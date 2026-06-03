@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* ── Centumania Brand Theme ─────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-carbon:      #0A0A0A;
+  --color-gold:        #E8B84B;
+  --color-gold-dark:   #C9981D;
+  --color-gold-muted:  #E8B84B33;
+  --color-offwhite:    #F5F5F0;
+  --color-surface:     #141414;
+  --color-surface-2:   #1E1E1E;
+  --color-border:      #2A2A2A;
+  --color-muted:       #888888;
+  --color-error:       #EF4444;
+  --color-success:     #22C55E;
+
+  /* Fonts — CSS variables set by next/font in layout.tsx */
+  --font-headline:    var(--font-bebas);
+  --font-subheading:  var(--font-barlow-condensed);
+  --font-body:        var(--font-barlow);
+}
+
+/* ── Global resets ───────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  /* Prevent font size adjustment on orientation change (mobile) */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #0A0A0A;
+  color: #F5F5F0;
+  font-family: var(--font-barlow), system-ui, sans-serif;
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar (desktop) ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0A0A0A; }
+::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 2px; }
