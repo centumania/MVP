@@ -15,10 +15,12 @@ type LeaderboardData = {
   userId:  string
 }
 
-const TIER_BADGE: Record<PricingTier, { label: string; variant: 'primary' | 'warning' | 'info' }> = {
-  rookie:  { label: 'Rookie',  variant: 'neutral' as never },
-  warrior: { label: 'Warrior', variant: 'primary' },
-  legend:  { label: 'Legend',  variant: 'warning' },
+import type { BadgeVariant } from '@/src/components/ui/Badge'
+
+const TIER_BADGE: Record<PricingTier, { label: string; variant: BadgeVariant }> = {
+  rookie:  { label: 'Rookie',  variant: 'neutral'  },
+  warrior: { label: 'Warrior', variant: 'primary'  },
+  legend:  { label: 'Legend',  variant: 'warning'  },
 }
 
 const MEDAL: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' }

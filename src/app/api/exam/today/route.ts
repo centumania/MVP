@@ -17,7 +17,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getSupabaseAdminClient, getSupabaseAuthenticatedClient } from '@/src/lib/supabase/server'
+import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
 import { getTodayInIST } from '@/src/lib/exam-window'
 
 export const dynamic = 'force-dynamic'

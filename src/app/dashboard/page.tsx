@@ -23,9 +23,10 @@ type DashboardState =
   | { status: 'ready'; window: ExamWindowStatus; today: TodayExam | null }
   | { status: 'error'; message: string }
 
-// ── Greeting ───────────────────────────────────────────────────────
+// ── Greeting (IST-aware) ───────────────────────────────────────────
 function greeting() {
-  const h = new Date().getHours()
+  const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000
+  const h = new Date(Date.now() + IST_OFFSET_MS).getUTCHours()
   if (h < 12) return 'Good morning'
   if (h < 17) return 'Good afternoon'
   return 'Good evening'
@@ -59,7 +60,8 @@ export default function DashboardPage() {
     })
     const id = setInterval(() => {
       getSupabaseBrowserClient().auth.getSession().then(({ data: { session } }) => {
-        if (session) fetchData(session.access_token)
+        if (!session) { router.replace('/auth/login'); return }
+        fetchData(session.access_token)
       })
     }, 30_000)
     return () => clearInterval(id)
@@ -163,10 +165,6 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        {/* ── Server time (debug) ──────────────────────────────── */}
-        <p className="text-xs text-text-muted text-center">
-          Server time: {w.serverTimeIST}
-        </p>
       </div>
     </AppLayout>
   )
@@ -233,11 +231,11 @@ function ExamCard({ w, today }: { w: ExamWindowStatus; today: TodayExam | null }
         <CardLabel className="mb-3">Next exam</CardLabel>
         <p className="text-2xl font-semibold text-text mb-1">Opens in {w.opensIn}</p>
         <p className="text-sm text-text-secondary">Daily window: 6:00 AM – 8:30 AM IST</p>
-        {today && (
+        {today?.alreadySubmitted && (
           <div className="mt-4 pt-4 border-t border-border">
             <Link href={`/exam/${today.dayNumber}`}>
               <Button variant="secondary" size="sm">
-                Review yesterday&apos;s answers
+                Review today&apos;s answer key
               </Button>
             </Link>
           </div>
