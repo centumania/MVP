@@ -1,46 +1,109 @@
 @import "tailwindcss";
 
-/* ── Centumania Brand Theme ─────────────────────────────────────── */
-@theme {
-  /* Colors */
-  --color-carbon:      #0A0A0A;
-  --color-gold:        #E8B84B;
-  --color-gold-dark:   #C9981D;
-  --color-gold-muted:  #E8B84B33;
-  --color-offwhite:    #F5F5F0;
-  --color-surface:     #141414;
-  --color-surface-2:   #1E1E1E;
-  --color-border:      #2A2A2A;
-  --color-muted:       #888888;
-  --color-error:       #EF4444;
-  --color-success:     #22C55E;
+/* ─────────────────────────────────────────────────────────────────
+   CENTUMANIA DESIGN SYSTEM
+   Inspired by: Linear, Stripe, Mercury, Vercel
+   Theme: Premium SaaS — Sky Blue × Deep Navy × White
+   ───────────────────────────────────────────────────────────────── */
 
-  /* Fonts — CSS variables set by next/font in layout.tsx */
-  --font-headline:    var(--font-bebas);
-  --font-subheading:  var(--font-barlow-condensed);
-  --font-body:        var(--font-barlow);
+@theme {
+  /* ── Primary — Sky Blue ──────────────────────────────────────── */
+  --color-primary:          #0EA5E9;   /* sky-500  — CTAs, links, active */
+  --color-primary-hover:    #0284C7;   /* sky-600  — hover state */
+  --color-primary-active:   #0369A1;   /* sky-700  — pressed state */
+  --color-primary-subtle:   #F0F9FF;   /* sky-50   — light backgrounds */
+  --color-primary-muted:    #E0F2FE;   /* sky-100  — badge backgrounds */
+  --color-primary-border:   #BAE6FD;   /* sky-200  — subtle borders */
+
+  /* ── Navy — Deep secondary ──────────────────────────────────── */
+  --color-navy:             #0F172A;   /* slate-900 — darkest text, sidebar */
+  --color-navy-800:         #1E293B;   /* slate-800 — dark surfaces */
+  --color-navy-700:         #334155;   /* slate-700 — secondary dark text */
+
+  /* ── Backgrounds ─────────────────────────────────────────────── */
+  --color-bg:               #F8FAFC;   /* slate-50  — page background */
+  --color-surface:          #FFFFFF;   /* white     — card surfaces */
+  --color-surface-raised:   #FFFFFF;   /* white     — elevated cards */
+  --color-surface-overlay:  #F1F5F9;   /* slate-100 — hover / alternate rows */
+
+  /* ── Borders ─────────────────────────────────────────────────── */
+  --color-border:           #E2E8F0;   /* slate-200 — default borders */
+  --color-border-strong:    #CBD5E1;   /* slate-300 — emphasis borders */
+  --color-border-focus:     #0EA5E9;   /* primary   — focus rings */
+
+  /* ── Text ───────────────────────────────────────────────────── */
+  --color-text:             #0F172A;   /* slate-900 — primary text */
+  --color-text-secondary:   #475569;   /* slate-600 — secondary text */
+  --color-text-muted:       #94A3B8;   /* slate-400 — muted / placeholder */
+  --color-text-disabled:    #CBD5E1;   /* slate-300 — disabled text */
+  --color-text-inverse:     #FFFFFF;   /* white     — on dark backgrounds */
+
+  /* ── Semantic ────────────────────────────────────────────────── */
+  --color-success:          #10B981;   /* emerald-500 */
+  --color-success-subtle:   #D1FAE5;   /* emerald-100 */
+  --color-success-text:     #065F46;   /* emerald-900 */
+
+  --color-warning:          #F59E0B;   /* amber-500 */
+  --color-warning-subtle:   #FEF3C7;   /* amber-100 */
+  --color-warning-text:     #78350F;   /* amber-900 */
+
+  --color-error:            #EF4444;   /* red-500 */
+  --color-error-subtle:     #FEE2E2;   /* red-100 */
+  --color-error-text:       #7F1D1D;   /* red-900 */
+
+  --color-info:             #6366F1;   /* indigo-500 */
+  --color-info-subtle:      #EEF2FF;   /* indigo-50 */
+
+  /* ── Fonts — CSS vars set by next/font in layout.tsx ─────────── */
+  --font-sans:    var(--font-inter);
+  --font-mono:    var(--font-jetbrains);
 }
 
 /* ── Global resets ───────────────────────────────────────────────── */
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
 html {
-  /* Prevent font size adjustment on orientation change (mobile) */
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: #0A0A0A;
-  color: #F5F5F0;
-  font-family: var(--font-barlow), system-ui, sans-serif;
-  /* Prevent horizontal scroll on mobile */
+  background-color: #F8FAFC;
+  color: #0F172A;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* ── Scrollbar (desktop) ─────────────────────────────────────────── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0A0A0A; }
-::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 2px; }
+/* ── Focus visible ───────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #0EA5E9;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Selection ───────────────────────────────────────────────────── */
+::selection {
+  background-color: #BAE6FD;
+  color: #0369A1;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: #CBD5E1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* ── Input resets ────────────────────────────────────────────────── */
+input, textarea, select {
+  font-family: inherit;
+}
+
+/* ── Utility: hide scrollbar but keep scroll ─────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

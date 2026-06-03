@@ -1,57 +1,36 @@
 import type { Metadata, Viewport } from 'next'
-import { Bebas_Neue, Barlow, Barlow_Condensed } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
-/* ── Fonts ─────────────────────────────────────────────────────────
- * Bebas Neue   → headlines (Tailwind: font-headline)
- * Barlow Condensed → subheadings (Tailwind: font-subheading)
- * Barlow       → body text (Tailwind: font-body, default)
- * ─────────────────────────────────────────────────────────────── */
-const bebasNeue = Bebas_Neue({
-  weight: '400',
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-bebas',
+  variable: '--font-inter',
   display: 'swap',
 })
 
-const barlowCondensed = Barlow_Condensed({
-  weight: ['400', '500', '600', '700'],
+const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-barlow-condensed',
+  variable: '--font-jetbrains',
   display: 'swap',
-})
-
-const barlow = Barlow({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-barlow',
-  display: 'swap',
+  weight: ['400', '500'],
 })
 
 export const metadata: Metadata = {
   title: 'Centumania — Winning is a habit',
-  description: 'Discipline-first LDC/UDC government exam prep for Puducherry students.',
+  description: 'India\'s most disciplined LDC/UDC exam prep platform. 25-day intensive programme for Puducherry competitive exam aspirants.',
   icons: { icon: '/favicon.ico' },
 }
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,  // Prevent zoom on form focus (mobile UX)
-  themeColor: '#0A0A0A',
+  themeColor: '#0EA5E9',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${bebasNeue.variable} ${barlowCondensed.variable} ${barlow.variable}`}
-    >
-      <body className="bg-carbon text-offwhite font-body antialiased">
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="bg-bg text-text font-sans antialiased">
         {children}
       </body>
     </html>

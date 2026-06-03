@@ -1,410 +1,413 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { Button } from '@/src/components/ui/Button'
+import { Badge } from '@/src/components/ui/Badge'
 import type { QuestionForClient, ExamSubmitResult, AnswerOption } from '@/src/types/database'
 
 // ── Types ──────────────────────────────────────────────────────────
-
 type ExamData = {
   exam: { id: string; dayNumber: number; title: string; openTime: string; closeTime: string }
-  questions:        QuestionForClient[]
+  questions: QuestionForClient[]
   alreadySubmitted: boolean
-  submission:       { id: string; score: number; total_marks: number } | null
-  windowStatus:     { isOpen: boolean; closesIn: string | null; message: string }
+  submission: { id: string; score: number; total_marks: number } | null
+  windowStatus: { isOpen: boolean; closesIn: string | null; message: string }
 }
 
-type PageState =
-  | { phase: 'loading' }
-  | { phase: 'window-closed'; message: string }
-  | { phase: 'exam'; data: ExamData; answers: Record<string, AnswerOption> }
-  | { phase: 'submitting' }
-  | { phase: 'results'; result: ExamSubmitResult; dayNumber: number }
-  | { phase: 'already-submitted'; data: ExamData }
-  | { phase: 'error'; message: string }
-
-// ── Page ───────────────────────────────────────────────────────────
-
-export default function ExamPage() {
-  const router = useRouter()
-  const params = useParams()
-  const day    = params.day as string
-
-  const [token, setToken]   = useState<string | null>(null)
-  const [state, setState]   = useState<PageState>({ phase: 'loading' })
-
-  // ── Auth + fetch exam ──────────────────────────────────────────
-  const loadExam = useCallback(async (accessToken: string) => {
-    try {
-      const res = await fetch(`/api/exam/${day}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-
-      if (res.status === 401) { router.replace('/auth/login'); return }
-      if (res.status === 402) { router.replace('/dashboard');  return }
-
-      if (res.status === 403) {
-        const body = await res.json()
-        setState({ phase: 'window-closed', message: body?.windowStatus?.message ?? 'Exam window is not open.' })
-        return
-      }
-
-      if (!res.ok) {
-        setState({ phase: 'error', message: 'Failed to load exam. Please try again.' })
-        return
-      }
-
-      const data: ExamData = await res.json()
-
-      if (data.alreadySubmitted) {
-        setState({ phase: 'already-submitted', data })
-        return
-      }
-
-      setState({ phase: 'exam', data, answers: {} })
-    } catch {
-      setState({ phase: 'error', message: 'Network error. Please check your connection.' })
-    }
-  }, [day, router])
-
-  useEffect(() => {
-    getSupabaseBrowserClient()
-      .auth.getSession()
-      .then(({ data: { session } }) => {
-        if (!session) { router.replace('/auth/login'); return }
-        setToken(session.access_token)
-        loadExam(session.access_token)
-      })
-  }, [router, loadExam])
-
-  // ── Answer selection ───────────────────────────────────────────
-  function selectAnswer(questionId: string, answer: AnswerOption) {
-    if (state.phase !== 'exam') return
-    setState({
-      ...state,
-      answers: { ...state.answers, [questionId]: answer },
-    })
-  }
-
-  // ── Submit ─────────────────────────────────────────────────────
-  async function handleSubmit() {
-    if (state.phase !== 'exam' || !token) return
-
-    const { data, answers } = state
-    const unanswered = data.questions.filter(q => !answers[q.id])
-    if (unanswered.length > 0) {
-      alert(`You have ${unanswered.length} unanswered question${unanswered.length > 1 ? 's' : ''}. Please answer all questions before submitting.`)
-      return
-    }
-
-    if (!confirm('Submit your exam? You cannot change your answers after submission.')) {
-      return
-    }
-
-    setState({ phase: 'submitting' })
-
-    try {
-      const res = await fetch('/api/exam/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type':  'application/json',
-          Authorization:   `Bearer ${token}`,
-        },
-        body: JSON.stringify({ examId: data.exam.id, answers }),
-      })
-
-      if (res.status === 409) {
-        // Race condition — reload to show existing submission
-        loadExam(token)
-        return
-      }
-
-      if (res.status === 403) {
-        setState({ phase: 'window-closed', message: 'The exam window has closed. Your answers were not submitted.' })
-        return
-      }
-
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}))
-        setState({ phase: 'error', message: body?.error ?? 'Submission failed. Please contact support.' })
-        return
-      }
-
-      const result: ExamSubmitResult = await res.json()
-      setState({ phase: 'results', result, dayNumber: data.exam.dayNumber })
-    } catch {
-      setState({ phase: 'error', message: 'Network error during submission. Please contact support.' })
-    }
-  }
-
-  // ── Renders ────────────────────────────────────────────────────
-
-  if (state.phase === 'loading' || state.phase === 'submitting') {
-    return (
-      <div className="min-h-screen bg-carbon flex flex-col items-center justify-center gap-3">
-        <p className="text-muted font-subheading uppercase tracking-widest text-sm animate-pulse">
-          {state.phase === 'submitting' ? 'Submitting…' : 'Loading…'}
-        </p>
-      </div>
-    )
-  }
-
-  if (state.phase === 'window-closed') {
-    return (
-      <FullScreenMessage
-        icon="🔒"
-        title="EXAM CLOSED"
-        body={state.phase === 'window-closed' ? (state as { phase: 'window-closed'; message: string }).message : ''}
-        action={{ label: 'Back to Dashboard', href: '/dashboard' }}
-      />
-    )
-  }
-
-  if (state.phase === 'error') {
-    return (
-      <FullScreenMessage
-        icon="⚠️"
-        title="ERROR"
-        body={(state as { phase: 'error'; message: string }).message}
-        action={{ label: 'Back to Dashboard', href: '/dashboard' }}
-      />
-    )
-  }
-
-  if (state.phase === 'results') {
-    return <ResultsView result={state.result} dayNumber={state.dayNumber} />
-  }
-
-  if (state.phase === 'already-submitted') {
-    return <AlreadySubmittedView data={state.data} />
-  }
-
-  // ── Active exam ────────────────────────────────────────────────
-  const { data, answers } = state
-  const answeredCount  = Object.keys(answers).length
-  const totalQuestions = data.questions.length
-
-  return (
-    <div className="min-h-screen bg-carbon flex flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-10 bg-carbon/95 backdrop-blur border-b border-border px-4 py-3 flex items-center justify-between">
-        <div>
-          <p className="text-muted text-xs font-subheading uppercase tracking-wide">
-            Day {data.exam.dayNumber}
-          </p>
-          <p className="text-offwhite font-subheading font-semibold text-sm">
-            {data.exam.title}
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-muted text-xs font-subheading uppercase tracking-wide">
-            Answered
-          </p>
-          <p className="text-gold font-headline text-2xl">
-            {answeredCount}/{totalQuestions}
-          </p>
-        </div>
-      </header>
-
-      {/* Questions */}
-      <main className="flex-1 px-4 py-6 max-w-lg mx-auto w-full space-y-8">
-        {data.questions.map((question, index) => (
-          <QuestionCard
-            key={question.id}
-            question={question}
-            index={index}
-            selected={answers[question.id] ?? null}
-            onSelect={answer => selectAnswer(question.id, answer)}
-          />
-        ))}
-
-        {/* Submit */}
-        <div className="pt-4 pb-8">
-          {answeredCount < totalQuestions && (
-            <p className="text-muted text-sm text-center mb-4">
-              {totalQuestions - answeredCount} question{totalQuestions - answeredCount > 1 ? 's' : ''} remaining
-            </p>
-          )}
-          <button
-            onClick={handleSubmit}
-            className="w-full bg-gold text-carbon font-subheading font-bold uppercase tracking-widest py-4 rounded-xl text-lg hover:bg-gold-dark transition-colors disabled:opacity-50"
-          >
-            Submit Exam
-          </button>
-          <p className="text-muted text-xs text-center mt-3">
-            You cannot change answers after submission.
-          </p>
-        </div>
-      </main>
-    </div>
-  )
-}
-
-// ── Sub-components ─────────────────────────────────────────────────
+type Phase =
+  | 'loading' | 'window-closed' | 'already-submitted'
+  | 'exam' | 'submitting' | 'results' | 'error'
 
 const OPTIONS: AnswerOption[] = ['A', 'B', 'C', 'D']
 
-function QuestionCard({
-  question,
-  index,
-  selected,
-  onSelect,
-}: {
-  question: QuestionForClient
-  index:    number
-  selected: AnswerOption | null
-  onSelect: (answer: AnswerOption) => void
-}) {
-  const optionText: Record<AnswerOption, string> = {
-    A: question.option_a,
-    B: question.option_b,
-    C: question.option_c,
-    D: question.option_d,
+// ── Countdown hook ─────────────────────────────────────────────────
+function useCountdown(closeTime: string | null) {
+  const [remaining, setRemaining] = useState<string>('')
+  const [urgent, setUrgent]       = useState(false)
+
+  useEffect(() => {
+    if (!closeTime) return
+    const tick = () => {
+      const ms  = new Date(closeTime).getTime() - Date.now()
+      if (ms <= 0) { setRemaining('00:00'); setUrgent(true); return }
+      const m   = Math.floor(ms / 60_000)
+      const s   = Math.floor((ms % 60_000) / 1000)
+      setRemaining(`${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`)
+      setUrgent(ms < 5 * 60_000)
+    }
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  }, [closeTime])
+
+  return { remaining, urgent }
+}
+
+// ── Page ───────────────────────────────────────────────────────────
+export default function ExamPage() {
+  const router = useRouter()
+  const { day } = useParams() as { day: string }
+
+  const [token, setToken]       = useState<string | null>(null)
+  const [phase, setPhase]       = useState<Phase>('loading')
+  const [data, setData]         = useState<ExamData | null>(null)
+  const [answers, setAnswers]   = useState<Record<string, AnswerOption>>({})
+  const [flagged, setFlagged]   = useState<Set<string>>(new Set())
+  const [activeQ, setActiveQ]   = useState(0)
+  const [result, setResult]     = useState<ExamSubmitResult | null>(null)
+  const [errorMsg, setErrorMsg] = useState('')
+  const questionRefs            = useRef<(HTMLDivElement | null)[]>([])
+
+  const { remaining, urgent } = useCountdown(
+    phase === 'exam' && data ? data.exam.closeTime : null,
+  )
+
+  const loadExam = useCallback(async (tok: string) => {
+    const res = await fetch(`/api/exam/${day}`, { headers: { Authorization: `Bearer ${tok}` } })
+    if (res.status === 401) { router.replace('/auth/login'); return }
+    if (res.status === 402) { router.replace('/dashboard');  return }
+    if (res.status === 403) {
+      const b = await res.json(); setPhase('window-closed'); setErrorMsg(b?.windowStatus?.message ?? 'Exam window is not open.'); return
+    }
+    if (!res.ok) { setPhase('error'); setErrorMsg('Failed to load exam.'); return }
+    const d: ExamData = await res.json()
+    setData(d)
+    setPhase(d.alreadySubmitted ? 'already-submitted' : 'exam')
+  }, [day, router])
+
+  useEffect(() => {
+    getSupabaseBrowserClient().auth.getSession().then(({ data: { session } }) => {
+      if (!session) { router.replace('/auth/login'); return }
+      setToken(session.access_token)
+      loadExam(session.access_token)
+    })
+  }, [router, loadExam])
+
+  function toggleFlag(id: string) {
+    setFlagged(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n })
   }
 
+  function scrollTo(idx: number) {
+    setActiveQ(idx)
+    questionRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  async function handleSubmit() {
+    if (!data || !token) return
+    const unanswered = data.questions.filter(q => !answers[q.id])
+    if (unanswered.length > 0) {
+      const go = confirm(`${unanswered.length} question${unanswered.length > 1 ? 's' : ''} unanswered. Submit anyway?`)
+      if (!go) return
+    } else {
+      if (!confirm('Submit your exam? This cannot be undone.')) return
+    }
+
+    setPhase('submitting')
+    const res = await fetch('/api/exam/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ examId: data.exam.id, answers }),
+    })
+
+    if (res.status === 409) { loadExam(token); return }
+    if (res.status === 403) { setPhase('window-closed'); setErrorMsg('Exam window has closed.'); return }
+    if (!res.ok) {
+      const b = await res.json().catch(() => ({}))
+      setPhase('error'); setErrorMsg(b?.error ?? 'Submission failed.'); return
+    }
+    setResult(await res.json())
+    setPhase('results')
+  }
+
+  // ── Loading / Submitting ───────────────────────────────────────
+  if (phase === 'loading' || phase === 'submitting') {
+    return (
+      <div className="min-h-screen bg-bg flex flex-col items-center justify-center gap-3">
+        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        <p className="text-sm text-text-secondary">
+          {phase === 'submitting' ? 'Submitting your answers…' : 'Loading exam…'}
+        </p>
+      </div>
+    )
+  }
+
+  if (phase === 'window-closed' || phase === 'error') {
+    return (
+      <div className="min-h-screen bg-bg flex flex-col items-center justify-center px-6 text-center">
+        <div className="w-14 h-14 bg-surface-overlay rounded-2xl flex items-center justify-center mx-auto mb-5">
+          {phase === 'window-closed'
+            ? <svg className="w-7 h-7 text-text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
+            : <svg className="w-7 h-7 text-error" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
+          }
+        </div>
+        <h2 className="text-xl font-semibold text-text mb-2">{phase === 'window-closed' ? 'Exam closed' : 'Something went wrong'}</h2>
+        <p className="text-sm text-text-secondary max-w-xs mb-6">{errorMsg}</p>
+        <Button onClick={() => router.push('/dashboard')} variant="secondary">Back to dashboard</Button>
+      </div>
+    )
+  }
+
+  if (phase === 'results' && result) {
+    return <ResultsScreen result={result} dayNumber={data?.exam.dayNumber ?? 0} />
+  }
+
+  if (phase === 'already-submitted' && data?.submission) {
+    return (
+      <div className="min-h-screen bg-bg flex flex-col items-center justify-center px-6 text-center">
+        <Badge variant="success" className="mb-4">Submitted</Badge>
+        <h2 className="text-2xl font-semibold text-text mb-1">Day {data.exam.dayNumber} complete</h2>
+        <div className="flex items-baseline gap-1.5 mt-2 mb-6">
+          <span className="text-5xl font-semibold text-text font-mono">{data.submission.score}</span>
+          <span className="text-xl text-text-secondary">/ {data.submission.total_marks}</span>
+        </div>
+        <Button onClick={() => router.push('/dashboard')}>Back to dashboard</Button>
+      </div>
+    )
+  }
+
+  if (!data) return null
+  const questions = data.questions
+  const answered  = Object.keys(answers).length
+  const total     = questions.length
+
   return (
-    <div>
-      <p className="text-muted text-xs font-subheading uppercase tracking-wide mb-2">
-        Q{index + 1} {question.marks > 1 ? `· ${question.marks} marks` : ''}
-      </p>
-      <p className="text-offwhite text-base leading-relaxed mb-4">
-        {question.question_text}
-      </p>
-      <div className="space-y-2">
-        {OPTIONS.map(opt => {
-          const isSelected = selected === opt
-          return (
-            <button
-              key={opt}
-              onClick={() => onSelect(opt)}
-              className={`w-full text-left px-4 py-3 rounded-xl border transition-all ${
-                isSelected
-                  ? 'border-gold bg-gold-muted text-gold'
-                  : 'border-border bg-surface text-offwhite hover:border-muted'
-              }`}
-            >
-              <span className={`font-subheading font-bold mr-3 ${isSelected ? 'text-gold' : 'text-muted'}`}>
-                {opt}.
-              </span>
-              {optionText[opt]}
+    <div className="min-h-screen bg-bg flex flex-col">
+
+      {/* ── Sticky header ───────────────────────────────────────── */}
+      <header className="sticky top-0 z-20 bg-surface border-b border-border">
+        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3 min-w-0">
+            <button onClick={() => router.push('/dashboard')} className="text-text-secondary hover:text-text p-1 -ml-1 shrink-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
             </button>
-          )
-        })}
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-text truncate">{data.exam.title}</p>
+              <p className="text-xs text-text-muted">Day {data.exam.dayNumber} · {answered}/{total} answered</p>
+            </div>
+          </div>
+          <div className={`flex items-center gap-2 shrink-0 font-mono text-sm font-medium px-3 py-1.5 rounded-lg border ${urgent ? 'bg-error-subtle border-error/30 text-error' : 'bg-surface-overlay border-border text-text-secondary'}`}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+            {remaining || data.windowStatus.closesIn || '--:--'}
+          </div>
+        </div>
+
+        {/* Progress bar */}
+        <div className="h-0.5 bg-surface-overlay">
+          <div className="h-full bg-primary transition-all duration-300" style={{ width: `${(answered / total) * 100}%` }} />
+        </div>
+      </header>
+
+      <div className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 lg:flex lg:gap-6">
+
+        {/* ── Questions ─────────────────────────────────────────── */}
+        <div className="flex-1 space-y-6">
+          {questions.map((q, i) => {
+            const sel      = answers[q.id] ?? null
+            const isFlagged = flagged.has(q.id)
+            const optText: Record<AnswerOption, string> = { A: q.option_a, B: q.option_b, C: q.option_c, D: q.option_d }
+
+            return (
+              <div
+                key={q.id}
+                ref={el => { questionRefs.current[i] = el }}
+                className={`bg-surface rounded-xl border p-5 transition-colors ${activeQ === i ? 'border-primary-border' : 'border-border'}`}
+              >
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-medium text-text-muted bg-surface-overlay px-2 py-0.5 rounded-md">
+                      Q{i + 1}
+                    </span>
+                    {q.marks > 1 && (
+                      <span className="text-xs text-text-muted">{q.marks} marks</span>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => toggleFlag(q.id)}
+                    title={isFlagged ? 'Remove flag' : 'Flag for review'}
+                    className={`p-1.5 rounded-md transition-colors ${isFlagged ? 'bg-warning-subtle text-warning' : 'text-text-muted hover:text-text hover:bg-surface-overlay'}`}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill={isFlagged ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" y1="22" x2="4" y2="15" />
+                    </svg>
+                  </button>
+                </div>
+
+                <p className="text-sm text-text leading-relaxed mb-4">{q.question_text}</p>
+
+                <div className="space-y-2">
+                  {OPTIONS.map(opt => (
+                    <button
+                      key={opt}
+                      onClick={() => { setAnswers(p => ({ ...p, [q.id]: opt })); setActiveQ(i) }}
+                      className={[
+                        'w-full flex items-center gap-3 px-4 py-3 rounded-lg border text-left transition-all text-sm',
+                        sel === opt
+                          ? 'border-primary bg-primary-subtle text-primary font-medium'
+                          : 'border-border bg-surface text-text hover:border-border-strong hover:bg-surface-overlay',
+                      ].join(' ')}
+                    >
+                      <span className={`w-5 h-5 rounded-full border flex items-center justify-center text-xs font-medium shrink-0 ${sel === opt ? 'border-primary bg-primary text-white' : 'border-border-strong text-text-muted'}`}>
+                        {opt}
+                      </span>
+                      {optText[opt]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
+
+          {/* Submit */}
+          <div className="pb-6">
+            <div className="bg-surface border border-border rounded-xl p-5">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <p className="text-sm font-medium text-text">Ready to submit?</p>
+                  <p className="text-xs text-text-muted mt-0.5">
+                    {total - answered > 0 ? `${total - answered} question${total - answered > 1 ? 's' : ''} unanswered` : 'All questions answered'}
+                  </p>
+                </div>
+                {flagged.size > 0 && (
+                  <Badge variant="warning">{flagged.size} flagged</Badge>
+                )}
+              </div>
+              <Button onClick={handleSubmit} fullWidth size="lg">
+                Submit exam
+              </Button>
+              <p className="text-xs text-text-muted text-center mt-2">
+                Submissions cannot be changed after this point.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Desktop question navigator ─────────────────────────── */}
+        <aside className="hidden lg:block w-44 shrink-0">
+          <div className="sticky top-20 bg-surface border border-border rounded-xl p-4">
+            <p className="text-xs font-medium text-text-muted mb-3 uppercase tracking-wide">Navigator</p>
+            <div className="grid grid-cols-5 gap-1.5">
+              {questions.map((q, i) => {
+                const isAnswered = !!answers[q.id]
+                const isFlagged  = flagged.has(q.id)
+                return (
+                  <button
+                    key={q.id}
+                    onClick={() => scrollTo(i)}
+                    title={`Q${i + 1}`}
+                    className={[
+                      'w-7 h-7 rounded-md text-xs font-medium transition-colors',
+                      isFlagged  ? 'bg-warning-subtle text-warning border border-warning/30' :
+                      isAnswered ? 'bg-primary text-white' :
+                                   'bg-surface-overlay text-text-muted hover:bg-border',
+                      activeQ === i ? 'ring-2 ring-primary ring-offset-1' : '',
+                    ].join(' ')}
+                  >
+                    {i + 1}
+                  </button>
+                )
+              })}
+            </div>
+            <div className="mt-4 space-y-1.5">
+              {[
+                { color: 'bg-primary',          label: 'Answered' },
+                { color: 'bg-warning-subtle border border-warning/30', label: 'Flagged' },
+                { color: 'bg-surface-overlay',  label: 'Not answered' },
+              ].map(({ color, label }) => (
+                <div key={label} className="flex items-center gap-2">
+                  <div className={`w-3 h-3 rounded-sm ${color}`} />
+                  <span className="text-xs text-text-muted">{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   )
 }
 
-function ResultsView({ result, dayNumber }: { result: ExamSubmitResult; dayNumber: number }) {
+// ── Results Screen ─────────────────────────────────────────────────
+function ResultsScreen({ result, dayNumber }: { result: ExamSubmitResult; dayNumber: number }) {
   const { score, total, percentage, answerKey } = result
+  const router = useRouter()
+
+  const tier = percentage >= 80 ? { label: 'Excellent', color: 'success' as const }
+             : percentage >= 60 ? { label: 'Good', color: 'primary' as const }
+             : percentage >= 40 ? { label: 'Average', color: 'warning' as const }
+             : { label: 'Needs work', color: 'error' as const }
 
   return (
-    <div className="min-h-screen bg-carbon flex flex-col">
-      {/* Score header */}
-      <div className="px-4 py-10 text-center border-b border-border">
-        <p className="text-muted font-subheading uppercase tracking-widest text-xs mb-3">
-          Day {dayNumber} — Result
-        </p>
-        <div className="flex items-end justify-center gap-2 mb-1">
-          <span className="font-headline text-8xl text-gold">{score}</span>
-          <span className="text-muted text-3xl mb-3">/ {total}</span>
+    <div className="min-h-screen bg-bg">
+      {/* Header */}
+      <div className="bg-surface border-b border-border">
+        <div className="max-w-2xl mx-auto px-4 py-8 text-center">
+          <Badge variant={tier.color} className="mb-4">{tier.label}</Badge>
+          <div className="flex items-baseline justify-center gap-2 mb-1">
+            <span className="text-6xl font-semibold text-text font-mono">{score}</span>
+            <span className="text-2xl text-text-secondary">/ {total}</span>
+          </div>
+          <p className="text-text-secondary text-sm mt-1">Day {dayNumber} · {percentage}% accuracy</p>
+
+          {/* Score bar */}
+          <div className="max-w-xs mx-auto mt-5">
+            <div className="h-2 bg-surface-overlay rounded-full overflow-hidden">
+              <div className="h-full bg-primary rounded-full transition-all duration-700" style={{ width: `${percentage}%` }} />
+            </div>
+          </div>
+
+          <div className="flex justify-center gap-6 mt-5 text-center">
+            <div>
+              <p className="text-2xl font-semibold text-text">{answerKey.filter(a => a.isCorrect).length}</p>
+              <p className="text-xs text-text-muted mt-0.5">Correct</p>
+            </div>
+            <div className="w-px bg-border" />
+            <div>
+              <p className="text-2xl font-semibold text-text">{answerKey.filter(a => !a.isCorrect).length}</p>
+              <p className="text-xs text-text-muted mt-0.5">Incorrect</p>
+            </div>
+            <div className="w-px bg-border" />
+            <div>
+              <p className="text-2xl font-semibold text-text">{total}</p>
+              <p className="text-xs text-text-muted mt-0.5">Total</p>
+            </div>
+          </div>
         </div>
-        <p className="text-muted text-lg">{percentage}% accuracy</p>
-        <p className="text-offwhite text-sm mt-3">
-          {percentage >= 80
-            ? 'Excellent work. Keep it up.'
-            : percentage >= 50
-            ? 'Good effort. Review the explanations below.'
-            : 'Study harder. Review all wrong answers carefully.'}
-        </p>
       </div>
 
       {/* Answer key */}
-      <main className="px-4 py-6 max-w-lg mx-auto w-full space-y-4">
-        <h2 className="font-subheading uppercase tracking-widest text-muted text-xs mb-4">
-          Answer Key
-        </h2>
+      <div className="max-w-2xl mx-auto px-4 py-6 space-y-3">
+        <p className="text-xs font-medium text-text-muted uppercase tracking-wide mb-4">Answer key</p>
         {answerKey.map((item, i) => (
-          <div
-            key={item.questionId}
-            className={`rounded-xl border p-4 ${
-              item.isCorrect ? 'border-success/30 bg-success/5' : 'border-error/30 bg-error/5'
-            }`}
-          >
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-muted text-xs font-subheading uppercase">Q{i + 1}</span>
-              <span className={`text-xs font-subheading uppercase tracking-wide ${item.isCorrect ? 'text-success' : 'text-error'}`}>
-                {item.isCorrect ? '✓ Correct' : '✗ Wrong'}
-              </span>
+          <div key={item.questionId} className={`bg-surface rounded-xl border p-4 ${item.isCorrect ? 'border-success/20' : 'border-error/20'}`}>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-text-muted font-medium">Q{i + 1}</span>
+              <Badge variant={item.isCorrect ? 'success' : 'error'} dot>
+                {item.isCorrect ? 'Correct' : 'Incorrect'}
+              </Badge>
             </div>
             {!item.isCorrect && (
-              <p className="text-sm text-muted mt-1">
-                Your answer: <span className="text-error">{item.yourAnswer ?? '—'}</span>
+              <p className="text-xs text-text-secondary mt-2">
+                Your answer: <span className="font-mono font-medium text-error">{item.yourAnswer ?? '—'}</span>
                 {' · '}
-                Correct: <span className="text-success">{item.correct}</span>
+                Correct: <span className="font-mono font-medium text-success">{item.correct}</span>
               </p>
             )}
             {item.explanation && (
-              <p className="text-muted text-sm mt-2 leading-relaxed border-t border-border/50 pt-2">
+              <p className="text-xs text-text-secondary mt-2.5 pt-2.5 border-t border-border leading-relaxed">
                 {item.explanation}
               </p>
             )}
           </div>
         ))}
 
-        <div className="pt-4 pb-10">
-          <a
-            href="/dashboard"
-            className="block w-full text-center bg-surface border border-border text-offwhite font-subheading font-semibold uppercase tracking-widest py-4 rounded-xl hover:border-gold transition-colors"
-          >
-            Back to Dashboard
-          </a>
+        <div className="pt-2 pb-8">
+          <Button onClick={() => router.push('/dashboard')} variant="secondary" fullWidth>
+            Back to dashboard
+          </Button>
         </div>
-      </main>
-    </div>
-  )
-}
-
-function AlreadySubmittedView({ data }: { data: ExamData }) {
-  return (
-    <div className="min-h-screen bg-carbon flex flex-col items-center justify-center px-4 text-center">
-      <p className="text-muted text-xs font-subheading uppercase tracking-widest mb-2">
-        Day {data.exam.dayNumber}
-      </p>
-      <h2 className="font-headline text-4xl text-gold mb-2">SUBMITTED</h2>
-      <p className="text-muted text-base mb-2">
-        Score: <span className="text-offwhite font-semibold">
-          {data.submission?.score} / {data.submission?.total_marks}
-        </span>
-      </p>
-      <a href="/dashboard" className="text-gold text-sm hover:underline mt-6">
-        Back to Dashboard
-      </a>
-    </div>
-  )
-}
-
-function FullScreenMessage({
-  icon, title, body,
-  action,
-}: {
-  icon:   string
-  title:  string
-  body:   string
-  action: { label: string; href: string }
-}) {
-  return (
-    <div className="min-h-screen bg-carbon flex flex-col items-center justify-center px-6 text-center">
-      <div className="text-5xl mb-6">{icon}</div>
-      <h2 className="font-headline text-4xl text-gold mb-3">{title}</h2>
-      <p className="text-muted text-base max-w-sm leading-relaxed mb-8">{body}</p>
-      <a
-        href={action.href}
-        className="bg-gold text-carbon font-subheading font-bold uppercase tracking-widest px-8 py-3 rounded-xl hover:bg-gold-dark transition-colors"
-      >
-        {action.label}
-      </a>
+      </div>
     </div>
   )
 }
