@@ -93,6 +93,7 @@ export type Material = {
   pdf_key:      string | null   // S3 object key — NEVER expose as a URL
   ppt_key:      string | null   // S3 object key — NEVER expose as a URL
   video_url:    string | null   // YouTube URL or CloudFront path (admin-set)
+  html_key:     string | null   // Storage key for interactive HTML MindMap — NEVER expose directly
   published_at: string          // ISO 8601
   expires_at:   string          // published_at + 24h — enforced server-side
   created_at:   string

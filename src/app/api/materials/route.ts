@@ -11,8 +11,6 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
-import { getTodayInIST } from '@/src/lib/exam-window'
-
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
@@ -38,7 +36,7 @@ export async function GET(request: NextRequest) {
     // Fetch today's non-expired material for this batch
     const { data: materials, error: matErr } = await supabase
       .from('materials')
-      .select('id, day_number, title, video_url, published_at, expires_at, pdf_key, ppt_key')
+      .select('id, day_number, title, video_url, published_at, expires_at, pdf_key, ppt_key, html_key')
       .eq('batch_id', batch.id)
       .gt('expires_at', now.toISOString())
       .order('day_number', { ascending: false })
@@ -52,7 +50,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'No materials available' }, { status: 404 })
     }
 
-    // Strip S3 keys — only expose safe metadata + YouTube/public video URLs
+    // Strip S3/storage keys — only expose safe metadata + YouTube/public video URLs
     const safe = materials.map(m => ({
       id:          m.id,
       dayNumber:   m.day_number,
@@ -60,8 +58,10 @@ export async function GET(request: NextRequest) {
       hasPDF:      !!m.pdf_key,
       hasPPT:      !!m.ppt_key,
       hasVideo:    !!m.video_url,
-      // Only expose video_url if it's a YouTube URL (not an S3 key)
-      videoUrl:    m.video_url?.startsWith('http') ? m.video_url : null,
+      hasMindMap:  !!m.html_key,  // Flag only — raw key never sent to client
+      // Expose YouTube URLs and local /study/ embeds; never expose storage keys
+      videoUrl:    (m.video_url?.startsWith('http') || m.video_url?.startsWith('/study/'))
+                     ? m.video_url : null,
       publishedAt: m.published_at,
       expiresAt:   m.expires_at,
     }))

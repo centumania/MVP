@@ -15,58 +15,50 @@ type LeaderboardData = {
   myRank:  LeaderboardEntry | null
   userId:  string
 }
-
 const TIER_BADGE: Record<PricingTier, { label: string; variant: BadgeVariant }> = {
-  rookie:  { label: 'Rookie',  variant: 'neutral'  },
-  warrior: { label: 'Warrior', variant: 'primary'  },
-  legend:  { label: 'Legend',  variant: 'warning'  },
+  rookie:  { label: 'Rookie',  variant: 'neutral' },
+  warrior: { label: 'Warrior', variant: 'primary' },
+  legend:  { label: 'Legend',  variant: 'gold'    },
 }
 
-const MEDAL: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' }
+// Green-palette podium metals
+const METAL = {
+  1: { grad: 'linear-gradient(135deg,#e7b14c 0%,#c98c1e 60%,#8b6110 100%)', glow: 'rgba(231,177,76,0.25)',  text: '#f5d48a', border: 'rgba(231,177,76,0.30)'  },
+  2: { grad: 'linear-gradient(135deg,#d0d8c8 0%,#9aa893 60%,#6b7a63 100%)', glow: 'rgba(154,168,147,0.20)', text: '#d0d8c8', border: 'rgba(154,168,147,0.25)' },
+  3: { grad: 'linear-gradient(135deg,#a37a50 0%,#7a5030 60%,#4a3018 100%)', glow: 'rgba(163,122,80,0.20)',  text: '#d4ad8a', border: 'rgba(163,122,80,0.30)'  },
+} as Record<number, { grad: string; glow: string; text: string; border: string }>
 
-const PODIUM_COLORS: Record<number, { bg: string; ring: string; text: string }> = {
-  1: { bg: 'bg-amber-50',   ring: 'ring-amber-200',   text: 'text-amber-700'   },
-  2: { bg: 'bg-slate-50',   ring: 'ring-slate-200',   text: 'text-slate-600'   },
-  3: { bg: 'bg-orange-50',  ring: 'ring-orange-200',  text: 'text-orange-700'  },
+function CrownIcon({ size = 18 }: { size?: number }) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor"><path d="M2 20h20l-2-10-5 5-3-8-3 8-5-5-2 10z"/></svg>
 }
 
-function Avatar({ name, size = 'md', highlight = false }: { name: string; size?: 'sm' | 'md' | 'lg'; highlight?: boolean }) {
+function Avatar({ name, isMe, size = 'md' }: { name: string; isMe?: boolean; size?: 'sm'|'md'|'lg' }) {
   const parts = name.trim().split(' ')
   const init  = parts.length >= 2 ? parts[0][0] + parts[1][0] : name.slice(0, 2)
-  const sz    = size === 'lg' ? 'w-12 h-12 text-base' : size === 'sm' ? 'w-7 h-7 text-xs' : 'w-9 h-9 text-sm'
+  const sz    = size === 'lg' ? 'w-12 h-12 text-sm' : size === 'sm' ? 'w-7 h-7 text-xs' : 'w-9 h-9 text-xs'
   return (
-    <div className={`${sz} rounded-full flex items-center justify-center shrink-0 font-semibold uppercase ${
-      highlight ? 'bg-primary text-white' : 'bg-primary-muted text-primary'
-    }`}>
+    <div className={`${sz} rounded-full flex items-center justify-center shrink-0 font-bold uppercase`}
+      style={isMe
+        ? { background: 'linear-gradient(135deg,#6fcf8f,#3fae6a)', color: '#06140c', boxShadow: '0 0 12px rgba(111,207,143,0.4)' }
+        : { background: 'rgba(111,207,143,0.10)', color: '#6fcf8f' }
+      }>
       {init}
     </div>
   )
 }
 
-function RankBadge({ rank }: { rank: number }) {
-  if (rank <= 3) return <span className="text-xl">{MEDAL[rank]}</span>
-  return (
-    <span className="font-mono text-sm font-semibold text-text-muted w-8 text-center shrink-0">
-      #{rank}
-    </span>
-  )
-}
-
 export default function LeaderboardPage() {
   const router = useRouter()
-  const [data,      setData]     = useState<LeaderboardData | null>(null)
-  const [userName,  setUserName] = useState<string>('')
-  const [loading,   setLoading]  = useState(true)
-  const [error,     setError]    = useState<string | null>(null)
+  const [data, setData]         = useState<LeaderboardData | null>(null)
+  const [userName, setUserName] = useState('')
+  const [loading, setLoading]   = useState(true)
+  const [error, setError]       = useState<string | null>(null)
 
   useEffect(() => {
     getSupabaseBrowserClient().auth.getSession().then(async ({ data: { session } }) => {
       if (!session) { router.replace('/auth/login'); return }
       setUserName(session.user.user_metadata?.name ?? session.user.email?.split('@')[0] ?? '')
-
-      const res = await fetch('/api/leaderboard', {
-        headers: { Authorization: `Bearer ${session.access_token}` },
-      })
+      const res = await fetch('/api/leaderboard', { headers: { Authorization: `Bearer ${session.access_token}` } })
       if (res.status === 402) { router.replace('/dashboard'); return }
       if (!res.ok) { setError('Failed to load leaderboard.'); setLoading(false); return }
       setData(await res.json())
@@ -74,147 +66,150 @@ export default function LeaderboardPage() {
     })
   }, [router])
 
-  if (loading) {
-    return (
-      <AppLayout userName={userName}>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-3">
-          {[...Array(8)].map((_, i) => <SkeletonCard key={i} lines={2} avatar />)}
-        </div>
-      </AppLayout>
-    )
-  }
+  if (loading) return (
+    <AppLayout userName={userName}>
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 space-y-3">
+        {[...Array(6)].map((_, i) => <SkeletonCard key={i} lines={2} avatar />)}
+      </div>
+    </AppLayout>
+  )
 
-  if (error) {
-    return (
-      <AppLayout userName={userName}>
-        <div className="max-w-3xl mx-auto px-4 py-8">
-          <p className="text-sm text-error">{error}</p>
-        </div>
-      </AppLayout>
-    )
-  }
+  if (error) return (
+    <AppLayout userName={userName}>
+      <div className="max-w-2xl mx-auto px-4 py-8"><p className="text-sm text-error">{error}</p></div>
+    </AppLayout>
+  )
 
   const { entries = [], myRank, userId } = data ?? {}
   const top3 = entries.slice(0, 3)
   const rest  = entries.slice(3)
-
   const myPercentile = myRank && entries.length > 0
     ? Math.round((1 - (myRank.rank - 1) / Math.max(entries.length, 1)) * 100)
     : null
 
   return (
     <AppLayout userName={userName}>
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-5">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 space-y-5">
 
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-semibold text-text">Leaderboard</h1>
-          <p className="text-sm text-text-secondary mt-0.5">LDC Batch 2026 · Cumulative rankings · {entries.length} students</p>
+          <h1 className="text-2xl font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+            Leaderboard
+          </h1>
+          <p className="text-sm text-text-muted mt-0.5 font-mono">LDC Batch 2026 · {entries.length} students</p>
         </div>
 
-        {/* My rank card */}
+        {/* My Rank Banner */}
         {myRank && (
-          <div className="bg-navy rounded-2xl px-5 py-4 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent pointer-events-none" />
+          <div className="relative rounded-2xl overflow-hidden px-5 py-4"
+            style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(111,207,143,0.20)' }}>
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: 'radial-gradient(ellipse at left,rgba(111,207,143,0.08),transparent 60%)' }} />
             <div className="relative flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center shrink-0">
-                <span className="text-white font-bold text-base font-mono">#{myRank.rank}</span>
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 font-bold text-sm font-mono"
+                style={{ background: 'rgba(111,207,143,0.12)', border: '1px solid rgba(111,207,143,0.25)', color: '#6fcf8f' }}>
+                #{myRank.rank}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-white font-semibold">Your ranking</p>
-                <div className="flex items-center gap-3 mt-1 flex-wrap">
-                  <span className="text-slate-400 text-xs font-mono">{myRank.total_score.toLocaleString()} pts</span>
-                  <span className="text-slate-600">·</span>
-                  <span className="text-slate-400 text-xs">{myRank.days_attended} days</span>
-                  <span className="text-slate-600">·</span>
-                  <span className="text-slate-400 text-xs">{myRank.accuracy_percent}% accuracy</span>
+                <p className="text-sm font-bold text-text">Your ranking</p>
+                <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                  <span className="text-xs font-mono text-text-muted">{myRank.total_score.toLocaleString()} pts</span>
+                  <span className="text-text-muted text-xs">·</span>
+                  <span className="text-xs text-text-muted">{myRank.days_attended} days</span>
+                  <span className="text-text-muted text-xs">·</span>
+                  <span className="text-xs text-text-muted">{myRank.accuracy_percent}% accuracy</span>
                 </div>
               </div>
               {myPercentile !== null && (
                 <div className="text-right shrink-0">
-                  <p className="text-primary font-semibold text-sm">Top {100 - myPercentile + 1}%</p>
-                  <p className="text-slate-500 text-xs mt-0.5">percentile</p>
+                  <p className="text-sm font-bold text-primary">Top {100 - myPercentile + 1}%</p>
+                  <p className="text-[10px] text-text-muted mt-0.5">percentile</p>
                 </div>
               )}
             </div>
           </div>
         )}
 
-        {/* Podium — top 3 */}
+        {/* PODIUM — Top 3 */}
         {top3.length >= 3 && (
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-3 items-end">
             {[1, 0, 2].map(i => {
-              const e      = top3[i]
+              const e = top3[i]
               if (!e) return <div key={i} />
-              const isMe   = e.user_id === userId
-              const colors = PODIUM_COLORS[e.rank] ?? PODIUM_COLORS[3]
+              const m = METAL[e.rank]
+              const isMe = e.user_id === userId
+              const isFirst = e.rank === 1
               return (
-                <div
-                  key={e.user_id}
-                  className={`${colors.bg} rounded-xl border ${colors.ring} ring-1 p-4 text-center ${i === 0 ? 'mt-4' : ''} ${isMe ? 'ring-primary' : ''}`}
+                <div key={e.user_id}
+                  className={`relative rounded-2xl overflow-hidden p-4 text-center ${isFirst ? 'pb-5 pt-6' : 'py-4'}`}
+                  style={{
+                    background: 'rgba(255,255,255,0.02)',
+                    border: `1px solid ${m.border}`,
+                    boxShadow: isMe ? `0 0 20px ${m.glow}, 0 0 0 2px rgba(111,207,143,0.3)` : `0 0 12px ${m.glow}`,
+                  }}
                 >
-                  <div className="text-2xl mb-2">{MEDAL[e.rank]}</div>
-                  <Avatar name={e.name} size={i === 0 ? 'lg' : 'md'} highlight={isMe} />
-                  <p className={`text-xs font-semibold mt-2 truncate ${colors.text}`}>{e.name.split(' ')[0]}</p>
-                  <p className="text-lg font-bold text-text mt-1 font-mono">{e.total_score.toLocaleString()}</p>
-                  <p className="text-[10px] text-text-muted">pts</p>
+                  {isFirst && (
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2" style={{ color: '#e7b14c' }}>
+                      <CrownIcon size={14} />
+                    </div>
+                  )}
+                  <div className="text-xl font-bold mb-2"
+                    style={{ background: m.grad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                    #{e.rank}
+                  </div>
+                  <Avatar name={e.name} isMe={isMe} size={isFirst ? 'lg' : 'md'} />
+                  <p className="text-xs font-bold text-text mt-2.5 truncate">{e.name.split(' ')[0]}</p>
+                  <p className="text-base font-bold font-mono mt-1 tracking-tight" style={{ color: m.text }}>
+                    {e.total_score.toLocaleString()}
+                  </p>
+                  <p className="text-[10px] text-text-muted font-mono">pts</p>
                   {e.tier && (
-                    <div className="mt-2">
+                    <div className="mt-2 flex justify-center">
                       <Badge variant={TIER_BADGE[e.tier]?.variant ?? 'neutral'} size="sm">
                         {TIER_BADGE[e.tier]?.label}
                       </Badge>
                     </div>
                   )}
-                  {isMe && <p className="text-[10px] text-primary mt-1 font-medium">You</p>}
+                  {isMe && <p className="text-[10px] text-primary font-bold mt-1 uppercase tracking-wider font-mono">You</p>}
                 </div>
               )
             })}
           </div>
         )}
 
-        {/* Full rankings */}
+        {/* RANKINGS TABLE */}
         {(top3.length < 3 ? entries : rest).length > 0 && (
           <Card noPadding>
-            <div className="px-4 py-3 border-b border-border">
-              <CardLabel>{top3.length >= 3 ? 'Rankings #4 and below' : 'All students'}</CardLabel>
+            <div className="px-4 py-3" style={{ borderBottom: '1px solid #27342b' }}>
+              <CardLabel>{top3.length >= 3 ? 'Rankings — #4 and below' : 'All students'}</CardLabel>
             </div>
-            <div className="divide-y divide-border">
+            <div>
               {(top3.length < 3 ? entries : rest).map((e, idx) => {
-                const isMe   = e.user_id === userId
-                const showPct = e.accuracy_percent > 0
+                const isMe = e.user_id === userId
                 return (
-                  <div
-                    key={e.user_id}
-                    className={`flex items-center gap-3 px-4 py-3 transition-colors ${isMe ? 'bg-primary-subtle' : 'hover:bg-surface-overlay'}`}
+                  <div key={e.user_id}
+                    className="flex items-center gap-3 px-4 py-3 transition-colors"
+                    style={{
+                      borderBottom: idx < (top3.length < 3 ? entries : rest).length - 1 ? '1px solid rgba(39,52,43,0.5)' : undefined,
+                      background: isMe ? 'rgba(111,207,143,0.05)' : undefined,
+                    }}
                   >
-                    <RankBadge rank={e.rank} />
-                    <Avatar name={e.name} size="sm" highlight={isMe} />
+                    <span className="text-xs font-mono text-text-muted w-8 text-center shrink-0 font-semibold">
+                      #{e.rank}
+                    </span>
+                    <Avatar name={e.name} isMe={isMe} size="sm" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-text truncate">
                         {e.name}
-                        {isMe && <span className="ml-1.5 text-xs text-primary font-normal">(you)</span>}
+                        {isMe && <span className="ml-1.5 text-[10px] text-primary font-bold uppercase tracking-wider font-mono">(you)</span>}
                       </p>
-                      <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                        <span className="text-xs text-text-muted">{e.days_attended} days</span>
-                        {showPct && (
-                          <>
-                            <span className="text-text-muted text-xs">·</span>
-                            <span className="text-xs text-text-muted">{e.accuracy_percent}%</span>
-                          </>
-                        )}
-                        {e.tier && (
-                          <>
-                            <span className="text-text-muted text-xs">·</span>
-                            <Badge variant={TIER_BADGE[e.tier]?.variant ?? 'neutral'} size="sm">
-                              {TIER_BADGE[e.tier]?.label}
-                            </Badge>
-                          </>
-                        )}
-                      </div>
+                      <p className="text-[10px] text-text-muted mt-0.5 font-mono">
+                        {e.days_attended} days · {e.accuracy_percent}% accuracy
+                      </p>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="text-sm font-semibold text-text font-mono">{e.total_score.toLocaleString()}</p>
-                      <p className="text-xs text-text-muted">pts</p>
+                      <p className="text-sm font-bold text-text font-mono">{e.total_score.toLocaleString()}</p>
+                      <p className="text-[10px] text-text-muted font-mono">pts</p>
                     </div>
                   </div>
                 )
@@ -224,11 +219,22 @@ export default function LeaderboardPage() {
         )}
 
         {entries.length === 0 && (
-          <Card className="text-center py-14">
-            <div className="text-4xl mb-3">🏆</div>
-            <p className="text-sm font-medium text-text">No submissions yet</p>
-            <p className="text-xs text-text-muted mt-1">Leaderboard updates after each exam submission.</p>
-          </Card>
+          <div className="flex flex-col items-center py-16 gap-4">
+            <div className="w-16 h-16 rounded-3xl flex items-center justify-center"
+              style={{ background: '#16201a', border: '1px solid #27342b' }}>
+              <svg className="w-7 h-7 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                <path d="M4 22h16"/>
+                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+              </svg>
+            </div>
+            <div className="text-center">
+              <p className="text-sm font-semibold text-text-secondary">No results yet</p>
+              <p className="text-xs text-text-muted mt-1">Rankings update after each exam submission.</p>
+            </div>
+          </div>
         )}
 
       </div>

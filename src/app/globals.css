@@ -1,65 +1,67 @@
 @import "tailwindcss";
 
-/* ─────────────────────────────────────────────────────────────────
-   CENTUMANIA DESIGN SYSTEM
-   Inspired by: Linear, Stripe, Mercury, Vercel
-   Theme: Premium SaaS — Sky Blue × Deep Navy × White
-   ───────────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════
+   CENTUMANIA — BIO MAP DESIGN SYSTEM
+   Palette: Deep Forest Green × Sage × Amber — Organic Performance
+   Reference: Bio Map · Foundations & Diversity (polished)
+   ═══════════════════════════════════════════════════════════════════ */
 
 @theme {
-  /* ── Primary — Sky Blue ──────────────────────────────────────── */
-  --color-primary:          #0EA5E9;   /* sky-500  — CTAs, links, active */
-  --color-primary-hover:    #0284C7;   /* sky-600  — hover state */
-  --color-primary-active:   #0369A1;   /* sky-700  — pressed state */
-  --color-primary-subtle:   #F0F9FF;   /* sky-50   — light backgrounds */
-  --color-primary-muted:    #E0F2FE;   /* sky-100  — badge backgrounds */
-  --color-primary-border:   #BAE6FD;   /* sky-200  — subtle borders */
+  /* ── Forest Green — Primary Accent ──────────────────────────── */
+  --color-primary:          #6fcf8f;
+  --color-primary-hover:    #3fae6a;
+  --color-primary-active:   #2a8e57;
+  --color-primary-subtle:   rgba(111,207,143,0.08);
+  --color-primary-muted:    rgba(111,207,143,0.16);
+  --color-primary-border:   rgba(111,207,143,0.28);
 
-  /* ── Navy — Deep secondary ──────────────────────────────────── */
-  --color-navy:             #0F172A;   /* slate-900 — darkest text, sidebar */
-  --color-navy-800:         #1E293B;   /* slate-800 — dark surfaces */
-  --color-navy-700:         #334155;   /* slate-700 — secondary dark text */
-
-  /* ── Backgrounds ─────────────────────────────────────────────── */
-  --color-bg:               #F8FAFC;   /* slate-50  — page background */
-  --color-surface:          #FFFFFF;   /* white     — card surfaces */
-  --color-surface-raised:   #FFFFFF;   /* white     — elevated cards */
-  --color-surface-overlay:  #F1F5F9;   /* slate-100 — hover / alternate rows */
+  /* ── Dark Forest Surfaces ────────────────────────────────────── */
+  --color-bg:               #0e1410;
+  --color-bg2:              #141d17;
+  --color-surface:          #16201a;
+  --color-surface-raised:   #1b271f;
+  --color-surface-overlay:  #1f2e24;
 
   /* ── Borders ─────────────────────────────────────────────────── */
-  --color-border:           #E2E8F0;   /* slate-200 — default borders */
-  --color-border-strong:    #CBD5E1;   /* slate-300 — emphasis borders */
-  --color-border-focus:     #0EA5E9;   /* primary   — focus rings */
+  --color-border:           rgba(39,52,43,0.9);
+  --color-border-strong:    rgba(111,207,143,0.15);
+  --color-border-focus:     #6fcf8f;
 
   /* ── Text ───────────────────────────────────────────────────── */
-  --color-text:             #0F172A;   /* slate-900 — primary text */
-  --color-text-secondary:   #475569;   /* slate-600 — secondary text */
-  --color-text-muted:       #94A3B8;   /* slate-400 — muted / placeholder */
-  --color-text-disabled:    #CBD5E1;   /* slate-300 — disabled text */
-  --color-text-inverse:     #FFFFFF;   /* white     — on dark backgrounds */
+  --color-text:             #e8ead8;
+  --color-text-secondary:   #9aa893;
+  --color-text-muted:       #6b7a63;
+  --color-text-disabled:    #3a4a3d;
+  --color-text-inverse:     #06140c;
 
-  /* ── Semantic ────────────────────────────────────────────────── */
-  --color-success:          #10B981;   /* emerald-500 */
-  --color-success-subtle:   #D1FAE5;   /* emerald-100 */
-  --color-success-text:     #065F46;   /* emerald-900 */
+  /* ── Semantic Palette ────────────────────────────────────────── */
+  --color-success:          #6fcf8f;
+  --color-success-subtle:   rgba(111,207,143,0.10);
+  --color-success-text:     #b5e8c7;
 
-  --color-warning:          #F59E0B;   /* amber-500 */
-  --color-warning-subtle:   #FEF3C7;   /* amber-100 */
-  --color-warning-text:     #78350F;   /* amber-900 */
+  --color-warning:          #e7b14c;
+  --color-warning-subtle:   rgba(231,177,76,0.10);
+  --color-warning-text:     #f5d48a;
 
-  --color-error:            #EF4444;   /* red-500 */
-  --color-error-subtle:     #FEE2E2;   /* red-100 */
-  --color-error-text:       #7F1D1D;   /* red-900 */
+  --color-error:            #e8736b;
+  --color-error-subtle:     rgba(232,115,107,0.10);
+  --color-error-text:       #f5b0ab;
 
-  --color-info:             #6366F1;   /* indigo-500 */
-  --color-info-subtle:      #EEF2FF;   /* indigo-50 */
+  --color-info:             #5ec8c0;
+  --color-info-subtle:      rgba(94,200,192,0.10);
 
-  /* ── Fonts — CSS vars set by next/font in layout.tsx ─────────── */
-  --font-sans:    var(--font-inter);
+  /* ── Amber/Gold ───────────────────────────────────────────────── */
+  --color-gold:             #e7b14c;
+  --color-gold-subtle:      rgba(231,177,76,0.10);
+  --color-gold-text:        #f5d48a;
+
+  /* ── Typography ──────────────────────────────────────────────── */
+  --font-display: var(--font-fraunces);
+  --font-sans:    var(--font-hanken);
   --font-mono:    var(--font-jetbrains);
 }
 
-/* ── Global resets ───────────────────────────────────────────────── */
+/* ── Global Resets ───────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
@@ -71,39 +73,153 @@ html {
 }
 
 body {
-  background-color: #F8FAFC;
-  color: #0F172A;
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  background-color: #0e1410;
+  background-image:
+    radial-gradient(1200px 600px at 85% -10%, rgba(63,174,106,0.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%,  rgba(94,200,192,0.07), transparent 55%);
+  color: #e8ead8;
+  font-family: var(--font-hanken, 'Hanken Grotesk'), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* ── Focus visible ───────────────────────────────────────────────── */
+/* Noise texture overlay (matches Bio Map) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Focus ───────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid #0EA5E9;
+  outline: 2px solid #6fcf8f;
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 /* ── Selection ───────────────────────────────────────────────────── */
 ::selection {
-  background-color: #BAE6FD;
-  color: #0369A1;
+  background-color: rgba(111,207,143,0.25);
+  color: #e8ead8;
 }
 
-/* ── Scrollbar ───────────────────────────────────────────────────── */
-::-webkit-scrollbar        { width: 5px; height: 5px; }
+/* ── Scrollbar — Refined Dark ────────────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track  { background: transparent; }
-::-webkit-scrollbar-thumb  { background: #CBD5E1; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+::-webkit-scrollbar-thumb  { background: rgba(111,207,143,0.15); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(111,207,143,0.30); }
 
-/* ── Input resets ────────────────────────────────────────────────── */
-input, textarea, select {
-  font-family: inherit;
+/* ── Input Resets ────────────────────────────────────────────────── */
+input, textarea, select { font-family: inherit; }
+input::placeholder, textarea::placeholder { color: #6b7a63; }
+
+/* ── Glass Morphism ──────────────────────────────────────────────── */
+.glass {
+  background: rgba(255,255,255,0.025);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(39,52,43,0.9);
 }
 
-/* ── Utility: hide scrollbar but keep scroll ─────────────────────── */
+.glass-strong {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(111,207,143,0.12);
+}
+
+/* ── Glow Effects ────────────────────────────────────────────────── */
+.glow-primary { box-shadow: 0 0 20px rgba(111,207,143,0.25); }
+.glow-success { box-shadow: 0 0 20px rgba(111,207,143,0.20); }
+.glow-gold    { box-shadow: 0 0 20px rgba(231,177,76,0.25); }
+
+/* ── Gradient Borders ────────────────────────────────────────────── */
+.border-gradient-green {
+  position: relative;
+}
+.border-gradient-green::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(111,207,143,0.5), rgba(111,207,143,0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ── Animations ──────────────────────────────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(111,207,143,0.20); }
+  50%       { box-shadow: 0 0 28px rgba(111,207,143,0.45); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-4px); }
+}
+
+.animate-pulse-glow { animation: pulse-glow 2.2s ease-in-out infinite; }
+.animate-float      { animation: float 3s ease-in-out infinite; }
+
+/* ── Skeleton Shimmer ────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(111,207,143,0.04) 0%,
+    rgba(111,207,143,0.10) 50%,
+    rgba(111,207,143,0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* ── No Scrollbar ────────────────────────────────────────────────── */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Input Premium Styling ───────────────────────────────────────── */
+.input-premium {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  font-size: 0.875rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid #27342b;
+  border-radius: 10px;
+  color: #e8ead8;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input-premium:focus {
+  outline: none;
+  border-color: rgba(111,207,143,0.50);
+  box-shadow: 0 0 0 3px rgba(111,207,143,0.12);
+}
+
+/* ── Stat Number ─────────────────────────────────────────────────── */
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* ── Display headings use Fraunces ───────────────────────────────── */
+.font-display {
+  font-family: var(--font-fraunces, 'Fraunces'), serif;
+}

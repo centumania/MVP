@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 
   const { data: materials, error } = await supabase
     .from('materials')
-    .select('id, day_number, title, video_url, pdf_key, ppt_key, published_at, expires_at')
+    .select('id, day_number, title, video_url, pdf_key, ppt_key, html_key, published_at, expires_at')
     .eq('batch_id', batch.id)
     .order('day_number', { ascending: true })
 
@@ -43,9 +43,11 @@ export async function GET(request: NextRequest) {
     hasVideo:    !!m.video_url,
     hasPDF:      !!m.pdf_key,
     hasPPT:      !!m.ppt_key,
+    hasMindMap:  !!m.html_key,
     videoUrl:    m.video_url,
     pdfKey:      m.pdf_key,
     pptKey:      m.ppt_key,
+    htmlKey:     m.html_key,
     publishedAt: m.published_at,
     expiresAt:   m.expires_at,
     isExpired:   m.expires_at < now,
@@ -67,14 +69,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { batchId, dayNumber, title, videoUrl, pdfKey, pptKey, publishedAt } = body as Record<string, string>
+  const { batchId, dayNumber, title, videoUrl, pdfKey, pptKey, htmlKey, publishedAt } = body as Record<string, string>
 
   if (!batchId || !dayNumber || !title) {
     return NextResponse.json({ error: 'Missing required: batchId, dayNumber, title' }, { status: 400 })
   }
 
-  if (!videoUrl && !pdfKey && !pptKey) {
-    return NextResponse.json({ error: 'At least one content source required (video, PDF, or PPT)' }, { status: 400 })
+  if (!videoUrl && !pdfKey && !pptKey && !htmlKey) {
+    return NextResponse.json({ error: 'At least one content source required (video, PDF, PPT, or HTML mind map)' }, { status: 400 })
   }
 
   const publishTime = publishedAt ? new Date(publishedAt) : new Date()
@@ -89,6 +91,7 @@ export async function POST(request: NextRequest) {
       video_url:    videoUrl || null,
       pdf_key:      pdfKey   || null,
       ppt_key:      pptKey   || null,
+      html_key:     htmlKey  || null,
       published_at: publishTime.toISOString(),
       expires_at:   expiresAt.toISOString(),
     })

@@ -10,6 +10,10 @@ type Student = {
   daysAttended: number
 }
 
+const CARD = { background: '#16201a', border: '1px solid #27342b' }
+const TROW = { borderBottom: '1px solid rgba(39,52,43,0.6)' }
+const THHD = { background: '#1b271f', borderBottom: '1px solid #27342b' }
+
 export default function AdminPayments() {
   const router = useRouter()
   const [token,    setToken]   = useState<string | null>(null)
@@ -23,7 +27,7 @@ export default function AdminPayments() {
 
   const load = useCallback(async (tok: string) => {
     const [pendRes, verRes] = await Promise.all([
-      fetch('/api/admin/students?status=pending&page=1', { headers: { Authorization: `Bearer ${tok}` } }),
+      fetch('/api/admin/students?status=pending&page=1',  { headers: { Authorization: `Bearer ${tok}` } }),
       fetch('/api/admin/students?status=verified&page=1', { headers: { Authorization: `Bearer ${tok}` } }),
     ])
     if (pendRes.ok) { const d = await pendRes.json(); setPending(d.students) }
@@ -75,25 +79,34 @@ export default function AdminPayments() {
     <div className="p-8 max-w-5xl">
 
       {toast && (
-        <div className="fixed top-4 right-4 z-50 bg-slate-900 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg">{toast}</div>
+        <div className="fixed top-4 right-4 z-50 text-sm px-4 py-2.5 rounded-lg shadow-lg"
+          style={{ background: '#1b271f', color: '#e8ead8', border: '1px solid #27342b' }}>
+          {toast}
+        </div>
       )}
 
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-slate-900">Payments</h1>
-        <p className="text-sm text-slate-500 mt-0.5">
-          <span className="text-amber-600 font-medium">{pending.length} pending</span>
+        <h1 className="text-2xl font-semibold text-text" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+          Payments
+        </h1>
+        <p className="text-sm text-text-muted mt-0.5 font-mono">
+          <span style={{ color: '#e7b14c' }}>{pending.length} pending</span>
           {' · '}
-          <span className="text-emerald-600 font-medium">{verified.length} verified</span>
+          <span style={{ color: '#6fcf8f' }}>{verified.length} verified</span>
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 bg-slate-100 rounded-lg w-fit mb-6">
+      <div className="flex gap-1 p-1 rounded-lg w-fit mb-6" style={{ background: '#1b271f' }}>
         {(['pending', 'verified'] as const).map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors capitalize ${tab === t ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            className="px-4 py-1.5 text-sm font-medium rounded-md transition-colors capitalize font-mono"
+            style={tab === t
+              ? { background: '#16201a', color: '#e8ead8', boxShadow: '0 1px 4px rgba(0,0,0,0.3)' }
+              : { color: '#6b7a63' }
+            }
           >
             {t === 'pending' ? `Pending (${pending.length})` : `Verified (${verified.length})`}
           </button>
@@ -101,55 +114,69 @@ export default function AdminPayments() {
       </div>
 
       {loading ? (
-        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-          <div className="w-5 h-5 border-2 border-[#0EA5E9] border-t-transparent rounded-full animate-spin mx-auto" />
+        <div className="rounded-xl p-12 text-center" style={CARD}>
+          <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto"
+            style={{ borderColor: 'rgba(111,207,143,0.3)', borderTopColor: '#6fcf8f' }} />
         </div>
       ) : list.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-          <p className="text-sm text-slate-400">
+        <div className="rounded-xl p-12 text-center" style={CARD}>
+          <p className="text-sm text-text-muted">
             {tab === 'pending' ? 'No pending payments.' : 'No verified students.'}
           </p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+        <div className="rounded-xl overflow-hidden" style={CARD}>
           {tab === 'pending' && (
-            <div className="px-4 py-3 bg-amber-50 border-b border-amber-100 flex items-center gap-2">
-              <svg className="w-4 h-4 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <p className="text-xs text-amber-700 font-medium">{pending.length} students waiting for payment verification</p>
+            <div className="px-4 py-3 flex items-center gap-2"
+              style={{ background: 'rgba(231,177,76,0.06)', borderBottom: '1px solid rgba(231,177,76,0.15)' }}>
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{ color: '#e7b14c' }}>
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <p className="text-xs font-medium font-mono" style={{ color: '#e7b14c' }}>
+                {pending.length} students waiting for payment verification
+              </p>
             </div>
           )}
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-100">
-                <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase tracking-wide">Student</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase tracking-wide hidden md:table-cell">Phone</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase tracking-wide hidden lg:table-cell">Registered</th>
+              <tr style={THHD}>
+                <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono">Student</th>
+                <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden md:table-cell">Phone</th>
+                <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden lg:table-cell">Registered</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody>
               {list.map(s => (
-                <tr key={s.id} className="hover:bg-slate-50 transition-colors">
+                <tr key={s.id} style={TROW}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.015)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = '')}>
                   <td className="px-4 py-3">
-                    <p className="font-medium text-slate-900">{s.name}</p>
-                    <p className="text-xs text-slate-400">{s.email}</p>
+                    <p className="font-medium text-text">{s.name}</p>
+                    <p className="text-xs text-text-muted">{s.email}</p>
                   </td>
-                  <td className="px-4 py-3 text-slate-600 hidden md:table-cell">{s.phone ?? '—'}</td>
-                  <td className="px-4 py-3 text-xs text-slate-400 hidden lg:table-cell">
+                  <td className="px-4 py-3 text-text-secondary font-mono text-xs hidden md:table-cell">{s.phone ?? '—'}</td>
+                  <td className="px-4 py-3 text-xs text-text-muted hidden lg:table-cell font-mono">
                     {new Date(s.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </td>
                   <td className="px-4 py-3 text-right">
                     {tab === 'pending' ? (
                       <button
                         onClick={() => verify(s.id)}
-                        className="px-4 py-1.5 bg-emerald-500 text-white text-xs font-medium rounded-lg hover:bg-emerald-600 transition-colors"
+                        className="px-4 py-1.5 text-xs font-medium rounded-lg transition-colors font-mono"
+                        style={{ background: '#3fae6a', color: '#06140c' }}
+                        onMouseEnter={e => (e.currentTarget.style.background = '#2a8e57')}
+                        onMouseLeave={e => (e.currentTarget.style.background = '#3fae6a')}
                       >
                         Verify Payment
                       </button>
                     ) : (
                       <button
                         onClick={() => revoke(s.id)}
-                        className="px-3 py-1.5 bg-slate-100 text-slate-600 text-xs font-medium rounded-lg hover:bg-slate-200 transition-colors"
+                        className="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors font-mono"
+                        style={{ background: '#1b271f', color: '#9aa893', border: '1px solid #27342b' }}
+                        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(232,115,107,0.08)')}
+                        onMouseLeave={e => (e.currentTarget.style.background = '#1b271f')}
                       >
                         Revoke
                       </button>

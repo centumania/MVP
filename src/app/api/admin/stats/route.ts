@@ -38,14 +38,14 @@ export async function GET(request: NextRequest) {
     .select('*', { count: 'exact', head: true })
     .gte('submitted_at', `${todayIST}T00:00:00+05:30`)
 
-  // Average score across all submissions
-  const { data: scoreData } = await supabase
-    .from('submissions')
-    .select('score, total_marks')
-    .limit(1000)
+  // Average accuracy from the leaderboard view (one row per user, not per submission)
+  // The leaderboard view already aggregates per-user accuracy, so this is O(users) not O(submissions).
+  const { data: avgData } = await supabase
+    .from('leaderboard')
+    .select('accuracy_percent')
 
-  const avgScore = scoreData && scoreData.length > 0
-    ? Math.round(scoreData.reduce((acc, s) => acc + (s.total_marks > 0 ? (s.score / s.total_marks) * 100 : 0), 0) / scoreData.length)
+  const avgScore = avgData && avgData.length > 0
+    ? Math.round(avgData.reduce((acc, r) => acc + (r.accuracy_percent ?? 0), 0) / avgData.length)
     : 0
 
   return NextResponse.json({

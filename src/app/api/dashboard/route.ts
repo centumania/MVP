@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
     ] = await Promise.all([
       supabase.from('batches').select('id, total_days').eq('is_active', true).maybeSingle(),
       supabase.from('leaderboard').select('rank, total_score, days_attended, accuracy_percent').eq('user_id', user.id).maybeSingle(),
-      supabase.from('submissions').select('id, score, total_marks, submitted_at, exam_id').eq('user_id', user.id).order('submitted_at', { ascending: false }),
+      supabase.from('submissions').select('id, score, total_marks, submitted_at, exam_id').eq('user_id', user.id).order('submitted_at', { ascending: false }).limit(30),
       supabase.from('leaderboard').select('*', { count: 'exact', head: true }),
     ])
 
@@ -132,6 +132,18 @@ export async function GET(request: NextRequest) {
       }))
       .reverse()
 
+    // Full submission history with day numbers (for history card)
+    const history = (allSubmissions ?? []).slice(0, 10).map(s => {
+      const examInfo = examDateMap[s.exam_id]
+      return {
+        dayNumber:   examInfo?.day_number ?? null,
+        score:       s.score,
+        totalMarks:  s.total_marks,
+        pct:         s.total_marks > 0 ? Math.round((s.score / s.total_marks) * 100) : 0,
+        submittedAt: s.submitted_at,
+      }
+    })
+
     const percentile = myRank && cohortSize && cohortSize > 0
       ? Math.round((1 - (myRank.rank - 1) / cohortSize) * 100)
       : null
@@ -156,6 +168,7 @@ export async function GET(request: NextRequest) {
       streak: calcStreak(),
       daysAttended: allSubmissions?.length ?? 0,
       last7,
+      history,
     })
 
   } catch (err) {

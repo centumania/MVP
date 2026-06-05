@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic'
 
 type Params = { params: Promise<{ id: string }> }
 
-type MaterialUpdate = Partial<Pick<Material, 'title' | 'video_url' | 'pdf_key' | 'ppt_key' | 'published_at' | 'expires_at'>>
+type MaterialUpdate = Partial<Pick<Material, 'title' | 'video_url' | 'pdf_key' | 'ppt_key' | 'html_key' | 'published_at' | 'expires_at'>>
 
 export async function PATCH(request: NextRequest, { params }: Params) {
   const ctx = await requireAdmin(request)
@@ -33,6 +33,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
   if ('videoUrl' in body) allowed.video_url = (body.videoUrl as string) || null
   if ('pdfKey'   in body) allowed.pdf_key   = (body.pdfKey   as string) || null
   if ('pptKey'   in body) allowed.ppt_key   = (body.pptKey   as string) || null
+  if ('htmlKey'  in body) allowed.html_key  = (body.htmlKey  as string) || null
 
   if ('publishedAt' in body && body.publishedAt) {
     const pub = new Date(String(body.publishedAt))

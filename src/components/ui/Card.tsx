@@ -1,76 +1,70 @@
 import { HTMLAttributes, forwardRef } from 'react'
 
+type CardVariant = 'default' | 'glass' | 'ghost'
+
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  /** Adds a subtle shadow and hover lift */
   hoverable?: boolean
-  /** Removes padding */
   noPadding?: boolean
-  /** Border highlight — used for active/selected state */
   highlight?: boolean
+  variant?: CardVariant
+  glow?: boolean
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ hoverable, noPadding, highlight, className = '', children, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={[
-        'bg-surface rounded-xl border',
-        highlight ? 'border-primary shadow-sm shadow-primary/10' : 'border-border',
-        !noPadding && 'p-5',
-        hoverable && 'transition-shadow duration-150 hover:shadow-md cursor-pointer',
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
-      {...props}
-    >
-      {children}
-    </div>
-  ),
-)
+  ({ hoverable, noPadding, highlight, variant = 'default', glow, className = '', children, ...props }, ref) => {
+    const base = 'rounded-2xl border transition-all duration-200'
 
+    const variants: Record<CardVariant, string> = {
+      default: 'bg-surface border-border',
+      glass:   'glass',
+      ghost:   'bg-transparent border-border',
+    }
+
+    const hoverClass = hoverable
+      ? 'hover:border-border-strong hover:bg-surface-raised cursor-pointer hover:shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
+      : ''
+
+    const glowClass = glow ? 'glow-primary' : ''
+
+    return (
+      <div
+        ref={ref}
+        className={[
+          base,
+          highlight ? 'border-primary/40 shadow-[0_0_24px_rgba(56,189,248,0.12)]' : variants[variant],
+          !noPadding && 'p-5',
+          hoverClass,
+          glowClass,
+          className,
+        ].filter(Boolean).join(' ')}
+        {...props}
+      >
+        {children}
+      </div>
+    )
+  },
+)
 Card.displayName = 'Card'
 
-export function CardHeader({
-  className = '',
-  children,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) {
+export function CardHeader({ className = '', children, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      className={`flex items-center justify-between mb-4 ${className}`}
-      {...props}
-    >
+    <div className={`flex items-center justify-between mb-4 ${className}`} {...props}>
       {children}
     </div>
   )
 }
 
-export function CardTitle({
-  className = '',
-  children,
-  ...props
-}: HTMLAttributes<HTMLHeadingElement>) {
+export function CardTitle({ className = '', children, ...props }: HTMLAttributes<HTMLHeadingElement>) {
   return (
-    <h3
-      className={`text-sm font-semibold text-text ${className}`}
-      {...props}
-    >
+    <h3 className={`text-sm font-semibold text-text tracking-tight ${className}`} {...props}>
       {children}
     </h3>
   )
 }
 
-export function CardLabel({
-  className = '',
-  children,
-  ...props
-}: HTMLAttributes<HTMLParagraphElement>) {
+export function CardLabel({ className = '', children, ...props }: HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p
-      className={`text-xs font-medium text-text-muted uppercase tracking-wide ${className}`}
-      {...props}
-    >
+    <p className={`text-[10px] font-semibold text-text-muted uppercase tracking-widest ${className}`} {...props}>
       {children}
     </p>
   )

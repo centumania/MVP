@@ -17,7 +17,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
-import { getTodayInIST, getExamWindowStatus } from '@/src/lib/exam-window'
+import { getExamWindowStatus } from '@/src/lib/exam-window'
 import type { QuestionForClient } from '@/src/types/database'
 
 export const dynamic = 'force-dynamic'

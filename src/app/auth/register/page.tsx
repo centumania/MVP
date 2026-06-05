@@ -19,11 +19,9 @@ export default function RegisterPage() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError(null)
-
     if (form.name.trim().length < 2) { setError('Please enter your full name.'); return }
     if (!/^[6-9][0-9]{9}$/.test(form.phone)) { setError('Enter a valid 10-digit Indian mobile number.'); return }
     if (form.password.length < 8) { setError('Password must be at least 8 characters.'); return }
-
     setLoading(true)
     try {
       const { error: authError } = await getSupabaseBrowserClient().auth.signUp({
@@ -34,7 +32,6 @@ export default function RegisterPage() {
           emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       })
-
       if (authError) {
         setError(authError.message.includes('already registered')
           ? 'This email is already registered. Please sign in.'
@@ -49,25 +46,29 @@ export default function RegisterPage() {
     }
   }
 
+  // ── Success State ──────────────────────────────────────────────
   if (success) {
     return (
-      <div className="min-h-screen bg-bg flex items-center justify-center px-6">
+      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#0e1410' }}>
         <div className="max-w-sm w-full text-center">
-          <div className="w-14 h-14 bg-success-subtle rounded-2xl flex items-center justify-center mx-auto mb-5">
-            <svg className="w-7 h-7 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 10.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.41 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 7.91" />
-              <polyline points="9 11 12 14 22 4" />
+          <div className="w-16 h-16 rounded-3xl mx-auto mb-6 flex items-center justify-center"
+            style={{ background: 'rgba(111,207,143,0.10)', border: '1px solid rgba(111,207,143,0.25)', boxShadow: '0 0 24px rgba(111,207,143,0.12)' }}>
+            <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-text mb-2">Check your inbox</h2>
-          <p className="text-sm text-text-secondary leading-relaxed mb-1">
-            We sent a confirmation link to{' '}
-            <span className="font-medium text-text">{form.email}</span>.
+          <h2 className="text-2xl font-bold text-text tracking-tight mb-2"
+            style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+            Check your inbox
+          </h2>
+          <p className="text-sm mb-1 text-text-muted">
+            Confirmation link sent to{' '}
+            <span className="font-semibold text-text">{form.email}</span>
           </p>
-          <p className="text-sm text-text-secondary leading-relaxed">
-            Click the link to activate your account, then contact your coordinator to complete enrolment.
+          <p className="text-sm mb-8 text-text-muted">
+            Click the link, then contact your coordinator to complete enrolment.
           </p>
-          <Link href="/auth/login" className="mt-6 inline-block text-sm text-primary font-medium hover:text-primary-hover">
+          <Link href="/auth/login" className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors">
             Back to sign in →
           </Link>
         </div>
@@ -75,54 +76,77 @@ export default function RegisterPage() {
     )
   }
 
+  const FIELDS = [
+    { id: 'name',     label: 'Full name',     type: 'text',     placeholder: 'Your full name',   autoComplete: 'name',         value: form.name,     onChange: update('name') },
+    { id: 'phone',    label: 'Mobile number', type: 'tel',      placeholder: '9876543210',        autoComplete: 'tel',          value: form.phone,    onChange: (e: React.ChangeEvent<HTMLInputElement>) => setForm(p => ({ ...p, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })) },
+    { id: 'email',    label: 'Email address', type: 'email',    placeholder: 'you@example.com',  autoComplete: 'email',        value: form.email,    onChange: update('email') },
+    { id: 'password', label: 'Password',      type: 'password', placeholder: 'Min 8 characters', autoComplete: 'new-password', value: form.password, onChange: update('password') },
+  ]
+
   return (
-    <div className="min-h-screen bg-bg flex items-center justify-center px-6 py-12">
+    <div className="min-h-screen flex items-center justify-center px-6 py-12" style={{ background: '#0e1410' }}>
       <div className="w-full max-w-sm">
 
-        <div className="flex items-center gap-2 mb-8">
-          <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-              <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" />
+        {/* Logo */}
+        <div className="flex items-center gap-2.5 mb-10">
+          <div style={{ filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.4))' }}>
+            <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="15" stroke="url(#rg1)" strokeWidth="1.5"/>
+              <circle cx="16" cy="16" r="7" fill="url(#rg1)"/>
+              <defs>
+                <linearGradient id="rg1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#6fcf8f"/>
+                  <stop offset="100%" stopColor="#3fae6a"/>
+                </linearGradient>
+              </defs>
             </svg>
           </div>
-          <span className="text-sm font-semibold text-text">Centumania</span>
+          <span className="text-base font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+            Centumania
+          </span>
         </div>
 
-        <h1 className="text-2xl font-semibold text-text mb-1.5">Create your account</h1>
-        <p className="text-sm text-text-secondary mb-8">
-          Join the LDC 2026 batch. Start your 25-day journey.
+        {/* Batch badge */}
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl mb-6"
+          style={{ background: 'rgba(111,207,143,0.08)', border: '1px solid rgba(111,207,143,0.15)' }}>
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          <span className="text-[10px] font-bold text-primary uppercase tracking-widest font-mono">
+            LDC Batch 2026 — Open Enrolment
+          </span>
+        </div>
+
+        <h1 className="text-3xl font-bold text-text tracking-tight mb-1.5"
+          style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+          Create your account
+        </h1>
+        <p className="text-sm mb-8 text-text-muted">
+          Begin your 25-day intensive programme.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {[
-            { id: 'name',     label: 'Full name',     type: 'text',     placeholder: 'Your full name',   autoComplete: 'name',     value: form.name,     onChange: update('name') },
-            { id: 'phone',    label: 'Mobile number', type: 'tel',      placeholder: '9876543210',        autoComplete: 'tel',      value: form.phone,    onChange: (e: React.ChangeEvent<HTMLInputElement>) => setForm(p => ({ ...p, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })) },
-            { id: 'email',    label: 'Email address', type: 'email',    placeholder: 'you@example.com',  autoComplete: 'email',    value: form.email,    onChange: update('email') },
-            { id: 'password', label: 'Password',      type: 'password', placeholder: 'Min 8 characters', autoComplete: 'new-password', value: form.password, onChange: update('password') },
-          ].map(field => (
-            <div key={field.id}>
-              <label htmlFor={field.id} className="block text-sm font-medium text-text mb-1.5">
-                {field.label}
+          {FIELDS.map(f => (
+            <div key={f.id}>
+              <label htmlFor={f.id} className="block text-xs font-semibold uppercase tracking-widest mb-2 text-text-muted font-mono">
+                {f.label}
               </label>
               <input
-                id={field.id}
-                type={field.type}
-                required
-                autoComplete={field.autoComplete}
-                placeholder={field.placeholder}
-                value={field.value}
-                onChange={field.onChange}
-                className="w-full h-10 px-3 text-sm bg-surface border border-border rounded-lg text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow"
+                id={f.id} type={f.type} required
+                autoComplete={f.autoComplete}
+                placeholder={f.placeholder}
+                value={f.value}
+                onChange={f.onChange}
+                className="input-premium"
               />
             </div>
           ))}
 
           {error && (
-            <div className="flex items-start gap-2.5 p-3 bg-error-subtle border border-error/20 rounded-lg">
+            <div className="flex items-start gap-2.5 p-3 rounded-xl"
+              style={{ background: 'rgba(232,115,107,0.08)', border: '1px solid rgba(232,115,107,0.20)' }}>
               <svg className="w-4 h-4 text-error shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
-              <p className="text-xs text-error-text">{error}</p>
+              <p className="text-xs text-error">{error}</p>
             </div>
           )}
 
@@ -130,17 +154,19 @@ export default function RegisterPage() {
             Create account
           </Button>
 
-          <p className="text-xs text-text-muted text-center leading-relaxed">
-            By creating an account you agree to our terms of service and confirm you are enrolling in the LDC 2026 cohort.
+          <p className="text-[10px] text-center leading-relaxed text-text-disabled">
+            By registering you confirm you are enrolling in the LDC 2026 cohort and agree to our terms.
           </p>
         </form>
 
-        <p className="text-center text-sm text-text-secondary mt-6">
-          Already have an account?{' '}
-          <Link href="/auth/login" className="text-primary font-medium hover:text-primary-hover transition-colors">
-            Sign in
-          </Link>
-        </p>
+        <div className="mt-5 pt-5 text-center" style={{ borderTop: '1px solid #27342b' }}>
+          <p className="text-sm text-text-muted">
+            Already have an account?{' '}
+            <Link href="/auth/login" className="font-semibold text-primary hover:text-primary-hover transition-colors">
+              Sign in
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   )

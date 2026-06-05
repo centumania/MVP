@@ -9,8 +9,12 @@ type Student = {
   tier: string | null; payment_verified: boolean; created_at: string
   daysAttended: number
 }
-
 type TierValue = 'rookie' | 'warrior' | 'legend' | null
+
+// ── Shared dark table styles ───────────────────────────────────────
+const CARD  = { background: '#16201a', border: '1px solid #27342b' }
+const THHD  = { background: '#1b271f', borderBottom: '1px solid #27342b' }
+const TROW  = { borderBottom: '1px solid rgba(39,52,43,0.6)' }
 
 export default function AdminStudents() {
   const router = useRouter()
@@ -29,11 +33,7 @@ export default function AdminStudents() {
     const res = await fetch(`/api/admin/students?${params}`, {
       headers: { Authorization: `Bearer ${tok}` },
     })
-    if (res.ok) {
-      const d = await res.json()
-      setStudents(d.students)
-      setTotal(d.total)
-    }
+    if (res.ok) { const d = await res.json(); setStudents(d.students); setTotal(d.total) }
     setLoading(false)
   }, [])
 
@@ -52,10 +52,7 @@ export default function AdminStudents() {
     return () => clearTimeout(t)
   }, [search, status, page, token, loadStudents])
 
-  function showToast(msg: string) {
-    setToast(msg)
-    setTimeout(() => setToast(null), 3000)
-  }
+  function showToast(msg: string) { setToast(msg); setTimeout(() => setToast(null), 3000) }
 
   async function verifyPayment(id: string) {
     if (!token) return
@@ -86,11 +83,7 @@ export default function AdminStudents() {
     const res = await fetch(`/api/admin/students/${id}`, {
       method: 'DELETE', headers: { Authorization: `Bearer ${token}` },
     })
-    if (res.ok) {
-      setStudents(prev => prev.filter(s => s.id !== id))
-      setTotal(t => t - 1)
-      showToast('Student deleted')
-    }
+    if (res.ok) { setStudents(prev => prev.filter(s => s.id !== id)); setTotal(t => t - 1); showToast('Student deleted') }
   }
 
   const totalPages = Math.ceil(total / 50)
@@ -100,15 +93,18 @@ export default function AdminStudents() {
 
       {/* Toast */}
       {toast && (
-        <div className="fixed top-4 right-4 z-50 bg-slate-900 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg">
+        <div className="fixed top-4 right-4 z-50 text-sm px-4 py-2.5 rounded-lg shadow-lg"
+          style={{ background: '#1b271f', color: '#e8ead8', border: '1px solid #27342b' }}>
           {toast}
         </div>
       )}
 
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">Students</h1>
-          <p className="text-sm text-slate-500 mt-0.5">{total} total students</p>
+          <h1 className="text-2xl font-semibold text-text" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+            Students
+          </h1>
+          <p className="text-sm text-text-muted mt-0.5 font-mono">{total} total students</p>
         </div>
       </div>
 
@@ -119,13 +115,20 @@ export default function AdminStudents() {
           placeholder="Search name, email or phone…"
           value={search}
           onChange={e => { setSearch(e.target.value); setPage(1) }}
-          className="flex-1 max-w-xs h-9 px-3 text-sm border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:border-transparent"
+          className="flex-1 max-w-xs h-9 px-3 text-sm rounded-lg text-text font-mono placeholder-text-muted focus:outline-none"
+          style={{ background: '#16201a', border: '1px solid #27342b' }}
+          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(111,207,143,0.5)')}
+          onBlur={e => (e.currentTarget.style.borderColor = '#27342b')}
         />
         {(['all', 'verified', 'pending'] as const).map(s => (
           <button
             key={s}
             onClick={() => { setStatus(s); setPage(1) }}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors capitalize ${status === s ? 'bg-[#0EA5E9] text-white border-[#0EA5E9]' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+            className="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors capitalize font-mono"
+            style={status === s
+              ? { background: '#3fae6a', color: '#06140c', border: '1px solid #3fae6a' }
+              : { background: '#16201a', color: '#9aa893', border: '1px solid #27342b' }
+            }
           >
             {s}
           </button>
@@ -133,53 +136,57 @@ export default function AdminStudents() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="rounded-xl overflow-hidden" style={CARD}>
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-slate-100">
-              <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase tracking-wide">Student</th>
-              <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase tracking-wide hidden md:table-cell">Phone</th>
-              <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase tracking-wide">Status</th>
-              <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase tracking-wide hidden lg:table-cell">Tier</th>
-              <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase tracking-wide hidden lg:table-cell">Days</th>
-              <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase tracking-wide hidden lg:table-cell">Joined</th>
+            <tr style={THHD}>
+              <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono">Student</th>
+              <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden md:table-cell">Phone</th>
+              <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono">Status</th>
+              <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden lg:table-cell">Tier</th>
+              <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden lg:table-cell">Days</th>
+              <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden lg:table-cell">Joined</th>
               <th className="px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody>
             {loading ? (
               [...Array(8)].map((_, i) => (
-                <tr key={i}>
+                <tr key={i} style={TROW}>
                   {[...Array(6)].map((_, j) => (
                     <td key={j} className="px-4 py-3">
-                      <div className="h-4 bg-slate-100 rounded animate-pulse" style={{ width: j === 0 ? '80%' : '60%' }} />
+                      <div className="h-4 rounded animate-pulse" style={{ background: '#1b271f', width: j === 0 ? '80%' : '60%' }} />
                     </td>
                   ))}
                 </tr>
               ))
             ) : students.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-12 text-center text-sm text-slate-400">
+                <td colSpan={7} className="px-4 py-12 text-center text-sm text-text-muted">
                   No students found
                 </td>
               </tr>
             ) : students.map(s => (
-              <tr key={s.id} className="hover:bg-slate-50 transition-colors">
+              <tr key={s.id} style={TROW}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.015)')}
+                onMouseLeave={e => (e.currentTarget.style.background = '')}>
                 <td className="px-4 py-3">
                   <div>
-                    <p className="font-medium text-slate-900">{s.name}</p>
-                    <p className="text-xs text-slate-400">{s.email}</p>
+                    <p className="font-medium text-text">{s.name}</p>
+                    <p className="text-xs text-text-muted">{s.email}</p>
                   </div>
                 </td>
-                <td className="px-4 py-3 text-slate-600 hidden md:table-cell">{s.phone ?? '—'}</td>
+                <td className="px-4 py-3 text-text-secondary font-mono text-xs hidden md:table-cell">{s.phone ?? '—'}</td>
                 <td className="px-4 py-3">
                   {s.payment_verified ? (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-md border border-emerald-100">
-                      <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />Verified
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium font-mono"
+                      style={{ background: 'rgba(111,207,143,0.08)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }}>
+                      <span className="w-1.5 h-1.5 bg-primary rounded-full" />Verified
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-medium rounded-md border border-amber-100">
-                      <span className="w-1.5 h-1.5 bg-amber-400 rounded-full" />Pending
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium font-mono"
+                      style={{ background: 'rgba(231,177,76,0.08)', color: '#e7b14c', border: '1px solid rgba(231,177,76,0.20)' }}>
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#e7b14c' }} />Pending
                     </span>
                   )}
                 </td>
@@ -187,7 +194,8 @@ export default function AdminStudents() {
                   <select
                     value={s.tier ?? ''}
                     onChange={e => updateTier(s.id, (e.target.value || null) as TierValue)}
-                    className="text-xs text-slate-600 border border-slate-200 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-[#0EA5E9]"
+                    className="text-xs rounded-md px-2 py-1 focus:outline-none font-mono"
+                    style={{ background: '#1b271f', border: '1px solid #27342b', color: '#9aa893' }}
                   >
                     <option value="">—</option>
                     <option value="rookie">Rookie</option>
@@ -195,8 +203,8 @@ export default function AdminStudents() {
                     <option value="legend">Legend</option>
                   </select>
                 </td>
-                <td className="px-4 py-3 text-slate-600 font-mono text-xs hidden lg:table-cell">{s.daysAttended}</td>
-                <td className="px-4 py-3 text-slate-400 text-xs hidden lg:table-cell">
+                <td className="px-4 py-3 text-text-secondary font-mono text-xs hidden lg:table-cell">{s.daysAttended}</td>
+                <td className="px-4 py-3 text-text-muted text-xs hidden lg:table-cell font-mono">
                   {new Date(s.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                 </td>
                 <td className="px-4 py-3">
@@ -204,14 +212,18 @@ export default function AdminStudents() {
                     {!s.payment_verified && (
                       <button
                         onClick={() => verifyPayment(s.id)}
-                        className="px-2.5 py-1.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-md hover:bg-emerald-100 transition-colors border border-emerald-100"
+                        className="px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors font-mono"
+                        style={{ background: 'rgba(111,207,143,0.10)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }}
                       >
                         Verify
                       </button>
                     )}
                     <button
                       onClick={() => deleteStudent(s.id, s.name)}
-                      className="p-1.5 text-slate-300 hover:text-red-500 transition-colors rounded-md hover:bg-red-50"
+                      className="p-1.5 rounded-md transition-colors"
+                      style={{ color: '#3a4a3d' }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#e8736b'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(232,115,107,0.08)' }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLButtonElement).style.background = '' }}
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
@@ -226,20 +238,22 @@ export default function AdminStudents() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="px-4 py-3 border-t border-slate-100 flex items-center justify-between">
-            <p className="text-xs text-slate-400">Page {page} of {totalPages}</p>
+          <div className="px-4 py-3 flex items-center justify-between" style={{ borderTop: '1px solid #27342b' }}>
+            <p className="text-xs text-text-muted font-mono">Page {page} of {totalPages}</p>
             <div className="flex gap-2">
               <button
                 disabled={page <= 1}
                 onClick={() => setPage(p => p - 1)}
-                className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg disabled:opacity-40 hover:bg-slate-50 transition-colors"
+                className="px-3 py-1.5 text-xs rounded-lg disabled:opacity-40 transition-colors font-mono"
+                style={{ border: '1px solid #27342b', background: '#1b271f', color: '#9aa893' }}
               >
                 Previous
               </button>
               <button
                 disabled={page >= totalPages}
                 onClick={() => setPage(p => p + 1)}
-                className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg disabled:opacity-40 hover:bg-slate-50 transition-colors"
+                className="px-3 py-1.5 text-xs rounded-lg disabled:opacity-40 transition-colors font-mono"
+                style={{ border: '1px solid #27342b', background: '#1b271f', color: '#9aa893' }}
               >
                 Next
               </button>

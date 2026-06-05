@@ -4,73 +4,88 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 
-// ── Icons (inline SVG — zero dependency) ──────────────────────────
-
-function IconDashboard({ active }: { active: boolean }) {
+// ── Icons ──────────────────────────────────────────────────────────
+function IcoDashboard({ a }: { a: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="7" height="7" rx="1" />
-      <rect x="14" y="3" width="7" height="7" rx="1" />
-      <rect x="14" y="14" width="7" height="7" rx="1" />
-      <rect x="3" y="14" width="7" height="7" rx="1" />
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={a ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"/>
     </svg>
   )
 }
-function IconExam({ active }: { active: boolean }) {
+function IcoExam({ a }: { a: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={a ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+      <rect x="9" y="3" width="6" height="4" rx="2"/>
+      <line x1="9" y1="12" x2="15" y2="12"/>
+      <line x1="9" y1="16" x2="12" y2="16"/>
     </svg>
   )
 }
-function IconMaterials({ active }: { active: boolean }) {
+function IcoBook({ a }: { a: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={a ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
     </svg>
   )
 }
-function IconLeaderboard({ active }: { active: boolean }) {
+function IcoLeaderboard({ a }: { a: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 20V10M12 20V4M6 20v-6" />
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={a ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 20V10M12 20V4M6 20v-6"/>
     </svg>
   )
 }
-function IconProfile({ active }: { active: boolean }) {
+function IcoProfile({ a }: { a: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={a ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
     </svg>
   )
 }
-function IconLogout() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" />
-    </svg>
-  )
-}
-
-// ── Nav items ──────────────────────────────────────────────────────
 
 const NAV = [
-  { href: '/dashboard',   label: 'Dashboard',   Icon: IconDashboard   },
-  { href: '/exam/today',  label: "Today's Exam", Icon: IconExam        },
-  { href: '/materials',   label: 'Materials',    Icon: IconMaterials   },
-  { href: '/leaderboard', label: 'Leaderboard',  Icon: IconLeaderboard },
-  { href: '/profile',     label: 'Profile',      Icon: IconProfile     },
+  { href: '/dashboard',   label: 'Dashboard',    Icon: IcoDashboard   },
+  { href: '/exam/today',  label: "Today's Exam",  Icon: IcoExam        },
+  { href: '/materials',   label: 'Materials',     Icon: IcoBook        },
+  { href: '/leaderboard', label: 'Leaderboard',   Icon: IcoLeaderboard },
+  { href: '/profile',     label: 'Profile',       Icon: IcoProfile     },
 ] as const
 
-// ── AppLayout ──────────────────────────────────────────────────────
+// ── Logo Mark — green gradient ─────────────────────────────────────
+function LogoMark({ size = 28 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
+      <circle cx="16" cy="16" r="15" stroke="url(#logoGrad)" strokeWidth="2"/>
+      <circle cx="16" cy="16" r="7" fill="url(#logoGrad)" opacity="0.9"/>
+      <line x1="16" y1="1" x2="16" y2="8" stroke="url(#logoGrad)" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="16" y1="24" x2="16" y2="31" stroke="url(#logoGrad)" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="1" y1="16" x2="8" y2="16" stroke="url(#logoGrad)" strokeWidth="2" strokeLinecap="round"/>
+      <line x1="24" y1="16" x2="31" y2="16" stroke="url(#logoGrad)" strokeWidth="2" strokeLinecap="round"/>
+      <defs>
+        <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#6fcf8f"/>
+          <stop offset="100%" stopColor="#3fae6a"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
 
-export function AppLayout({
-  children,
-  userName,
-  batchName,
-}: {
-  children:   React.ReactNode
-  userName?:  string
+// ── AppLayout ──────────────────────────────────────────────────────
+export function AppLayout({ children, userName, batchName }: {
+  children: React.ReactNode
+  userName?: string
   batchName?: string
 }) {
   const pathname = usePathname()
@@ -82,38 +97,35 @@ export function AppLayout({
   }
 
   const initials = userName
-    ?.split(' ')
-    .map(w => w[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase() ?? '?'
+    ?.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase() ?? '?'
 
   return (
     <div className="flex min-h-screen bg-bg">
 
       {/* ── Desktop Sidebar ─────────────────────────────────────── */}
-      <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 w-60 bg-surface border-r border-border z-20">
+      <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 z-20"
+        aria-label="Main navigation"
+        style={{ width: 228, background: '#0e1410', borderRight: '1px solid #27342b' }}>
 
-        {/* Logo */}
-        <div className="px-5 py-5 border-b border-border">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center shrink-0">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-                <circle cx="12" cy="12" r="10" />
-                <circle cx="12" cy="12" r="4" />
-                <line x1="12" y1="2" x2="12" y2="6" />
-                <line x1="12" y1="18" x2="12" y2="22" />
-              </svg>
+        {/* Brand */}
+        <div className="px-5 py-5" style={{ borderBottom: '1px solid #27342b' }}>
+          <div className="flex items-center gap-3">
+            <div className="shrink-0" style={{ filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.4))' }}>
+              <LogoMark size={26} />
             </div>
-            <span className="text-sm font-semibold text-text tracking-tight">Centumania</span>
+            <div>
+              <p className="text-sm font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces, serif)' }}>
+                Centumania
+              </p>
+              {batchName && (
+                <p className="text-[10px] text-text-muted mt-0.5 tracking-wide font-mono">{batchName}</p>
+              )}
+            </div>
           </div>
-          {batchName && (
-            <p className="text-xs text-text-muted mt-1.5 ml-9">{batchName}</p>
-          )}
         </div>
 
-        {/* Nav */}
-        <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+        {/* Navigation */}
+        <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto" aria-label="Main navigation">
           {NAV.map(({ href, label, Icon }) => {
             const active = pathname === href || pathname.startsWith(href + '/')
             return (
@@ -121,70 +133,88 @@ export function AppLayout({
                 key={href}
                 href={href}
                 className={[
-                  'flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors',
+                  'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 relative',
                   active
-                    ? 'bg-primary-subtle text-primary font-medium'
-                    : 'text-text-secondary hover:bg-surface-overlay hover:text-text',
+                    ? 'text-primary font-medium'
+                    : 'text-text-muted hover:text-text-secondary',
                 ].join(' ')}
+                style={active ? { background: 'rgba(111,207,143,0.08)' } : {}}
+                onMouseEnter={e => { if (!active) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)' }}
+                onMouseLeave={e => { if (!active) (e.currentTarget as HTMLElement).style.background = '' }}
               >
-                <Icon active={active} />
-                {label}
+                {active && (
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
+                    style={{ background: '#6fcf8f', boxShadow: '0 0 8px rgba(111,207,143,0.8)' }} />
+                )}
+                <Icon a={active} />
+                <span className="tracking-tight">{label}</span>
               </Link>
             )
           })}
         </nav>
 
-        {/* User + Logout */}
-        <div className="px-3 py-4 border-t border-border space-y-1">
+        {/* User Section */}
+        <div className="px-3 py-4" style={{ borderTop: '1px solid #27342b' }}>
           {userName && (
-            <div className="flex items-center gap-2.5 px-3 py-2">
-              <div className="w-7 h-7 rounded-full bg-primary-muted text-primary text-xs font-semibold flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
+              <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
+                style={{ background: 'linear-gradient(135deg,#6fcf8f,#3fae6a)', color: '#06140c', boxShadow: '0 0 10px rgba(111,207,143,0.30)' }}>
                 {initials}
               </div>
-              <div className="min-w-0">
-                <p className="text-sm font-medium text-text truncate">{userName}</p>
-              </div>
+              <p className="text-xs font-medium text-text-secondary truncate">{userName}</p>
             </div>
           )}
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-lg text-sm text-text-secondary hover:bg-surface-overlay hover:text-text transition-colors"
+            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-xs text-text-muted hover:text-text-secondary transition-colors"
+            style={{}}
+            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.03)')}
+            onMouseLeave={e => (e.currentTarget.style.background = '')}
           >
-            <IconLogout />
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
             Sign out
           </button>
         </div>
       </aside>
 
-      {/* ── Main content area ────────────────────────────────────── */}
-      <div className="flex-1 md:ml-60 flex flex-col min-h-screen">
+      {/* ── Main Content ─────────────────────────────────────────── */}
+      <div className="flex-1 flex flex-col min-h-screen">
+        <style>{`@media(min-width:768px){.main-shift{margin-left:228px}}`}</style>
+        <div className="main-shift flex-1 flex flex-col min-h-screen">
 
-        {/* Mobile top bar */}
-        <header className="md:hidden flex items-center justify-between px-4 h-14 bg-surface border-b border-border sticky top-0 z-10">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-                <circle cx="12" cy="12" r="10" />
-                <circle cx="12" cy="12" r="4" />
-              </svg>
+          {/* Mobile Top Bar */}
+          <header className="md:hidden flex items-center justify-between px-4 h-14 sticky top-0 z-10"
+            style={{ background: 'rgba(14,20,16,0.95)', backdropFilter: 'blur(6px)', borderBottom: '1px solid #27342b' }}>
+            <div className="flex items-center gap-2.5">
+              <div style={{ filter: 'drop-shadow(0 0 6px rgba(111,207,143,0.5))' }}>
+                <LogoMark size={22} />
+              </div>
+              <span className="text-sm font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces, serif)' }}>
+                Centumania
+              </span>
             </div>
-            <span className="text-sm font-semibold text-text">Centumania</span>
-          </div>
-          {userName && (
-            <div className="w-8 h-8 rounded-full bg-primary-muted text-primary text-xs font-semibold flex items-center justify-center">
-              {initials}
-            </div>
-          )}
-        </header>
+            {userName && (
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+                style={{ background: 'linear-gradient(135deg,#6fcf8f,#3fae6a)', color: '#06140c', boxShadow: '0 0 10px rgba(111,207,143,0.30)' }}>
+                {initials}
+              </div>
+            )}
+          </header>
 
-        {/* Page content */}
-        <main className="flex-1 pb-20 md:pb-0">
-          {children}
-        </main>
+          {/* Page Content */}
+          <main id="main-content" className="flex-1 pb-20 md:pb-0">
+            {children}
+          </main>
+        </div>
       </div>
 
       {/* ── Mobile Bottom Nav ────────────────────────────────────── */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 bg-surface border-t border-border z-20 flex">
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-20 flex"
+        aria-label="Mobile navigation"
+        style={{ background: 'rgba(14,20,16,0.97)', backdropFilter: 'blur(20px)', borderTop: '1px solid #27342b' }}>
         {NAV.slice(0, 4).map(({ href, label, Icon }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
@@ -192,12 +222,14 @@ export function AppLayout({
               key={href}
               href={href}
               className={[
-                'flex-1 flex flex-col items-center justify-center py-2.5 gap-1 transition-colors',
+                'flex-1 flex flex-col items-center justify-center py-3 gap-1 transition-colors',
                 active ? 'text-primary' : 'text-text-muted hover:text-text-secondary',
               ].join(' ')}
             >
-              <Icon active={active} />
-              <span className="text-[10px] font-medium">{label.split("'")[0]}</span>
+              <Icon a={active} />
+              <span className="text-[9px] font-semibold tracking-widest uppercase">
+                {label.split("'")[0].split(' ')[0]}
+              </span>
             </Link>
           )
         })}

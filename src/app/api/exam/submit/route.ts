@@ -22,6 +22,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
 import { getExamWindowStatus } from '@/src/lib/exam-window'
+import { rateLimit } from '@/src/lib/rate-limit'
 import type { AnswerOption, ExamSubmitResult } from '@/src/types/database'
 
 export const dynamic = 'force-dynamic'
@@ -53,6 +54,22 @@ export async function POST(request: NextRequest) {
     const { data: { user }, error: authError } = await supabase.auth.getUser(token)
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // ── 1b. Rate limit ────────────────────────────────────────────────
+    const limiter = await rateLimit(`exam-submit:${user.id}`, { limit: 3, window: '1 h' })
+    if (!limiter.success) {
+      return NextResponse.json(
+        { error: 'Too many submissions. Please wait before trying again.' },
+        {
+          status: 429,
+          headers: {
+            'Retry-After':         String(Math.ceil((limiter.reset - Date.now()) / 1000)),
+            'X-RateLimit-Limit':   String(limiter.limit),
+            'X-RateLimit-Remaining': String(limiter.remaining),
+          },
+        },
+      )
     }
 
     // ── 2. Parse and validate request body ──────────────────────────
