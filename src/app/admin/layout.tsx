@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { LogoMark } from '@/src/components/ui/Logo'
 
 const NAV = [
   { href: '/admin',           label: 'Overview',  icon: GridIcon   },
@@ -151,19 +152,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Logo */}
         <div className="px-4 py-5" style={{ borderBottom: '1px solid #27342b' }}>
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-              style={{ background: '#3fae6a', boxShadow: '0 0 12px rgba(63,174,106,0.4)' }}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-                <circle cx="12" cy="12" r="10"/>
-                <circle cx="12" cy="12" r="4"/>
-                <line x1="12" y1="2"  x2="12" y2="6"/>
-                <line x1="12" y1="18" x2="12" y2="22"/>
-              </svg>
+            <div className="shrink-0" style={{ filter: 'drop-shadow(0 0 6px rgba(111,207,143,0.4))' }}>
+              <LogoMark size={26} />
             </div>
             <div>
               <span className="text-sm font-semibold text-text"
                 style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-                Centumania
+                CentuMania
               </span>
               <p className="text-[10px] text-text-muted leading-none mt-0.5 font-mono">Admin Console</p>
             </div>

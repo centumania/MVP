@@ -1,5 +1,5 @@
 /**
- * Centumania — Supabase Database TypeScript Types
+ * CentuMania — Supabase Database TypeScript Types
  *
  * IMPORTANT: These types MUST mirror the live Supabase schema exactly.
  * When you run a new migration, update this file in the same commit.
@@ -131,6 +131,26 @@ export type LeaderboardEntry = {
 }
 
 // ---------------------------------------------------------------------------
+// AI Mentor Report
+// ---------------------------------------------------------------------------
+
+export type AiReport = {
+  id:                   string
+  student_id:           string      // FK → auth.users.id
+  exam_id:              string      // FK → exams.id
+  submission_id:        string      // FK → submissions.id
+  report_text:          string      // Full raw Claude response
+  readiness_score:      number      // 0–100
+  predicted_low:        number
+  predicted_high:       number
+  learning_profile:     string      // e.g. "The Scholar"
+  strengths_text:       string | null
+  weaknesses_text:      string | null
+  recommendations_text: string | null
+  generated_at:         string
+}
+
+// ---------------------------------------------------------------------------
 // API response types
 // ---------------------------------------------------------------------------
 
@@ -202,6 +222,12 @@ export type Database = {
         Row:           SubmissionAnswer
         Insert:        Omit<SubmissionAnswer, 'id'>
         Update:        Partial<Omit<SubmissionAnswer, 'id'>>
+        Relationships: []
+      }
+      ai_reports: {
+        Row:           AiReport
+        Insert:        Omit<AiReport, 'id' | 'generated_at'> & { generated_at?: string }
+        Update:        Partial<Omit<AiReport, 'id'>>
         Relationships: []
       }
     }

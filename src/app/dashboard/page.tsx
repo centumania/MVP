@@ -141,7 +141,6 @@ export default function DashboardPage() {
   const today = d.todayExam
   const lr    = d.leaderboard
   const progressPct = Math.round((d.daysAttended / (d.batchTotalDays || 25)) * 100)
-  const xpPct       = Math.round((d.xpInLevel / d.xpToNext) * 100)
   const dateLabel   = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })
   const tipIdx      = new Date().getDate() % TIPS.length
   const daysLeft    = d.batchTotalDays - d.daysAttended
@@ -149,8 +148,8 @@ export default function DashboardPage() {
   const statItems = [
     { label: 'Rank',     value: lr ? `#${lr.rank}` : '—',            sub: lr?.percentile ? `top ${100 - lr.percentile + 1}%` : 'unranked' },
     { label: 'Score',    value: lr ? lr.score.toLocaleString() : '—', sub: 'total points' },
-    { label: 'Streak',   value: `${d.streak}`,                        sub: `day${d.streak !== 1 ? 's' : ''} 🔥` },
-    { label: 'Progress', value: `${d.daysAttended}/${d.batchTotalDays}`, sub: `${progressPct}% done` },
+    { label: 'Days',     value: `${d.daysAttended}`,                  sub: `of ${d.batchTotalDays} days` },
+    { label: 'Accuracy', value: lr ? `${lr.accuracy}%` : '—',        sub: 'avg accuracy' },
   ]
 
   return (
@@ -188,10 +187,14 @@ export default function DashboardPage() {
 
             <div className="flex items-center gap-5">
               <div className="shrink-0">
+                {/* Streak ring — replaces XP/Level display */}
                 <ProgressRing
-                  value={xpPct} size={84} strokeWidth={5}
-                  color="#6fcf8f" trackColor="rgba(111,207,143,0.10)"
-                  label={`Lv${d.xpLevel}`} sublabel={`${d.xpInLevel}xp`}
+                  value={Math.min(100, Math.round((d.streak / 7) * 100))}
+                  size={84} strokeWidth={5}
+                  color={d.streak >= 7 ? '#e7b14c' : d.streak >= 3 ? '#6fcf8f' : '#5ec8c0'}
+                  trackColor="rgba(255,255,255,0.05)"
+                  label={`${d.streak}d`}
+                  sublabel="streak"
                 />
               </div>
               <div className="flex-1 grid grid-cols-2 gap-2.5">

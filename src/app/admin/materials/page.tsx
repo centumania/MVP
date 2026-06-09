@@ -1,35 +1,70 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 
 type Material = {
-  id: string; dayNumber: number; title: string
-  hasVideo: boolean; hasPDF: boolean; hasPPT: boolean
-  videoUrl: string | null; pdfKey: string | null; pptKey: string | null
-  publishedAt: string; expiresAt: string; isExpired: boolean
+  id:          string
+  dayNumber:   number
+  title:       string
+  hasVideo:    boolean
+  hasPDF:      boolean
+  hasPPT:      boolean
+  hasMindMap:  boolean
+  videoUrl:    string | null
+  pdfKey:      string | null
+  pptKey:      string | null
+  htmlKey:     string | null
+  publishedAt: string
+  expiresAt:   string
+  isExpired:   boolean
 }
+
+type UploadState = 'idle' | 'uploading' | 'done' | 'error'
 
 const CARD = { background: '#16201a', border: '1px solid #27342b' }
 const THHD = { background: '#1b271f', borderBottom: '1px solid #27342b' }
 const TROW = { borderBottom: '1px solid rgba(39,52,43,0.6)' }
 
+const inputStyle: React.CSSProperties = {
+  background: '#16201a', border: '1px solid #27342b', color: '#e8ead8',
+  height: 36, borderRadius: 8, padding: '0 12px', fontSize: 14, width: '100%',
+}
+
 export default function AdminMaterials() {
-  const router = useRouter()
+  const router      = useRouter()
+  const htmlInputRef = useRef<HTMLInputElement>(null)
+
   const [token,     setToken]    = useState<string | null>(null)
   const [batchId,   setBatchId]  = useState<string | null>(null)
   const [materials, setMaterials] = useState<Material[]>([])
   const [loading,   setLoading]  = useState(true)
-  const [toast,     setToast]    = useState<string | null>(null)
+  const [toast,     setToast]    = useState<{ msg: string; ok: boolean } | null>(null)
   const [showAdd,   setShowAdd]  = useState(false)
-  const [form, setForm] = useState({ dayNumber: '', title: '', videoUrl: '', pdfKey: '', pptKey: '', publishedAt: '' })
 
-  function showToast(msg: string) { setToast(msg); setTimeout(() => setToast(null), 3000) }
+  // Form state
+  const [form, setForm] = useState({
+    dayNumber: '', title: '', videoUrl: '', pdfKey: '', pptKey: '', publishedAt: '',
+  })
+  // HTML upload state
+  const [htmlKey,      setHtmlKey]      = useState<string>('')
+  const [htmlFileName, setHtmlFileName] = useState<string>('')
+  const [uploadState,  setUploadState]  = useState<UploadState>('idle')
+  const [uploadError,  setUploadError]  = useState<string>('')
+
+  function showToast(msg: string, ok = true) {
+    setToast({ msg, ok })
+    setTimeout(() => setToast(null), 3500)
+  }
 
   const load = useCallback(async (tok: string) => {
     const res = await fetch('/api/admin/materials', { headers: { Authorization: `Bearer ${tok}` } })
-    if (res.ok) { const d = await res.json(); setMaterials(d.materials); setBatchId(d.batchId) }
+    if (res.ok) {
+      const d = await res.json()
+      setMaterials(d.materials)
+      setBatchId(d.batchId)
+    }
     setLoading(false)
   }, [])
 
@@ -41,30 +76,90 @@ export default function AdminMaterials() {
     })
   }, [router, load])
 
+  // ── HTML file upload ──────────────────────────────────────────────────────────
+  async function handleHtmlFile(file: File) {
+    if (!token) return
+    if (!file.name.endsWith('.html')) {
+      setUploadError('Only .html files are accepted.')
+      setUploadState('error')
+      return
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setUploadError('File exceeds the 5 MB limit.')
+      setUploadState('error')
+      return
+    }
+
+    setUploadState('uploading')
+    setUploadError('')
+    setHtmlFileName(file.name)
+
+    const fd = new FormData()
+    fd.append('file', file)
+
+    const res = await fetch('/api/admin/materials/upload-html', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: fd,
+    })
+
+    if (res.ok) {
+      const { key } = await res.json()
+      setHtmlKey(key)
+      setUploadState('done')
+    } else {
+      const err = await res.json().catch(() => ({}))
+      setUploadError(err.error ?? 'Upload failed. Please try again.')
+      setUploadState('error')
+    }
+  }
+
+  function clearHtml() {
+    setHtmlKey('')
+    setHtmlFileName('')
+    setUploadState('idle')
+    setUploadError('')
+    if (htmlInputRef.current) htmlInputRef.current.value = ''
+  }
+
+  // ── Create material ───────────────────────────────────────────────────────────
   async function createMaterial() {
     if (!token || !batchId) return
     const { dayNumber, title, videoUrl, pdfKey, pptKey, publishedAt } = form
-    if (!dayNumber || !title) { showToast('Day number and title required'); return }
-    if (!videoUrl && !pdfKey && !pptKey) { showToast('At least one content source required'); return }
+    if (!dayNumber || !title) { showToast('Day number and title are required.', false); return }
+    if (!videoUrl && !pdfKey && !pptKey && !htmlKey) {
+      showToast('Add at least one content source — MindMap HTML, Video, PDF, or PPT.', false); return
+    }
+
     const res = await fetch('/api/admin/materials', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ batchId, dayNumber, title, videoUrl: videoUrl || null, pdfKey: pdfKey || null, pptKey: pptKey || null, publishedAt: publishedAt || null }),
+      body: JSON.stringify({
+        batchId, dayNumber, title,
+        videoUrl:    videoUrl || null,
+        pdfKey:      pdfKey   || null,
+        pptKey:      pptKey   || null,
+        htmlKey:     htmlKey  || null,
+        publishedAt: publishedAt || null,
+      }),
     })
+
     if (res.ok) {
-      showToast('Material created'); setShowAdd(false)
-      setForm({ dayNumber: '', title: '', videoUrl: '', pdfKey: '', pptKey: '', publishedAt: '' })
+      showToast('Material created successfully.')
+      closeModal()
       load(token)
     } else {
       const err = await res.json().catch(() => ({}))
-      showToast(err.error ?? 'Failed')
+      showToast(err.error ?? 'Failed to create material.', false)
     }
   }
 
   async function deleteMaterial(id: string, title: string) {
     if (!token || !confirm(`Delete "${title}"?`)) return
-    const res = await fetch(`/api/admin/materials/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
-    if (res.ok) { setMaterials(prev => prev.filter(m => m.id !== id)); showToast('Deleted') }
+    const res = await fetch(`/api/admin/materials/${id}`, {
+      method: 'DELETE', headers: { Authorization: `Bearer ${token}` },
+    })
+    if (res.ok) { setMaterials(prev => prev.filter(m => m.id !== id)); showToast('Deleted.') }
   }
 
   async function extendExpiry(id: string) {
@@ -74,25 +169,39 @@ export default function AdminMaterials() {
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({ publishedAt: new Date().toISOString() }),
     })
-    if (res.ok) { load(token); showToast('Expiry extended 24 hours from now') }
+    if (res.ok) { load(token); showToast('Expiry extended 24 h from now.') }
   }
 
-  const inputStyle = { background: '#16201a', border: '1px solid #27342b', color: '#e8ead8', height: 36, borderRadius: 8, padding: '0 12px', fontSize: 14, width: '100%' }
+  function closeModal() {
+    setShowAdd(false)
+    setForm({ dayNumber: '', title: '', videoUrl: '', pdfKey: '', pptKey: '', publishedAt: '' })
+    clearHtml()
+  }
 
   return (
     <div className="p-8 max-w-5xl">
 
+      {/* Toast */}
       {toast && (
         <div className="fixed top-4 right-4 z-50 text-sm px-4 py-2.5 rounded-lg shadow-lg"
-          style={{ background: '#1b271f', color: '#e8ead8', border: '1px solid #27342b' }}>
-          {toast}
+          style={{
+            background: toast.ok ? '#1b271f' : 'rgba(232,115,107,0.12)',
+            color: toast.ok ? '#e8ead8' : '#e8736b',
+            border: `1px solid ${toast.ok ? '#27342b' : 'rgba(232,115,107,0.25)'}`,
+          }}>
+          {toast.msg}
         </div>
       )}
 
+      {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-text" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>Materials</h1>
-          <p className="text-sm text-text-muted mt-0.5 font-mono">{materials.length} materials in active batch</p>
+          <h1 className="text-2xl font-semibold text-text" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+            Materials
+          </h1>
+          <p className="text-sm text-text-muted mt-0.5 font-mono">
+            {materials.length} materials in active batch
+          </p>
         </div>
         <button
           onClick={() => setShowAdd(true)}
@@ -105,41 +214,161 @@ export default function AdminMaterials() {
         </button>
       </div>
 
-      {/* Add modal */}
+      {/* ── Add modal ─────────────────────────────────────────────────────────── */}
       {showAdd && (
-        <div className="fixed inset-0 bg-black/60 z-40 flex items-center justify-center p-4">
-          <div className="rounded-xl w-full max-w-md p-6 shadow-2xl" style={{ background: '#16201a', border: '1px solid #27342b' }}>
-            <h2 className="text-lg font-semibold text-text mb-5" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-              Add Study Material
-            </h2>
-            <div className="space-y-3">
-              {[
-                { label: 'Day Number',                                field: 'dayNumber',   type: 'number',         placeholder: '1' },
-                { label: 'Title',                                      field: 'title',       type: 'text',           placeholder: 'Day 1 — Tamil History' },
-                { label: 'YouTube / Video URL (optional)',              field: 'videoUrl',    type: 'url',            placeholder: 'https://youtube.com/watch?v=…' },
-                { label: 'PDF Key (S3 object key, optional)',           field: 'pdfKey',      type: 'text',           placeholder: 'materials/day-1.pdf' },
-                { label: 'PPT Key (S3 object key, optional)',           field: 'pptKey',      type: 'text',           placeholder: 'materials/day-1.pptx' },
-                { label: 'Publish time (blank = now)',                  field: 'publishedAt', type: 'datetime-local', placeholder: '' },
-              ].map(({ label, field, type, placeholder }) => (
-                <div key={field}>
-                  <label className="block text-xs font-medium text-text-muted mb-1 font-mono">{label}</label>
-                  <input
-                    type={type} placeholder={placeholder}
-                    value={form[field as keyof typeof form]}
-                    onChange={e => setForm(prev => ({ ...prev, [field]: e.target.value }))}
-                    style={inputStyle}
-                  />
-                </div>
-              ))}
+        <div className="fixed inset-0 bg-black/70 z-40 flex items-center justify-center p-4">
+          <div className="rounded-xl w-full max-w-md shadow-2xl overflow-y-auto max-h-[90vh]"
+            style={{ background: '#16201a', border: '1px solid #27342b' }}>
+
+            <div className="px-6 pt-6 pb-4" style={{ borderBottom: '1px solid #1b271f' }}>
+              <h2 className="text-lg font-semibold text-text" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+                Add Study Material
+              </h2>
+              <p className="text-xs text-text-muted mt-0.5 font-mono">
+                Upload a MindMap HTML file as the primary interactive content.
+              </p>
             </div>
-            <div className="flex gap-3 mt-5">
-              <button onClick={createMaterial}
-                className="flex-1 h-9 text-sm font-medium rounded-lg font-mono"
+
+            <div className="px-6 py-5 space-y-4">
+
+              {/* Day + Publish time */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-text-muted mb-1.5 font-mono">Day Number</label>
+                  <input type="number" placeholder="1"
+                    value={form.dayNumber}
+                    onChange={e => setForm(p => ({ ...p, dayNumber: e.target.value }))}
+                    style={inputStyle} />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-text-muted mb-1.5 font-mono">Publish time (blank = now)</label>
+                  <input type="datetime-local"
+                    value={form.publishedAt}
+                    onChange={e => setForm(p => ({ ...p, publishedAt: e.target.value }))}
+                    style={inputStyle} />
+                </div>
+              </div>
+
+              {/* Title */}
+              <div>
+                <label className="block text-xs font-medium text-text-muted mb-1.5 font-mono">Title</label>
+                <input type="text" placeholder="Day 1 — Tamil History"
+                  value={form.title}
+                  onChange={e => setForm(p => ({ ...p, title: e.target.value }))}
+                  style={inputStyle} />
+              </div>
+
+              {/* ── MindMap HTML Upload ──────────────────────────────────────── */}
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <label className="text-xs font-bold text-text-muted font-mono uppercase tracking-widest">
+                    MindMap HTML
+                  </label>
+                  <span className="px-1.5 py-0.5 rounded text-[10px] font-bold font-mono"
+                    style={{ background: 'rgba(111,207,143,0.10)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }}>
+                    PRIMARY
+                  </span>
+                </div>
+
+                {uploadState === 'done' ? (
+                  <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg"
+                    style={{ background: 'rgba(111,207,143,0.06)', border: '1px solid rgba(111,207,143,0.20)' }}>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6fcf8f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    <span className="text-xs text-primary flex-1 truncate font-mono">{htmlFileName}</span>
+                    <button onClick={clearHtml}
+                      className="text-[11px] text-text-muted hover:text-error transition-colors font-mono">
+                      ✕ Remove
+                    </button>
+                  </div>
+
+                ) : uploadState === 'uploading' ? (
+                  <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg"
+                    style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #27342b' }}>
+                    <div className="w-4 h-4 rounded-full border-2 border-transparent animate-spin shrink-0"
+                      style={{ borderTopColor: '#6fcf8f' }} />
+                    <span className="text-xs text-text-muted font-mono">Uploading {htmlFileName}…</span>
+                  </div>
+
+                ) : (
+                  <label
+                    className="flex flex-col items-center justify-center gap-2 px-4 py-6 rounded-lg cursor-pointer transition-all"
+                    style={{ border: '2px dashed #27342b', background: 'rgba(255,255,255,0.01)' }}
+                    onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderColor = 'rgba(111,207,143,0.5)'; e.currentTarget.style.background = 'rgba(111,207,143,0.04)' }}
+                    onDragLeave={e => { e.currentTarget.style.borderColor = '#27342b'; e.currentTarget.style.background = 'rgba(255,255,255,0.01)' }}
+                    onDrop={e => {
+                      e.preventDefault()
+                      e.currentTarget.style.borderColor = '#27342b'
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.01)'
+                      const file = e.dataTransfer.files[0]
+                      if (file) handleHtmlFile(file)
+                    }}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3a4a3d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <div className="text-center">
+                      <p className="text-xs font-medium text-text-secondary">Drop your HTML MindMap here</p>
+                      <p className="text-[11px] text-text-muted mt-0.5">or click to browse · .html · max 5 MB</p>
+                    </div>
+                    <input ref={htmlInputRef} type="file" accept=".html,text/html" className="sr-only"
+                      onChange={e => { const file = e.target.files?.[0]; if (file) handleHtmlFile(file) }} />
+                  </label>
+                )}
+
+                {uploadState === 'error' && (
+                  <p className="text-xs mt-1.5 font-mono" style={{ color: '#e8736b' }}>⚠ {uploadError}</p>
+                )}
+              </div>
+
+              {/* Optional extras divider */}
+              <div className="flex items-center gap-3">
+                <div className="flex-1 h-px" style={{ background: '#27342b' }} />
+                <span className="text-[10px] text-text-muted font-mono uppercase tracking-widest">Optional extras</span>
+                <div className="flex-1 h-px" style={{ background: '#27342b' }} />
+              </div>
+
+              {/* Video URL */}
+              <div>
+                <label className="block text-xs font-medium text-text-muted mb-1.5 font-mono">YouTube / Video URL</label>
+                <input type="url" placeholder="https://youtube.com/watch?v=…"
+                  value={form.videoUrl}
+                  onChange={e => setForm(p => ({ ...p, videoUrl: e.target.value }))}
+                  style={inputStyle} />
+              </div>
+
+              {/* PDF + PPT */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-medium text-text-muted mb-1.5 font-mono">PDF Storage Key</label>
+                  <input type="text" placeholder="materials/day-1.pdf"
+                    value={form.pdfKey}
+                    onChange={e => setForm(p => ({ ...p, pdfKey: e.target.value }))}
+                    style={inputStyle} />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-text-muted mb-1.5 font-mono">PPT Storage Key</label>
+                  <input type="text" placeholder="materials/day-1.pptx"
+                    value={form.pptKey}
+                    onChange={e => setForm(p => ({ ...p, pptKey: e.target.value }))}
+                    style={inputStyle} />
+                </div>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="px-6 pb-6 flex gap-3">
+              <button onClick={createMaterial} disabled={uploadState === 'uploading'}
+                className="flex-1 h-10 text-sm font-semibold rounded-lg font-mono transition-opacity disabled:opacity-40"
                 style={{ background: '#3fae6a', color: '#06140c' }}>
-                Create
+                Create Material
               </button>
-              <button onClick={() => setShowAdd(false)}
-                className="flex-1 h-9 text-sm font-medium rounded-lg font-mono"
+              <button onClick={closeModal}
+                className="flex-1 h-10 text-sm font-medium rounded-lg font-mono"
                 style={{ background: '#1b271f', color: '#9aa893', border: '1px solid #27342b' }}>
                 Cancel
               </button>
@@ -148,7 +377,7 @@ export default function AdminMaterials() {
         </div>
       )}
 
-      {/* Materials list */}
+      {/* ── Materials table ──────────────────────────────────────────────────── */}
       {loading ? (
         <div className="rounded-xl p-12 text-center" style={CARD}>
           <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto"
@@ -156,7 +385,7 @@ export default function AdminMaterials() {
         </div>
       ) : materials.length === 0 ? (
         <div className="rounded-xl p-12 text-center" style={CARD}>
-          <p className="text-sm text-text-muted">No materials. Add the first one above.</p>
+          <p className="text-sm text-text-muted">No materials yet. Add the first one above.</p>
         </div>
       ) : (
         <div className="rounded-xl overflow-hidden" style={CARD}>
@@ -178,10 +407,16 @@ export default function AdminMaterials() {
                   <td className="px-4 py-3 font-mono text-sm font-medium" style={{ color: '#6fcf8f' }}>D{m.dayNumber}</td>
                   <td className="px-4 py-3 text-text font-medium">{m.title}</td>
                   <td className="px-4 py-3 hidden md:table-cell">
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 flex-wrap">
+                      {m.hasMindMap && (
+                        <span className="px-1.5 py-0.5 text-xs rounded font-mono"
+                          style={{ background: 'rgba(111,207,143,0.10)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }}>
+                          MindMap
+                        </span>
+                      )}
                       {m.hasVideo && (
                         <span className="px-1.5 py-0.5 text-xs rounded font-mono"
-                          style={{ background: 'rgba(111,207,143,0.08)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.15)' }}>
+                          style={{ background: 'rgba(94,200,192,0.08)', color: '#5ec8c0', border: '1px solid rgba(94,200,192,0.15)' }}>
                           Video
                         </span>
                       )}
@@ -193,7 +428,7 @@ export default function AdminMaterials() {
                       )}
                       {m.hasPPT && (
                         <span className="px-1.5 py-0.5 text-xs rounded font-mono"
-                          style={{ background: 'rgba(94,200,192,0.08)', color: '#5ec8c0', border: '1px solid rgba(94,200,192,0.15)' }}>
+                          style={{ background: 'rgba(231,177,76,0.08)', color: '#e7b14c', border: '1px solid rgba(231,177,76,0.15)' }}>
                           PPT
                         </span>
                       )}
@@ -205,29 +440,28 @@ export default function AdminMaterials() {
                         ? { background: 'rgba(232,115,107,0.08)', color: '#e8736b', border: '1px solid rgba(232,115,107,0.15)' }
                         : { background: 'rgba(231,177,76,0.08)', color: '#e7b14c', border: '1px solid rgba(231,177,76,0.15)' }
                       }>
-                      {m.isExpired ? 'Expired' : new Date(m.expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                      {m.isExpired
+                        ? 'Expired'
+                        : new Date(m.expiresAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+                      }
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2 justify-end">
                       {m.isExpired && (
-                        <button
-                          onClick={() => extendExpiry(m.id)}
+                        <button onClick={() => extendExpiry(m.id)}
                           className="px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors font-mono"
-                          style={{ background: 'rgba(111,207,143,0.10)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }}
-                        >
+                          style={{ background: 'rgba(111,207,143,0.10)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }}>
                           Extend
                         </button>
                       )}
-                      <button
-                        onClick={() => deleteMaterial(m.id, m.title)}
-                        className="p-1.5 rounded-md transition-colors"
-                        style={{ color: '#3a4a3d' }}
+                      <button onClick={() => deleteMaterial(m.id, m.title)}
+                        className="p-1.5 rounded-md transition-colors" style={{ color: '#3a4a3d' }}
                         onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#e8736b'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(232,115,107,0.08)' }}
-                        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLButtonElement).style.background = '' }}
-                      >
+                        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLButtonElement).style.background = '' }}>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                          <polyline points="3 6 5 6 21 6"/>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
                         </svg>
                       </button>
                     </div>

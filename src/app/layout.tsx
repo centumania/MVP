@@ -25,8 +25,8 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Centumania — Winning is a habit',
-  description: "India's most disciplined LDC/UDC exam prep platform. 25-day intensive programme for Puducherry competitive exam aspirants.",
+  title: 'CentuMania — Winning is a habit',
+  description: "India's most disciplined LDC/UDC exam prep platform. 15-day intensive programme for Puducherry competitive exam aspirants.",
   icons: { icon: '/favicon.ico' },
 }
 

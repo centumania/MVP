@@ -87,7 +87,7 @@ export function formatDuration(ms: number): string {
  *   now === close_time → window IS closed (exclusive upper bound — hard close)
  *
  * The "opens tomorrow" calculation uses open_time + 24h as an approximation.
- * This is correct for Centumania's single daily schedule (all exams at 6:00 AM IST).
+ * This is correct for CentuMania's single daily schedule (all exams at 6:00 AM IST).
  * If future batches use variable schedules, this should query the next exam row instead.
  *
  * @param now       Current server time (UTC). Caller supplies this for testability.
@@ -152,7 +152,7 @@ export function getExamWindowStatus(
   }
 
   // Approximate next open as open_time + 24 hours.
-  // Valid assumption: all Centumania exams open at 6:00 AM IST daily.
+  // Valid assumption: all CentuMania exams open at 6:00 AM IST daily.
   const nextOpenMs = openMs + 24 * 60 * 60 * 1000
   const opensInMs  = nextOpenMs - nowMs
   const opensIn    = formatDuration(opensInMs)

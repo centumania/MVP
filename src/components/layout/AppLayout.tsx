@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { LogoMark } from '@/src/components/ui/Logo'
 
 // ── Icons ──────────────────────────────────────────────────────────
 function IcoDashboard({ a }: { a: boolean }) {
@@ -62,25 +63,6 @@ const NAV = [
   { href: '/profile',     label: 'Profile',       Icon: IcoProfile     },
 ] as const
 
-// ── Logo Mark — green gradient ─────────────────────────────────────
-function LogoMark({ size = 28 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none">
-      <circle cx="16" cy="16" r="15" stroke="url(#logoGrad)" strokeWidth="2"/>
-      <circle cx="16" cy="16" r="7" fill="url(#logoGrad)" opacity="0.9"/>
-      <line x1="16" y1="1" x2="16" y2="8" stroke="url(#logoGrad)" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="16" y1="24" x2="16" y2="31" stroke="url(#logoGrad)" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="1" y1="16" x2="8" y2="16" stroke="url(#logoGrad)" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="24" y1="16" x2="31" y2="16" stroke="url(#logoGrad)" strokeWidth="2" strokeLinecap="round"/>
-      <defs>
-        <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#6fcf8f"/>
-          <stop offset="100%" stopColor="#3fae6a"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  )
-}
 
 // ── AppLayout ──────────────────────────────────────────────────────
 export function AppLayout({ children, userName, batchName }: {
@@ -115,11 +97,11 @@ export function AppLayout({ children, userName, batchName }: {
             </div>
             <div>
               <p className="text-sm font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces, serif)' }}>
-                Centumania
+                CentuMania
               </p>
-              {batchName && (
-                <p className="text-[10px] text-text-muted mt-0.5 tracking-wide font-mono">{batchName}</p>
-              )}
+              <p className="text-[10px] text-text-muted mt-0.5 tracking-wide font-mono">
+                {batchName ?? 'Winning is a Habit'}
+              </p>
             </div>
           </div>
         </div>
@@ -192,9 +174,14 @@ export function AppLayout({ children, userName, batchName }: {
               <div style={{ filter: 'drop-shadow(0 0 6px rgba(111,207,143,0.5))' }}>
                 <LogoMark size={22} />
               </div>
-              <span className="text-sm font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces, serif)' }}>
-                Centumania
-              </span>
+              <div>
+                <span className="text-sm font-bold text-text tracking-tight block" style={{ fontFamily: 'var(--font-fraunces, serif)' }}>
+                  CentuMania
+                </span>
+                <span className="text-[9px] text-text-muted font-mono tracking-wide leading-none">
+                  Winning is a Habit
+                </span>
+              </div>
             </div>
             {userName && (
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"

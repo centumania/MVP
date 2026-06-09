@@ -149,7 +149,7 @@ export default function ExamPage() {
 
   // ── Results ───────────────────────────────────────────────────
   if (phase === 'results' && result) {
-    return <ResultsScreen result={result} dayNumber={data?.exam.dayNumber ?? 0} />
+    return <ResultsScreen result={result} dayNumber={data?.exam.dayNumber ?? 0} examId={data?.exam.id ?? ''} />
   }
 
   // ── Already Submitted ─────────────────────────────────────────
@@ -394,7 +394,7 @@ export default function ExamPage() {
 }
 
 // ── Results Screen ─────────────────────────────────────────────────
-function ResultsScreen({ result, dayNumber }: { result: ExamSubmitResult; dayNumber: number }) {
+function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult; dayNumber: number; examId: string }) {
   const { score, total, percentage, answerKey } = result
   const router = useRouter()
 
@@ -420,6 +420,31 @@ function ResultsScreen({ result, dayNumber }: { result: ExamSubmitResult; dayNum
           <div className="h-full rounded-full transition-all duration-700"
             style={{ width: `${percentage}%`, background: col, boxShadow: `0 0 8px ${col}60` }} />
         </div>
+
+        {/* Mentor Report CTA */}
+        {examId && (
+          <div className="mt-6">
+            <button
+              onClick={() => router.push(`/mentor/${examId}`)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
+              style={{
+                background: 'rgba(111,207,143,0.08)',
+                border: '1px solid rgba(111,207,143,0.25)',
+                color: '#6fcf8f',
+                boxShadow: '0 0 16px rgba(111,207,143,0.08)',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(111,207,143,0.14)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(111,207,143,0.08)' }}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+              View Mentor Report
+            </button>
+            <p className="text-[10px] text-text-muted mt-1.5 font-mono" style={{ opacity: 0.5 }}>
+              AI-generated coaching report · ready in ~3 s
+            </p>
+          </div>
+        )}
 
         <div className="flex justify-center gap-8 mt-6">
           {[

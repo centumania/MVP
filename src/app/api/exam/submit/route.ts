@@ -23,6 +23,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
 import { getExamWindowStatus } from '@/src/lib/exam-window'
 import { rateLimit } from '@/src/lib/rate-limit'
+import { triggerMentorReportAfterSubmit } from '@/src/lib/mentor/service'
 import type { AnswerOption, ExamSubmitResult } from '@/src/types/database'
 
 export const dynamic = 'force-dynamic'
@@ -252,6 +253,23 @@ export async function POST(request: NextRequest) {
 
     // ── 12. Return result ─────────────────────────────────────────────
     const result: ExamSubmitResult = { score, total: totalMarks, percentage, answerKey }
+
+    // ── 13. Fire-and-forget mentor report generation ──────────────────
+    // Score returns immediately. Report is generated in the background
+    // (~2-3 s) and ready by the time the student navigates to it.
+    const correctCount   = answerKey.filter(a => a.isCorrect).length
+    const answeredCount  = Object.keys(answers).length
+
+    triggerMentorReportAfterSubmit({
+      userId:         user.id,
+      examId,
+      submissionId:   newSubmission.id,
+      overallScore:   percentage,
+      answeredCount,
+      totalQuestions: questions.length,
+      correctCount,
+    }).catch(err => console.error('[exam/submit] Mentor report generation failed:', err))
+
     return NextResponse.json(result, { status: 201 })
 
   } catch (err) {

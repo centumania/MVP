@@ -1,19 +1,15 @@
 /**
  * GET /api/materials/mindmap/[id]
  *
- * Serves the HTML MindMap for a material, gated by auth + payment.
- * Returns the HTML content directly (Content-Type: text/html) so it
- * can be rendered in an iframe inside the viewer page.
+ * Returns a short-lived presigned URL for the interactive HTML MindMap.
+ * The viewer loads the URL directly in an iframe — Supabase Storage serves
+ * the HTML without a restrictive CSP so all inline scripts run freely.
  *
  * Security:
- *  - JWT + payment_verified required
- *  - html_key resolved to a presigned URL server-side (never sent to client)
- *  - expiry check enforced (materials.expires_at)
- *  - Sandboxed via iframe sandbox attribute in the viewer
- *
- * Extension points (not yet implemented):
- *  - X-Completion-Tracking header reserved for future XP integration
- *  - X-Analytics-Session header reserved for future learning analytics
+ *  - JWT + payment_verified required before the URL is issued
+ *  - Presigned URL expires in 5 minutes (viewer must load within that window)
+ *  - html_key (internal storage path) is never sent to the client
+ *  - expires_at enforced: expired materials return 404
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
@@ -55,33 +51,24 @@ export async function GET(
     return NextResponse.json({ error: 'MindMap not found or expired' }, { status: 404 })
   }
 
-  // Generate a short-lived presigned URL for the HTML file
+  // 5-minute presigned URL — enough for the iframe to load the full HTML
   const { data: signedData, error: signError } = await supabase.storage
     .from('materials')
-    .createSignedUrl(material.html_key, 60) // 60-second expiry
+    .createSignedUrl(material.html_key, 300)
 
   if (signError || !signedData?.signedUrl) {
     console.error('[mindmap] Failed to sign URL:', signError)
     return NextResponse.json({ error: 'Failed to load MindMap' }, { status: 500 })
   }
 
-  // Fetch the HTML from storage and proxy it so the raw storage URL is never
-  // exposed to the client.
-  const htmlResponse = await fetch(signedData.signedUrl)
-  if (!htmlResponse.ok) {
-    return NextResponse.json({ error: 'Failed to retrieve MindMap' }, { status: 502 })
-  }
-
-  const html = await htmlResponse.text()
-
-  return new NextResponse(html, {
-    status: 200,
-    headers: {
-      'Content-Type':           'text/html; charset=utf-8',
-      'Cache-Control':          'no-store',
-      // Extension point headers (reserved for future analytics)
-      'X-Completion-Tracking': 'disabled',
-      'X-Analytics-Session':   'disabled',
+  // Return the presigned URL — the viewer uses it as the iframe src.
+  // Supabase Storage serves the HTML with no restrictive CSP, so all
+  // inline scripts and dynamic imports in the MindMap run freely.
+  return NextResponse.json(
+    { url: signedData.signedUrl },
+    {
+      status: 200,
+      headers: { 'Cache-Control': 'no-store' },
     },
-  })
+  )
 }

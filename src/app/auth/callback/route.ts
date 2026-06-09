@@ -1,37 +1,52 @@
 /**
  * GET /auth/callback
  *
- * Handles Supabase email confirmation redirect.
- * Supabase appends ?code=... to this URL after the user clicks
- * the confirmation link in their email.
+ * Fallback handler for Supabase email-confirmation redirects that still
+ * point here (e.g. old emails in users' inboxes before we changed
+ * emailRedirectTo to point directly to /auth/confirm).
  *
- * We exchange the code for a session and redirect to the dashboard.
- * If the exchange fails (expired or invalid link), redirect to login
- * with an error query param so the page can show a message.
+ * New registrations send emailRedirectTo → /auth/confirm directly,
+ * avoiding this extra server hop (better for mobile cross-browser scenarios).
+ *
+ * This route is kept for backward compatibility.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
-  const code  = searchParams.get('code')
-  const error = searchParams.get('error')
+  const code        = searchParams.get('code')
+  const error       = searchParams.get('error')
+  const errorDesc   = searchParams.get('error_description')
+  const type        = searchParams.get('type') // 'signup' | 'recovery' | 'magiclink'
 
-  // Supabase may redirect here with an error for expired links etc.
+  // Supabase may redirect here with an error (expired link, etc.)
   if (error) {
+    const msg = errorDesc ?? 'Link expired. Please try again.'
+    // For recovery (password reset), send back to forgot-password
+    if (type === 'recovery') {
+      return NextResponse.redirect(
+        `${origin}/auth/forgot-password?message=${encodeURIComponent(msg)}`
+      )
+    }
     return NextResponse.redirect(
-      `${origin}/auth/login?message=Link+expired.+Please+try+again.`
+      `${origin}/auth/confirm?message=${encodeURIComponent(msg)}`
     )
   }
 
   if (!code) {
-    return NextResponse.redirect(`${origin}/auth/login`)
+    // No code — let /auth/confirm try the hash-based (implicit) flow
+    return NextResponse.redirect(`${origin}/auth/confirm`)
   }
 
-  // The code exchange for a session must happen on the client side using
-  // the browser client (it sets localStorage/cookies). We redirect to a
-  // client page that handles the exchange, then redirects to /dashboard.
-  // The code is passed as a hash fragment to keep it out of server logs.
+  // For password recovery, forward to reset-password page with code
+  if (type === 'recovery') {
+    return NextResponse.redirect(
+      `${origin}/auth/reset-password?code=${encodeURIComponent(code)}`
+    )
+  }
+
+  // For email verification (signup / magiclink), forward to confirm page
   return NextResponse.redirect(
     `${origin}/auth/confirm?code=${encodeURIComponent(code)}`
   )

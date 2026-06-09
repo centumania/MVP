@@ -4,12 +4,14 @@ import { useState, FormEvent } from 'react'
 import Link from 'next/link'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { Button } from '@/src/components/ui/Button'
+import { LogoMark } from '@/src/components/ui/Logo'
 
 export default function RegisterPage() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', password: '' })
-  const [error, setError]     = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [form, setForm]           = useState({ name: '', phone: '', email: '', password: '' })
+  const [showPassword, setShowPw] = useState(false)
+  const [error, setError]         = useState<string | null>(null)
+  const [success, setSuccess]     = useState(false)
+  const [loading, setLoading]     = useState(false)
 
   function update(field: keyof typeof form) {
     return (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -24,12 +26,13 @@ export default function RegisterPage() {
     if (form.password.length < 8) { setError('Password must be at least 8 characters.'); return }
     setLoading(true)
     try {
+      // emailRedirectTo → /auth/confirm directly (mobile-safe: no intermediate server hop)
       const { error: authError } = await getSupabaseBrowserClient().auth.signUp({
         email: form.email.trim().toLowerCase(),
         password: form.password,
         options: {
           data: { name: form.name.trim(), phone: form.phone },
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${window.location.origin}/auth/confirm`,
         },
       })
       if (authError) {
@@ -65,8 +68,12 @@ export default function RegisterPage() {
             Confirmation link sent to{' '}
             <span className="font-semibold text-text">{form.email}</span>
           </p>
-          <p className="text-sm mb-8 text-text-muted">
-            Click the link, then contact your coordinator to complete enrolment.
+          <p className="text-sm mb-3 text-text-muted">
+            Click the link to verify, then contact your coordinator to complete enrolment.
+          </p>
+          <p className="text-xs mb-8 px-4 py-3 rounded-xl text-text-muted"
+            style={{ background: 'rgba(94,200,192,0.06)', border: '1px solid rgba(94,200,192,0.15)' }}>
+            📱 On mobile — open the verification link in the same browser you used to register.
           </p>
           <Link href="/auth/login" className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors">
             Back to sign in →
@@ -76,34 +83,20 @@ export default function RegisterPage() {
     )
   }
 
-  const FIELDS = [
-    { id: 'name',     label: 'Full name',     type: 'text',     placeholder: 'Your full name',   autoComplete: 'name',         value: form.name,     onChange: update('name') },
-    { id: 'phone',    label: 'Mobile number', type: 'tel',      placeholder: '9876543210',        autoComplete: 'tel',          value: form.phone,    onChange: (e: React.ChangeEvent<HTMLInputElement>) => setForm(p => ({ ...p, phone: e.target.value.replace(/\D/g, '').slice(0, 10) })) },
-    { id: 'email',    label: 'Email address', type: 'email',    placeholder: 'you@example.com',  autoComplete: 'email',        value: form.email,    onChange: update('email') },
-    { id: 'password', label: 'Password',      type: 'password', placeholder: 'Min 8 characters', autoComplete: 'new-password', value: form.password, onChange: update('password') },
-  ]
-
   return (
     <div className="min-h-screen flex items-center justify-center px-6 py-12" style={{ background: '#0e1410' }}>
       <div className="w-full max-w-sm">
 
         {/* Logo */}
-        <div className="flex items-center gap-2.5 mb-10">
-          <div style={{ filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.4))' }}>
-            <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-              <circle cx="16" cy="16" r="15" stroke="url(#rg1)" strokeWidth="1.5"/>
-              <circle cx="16" cy="16" r="7" fill="url(#rg1)"/>
-              <defs>
-                <linearGradient id="rg1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="#6fcf8f"/>
-                  <stop offset="100%" stopColor="#3fae6a"/>
-                </linearGradient>
-              </defs>
-            </svg>
+        <div className="flex items-center gap-2.5 mb-10"
+          style={{ filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.4))' }}>
+          <LogoMark size={24} />
+          <div>
+            <span className="text-base font-bold text-text tracking-tight block" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+              CentuMania
+            </span>
+            <span className="text-[10px] text-text-muted font-mono tracking-wide">Winning is a Habit</span>
           </div>
-          <span className="text-base font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-            Centumania
-          </span>
         </div>
 
         {/* Batch badge */}
@@ -119,26 +112,65 @@ export default function RegisterPage() {
           style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
           Create your account
         </h1>
-        <p className="text-sm mb-8 text-text-muted">
-          Begin your 25-day intensive programme.
-        </p>
+        <p className="text-sm mb-8 text-text-muted">Begin your 25-day intensive programme.</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {FIELDS.map(f => (
-            <div key={f.id}>
-              <label htmlFor={f.id} className="block text-xs font-semibold uppercase tracking-widest mb-2 text-text-muted font-mono">
-                {f.label}
-              </label>
+          {/* Name */}
+          <div>
+            <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-widest mb-2 text-text-muted font-mono">
+              Full name
+            </label>
+            <input id="name" type="text" required autoComplete="name"
+              placeholder="Your full name" value={form.name} onChange={update('name')}
+              className="input-premium" />
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label htmlFor="phone" className="block text-xs font-semibold uppercase tracking-widest mb-2 text-text-muted font-mono">
+              Mobile number
+            </label>
+            <input id="phone" type="tel" required autoComplete="tel"
+              placeholder="9876543210" value={form.phone}
+              onChange={e => setForm(p => ({ ...p, phone: e.target.value.replace(/\D/g, '').slice(0, 10) }))}
+              className="input-premium" />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-widest mb-2 text-text-muted font-mono">
+              Email address
+            </label>
+            <input id="email" type="email" required autoComplete="email"
+              placeholder="you@example.com" value={form.email} onChange={update('email')}
+              className="input-premium" />
+          </div>
+
+          {/* Password + toggle */}
+          <div>
+            <label htmlFor="password" className="block text-xs font-semibold uppercase tracking-widest mb-2 text-text-muted font-mono">
+              Password
+            </label>
+            <div className="relative">
               <input
-                id={f.id} type={f.type} required
-                autoComplete={f.autoComplete}
-                placeholder={f.placeholder}
-                value={f.value}
-                onChange={f.onChange}
-                className="input-premium"
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                required autoComplete="new-password"
+                placeholder="Min 8 characters"
+                value={form.password} onChange={update('password')}
+                className="input-premium pr-11"
               />
+              <button
+                type="button"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                onClick={() => setShowPw(v => !v)}
+                className="absolute inset-y-0 right-0 flex items-center px-3 text-text-muted hover:text-text-secondary transition-colors"
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+              </button>
             </div>
-          ))}
+          </div>
 
           {error && (
             <div className="flex items-start gap-2.5 p-3 rounded-xl"
@@ -169,5 +201,23 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+function EyeIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+  )
+}
+function EyeOffIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+      <line x1="1" y1="1" x2="23" y2="23"/>
+    </svg>
   )
 }

@@ -35,12 +35,10 @@ export default function MindMapViewer() {
   const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const [state, setState]     = useState<LoadState>('loading')
-  const [htmlSrc, setHtmlSrc] = useState<string>('')
+  const [iframeSrc, setSrc]   = useState<string>('')
   const [title, setTitle]     = useState<string>('Study Map')
 
   useEffect(() => {
-    let objectUrl: string | null = null
-
     async function load() {
       const { data: { session } } = await getSupabaseBrowserClient().auth.getSession()
       if (!session) { router.replace('/auth/login'); return }
@@ -54,18 +52,18 @@ export default function MindMapViewer() {
       if (res.status === 404) { setState('expired'); return }
       if (!res.ok)             { setState('error'); return }
 
-      const html = await res.text()
-      const blob = new Blob([html], { type: 'text/html' })
-      objectUrl  = URL.createObjectURL(blob)
-      setHtmlSrc(objectUrl)
+      // API now returns { url } — a 5-min presigned Supabase Storage URL.
+      // Loading the iframe from this URL (different origin: *.supabase.co)
+      // means the HTML is served with Supabase's own response headers,
+      // which have no restrictive CSP. All inline scripts, dynamic imports,
+      // and localStorage inside the MindMap work without any sandbox limits.
+      const { url } = await res.json()
+      setSrc(url)
       setState('ready')
-
-      // Extension point: fired on load
       onMindMapLoad(id)
     }
 
     load()
-    return () => { if (objectUrl) URL.revokeObjectURL(objectUrl) }
   }, [id, router])
 
   return (
@@ -189,23 +187,24 @@ export default function MindMapViewer() {
           </div>
         )}
 
-        {/* MindMap iframe — sandboxed for security */}
-        {state === 'ready' && htmlSrc && (
+        {/* MindMap iframe — loads directly from Supabase Storage */}
+        {state === 'ready' && iframeSrc && (
           <iframe
             ref={iframeRef}
-            src={htmlSrc}
+            src={iframeSrc}
             title={title}
             className="w-full h-full absolute inset-0 border-0"
             style={{ minHeight: 'calc(100vh - 48px)' }}
-            // Sandbox: allow scripts (needed for interactive maps) but block
-            // top-level navigation, form submission, and popups.
-            sandbox="allow-scripts allow-same-origin"
+            // No sandbox: the iframe loads from *.supabase.co (cross-origin).
+            // Supabase Storage serves the HTML without a restrictive CSP, so
+            // all inline scripts, dynamic import() calls, and localStorage work.
+            // The parent page's CSP only controls WHICH origins can be framed
+            // (frame-src), not what scripts inside the frame can do.
             onLoad={() => {
-              // Try to read the title from the iframe document
               try {
                 const doc = iframeRef.current?.contentDocument
                 if (doc?.title) setTitle(doc.title)
-              } catch { /* cross-origin — ignore */ }
+              } catch { /* cross-origin — expected */ }
             }}
             aria-label={`Interactive study map: ${title}`}
           />
