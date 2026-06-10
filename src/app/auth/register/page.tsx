@@ -26,22 +26,36 @@ export default function RegisterPage() {
     if (form.password.length < 8) { setError('Password must be at least 8 characters.'); return }
     setLoading(true)
     try {
-      // emailRedirectTo → /auth/confirm directly (mobile-safe: no intermediate server hop)
-      const { error: authError } = await getSupabaseBrowserClient().auth.signUp({
-        email: form.email.trim().toLowerCase(),
-        password: form.password,
-        options: {
-          data: { name: form.name.trim(), phone: form.phone },
-          emailRedirectTo: `${window.location.origin}/auth/confirm`,
-        },
+      // Step 1 — create user server-side (email pre-confirmed, no rate limit)
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          phone: form.phone,
+          email: form.email.trim().toLowerCase(),
+          password: form.password,
+        }),
       })
-      if (authError) {
-        setError(authError.message.includes('already registered')
-          ? 'This email is already registered. Please sign in.'
-          : authError.message)
+      const body = await res.json()
+      if (!res.ok) {
+        setError(body.error ?? 'Registration failed. Please try again.')
         return
       }
-      setSuccess(true)
+
+      // Step 2 — sign in immediately (no "check inbox" step)
+      const { error: signInError } = await getSupabaseBrowserClient().auth.signInWithPassword({
+        email: form.email.trim().toLowerCase(),
+        password: form.password,
+      })
+      if (signInError) {
+        // Account created but sign-in failed — send to login page
+        setSuccess(true)
+        return
+      }
+
+      // Step 3 — go straight to dashboard
+      window.location.href = '/dashboard'
     } catch {
       setError('Something went wrong. Please try again.')
     } finally {
@@ -62,21 +76,18 @@ export default function RegisterPage() {
           </div>
           <h2 className="text-2xl font-bold text-text tracking-tight mb-2"
             style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-            Check your inbox
+            Account created!
           </h2>
-          <p className="text-sm mb-1 text-text-muted">
-            Confirmation link sent to{' '}
-            <span className="font-semibold text-text">{form.email}</span>
-          </p>
           <p className="text-sm mb-3 text-text-muted">
-            Click the link to verify, then contact your coordinator to complete enrolment.
+            Welcome to CentuMania,{' '}
+            <span className="font-semibold text-text">{form.name}</span>.
           </p>
           <p className="text-xs mb-8 px-4 py-3 rounded-xl text-text-muted"
-            style={{ background: 'rgba(94,200,192,0.06)', border: '1px solid rgba(94,200,192,0.15)' }}>
-            📱 On mobile — open the verification link in the same browser you used to register.
+            style={{ background: 'rgba(111,207,143,0.06)', border: '1px solid rgba(111,207,143,0.15)' }}>
+            Your account is ready. Sign in to access your dashboard.
           </p>
           <Link href="/auth/login" className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors">
-            Back to sign in →
+            Sign in →
           </Link>
         </div>
       </div>
@@ -112,7 +123,7 @@ export default function RegisterPage() {
           style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
           Create your account
         </h1>
-        <p className="text-sm mb-8 text-text-muted">Begin your 25-day intensive programme.</p>
+        <p className="text-sm mb-8 text-text-muted">Begin your 15-day intensive programme.</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
