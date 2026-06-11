@@ -76,7 +76,7 @@ export default function AdminPayments() {
   const list = tab === 'pending' ? pending : verified
 
   return (
-    <div className="p-8 max-w-5xl">
+    <div className="p-4 sm:p-6 md:p-8 max-w-5xl">
 
       {toast && (
         <div className="fixed top-4 right-4 z-50 text-sm px-4 py-2.5 rounded-lg shadow-lg"
@@ -92,7 +92,7 @@ export default function AdminPayments() {
         <p className="text-sm text-text-muted mt-0.5 font-mono">
           <span style={{ color: '#e7b14c' }}>{pending.length} pending</span>
           {' · '}
-          <span style={{ color: '#6fcf8f' }}>{verified.length} verified</span>
+          <span style={{ color: '#4ADE80' }}>{verified.length} verified</span>
         </p>
       </div>
 
@@ -116,7 +116,7 @@ export default function AdminPayments() {
       {loading ? (
         <div className="rounded-xl p-12 text-center" style={CARD}>
           <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto"
-            style={{ borderColor: 'rgba(111,207,143,0.3)', borderTopColor: '#6fcf8f' }} />
+            style={{ borderColor: 'rgba(74,222,128,0.3)', borderTopColor: '#4ADE80' }} />
         </div>
       ) : list.length === 0 ? (
         <div className="rounded-xl p-12 text-center" style={CARD}>
@@ -125,7 +125,7 @@ export default function AdminPayments() {
           </p>
         </div>
       ) : (
-        <div className="rounded-xl overflow-hidden" style={CARD}>
+        <div className="rounded-xl overflow-hidden table-scroll" style={CARD}>
           {tab === 'pending' && (
             <div className="px-4 py-3 flex items-center gap-2"
               style={{ background: 'rgba(231,177,76,0.06)', borderBottom: '1px solid rgba(231,177,76,0.15)' }}>
@@ -164,9 +164,9 @@ export default function AdminPayments() {
                       <button
                         onClick={() => verify(s.id)}
                         className="px-4 py-1.5 text-xs font-medium rounded-lg transition-colors font-mono"
-                        style={{ background: '#3fae6a', color: '#06140c' }}
+                        style={{ background: '#22C55E', color: '#06140c' }}
                         onMouseEnter={e => (e.currentTarget.style.background = '#2a8e57')}
-                        onMouseLeave={e => (e.currentTarget.style.background = '#3fae6a')}
+                        onMouseLeave={e => (e.currentTarget.style.background = '#22C55E')}
                       >
                         Verify Payment
                       </button>

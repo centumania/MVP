@@ -1,9 +1,8 @@
 /**
  * CentuMania Logo Components
  *
- * Design concept: Archer's bullseye — precision, mastery, target achievement.
- * Three concentric rings (target) + arrow piercing the centre.
- * Green gradient to match brand palette.
+ * Design: Three concentric rings (target/precision) — clean, minimal.
+ * Wordmark: "Centu" in text colour · "Mania" in primary green.
  *
  * Exports:
  *   LogoMark  — icon-only (SVG)
@@ -17,9 +16,11 @@ import { useId } from 'react'
 
 // ─── LogoMark — icon only ─────────────────────────────────────────────────────
 export function LogoMark({ size = 32, glow = false }: { size?: number; glow?: boolean }) {
-  // useId() is React 18 SSR-safe: same value on server and client hydration.
-  // Replace colons (React's separator char) — SVG IDs must not contain colons.
   const id = useId().replace(/:/g, 'x')
+
+  const glowStyle = glow
+    ? { filter: 'drop-shadow(0 0 8px rgba(74,222,128,0.55))' }
+    : undefined
 
   return (
     <svg
@@ -29,32 +30,50 @@ export function LogoMark({ size = 32, glow = false }: { size?: number; glow?: bo
       fill="none"
       aria-label="CentuMania logo"
       role="img"
-      style={glow ? { filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.55))' } : undefined}
+      style={glowStyle}
     >
       <defs>
-        <linearGradient id={id} x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-          <stop offset="0%"   stopColor="#6fcf8f"/>
-          <stop offset="100%" stopColor="#3fae6a"/>
-        </linearGradient>
+        <radialGradient id={`${id}g`} cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stopColor="#6AE598" stopOpacity="1" />
+          <stop offset="100%" stopColor="#4ADE80" stopOpacity="1" />
+        </radialGradient>
       </defs>
 
-      {/* ── Target rings ─────────────────────────────────────────── */}
-      <circle cx="17" cy="15" r="13.5" stroke={`url(#${id})`} strokeWidth="1.4" opacity="0.55"/>
-      <circle cx="17" cy="15" r="8.5"  stroke={`url(#${id})`} strokeWidth="1.2" opacity="0.75"/>
-      <circle cx="17" cy="15" r="4"    stroke={`url(#${id})`} strokeWidth="1.1" opacity="0.9"/>
-      <circle cx="17" cy="15" r="1.8"  fill={`url(#${id})`}/>
+      {/* ── Outer ring ──────────────────────────────────────────── */}
+      <circle
+        cx="16" cy="16" r="13.5"
+        stroke="#4ADE80"
+        strokeWidth="1.4"
+        opacity="0.28"
+      />
 
-      {/* ── Arrow ─────────────────────────────────────────────────── */}
-      <line x1="3" y1="29" x2="13.8" y2="17.2"
-        stroke={`url(#${id})`} strokeWidth="1.6" strokeLinecap="round"/>
-      <polygon points="17,15  13.2,16.8  14.8,12.8" fill={`url(#${id})`}/>
-      <path d="M3 29 L5.5 24.5 M3 29 L7.5 27"
-        stroke={`url(#${id})`} strokeWidth="1.2" strokeLinecap="round"/>
+      {/* ── Mid ring ────────────────────────────────────────────── */}
+      <circle
+        cx="16" cy="16" r="8.5"
+        stroke="#4ADE80"
+        strokeWidth="1.3"
+        opacity="0.58"
+      />
+
+      {/* ── Inner ring ──────────────────────────────────────────── */}
+      <circle
+        cx="16" cy="16" r="4"
+        stroke="#4ADE80"
+        strokeWidth="1.2"
+        opacity="0.82"
+      />
+
+      {/* ── Bullseye dot ────────────────────────────────────────── */}
+      <circle
+        cx="16" cy="16" r="2"
+        fill={`url(#${id}g)`}
+        style={{ filter: `drop-shadow(0 0 ${Math.max(2, size * 0.1)}px rgba(74,222,128,0.9))` }}
+      />
     </svg>
   )
 }
 
-// ─── LogoFull — icon + wordmark ───────────────────────────────────────────────
+// ─── LogoFull — icon + bi-color wordmark ─────────────────────────────────────
 export function LogoFull({
   size = 26,
   glow = false,
@@ -64,16 +83,26 @@ export function LogoFull({
   glow?:      boolean
   className?: string
 }) {
+  const fontSize   = Math.round(size * 0.58)
+  const glowFilter = glow
+    ? { filter: 'drop-shadow(0 0 8px rgba(74,222,128,0.45))' }
+    : undefined
+
   return (
-    <div className={`flex items-center gap-2.5 ${className}`}>
-      <div className="shrink-0" style={glow ? { filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.45))' } : undefined}>
+    <div className={`flex items-center gap-2 ${className}`}>
+      <div className="shrink-0" style={glowFilter}>
         <LogoMark size={size} />
       </div>
       <span
-        className="font-bold text-text tracking-tight"
-        style={{ fontFamily: 'var(--font-fraunces, serif)', fontSize: size * 0.55 }}
+        className="font-black tracking-tight leading-none select-none"
+        style={{
+          fontFamily: 'var(--font-fraunces, serif)',
+          fontSize,
+          letterSpacing: '-0.025em',
+        }}
       >
-        CentuMania
+        <span style={{ color: 'var(--color-text, #e8ead8)' }}>Centu</span>
+        <span style={{ color: '#4ADE80' }}>Mania</span>
       </span>
     </div>
   )

@@ -21,33 +21,23 @@ export async function GET(request: NextRequest) {
     .eq('is_active', true)
     .maybeSingle()
 
-  if (!batch) {
-    return NextResponse.json({ materials: [], batchId: null })
-  }
+  if (!batch) return NextResponse.json({ materials: [], batchId: null })
 
   const { data: materials, error } = await supabase
     .from('materials')
-    .select('id, day_number, title, video_url, pdf_key, ppt_key, html_key, published_at, expires_at')
+    .select('id, day_number, title, html_url, published_at, expires_at')
     .eq('batch_id', batch.id)
     .order('day_number', { ascending: true })
 
-  if (error) {
-    return NextResponse.json({ error: 'Failed to fetch materials' }, { status: 500 })
-  }
+  if (error) return NextResponse.json({ error: 'Failed to fetch materials' }, { status: 500 })
 
   const now = new Date().toISOString()
   const enriched = (materials ?? []).map(m => ({
     id:          m.id,
     dayNumber:   m.day_number,
     title:       m.title,
-    hasVideo:    !!m.video_url,
-    hasPDF:      !!m.pdf_key,
-    hasPPT:      !!m.ppt_key,
-    hasMindMap:  !!m.html_key,
-    videoUrl:    m.video_url,
-    pdfKey:      m.pdf_key,
-    pptKey:      m.ppt_key,
-    htmlKey:     m.html_key,
+    htmlUrl:     m.html_url,
+    hasContent:  !!m.html_url,
     publishedAt: m.published_at,
     expiresAt:   m.expires_at,
     isExpired:   m.expires_at < now,
@@ -69,14 +59,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { batchId, dayNumber, title, videoUrl, pdfKey, pptKey, htmlKey, publishedAt } = body as Record<string, string>
+  const { batchId, dayNumber, title, htmlUrl, publishedAt } = body as Record<string, string>
 
   if (!batchId || !dayNumber || !title) {
     return NextResponse.json({ error: 'Missing required: batchId, dayNumber, title' }, { status: 400 })
   }
 
-  if (!videoUrl && !pdfKey && !pptKey && !htmlKey) {
-    return NextResponse.json({ error: 'At least one content source required (video, PDF, PPT, or HTML mind map)' }, { status: 400 })
+  if (!htmlUrl?.trim()) {
+    return NextResponse.json({ error: 'Hosted HTML URL is required' }, { status: 400 })
   }
 
   const publishTime = publishedAt ? new Date(publishedAt) : new Date()
@@ -88,12 +78,14 @@ export async function POST(request: NextRequest) {
       batch_id:     batchId,
       day_number:   Number(dayNumber),
       title:        String(title).trim(),
-      video_url:    videoUrl || null,
-      pdf_key:      pdfKey   || null,
-      ppt_key:      pptKey   || null,
-      html_key:     htmlKey  || null,
+      html_url:     String(htmlUrl).trim(),
       published_at: publishTime.toISOString(),
       expires_at:   expiresAt.toISOString(),
+      // Legacy columns kept nullable in schema
+      video_url:    null,
+      pdf_key:      null,
+      ppt_key:      null,
+      html_key:     null,
     })
     .select()
     .single()

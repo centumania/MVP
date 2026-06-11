@@ -24,7 +24,7 @@ export default function ExamTodayPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-3" style={{ background: '#0e1410' }}>
       <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
-        style={{ borderColor: 'rgba(111,207,143,0.3)', borderTopColor: '#6fcf8f' }} />
+        style={{ borderColor: 'rgba(74,222,128,0.3)', borderTopColor: '#4ADE80' }} />
       <p className="text-sm text-text-secondary">Loading today&apos;s exam…</p>
     </div>
   )

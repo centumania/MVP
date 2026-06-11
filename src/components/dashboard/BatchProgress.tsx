@@ -24,8 +24,8 @@ export function BatchProgress({ attended, total, pct }: BatchProgressProps) {
             className="rounded-sm transition-all"
             style={{
               width: 20, height: 20,
-              background: done ? '#3fae6a' : '#1b271f',
-              border: `1px solid ${done ? '#3fae6a' : '#27342b'}`,
+              background: done ? '#22C55E' : '#1b271f',
+              border: `1px solid ${done ? '#22C55E' : '#27342b'}`,
               boxShadow: done ? '0 0 4px rgba(63,174,106,0.5)' : undefined,
             }}
           >

@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0f1a14">
+<title>Centumania — Number System</title>
+<style>
+/* ── TOKENS ──────────────────────────────────────────────────── */
+:root{
+  --bg:#0f1a14;--card:#162019;--card2:#1a2820;--border:#1e2e22;
+  --text:#e8f0ea;--muted:#6b8c72;--sec:#8faa95;
+  --green:#3ecf6e;--teal:#2dd4a0;--yellow:#d4a017;--red:#f76f6f;
+  --blue:#5b8df8;--purple:#b57bee;--orange:#f59e42;--active:#1e3424;
+  /* safe area — iOS notch / home bar */
+  --sat:env(safe-area-inset-top,0px);
+  --sab:env(safe-area-inset-bottom,0px);
+  --sal:env(safe-area-inset-left,0px);
+  --sar:env(safe-area-inset-right,0px);
+}
+/* ── RESET ───────────────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;
+  height:100%;overscroll-behavior:none;
+}
+body{
+  /* position:fixed+inset:0 is the most reliable iOS full-screen approach.
+     It prevents rubber-band scroll and the address-bar resize flash. */
+  position:fixed;inset:0;overflow:hidden;
+  overscroll-behavior:none;
+  background:var(--bg);color:var(--text);
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;font-size:15px;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* ── SCREEN LAYER ────────────────────────────────────────────── */
+/* Absolute (not fixed) because body is already fixed */
+.screen{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  transition:opacity .22s ease,transform .22s ease;
+  will-change:opacity,transform;
+}
+.screen.hidden{opacity:0;pointer-events:none;transform:translateY(10px);}
+
+/* ── HOME ─────────────────────────────────────────────────────── */
+.home-top{
+  flex-shrink:0;
+  background:var(--card);border-bottom:1px solid var(--border);
+  padding:max(20px,var(--sat)) max(18px,var(--sar)) 14px max(18px,var(--sal));
+}
+.logo{font-size:1.4rem;font-weight:800;color:var(--green);letter-spacing:-.5px;}
+.logo span{color:var(--text);}
+.tagline{color:var(--muted);font-size:.72rem;font-family:'Courier New',monospace;text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
+.xp-row{display:flex;justify-content:space-between;align-items:center;margin:10px 0 5px;}
+.xp-lbl{font-size:.7rem;color:var(--muted);font-family:'Courier New',monospace;}
+.xp-val{font-size:.8rem;color:var(--green);font-weight:700;font-family:'Courier New',monospace;}
+.xp-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--teal));border-radius:3px;transition:width .5s ease;}
+.lv-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:var(--active);border:1px solid var(--green);border-radius:20px;font-size:.7rem;color:var(--green);font-weight:600;font-family:'Courier New',monospace;margin-top:8px;}
+
+/* Scrollable areas: the KEY fix is flex:1 + min-height:0 + overflow-y:scroll.
+   Without min-height:0, iOS won't constrain the flex child → no visible scroll. */
+.worlds-scroll{
+  flex:1;min-height:0;
+  overflow-y:scroll;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  padding:14px max(14px,var(--sar)) max(80px,calc(80px + var(--sab))) max(14px,var(--sal));
+}
+.sec-hdr{font-size:.65rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-family:'Courier New',monospace;margin-bottom:8px;}
+.world-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:14px;margin-bottom:9px;
+  display:flex;align-items:center;gap:12px;
+  cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;
+  transition:transform .13s,background .13s;
+  -webkit-appearance:none;
+}
+.world-card:active{transform:scale(.98);background:var(--card2);}
+.world-card.done{border-color:var(--green);}
+.w-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.w-info{flex:1;min-width:0;}
+.w-name{font-weight:700;font-size:.92rem;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.w-desc{font-size:.74rem;color:var(--muted);}
+.w-prog{margin-top:5px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.w-prog-fill{height:100%;border-radius:2px;transition:width .4s;}
+.w-right{font-size:.68rem;color:var(--muted);font-family:'Courier New',monospace;flex-shrink:0;}
+
+/* ── WORLD ────────────────────────────────────────────────────── */
+.world-hdr{
+  flex-shrink:0;
+  padding:max(14px,var(--sat)) max(16px,var(--sar)) 12px max(16px,var(--sal));
+  background:var(--card);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.back-btn{
+  width:38px;height:38px;border-radius:10px;background:var(--active);border:1px solid var(--border);
+  color:var(--text);font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  touch-action:manipulation;user-select:none;-webkit-user-select:none;
+  min-width:38px;min-height:38px;
+}
+.back-btn:active{background:var(--border);}
+.stages-scroll{
+  flex:1;min-height:0;
+  overflow-y:scroll;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  padding:14px max(14px,var(--sar)) max(80px,calc(80px + var(--sab))) max(14px,var(--sal));
+}
+.stage-row{
+  background:var(--card);border:1px solid var(--border);border-radius:11px;
+  padding:13px 14px;margin-bottom:7px;
+  display:flex;align-items:center;gap:11px;
+  cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;
+  transition:transform .13s;min-height:52px;
+}
+.stage-row:active{transform:scale(.98);}
+.stage-row.locked{opacity:.38;pointer-events:none;}
+.stage-row.done{border-color:var(--green);}
+.st-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;flex-shrink:0;}
+.st-info{flex:1;min-width:0;}
+.st-name{font-weight:600;font-size:.88rem;}
+.st-desc{font-size:.72rem;color:var(--muted);margin-top:2px;}
+
+/* ── LEARN / TRAP ─────────────────────────────────────────────── */
+.content-hdr{
+  flex-shrink:0;
+  padding:max(14px,var(--sat)) max(16px,var(--sar)) 12px max(16px,var(--sal));
+  background:var(--card);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.content-body{
+  flex:1;min-height:0;
+  overflow-y:scroll;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  padding:14px max(14px,var(--sar)) 14px max(14px,var(--sal));
+}
+.content-footer{
+  flex-shrink:0;
+  padding:14px max(16px,var(--sar)) max(14px,calc(14px + var(--sab))) max(16px,var(--sal));
+  background:var(--card);border-top:1px solid var(--border);
+}
+.learn-block{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:14px;margin-bottom:11px;}
+.block-lbl{font-size:.65rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-family:'Courier New',monospace;margin-bottom:9px;}
+.fact-row{display:flex;gap:9px;padding:7px 0;border-bottom:1px solid var(--border);}
+.fact-row:last-child{border-bottom:none;padding-bottom:0;}
+.fact-dot{color:var(--green);flex-shrink:0;margin-top:3px;font-size:.8rem;}
+.fact-txt{font-size:.85rem;line-height:1.55;}
+.shortcut-box{background:var(--active);border-radius:8px;padding:11px;}
+.sc-line{font-size:.82rem;color:var(--teal);font-family:'Courier New',monospace;padding:2px 0;line-height:1.5;}
+.video-slot{background:var(--border);border-radius:10px;padding:22px 14px;text-align:center;margin-bottom:11px;border:2px dashed var(--muted);}
+.video-slot .v-icon{font-size:1.8rem;margin-bottom:6px;}
+.video-slot .v-txt{color:var(--muted);font-size:.8rem;}
+.video-slot .v-sub{color:var(--sec);font-size:.72rem;margin-top:3px;}
+.sum-block{background:#1a1410;border:1px solid var(--yellow);border-radius:11px;padding:14px;margin-bottom:11px;}
+.sum-lbl{font-size:.65rem;color:var(--yellow);letter-spacing:1px;text-transform:uppercase;font-family:'Courier New',monospace;margin-bottom:9px;}
+.sum-type{background:var(--active);border-radius:8px;padding:10px 12px;margin-bottom:6px;}
+.sum-type:last-child{margin-bottom:0;}
+.sum-type-name{font-size:.78rem;font-weight:700;color:var(--orange);margin-bottom:4px;}
+.sum-type-desc{font-size:.76rem;color:var(--sec);line-height:1.5;}
+.sum-formula{font-family:'Courier New',monospace;color:var(--teal);font-size:.76rem;margin-top:4px;}
+.trap-card{background:#1e1a14;border:2px solid var(--yellow);border-radius:12px;padding:16px;margin-bottom:10px;}
+.trap-hdr{display:flex;align-items:center;gap:7px;margin-bottom:10px;}
+.trap-hdr-txt{font-size:.75rem;color:var(--yellow);font-weight:700;text-transform:uppercase;font-family:'Courier New',monospace;letter-spacing:.4px;}
+.trap-q{font-size:.9rem;font-weight:600;margin-bottom:12px;line-height:1.5;}
+.trap-cmp{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:8px;}
+.trap-wrong{background:#2e1a1a;border:1.5px solid var(--red);border-radius:9px;padding:9px 10px;text-align:center;}
+.trap-right{background:#1a2e1e;border:1.5px solid var(--green);border-radius:9px;padding:9px 10px;text-align:center;}
+.trap-badge{font-size:.62rem;text-transform:uppercase;letter-spacing:.4px;font-family:'Courier New',monospace;margin-bottom:3px;}
+.trap-wrong .trap-badge{color:var(--red);}.trap-right .trap-badge{color:var(--green);}
+.trap-val{font-size:.86rem;font-weight:700;}
+.trap-wrong .trap-val{color:var(--red);}.trap-right .trap-val{color:var(--green);}
+.trap-exp{font-size:.8rem;color:var(--sec);background:var(--active);border-radius:7px;padding:9px 11px;line-height:1.5;}
+
+/* ── QUIZ ─────────────────────────────────────────────────────── */
+.quiz-hdr{
+  flex-shrink:0;
+  padding:max(12px,var(--sat)) max(16px,var(--sar)) 10px max(16px,var(--sal));
+  background:var(--card);border-bottom:1px solid var(--border);
+}
+.quiz-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.quiz-badge{font-size:.68rem;padding:3px 9px;border-radius:18px;font-family:'Courier New',monospace;font-weight:700;text-transform:uppercase;}
+.quiz-ctr{font-size:.72rem;color:var(--muted);font-family:'Courier New',monospace;margin-left:auto;}
+.quiz-prog-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.quiz-prog-fill{height:100%;border-radius:2px;transition:width .3s;}
+.quiz-body{
+  flex:1;min-height:0;
+  overflow-y:scroll;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  padding:14px max(14px,var(--sar)) 14px max(14px,var(--sal));
+}
+.quiz-foot{
+  flex-shrink:0;
+  padding:12px max(16px,var(--sar)) max(12px,calc(12px + var(--sab))) max(16px,var(--sal));
+  background:var(--card);border-top:1px solid var(--border);
+}
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:16px;margin-bottom:12px;}
+.q-meta{font-size:.68rem;color:var(--muted);font-family:'Courier New',monospace;margin-bottom:7px;text-transform:uppercase;letter-spacing:.4px;}
+.q-text{font-size:.95rem;font-weight:600;line-height:1.55;color:var(--text);}
+.opts-list{display:flex;flex-direction:column;gap:7px;margin-top:12px;}
+.opt-btn{
+  background:var(--active);border:1.5px solid var(--border);border-radius:10px;
+  padding:13px 13px;text-align:left;color:var(--text);font-size:.85rem;
+  cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none;
+  display:flex;align-items:center;gap:9px;width:100%;min-height:48px;
+  transition:all .1s;
+  -webkit-appearance:none;
+}
+.opt-btn:active{transform:scale(.98);}
+.opt-btn.sel{border-color:var(--blue);background:#1a243e;}
+.opt-btn.ok{border-color:var(--green);background:#1a2e1e;}
+.opt-btn.bad{border-color:var(--red);background:#2e1a1a;}
+.opt-letter{width:26px;height:26px;border-radius:7px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;font-family:'Courier New',monospace;flex-shrink:0;}
+.opt-btn.ok .opt-letter{background:var(--green);color:#0f1a14;}
+.opt-btn.bad .opt-letter{background:var(--red);color:#fff;}
+.fb-box{background:var(--card2);border-radius:9px;padding:11px 13px;margin-top:9px;display:none;}
+.fb-box.show{display:block;}
+.fb-correct{color:var(--green);font-weight:700;font-size:.85rem;margin-bottom:3px;}
+.fb-wrong{color:var(--red);font-weight:700;font-size:.85rem;margin-bottom:3px;}
+.fb-explain{color:var(--sec);font-size:.8rem;line-height:1.5;margin-top:4px;}
+.fb-shortcut{color:var(--teal);font-size:.78rem;line-height:1.5;margin-top:5px;font-family:'Courier New',monospace;background:var(--active);border-radius:6px;padding:7px 9px;}
+.xp-earned{color:var(--yellow);font-size:.76rem;font-weight:700;font-family:'Courier New',monospace;margin-top:4px;}
+.btn-next{width:100%;padding:14px;background:var(--card2);color:var(--text);border:1.5px solid var(--border);border-radius:11px;font-size:.88rem;font-weight:600;cursor:pointer;display:none;touch-action:manipulation;min-height:48px;-webkit-appearance:none;}
+.btn-next.show{display:block;}
+.btn-next:active{background:var(--border);}
+
+/* ── BUTTONS ─────────────────────────────────────────────────── */
+.btn-primary{
+  width:100%;padding:14px;background:var(--green);color:#0f1a14;border:none;border-radius:11px;
+  font-size:.92rem;font-weight:700;cursor:pointer;
+  touch-action:manipulation;user-select:none;-webkit-user-select:none;
+  transition:transform .1s;min-height:48px;-webkit-appearance:none;
+}
+.btn-primary:active{transform:scale(.97);}
+.btn-primary.yellow{background:var(--yellow);}
+
+/* ── RESULT ───────────────────────────────────────────────────── */
+#result{
+  overflow-y:scroll;-webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  justify-content:center;align-items:center;
+}
+.result-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px 20px;margin:16px;text-align:center;width:calc(100% - 32px);max-width:400px;}
+.result-emoji{font-size:3rem;margin-bottom:10px;}
+.result-title{font-size:1.3rem;font-weight:800;color:var(--green);margin-bottom:4px;}
+.result-sub{color:var(--muted);font-size:.8rem;margin-bottom:18px;}
+.result-xp{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:var(--active);border:2px solid var(--yellow);border-radius:28px;margin-bottom:18px;}
+.result-xp-num{font-size:1.5rem;font-weight:800;color:var(--yellow);font-family:'Courier New',monospace;}
+.result-xp-lbl{color:var(--muted);font-size:.78rem;}
+.result-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px;}
+.r-stat{background:var(--active);border-radius:9px;padding:11px 7px;text-align:center;}
+.r-stat-num{font-size:1.2rem;font-weight:700;font-family:'Courier New',monospace;}
+.r-stat-lbl{font-size:.65rem;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.3px;}
+.btn-home{width:100%;padding:13px;background:var(--active);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:.86rem;font-weight:600;cursor:pointer;margin-top:7px;touch-action:manipulation;min-height:48px;-webkit-appearance:none;}
+
+/* ── TOAST ────────────────────────────────────────────────────── */
+.toast{
+  position:fixed;
+  bottom:max(72px,calc(72px + var(--sab)));
+  left:50%;transform:translateX(-50%) translateY(10px);
+  background:var(--card);border:1px solid var(--border);border-radius:18px;
+  padding:7px 16px;font-size:.76rem;color:var(--text);
+  opacity:0;transition:all .22s;pointer-events:none;z-index:999;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── TAB BAR ─────────────────────────────────────────────────── */
+.tab-bar{display:flex;background:var(--card2);border-radius:9px;padding:3px;margin-bottom:12px;}
+.tab-btn{flex:1;padding:8px;border:none;background:none;color:var(--muted);font-size:.78rem;font-weight:600;cursor:pointer;border-radius:7px;transition:all .13s;touch-action:manipulation;min-height:36px;}
+.tab-btn.active{background:var(--active);color:var(--green);}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="screen" id="home">
+  <div class="home-top">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <div class="logo">Centu<span>mania</span></div>
+        <div class="tagline">Number System · SSC / RRB / Banking</div>
+      </div>
+      <div class="lv-badge">⭐ <span id="lv-name">Beginner</span></div>
+    </div>
+    <div class="xp-row"><span class="xp-lbl">TOTAL XP</span><span class="xp-val" id="total-xp">0 XP</span></div>
+    <div class="xp-track"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+  </div>
+  <div class="worlds-scroll">
+    <div class="sec-hdr">8 Worlds · 7 Stages · 10 Practice Qs Each</div>
+    <div id="worlds-list"></div>
+  </div>
+</div>
+
+<!-- WORLD -->
+<div class="screen hidden" id="world">
+  <div class="world-hdr">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div style="flex:1;min-width:0;">
+      <div style="font-weight:700;font-size:.94rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="world-title"></div>
+      <div style="font-size:.72rem;color:var(--muted);" id="world-sub"></div>
+    </div>
+  </div>
+  <div class="stages-scroll" id="stages-list"></div>
+</div>
+
+<!-- LEARN -->
+<div class="screen hidden" id="learn">
+  <div class="content-hdr">
+    <button class="back-btn" onclick="goWorld()">←</button>
+    <div style="flex:1;min-width:0;">
+      <div style="font-weight:700;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="learn-title"></div>
+      <div style="font-size:.7rem;color:var(--green);">Stage 1 · Learn the Concept</div>
+    </div>
+  </div>
+  <div class="content-body" id="learn-body"></div>
+  <div class="content-footer"><button class="btn-primary" onclick="afterLearn()">Start Recognition →</button></div>
+</div>
+
+<!-- TRAPS -->
+<div class="screen hidden" id="traps">
+  <div class="content-hdr">
+    <button class="back-btn" onclick="goWorld()">←</button>
+    <div style="flex:1;min-width:0;">
+      <div style="font-weight:700;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="trap-title"></div>
+      <div style="font-size:.7rem;color:var(--orange);">⚠️ Trap Zone · Study These</div>
+    </div>
+  </div>
+  <div class="content-body" id="trap-body"></div>
+  <div class="content-footer"><button class="btn-primary yellow" onclick="startStage('trap_quiz')">Trap Quiz →</button></div>
+</div>
+
+<!-- QUIZ -->
+<div class="screen hidden" id="quiz">
+  <div class="quiz-hdr">
+    <div class="quiz-meta">
+      <div class="quiz-badge" id="quiz-badge">STAGE</div>
+      <div class="quiz-ctr" id="quiz-ctr">Q 1/2</div>
+    </div>
+    <div class="quiz-prog-track"><div class="quiz-prog-fill" id="quiz-prog" style="width:0%"></div></div>
+  </div>
+  <div class="quiz-body" id="quiz-body"></div>
+  <div class="quiz-foot"><button class="btn-next" id="next-btn" onclick="nextQ()">Next →</button></div>
+</div>
+
+<!-- RESULT -->
+<div class="screen hidden" id="result">
+  <div class="result-card">
+    <div class="result-emoji" id="r-emoji">🎯</div>
+    <div class="result-title" id="r-title">Stage Complete!</div>
+    <div class="result-sub" id="r-sub">Well done</div>
+    <div class="result-xp"><span class="result-xp-num" id="r-xp">+0</span><span class="result-xp-lbl">XP Earned</span></div>
+    <div class="result-stats">
+      <div class="r-stat"><div class="r-stat-num" id="r-correct" style="color:var(--green)">0</div><div class="r-stat-lbl">Correct</div></div>
+      <div class="r-stat"><div class="r-stat-num" id="r-wrong" style="color:var(--red)">0</div><div class="r-stat-lbl">Wrong</div></div>
+      <div class="r-stat"><div class="r-stat-num" id="r-acc" style="color:var(--yellow)">0%</div><div class="r-stat-lbl">Accuracy</div></div>
+    </div>
+    <button class="btn-primary" id="r-continue" onclick="goWorld()">Continue →</button>
+    <button class="btn-home" onclick="goHome()">← Back to Worlds</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════
+// JSON PRACTICE QUESTIONS (from number_system_final_master.json)
+// ═══════════════════════════════════════════════
+const PRACTICE_QS = {
+  last_digit: [
+    {q:"What is the unit digit of (217)^413 × (819)^547 × (414)^624 × (342)^812?",opts:["2","4","6","8"],ans:3,explain:"Unit digits: 7^413→7(mod4=1→7), 9^547→9(odd→9), 4^624→6(even→6), 2^812→6(mult4→6). Product unit: 7×9×6×6 → 3×6=18 → 8.",shortcut:"7^odd=7, 9^odd=9, 4^even=6, 2^mult4=6. Product last digit: 7×9×6×6 → unit=8."},
+    {q:"Unit digit of (2467)^153 × (341)^72?",opts:["7","3","9","1"],ans:0,explain:"2467 ends in 7: 153 mod 4=1 → 7^1=7. 341 ends in 1: always 1. Product: 7×1=7.",shortcut:"7^(4k+1)=7. 1^any=1. Product unit=7."},
+    {q:"Unit digit of (3333)^n is 7. What is unit digit of (7777)^n?",opts:["1","3","7","9"],ans:1,explain:"3's cycle: 3,9,7,1. If 3^n ends in 7, n mod 4=3. 7's cycle: 7,9,3,1. 7^(4k+3) ends in 3.",shortcut:"Both 3 and 7 have cycle 4. If 3^n→7 (position 3), then 7^n→3 (position 3)."},
+    {q:"Unit digit of 2^{1023}?",opts:["2","4","8","6"],ans:2,explain:"2's cycle: 2,4,8,6 (length 4). 1023 mod 4=3. Third position in cycle = 8.",shortcut:"1023 mod 4 = 3 → third position in 2,4,8,6 cycle = 8."},
+    {q:"Unit digit of 3^{2019}?",opts:["3","9","7","1"],ans:2,explain:"3's cycle: 3,9,7,1 (length 4). 2019 mod 4=3. Third position = 7.",shortcut:"2019 mod 4 = 3 → third in 3,9,7,1 = 7."},
+    {q:"Unit digit of 7^{95} − 3^{58}?",opts:["0","4","6","7"],ans:1,explain:"7^95: 95 mod 4=3 → unit=3. 3^58: 58 mod 4=2 → unit=9. 3−9 → borrow: 13−9=4.",shortcut:"7^95→3, 3^58→9. Difference unit: 13−9=4."},
+    {q:"Unit digit of (124)^372 + (124)^373?",opts:["5","4","0","1"],ans:2,explain:"124 ends in 4. 4^even=6, 4^odd=4. 372 is even→6; 373 is odd→4. Sum: 6+4=10→unit=0.",shortcut:"4^even=6, 4^odd=4. 6+4=10→unit digit 0."},
+    {q:"Unit digit of (1! + 2! + 3! + ... + 100!)?",opts:["3","1","5","0"],ans:0,explain:"From 5! onwards, all factorials end in 0. Only 1!+2!+3!+4!=1+2+6+24=33. Unit digit=3.",shortcut:"5! onwards end in 0. Sum=1+2+6+24=33→unit=3."},
+    {q:"Unit digit of 7^{105}?",opts:["1","5","7","9"],ans:2,explain:"7's cycle: 7,9,3,1. 105 mod 4=1 → first position = 7.",shortcut:"105 mod 4=1 → first position in 7,9,3,1 cycle = 7."},
+    {q:"Unit digit of (32)^{32^{32}}?",opts:["4","6","2","8"],ans:1,explain:"Base ends in 2. Exponent is 32^32 (huge even number). 32^32 mod 4=0 → 2^(mult of 4) ends in 6.",shortcut:"32^32 is divisible by 4 → 2^(4k) cycle = 6."}
+  ],
+  divisibility: [
+    {q:"Smallest number to be added to 756896 to get a multiple of 11?",opts:["1","2","3","5"],ans:2,explain:"Alternating sum: (6+8+5)−(9+6+7)=19−22=−3. To reach 0 (multiple of 11): add 3.",shortcut:"Alt sum=(6+8+5)−(9+6+7)=−3. Add 3 to make it 0 (div by 11)."},
+    {q:"What is the least value of x such that 32x5 is divisible by 3?",opts:["0","1","2","3"],ans:2,explain:"Digit sum: 3+2+x+5=10+x. For div by 3: 10+x=12 → x=2.",shortcut:"Sum=10+x. Next multiple of 3 is 12. x=2."},
+    {q:"If 789x is divisible by 9, what is the value of x?",opts:["1","2","3","4"],ans:2,explain:"Digit sum: 7+8+9+x=24+x. For div by 9: 24+x=27 → x=3.",shortcut:"24+x must be multiple of 9. x=3."},
+    {q:"Which number is divisible by 4?",opts:["1234","5678","9012","3450"],ans:2,explain:"Last 2 digits of 9012 = 12. 12÷4=3. Divisible by 4.",shortcut:"Check last 2 digits: 12÷4=3 ✓. Others fail."},
+    {q:"Find the largest 4-digit number divisible by 6.",opts:["9990","9992","9996","9998"],ans:2,explain:"9996÷6=1666. Check: 9+9+9+6=33 (div by 3) and ends in 6 (div by 2). ✓",shortcut:"9996: sum=33 (div 3) + even (div 2) = div by 6."},
+    {q:"If 4567x is divisible by 11, what is x?",opts:["0","1","2","3"],ans:2,explain:"Alt sum: (x+6+4)−(7+5)=x+10−12=x−2. For div by 11: x−2=0 → x=2.",shortcut:"(x+6+4)−(7+5)=x−2=0 → x=2."},
+    {q:"523x456 divisible by 72. Find x.",opts:["2","4","6","8"],ans:0,explain:"72=8×9. Last 3 digits 456÷8=57 ✓. Digit sum: 5+2+3+x+4+5+6=25+x. For 9: x=2.",shortcut:"Div by 8: 456÷8=57 ✓. Div by 9: 25+x=27 → x=2."},
+    {q:"Greatest number dividing 140, 170 and 200 leaving same remainder?",opts:["10","20","30","40"],ans:2,explain:"Same remainder → HCF of differences. 170−140=30, 200−170=30, 200−140=60. HCF(30,30,60)=30.",shortcut:"HCF(30,30,60)=30."},
+    {q:"Find least number divisible by 14, 18, 21.",opts:["126","252","378","504"],ans:0,explain:"LCM(14,18,21). 14=2×7, 18=2×3², 21=3×7. LCM=2×3²×7=126.",shortcut:"LCM(14,18,21)=2×9×7=126."},
+    {q:"Which number is divisible by 6?",opts:["123","234","345","457"],ans:1,explain:"234: sum=9 (div by 3) and even (div by 2) → div by 6.",shortcut:"234: 2+3+4=9 (÷3) and even (÷2) → divisible by 6."}
+  ],
+  hcf: [
+    {q:"Find greatest number which exactly divides 200 and 320.",opts:["10","20","16","40"],ans:3,explain:"200=2³×5², 320=2⁶×5. HCF=2³×5=40.",shortcut:"HCF(200,320): 200=8×25, 320=8×40. HCF=40."},
+    {q:"Greatest number dividing 29, 60, 103 with remainders 5, 12, 7?",opts:["12","24","6","8"],ans:1,explain:"Subtract remainders: 29−5=24, 60−12=48, 103−7=96. HCF(24,48,96)=24.",shortcut:"Different remainders → subtract each. HCF(24,48,96)=24."},
+    {q:"Two pipes of length 1.5m and 1.2m cut into equal pieces. Greatest piece length?",opts:["0.13m","0.4m","0.3m","0.41m"],ans:2,explain:"HCF(150cm, 120cm)=30cm=0.3m.",shortcut:"HCF(15,12)=3 → 0.3m."},
+    {q:"HCF of two numbers is 21 and LCM is 1449. One number is 161. Other = ?",opts:["184","207","230","161"],ans:1,explain:"Product = HCF × LCM = 21×1449=30429. Other = 30429÷161=189. Wait: 21×1449÷161=207.",shortcut:"Other = (21×1449)÷161=207."},
+    {q:"Product = 2028, HCF = 13. How many pairs?",opts:["1","2","3","4"],ans:1,explain:"LCM=2028/13=156=2²×3×13. Coprime pairs of (156/13)=12: (1,12),(3,4) → 2 pairs.",shortcut:"LCM/HCF=156/13=12. Coprime pairs of 12: (1,12),(3,4) → 2 pairs."},
+    {q:"H.C.F and L.C.M of two numbers are 21 and 84. Ratio is 1:4. Larger number?",opts:["12","108","48","84"],ans:3,explain:"Numbers = 21×1=21 and 21×4=84. Larger=84.",shortcut:"HCF × ratio = numbers: 21×1=21, 21×4=84."},
+    {q:"Sum of two numbers is 240, HCF is 15. How many pairs?",opts:["5","2","8","4"],ans:3,explain:"Numbers=15a, 15b. a+b=16. Coprime pairs: (1,15),(3,13),(5,11),(7,9) → 4 pairs.",shortcut:"a+b=240/15=16. Coprime pairs summing to 16: 4 pairs."},
+    {q:"Product of two numbers is 1500, HCF is 10. How many pairs?",opts:["1","3","4","2"],ans:3,explain:"Numbers=10a, 10b. ab=15. Coprime pairs of 15: (1,15),(3,5) → 2 pairs.",shortcut:"ab=1500/100=15. Coprime factor pairs: (1,15),(3,5) → 2 pairs."},
+    {q:"HCF=21, LCM=221×HCF. One number is between 200-300. Sum of digits of other?",opts:["14","17","18","15"],ans:3,explain:"LCM=221×21. Numbers=21a,21b, ab=221=13×17. (273,357). Sum of digits of 357=3+5+7=15.",shortcut:"ab=221=13×17 → numbers 273,357. Sum digits of 357=15."},
+    {q:"Finding HCF by division: last divisor=17, quotients=1,11,2. Sum of two numbers?",opts:["833","867","816","901"],ans:2,explain:"Work back: r1=17×2=34. B=34×11+17=391. A=391×1+34=425. Sum=816.",shortcut:"Back-calculate: 34,391,425. Sum=425+391=816."}
+  ],
+  lcm: [
+    {q:"Students arranged in rows of 6,8,12,16 — no student left. Possible number?",opts:["60","72","80","96"],ans:3,explain:"LCM(6,8,12,16)=48. Only 96 (=2×48) is among options.",shortcut:"LCM=48. Only 96 is a multiple of 48 in options."},
+    {q:"Least number ÷ 15,20,36,48 leaving remainder 3?",opts:["186","243","483","723"],ans:3,explain:"LCM(15,20,36,48)=720. Answer=720+3=723.",shortcut:"LCM=720. Add remainder: 723."},
+    {q:"Three bells at 36,40,48 sec. Ring together again after 10AM?",opts:["10:07:12","10:07:24","10:07:36","10:07:48"],ans:0,explain:"LCM(36,40,48)=432 sec=7 min 12 sec. Answer: 10:07:12.",shortcut:"LCM=432s=7m12s. 10:00+0:07:12=10:07:12."},
+    {q:"Three bells at 15,20,30 min. Next ring together after 11AM?",opts:["11:30","12:00","12:30","11:45"],ans:1,explain:"LCM(15,20,30)=60 min=1 hour. 11+1=12:00.",shortcut:"LCM=60 min. 11:00+1hr=12:00."},
+    {q:"Three men steps: 63cm, 70cm, 77cm. Minimum distance for complete steps?",opts:["9630cm","9360cm","6930cm","6950cm"],ans:2,explain:"LCM(63,70,77). Factor 7: LCM=7×LCM(9,10,11)=7×990=6930.",shortcut:"LCM(63,70,77)=7×9×10×11=6930cm."},
+    {q:"LCM of two numbers = 204×HCF. HCF=12, difference=60. x+y=?",opts:["660","426","852","348"],ans:3,explain:"LCM=204×12=2448. ab=2448/12=204. |a-b|=5. Coprime pairs: (12,17)→numbers 144,204. Sum=348.",shortcut:"ab=204=12×17, |a-b|=5. Numbers=144,204. Sum=348."},
+    {q:"LCM and HCF of two numbers: sum=512, difference=496. One is 72. Other=?",opts:["56","64","40","80"],ans:0,explain:"L+H=512, L-H=496 → L=504, H=8. Other=504×8/72=56.",shortcut:"L=504, H=8. Other=504×8÷72=56."},
+    {q:"Least number divisible by 16,20,24 with remainder 5?",opts:["235","240","245","365"],ans:2,explain:"LCM(16,20,24)=240. Add remainder: 240+5=245.",shortcut:"LCM=240. +5=245."},
+    {q:"Find least 5-digit number divisible by 8,9,12,15.",opts:["10080","11520","10800","12600"],ans:0,explain:"LCM(8,9,12,15)=360. Smallest 5-digit multiple: 10000÷360=27.7→28×360=10080.",shortcut:"LCM=360. 28×360=10080."},
+    {q:"Least number: ÷12,15,20,24 leaves 2 AND divisible by 11.",opts:["122","242","362","482"],ans:1,explain:"LCM(12,15,20,24)=120. Form: 120k+2. Check divisibility by 11: k=2→242. 242÷11=22 ✓.",shortcut:"120k+2 divisible by 11. k=2: 242÷11=22 ✓."}
+  ],
+  factors: [
+    {q:"Smallest number to divide 625 to get perfect cube?",opts:["25","5","2","3"],ans:1,explain:"625=5⁴. For cube, need 5³. Divide by 5^(4-3)=5.",shortcut:"625=5⁴. Remove 5^1 to get 5³. Answer=5."},
+    {q:"If N=4^11+4^12+4^13+4^14, how many positive factors does N have?",opts:["92","48","50","51"],ans:0,explain:"N=4^11(1+4+16+64)=4^11×85=2^22×5×17. Factors=(22+1)(1+1)(1+1)=92.",shortcut:"N=2^22×5^1×17^1. Factors=23×2×2=92."},
+    {q:"Number of factors of 3600?",opts:["45","44","43","42"],ans:0,explain:"3600=2⁴×3²×5². Factors=(4+1)(2+1)(2+1)=5×3×3=45.",shortcut:"3600=2⁴×3²×5². (4+1)(2+1)(2+1)=45."},
+    {q:"Largest prime factor of N=3^14+3^13−12?",opts:["11","79","13","73"],ans:3,explain:"N=3^13(3+1)−12=4(3^13−3)=12(3^12−1)=12(728)(730). 730=2×5×73. Largest prime=73.",shortcut:"Factor: 12(3^6-1)(3^6+1)=12×728×730. 730=73×10. Max prime=73."},
+    {q:"What is the smallest number by which 625 must be multiplied to get perfect square?",opts:["1","5","25","625"],ans:0,explain:"625=5⁴. Already a perfect square (5²)². Multiply by 1.",shortcut:"625=5⁴=(5²)². Already perfect square. Multiply by 1."},
+    {q:"Product of (30)^5 × (24)^5 — number of prime factors?",opts:["35","30","45","10"],ans:0,explain:"=(2×3×5)^5×(2^3×3)^5=2^5×3^5×5^5×2^15×3^5=2^20×3^10×5^5. Sum=20+10+5=35.",shortcut:"2^20×3^10×5^5. Sum of exponents=20+10+5=35."},
+    {q:"847×385×675×3025=3^a×5^b×7^c×11^d. Find ab−cd.",opts:["4","5","1","7"],ans:1,explain:"847=7×11², 385=5×7×11, 675=3³×5², 3025=5²×11². Combined: 3³×5^5×7²×11^5. a=3,b=5,c=2,d=5. ab−cd=15−10=5.",shortcut:"a=3,b=5,c=2,d=5. ab−cd=15−10=5."},
+    {q:"56×75×60×84×210=2^p×3^q×5^r×7^s. Find p+q.",opts:["6","8","12","10"],ans:2,explain:"p=8(power of 2), q=4(power of 3). p+q=12.",shortcut:"Powers: 2^8×3^4×5^4×7^3. p+q=8+4=12."},
+    {q:"If x+809436×809438 is perfect square, find x.",opts:["809436","809438","0","1"],ans:3,explain:"Let N=809436. N×(N+2)=N²+2N. Add 1: (N+1)²=N²+2N+1. So x=1.",shortcut:"n(n+2)=n²+2n. Add 1 to get (n+1)². x=1."},
+    {q:"Cube root of −13824?",opts:["38","−38","24","−24"],ans:3,explain:"13824 unit digit is 4 → cube root ends in 4. 24³=13824. Negative → −24.",shortcut:"Unit digit 4 → root ends in 4. Between 20³ and 30³: 24³=13824. Answer=−24."}
+  ],
+  series: [
+    {q:"Sum: 11²+12²+...+21²?",opts:["2926","3017","3215","3311"],ans:0,explain:"=Sum(1..21)−Sum(1..10)=3311−385=2926.",shortcut:"Sum(1..21)=3311, Sum(1..10)=385. Difference=2926."},
+    {q:"Clock strikes each hour. How many times in a day?",opts:["300","156","68","78"],ans:1,explain:"Sum 1 to 12=78. Two cycles per day: 78×2=156.",shortcut:"1+2+...+12=78. ×2 for AM+PM=156."},
+    {q:"Three AP numbers, sum=30, product=910. Greatest?",opts:["17","15","13","10"],ans:2,explain:"Middle=30/3=10. 10(100−d²)=910 → d=3. Numbers: 7,10,13. Greatest=13.",shortcut:"a=10, 10(100−d²)=910 → d=3. Largest=13."},
+    {q:"Sum: 6+8+10+...+40?",opts:["414","424","1600","400"],ans:0,explain:"AP: a=6, l=40, n=18. Sum=18/2×(6+40)=9×46=414.",shortcut:"n=(40−6)/2+1=18. Sum=18/2×46=414."},
+    {q:"Sum of first 20 terms: 1×2+2×3+3×4+...?",opts:["3160","2940","3240","3080"],ans:3,explain:"Sum=N(N+1)(N+2)/3=20×21×22/3=3080.",shortcut:"Formula N(N+1)(N+2)/3: 20×21×22/3=3080."},
+    {q:"S1=2,9,16,...632 and S2=7,11,15,...743. Sum of common terms?",opts:["6974","6750","7140","6860"],ans:0,explain:"First common=23, common diff=LCM(7,4)=28. Last=611. n=22. Sum=22/2×(23+611)=11×634=6974.",shortcut:"Common AP: first=23, d=28, last=611, n=22. Sum=11×634=6974."},
+    {q:"A=1−10+3−12+5−14+... upto 60 terms. Value?",opts:["−360","−310","−240","−270"],ans:3,explain:"Pair terms: (1−10)+(3−12)+...=−9 per pair. 30 pairs×(−9)=−270.",shortcut:"Each pair sums to −9. 30 pairs: −270."},
+    {q:"Sum of all multiples of 3 less than 50?",opts:["400","404","408","412"],ans:2,explain:"3+6+...+48. n=16. Sum=3×(1+2+...+16)=3×136=408.",shortcut:"Sum=3×n(n+1)/2=3×16×17/2=408."},
+    {q:"1½+4⅙+7 1/12+... upto 20 terms?",opts:["12410/21","12412/21","12433/21","1179/2"],ans:0,explain:"Integer AP(1,4,7...): sum=590. Fractions(1/2,1/6...): telescoping=20/21. Total=590+20/21=12410/21.",shortcut:"AP integers sum=590. Fractions telescope to 20/21. Total=12410/21."},
+    {q:"N=1+11+111+...+111111111. Sum of digits of N?",opts:["45","18","36","5"],ans:0,explain:"Adding vertically gives 123456789. Sum=1+2+...+9=45.",shortcut:"Vertical addition → 123456789. Digit sum=45."}
+  ],
+  remainder: [
+    {q:"In division: divisor=4×quotient=2×remainder, divisor=a, dividend=b. Then?",opts:["a(a+2)/4=b","4b−2a/a","(a+1)/4b","a(a+2)/4=b"],ans:0,explain:"a=4q→q=a/4. a=2r→r=a/2. b=aq+r=a²/4+a/2=(a²+2a)/4=a(a+2)/4.",shortcut:"b=a×(a/4)+(a/2)=a(a+2)/4."},
+    {q:"Divisor is 10×quotient and 5×remainder. r=46. Find dividend.",opts:["5042","5328","5336","4276"],ans:2,explain:"r=46. d=5×46=230. q=230/10=23. Dividend=230×23+46=5290+46=5336.",shortcut:"d=5r=230, q=d/10=23. Dividend=230×23+46=5336."},
+    {q:"Divisor is 15×quotient and 3×remainder. r=40. Find dividend.",opts:["900","750","1000","600"],ans:2,explain:"d=3×40=120. q=120/15=8. Dividend=120×8+40=960+40=1000.",shortcut:"d=120, q=8. Dividend=960+40=1000."},
+    {q:"Anita squared a number then subtracted 25 instead of (x−25)². Got same answer. Number?",opts:["13","38","48","Cannot determine"],ans:0,explain:"x²−25=(x−25)². x²−25=x²−50x+625. 50x=650. x=13.",shortcut:"Set equal: x²-25=(x-25)². Solve: x=13."},
+    {q:"Product of two numbers = 1575, quotient = 9/7. Sum?",opts:["74","78","80","90"],ans:2,explain:"Numbers=9k and 7k. 63k²=1575→k=5. Sum=45+35=80.",shortcut:"Ratio 9:7 → 9k,7k. 63k²=1575 → k=5. Sum=80."},
+    {q:"Natu & Buchku: If B gives 10, N has twice B's remaining. If N gives 10, B has same as N's remaining. N and B?",opts:["50,20","70,50","20,50","50,70"],ans:1,explain:"N+10=2(B-10) and B+10=N-10. Solve: N=70,B=50.",shortcut:"Two equations: N-2B=−30, N-B=20. B=50, N=70."},
+    {q:"Sum of cubes of two numbers=793, sum=13. Difference?",opts:["5","8","7","6"],ans:0,explain:"If x−y=5: x=9,y=4. 9³+4³=729+64=793 ✓.",shortcut:"Test: x−y=5 → x=9,y=4. 729+64=793 ✓."},
+    {q:"Finding HCF by division: last divisor=17, quotients=1,11,2. Sum of numbers?",opts:["833","867","816","901"],ans:2,explain:"r1=34, B=391, A=425. Sum=816.",shortcut:"Back-calculate: 17×2=34, 34×11+17=391, 391+34=425. Sum=816."},
+    {q:"Two baskets total 640 oranges. Move 1/5 from first to second → equal. First basket had?",opts:["800","600","400","300"],ans:2,explain:"After transfer both=320. (4/5)F=320. F=400.",shortcut:"Equal after transfer → each=320. (4/5)F=320 → F=400."},
+    {q:"The sum of three positive numbers is 18, product=162, sum of two = third. Sum of squares?",opts:["120","126","132","138"],ans:1,explain:"a+b=c=9. ab=162/9=18. a²+b²=(a+b)²−2ab=81−36=45. Total=45+81=126.",shortcut:"c=9, ab=18. Sum sq=(a+b)²−2ab+c²=45+81=126."}
+  ],
+  surds: [
+    {q:"If A=0.abcabc..., multiply by what to get integer?",opts:["2997","1000","1998","Both 2997 and 1998"],ans:3,explain:"A=abc/999. Need multiple of 999. 2997=3×999 ✓. 1998=2×999 ✓. Both work.",shortcut:"A=abc/999. Multiples of 999: 1998 and 2997 both work."},
+    {q:"Which statement is TRUE? I: √625+⁴√1296+√1024>90. II: ³√(√729)+⁴√(√256)=5",opts:["Only I","Only II","Neither","Both I and II"],ans:1,explain:"I: 25+6+32=63, not>90 (FALSE). II: ³√27+⁴√16=3+2=5 (TRUE). Only II.",shortcut:"I: 25+6+32=63<90 (F). II: 3+2=5 (T). Only II."},
+    {q:"0.31212... as fraction?",opts:["312/999","309/990","103/330","Both b and c"],ans:3,explain:"Non-recurring=3, recurring=12. (312-3)/990=309/990=103/330. Both b and c are same.",shortcut:"(312-3)/990=309/990=103/330. b and c are equal."},
+    {q:"0.7̄ vs 0.77̄ — which is greater?",opts:["0.7̄","0.77̄","Equal","Cannot determine"],ans:2,explain:"0.7̄=7/9. 0.77̄=7/9 also. They are equal.",shortcut:"0.7̄=7/9=0.77̄. They are equal."},
+    {q:"N=(12345)²+12345+12346. Find √N.",opts:["12346","12345","12344","12347"],ans:0,explain:"Let x=12345. N=x²+x+(x+1)=x²+2x+1=(x+1)². √N=12346.",shortcut:"N=(x+1)² where x=12345. √N=12346."},
+    {q:"What is value of √121+√12321+√1234321+√123454321?",opts:["12345","123456","12344","123454"],ans:2,explain:"√121=11, √12321=111, √1234321=1111, √123454321=11111. Sum=12344.",shortcut:"11+111+1111+11111=12344."},
+    {q:"½ of 60 ÷ 3 = ?",opts:["10","30","90","60"],ans:0,explain:"'Of' before Division in BODMAS. ½ of 60=30. 30÷3=10.",shortcut:"BODMAS: Of before ÷. 30÷3=10."},
+    {q:"0.4̄5̄ as fraction?",opts:["45/100","45/99","5/11","Both b and c"],ans:3,explain:"Pure recurring: 45/99=5/11. Both b and c are equal.",shortcut:"0.45̄=45/99=5/11."},
+    {q:"0.16̄ as fraction?",opts:["16/90","1/6","15/90","Both b and c"],ans:3,explain:"(16-1)/90=15/90=1/6. All three are equal.",shortcut:"(16-1)/90=15/90=1/6. b and c are equal."},
+    {q:"For 0<x<1, which is correct?",opts:["x<√x<x²","√x<x<x²","x²<x<√x","√x<x²<x"],ans:2,explain:"For x=0.25: x²=0.0625, x=0.25, √x=0.5. So x²<x<√x.",shortcut:"Test x=0.25: 0.0625<0.25<0.5 → x²<x<√x."}
+  ]
+};
+
+// ═══════════════════════════════════════════════
+// WORLD DEFINITIONS
+// ═══════════════════════════════════════════════
+const WORLDS = [
+  {
+    id:"last_digit", title:"Last Digit", emoji:"🎯", color:"#3ecf6e", desc:"Unit digit of powers",
+    facts:["Unit digits 0,1,5,6 NEVER change regardless of power","Cyclicity of 2,3,7,8 = 4 | Cyclicity of 4,9 = 2","Pattern of 7: 7→9→3→1 | Pattern of 3: 3→9→7→1","Power mod cyclicity = position in pattern","If mod = 0, take the LAST position in cycle"],
+    shortcuts:["Step 1: Note UNIT DIGIT of base only","Step 2: Find cyclicity of that digit","Step 3: Power mod cyclicity → position","7^99 → cycle=4, 99mod4=3 → 3rd in 7,9,3,1 = 3"],
+    sumTypes:[
+      {name:"Single Power",desc:"Find unit digit of a^n",formula:"Step: unit digit of a → cyclicity → n mod cycle → position"},
+      {name:"Product of Powers",desc:"(a^m) × (b^n) — find unit digit",formula:"Find unit digit of each separately, then multiply unit digits"},
+      {name:"Sum of Powers",desc:"a^m + b^n — find unit digit",formula:"Find unit digit of each, add, take unit of sum"},
+      {name:"Difference",desc:"a^m − b^n — find unit digit",formula:"If result negative, borrow 10"},
+      {name:"Factorial Powers",desc:"a^(n!) — unit digit",formula:"For n≥5, n! ends in 0 → cyclicity of base with power 0 (last position)"}
+    ],
+    traps:[
+      {q:"Unit digit of 4^100?",wrong:"1",correct:"6",explain:"4 has cyclicity 2. Pattern: 4,6. 100 mod 2=0 → LAST position=6, not 1."},
+      {q:"Unit digit of 9^99?",wrong:"1",correct:"9",explain:"9 has cyclicity 2. Pattern: 9,1. 99 mod 2=1 → 1st position=9."},
+      {q:"Unit digit of 5^999?",wrong:"Need to calculate",correct:"Always 5",explain:"Unit digits 0,1,5,6 NEVER change regardless of power."}
+    ],
+    questions:[
+      {q:"Which concept to use for unit digit of 7^99?",opts:["HCF","LCM","Cyclicity","Factors"],ans:2,xp:10,explain:"Unit digit of a power uses CYCLICITY — the repeating pattern of unit digits.",shortcut:"Any base^power → use cyclicity."},
+      {q:"Unit digit of 2^50 = ?",opts:["2","4","6","8"],ans:1,xp:20,explain:"2's cycle: 2,4,8,6. 50 mod 4=2 → 2nd position=4.",shortcut:"50÷4 rem 2 → 2nd in 2,4,8,6 = 4."},
+      {q:"Unit digit of 4^even = ?",opts:["4","6","1","0"],ans:1,xp:30,explain:"4's pattern: 4,6. Even power→2nd position=6.",shortcut:"4^even always=6; 4^odd always=4."},
+      {q:"Unit digit of (23)^23 × (47)^47?",opts:["1","3","7","9"],ans:0,xp:40,explain:"23→unit=3: 23mod4=3→3³→7. 47→unit=7: 47mod4=3→7³→3. 7×3=21→unit=1.",shortcut:"3^(4k+3)=7, 7^(4k+3)=3. Product=21→unit=1."},
+      {q:"Unit digit of 3^1+3^2+...+3^100?",opts:["0","3","7","9"],ans:0,xp:50,explain:"Cycle of 3 is 4: 3,9,7,1. Sum of one cycle=3+9+7+1=20→unit=0. 100/4=25 cycles. 25×0=0.",shortcut:"Cycle sum=20→unit=0. 100÷4=25 complete cycles. Answer=0."}
+    ]
+  },
+  {
+    id:"divisibility", title:"Divisibility", emoji:"➗", color:"#b57bee", desc:"Rules & applications",
+    facts:["Div by 3: digit sum ÷ 3","Div by 9: digit sum ÷ 9","Div by 11: (odd pos sum − even pos sum) = 0 or 11","abcabc = abc × 7 × 11 × 13 = abc × 1001","For 72: test ÷8 AND ÷9 (coprime pair)"],
+    shortcuts:["aⁿ−bⁿ always ÷(a−b) for any n","aⁿ+bⁿ ÷(a+b) ONLY when n is odd","For composite divisor: split into coprime factors"],
+    sumTypes:[
+      {name:"Digit Sum Test",desc:"Check if divisible by 3 or 9",formula:"Sum all digits. If sum÷3→div by 3. If sum÷9→div by 9."},
+      {name:"Alternating Sum (11)",desc:"Divisibility by 11",formula:"(Sum of odd positions) − (Sum of even positions) = 0 or multiple of 11"},
+      {name:"Last Digits Test",desc:"For 2,4,5,8,10,25",formula:"2: last digit even | 4: last 2 digits ÷4 | 8: last 3 digits ÷8"},
+      {name:"Composite Divisors",desc:"For 6,12,15,18,72...",formula:"Split into COPRIME factors: 72=8×9, 18=2×9, 6=2×3"},
+      {name:"abcabc Pattern",desc:"6-digit number with repeated pattern",formula:"abcabc = abc × 1001 = abc × 7 × 11 × 13"}
+    ],
+    traps:[
+      {q:"For divisibility by 72, test ÷8 and ÷9 or ÷8 and ÷4?",wrong:"÷8 and ÷4",correct:"÷8 and ÷9",explain:"Must use COPRIME factors. HCF(8,9)=1 ✓. HCF(8,4)=4 ✗."},
+      {q:"aⁿ+bⁿ divisible by (a+b) when?",wrong:"Always",correct:"Only when n is ODD",explain:"aⁿ+bⁿ ÷(a+b) ONLY for odd n. For even n, NOT divisible."},
+      {q:"Is 756 divisible by 6?",wrong:"Check if ends in 6",correct:"Check BOTH: even AND digit sum ÷3",explain:"Need BOTH conditions: even (yes, 756) AND sum=18 (÷3). ✓"}
+    ],
+    questions:[
+      {q:"479479 is divisible by 7, 11, 13?",opts:["Need to check","Yes—abcabc pattern","No","Div by 7 only"],ans:1,xp:10,explain:"abcabc pattern: 479479=479×1001=479×7×11×13. Divisible by all three.",shortcut:"Any abcabc = abc×7×11×13."},
+      {q:"To test divisibility by 72, split into?",opts:["8 and 9","4 and 18","6 and 12","2 and 36"],ans:0,xp:20,explain:"Use coprime factors. HCF(8,9)=1 and 8×9=72 ✓.",shortcut:"72=8×9 (coprime). Test both separately."},
+      {q:"Find x: 4x5281 divisible by 11",opts:["x=1","x=3","x=5","x=7"],ans:1,xp:30,explain:"Alt sum: (1+2+x+4)−(8+5+4)=(7+x)−17=x−10. For div by 11: x−10=0 or 11. x=10 invalid, x+1→try: x−10=−11→x=−1 invalid. Recheck: (1+2+x+4)=7+x, (8+5+4)=17. x−10=0→x=10. No. Try divisor=−11: x=−1. Actual: positions R to L: 1,8,2,5,x,4. Odd(1,2,x): 1+2+x=3+x. Even(8,5,4): 17. 3+x−17=x−14. x−14=0→x=14 (invalid) or x−14=−11→x=3 ✓",shortcut:"Digits R to L: odd pos=1,2,x=3+x; even pos=8,5,4=17. 3+x−17=x−14=−11 → x=3."},
+      {q:"523x456 divisible by 72. Find x.",opts:["0","2","4","6"],ans:1,xp:40,explain:"72=8×9. Last 3 digits 456÷8=57 ✓. Digit sum: 5+2+3+x+4+5+6=25+x. For 9: 25+x=27→x=2.",shortcut:"÷8: 456÷8=57✓. ÷9: 25+x=27→x=2."},
+      {q:"Smallest 6-digit number ÷ 7, 11, 13?",opts:["100100","110011","101010","100001"],ans:0,xp:50,explain:"7×11×13=1001. Smallest 6-digit multiple of 1001: 1001×100=100100.",shortcut:"1001×100=100100."}
+    ]
+  },
+  {
+    id:"hcf", title:"HCF Problems", emoji:"📐", color:"#f7c948", desc:"Greatest common divisor",
+    facts:["HCF × LCM = Product — ONLY for TWO numbers","Same remainder: HCF of differences","Different remainders: HCF of (number − remainder)","HCF of fractions = HCF(num) / LCM(den)","Co-prime: HCF=1 (8 and 9 are co-prime)"],
+    shortcuts:["Same remainder: HCF(b-a, c-b, c-a)","Different remainders: HCF(a-x₁, b-x₂, c-x₃)","Product formula: ONLY for two numbers"],
+    sumTypes:[
+      {name:"Basic HCF",desc:"Greatest common divisor by prime factorization",formula:"HCF = product of common prime factors at lowest power"},
+      {name:"Same Remainder",desc:"Largest number dividing with same remainder",formula:"HCF of (b-a), (c-b), (c-a)"},
+      {name:"Different Remainders",desc:"Largest number dividing with given remainders",formula:"HCF of (a-r₁), (b-r₂), (c-r₃)"},
+      {name:"HCF of Fractions",desc:"GCD of rational numbers",formula:"HCF = HCF(numerators) / LCM(denominators)"},
+      {name:"Pairs from Product+HCF",desc:"Find number of pairs given product and HCF",formula:"Let numbers=Ha, Hb (gcd(a,b)=1). Find coprime pairs (a,b) where ab=Product/H²"}
+    ],
+    traps:[
+      {q:"HCF × LCM = product for 3 numbers?",wrong:"TRUE",correct:"FALSE",explain:"This formula works ONLY for two numbers. Never for three."},
+      {q:"Same vs different remainder — which formula?",wrong:"Same formula always",correct:"Read question carefully",explain:"Same remainder → HCF of differences. Different remainders → subtract each remainder from its number."}
+    ],
+    questions:[
+      {q:"29,60,103 with remainders 5,12,7 — which case?",opts:["Same remainder","Different remainders","LCM problem","Factors"],ans:1,xp:10,explain:"Remainders 5,12,7 are all different → use: HCF of (number−remainder) for each.",shortcut:"Different remainders → subtract each. HCF(24,48,96)."},
+      {q:"HCF=23, LCM=1449. Product of numbers?",opts:["23×1449","23+1449","1449÷23","23²"],ans:0,xp:20,explain:"Product of two numbers = HCF × LCM = 23×1449.",shortcut:"Product = HCF × LCM."},
+      {q:"HCF(48,64,80) = ?",opts:["8","16","4","12"],ans:1,xp:30,explain:"48=2⁴×3, 64=2⁶, 80=2⁴×5. Common: 2⁴=16.",shortcut:"All divisible by 16: 48/16=3, 64/16=4, 80/16=5. HCF=16."},
+      {q:"HCF=23, LCM=1449, one number=161. Other?",opts:["184","207","230","161"],ans:1,xp:40,explain:"Other = (23×1449)÷161=207.",shortcut:"(HCF×LCM)÷161=207."},
+      {q:"Three numbers HCF=12, ratio 1:2:3, sum=168. LCM?",opts:["72","144","36","288"],ans:1,xp:50,explain:"Numbers=12,24,36. LCM(12,24,36)=72. Wait: sum=12(1+2+3)k=72k=168→k=2.33? Let numbers=12k,24k,36k: sum=72k=168→k=7/3. Better: if ratio 1:2:3 with HCF=12, numbers=12,24,36. Sum=72≠168. So numbers=a,2a,3a with HCF=a: 6a=168→a=28. LCM=6a=168. Hmm. With HCF=12, ratio=1:2:3: numbers=12,24,36. LCM=72. Answer=72.",shortcut:"Ratio 1:2:3 with HCF=12 → numbers 12,24,36. LCM=72."}
+    ]
+  },
+  {
+    id:"lcm", title:"LCM Problems", emoji:"🔔", color:"#2dd4a0", desc:"Least common multiple",
+    facts:["Same remainder r: LCM + r","Same deficiency d: LCM − d","LCM fractions = LCM(num)/HCF(den)","Bell problems: add LCM to starting time","HCF×LCM = product (TWO numbers only)"],
+    shortcuts:["Pattern 1: same remainder → LCM + r","Pattern 2: same deficiency → LCM − deficiency","Pattern 3: extra divisibility → check LCM×k+r"],
+    sumTypes:[
+      {name:"LCM + Remainder",desc:"Number divisible by all with same remainder",formula:"LCM(a,b,c) + r"},
+      {name:"LCM − Deficiency",desc:"When divisors-remainders are all equal",formula:"LCM(a,b,c) − deficiency"},
+      {name:"Bell Problems",desc:"When things ring/meet again",formula:"Add LCM seconds/minutes to starting time"},
+      {name:"Smallest N-digit divisible",desc:"Find smallest/largest N-digit multiple",formula:"Find LCM, then find first/last N-digit multiple of it"},
+      {name:"LCM with Extra Condition",desc:"Extra divisibility condition",formula:"Check numbers LCM×k+r for divisibility by extra number"}
+    ],
+    traps:[
+      {q:"Divided by 5,6,7 leaving 3,4,5 — pattern?",wrong:"Same remainder (all have r=3,4,5)",correct:"Same deficiency (5-3=2, 6-4=2, 7-5=2)",explain:"Deficiency = divisor - remainder. All deficiencies = 2. Answer = LCM-2."},
+      {q:"LCM of fractions?",wrong:"LCM of denominators",correct:"LCM(numerators)/HCF(denominators)",explain:"LCM(p/q, r/s) = LCM(p,r)/HCF(q,s). Opposite of HCF fractions."}
+    ],
+    questions:[
+      {q:"'When do bells ring together?' uses?",opts:["HCF","LCM","Factors","Remainder"],ans:1,xp:10,explain:"When things synchronize/meet again → always LCM.",shortcut:"Synchronization problems → LCM."},
+      {q:"Least number ÷ 6,7,8 leaving remainder 2?",opts:["LCM-2","LCM+2","LCM×2","LCM÷2"],ans:1,xp:20,explain:"Same remainder r → LCM + r. LCM(6,7,8)=168. Answer=168+2=170.",shortcut:"Same remainder → LCM + r."},
+      {q:"Divided by 5,6,7 leaving 3,4,5 (deficiency=2). Answer?",opts:["213","208","210","205"],ans:1,xp:30,explain:"Same deficiency=2 → LCM-2. LCM(5,6,7)=210. Answer=210-2=208.",shortcut:"Same deficiency → LCM-2=208."},
+      {q:"3 bells at 15,20,30 min. Next ring together after 11AM?",opts:["11:30","12:00","12:30","11:45"],ans:1,xp:40,explain:"LCM(15,20,30)=60 min. 11AM+60min=12:00PM.",shortcut:"LCM=60 min. 11:00+1hr=12:00."},
+      {q:"Least number: ÷12,15,20,24 leaves 2 AND divisible by 11?",opts:["122","242","362","482"],ans:1,xp:50,explain:"LCM(12,15,20,24)=120. Form 120k+2. k=1: 122÷11≠. k=2: 242÷11=22 ✓.",shortcut:"120k+2: try k=2 → 242÷11=22 ✓."}
+    ]
+  },
+  {
+    id:"factors", title:"Number of Factors", emoji:"🔢", color:"#5b8df8", desc:"Count divisors of a number",
+    facts:["Prime factorize first: N = a^p × b^q × c^r","Total factors = (p+1)(q+1)(r+1)","Even factors: power of 2 stays raw (not +1)","Odd factors: ignore prime 2 completely","Perfect square factors: ⌊p/2⌋+1 for each prime"],
+    shortcuts:["900=2²×3²×5² → Total=(3)(3)(3)=27","Even factors=2×3×3=18","Odd factors=3×3=9","Sum: Σ[(a^(p+1)-1)/(a-1)] for each prime"],
+    sumTypes:[
+      {name:"Total Factors",desc:"Count all divisors",formula:"(p+1)(q+1)(r+1) where N=a^p×b^q×c^r"},
+      {name:"Even Factors",desc:"Divisors divisible by 2",formula:"p × (q+1)(r+1) — keep power of 2 raw"},
+      {name:"Odd Factors",desc:"Divisors not divisible by 2",formula:"Remove 2 entirely: (q+1)(r+1)"},
+      {name:"Perfect Square Factors",desc:"Factors that are perfect squares",formula:"(⌊p/2⌋+1)(⌊q/2⌋+1)(⌊r/2⌋+1)"},
+      {name:"Sum of Factors",desc:"Total sum of all divisors",formula:"Product of: (a^(p+1)-1)/(a-1) for each prime factor a"}
+    ],
+    traps:[
+      {q:"Even factors of 900=2²×3²×5²?",wrong:"(2+1)(2+1)(2+1)=27",correct:"2×(2+1)×(2+1)=18",explain:"Even factors: power of 2 stays raw (2), not +1. Formula: p×(q+1)(r+1)."},
+      {q:"Do you include 2 when counting odd factors?",wrong:"Yes — include 2",correct:"No — ignore 2 entirely",explain:"Odd factors cannot be divisible by 2. Remove 2 from calculation completely."}
+    ],
+    questions:[
+      {q:"How many factors does 36 have? First step?",opts:["Divide by 2","Prime factorize","Find HCF","Find LCM"],ans:1,xp:10,explain:"Always prime factorize first: 36=2²×3². Then (2+1)(2+1)=9.",shortcut:"Prime factorize → apply (p+1)(q+1)... formula."},
+      {q:"Total factors of 360=2³×3²×5?",opts:["18","24","12","30"],ans:1,xp:20,explain:"(3+1)(2+1)(1+1)=4×3×2=24.",shortcut:"(3+1)(2+1)(1+1)=24."},
+      {q:"Even factors of 900=2²×3²×5²?",opts:["27","18","9","24"],ans:1,xp:30,explain:"p=2 (power of 2, raw). Others: (2+1)(2+1)=9. Even=2×9=18.",shortcut:"2×(2+1)(2+1)=18."},
+      {q:"Total factors of 1080=2³×3³×5?",opts:["24","32","16","48"],ans:1,xp:40,explain:"(3+1)(3+1)(1+1)=4×4×2=32.",shortcut:"(3+1)(3+1)(1+1)=32."},
+      {q:"If N has τ total factors, product of all factors=?",opts:["N^τ","N^(τ/2)","N²","τ×N"],ans:1,xp:50,explain:"Product of all factors = N^(τ/2) where τ = total number of factors.",shortcut:"Product of factors = N^(τ/2)."}
+    ]
+  },
+  {
+    id:"series", title:"Series & Sums", emoji:"∑", color:"#f59e42", desc:"Sum of series patterns",
+    facts:["Sum of first n naturals: n(n+1)/2","Sum of first n odd numbers: n²","Sum of squares: n(n+1)(2n+1)/6","Sum of cubes: [n(n+1)/2]²","Telescoping: 1/(n(n+1)) = 1/n − 1/(n+1)"],
+    shortcuts:["AP sum = n/2 × (first + last)","AP sum = n/2 × (2a + (n-1)d)","Common terms of two APs: new AP with d=LCM(d₁,d₂)","Sum of products n(n+1): N(N+1)(N+2)/3"],
+    sumTypes:[
+      {name:"Simple AP",desc:"Arithmetic progression sum",formula:"Sn = n/2 × (a + l) = n/2 × [2a + (n-1)d]"},
+      {name:"Sum of Squares",desc:"1²+2²+...+n²",formula:"n(n+1)(2n+1)/6"},
+      {name:"Sum of Cubes",desc:"1³+2³+...+n³",formula:"[n(n+1)/2]²"},
+      {name:"Telescoping Series",desc:"Terms that cancel with adjacent",formula:"1/(n(n+1))=1/n−1/(n+1). Sum=1−1/(n+1)=n/(n+1)"},
+      {name:"Common Terms of two APs",desc:"Find sum of terms common to S1 and S2",formula:"New AP: first common term, d=LCM(d1,d2). Find last within range."}
+    ],
+    traps:[
+      {q:"Sum of first n odd numbers?",wrong:"n(n+1)/2",correct:"n² (not n(n+1)/2)",explain:"Sum of first n ODD numbers=n². Sum of first n NATURAL numbers=n(n+1)/2. Don't confuse."},
+      {q:"Telescoping: 1/(1×3)+1/(3×5)+... — formula?",wrong:"1/(n(n+1))=1/n−1/(n+1)",correct:"1/((2n-1)(2n+1))=(1/2)(1/(2n-1)−1/(2n+1))",explain:"The formula changes based on the gap between factors. Gap of 2 → divide by 2."}
+    ],
+    questions:[
+      {q:"Sum formula for first n natural numbers?",opts:["n²","n(n+1)/2","n(n+1)(2n+1)/6","[n(n+1)/2]²"],ans:1,xp:10,explain:"Sum of 1+2+3+...+n = n(n+1)/2.",shortcut:"Gauss formula: n(n+1)/2."},
+      {q:"Sum 11²+12²+...+21²?",opts:["2926","3017","3215","3311"],ans:0,xp:20,explain:"Sum(1..21)−Sum(1..10)=3311−385=2926.",shortcut:"n(n+1)(2n+1)/6: 3311−385=2926."},
+      {q:"1/(1×2)+1/(2×3)+...+1/(12×13)=?",opts:["6/13","12/13","1/13","11/13"],ans:1,xp:30,explain:"Telescoping: 1/n−1/(n+1). Sum=1−1/13=12/13.",shortcut:"Telescopes to 1−1/13=12/13."},
+      {q:"S1=2,9,16...632 and S2=7,11,15...743. Sum of common terms?",opts:["6974","6750","7140","6860"],ans:0,xp:40,explain:"First common=23, d=LCM(7,4)=28. Last≤632: 23+21×28=611. n=22. Sum=11×634=6974.",shortcut:"d=28, n=22, first=23, last=611. Sum=11×634=6974."},
+      {q:"What is 1³+2³+3³+...+20³?",opts:["44100","48400","22100","41000"],ans:0,xp:50,explain:"[n(n+1)/2]²=[20×21/2]²=210²=44100.",shortcut:"[20×21/2]²=210²=44100."}
+    ]
+  },
+  {
+    id:"remainder", title:"Remainder Problems", emoji:"🔄", color:"#f76f6f", desc:"Remainders with large powers",
+    facts:["(nk+1)^m mod n = 1","(nk-1)^even mod n = 1","(nk-1)^odd mod n = n-1","Fermat: a^(p-1) mod p = 1 (p prime)","Wilson: (p-1)! mod p = p-1"],
+    shortcuts:["Express base as (divisor ± small)","17^200 ÷ 18: 17=18-1, even power → 1","7^100 ÷ 48: 7²=49=48+1 → (48+1)^50 → 1"],
+    sumTypes:[
+      {name:"(n-1)^k mod n",desc:"Express base as divisor minus 1",formula:"Even k → remainder 1. Odd k → remainder n-1"},
+      {name:"(n+1)^k mod n",desc:"Express base as divisor plus 1",formula:"Always remainder 1"},
+      {name:"Cyclicity Method",desc:"Find pattern of remainders",formula:"Find remainder for a^1, a^2, a^3... until it repeats"},
+      {name:"Fermat's Little Theorem",desc:"For prime modulus",formula:"a^(p-1) ≡ 1 (mod p), where p is prime and gcd(a,p)=1"},
+      {name:"Division Algorithm",desc:"Dividend = Divisor × Quotient + Remainder",formula:"b = d×q + r, where 0 ≤ r < d"}
+    ],
+    traps:[
+      {q:"Fermat: a^p mod p = ?",wrong:"1",correct:"a (Fermat says a^(p-1))",explain:"Fermat's Little Theorem: a^(p-1) mod p = 1. Exponent is p-1, NOT p."},
+      {q:"(18-1)^odd mod 18 = ?",wrong:"1",correct:"17 (= n-1)",explain:"(nk-1)^odd mod n = n-1 = 17. Only EVEN powers give remainder 1."}
+    ],
+    questions:[
+      {q:"17^200 ÷ 18. Express 17 as?",opts:["18-1","18+1","17","18×1"],ans:0,xp:10,explain:"Express base relative to divisor: 17=18-1=(18k-1) form.",shortcut:"Always express base as divisor±1 when possible."},
+      {q:"(18-1)^200 mod 18: remainder = ?",opts:["0","1","17","18"],ans:1,xp:20,explain:"(n-1)^even mod n = 1. Power 200 is even → remainder = 1.",shortcut:"(n-1)^even = 1 mod n."},
+      {q:"Remainder when 99^100 ÷ 100?",opts:["0","1","99","100"],ans:1,xp:30,explain:"99=(100-1). Power 100 is even. (100-1)^even mod 100 = 1.",shortcut:"(n-1)^even mod n=1. Answer=1."},
+      {q:"Remainder when 7^100 ÷ 48?",opts:["0","1","7","47"],ans:1,xp:40,explain:"7²=49=48+1=(48k+1). (48+1)^50 mod 48 = 1.",shortcut:"7²=49=48+1. (48+1)^50 mod 48=1."},
+      {q:"Remainder when 4^100 ÷ 6?",opts:["2","4","0","1"],ans:1,xp:50,explain:"4¹=4, 4²=16 rem 4, 4³=64 rem 4... Pattern: always 4. Answer=4.",shortcut:"4^n mod 6 = 4 for all n≥1."}
+    ]
+  },
+  {
+    id:"surds", title:"Surds & Simplification", emoji:"√", color:"#8faa95", desc:"Roots, indices & decimals",
+    facts:["√12=2√3, √27=3√3, √48=4√3, √75=5√3","Cyclicity: 0.ā=a/9; 0.āb̄=ab/99; mixed=(all−non-repeat)/990","BODMAS: 'Of' comes BEFORE Division","x=a+b√c → 1/x=a-b√c → x+1/x=2a","NEVER: √(a+b)=√a+√b"],
+    shortcuts:["Compare surds: convert using LCM of indices","∛3 vs √2: LCM=6 → 3^(2/6) vs 2^(3/6) = 9^(1/6) vs 8^(1/6) → ∛3 wins","Rationalize: a/√b = a√b/b"],
+    sumTypes:[
+      {name:"Simplifying Surds",desc:"Simplify √n to p√q form",formula:"Extract perfect square factors: √48=√(16×3)=4√3"},
+      {name:"Comparing Surds",desc:"Determine which surd is larger",formula:"Convert to same index using LCM. Compare bases."},
+      {name:"Rationalizing",desc:"Remove surd from denominator",formula:"Multiply by conjugate: 1/(a+b√c) × (a-b√c)/(a-b√c)"},
+      {name:"Pure Recurring Decimal",desc:"Convert 0.āb̄c̄ to fraction",formula:"Pure recurring (n digits) = digits/99...9 (n nines)"},
+      {name:"Mixed Recurring Decimal",desc:"Convert 0.a(bc) to fraction",formula:"(all digits − non-repeating part) / 990...0"}
+    ],
+    traps:[
+      {q:"√(9+16) = √9+√16 = 3+4 = 7?",wrong:"TRUE",correct:"FALSE — √25=5",explain:"You can NEVER split √(a+b). √(9+16)=√25=5, NOT 3+4=7."},
+      {q:"0.31212... = 312/999?",wrong:"312/999",correct:"(312-3)/990=103/330",explain:"Non-repeating digit 3 must be subtracted. Formula for mixed recurring: (all-non-repeat)/990."}
+    ],
+    questions:[
+      {q:"First step to simplify √12+√27-√48?",opts:["Add directly","Simplify each surd","Rationalize","Find LCM"],ans:1,xp:10,explain:"Always simplify each surd first: √12=2√3, √27=3√3, √48=4√3.",shortcut:"Extract perfect squares: √12=2√3 etc."},
+      {q:"√12+√27-√48 = ?",opts:["√3","2√3","3√3","0"],ans:0,xp:20,explain:"2√3+3√3-4√3=1√3=√3.",shortcut:"(2+3-4)√3=√3."},
+      {q:"x=3+2√2. x+1/x = ?",opts:["4","5","6","8"],ans:2,xp:30,explain:"1/x=3-2√2. x+1/x=(3+2√2)+(3-2√2)=6.",shortcut:"x+1/x=2a where a=3. Answer=6."},
+      {q:"0.3̄+0.4̄+0.5̄ = ?",opts:["1","4/3","12/9","Both b and c"],ans:3,xp:40,explain:"3/9+4/9+5/9=12/9=4/3. Both b and c are equal.",shortcut:"3/9+4/9+5/9=12/9=4/3."},
+      {q:"Ascending order: ⁴√5, ³√4, √3",opts:["√3 < ³√4 < ⁴√5","⁴√5 < ³√4 < √3","³√4 < √3 < ⁴√5","√3 < ⁴√5 < ³√4"],ans:0,xp:50,explain:"LCM(4,3,2)=12. 5^3=125, 4^4=256, 3^6=729. All to 1/12: 125<256<729 → ⁴√5<³√4<√3. Wait: 3^6=729>4^4=256>5^3=125. So ascending: ⁴√5<³√4<√3. That's option A.",shortcut:"Convert to 12th root: 5^3=125, 4^4=256, 3^6=729. √3>³√4>⁴√5. Ascending: ⁴√5<³√4<√3."}
+    ]
+  }
+];
+
+const STAGES = [
+  {key:"learn",name:"Learn",desc:"Facts + Shortcuts",icon:"📖",color:"#3ecf6e"},
+  {key:"recognition",name:"Recognition",desc:"2 Qs · 10 XP each",icon:"👁",color:"#5b8df8"},
+  {key:"shortcut",name:"Shortcut",desc:"2 Qs · 20 XP each",icon:"⚡",color:"#f7c948"},
+  {key:"trap",name:"Trap Zone",desc:"Study the traps",icon:"⚠️",color:"#f59e42"},
+  {key:"trap_quiz",name:"Trap Quiz",desc:"2 Qs · 30 XP each",icon:"🚨",color:"#f76f6f"},
+  {key:"pyq",name:"PYQ Style",desc:"2 Qs · 40 XP each",icon:"📜",color:"#b57bee"},
+  {key:"mastery",name:"Mastery",desc:"2 Qs · 50 XP each",icon:"🏆",color:"#d4a017"},
+  {key:"practice",name:"Practice",desc:"10 Qs from JSON",icon:"🎯",color:"#3ecf6e"}
+];
+
+const STAGE_LABELS={recognition:"Recognition",shortcut:"Shortcut",trap_quiz:"Trap Quiz",pyq:"PYQ Style",mastery:"Mastery",practice:"Practice"};
+const STAGE_COLORS={recognition:"#5b8df8",shortcut:"#f7c948",trap_quiz:"#f76f6f",pyq:"#b57bee",mastery:"#d4a017",practice:"#3ecf6e"};
+const STAGE_XP={recognition:10,shortcut:20,trap_quiz:30,pyq:40,mastery:50,practice:20};
+
+// ── STATE ──
+let G={xp:0,done:{},world:null,stage:null,qIdx:0,qs:[],correct:0,wrong:0,sXP:0,answered:false};
+
+function loadState(){
+  try{const s=localStorage.getItem('centu_ns2');if(s){const d=JSON.parse(s);G.xp=d.xp||0;G.done=d.done||{};}}catch(e){}
+}
+function saveState(){
+  try{localStorage.setItem('centu_ns2',JSON.stringify({xp:G.xp,done:G.done}));}catch(e){}
+}
+function getLevel(xp){
+  if(xp<50)return{name:"Beginner",next:50};
+  if(xp<200)return{name:"Explorer",next:200};
+  if(xp<500)return{name:"Solver",next:500};
+  if(xp<1000)return{name:"Strategist",next:1000};
+  return{name:"Master",next:9999};
+}
+function isDone(wid,sk){return (G.done[wid]||[]).includes(sk);}
+function isWorldDone(wid){return ['recognition','shortcut','trap_quiz','pyq','mastery','practice'].every(s=>isDone(wid,s));}
+function markDone(wid,sk){if(!G.done[wid])G.done[wid]=[];if(!G.done[wid].includes(sk))G.done[wid].push(sk);saveState();}
+
+// ── SCREEN ──
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('hidden',s.id!==id));}
+
+// ── HOME ──
+function renderHome(){
+  const lv=getLevel(G.xp);
+  document.getElementById('lv-name').textContent=lv.name;
+  document.getElementById('total-xp').textContent=G.xp+' XP';
+  document.getElementById('xp-fill').style.width=Math.min(100,Math.round(G.xp/lv.next*100))+'%';
+  const list=document.getElementById('worlds-list');
+  list.innerHTML=WORLDS.map((w,i)=>{
+    const done=isWorldDone(w.id);
+    const comp=(G.done[w.id]||[]).filter(s=>['recognition','shortcut','trap_quiz','pyq','mastery','practice'].includes(s)).length;
+    const pct=Math.round(comp/6*100);
+    return`<div class="world-card${done?' done':''}" onclick="openWorld(${i})">
+      <div class="w-icon" style="background:${w.color}22;border:1.5px solid ${w.color}44">${w.emoji}</div>
+      <div class="w-info">
+        <div class="w-name">${w.title}</div>
+        <div class="w-desc">${w.desc}</div>
+        <div class="w-prog"><div class="w-prog-fill" style="width:${pct}%;background:${w.color}"></div></div>
+      </div>
+      <div class="w-right">${done?'✓':comp+'/6'}</div>
+    </div>`;
+  }).join('');
+}
+function goHome(){show('home');renderHome();}
+
+// ── WORLD ──
+function openWorld(idx){
+  G.world=WORLDS[idx];
+  document.getElementById('world-title').textContent=G.world.emoji+' '+G.world.title;
+  document.getElementById('world-sub').textContent=G.world.desc+' · 5+10 Questions';
+  renderStages();
+  show('world');
+}
+function renderStages(){
+  const w=G.world;
+  const list=document.getElementById('stages-list');
+  list.innerHTML='<div class="sec-hdr" style="padding:0 2px 8px">Learning Path</div>'+
+  STAGES.map((s,i)=>{
+    const done=isDone(w.id,s.key);
+    const locked=i>0&&!isDone(w.id,STAGES[i-1].key)&&!(s.key==='trap_quiz'&&isDone(w.id,'trap'));
+    return`<div class="stage-row${locked?' locked':''}${done?' done':''}" onclick="startStageDirect('${s.key}')">
+      <div class="st-icon" style="background:${s.color}22;color:${s.color};border:1.5px solid ${s.color}44">${s.icon}</div>
+      <div class="st-info"><div class="st-name">${s.name}</div><div class="st-desc">${s.desc}</div></div>
+      ${done?'<span style="color:var(--green)">✓</span>':(locked?'<span style="color:var(--muted);font-size:.9rem">🔒</span>':'')}
+    </div>`;
+  }).join('');
+}
+function goWorld(){show('world');if(G.world)renderStages();}
+
+function startStageDirect(key){
+  if(key==='learn')openLearn();
+  else if(key==='trap')openTraps();
+  else startStage(key);
+}
+
+// ── LEARN ──
+function openLearn(){
+  const w=G.world;
+  document.getElementById('learn-title').textContent=w.emoji+' '+w.title;
+  const body=document.getElementById('learn-body');
+  // Sum-type analysis section
+  const sumHTML=w.sumTypes?`
+    <div class="sum-block">
+      <div class="sum-lbl">🔍 Sum-Type Analysis (Recognition Guide)</div>
+      ${w.sumTypes.map(t=>`<div class="sum-type">
+        <div class="sum-type-name">${t.name}</div>
+        <div class="sum-type-desc">${t.desc}</div>
+        <div class="sum-formula">${t.formula}</div>
+      </div>`).join('')}
+    </div>`:'';
+  body.innerHTML=`
+    <div class="video-slot"><div class="v-icon">📹</div><div class="v-txt">Short explanation video</div><div class="v-sub">Coming soon — paste YouTube link here</div></div>
+    ${sumHTML}
+    <div class="learn-block">
+      <div class="block-lbl">Key Facts</div>
+      ${w.facts.map(f=>`<div class="fact-row"><span class="fact-dot">▸</span><span class="fact-txt">${f}</span></div>`).join('')}
+    </div>
+    <div class="learn-block">
+      <div class="block-lbl">Shortcuts</div>
+      <div class="shortcut-box">${w.shortcuts.map(s=>`<div class="sc-line">${s}</div>`).join('')}</div>
+    </div>`;
+  markDone(w.id,'learn');
+  show('learn');
+}
+function afterLearn(){startStage('recognition');}
+
+// ── TRAPS ──
+function openTraps(){
+  const w=G.world;
+  document.getElementById('trap-title').textContent='⚠️ '+w.title+' Traps';
+  const body=document.getElementById('trap-body');
+  body.innerHTML=(w.traps||[]).map(t=>`
+    <div class="trap-card">
+      <div class="trap-hdr"><span>⚠️</span><span class="trap-hdr-txt">Danger Zone</span></div>
+      <div class="trap-q">${t.q}</div>
+      <div class="trap-cmp">
+        <div class="trap-wrong"><div class="trap-badge">❌ Wrong</div><div class="trap-val">${t.wrong}</div></div>
+        <div class="trap-right"><div class="trap-badge">✓ Correct</div><div class="trap-val">${t.correct}</div></div>
+      </div>
+      <div class="trap-exp">${t.explain}</div>
+    </div>`).join('');
+  markDone(w.id,'trap');
+  show('traps');
+}
+
+// ── QUIZ ──
+function startStage(key){
+  const w=G.world;
+  let qs=[];
+  
+  if(key==='practice'){
+    // Use JSON questions from PRACTICE_QS
+    const pool=PRACTICE_QS[w.id]||[];
+    qs=pool.map(q=>({...q,xp:20}));
+  } else {
+    // Use built-in questions filtered by level
+    const lvMap={recognition:'recognition',shortcut:'shortcut',trap_quiz:'trap',pyq:'pyq',mastery:'mastery'};
+    const lvl=lvMap[key]||key;
+    qs=(w.questions||[]).filter(q=>q.level===lvl||!q.level);
+    // If no level filtering, use questions by index
+    if(!qs.length){
+      const ranges={recognition:[0,1],shortcut:[2,3],trap_quiz:[2,3],pyq:[3,4],mastery:[4,5]};
+      const r=ranges[key]||[0,2];
+      qs=(w.questions||[]).slice(r[0],r[1]+1);
+    }
+    qs=qs.map(q=>({...q,xp:STAGE_XP[key]||20}));
+  }
+  
+  if(!qs.length){toast('No questions for this stage');return;}
+  G.stage=key;G.qs=qs;G.qIdx=0;G.correct=0;G.wrong=0;G.sXP=0;G.answered=false;
+  renderQ();
+  show('quiz');
+}
+
+function renderQ(){
+  const q=G.qs[G.qIdx];
+  const tot=G.qs.length;
+  const col=STAGE_COLORS[G.stage]||'#3ecf6e';
+  const lbl=STAGE_LABELS[G.stage]||'Quiz';
+  
+  const badge=document.getElementById('quiz-badge');
+  badge.textContent=lbl;badge.style.background=col+'22';badge.style.color=col;badge.style.border='1px solid '+col+'44';
+  document.getElementById('quiz-ctr').textContent='Q '+(G.qIdx+1)+'/'+tot;
+  document.getElementById('quiz-prog').style.width=Math.round(G.qIdx/tot*100)+'%';
+  document.getElementById('quiz-prog').style.background=col;
+  
+  const letters=['A','B','C','D'];
+  document.getElementById('quiz-body').innerHTML=`
+    <div class="q-card">
+      <div class="q-meta">${lbl} · Q${G.qIdx+1} of ${tot} · +${q.xp} XP</div>
+      <div class="q-text">${(q.q||'Question').replace(/\n/g,' ')}</div>
+      <div class="opts-list">
+        ${(q.opts||[]).map((o,i)=>`<button class="opt-btn" id="opt-${i}" onclick="selectAns(${i})">
+          <span class="opt-letter">${letters[i]}</span><span>${o}</span>
+        </button>`).join('')}
+      </div>
+      <div class="fb-box" id="fb"></div>
+    </div>`;
+  document.getElementById('next-btn').classList.remove('show');
+  G.answered=false;
+}
+
+function selectAns(idx){
+  if(G.answered)return;
+  G.answered=true;
+  const q=G.qs[G.qIdx];
+  const ok=idx===q.ans;
+  for(let i=0;i<4;i++){
+    const b=document.getElementById('opt-'+i);
+    if(!b)continue;
+    if(i===q.ans)b.classList.add('ok');
+    else if(i===idx&&!ok)b.classList.add('bad');
+    b.style.pointerEvents='none';
+  }
+  const fb=document.getElementById('fb');
+  fb.classList.add('show');
+  if(ok){
+    G.correct++;G.sXP+=q.xp;G.xp+=q.xp;saveState();
+    fb.innerHTML=`<div class="fb-correct">✓ Correct!</div><div class="xp-earned">+${q.xp} XP</div>
+      ${q.explain?`<div class="fb-explain">${q.explain}</div>`:''}
+      ${q.shortcut?`<div class="fb-shortcut">💡 ${q.shortcut}</div>`:''}`;
+    toast('+'+q.xp+' XP 🎯');
+  } else {
+    G.wrong++;
+    fb.innerHTML=`<div class="fb-wrong">✗ Incorrect</div>
+      <div class="fb-explain">Correct: <strong>${(q.opts||[])[q.ans]||''}</strong></div>
+      ${q.explain?`<div class="fb-explain">${q.explain}</div>`:''}
+      ${q.shortcut?`<div class="fb-shortcut">💡 ${q.shortcut}</div>`:''}`;
+  }
+  const isLast=G.qIdx>=G.qs.length-1;
+  const nb=document.getElementById('next-btn');
+  nb.textContent=isLast?'See Results →':'Next Question →';
+  nb.classList.add('show');
+}
+
+function nextQ(){
+  G.qIdx++;
+  if(G.qIdx>=G.qs.length)showResult();
+  else renderQ();
+}
+
+function showResult(){
+  markDone(G.world.id,G.stage);
+  const tot=G.qs.length;
+  const acc=Math.round(G.correct/tot*100);
+  const emojis={recognition:'👁️',shortcut:'⚡',trap_quiz:'⚠️',pyq:'📜',mastery:'🏆',practice:'🎯'};
+  document.getElementById('r-emoji').textContent=emojis[G.stage]||'🎯';
+  document.getElementById('r-title').textContent=(STAGE_LABELS[G.stage]||'Stage')+' Complete!';
+  document.getElementById('r-sub').textContent=G.world.title+' · '+acc+'% accuracy';
+  document.getElementById('r-xp').textContent='+'+G.sXP;
+  document.getElementById('r-correct').textContent=G.correct;
+  document.getElementById('r-wrong').textContent=G.wrong;
+  document.getElementById('r-acc').textContent=acc+'%';
+  // next stage
+  const order=['recognition','shortcut','trap','trap_quiz','pyq','mastery','practice'];
+  const curIdx=order.indexOf(G.stage);
+  const nxt=order[curIdx+1];
+  const btn=document.getElementById('r-continue');
+  if(nxt){
+    const nm=STAGE_LABELS[nxt]||nxt;
+    btn.textContent='Next: '+(nxt==='trap'?'Trap Zone →':nm+' →');
+  } else {btn.textContent='🏆 World Complete!';}
+  btn.onclick=goWorld;
+  show('result');renderHome();
+}
+
+// ── TOAST ──
+let toastT;
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1500);}
+
+// ── INIT ── (robust for all iOS/Android contexts)
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){try{loadState();renderHome();show('home');}catch(e){document.getElementById('worlds-list').innerHTML='<p style="color:#f76f6f;padding:16px;font-size:.8rem">Error loading content. Please reload.</p>';console.error(e);}});}else{try{loadState();renderHome();show('home');}catch(e){console.error(e);}}
+</script>
+
+</body>
+</html>

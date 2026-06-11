@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { Button } from '@/src/components/ui/Button'
-import { LogoMark } from '@/src/components/ui/Logo'
+import { LogoFull } from '@/src/components/ui/Logo'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -71,34 +71,29 @@ export default function LoginPage() {
 
         {/* Geometric decoration */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" viewBox="0 0 500 700" fill="none">
-          <circle cx="400" cy="100" r="200" stroke="rgba(111,207,143,0.4)" strokeWidth="1"/>
-          <circle cx="400" cy="100" r="140" stroke="rgba(111,207,143,0.25)" strokeWidth="1"/>
-          <circle cx="400" cy="100" r="80"  stroke="rgba(111,207,143,0.15)" strokeWidth="1"/>
-          <line x1="400" y1="-100" x2="400" y2="300" stroke="rgba(111,207,143,0.15)" strokeWidth="1"/>
-          <line x1="200" y1="100"  x2="600" y2="100" stroke="rgba(111,207,143,0.15)" strokeWidth="1"/>
+          <circle cx="400" cy="100" r="200" stroke="rgba(74,222,128,0.4)" strokeWidth="1"/>
+          <circle cx="400" cy="100" r="140" stroke="rgba(74,222,128,0.25)" strokeWidth="1"/>
+          <circle cx="400" cy="100" r="80"  stroke="rgba(74,222,128,0.15)" strokeWidth="1"/>
+          <line x1="400" y1="-100" x2="400" y2="300" stroke="rgba(74,222,128,0.15)" strokeWidth="1"/>
+          <line x1="200" y1="100"  x2="600" y2="100" stroke="rgba(74,222,128,0.15)" strokeWidth="1"/>
           <circle cx="100" cy="600" r="120" stroke="rgba(94,200,192,0.15)" strokeWidth="1"/>
           <polygon points="50,650 150,500 250,650" stroke="rgba(94,200,192,0.12)" strokeWidth="1" fill="none"/>
           {/* Large arrow decoration */}
-          <line x1="50" y1="450" x2="250" y2="250" stroke="rgba(111,207,143,0.08)" strokeWidth="2"/>
-          <polygon points="250,250 230,280 280,270" fill="rgba(111,207,143,0.08)"/>
+          <line x1="50" y1="450" x2="250" y2="250" stroke="rgba(74,222,128,0.08)" strokeWidth="2"/>
+          <polygon points="250,250 230,280 280,270" fill="rgba(74,222,128,0.08)"/>
         </svg>
         <div className="absolute top-0 right-0 w-64 h-64 pointer-events-none"
-          style={{ background: 'radial-gradient(circle,rgba(111,207,143,0.08),transparent 70%)' }} />
+          style={{ background: 'radial-gradient(circle,rgba(74,222,128,0.08),transparent 70%)' }} />
 
         {/* Logo */}
-        <div className="relative flex items-center gap-3" style={{ filter: 'drop-shadow(0 0 10px rgba(111,207,143,0.5))' }}>
-          <LogoMark size={30} />
-          <div>
-            <span className="text-base font-bold text-text tracking-tight block" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-              CentuMania
-            </span>
-            <span className="text-[10px] text-text-muted font-mono tracking-wide">Winning is a Habit</span>
-          </div>
+        <div className="relative">
+          <LogoFull size={30} glow />
+          <span className="text-[10px] text-text-muted font-mono tracking-wide block mt-1 pl-0.5">Winning is a Habit</span>
         </div>
 
         {/* Hero text */}
         <div className="relative space-y-6">
-          <p className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: '#6fcf8f' }}>
+          <p className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: '#4ADE80' }}>
             LDC/UDC · Puducherry · 2026
           </p>
           <blockquote className="text-4xl font-bold text-text leading-tight tracking-tight"
@@ -122,15 +117,9 @@ export default function LoginPage() {
         <div className="w-full max-w-sm">
 
           {/* Mobile logo */}
-          <div className="flex items-center gap-2.5 mb-10 lg:hidden"
-            style={{ filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.4))' }}>
-            <LogoMark size={24} />
-            <div>
-              <span className="text-base font-bold text-text tracking-tight block" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-                CentuMania
-              </span>
-              <span className="text-[10px] text-text-muted font-mono tracking-wide">Winning is a Habit</span>
-            </div>
+          <div className="mb-10 lg:hidden">
+            <LogoFull size={24} glow />
+            <span className="text-[10px] text-text-muted font-mono tracking-wide block mt-1 pl-0.5">Winning is a Habit</span>
           </div>
 
           <h1 className="text-3xl font-bold text-text tracking-tight mb-1.5"

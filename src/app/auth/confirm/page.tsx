@@ -101,7 +101,7 @@ function ConfirmInner() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#0e1410' }}>
         <div className="w-8 h-8 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#6fcf8f', boxShadow: '0 0 12px rgba(111,207,143,0.3)' }} />
+          style={{ borderTopColor: '#4ADE80', boxShadow: '0 0 12px rgba(74,222,128,0.3)' }} />
         <p className="text-sm text-text-muted">Confirming your account…</p>
         <p className="text-xs text-text-muted" style={{ opacity: 0.4 }}>This takes just a moment</p>
       </div>
@@ -129,7 +129,7 @@ function ConfirmInner() {
           <a
             href="/auth/register"
             className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
-            style={{ background: '#3fae6a', color: '#06140c' }}
+            style={{ background: '#22C55E', color: '#06140c' }}
           >
             Register again
           </a>
@@ -145,7 +145,7 @@ function ConfirmInner() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#0e1410' }}>
       <div className="w-16 h-16 rounded-3xl flex items-center justify-center"
-        style={{ background: 'rgba(111,207,143,0.10)', border: '1px solid rgba(111,207,143,0.25)' }}>
+        style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.25)' }}>
         <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="20 6 9 17 4 12"/>
         </svg>
@@ -160,7 +160,7 @@ export default function ConfirmPage() {
     <Suspense fallback={
       <div className="min-h-screen flex flex-col items-center justify-center gap-3" style={{ background: '#0e1410' }}>
         <div className="w-6 h-6 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#6fcf8f' }} />
+          style={{ borderTopColor: '#4ADE80' }} />
         <p className="text-sm text-text-muted">Loading…</p>
       </div>
     }>

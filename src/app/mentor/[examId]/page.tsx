@@ -16,7 +16,7 @@ import type { AiReport } from '@/src/types/database'
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function readinessColor(score: number) {
-  if (score >= 80) return '#6fcf8f'
+  if (score >= 80) return '#4ADE80'
   if (score >= 60) return '#5ec8c0'
   if (score >= 40) return '#e7b14c'
   return '#e8736b'
@@ -133,7 +133,7 @@ export default function MentorReportPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#0e1410' }}>
         <div className="w-8 h-8 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#6fcf8f', boxShadow: '0 0 12px rgba(111,207,143,0.3)' }} />
+          style={{ borderTopColor: '#4ADE80', boxShadow: '0 0 12px rgba(74,222,128,0.3)' }} />
         <p className="text-sm text-text-muted">
           {phase === 'generating' ? 'Your mentor report is being generated…' : 'Loading report…'}
         </p>
@@ -233,8 +233,8 @@ export default function MentorReportPage() {
         {report.strengths_text && (
           <ReportSection
             icon={<StrengthIcon />}
-            accent="rgba(111,207,143,0.12)"
-            accentBorder="rgba(111,207,143,0.20)"
+            accent="rgba(74,222,128,0.12)"
+            accentBorder="rgba(74,222,128,0.20)"
             label="Strengths"
             text={report.strengths_text}
           />
@@ -300,7 +300,7 @@ function ReportSection({
 
 function StrengthIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6fcf8f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="20 6 9 17 4 12"/>
     </svg>
   )

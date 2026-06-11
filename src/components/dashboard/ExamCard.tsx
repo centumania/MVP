@@ -15,7 +15,7 @@ type TodayExam = {
 }
 
 function scoreColor(pct: number): string {
-  if (pct >= 80) return '#6fcf8f'
+  if (pct >= 80) return '#4ADE80'
   if (pct >= 60) return '#5ec8c0'
   if (pct >= 40) return '#e7b14c'
   return '#e8736b'
@@ -59,13 +59,13 @@ export function ExamCard({ w, today }: ExamCardProps) {
   if (w.isOpen && today) {
     return (
       <div className="relative rounded-2xl overflow-hidden animate-pulse-glow"
-        style={{ background: 'linear-gradient(135deg,rgba(111,207,143,0.12),rgba(111,207,143,0.04))', border: '1px solid rgba(111,207,143,0.25)' }}>
+        style={{ background: 'linear-gradient(135deg,rgba(74,222,128,0.12),rgba(74,222,128,0.04))', border: '1px solid rgba(74,222,128,0.25)' }}>
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at top right,rgba(111,207,143,0.08),transparent 60%)' }} />
+          style={{ background: 'radial-gradient(ellipse at top right,rgba(74,222,128,0.08),transparent 60%)' }} />
         <div className="relative p-5">
           <div className="flex items-center gap-2 mb-3">
             <span className="w-2 h-2 bg-primary rounded-full animate-pulse"
-              style={{ boxShadow: '0 0 6px rgba(111,207,143,0.8)' }} />
+              style={{ boxShadow: '0 0 6px rgba(74,222,128,0.8)' }} />
             <span className="text-[10px] font-bold text-primary uppercase tracking-widest font-mono">Live now</span>
           </div>
           <p className="text-2xl font-bold text-text tracking-tight mb-1" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>

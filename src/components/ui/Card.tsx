@@ -31,7 +31,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         className={[
           base,
-          highlight ? 'border-primary/40 shadow-[0_0_24px_rgba(56,189,248,0.12)]' : variants[variant],
+          highlight ? 'border-primary/40 shadow-[0_0_24px_rgba(74,222,128,0.12)]' : variants[variant],
           !noPadding && 'p-5',
           hoverClass,
           glowClass,

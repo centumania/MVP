@@ -107,10 +107,10 @@ export default function AdminExams() {
     }
   }
 
-  const inputStyle = { background: '#16201a', border: '1px solid #27342b', color: '#e8ead8', height: 36, borderRadius: 8, padding: '0 12px', fontSize: 14, width: '100%' }
+  const inputStyle = { background: '#16201a', border: '1px solid #27342b', color: '#e8ead8', height: 44, borderRadius: 8, padding: '0 12px', fontSize: 14, width: '100%' }
 
   return (
-    <div className="p-8 max-w-6xl">
+    <div className="p-4 sm:p-6 md:p-8 max-w-6xl">
 
       {toast && (
         <div className="fixed top-4 right-4 z-50 text-sm px-4 py-2.5 rounded-lg shadow-lg"
@@ -127,9 +127,9 @@ export default function AdminExams() {
         <button
           onClick={() => setShowCreate(true)}
           className="px-4 py-2 text-sm font-medium rounded-lg transition-colors font-mono"
-          style={{ background: '#3fae6a', color: '#06140c' }}
+          style={{ background: '#22C55E', color: '#06140c' }}
           onMouseEnter={e => (e.currentTarget.style.background = '#2a8e57')}
-          onMouseLeave={e => (e.currentTarget.style.background = '#3fae6a')}
+          onMouseLeave={e => (e.currentTarget.style.background = '#22C55E')}
         >
           + New Exam
         </button>
@@ -161,12 +161,12 @@ export default function AdminExams() {
             </div>
             <div className="flex gap-3 mt-6">
               <button onClick={createExam}
-                className="flex-1 h-9 text-sm font-medium rounded-lg font-mono"
-                style={{ background: '#3fae6a', color: '#06140c' }}>
+                className="flex-1 h-11 text-sm font-medium rounded-lg font-mono"
+                style={{ background: '#22C55E', color: '#06140c' }}>
                 Create
               </button>
               <button onClick={() => setShowCreate(false)}
-                className="flex-1 h-9 text-sm font-medium rounded-lg font-mono"
+                className="flex-1 h-11 text-sm font-medium rounded-lg font-mono"
                 style={{ background: '#1b271f', color: '#9aa893', border: '1px solid #27342b' }}>
                 Cancel
               </button>
@@ -179,10 +179,10 @@ export default function AdminExams() {
       {loading ? (
         <div className="rounded-xl p-8 text-center" style={CARD}>
           <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto"
-            style={{ borderColor: 'rgba(111,207,143,0.3)', borderTopColor: '#6fcf8f' }} />
+            style={{ borderColor: 'rgba(74,222,128,0.3)', borderTopColor: '#4ADE80' }} />
         </div>
       ) : (
-        <div className="rounded-xl overflow-hidden" style={CARD}>
+        <div className="rounded-xl overflow-hidden table-scroll" style={CARD}>
           <table className="w-full text-sm">
             <thead>
               <tr style={THHD}>
@@ -201,7 +201,7 @@ export default function AdminExams() {
                 <tr key={exam.id} style={TROW}
                   onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.015)')}
                   onMouseLeave={e => (e.currentTarget.style.background = '')}>
-                  <td className="px-4 py-3 font-mono text-sm font-medium" style={{ color: '#6fcf8f' }}>D{exam.day_number}</td>
+                  <td className="px-4 py-3 font-mono text-sm font-medium" style={{ color: '#4ADE80' }}>D{exam.day_number}</td>
                   <td className="px-4 py-3 text-text font-medium">{exam.title}</td>
                   <td className="px-4 py-3 text-text-muted text-xs hidden md:table-cell font-mono">
                     {new Date(exam.exam_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
@@ -209,7 +209,7 @@ export default function AdminExams() {
                   <td className="px-4 py-3">
                     <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium font-mono"
                       style={exam.questionCount > 0
-                        ? { background: 'rgba(111,207,143,0.08)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }
+                        ? { background: 'rgba(74,222,128,0.08)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.20)' }
                         : { background: 'rgba(231,177,76,0.08)', color: '#e7b14c', border: '1px solid rgba(231,177,76,0.20)' }
                       }>
                       {exam.questionCount} Qs
@@ -220,9 +220,9 @@ export default function AdminExams() {
                     <button
                       onClick={() => openQuestions(exam)}
                       className="px-3 py-1.5 text-xs font-medium rounded-md transition-colors font-mono"
-                      style={{ background: 'rgba(111,207,143,0.08)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.15)' }}
-                      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(111,207,143,0.16)')}
-                      onMouseLeave={e => (e.currentTarget.style.background = 'rgba(111,207,143,0.08)')}
+                      style={{ background: 'rgba(74,222,128,0.08)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.15)' }}
+                      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(74,222,128,0.16)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'rgba(74,222,128,0.08)')}
                     >
                       {exam.questionCount > 0 ? 'Edit Questions' : 'Add Questions'}
                     </button>
@@ -259,7 +259,7 @@ export default function AdminExams() {
                 <button
                   onClick={saveQuestions} disabled={saving}
                   className="px-3 py-1.5 text-xs font-medium rounded-lg disabled:opacity-50 font-mono"
-                  style={{ background: '#3fae6a', color: '#06140c' }}>
+                  style={{ background: '#22C55E', color: '#06140c' }}>
                   {saving ? 'Saving…' : 'Save All'}
                 </button>
                 <button onClick={() => setSelected(null)} className="p-1.5 text-text-muted hover:text-text">
@@ -274,7 +274,7 @@ export default function AdminExams() {
               {qLoading ? (
                 <div className="flex items-center justify-center py-12">
                   <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
-                    style={{ borderColor: 'rgba(111,207,143,0.3)', borderTopColor: '#6fcf8f' }} />
+                    style={{ borderColor: 'rgba(74,222,128,0.3)', borderTopColor: '#4ADE80' }} />
                 </div>
               ) : questions.map((q, i) => (
                 <div key={i} className="rounded-xl p-4" style={{ background: '#16201a', border: '1px solid #27342b' }}>
@@ -300,7 +300,7 @@ export default function AdminExams() {
                       rows={2}
                       className="w-full px-3 py-2 text-sm rounded-lg resize-none focus:outline-none"
                       style={{ background: '#1b271f', border: '1px solid #27342b', color: '#e8ead8' }}
-                      onFocus={e => (e.currentTarget.style.borderColor = 'rgba(111,207,143,0.5)')}
+                      onFocus={e => (e.currentTarget.style.borderColor = 'rgba(74,222,128,0.5)')}
                       onBlur={e => (e.currentTarget.style.borderColor = '#27342b')}
                     />
                     {(['A','B','C','D'] as const).map(opt => (
@@ -309,7 +309,7 @@ export default function AdminExams() {
                           onClick={() => updateQ(i, 'correct_answer', opt)}
                           className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold shrink-0 transition-colors font-mono"
                           style={q.correct_answer === opt
-                            ? { background: '#3fae6a', color: '#06140c', boxShadow: '0 0 8px rgba(63,174,106,0.5)' }
+                            ? { background: '#22C55E', color: '#06140c', boxShadow: '0 0 8px rgba(63,174,106,0.5)' }
                             : { background: '#1b271f', border: '1px solid #27342b', color: '#6b7a63' }
                           }>
                           {opt}
@@ -318,9 +318,9 @@ export default function AdminExams() {
                           placeholder={`Option ${opt}`}
                           value={(q as Record<string,unknown>)[`option_${opt.toLowerCase()}`] as string}
                           onChange={e => updateQ(i, `option_${opt.toLowerCase()}` as keyof Question, e.target.value)}
-                          className="flex-1 h-8 px-3 text-sm rounded-lg focus:outline-none"
+                          className="flex-1 h-11 px-3 text-sm rounded-lg focus:outline-none"
                           style={{ background: '#1b271f', border: '1px solid #27342b', color: '#e8ead8' }}
-                          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(111,207,143,0.5)')}
+                          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(74,222,128,0.5)')}
                           onBlur={e => (e.currentTarget.style.borderColor = '#27342b')}
                         />
                       </div>
@@ -332,7 +332,7 @@ export default function AdminExams() {
                       rows={2}
                       className="w-full px-3 py-2 text-xs rounded-lg resize-none focus:outline-none"
                       style={{ background: '#1b271f', border: '1px solid #27342b', color: '#9aa893' }}
-                      onFocus={e => (e.currentTarget.style.borderColor = 'rgba(111,207,143,0.4)')}
+                      onFocus={e => (e.currentTarget.style.borderColor = 'rgba(74,222,128,0.4)')}
                       onBlur={e => (e.currentTarget.style.borderColor = '#27342b')}
                     />
                   </div>

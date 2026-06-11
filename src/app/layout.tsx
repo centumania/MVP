@@ -27,13 +27,28 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'CentuMania — Winning is a habit',
   description: "India's most disciplined LDC/UDC exam prep platform. 15-day intensive programme for Puducherry competitive exam aspirants.",
-  icons: { icon: '/favicon.ico' },
+  icons: {
+    icon:  '/favicon.svg',
+    apple: '/icons/apple-touch-icon.png',
+  },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable:       true,
+    statusBarStyle: 'black-translucent',
+    title:         'CentuMania',
+  },
+  formatDetection: { telephone: false },
 }
 
 export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  themeColor: '#3fae6a',
+  width:           'device-width',
+  initialScale:    1,
+  maximumScale:    1,
+  viewportFit:     'cover',
+  themeColor:      [
+    { media: '(prefers-color-scheme: dark)',  color: '#0e1410' },
+    { media: '(prefers-color-scheme: light)', color: '#0e1410' },
+  ],
 }
 
 /**
@@ -65,7 +80,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold focus:outline-none"
-          style={{ background: '#3fae6a', color: '#06140c' }}
+          style={{ background: '#4ADE80', color: '#06140c' }}
         >
           Skip to main content
         </a>

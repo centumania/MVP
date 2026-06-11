@@ -39,8 +39,8 @@ function Avatar({ name, isMe, size = 'md' }: { name: string; isMe?: boolean; siz
   return (
     <div className={`${sz} rounded-full flex items-center justify-center shrink-0 font-bold uppercase`}
       style={isMe
-        ? { background: 'linear-gradient(135deg,#6fcf8f,#3fae6a)', color: '#06140c', boxShadow: '0 0 12px rgba(111,207,143,0.4)' }
-        : { background: 'rgba(111,207,143,0.10)', color: '#6fcf8f' }
+        ? { background: 'linear-gradient(135deg,#4ADE80,#22C55E)', color: '#06140c', boxShadow: '0 0 12px rgba(74,222,128,0.4)' }
+        : { background: 'rgba(74,222,128,0.10)', color: '#4ADE80' }
       }>
       {init}
     </div>
@@ -102,12 +102,12 @@ export default function LeaderboardPage() {
         {/* My Rank Banner */}
         {myRank && (
           <div className="relative rounded-2xl overflow-hidden px-5 py-4"
-            style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(111,207,143,0.20)' }}>
+            style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(74,222,128,0.20)' }}>
             <div className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse at left,rgba(111,207,143,0.08),transparent 60%)' }} />
+              style={{ background: 'radial-gradient(ellipse at left,rgba(74,222,128,0.08),transparent 60%)' }} />
             <div className="relative flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 font-bold text-sm font-mono"
-                style={{ background: 'rgba(111,207,143,0.12)', border: '1px solid rgba(111,207,143,0.25)', color: '#6fcf8f' }}>
+                style={{ background: 'rgba(74,222,128,0.12)', border: '1px solid rgba(74,222,128,0.25)', color: '#4ADE80' }}>
                 #{myRank.rank}
               </div>
               <div className="flex-1 min-w-0">
@@ -145,7 +145,7 @@ export default function LeaderboardPage() {
                   style={{
                     background: 'rgba(255,255,255,0.02)',
                     border: `1px solid ${m.border}`,
-                    boxShadow: isMe ? `0 0 20px ${m.glow}, 0 0 0 2px rgba(111,207,143,0.3)` : `0 0 12px ${m.glow}`,
+                    boxShadow: isMe ? `0 0 20px ${m.glow}, 0 0 0 2px rgba(74,222,128,0.3)` : `0 0 12px ${m.glow}`,
                   }}
                 >
                   {isFirst && (
@@ -191,7 +191,7 @@ export default function LeaderboardPage() {
                     className="flex items-center gap-3 px-4 py-3 transition-colors"
                     style={{
                       borderBottom: idx < (top3.length < 3 ? entries : rest).length - 1 ? '1px solid rgba(39,52,43,0.5)' : undefined,
-                      background: isMe ? 'rgba(111,207,143,0.05)' : undefined,
+                      background: isMe ? 'rgba(74,222,128,0.05)' : undefined,
                     }}
                   >
                     <span className="text-xs font-mono text-text-muted w-8 text-center shrink-0 font-semibold">

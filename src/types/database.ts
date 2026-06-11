@@ -93,7 +93,8 @@ export type Material = {
   pdf_key:      string | null   // S3 object key — NEVER expose as a URL
   ppt_key:      string | null   // S3 object key — NEVER expose as a URL
   video_url:    string | null   // YouTube URL or CloudFront path (admin-set)
-  html_key:     string | null   // Storage key for interactive HTML MindMap — NEVER expose directly
+  html_key:     string | null   // Legacy storage key — deprecated, use html_url
+  html_url:     string | null   // Externally hosted HTML URL — redirect target after auth gate
   published_at: string          // ISO 8601
   expires_at:   string          // published_at + 24h — enforced server-side
   created_at:   string
@@ -128,6 +129,83 @@ export type LeaderboardEntry = {
   days_attended:    number
   accuracy_percent: number      // 0.0–100.0
   rank:             number
+}
+
+// ---------------------------------------------------------------------------
+// Centum Index tables
+// ---------------------------------------------------------------------------
+
+export type DailyTest = {
+  id:              string
+  batch_id:        string
+  test_date:       string    // YYYY-MM-DD
+  is_published:    boolean
+  total_questions: number
+  created_at:      string
+}
+
+export type TestSubmission = {
+  id:              string
+  user_id:         string
+  test_id:         string
+  submitted_at:    string
+  score:           number
+  total_questions: number
+}
+
+export type Node = {
+  id:         string
+  topic_id:   string | null
+  node_type:  'recognition' | 'shortcut' | 'trap' | 'pyq' | 'mastery'
+  title:      string
+  content:    Record<string, unknown>
+  is_active:  boolean
+  created_at: string
+}
+
+export type NodeAssignment = {
+  id:            string
+  batch_id:      string
+  node_id:       string
+  assigned_date: string    // YYYY-MM-DD
+}
+
+export type NodeProgress = {
+  id:           string
+  user_id:      string
+  node_id:      string
+  visited_at:   string
+  completed_at: string | null
+  is_completed: boolean
+}
+
+export type McqAttempt = {
+  id:              string
+  user_id:         string
+  node_id:         string
+  question_id:     string
+  attempt_number:  number
+  selected_option: string | null
+  is_correct:      boolean
+  attempted_at:    string
+}
+
+export type CentumIndexLogRow = {
+  id:                    string
+  user_id:               string
+  batch_id:              string
+  calculated_date:       string
+  tests_conducted:       number
+  tests_submitted:       number
+  attendance_index:      number
+  nodes_assigned:        number
+  nodes_completed:       number
+  node_completion_pct:   number
+  first_attempt_correct: number
+  first_attempt_total:   number
+  first_attempt_acc_pct: number
+  node_index:            number
+  centum_index:          number
 }
 
 // ---------------------------------------------------------------------------
@@ -230,6 +308,48 @@ export type Database = {
         Update:        Partial<Omit<AiReport, 'id'>>
         Relationships: []
       }
+      daily_tests: {
+        Row:           DailyTest
+        Insert:        Omit<DailyTest, 'id' | 'created_at'>
+        Update:        Partial<Omit<DailyTest, 'id' | 'created_at'>>
+        Relationships: []
+      }
+      test_submissions: {
+        Row:           TestSubmission
+        Insert:        Omit<TestSubmission, 'id' | 'submitted_at'> & { submitted_at?: string }
+        Update:        Partial<Omit<TestSubmission, 'id'>>
+        Relationships: []
+      }
+      nodes: {
+        Row:           Node
+        Insert:        Omit<Node, 'id' | 'created_at'>
+        Update:        Partial<Omit<Node, 'id' | 'created_at'>>
+        Relationships: []
+      }
+      node_assignments: {
+        Row:           NodeAssignment
+        Insert:        Omit<NodeAssignment, 'id'>
+        Update:        Partial<Omit<NodeAssignment, 'id'>>
+        Relationships: []
+      }
+      node_progress: {
+        Row:           NodeProgress
+        Insert:        Omit<NodeProgress, 'id'>
+        Update:        Partial<Omit<NodeProgress, 'id'>>
+        Relationships: []
+      }
+      mcq_attempts: {
+        Row:           McqAttempt
+        Insert:        Omit<McqAttempt, 'id'>
+        Update:        Partial<Omit<McqAttempt, 'id'>>
+        Relationships: []
+      }
+      centum_index_log: {
+        Row:           CentumIndexLogRow
+        Insert:        Omit<CentumIndexLogRow, 'id'>
+        Update:        Partial<Omit<CentumIndexLogRow, 'id'>>
+        Relationships: []
+      }
     }
     Views: {
       leaderboard: {
@@ -239,7 +359,12 @@ export type Database = {
         Relationships: []
       }
     }
-    Functions: Record<string, never>
+    Functions: {
+      calculate_centum_index: {
+        Args:    { p_user_id: string }
+        Returns: Record<string, unknown>
+      }
+    }
     Enums: {
       pricing_tier:  PricingTier
       answer_option: AnswerOption

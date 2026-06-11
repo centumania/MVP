@@ -9,6 +9,8 @@ import { Badge } from '@/src/components/ui/Badge'
 import { Button } from '@/src/components/ui/Button'
 import { ProgressRing } from '@/src/components/ui/ProgressRing'
 import type { User } from '@supabase/supabase-js'
+import { getCentumColor, getRefundTier } from '@/src/types/centum'
+import type { CentumIndexLog } from '@/src/types/centum'
 
 type Profile = {
   id: string; name: string; email: string; phone: string | null
@@ -40,22 +42,30 @@ function getAchievements(data: DashData | null): Achievement[] {
 
 export default function ProfilePage() {
   const router = useRouter()
-  const [user, setUser]         = useState<User | null>(null)
-  const [profile, setProfile]   = useState<Profile | null>(null)
-  const [dashData, setDashData] = useState<DashData | null>(null)
-  const [loading, setLoading]   = useState(true)
+  const [user, setUser]               = useState<User | null>(null)
+  const [profile, setProfile]         = useState<Profile | null>(null)
+  const [dashData, setDashData]       = useState<DashData | null>(null)
+  const [centumToday, setCentumToday] = useState<CentumIndexLog | null>(null)
+  const [centumHist,  setCentumHist]  = useState<CentumIndexLog[]>([])
+  const [loading, setLoading]         = useState(true)
 
   useEffect(() => {
     getSupabaseBrowserClient().auth.getSession().then(async ({ data: { session } }) => {
       if (!session) { router.replace('/auth/login'); return }
       setUser(session.user)
       // Use API for profile data — avoids browser-client RLS race conditions
-      const [profileRes, dashRes] = await Promise.all([
-        fetch('/api/profile', { headers: { Authorization: `Bearer ${session.access_token}` } }),
-        fetch('/api/dashboard', { headers: { Authorization: `Bearer ${session.access_token}` } }),
+      const [profileRes, dashRes, centumRes] = await Promise.all([
+        fetch('/api/profile',     { headers: { Authorization: `Bearer ${session.access_token}` } }),
+        fetch('/api/dashboard',   { headers: { Authorization: `Bearer ${session.access_token}` } }),
+        fetch('/api/centum/me',   { headers: { Authorization: `Bearer ${session.access_token}` } }),
       ])
       if (profileRes.ok) setProfile(await profileRes.json())
       if (dashRes.ok)    setDashData(await dashRes.json())
+      if (centumRes.ok) {
+        const { today, history } = await centumRes.json()
+        setCentumToday(today ?? null)
+        setCentumHist(history ?? [])
+      }
       setLoading(false)
     })
   }, [router])
@@ -93,15 +103,15 @@ export default function ProfilePage() {
 
         {/* ── Identity Card ───────────────────────────────────────── */}
         <div className="relative rounded-2xl overflow-hidden p-5"
-          style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(111,207,143,0.12)' }}>
+          style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(74,222,128,0.12)' }}>
           <div className="absolute top-0 right-0 w-32 h-32 pointer-events-none opacity-15"
-            style={{ background: 'radial-gradient(circle,#6fcf8f,transparent 70%)' }} />
+            style={{ background: 'radial-gradient(circle,#4ADE80,transparent 70%)' }} />
           <div className="relative flex items-center gap-4">
             <div className="relative shrink-0">
-              <ProgressRing value={xpPct} size={64} strokeWidth={3} color="#6fcf8f" trackColor="rgba(111,207,143,0.10)" />
+              <ProgressRing value={xpPct} size={64} strokeWidth={3} color="#4ADE80" trackColor="rgba(74,222,128,0.10)" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
-                  style={{ background: 'linear-gradient(135deg,#6fcf8f,#3fae6a)', color: '#06140c' }}>
+                  style={{ background: 'linear-gradient(135deg,#4ADE80,#22C55E)', color: '#06140c' }}>
                   {initials}
                 </div>
               </div>
@@ -114,7 +124,7 @@ export default function ProfilePage() {
               <div className="flex items-center gap-2 mt-2 flex-wrap">
                 {dashData && (
                   <span className="text-[10px] font-bold text-primary px-2 py-0.5 rounded-lg uppercase tracking-wider font-mono"
-                    style={{ background: 'rgba(111,207,143,0.10)', border: '1px solid rgba(111,207,143,0.20)' }}>
+                    style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.20)' }}>
                     Level {dashData.xpLevel} · {dashData.xp.toLocaleString()} XP
                   </span>
                 )}
@@ -147,6 +157,82 @@ export default function ProfilePage() {
               </Card>
             ))}
           </div>
+        )}
+
+        {/* ── Centum Index ────────────────────────────────────────── */}
+        {(centumToday || centumHist.length > 0) && (
+          <Card>
+            <div className="flex items-center justify-between mb-4">
+              <CardLabel>Centum Index</CardLabel>
+              {centumToday && (() => {
+                const refund = getRefundTier(Number(centumToday.centum_index))
+                return refund ? (
+                  <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-md uppercase tracking-wider"
+                    style={{ background: `${refund.color}15`, color: refund.color, border: `1px solid ${refund.color}30` }}>
+                    {refund.label}
+                  </span>
+                ) : null
+              })()}
+            </div>
+
+            {centumToday ? (
+              <>
+                {/* Big score */}
+                <div className="flex items-end gap-3 mb-4">
+                  <p className="text-5xl font-bold font-mono leading-none"
+                    style={{ color: getCentumColor(Number(centumToday.centum_index)) }}>
+                    {Number(centumToday.centum_index).toFixed(1)}
+                  </p>
+                  <p className="text-xs text-text-muted font-mono mb-1">Today</p>
+                </div>
+
+                {/* Sub-scores */}
+                <div className="grid grid-cols-2 gap-3 mb-4">
+                  <div className="rounded-xl p-3" style={{ background: '#1b271f', border: '1px solid #27342b' }}>
+                    <p className="text-[10px] text-text-muted uppercase tracking-widest font-mono mb-1">Attendance ×60%</p>
+                    <p className="text-xl font-bold font-mono text-text">{Number(centumToday.attendance_index).toFixed(1)}%</p>
+                    <p className="text-[10px] text-text-muted font-mono mt-0.5">
+                      {centumToday.tests_submitted}/{centumToday.tests_conducted} tests
+                    </p>
+                  </div>
+                  <div className="rounded-xl p-3" style={{ background: '#1b271f', border: '1px solid #27342b' }}>
+                    <p className="text-[10px] text-text-muted uppercase tracking-widest font-mono mb-1">Node Index ×40%</p>
+                    <p className="text-xl font-bold font-mono text-text">{Number(centumToday.node_index).toFixed(1)}</p>
+                    <p className="text-[10px] text-text-muted font-mono mt-0.5">
+                      {centumToday.nodes_completed}/{centumToday.nodes_assigned} nodes
+                    </p>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <p className="text-sm text-text-muted mb-4">Not calculated yet for today.</p>
+            )}
+
+            {/* Last 7 days */}
+            {centumHist.length > 0 && (
+              <div>
+                <p className="text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono mb-2">Last 7 days</p>
+                <div className="space-y-1.5">
+                  {centumHist.map(h => {
+                    const col = getCentumColor(Number(h.centum_index))
+                    return (
+                      <div key={h.id} className="flex items-center justify-between">
+                        <span className="text-xs text-text-muted font-mono">
+                          {new Date(h.calculated_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                        </span>
+                        <div className="flex-1 mx-3 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                          <div className="h-full rounded-full" style={{ width: `${Math.min(Number(h.centum_index), 100)}%`, background: col }} />
+                        </div>
+                        <span className="text-xs font-bold font-mono w-10 text-right" style={{ color: col }}>
+                          {Number(h.centum_index).toFixed(1)}
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+          </Card>
         )}
 
         {/* ── Account Details ─────────────────────────────────────── */}
@@ -200,7 +286,7 @@ export default function ProfilePage() {
           {profile?.payment_verified ? (
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: 'rgba(111,207,143,0.10)', border: '1px solid rgba(111,207,143,0.20)' }}>
+                style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.20)' }}>
                 <svg className="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>

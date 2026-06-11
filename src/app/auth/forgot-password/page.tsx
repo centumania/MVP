@@ -4,7 +4,7 @@ import { useState, FormEvent } from 'react'
 import Link from 'next/link'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { Button } from '@/src/components/ui/Button'
-import { LogoMark } from '@/src/components/ui/Logo'
+import { LogoFull } from '@/src/components/ui/Logo'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail]     = useState('')
@@ -40,7 +40,7 @@ export default function ForgotPasswordPage() {
       <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#0e1410' }}>
         <div className="max-w-sm w-full text-center">
           <div className="w-16 h-16 rounded-3xl mx-auto mb-6 flex items-center justify-center"
-            style={{ background: 'rgba(111,207,143,0.10)', border: '1px solid rgba(111,207,143,0.25)', boxShadow: '0 0 24px rgba(111,207,143,0.12)' }}>
+            style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.25)', boxShadow: '0 0 24px rgba(74,222,128,0.12)' }}>
             <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
               <polyline points="22,6 12,13 2,6"/>
@@ -70,15 +70,9 @@ export default function ForgotPasswordPage() {
       <div className="w-full max-w-sm">
 
         {/* Logo */}
-        <div className="flex items-center gap-2.5 mb-10"
-          style={{ filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.4))' }}>
-          <LogoMark size={24} />
-          <div>
-            <span className="text-base font-bold text-text tracking-tight block" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-              CentuMania
-            </span>
-            <span className="text-[10px] text-text-muted font-mono tracking-wide">Winning is a Habit</span>
-          </div>
+        <div className="mb-10">
+          <LogoFull size={24} glow />
+          <span className="text-[10px] text-text-muted font-mono tracking-wide block mt-1 pl-0.5">Winning is a Habit</span>
         </div>
 
         {/* Back link */}

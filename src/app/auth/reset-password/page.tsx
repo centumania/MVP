@@ -18,7 +18,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { Button } from '@/src/components/ui/Button'
-import { LogoMark } from '@/src/components/ui/Logo'
+import { LogoFull } from '@/src/components/ui/Logo'
 
 function EyeIcon() {
   return (
@@ -116,7 +116,7 @@ function ResetForm() {
     return (
       <div className="flex flex-col items-center justify-center gap-3 py-12">
         <div className="w-6 h-6 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#6fcf8f' }} />
+          style={{ borderTopColor: '#4ADE80' }} />
         <p className="text-sm text-text-muted">Verifying reset link…</p>
       </div>
     )
@@ -149,7 +149,7 @@ function ResetForm() {
     return (
       <div className="text-center py-8">
         <div className="w-16 h-16 rounded-3xl mx-auto mb-6 flex items-center justify-center"
-          style={{ background: 'rgba(111,207,143,0.10)', border: '1px solid rgba(111,207,143,0.25)' }}>
+          style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.25)' }}>
           <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
@@ -230,15 +230,9 @@ export default function ResetPasswordPage() {
       <div className="w-full max-w-sm">
 
         {/* Logo */}
-        <div className="flex items-center gap-2.5 mb-10"
-          style={{ filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.4))' }}>
-          <LogoMark size={24} />
-          <div>
-            <span className="text-base font-bold text-text tracking-tight block" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-              CentuMania
-            </span>
-            <span className="text-[10px] text-text-muted font-mono tracking-wide">Winning is a Habit</span>
-          </div>
+        <div className="mb-10">
+          <LogoFull size={24} glow />
+          <span className="text-[10px] text-text-muted font-mono tracking-wide block mt-1 pl-0.5">Winning is a Habit</span>
         </div>
 
         <h1 className="text-3xl font-bold text-text tracking-tight mb-1.5"
@@ -252,7 +246,7 @@ export default function ResetPasswordPage() {
         <Suspense fallback={
           <div className="flex flex-col items-center justify-center gap-3 py-12">
             <div className="w-6 h-6 rounded-full border-2 border-transparent animate-spin"
-              style={{ borderTopColor: '#6fcf8f' }} />
+              style={{ borderTopColor: '#4ADE80' }} />
           </div>
         }>
           <ResetForm />

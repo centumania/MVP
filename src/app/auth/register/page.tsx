@@ -4,7 +4,7 @@ import { useState, FormEvent } from 'react'
 import Link from 'next/link'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { Button } from '@/src/components/ui/Button'
-import { LogoMark } from '@/src/components/ui/Logo'
+import { LogoFull } from '@/src/components/ui/Logo'
 
 export default function RegisterPage() {
   const [form, setForm]           = useState({ name: '', phone: '', email: '', password: '' })
@@ -69,7 +69,7 @@ export default function RegisterPage() {
       <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#0e1410' }}>
         <div className="max-w-sm w-full text-center">
           <div className="w-16 h-16 rounded-3xl mx-auto mb-6 flex items-center justify-center"
-            style={{ background: 'rgba(111,207,143,0.10)', border: '1px solid rgba(111,207,143,0.25)', boxShadow: '0 0 24px rgba(111,207,143,0.12)' }}>
+            style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.25)', boxShadow: '0 0 24px rgba(74,222,128,0.12)' }}>
             <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
@@ -83,7 +83,7 @@ export default function RegisterPage() {
             <span className="font-semibold text-text">{form.name}</span>.
           </p>
           <p className="text-xs mb-8 px-4 py-3 rounded-xl text-text-muted"
-            style={{ background: 'rgba(111,207,143,0.06)', border: '1px solid rgba(111,207,143,0.15)' }}>
+            style={{ background: 'rgba(74,222,128,0.06)', border: '1px solid rgba(74,222,128,0.15)' }}>
             Your account is ready. Sign in to access your dashboard.
           </p>
           <Link href="/auth/login" className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors">
@@ -99,20 +99,14 @@ export default function RegisterPage() {
       <div className="w-full max-w-sm">
 
         {/* Logo */}
-        <div className="flex items-center gap-2.5 mb-10"
-          style={{ filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.4))' }}>
-          <LogoMark size={24} />
-          <div>
-            <span className="text-base font-bold text-text tracking-tight block" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-              CentuMania
-            </span>
-            <span className="text-[10px] text-text-muted font-mono tracking-wide">Winning is a Habit</span>
-          </div>
+        <div className="mb-10">
+          <LogoFull size={24} glow />
+          <span className="text-[10px] text-text-muted font-mono tracking-wide block mt-1 pl-0.5">Winning is a Habit</span>
         </div>
 
         {/* Batch badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl mb-6"
-          style={{ background: 'rgba(111,207,143,0.08)', border: '1px solid rgba(111,207,143,0.15)' }}>
+          style={{ background: 'rgba(74,222,128,0.08)', border: '1px solid rgba(74,222,128,0.15)' }}>
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
           <span className="text-[10px] font-bold text-primary uppercase tracking-widest font-mono">
             LDC Batch 2026 — Open Enrolment

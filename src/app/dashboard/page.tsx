@@ -41,7 +41,7 @@ function ordinal(n: number) {
   return n + (s[(v - 20) % 10] || s[v] || s[0])
 }
 function scoreColor(pct: number): string {
-  if (pct >= 80) return '#6fcf8f'
+  if (pct >= 80) return '#4ADE80'
   if (pct >= 60) return '#5ec8c0'
   if (pct >= 40) return '#e7b14c'
   return '#e8736b'
@@ -158,11 +158,11 @@ export default function DashboardPage() {
 
         {/* ── HERO ──────────────────────────────────────────────── */}
         <div className="relative rounded-3xl overflow-hidden"
-          style={{ background: 'linear-gradient(135deg,#112215 0%,#0d1c10 60%,#112219 100%)', border: '1px solid rgba(111,207,143,0.12)' }}>
+          style={{ background: 'linear-gradient(135deg,#112215 0%,#0d1c10 60%,#112219 100%)', border: '1px solid rgba(74,222,128,0.12)' }}>
           <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full opacity-20 pointer-events-none"
-            style={{ background: 'radial-gradient(circle,#6fcf8f,transparent 70%)' }} />
+            style={{ background: 'radial-gradient(circle,#4ADE80,transparent 70%)' }} />
           <div className="absolute -bottom-10 -left-10 w-32 h-32 rounded-full opacity-10 pointer-events-none"
-            style={{ background: 'radial-gradient(circle,#3fae6a,transparent 70%)' }} />
+            style={{ background: 'radial-gradient(circle,#22C55E,transparent 70%)' }} />
 
           <div className="relative p-6">
             <div className="flex items-start justify-between mb-5">
@@ -191,7 +191,7 @@ export default function DashboardPage() {
                 <ProgressRing
                   value={Math.min(100, Math.round((d.streak / 7) * 100))}
                   size={84} strokeWidth={5}
-                  color={d.streak >= 7 ? '#e7b14c' : d.streak >= 3 ? '#6fcf8f' : '#5ec8c0'}
+                  color={d.streak >= 7 ? '#e7b14c' : d.streak >= 3 ? '#4ADE80' : '#5ec8c0'}
                   trackColor="rgba(255,255,255,0.05)"
                   label={`${d.streak}d`}
                   sublabel="streak"
@@ -239,7 +239,7 @@ export default function DashboardPage() {
             </div>
             <div className="flex items-center gap-4 mt-3 pt-3" style={{ borderTop: '1px dashed #27342b' }}>
               {[
-                { col: '#6fcf8f', label: '≥80%' },
+                { col: '#4ADE80', label: '≥80%' },
                 { col: '#5ec8c0', label: '60–79%' },
                 { col: '#e7b14c', label: '40–59%' },
                 { col: '#e8736b', label: '<40%' },

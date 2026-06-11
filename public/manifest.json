@@ -1,0 +1,32 @@
+{
+  "name": "CentuMania — Winning is a Habit",
+  "short_name": "CentuMania",
+  "description": "India's most disciplined LDC/UDC exam prep platform",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#0e1410",
+  "theme_color": "#0e1410",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["education"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/favicon.svg",        "sizes": "any",     "type": "image/svg+xml" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Today's Exam",
+      "short_name": "Exam",
+      "url": "/exam/today",
+      "description": "Take today's exam"
+    },
+    {
+      "name": "Study Materials",
+      "short_name": "Materials",
+      "url": "/materials",
+      "description": "Open study materials"
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { AppLayout } from '@/src/components/layout/AppLayout'
@@ -10,9 +9,13 @@ import { Badge } from '@/src/components/ui/Badge'
 import { SkeletonCard } from '@/src/components/ui/Skeleton'
 
 type Material = {
-  id: string; dayNumber: number; title: string
-  hasPDF: boolean; hasPPT: boolean; hasVideo: boolean; hasMindMap: boolean
-  videoUrl: string | null; publishedAt: string; expiresAt: string
+  id:          string
+  dayNumber:   number
+  title:       string
+  hasContent:  boolean
+  isFree:      boolean
+  publishedAt: string
+  expiresAt:   string
 }
 
 function timeUntil(iso: string, nowMs: number): string {
@@ -25,32 +28,57 @@ function timeUntil(iso: string, nowMs: number): string {
   return `${m}m left`
 }
 
-function isLocalEmbed(url: string | null): boolean {
-  return !!url && url.startsWith('/study/')
-}
+function MaterialCard({ m, token }: { m: Material; token: string }) {
+  const [now, setNow]         = useState(() => Date.now())
+  const [opening, setOpening] = useState(false)
+  const [error, setError]     = useState<string | null>(null)
 
-function getYouTubeId(url: string): string | null {
-  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([A-Za-z0-9_-]{11})/)
-  return m ? m[1] : null
-}
-
-function MaterialCard({ m }: { m: Material }) {
-  const [expanded, setExpanded] = useState(false)
-  const [now, setNow] = useState(() => Date.now())
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 60_000)
     return () => clearInterval(id)
   }, [])
-  const ms      = new Date(m.expiresAt).getTime() - now
-  const urgent  = ms > 0 && ms < 2 * 3600 * 1000
-  const isEmbed = isLocalEmbed(m.videoUrl)
-  const ytId    = m.videoUrl && !isEmbed ? getYouTubeId(m.videoUrl) : null
+
+  const ms     = new Date(m.expiresAt).getTime() - now
+  const urgent = ms > 0 && ms < 2 * 3600 * 1000
+
+  async function openMaterial() {
+    setOpening(true)
+    setError(null)
+    try {
+      const res = await fetch(`/api/materials/open/${m.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+
+      if (res.status === 402) { setError('Your payment is pending. Contact your coordinator.'); return }
+      if (res.status === 404) { setError('This material is no longer available.'); return }
+      if (res.status === 401) { setError('Session expired. Please refresh the page.'); return }
+
+      if (res.ok) {
+        const { url } = await res.json()
+        window.open(url, '_blank', 'noopener')
+      }
+    } catch {
+      setError('Could not open material. Please try again.')
+    } finally {
+      setOpening(false)
+    }
+  }
 
   return (
     <Card>
-      <div className="flex items-start justify-between gap-3 mb-4">
+      <div className="flex items-start justify-between gap-3 mb-5">
         <div>
-          <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest mb-1 font-mono">Day {m.dayNumber}</p>
+          <div className="flex items-center gap-2 mb-1">
+            <p className="text-[10px] font-bold text-text-muted uppercase tracking-widest font-mono">
+              Day {m.dayNumber}
+            </p>
+            {m.isFree && (
+              <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded"
+                style={{ background: 'rgba(74,222,128,0.10)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.20)' }}>
+                Free
+              </span>
+            )}
+          </div>
           <h2 className="text-base font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
             {m.title}
           </h2>
@@ -58,133 +86,73 @@ function MaterialCard({ m }: { m: Material }) {
         <Badge variant={urgent ? 'error' : 'warning'} dot>{timeUntil(m.expiresAt, now)}</Badge>
       </div>
 
-      {isEmbed && m.videoUrl && (
-        <div className="mb-4">
-          {!expanded ? (
-            <button
-              onClick={() => setExpanded(true)}
-              className="w-full flex items-center justify-center gap-3 py-8 rounded-xl transition-all"
-              style={{ background: 'rgba(111,207,143,0.05)', border: '1px solid rgba(111,207,143,0.15)' }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6fcf8f" strokeWidth="1.8" strokeLinecap="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-              </svg>
-              <div className="text-left">
-                <p className="text-sm font-semibold text-primary">Open Interactive Study Map</p>
-                <p className="text-xs text-text-muted mt-0.5">Mind map with Study · Revise · Quiz modes</p>
-              </div>
-            </button>
-          ) : (
-            <div className="rounded-xl overflow-hidden" style={{ border: '1px solid #27342b' }}>
-              <div className="flex items-center justify-between px-3 py-2"
-                style={{ background: '#1b271f', borderBottom: '1px solid #27342b' }}>
-                <span className="text-xs font-mono text-text-muted">{m.title}</span>
-                <button onClick={() => setExpanded(false)}
-                  className="text-xs text-text-muted hover:text-text transition-colors px-2 py-0.5 rounded"
-                  style={{ background: 'rgba(255,255,255,0.05)' }}>
-                  ✕ Close
-                </button>
-              </div>
-              <iframe src={m.videoUrl} className="w-full" style={{ height: '75vh', border: 'none' }} title={m.title} />
-            </div>
-          )}
-          <a href={m.videoUrl} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 mt-2 text-xs text-primary hover:text-primary-hover transition-colors">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-              <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-            </svg>
-            Open in full tab →
-          </a>
+      {error && (
+        <div className="mb-4 px-3 py-2 rounded-lg text-xs font-mono"
+          style={{ background: 'rgba(232,115,107,0.08)', color: '#e8736b', border: '1px solid rgba(232,115,107,0.20)' }}>
+          {error}
         </div>
       )}
 
-      {ytId && (
-        <div className="relative w-full rounded-xl overflow-hidden mb-4" style={{ paddingTop: '56.25%', background: '#16201a' }}>
-          <iframe className="absolute inset-0 w-full h-full"
-            src={`https://www.youtube-nocookie.com/embed/${ytId}`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen title={m.title} />
-        </div>
-      )}
-
-      {m.hasVideo && m.videoUrl && !ytId && !isEmbed && (
-        <a href={m.videoUrl} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-1.5 mb-4 text-sm text-primary hover:text-primary-hover transition-colors">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Watch video →
-        </a>
-      )}
-
-      {m.hasMindMap && (
-        <Link
-          href={`/materials/mindmap/${m.id}`}
-          className="flex items-center justify-between p-4 rounded-xl mb-4 transition-all hover:opacity-90"
-          style={{ background: 'linear-gradient(135deg,rgba(111,207,143,0.12),rgba(94,200,192,0.08))', border: '1px solid rgba(111,207,143,0.20)' }}
+      {m.hasContent ? (
+        <button
+          onClick={openMaterial}
+          disabled={opening}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-xl transition-all disabled:opacity-60"
+          style={{
+            background: 'linear-gradient(135deg,rgba(74,222,128,0.12),rgba(94,200,192,0.08))',
+            border: '1px solid rgba(74,222,128,0.25)',
+          }}
         >
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-              style={{ background: 'rgba(111,207,143,0.15)' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6fcf8f" strokeWidth="1.8" strokeLinecap="round">
-                <circle cx="12" cy="12" r="3"/>
-                <circle cx="4" cy="6" r="2"/><line x1="6" y1="6" x2="9" y2="10.5"/>
-                <circle cx="20" cy="6" r="2"/><line x1="18" y1="6" x2="15" y2="10.5"/>
-                <circle cx="4" cy="18" r="2"/><line x1="6" y1="18" x2="9" y2="13.5"/>
-                <circle cx="20" cy="18" r="2"/><line x1="18" y1="18" x2="15" y2="13.5"/>
-              </svg>
+              style={{ background: 'rgba(74,222,128,0.15)' }}>
+              {opening ? (
+                <div className="w-4 h-4 rounded-full border-2 animate-spin"
+                  style={{ borderColor: 'rgba(74,222,128,0.3)', borderTopColor: '#4ADE80' }} />
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+              )}
             </div>
-            <div>
-              <p className="text-sm font-semibold text-primary">Open Interactive Study Map</p>
-              <p className="text-xs text-text-muted mt-0.5">Full-screen mind map · Study · Revise · Quiz</p>
+            <div className="text-left">
+              <p className="text-sm font-semibold text-primary">Open Study Material</p>
+              <p className="text-xs text-text-muted mt-0.5">Opens in a new tab</p>
             </div>
           </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6fcf8f" strokeWidth="2" strokeLinecap="round">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
           </svg>
-        </Link>
+        </button>
+      ) : (
+        <div className="flex items-center gap-3 px-5 py-4 rounded-xl"
+          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #27342b' }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa893" strokeWidth="1.8" strokeLinecap="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <p className="text-sm text-text-muted">Content not yet published.</p>
+        </div>
       )}
-
-      <div className="flex items-center gap-2 flex-wrap">
-        {isEmbed && (
-          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-primary"
-            style={{ background: 'rgba(111,207,143,0.08)', border: '1px solid rgba(111,207,143,0.15)' }}>
-            Interactive
-          </span>
-        )}
-        {m.hasMindMap && (
-          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-primary"
-            style={{ background: 'rgba(111,207,143,0.08)', border: '1px solid rgba(111,207,143,0.15)' }}>
-            Interactive
-          </span>
-        )}
-        {m.hasPDF && (
-          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold"
-            style={{ background: 'rgba(232,115,107,0.08)', border: '1px solid rgba(232,115,107,0.15)', color: '#e8736b' }}>
-            PDF — via coordinator
-          </span>
-        )}
-        {m.hasPPT && (
-          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold"
-            style={{ background: 'rgba(94,200,192,0.08)', border: '1px solid rgba(94,200,192,0.15)', color: '#5ec8c0' }}>
-            Slides — via coordinator
-          </span>
-        )}
-      </div>
     </Card>
   )
 }
 
 export default function MaterialsPage() {
-  const router      = useRouter()
-  const [userName, setUserName]   = useState('')
-  const [materials, setMaterials] = useState<Material[]>([])
-  const [loading, setLoading]     = useState(true)
-  const [status, setStatus]       = useState<'ok' | 'payment' | 'empty' | 'error'>('ok')
+  const router                          = useRouter()
+  const [userName, setUserName]         = useState('')
+  const [token,    setToken]            = useState('')
+  const [materials, setMaterials]       = useState<Material[]>([])
+  const [loading,   setLoading]         = useState(true)
+  const [status,    setStatus]          = useState<'ok' | 'payment' | 'empty' | 'error'>('ok')
 
   useEffect(() => {
     getSupabaseBrowserClient().auth.getSession().then(async ({ data: { session } }) => {
       if (!session) { router.replace('/auth/login'); return }
       setUserName(session.user.user_metadata?.name ?? session.user.email?.split('@')[0] ?? '')
+      setToken(session.access_token)
+
       const res = await fetch('/api/materials', {
         headers: { Authorization: `Bearer ${session.access_token}` },
       })
@@ -260,7 +228,7 @@ export default function MaterialsPage() {
           </div>
         )}
 
-        {materials.map(m => <MaterialCard key={m.id} m={m} />)}
+        {materials.map(m => <MaterialCard key={m.id} m={m} token={token} />)}
       </div>
     </AppLayout>
   )

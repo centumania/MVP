@@ -2,7 +2,9 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { getCentumColor } from '@/src/types/centum'
 
 type Student = {
   id: string; name: string; email: string; phone: string | null
@@ -18,14 +20,16 @@ const TROW  = { borderBottom: '1px solid rgba(39,52,43,0.6)' }
 
 export default function AdminStudents() {
   const router = useRouter()
-  const [token,    setToken]   = useState<string | null>(null)
-  const [students, setStudents] = useState<Student[]>([])
-  const [total,    setTotal]   = useState(0)
-  const [loading,  setLoading] = useState(true)
-  const [search,   setSearch]  = useState('')
-  const [status,   setStatus]  = useState<'all' | 'verified' | 'pending'>('all')
-  const [page,     setPage]    = useState(1)
-  const [toast,    setToast]   = useState<string | null>(null)
+  const [token,          setToken]         = useState<string | null>(null)
+  const [students,       setStudents]      = useState<Student[]>([])
+  const [total,          setTotal]         = useState(0)
+  const [loading,        setLoading]       = useState(true)
+  const [search,         setSearch]        = useState('')
+  const [status,         setStatus]        = useState<'all' | 'verified' | 'pending'>('all')
+  const [page,           setPage]          = useState(1)
+  const [toast,          setToast]         = useState<string | null>(null)
+  const [centumScores,   setCentumScores]  = useState<Record<string, number | null>>({})
+  const [calculatingIds, setCalculatingIds] = useState<Set<string>>(new Set())
 
   const loadStudents = useCallback(async (tok: string, q: string, s: string, p: number) => {
     setLoading(true)
@@ -33,9 +37,50 @@ export default function AdminStudents() {
     const res = await fetch(`/api/admin/students?${params}`, {
       headers: { Authorization: `Bearer ${tok}` },
     })
-    if (res.ok) { const d = await res.json(); setStudents(d.students); setTotal(d.total) }
+    if (res.ok) {
+      const d = await res.json()
+      setStudents(d.students)
+      setTotal(d.total)
+      // Fetch today's centum scores for this page of students
+      const centumRes = await fetch('/api/centum/leaderboard', {
+        headers: { Authorization: `Bearer ${tok}` },
+      })
+      if (centumRes.ok) {
+        const { leaderboard } = await centumRes.json()
+        const map: Record<string, number | null> = {}
+        for (const entry of leaderboard ?? []) {
+          map[entry.user_id] = Number(entry.centum_index)
+        }
+        setCentumScores(map)
+      }
+    }
     setLoading(false)
   }, [])
+
+  async function calculateOne(studentId: string) {
+    if (!token) return
+    setCalculatingIds(prev => new Set(prev).add(studentId))
+    try {
+      const res = await fetch('/api/centum/calculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ user_id: studentId }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setCentumScores(prev => ({ ...prev, [studentId]: Number(data.centum_index) }))
+        showToast('Centum Index updated')
+      } else {
+        showToast('Calculation failed')
+      }
+    } finally {
+      setCalculatingIds(prev => {
+        const n = new Set(prev)
+        n.delete(studentId)
+        return n
+      })
+    }
+  }
 
   useEffect(() => {
     getSupabaseBrowserClient().auth.getSession().then(({ data: { session } }) => {
@@ -89,7 +134,7 @@ export default function AdminStudents() {
   const totalPages = Math.ceil(total / 50)
 
   return (
-    <div className="p-8 max-w-7xl">
+    <div className="p-4 sm:p-6 md:p-8 max-w-7xl">
 
       {/* Toast */}
       {toast && (
@@ -115,9 +160,9 @@ export default function AdminStudents() {
           placeholder="Search name, email or phone…"
           value={search}
           onChange={e => { setSearch(e.target.value); setPage(1) }}
-          className="flex-1 max-w-xs h-9 px-3 text-sm rounded-lg text-text font-mono placeholder-text-muted focus:outline-none"
+          className="flex-1 max-w-xs h-11 px-3 text-sm rounded-lg text-text font-mono placeholder-text-muted focus:outline-none"
           style={{ background: '#16201a', border: '1px solid #27342b' }}
-          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(111,207,143,0.5)')}
+          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(74,222,128,0.5)')}
           onBlur={e => (e.currentTarget.style.borderColor = '#27342b')}
         />
         {(['all', 'verified', 'pending'] as const).map(s => (
@@ -126,7 +171,7 @@ export default function AdminStudents() {
             onClick={() => { setStatus(s); setPage(1) }}
             className="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors capitalize font-mono"
             style={status === s
-              ? { background: '#3fae6a', color: '#06140c', border: '1px solid #3fae6a' }
+              ? { background: '#22C55E', color: '#06140c', border: '1px solid #22C55E' }
               : { background: '#16201a', color: '#9aa893', border: '1px solid #27342b' }
             }
           >
@@ -136,7 +181,7 @@ export default function AdminStudents() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl overflow-hidden" style={CARD}>
+      <div className="rounded-xl overflow-hidden table-scroll" style={CARD}>
         <table className="w-full text-sm">
           <thead>
             <tr style={THHD}>
@@ -145,6 +190,7 @@ export default function AdminStudents() {
               <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono">Status</th>
               <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden lg:table-cell">Tier</th>
               <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden lg:table-cell">Days</th>
+              <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden lg:table-cell">Centum</th>
               <th className="text-left px-4 py-3 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden lg:table-cell">Joined</th>
               <th className="px-4 py-3" />
             </tr>
@@ -180,7 +226,7 @@ export default function AdminStudents() {
                 <td className="px-4 py-3">
                   {s.payment_verified ? (
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium font-mono"
-                      style={{ background: 'rgba(111,207,143,0.08)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }}>
+                      style={{ background: 'rgba(74,222,128,0.08)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.20)' }}>
                       <span className="w-1.5 h-1.5 bg-primary rounded-full" />Verified
                     </span>
                   ) : (
@@ -204,16 +250,56 @@ export default function AdminStudents() {
                   </select>
                 </td>
                 <td className="px-4 py-3 text-text-secondary font-mono text-xs hidden lg:table-cell">{s.daysAttended}</td>
+                <td className="px-4 py-3 hidden lg:table-cell">
+                  {(() => {
+                    const score = centumScores[s.id]
+                    if (score == null) return <span className="text-xs text-text-muted font-mono">—</span>
+                    const col = getCentumColor(score)
+                    return (
+                      <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-md"
+                        style={{ background: `${col}18`, color: col, border: `1px solid ${col}30` }}>
+                        {score.toFixed(1)}
+                      </span>
+                    )
+                  })()}
+                </td>
                 <td className="px-4 py-3 text-text-muted text-xs hidden lg:table-cell font-mono">
                   {new Date(s.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-1 justify-end">
+                    <Link href={`/admin/students/${s.id}`}
+                      className="p-1.5 rounded-md transition-colors hidden lg:flex items-center"
+                      title="View student detail"
+                      style={{ color: '#3a4a3d' }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#4ADE80'; (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(74,222,128,0.08)' }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLAnchorElement).style.background = '' }}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    </Link>
+                    <button
+                      onClick={() => calculateOne(s.id)}
+                      disabled={calculatingIds.has(s.id)}
+                      title="Recalculate Centum Index"
+                      className="p-1.5 rounded-md transition-colors hidden lg:flex items-center disabled:opacity-40"
+                      style={{ color: '#3a4a3d' }}
+                      onMouseEnter={e => { if (!calculatingIds.has(s.id)) { (e.currentTarget as HTMLButtonElement).style.color = '#5ec8c0'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(94,200,192,0.08)' } }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLButtonElement).style.background = '' }}>
+                      {calculatingIds.has(s.id) ? (
+                        <div className="w-3 h-3 rounded-full border border-t-transparent animate-spin"
+                          style={{ borderColor: 'rgba(94,200,192,0.3)', borderTopColor: '#5ec8c0' }} />
+                      ) : (
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                        </svg>
+                      )}
+                    </button>
                     {!s.payment_verified && (
                       <button
                         onClick={() => verifyPayment(s.id)}
                         className="px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors font-mono"
-                        style={{ background: 'rgba(111,207,143,0.10)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }}
+                        style={{ background: 'rgba(74,222,128,0.10)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.20)' }}
                       >
                         Verify
                       </button>

@@ -1,17 +1,19 @@
 /**
  * GET /api/materials
  *
- * Returns today's active study material for the authenticated student.
- * S3 keys (pdf_key, ppt_key) are NEVER returned to the client.
- * Only metadata and public video URLs are exposed.
+ * Returns active study materials for the authenticated student.
+ * Storage keys are NEVER returned. html_url is a public external link — safe to expose.
  *
- * Returns 402 if student is not payment-verified.
- * Returns 404 if no non-expired material exists today.
+ * Free preview policy:
+ *   - Days 1 & 2 accessible to all logged-in users (no payment required).
+ *   - Day 3+ requires payment_verified = true.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
 export const dynamic = 'force-dynamic'
+
+const FREE_DAYS = 2
 
 export async function GET(request: NextRequest) {
   try {
@@ -24,22 +26,23 @@ export async function GET(request: NextRequest) {
 
     const { data: profile } = await supabase
       .from('profiles').select('payment_verified').eq('id', user.id).single()
-    if (!profile?.payment_verified) return NextResponse.json({ error: 'Payment required' }, { status: 402 })
 
-    // Active batch
+    const isPaid = profile?.payment_verified === true
+
     const { data: batch } = await supabase
       .from('batches').select('id').eq('is_active', true).limit(1).maybeSingle()
     if (!batch) return NextResponse.json({ error: 'No active batch' }, { status: 404 })
 
-    const now = new Date()
-
-    // Fetch today's non-expired material for this batch
-    const { data: materials, error: matErr } = await supabase
+    let query = supabase
       .from('materials')
-      .select('id, day_number, title, video_url, published_at, expires_at, pdf_key, ppt_key, html_key')
+      .select('id, day_number, title, html_url, published_at, expires_at')
       .eq('batch_id', batch.id)
-      .gt('expires_at', now.toISOString())
+      .gt('expires_at', new Date().toISOString())
       .order('day_number', { ascending: false })
+
+    if (!isPaid) query = query.lte('day_number', FREE_DAYS)
+
+    const { data: materials, error: matErr } = await query
 
     if (matErr) {
       console.error('[materials] Query failed:', matErr)
@@ -47,21 +50,17 @@ export async function GET(request: NextRequest) {
     }
 
     if (!materials || materials.length === 0) {
-      return NextResponse.json({ error: 'No materials available' }, { status: 404 })
+      return isPaid
+        ? NextResponse.json({ error: 'No materials available' }, { status: 404 })
+        : NextResponse.json({ error: 'Payment required' }, { status: 402 })
     }
 
-    // Strip S3/storage keys — only expose safe metadata + YouTube/public video URLs
     const safe = materials.map(m => ({
       id:          m.id,
       dayNumber:   m.day_number,
       title:       m.title,
-      hasPDF:      !!m.pdf_key,
-      hasPPT:      !!m.ppt_key,
-      hasVideo:    !!m.video_url,
-      hasMindMap:  !!m.html_key,  // Flag only — raw key never sent to client
-      // Expose YouTube URLs and local /study/ embeds; never expose storage keys
-      videoUrl:    (m.video_url?.startsWith('http') || m.video_url?.startsWith('/study/'))
-                     ? m.video_url : null,
+      hasContent:  !!m.html_url,
+      isFree:      m.day_number <= FREE_DAYS,
       publishedAt: m.published_at,
       expiresAt:   m.expires_at,
     }))

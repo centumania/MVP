@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#141f1c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Chem Map A — Matter &amp; Atom | Centumania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141f1c;--bg2:#111a17;--panel:#1a2a25;--panel2:#1e3029;--line:#254033;
+  --ink:#e8f5f0;--ink2:#9dc4b4;--ink3:#5a8070;
+  --green:#3dd68c;--green2:#2ab572;--green-glow:rgba(61,214,140,.13);
+  --teal:#22d3c8;--gold:#f0bc45;--gold-bg:rgba(240,188,69,.12);
+  --red:#f06b6b;--red-bg:rgba(240,107,107,.10);
+  --blue:#4f8ef7;--violet:#a78bfa;--violet-bg:rgba(167,139,250,.11);
+  --mono:"JetBrains Mono",monospace;--serif:"Instrument Serif",serif;--sans:"DM Sans",sans-serif;
+  --nav-h:52px;--bot-h:52px;
+  /* iOS safe area */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  height:100%;
+  /* Prevent iOS rubber-band on the html element */
+  overscroll-behavior:none;
+}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:15px;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  overscroll-behavior:none;
+  /* Prevent iOS bounce scroll on body */
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+}
+/* Workaround: body is position:fixed so we need a wrapper that scrolls */
+.shell{display:grid;grid-template-rows:calc(var(--nav-h) + var(--sat)) 1fr calc(var(--bot-h) + var(--sab));height:100svh;height:100dvh;height:100vh;overflow:hidden;width:100%;}
+.topbar{display:flex;align-items:center;gap:10px;padding:var(--sat) 14px 0;padding-left:max(14px,var(--sal));padding-right:max(14px,var(--sar));height:calc(var(--nav-h) + var(--sat));border-bottom:1px solid var(--line);background:rgba(17,26,23,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:60}
+.logo{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--green);display:flex;align-items:center;gap:7px}
+.logo-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 7px var(--green);flex-shrink:0}
+.logo sup{font-style:normal;font-size:9px;font-family:var(--mono);color:var(--ink3)}
+.nav-stats{display:none}
+.body{grid-row:2;overflow:hidden;display:grid;grid-template-columns:1fr}
+aside{display:none}
+main{overflow-y:auto;overflow-x:hidden;background:var(--bg);-webkit-overflow-scrolling:touch;scroll-behavior:smooth;overscroll-behavior-y:contain}
+main::-webkit-scrollbar{width:3px}main::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.mob-stats{display:flex;gap:14px;align-items:center;padding:7px 14px;background:var(--panel2);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;flex-shrink:0}
+.mob-stats::-webkit-scrollbar{display:none}
+.mob-stats .stat b{font-size:12px}
+.stat{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.stat b{font-size:13px}
+.stat.xp b{color:var(--gold)}.stat.vis b{color:var(--teal)}.stat.trap b{color:var(--red)}
+.mob-bar{display:flex;grid-row:3;background:rgba(17,26,23,.98);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);align-items:stretch;z-index:50;padding-bottom:var(--sab);padding-left:var(--sal);padding-right:var(--sar);}
+.mob-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;color:var(--ink3);cursor:pointer;padding:8px 4px;font-family:var(--mono);font-size:9px;letter-spacing:.5px;transition:.13s;position:relative;touch-action:manipulation;user-select:none;-webkit-user-select:none;min-height:44px;}
+.mob-tab.active{color:var(--green)}.mob-tab .mt-ico{font-size:19px}
+.mob-tab .mt-badge{position:absolute;top:5px;right:calc(50% - 15px);background:var(--red);color:#fff;font-size:8px;font-family:var(--mono);padding:1px 4px;border-radius:10px;min-width:14px;text-align:center}
+.mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;opacity:0;pointer-events:none;transition:.22s ease;touch-action:none;}
+.mob-overlay.show{opacity:1;pointer-events:all}
+.mob-drawer{position:fixed;left:-100%;top:0;bottom:0;width:min(300px,88vw);background:var(--bg2);border-right:1px solid var(--line);z-index:101;transition:.28s cubic-bezier(.2,.8,.4,1);overflow-y:auto;-webkit-overflow-scrolling:touch;padding-top:var(--sat);padding-bottom:var(--sab);will-change:transform;}
+.mob-drawer.open{left:0}
+.mob-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px;border-bottom:1px solid var(--line)}
+.mob-close{background:none;border:1px solid var(--line);color:var(--ink2);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.sidebar-inner{padding:10px 8px 60px}
+.ch-group{margin-bottom:3px}
+.ch-toggle{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink2);padding:9px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:.13s;font-family:var(--sans)}
+.ch-toggle:hover,.ch-toggle.open{background:var(--panel);color:var(--ink)}
+.ch-toggle .cht-pct{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-left:auto}
+.ch-toggle.open .cht-pct{color:var(--green)}
+.node-items{display:none;padding:3px 4px 3px 10px}
+.ch-group.expanded .node-items{display:block}
+.ni-btn{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink3);padding:7px 9px;border-radius:8px;cursor:pointer;font-size:13px;transition:.12s;font-family:var(--sans);margin-bottom:1px}
+.ni-btn:hover:not(.locked){background:var(--panel);color:var(--ink)}
+.ni-btn.current{background:var(--green-glow);border-color:var(--green2);color:var(--green)}
+.ni-btn.done:not(.current){color:var(--ink)}
+.ni-btn.locked{cursor:default;opacity:.4}
+.ni-tag{font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:4px;margin-left:auto;flex-shrink:0}
+.ni-tag.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.25)}
+.ni-tag.hidden{background:var(--violet-bg);color:var(--violet);border:1px solid rgba(167,139,250,.25)}
+.ni-tag.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(240,188,69,.25)}
+.node-view{padding:16px 14px calc(90px + var(--sab));max-width:900px;margin:0 auto;padding-left:max(14px,var(--sal));padding-right:max(14px,var(--sar));}
+h1.nt{font-family:var(--serif);font-size:26px;font-style:italic;line-height:1.05;margin-bottom:6px}
+.node-hd{margin-bottom:18px}
+.node-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:10px}
+.node-badge.regular{background:var(--green-glow);color:var(--green);border:1px solid var(--green2)}
+.node-badge.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.3)}
+.node-badge.hidden{background:var(--violet-bg);color:var(--violet);border:1px solid rgba(167,139,250,.3)}
+.node-badge.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(240,188,69,.3)}
+.xp-pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--gold);background:var(--gold-bg);border:1px solid rgba(240,188,69,.2);border-radius:6px;padding:3px 8px}
+.section-lbl{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;margin:18px 0 8px;display:flex;align-items:center;gap:8px}
+.section-lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+.tabs{display:flex;gap:3px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:20px;width:100%;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:8px;cursor:pointer;border:0;background:none;color:var(--ink2);transition:.14s;white-space:nowrap;flex-shrink:0}
+.tab:hover:not(.on){color:var(--ink)}.tab.on{background:var(--green2);color:#fff;font-weight:700}
+.fact-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+.fb-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink2);border-bottom:1px solid var(--line);background:var(--panel2);display:flex;align-items:center;gap:7px}
+.fb-body{padding:14px 16px}
+ul.facts{list-style:none;padding:0}
+ul.facts li{padding:7px 0 7px 22px;border-bottom:1px dashed var(--line);font-size:14px;position:relative;line-height:1.55}
+ul.facts li:last-child{border-bottom:0}
+ul.facts li::before{content:"▸";position:absolute;left:3px;top:8px;color:var(--teal);font-size:11px}
+ul.facts b{color:var(--green)}
+.trap-block{background:var(--red-bg);border:1px solid rgba(240,107,107,.35);border-radius:12px;padding:16px;margin:10px 0}
+.trap-block .tb-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--red);margin-bottom:10px}
+.trap-block ul{list-style:none;padding:0}
+.trap-block li{padding:7px 0 7px 20px;position:relative;font-size:14px;border-bottom:1px dashed rgba(240,107,107,.18);line-height:1.5}
+.trap-block li:last-child{border-bottom:0}
+.trap-block li::before{content:"⚠";position:absolute;left:0;top:7px;font-size:11px;color:var(--red)}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--line);margin:10px 0}
+table.dt{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
+table.dt th{padding:9px 13px;text-align:left;background:var(--green2);color:#fff;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
+table.dt td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink)}
+table.dt tr:last-child td{border-bottom:0}
+table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono);font-size:12px}
+.yes{color:var(--green);font-weight:700}.no{color:var(--red);font-weight:700}
+.diag-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:10px 0}
+.diag-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);border-bottom:1px solid var(--line);background:var(--panel2)}
+.diag-body{padding:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.diag-body svg{display:block;width:100%;height:auto}
+.golden-block{background:linear-gradient(135deg,rgba(240,188,69,.09),rgba(61,214,140,.06));border:1px solid rgba(240,188,69,.3);border-radius:14px;padding:18px;margin:12px 0}
+.golden-block .gb-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:12px}
+.golden-block ul{list-style:none;padding:0}
+.golden-block li{padding:8px 0 8px 22px;position:relative;font-size:14px;border-bottom:1px dashed rgba(240,188,69,.15);line-height:1.5;color:var(--ink)}
+.golden-block li:last-child{border-bottom:0}
+.golden-block li::before{content:"→";position:absolute;left:0;color:var(--gold)}
+.golden-block b{color:var(--green)}
+.insight-block{background:linear-gradient(135deg,rgba(167,139,250,.07),rgba(79,142,247,.06));border:1px solid rgba(167,139,250,.3);border-radius:12px;padding:16px;margin:10px 0;position:relative;overflow:hidden}
+.insight-block::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--blue),var(--violet));background-size:200%;animation:iShimmer 3s linear infinite}
+@keyframes iShimmer{0%{background-position:0%}100%{background-position:200%}}
+.ib-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--violet);margin-bottom:10px}
+.insight-block p{font-size:14px;line-height:1.6;color:var(--ink2)}
+/* MCQ — single column on mobile */
+.mcq-list{display:flex;flex-direction:column;gap:14px}
+.mcq-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.mcq-q{font-size:15px;font-weight:600;margin-bottom:12px;line-height:1.45;color:var(--ink)}
+.mcq-qn{font-family:var(--mono);font-size:11px;color:var(--teal);margin-right:6px}
+.mcq-opts{display:grid;grid-template-columns:1fr;gap:8px}
+.mopt{padding:11px 14px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);font-size:14px;cursor:pointer;text-align:left;font-family:var(--sans);transition:.13s;touch-action:manipulation;user-select:none;-webkit-user-select:none;min-height:48px;width:100%;}
+.mopt:active:not([disabled]){border-color:var(--green2);background:var(--green-glow);transform:scale(.98);}
+.mopt.correct{background:rgba(61,214,140,.12);border-color:var(--green);color:var(--green)}
+.mopt.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.mopt.show-correct{background:rgba(61,214,140,.07);border-color:var(--green)}
+.mcq-fb{margin-top:10px;font-size:13px;padding:9px 12px;border-radius:8px;display:none;line-height:1.5}
+.mcq-fb.show{display:block}
+.mcq-fb.right{background:rgba(61,214,140,.10);color:var(--green);border:1px solid rgba(61,214,140,.25)}
+.mcq-fb.wrong{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.25)}
+.mcq-score{font-family:var(--mono);font-size:12px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.mcq-score span{color:var(--green)}
+/* node completion banner */
+.node-complete-banner{background:linear-gradient(135deg,rgba(61,214,140,.12),rgba(34,211,200,.08));border:1px solid rgba(61,214,140,.35);border-radius:12px;padding:14px 16px;margin-top:16px;display:flex;align-items:center;gap:10px}
+.ncb-icon{font-size:22px;flex-shrink:0}
+.ncb-text{flex:1}
+.ncb-title{font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:1px;margin-bottom:3px}
+.ncb-sub{font-size:13px;color:var(--ink2)}
+.node-nav{display:flex;gap:10px;margin-top:24px;padding-top:16px;border-top:1px solid var(--line);align-items:center}
+.nnav{font-family:var(--sans);font-weight:600;font-size:14px;border-radius:9px;padding:10px 16px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:.14s;touch-action:manipulation;user-select:none;-webkit-user-select:none;min-height:48px;}
+.nnav.primary{background:var(--green2);color:#fff;border-color:var(--green2);margin-left:auto}
+.locked-view{text-align:center;padding:60px 20px}
+.locked-view .lv-ico{font-size:48px;margin-bottom:14px;opacity:.3}
+.locked-view h2{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--ink2);margin-bottom:8px}
+.locked-view p{color:var(--ink2);font-size:14px;max-width:300px;margin:0 auto 18px;line-height:1.6}
+.lock-req-list{display:inline-flex;flex-direction:column;gap:8px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;max-width:280px}
+.lreq{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink3);line-height:1.5}
+.lreq.met{color:var(--green)}.lreq::before{content:"○";flex-shrink:0}.lreq.met::before{content:"✓"}
+.toast{position:fixed;top:calc(var(--nav-h) + var(--sat) + 8px);left:50%;transform:translateX(-50%) translateY(-8px);background:linear-gradient(135deg,rgba(240,188,69,.18),rgba(61,214,140,.12));border:1px solid var(--gold);border-radius:12px;padding:10px 18px;display:flex;align-items:center;gap:10px;z-index:300;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;will-change:transform,opacity;max-width:calc(100vw - 28px);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast-val{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--gold)}
+.toast-msg{font-size:13px;font-weight:600;color:var(--ink)}
+/* sync indicator */
+.sync-dot{position:fixed;bottom:calc(var(--bot-h) + 8px);right:12px;width:8px;height:8px;border-radius:50%;background:var(--green);opacity:0;transition:.4s;z-index:200}
+.sync-dot.show{opacity:1}
+.dash{padding:18px 14px calc(90px + var(--sab));max-width:680px;margin:0 auto;padding-left:max(14px,var(--sal));padding-right:max(14px,var(--sar));}
+.dash-t{font-family:var(--serif);font-size:32px;font-style:italic;margin-bottom:4px;color:var(--ink)}
+.dash-s{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-bottom:22px;letter-spacing:1px}
+.dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+.dc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+.dc .dv{font-family:var(--mono);font-size:20px;font-weight:700;margin-bottom:4px}
+.dc .dl{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:1px;text-transform:uppercase}
+.dc.gold .dv{color:var(--gold)}.dc.g .dv{color:var(--green)}.dc.r .dv{color:var(--red)}.dc.b .dv{color:var(--teal)}
+.ch-prog{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
+.cpr{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.cpr:last-child{margin-bottom:0}
+.cpr-n{font-family:var(--mono);font-size:11px;color:var(--ink2);width:140px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cpr-bar{flex:1;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.cpr-fill{height:100%;background:var(--green);border-radius:3px;transition:.5s}
+.cpr-pct{font-family:var(--mono);font-size:10px;color:var(--green);width:28px;text-align:right;flex-shrink:0}
+.mentor-box{background:var(--red-bg);border:1px solid rgba(240,107,107,.3);border-radius:12px;padding:14px;margin-bottom:14px}
+.mentor-box h3{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--red);margin-bottom:8px}
+.mentor-box li{font-size:13px;color:var(--ink2);padding:4px 0 4px 16px;position:relative;list-style:none;line-height:1.5}
+.mentor-box li::before{content:"→";position:absolute;left:0;color:var(--red)}
+.start-btn{background:linear-gradient(135deg,var(--green2),var(--green));color:#fff;border:0;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer;width:100%;touch-action:manipulation;user-select:none;-webkit-user-select:none;min-height:52px;-webkit-appearance:none;appearance:none;}
+.heatmap{display:flex;flex-wrap:wrap;gap:5px;padding:4px 0}
+.hmap-item{font-family:var(--mono);font-size:11px;padding:4px 8px;border-radius:6px;cursor:default}
+.hmap-item.h{background:rgba(240,188,69,.18);color:var(--gold);border:1px solid rgba(240,188,69,.3)}
+.hmap-item.m{background:rgba(61,214,140,.10);color:var(--green);border:1px solid rgba(61,214,140,.2)}
+.hmap-item.l{background:var(--panel2);color:var(--ink3);border:1px solid var(--line)}
+@media(min-width:721px){
+  :root{--nav-h:56px;--bot-h:0px}
+  .shell{grid-template-rows:calc(var(--nav-h) + var(--sat)) 1fr;height:100svh;height:100dvh;height:100vh;}
+  .body{grid-template-columns:260px 1fr;}
+  aside{display:block;background:var(--bg2);border-right:1px solid var(--line);overflow-y:auto;overflow-x:hidden;padding-bottom:20px;}
+  aside::-webkit-scrollbar{width:3px}aside::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+  .nav-stats{display:flex;gap:14px;align-items:center;margin-left:auto}
+  .mob-stats{display:none}
+  .mob-bar{display:none}
+  .mob-overlay{display:none !important}
+  .mob-drawer{display:none}
+  .node-view{padding:28px clamp(16px,3.5vw,52px) 80px}
+  h1.nt{font-size:clamp(26px,4vw,38px)}
+  .dash{padding:36px clamp(18px,4vw,56px) 80px}
+  .dash-t{font-size:clamp(32px,5vw,50px)}
+  .dash-grid{grid-template-columns:repeat(4,1fr)}
+  .mcq-opts{grid-template-columns:1fr 1fr}
+  .tabs{width:fit-content;overflow-x:visible}
+  .toast{left:auto;right:20px;transform:translateY(-8px);max-width:380px;}
+  .toast.show{transform:translateY(0)}
+  .start-btn{width:auto}
+  .cpr-n{width:165px}
+  .sync-dot{bottom:12px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="topbar">
+  <div class="logo"><span class="logo-dot"></span>Centumania <sup>CHEM A</sup></div>
+  <div class="nav-stats">
+    <div class="stat xp">XP <b id="hXP">0</b></div>
+    <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
+    <div class="stat trap">Traps <b id="hTrap">0/0</b></div>
+  </div>
+</nav>
+<div class="mob-stats" id="mobStats">
+  <div class="stat xp">XP <b id="mhXP">0</b></div>
+  <div class="stat vis">Nodes <b id="mhVis">0/0</b></div>
+  <div class="stat trap">Traps <b id="mhTrap">0/0</b></div>
+</div>
+<div class="body">
+  <aside><div class="sidebar-inner" id="sideInner"></div></aside>
+  <main id="mainArea"><div id="viewWrap"></div></main>
+</div>
+<nav class="mob-bar" id="mobBar">
+  <button class="mob-tab active" id="mbt-dash" onclick="showDash()"><span class="mt-ico">◈</span>Home</button>
+  <button class="mob-tab" id="mbt-menu" onclick="openDrawer()"><span class="mt-ico">☰</span>Topics</button>
+  <button class="mob-tab" id="mbt-traps" onclick="goTraps()"><span class="mt-ico">⚠</span>Traps<span class="mt-badge" id="trapBadge">0</span></button>
+</nav>
+</div>
+<div class="mob-overlay" id="mobOverlay" onclick="closeDrawer()"></div>
+<div class="mob-drawer" id="mobDrawer">
+  <div class="mob-drawer-head">
+    <div class="logo"><span class="logo-dot"></span>Topics</div>
+    <button class="mob-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="sidebar-inner" id="mobSideInner"></div>
+</div>
+<div class="toast" id="toast"><div class="toast-val" id="toastVal"></div><div class="toast-msg" id="toastMsg"></div></div>
+<div class="sync-dot" id="syncDot"></div>
+<script>
+// ── DIAGRAMS ──────────────────────────────────────────────────────────────────
+const DIAGRAMS={
+"states-matter":`<svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="8" y="8" width="226" height="184" rx="12" fill="rgba(79,142,247,.07)" stroke="#4f8ef7" stroke-width="1.5"/>
+<text x="121" y="30" fill="#4f8ef7" font-size="13" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">SOLID 🧱</text>
+<rect x="28" y="50" width="12" height="12" rx="2" fill="#4f8ef7" opacity=".8"/>
+<rect x="48" y="50" width="12" height="12" rx="2" fill="#4f8ef7" opacity=".8"/>
+<rect x="68" y="50" width="12" height="12" rx="2" fill="#4f8ef7" opacity=".8"/>
+<rect x="88" y="50" width="12" height="12" rx="2" fill="#4f8ef7" opacity=".8"/>
+<rect x="28" y="70" width="12" height="12" rx="2" fill="#4f8ef7" opacity=".8"/>
+<rect x="48" y="70" width="12" height="12" rx="2" fill="#4f8ef7" opacity=".8"/>
+<rect x="68" y="70" width="12" height="12" rx="2" fill="#4f8ef7" opacity=".8"/>
+<rect x="88" y="70" width="12" height="12" rx="2" fill="#4f8ef7" opacity=".8"/>
+<text x="121" y="112" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Close-packed, ordered</text>
+<text x="121" y="128" fill="#4f8ef7" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">Fixed shape + volume</text>
+<text x="121" y="145" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Max force · Min energy · Min space</text>
+<rect x="18" y="158" width="206" height="26" rx="5" fill="rgba(79,142,247,.12)" stroke="rgba(79,142,247,.3)" stroke-width="1"/>
+<text x="121" y="175" fill="#4f8ef7" font-size="8" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">e.g. Ice, Iron, Diamond</text>
+<rect x="250" y="8" width="226" height="184" rx="12" fill="rgba(34,211,200,.07)" stroke="#22d3c8" stroke-width="1.5"/>
+<text x="363" y="30" fill="#22d3c8" font-size="13" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">LIQUID 💧</text>
+<circle cx="280" cy="65" r="7" fill="#22d3c8" opacity=".7"/>
+<circle cx="310" cy="58" r="7" fill="#22d3c8" opacity=".7"/>
+<circle cx="340" cy="70" r="7" fill="#22d3c8" opacity=".7"/>
+<circle cx="295" cy="82" r="7" fill="#22d3c8" opacity=".6"/>
+<circle cx="325" cy="78" r="7" fill="#22d3c8" opacity=".6"/>
+<circle cx="358" cy="58" r="7" fill="#22d3c8" opacity=".5"/>
+<text x="363" y="112" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Loosely packed, random</text>
+<text x="363" y="128" fill="#22d3c8" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">No fixed shape · Fixed volume</text>
+<text x="363" y="145" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Med force · Med energy · Med space</text>
+<rect x="260" y="158" width="206" height="26" rx="5" fill="rgba(34,211,200,.12)" stroke="rgba(34,211,200,.3)" stroke-width="1"/>
+<text x="363" y="175" fill="#22d3c8" font-size="8" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">e.g. Water, Mercury, Alcohol</text>
+<rect x="492" y="8" width="226" height="184" rx="12" fill="rgba(240,188,69,.07)" stroke="#f0bc45" stroke-width="1.5"/>
+<text x="605" y="30" fill="#f0bc45" font-size="13" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">GAS 💨</text>
+<circle cx="520" cy="50" r="5" fill="#f0bc45" opacity=".5"/>
+<circle cx="580" cy="65" r="5" fill="#f0bc45" opacity=".5"/>
+<circle cx="550" cy="40" r="5" fill="#f0bc45" opacity=".5"/>
+<circle cx="630" cy="55" r="5" fill="#f0bc45" opacity=".5"/>
+<circle cx="600" cy="80" r="5" fill="#f0bc45" opacity=".5"/>
+<circle cx="540" cy="78" r="5" fill="#f0bc45" opacity=".5"/>
+<circle cx="690" cy="45" r="5" fill="#f0bc45" opacity=".4"/>
+<text x="605" y="112" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Widely dispersed, random</text>
+<text x="605" y="128" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">No fixed shape · No fixed volume</text>
+<text x="605" y="145" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Min force · Max energy · Max space</text>
+<rect x="502" y="158" width="206" height="26" rx="5" fill="rgba(240,188,69,.12)" stroke="rgba(240,188,69,.3)" stroke-width="1"/>
+<text x="605" y="175" fill="#f0bc45" font-size="8" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">e.g. Steam, Oxygen, CO₂</text>
+</svg>`,
+"phase-changes":`<svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<defs>
+<marker id="ph1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#3dd68c"/></marker>
+<marker id="ph2" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#f06b6b"/></marker>
+</defs>
+<rect x="58" y="100" width="140" height="60" rx="10" fill="rgba(79,142,247,.15)" stroke="#4f8ef7" stroke-width="2"/>
+<text x="128" y="127" fill="#4f8ef7" font-size="14" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">SOLID</text>
+<text x="128" y="147" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Fixed shape+volume</text>
+<rect x="310" y="100" width="140" height="60" rx="10" fill="rgba(34,211,200,.15)" stroke="#22d3c8" stroke-width="2"/>
+<text x="380" y="127" fill="#22d3c8" font-size="14" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">LIQUID</text>
+<text x="380" y="147" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">No shape · fixed volume</text>
+<rect x="562" y="100" width="140" height="60" rx="10" fill="rgba(240,188,69,.15)" stroke="#f0bc45" stroke-width="2"/>
+<text x="632" y="127" fill="#f0bc45" font-size="14" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">GAS</text>
+<text x="632" y="147" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">No shape · no volume</text>
+<line x1="198" y1="120" x2="310" y2="120" stroke="#3dd68c" stroke-width="1.5" marker-end="url(#ph1)"/>
+<text x="254" y="112" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">MELTING</text>
+<text x="254" y="103" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">heat↑ · ice→water at 0°C</text>
+<line x1="310" y1="140" x2="198" y2="140" stroke="#f06b6b" stroke-width="1.5" marker-end="url(#ph2)"/>
+<text x="254" y="156" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">FREEZING</text>
+<line x1="450" y1="120" x2="562" y2="120" stroke="#3dd68c" stroke-width="1.5" marker-end="url(#ph1)"/>
+<text x="506" y="112" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">VAPORISATION</text>
+<text x="506" y="103" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">BP = 100°C for water</text>
+<line x1="562" y1="140" x2="450" y2="140" stroke="#f06b6b" stroke-width="1.5" marker-end="url(#ph2)"/>
+<text x="506" y="156" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">CONDENSATION</text>
+<path d="M128,100 Q128,40 632,40 L632,100" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="380" y="34" fill="#a78bfa" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">SUBLIMATION (Solid→Gas) · Naphthalene · Dry Ice · Camphor · I₂</text>
+<path d="M632,160 Q632,224 128,224 L128,160" fill="none" stroke="#f06b6b" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text x="380" y="242" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">DEPOSITION (Gas→Solid) · reverse sublimation</text>
+<rect x="270" y="58" width="220" height="30" rx="6" fill="rgba(240,107,107,.12)" stroke="rgba(240,107,107,.3)" stroke-width="1"/>
+<text x="380" y="74" fill="#f06b6b" font-size="8" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">⚠ TEMP STAYS CONSTANT during any phase change (latent heat)</text>
+</svg>`,
+"atom-structure":`<svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<circle cx="380" cy="140" r="18" fill="rgba(240,188,69,.35)" stroke="#f0bc45" stroke-width="2"/>
+<text x="380" y="136" fill="#f0bc45" font-size="8" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">NUCLEUS</text>
+<text x="380" y="148" fill="#f0bc45" font-size="7" text-anchor="middle" font-family="DM Sans,sans-serif">p⁺ + n⁰</text>
+<ellipse cx="380" cy="140" rx="80" ry="40" fill="none" stroke="#4f8ef7" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="460" y="136" fill="#4f8ef7" font-size="8" font-family="DM Sans,sans-serif">K(2)</text>
+<circle cx="460" cy="140" r="5" fill="#4f8ef7"/>
+<circle cx="300" cy="140" r="5" fill="#4f8ef7"/>
+<ellipse cx="380" cy="140" rx="130" ry="70" fill="none" stroke="#3dd68c" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="510" y="136" fill="#3dd68c" font-size="8" font-family="DM Sans,sans-serif">L(8)</text>
+<circle cx="510" cy="140" r="5" fill="#3dd68c"/>
+<circle cx="250" cy="140" r="5" fill="#3dd68c"/>
+<circle cx="380" cy="70" r="5" fill="#3dd68c"/>
+<circle cx="380" cy="210" r="5" fill="#3dd68c"/>
+<ellipse cx="380" cy="140" rx="175" ry="100" fill="none" stroke="#22d3c8" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="555" y="136" fill="#22d3c8" font-size="8" font-family="DM Sans,sans-serif">M(18)</text>
+<circle cx="555" cy="140" r="5" fill="#22d3c8"/>
+<circle cx="205" cy="140" r="5" fill="#22d3c8"/>
+<circle cx="380" cy="40" r="5" fill="#22d3c8"/>
+<circle cx="380" cy="240" r="5" fill="#22d3c8"/>
+<rect x="8" y="8" width="180" height="120" rx="8" fill="var(--panel2,#1e3029)" stroke="#254033" stroke-width="1"/>
+<text x="98" y="28" fill="#e8f5f0" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">DISCOVERERS</text>
+<text x="98" y="48" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">⚡ Electron — Thomson</text>
+<text x="98" y="63" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Cathode ray experiment (1897)</text>
+<text x="98" y="82" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">⊕ Proton — Rutherford</text>
+<text x="98" y="97" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Gold foil experiment (1909)</text>
+<text x="98" y="116" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">○ Neutron — Chadwick</text>
+<rect x="572" y="8" width="180" height="130" rx="8" fill="var(--panel2,#1e3029)" stroke="#254033" stroke-width="1"/>
+<text x="662" y="28" fill="#e8f5f0" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">BOHR SHELLS</text>
+<text x="662" y="48" fill="#4f8ef7" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">K shell → max 2e⁻</text>
+<text x="662" y="66" fill="#3dd68c" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">L shell → max 8e⁻</text>
+<text x="662" y="84" fill="#22d3c8" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">M shell → max 18e⁻</text>
+<text x="662" y="102" fill="#a78bfa" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">N shell → max 32e⁻</text>
+<text x="662" y="120" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Formula: max = 2n²</text>
+</svg>`,
+"mixture-types":`<svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<defs><marker id="m1" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#9dc4b4"/></marker></defs>
+<rect x="280" y="8" width="200" height="38" rx="8" fill="rgba(61,214,140,.14)" stroke="#3dd68c" stroke-width="1.5"/>
+<text x="380" y="31" fill="#3dd68c" font-size="12" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">MIXTURES</text>
+<line x1="280" y1="47" x2="176" y2="70" stroke="#9dc4b4" stroke-width="1.5" marker-end="url(#m1)"/>
+<line x1="480" y1="47" x2="584" y2="70" stroke="#9dc4b4" stroke-width="1.5" marker-end="url(#m1)"/>
+<rect x="56" y="70" width="240" height="46" rx="8" fill="rgba(61,214,140,.09)" stroke="#3dd68c" stroke-width="1.5"/>
+<text x="176" y="91" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">HOMOGENEOUS</text>
+<text x="176" y="107" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Uniform composition — alloys, saltwater</text>
+<rect x="464" y="70" width="240" height="46" rx="8" fill="rgba(240,188,69,.09)" stroke="#f0bc45" stroke-width="1.5"/>
+<text x="584" y="91" fill="#f0bc45" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">HETEROGENEOUS</text>
+<text x="584" y="107" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Non-uniform — sand+water, oil+water</text>
+<rect x="8" y="138" width="160" height="56" rx="7" fill="rgba(61,214,140,.07)" stroke="#3dd68c" stroke-width="1"/>
+<text x="88" y="158" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">SOLUTION</text>
+<text x="88" y="172" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">&lt;1nm · No Tyndall</text>
+<text x="88" y="185" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Saltwater, copper sulphate</text>
+<rect x="190" y="138" width="160" height="56" rx="7" fill="rgba(167,139,250,.07)" stroke="#a78bfa" stroke-width="1"/>
+<text x="270" y="158" fill="#a78bfa" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">COLLOID</text>
+<text x="270" y="172" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">1–1000nm · Tyndall ✓</text>
+<text x="270" y="185" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Milk, Fog, Blood, Butter</text>
+<rect x="460" y="138" width="290" height="56" rx="7" fill="rgba(240,107,107,.07)" stroke="#f06b6b" stroke-width="1"/>
+<text x="605" y="158" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">SUSPENSION</text>
+<text x="605" y="172" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">&gt;1000nm · Settles on standing</text>
+<text x="605" y="185" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Muddy water, chalk+water</text>
+</svg>`,
+"atomic-models":`<svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="8" y="8" width="140" height="184" rx="10" fill="rgba(79,142,247,.07)" stroke="#4f8ef7" stroke-width="1.5"/>
+<text x="78" y="30" fill="#4f8ef7" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">DALTON 1803</text>
+<circle cx="78" cy="90" r="30" fill="rgba(79,142,247,.3)" stroke="#4f8ef7" stroke-width="2"/>
+<text x="78" y="86" fill="#4f8ef7" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Atom =</text>
+<text x="78" y="99" fill="#4f8ef7" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">solid ball</text>
+<text x="78" y="160" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Indivisible sphere</text>
+<text x="78" y="175" fill="#f06b6b" font-size="7" text-anchor="middle" font-family="DM Sans,sans-serif">✗ Electrons unknown</text>
+<rect x="160" y="8" width="140" height="184" rx="10" fill="rgba(34,211,200,.07)" stroke="#22d3c8" stroke-width="1.5"/>
+<text x="230" y="30" fill="#22d3c8" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">THOMSON 1904</text>
+<circle cx="230" cy="90" r="30" fill="rgba(34,211,200,.25)" stroke="#22d3c8" stroke-width="2"/>
+<circle cx="218" cy="85" r="4" fill="#f06b6b"/>
+<circle cx="240" cy="82" r="4" fill="#f06b6b"/>
+<circle cx="228" cy="100" r="4" fill="#f06b6b"/>
+<text x="230" y="155" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Plum Pudding</text>
+<text x="230" y="168" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">e⁻ in +ve sphere</text>
+<text x="230" y="182" fill="#f06b6b" font-size="7" text-anchor="middle" font-family="DM Sans,sans-serif">✗ No nucleus</text>
+<rect x="312" y="8" width="140" height="184" rx="10" fill="rgba(240,188,69,.07)" stroke="#f0bc45" stroke-width="1.5"/>
+<text x="382" y="30" fill="#f0bc45" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">RUTHERFORD 1911</text>
+<circle cx="382" cy="90" r="8" fill="rgba(240,188,69,.5)" stroke="#f0bc45" stroke-width="2"/>
+<ellipse cx="382" cy="90" rx="30" ry="15" fill="none" stroke="#f0bc45" stroke-width="1.5" stroke-dasharray="4 2"/>
+<circle cx="412" cy="90" r="4" fill="#f06b6b"/>
+<text x="382" y="155" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Nuclear model</text>
+<text x="382" y="168" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Dense +ve nucleus</text>
+<text x="382" y="182" fill="#f06b6b" font-size="7" text-anchor="middle" font-family="DM Sans,sans-serif">✗ e⁻ should spiral in</text>
+<rect x="464" y="8" width="140" height="184" rx="10" fill="rgba(61,214,140,.07)" stroke="#3dd68c" stroke-width="1.5"/>
+<text x="534" y="30" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">BOHR 1913</text>
+<circle cx="534" cy="90" r="8" fill="rgba(240,188,69,.35)" stroke="#f0bc45" stroke-width="2"/>
+<ellipse cx="534" cy="90" rx="22" ry="22" fill="none" stroke="#4f8ef7" stroke-width="1.5"/>
+<circle cx="556" cy="90" r="4" fill="#f06b6b"/>
+<ellipse cx="534" cy="90" rx="36" ry="36" fill="none" stroke="#3dd68c" stroke-width="1.5"/>
+<circle cx="534" cy="54" r="4" fill="#f06b6b"/>
+<text x="534" y="155" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Fixed energy shells</text>
+<text x="534" y="168" fill="#3dd68c" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">✓ Explains H spectrum</text>
+<text x="534" y="182" fill="#9dc4b4" font-size="7" text-anchor="middle" font-family="DM Sans,sans-serif">K,L,M,N shells</text>
+<rect x="616" y="8" width="136" height="184" rx="10" fill="rgba(167,139,250,.07)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="684" y="30" fill="#a78bfa" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">QUANTUM</text>
+<circle cx="684" cy="90" r="8" fill="rgba(240,188,69,.35)" stroke="#f0bc45" stroke-width="2"/>
+<ellipse cx="684" cy="90" rx="28" ry="14" fill="rgba(167,139,250,.15)" stroke="#a78bfa" stroke-width="1"/>
+<ellipse cx="684" cy="90" rx="14" ry="28" fill="rgba(167,139,250,.15)" stroke="#a78bfa" stroke-width="1"/>
+<text x="684" y="155" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Orbitals (s,p,d,f)</text>
+<text x="684" y="168" fill="#a78bfa" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Probability clouds</text>
+<text x="684" y="182" fill="#9dc4b4" font-size="7" text-anchor="middle" font-family="DM Sans,sans-serif">Modern model</text>
+</svg>`,
+"alloys-table":`<svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="8" y="8" width="744" height="30" rx="6" fill="var(--green2,#2ab572)" opacity=".9"/>
+<text x="60" y="28" fill="#fff" font-size="10" font-weight="bold" font-family="DM Sans,sans-serif" letter-spacing="1">ALLOY</text>
+<text x="220" y="28" fill="#fff" font-size="10" font-weight="bold" font-family="DM Sans,sans-serif" letter-spacing="1">COMPOSITION</text>
+<text x="430" y="28" fill="#fff" font-size="10" font-weight="bold" font-family="DM Sans,sans-serif" letter-spacing="1">USE / PROPERTY</text>
+<text x="640" y="28" fill="#fff" font-size="10" font-weight="bold" font-family="DM Sans,sans-serif" letter-spacing="1">EXAM WEIGHT</text>
+<rect x="8" y="38" width="744" height="26" rx="0" fill="rgba(61,214,140,.06)"/>
+<text x="60" y="55" fill="#22d3c8" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">Steel</text>
+<text x="220" y="55" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">Fe + C (0.5–1.5%)</text>
+<text x="430" y="55" fill="#9dc4b4" font-size="10" font-family="DM Sans,sans-serif">Construction, tools</text>
+<text x="640" y="55" fill="#f06b6b" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">★★★★★</text>
+<rect x="8" y="64" width="744" height="26" rx="0"/>
+<text x="60" y="81" fill="#22d3c8" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">Brass</text>
+<text x="220" y="81" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">Cu + Zn</text>
+<text x="430" y="81" fill="#9dc4b4" font-size="10" font-family="DM Sans,sans-serif">Musical instruments, coins</text>
+<text x="640" y="81" fill="#f06b6b" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">★★★★★</text>
+<rect x="8" y="90" width="744" height="26" rx="0" fill="rgba(61,214,140,.06)"/>
+<text x="60" y="107" fill="#22d3c8" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">Bronze</text>
+<text x="220" y="107" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">Cu + Sn</text>
+<text x="430" y="107" fill="#9dc4b4" font-size="10" font-family="DM Sans,sans-serif">Statues, bearings, springs</text>
+<text x="640" y="107" fill="#f06b6b" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">★★★★★</text>
+<rect x="8" y="116" width="744" height="26" rx="0"/>
+<text x="60" y="133" fill="#22d3c8" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">Duralumin</text>
+<text x="220" y="133" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">Al + Cu + Mn + Mg</text>
+<text x="430" y="133" fill="#9dc4b4" font-size="10" font-family="DM Sans,sans-serif">Aeroplanes (lightweight+strong)</text>
+<text x="640" y="133" fill="#f0bc45" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">★★★★</text>
+<rect x="8" y="142" width="744" height="26" rx="0" fill="rgba(61,214,140,.06)"/>
+<text x="60" y="159" fill="#22d3c8" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">Nichrome</text>
+<text x="220" y="159" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">Ni + Fe + Cr</text>
+<text x="430" y="159" fill="#9dc4b4" font-size="10" font-family="DM Sans,sans-serif">Heating coils, resistance wire</text>
+<text x="640" y="159" fill="#f0bc45" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">★★★★</text>
+<rect x="8" y="168" width="744" height="26" rx="0"/>
+<text x="60" y="185" fill="#22d3c8" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">German Silver</text>
+<text x="220" y="185" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">Cu + Zn + Ni</text>
+<text x="430" y="185" fill="#9dc4b4" font-size="10" font-family="DM Sans,sans-serif">Utensils (NO silver inside!)</text>
+<text x="640" y="185" fill="#f06b6b" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">★★★★★</text>
+<rect x="8" y="194" width="744" height="26" rx="0" fill="rgba(61,214,140,.06)"/>
+<text x="60" y="211" fill="#22d3c8" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">Invar</text>
+<text x="220" y="211" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">Fe + Ni + C</text>
+<text x="430" y="211" fill="#9dc4b4" font-size="10" font-family="DM Sans,sans-serif">Watch pendulum (low expansion)</text>
+<text x="640" y="211" fill="#3dd68c" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">★★★</text>
+</svg>`,
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const SKEY="centumania_chem_a_v2";
+let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
+try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
+
+// ── TRACKING / BACKEND ────────────────────────────────────────────────────────
+// Active node session tracking
+let _nodeSession={nodeId:null,openedAt:null,questionsAnswered:0,correctOnFirst:0,totalQ:0,abandoned:false};
+
+function trackEvent(event,payload){
+  // Fire-and-forget. Silent fail on network error.
+  const body=Object.assign({event,mapId:"chem_a",ts:new Date().toISOString()},payload);
+  try{
+    fetch('/api/progress',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    }).then(()=>flashSync()).catch(()=>{});
+  }catch(e){}
+}
+
+function flashSync(){
+  const dot=document.getElementById('syncDot');
+  if(!dot)return;
+  dot.classList.add('show');
+  setTimeout(()=>dot.classList.remove('show'),900);
+}
+
+function startNodeSession(nodeId,totalQ){
+  // If previous node was open and not fully answered, fire abandoned
+  if(_nodeSession.nodeId && _nodeSession.nodeId!==nodeId){
+    const wasComplete=_nodeSession.questionsAnswered>=_nodeSession.totalQ && _nodeSession.totalQ>0;
+    if(!wasComplete && _nodeSession.totalQ>0){
+      trackEvent('node_abandoned',{
+        nodeId:_nodeSession.nodeId,
+        timeSpentSeconds:Math.floor((Date.now()-_nodeSession.openedAt)/1000),
+        questionsAnswered:_nodeSession.questionsAnswered,
+        totalQuestions:_nodeSession.totalQ
+      });
+    }
+  }
+  _nodeSession={nodeId,openedAt:Date.now(),questionsAnswered:0,correctOnFirst:0,totalQ,abandoned:false};
+  trackEvent('node_opened',{nodeId,totalQuestions:totalQ});
+}
+
+function trackAnswer(nodeId,qi,correct){
+  _nodeSession.questionsAnswered++;
+  if(correct)_nodeSession.correctOnFirst++;
+  trackEvent('question_answered',{
+    nodeId,
+    questionIndex:qi,
+    firstAttemptCorrect:correct,
+    timeIntoNodeSeconds:Math.floor((Date.now()-_nodeSession.openedAt)/1000)
+  });
+  // Check completion
+  if(_nodeSession.questionsAnswered>=_nodeSession.totalQ){
+    const timeSpent=Math.floor((Date.now()-_nodeSession.openedAt)/1000);
+    const accuracy=Math.round(_nodeSession.correctOnFirst/_nodeSession.totalQ*100);
+    trackEvent('node_completed',{
+      nodeId,
+      totalQuestions:_nodeSession.totalQ,
+      correctOnFirstAttempt:_nodeSession.correctOnFirst,
+      firstAttemptAccuracyPct:accuracy,
+      timeSpentSeconds:timeSpent,
+      completedAt:new Date().toISOString()
+    });
+  }
+}
+
+// ── CHAPTER DATA ──────────────────────────────────────────────────────────────
+const CHAPTERS=[
+{id:"matter",title:"States of Matter",icon:"🧊",nodes:[
+ {id:"matter-states",title:"Three States of Matter",xp:10,type:"regular",diag:"states-matter",
+  facts:["<b>Matter</b> = anything with mass + occupies space. Particles attract each other via interparticle forces.","<b>Solid</b>: fixed shape + volume | Max density | Min energy | Max interparticle force","<b>Liquid</b>: no fixed shape, has volume | Flows higher→lower | Medium everything","<b>Gas</b>: no shape, no volume | Max energy | Min density | Min force | All-direction flow","Interparticle space: Gas &gt; Liquid &gt; Solid | Density: Solid &gt; Liquid &gt; Gas","Rate of diffusion: Gas &gt; Liquid &gt; Solid (increases with temperature ↑)","Characteristics of particles: (1) Spaces between them (2) Always in motion (3) Attract each other"],
+  table:{h:["Property","Solid","Liquid","Gas"],r:[["Shape","Fixed","Takes container","None"],["Volume","Fixed","Fixed","None"],["Density","<b>Maximum</b>","Medium","<b>Minimum</b>"],["Kinetic Energy","Minimum","Medium","<b>Maximum</b>"],["Compressibility","Negligible","Near zero","<b>High</b>"],["Diffusion rate","Negligible","Depends","<b>Maximum</b>"]]},
+  mcqs:[
+    {q:"Which state of matter has maximum interparticle force?",o:["Gas","Liquid","Solid","Plasma"],a:2,e:"Solid has maximum interparticle force — particles are tightly packed with minimum space between them."},
+    {q:"Rate of diffusion is MAXIMUM in which state?",o:["Solid","Liquid","Gas","All equal"],a:2,e:"Gas diffusion >> liquid >> solid. Gas molecules move freely in all directions with no fixed positions."},
+    {q:"Which property is MINIMUM in solids?",o:["Density","Interparticle force","Kinetic energy","Compressibility"],a:2,e:"Kinetic energy is minimum in solids — particles vibrate in fixed positions only."},
+    {q:"Interparticle space is maximum in?",o:["Solid","Liquid","Gas","Same in all"],a:2,e:"Gas has maximum interparticle space — that is why gases are highly compressible."},
+    {q:"Ice is LESS dense than water. This is called?",o:["Normal expansion","Anomalous expansion","Phase change","Latent heat"],a:1,e:"Anomalous expansion of water — ice at 0°C is less dense than water at 4°C. This is why ice floats."}
+  ]},
+ {id:"matter-properties",title:"Intensive vs Extensive Properties",xp:10,type:"trap",
+  facts:["<b>Intensive properties</b>: independent of amount of matter","Examples: Temperature, Pressure, Density, Boiling point, Melting point, Colour, Refractive index","<b>Extensive properties</b>: depend on amount of matter","Examples: Mass, Volume, Length, Energy, Heat content","Simple test: divide the sample in half — intensive property stays same; extensive halves"],
+  traps:["Density is INTENSIVE — it stays the same regardless of sample size","Mass and Volume are EXTENSIVE — they change with amount","Exam often asks 'which is NOT an intensive property' → always choose mass/volume"],
+  mcqs:[
+    {q:"Which is an intensive property?",o:["Mass","Volume","Density","Heat content"],a:2,e:"Density = intensive. Halve the sample — density stays the same. Mass and volume both halve."},
+    {q:"Extensive property example?",o:["Temperature","Pressure","Colour","Volume"],a:3,e:"Volume is extensive — it depends on how much matter you have. Double the matter = double the volume."},
+    {q:"Boiling point is which type of property?",o:["Extensive","Intensive","Both","Neither"],a:1,e:"Boiling point is intensive — it does not change with the amount of substance. Water boils at 100°C whether it is 1ml or 1L."},
+    {q:"Which of these is NOT an intensive property?",o:["Melting point","Refractive index","Length","Density"],a:2,e:"Length is extensive — it changes with the amount/size of the object. All others are intensive."},
+    {q:"You have 100g of salt. You divide it into two halves. Which property halves?",o:["Density","Melting point","Mass","Colour"],a:2,e:"Mass is extensive — it halves when you divide the sample. Density, melting point, colour remain the same."}
+  ]},
+ {id:"matter-plasma",title:"Plasma — 4th State",xp:15,type:"hidden",requires:["matter-states","matter-properties"],
+  facts:["<b>Plasma</b> = 4th state of matter — super-heated, ionized gas","Particles are charged ions and free electrons — highly energetic","Found in: Sun and stars, lightning, neon signs, plasma TVs","Can conduct electricity unlike ordinary gases","<b>Bose-Einstein Condensate (BEC)</b> = 5th state — occurs near absolute zero (0 K)","BEC: atoms merge into a single quantum state — never asked in SSC/RRB","Remember: for exams, only 3+1 = Solid, Liquid, Gas, Plasma"],
+  insight:[{h:"SSC 2023 pattern",body:"'4th state of matter' has been asked in SSC MTS 2023 and RRB NTPC 2022. Answer = Plasma. Bose-Einstein Condensate is NOT asked at SSC/RRB level — don't confuse."}],
+  mcqs:[
+    {q:"4th state of matter is?",o:["Foam","Plasma","Gel","Aerosol"],a:1,e:"Plasma = 4th state. Ionized gas found in sun, lightning, neon signs — contains free electrons and ions."},
+    {q:"Plasma is found in?",o:["Melting ice","Ocean water","Sun and stars","Underground rocks"],a:2,e:"Plasma found in Sun, stars, lightning — highly energetic ionized gas where electrons are stripped from atoms."},
+    {q:"Which can conduct electricity that ordinary gas cannot?",o:["Liquid","Solid","Plasma","BEC"],a:2,e:"Plasma conducts electricity because it contains free electrons and positive ions — unlike neutral gas molecules."},
+    {q:"Bose-Einstein Condensate forms near?",o:["100°C","0°C","Absolute zero (0K)","Boiling point"],a:2,e:"BEC forms near absolute zero (0 Kelvin = -273°C). Not asked in SSC/RRB — focus on Plasma as 4th state."},
+    {q:"Neon signs glow because of which state of matter?",o:["Gas","Liquid","Solid","Plasma"],a:3,e:"Neon signs contain plasma — the electric current ionizes the gas, creating glowing plasma inside the tube."}
+  ]},
+]},
+{id:"phase",title:"Phase Changes",icon:"🌡️",nodes:[
+ {id:"phase-changes",title:"Phase Changes & Key Terms",xp:15,type:"regular",diag:"phase-changes",
+  facts:["<b>Melting</b>: Solid→Liquid (heat↑). Ice melts at <b>0°C (32°F)</b>","<b>Freezing</b>: Liquid→Solid (cool↓). Freezing point = Melting point","<b>Vaporisation</b>: Liquid→Gas. Water boils at <b>100°C at 1 atm</b>","<b>Condensation</b>: Gas→Liquid","<b>Sublimation</b>: Solid→Gas DIRECTLY (no liquid phase). e.g. Naphthalene, Dry Ice (CO₂), Camphor, Iodine","<b>Deposition</b>: Gas→Solid directly (reverse sublimation)","<b>KEY RULE</b>: Temperature STAYS CONSTANT during any phase change (energy goes to/from latent heat)","<b>Latent Heat of Fusion</b>: heat to convert 1 kg solid→liquid at MP (no temp change)","<b>Latent Heat of Vaporisation</b>: heat to convert 1 kg liquid→gas at BP (no temp change)"],
+  traps:["Temperature is CONSTANT during phase change — it does NOT rise","Sublimation goes Solid→Gas (no liquid) — Naphthalene, Dry Ice, Camphor, I₂","Pressure cooker: high pressure → raises BP above 100°C → faster cooking","Mountain top: low pressure → BP below 100°C → longer cooking time"],
+  mcqs:[
+    {q:"During melting of ice, temperature?",o:["Rises steadily","Falls","Stays constant","Fluctuates"],a:2,e:"CONSTANT during phase change. All energy goes into breaking interparticle bonds (latent heat of fusion), not raising temperature."},
+    {q:"Sublimation is the process of?",o:["Liquid → Gas","Solid → Gas directly","Gas → Solid","Gas → Liquid"],a:1,e:"Sublimation = Solid → Gas directly, skipping the liquid phase. Examples: Camphor, Naphthalene, Dry Ice (CO₂), Iodine."},
+    {q:"In a pressure cooker, food cooks faster because?",o:["Lower pressure raises boiling point","Higher pressure raises boiling point","Higher pressure lowers boiling point","Temperature increases faster"],a:1,e:"Higher pressure → higher boiling point (above 100°C) → food cooks at higher temperature → faster cooking."},
+    {q:"Latent heat of fusion is the energy needed to?",o:["Melt 1kg solid to liquid at constant temp","Boil 1kg liquid to gas","Heat 1kg by 1°C","Freeze 1kg liquid to solid"],a:0,e:"Latent heat of fusion = energy to convert 1kg solid → liquid at melting point, with NO temperature change."},
+    {q:"Dry Ice is an example of which process?",o:["Melting","Evaporation","Sublimation","Condensation"],a:2,e:"Dry Ice (solid CO₂) undergoes sublimation — it goes directly from solid to gas without becoming liquid."}
+  ]},
+ {id:"evaporation",title:"Evaporation & Diffusion",xp:15,type:"regular",
+  facts:["<b>Evaporation</b>: Liquid→Gas BELOW boiling point (spontaneous, surface phenomenon)","Causes cooling effect — sweating, earthen pot, wet cloth on forehead","<b>Factors that INCREASE evaporation</b>: Temperature↑, Surface area↑, Wind speed↑","<b>Humidity INVERSELY affects evaporation</b>: Humidity↑ → Evaporation RATE↓","<b>Mnemonic T-S-H-W</b>: Temperature, Surface area, Humidity (inverse!), Wind speed","<b>Diffusion</b>: spontaneous mixing of particles from high→low concentration","Rate of diffusion ↑ with Temperature ↑","e.g. Ink in water, smell of perfume spreading"],
+  traps:["Humidity ↑ → Evaporation ↓ (INVERSE — most common exam trap in evaporation)","Evaporation cools; condensation warms — earthen pot works by evaporation","Diffusion ≠ Osmosis: diffusion = any molecule; osmosis = water only through semipermeable membrane"],
+  mcqs:[
+    {q:"Evaporation rate DECREASES when?",o:["Temperature rises","Wind speed increases","Humidity increases","Surface area increases"],a:2,e:"Humidity ↑ → Evaporation ↓. More water vapour already in air means less additional water can evaporate."},
+    {q:"Earthen pot cools water by?",o:["Conduction","Convection","Evaporation","Radiation"],a:2,e:"Tiny pores in the clay allow water to seep out and evaporate from the surface — evaporation absorbs heat, cooling the pot."},
+    {q:"Evaporation occurs at?",o:["Only at boiling point","Only above 100°C","Any temperature below boiling point","Only in sunlight"],a:2,e:"Evaporation is a surface phenomenon that occurs at any temperature — only the fastest surface molecules escape. Boiling = bulk process."},
+    {q:"Diffusion rate increases with?",o:["Decrease in temperature","Increase in temperature","Increase in pressure only","Decrease in concentration"],a:1,e:"Higher temperature → more kinetic energy → faster movement → higher diffusion rate."},
+    {q:"Osmosis differs from diffusion because osmosis?",o:["Moves from low to high concentration","Only involves water through a semipermeable membrane","Involves gases only","Requires energy"],a:1,e:"Osmosis = movement of WATER ONLY through a semipermeable membrane from low solute to high solute concentration. Diffusion = any substance."}
+  ]},
+ {id:"tyndall-deep",title:"Tyndall Effect — Examiner's Secret",xp:25,type:"hidden",requires:["phase-changes","evaporation"],
+  facts:["<b>Tyndall Effect</b>: scattering of light by colloidal particles (makes beam visible)","Colloid particle size: <b>1nm – 1000nm</b> (between solution and suspension)","<b>Shows Tyndall</b>: Milk, Smoke, Fog, Butter, Starch solution, Blood, Muddy river water (fresh)","<b>Does NOT show Tyndall</b>: True solutions — saltwater, sugar water, copper sulphate, lemonade","Classic SSC scenario: headlights in fog = Tyndall Effect","Smoke in a dark room with a ray of light = Tyndall Effect","<b>Suspension</b> also scatters but particles settle — colloids don't settle"],
+  insight:[{h:"SSC 5-year frequency",body:"Tyndall Effect asked in SSC CGL 2019, 2021, 2022, CHSL 2023, RRB NTPC 2022. Always phrased as 'which does NOT show Tyndall' — trap is that milk/blood (biological fluids) DO show it."}],
+  mcqs:[
+    {q:"Which does NOT show Tyndall Effect?",o:["Milk","Fog","Salt solution","Blood"],a:2,e:"Salt solution = true solution (particles <1nm). No colloidal particles to scatter light. Milk, fog, blood = colloids → show Tyndall."},
+    {q:"Tyndall effect is caused by?",o:["Absorption of light","Reflection from flat surface","Scattering by colloidal particles","Refraction through glass"],a:2,e:"Colloidal particles (1–1000nm) are large enough to scatter light, making the beam visible in the medium."},
+    {q:"Headlights in fog are visible due to?",o:["Reflection","Refraction","Tyndall Effect","Diffraction"],a:2,e:"Fog = water droplets = colloid. The headlight beam is scattered by fog droplets → Tyndall Effect."},
+    {q:"Which is a colloid?",o:["Copper sulphate solution","Lemonade","Blood","Saltwater"],a:2,e:"Blood = colloid (particles 1–1000nm). Copper sulphate, lemonade, saltwater = true solutions (<1nm)."},
+    {q:"Colloid particles are in size range of?",o:["Less than 1nm","1nm to 1000nm","Greater than 1000nm","Greater than 1mm"],a:1,e:"Colloid: 1–1000nm. True solution: <1nm. Suspension: >1000nm. This size range enables the Tyndall Effect."}
+  ]},
+]},
+{id:"classification",title:"Classification of Matter",icon:"🗂️",nodes:[
+ {id:"pure-substances",title:"Elements, Compounds & Mixtures",xp:15,type:"regular",
+  facts:["<b>Pure substance</b>: fixed composition; constant MP/BP; cannot be separated physically","<b>Element</b>: same type of atoms (same atomic number). Cannot be broken chemically","<b>Compound</b>: two or more elements in fixed ratio by chemical bonding","<b>Mixture</b>: two or more substances mixed, NOT in fixed ratio, separable by physical means","<b>Homogeneous mixture</b>: uniform composition throughout (e.g. alloys, saltwater)","<b>Heterogeneous mixture</b>: non-uniform (e.g. sand+water, oil+water)","Law of Constant Proportions (Proust's Law): in a compound, elements always in fixed mass ratio","In water: H:O = <b>1:8 by mass</b> always"],
+  table:{h:["Type","Composition","Separation","Examples"],r:[["Element","One type","Cannot be","O₂, Fe, Au, H₂"],["Compound","Fixed ratio","Chemical","H₂O, NaCl, CO₂"],["Mixture (Homo)","Variable","Physical","Alloys, saltwater"],["Mixture (Hetero)","Variable","Physical","Sand+water, oil+water"]]},
+  mcqs:[
+    {q:"Alloys are classified as?",o:["Elements","Compounds","Homogeneous mixtures","Heterogeneous mixtures"],a:2,e:"Alloys = HOMOGENEOUS mixtures. They have uniform composition throughout. The metals are NOT chemically bonded."},
+    {q:"Proust's Law (Law of Constant Proportions) states?",o:["Mass is conserved in reactions","Elements combine in fixed mass ratios in a compound","Atoms are indivisible","Matter has 3 states"],a:1,e:"Proust's Law = elements in a compound are always in fixed mass ratio. Water always has H:O = 1:8 by mass."},
+    {q:"Which can be separated by physical methods?",o:["Compound","Element","Mixture","None of these"],a:2,e:"Mixtures can be separated by physical methods (filtration, distillation, etc.). Compounds need chemical methods."},
+    {q:"H:O mass ratio in water is always?",o:["1:4","1:8","2:16","1:16"],a:1,e:"In water (H₂O): H:O = 1:8 by mass. This is a fixed ratio regardless of how much water you take — Proust's Law."},
+    {q:"Which is a PURE substance?",o:["Brass","Seawater","Distilled water","Concrete"],a:2,e:"Distilled water = pure substance with fixed composition. Brass, seawater, concrete are all mixtures."}
+  ]},
+ {id:"solutions-colloids",title:"Solutions, Colloids & Suspensions",xp:20,type:"trap",diag:"mixture-types",
+  table:{h:["Type","Particle Size","Tyndall","Settles?","Example"],r:[["True Solution","<1 nm","<span class='no'>No</span>","No","Saltwater, CuSO₄"],["Colloid","1–1000 nm","<span class='yes'>Yes</span>","No","Milk, Fog, Blood"],["Suspension",">1000 nm","Yes (large)","<span class='yes'>Yes</span>","Muddy water"]]},
+  traps:["Milk = COLLOID (not solution). Blood = COLLOID. Butter = COLLOID","German Silver contains NO silver — it's Cu+Zn+Ni (trap name)","Alloys are MIXTURES not compounds — elements not chemically bonded","True solutions are transparent; colloids appear turbid (cloudy)"],
+  mcqs:[
+    {q:"Milk is classified as?",o:["True solution","Suspension","Colloid","Compound"],a:2,e:"Milk = colloid. Particle size 1–1000nm. Shows Tyndall effect. Appears turbid (not transparent)."},
+    {q:"German Silver contains silver?",o:["Yes, about 30%","Yes, about 10%","No silver at all","Yes, 5%"],a:2,e:"German Silver = Cu+Zn+Ni. ZERO silver. It is only silver-coloured. Classic exam name trap."},
+    {q:"Which does NOT settle on standing?",o:["Suspension","Colloid","Muddy water","Chalk in water"],a:1,e:"Colloid does NOT settle — particles (1–1000nm) are too small. Suspension (>1000nm) settles on standing."},
+    {q:"True solution is?",o:["Turbid","Transparent","Opaque","Translucent"],a:1,e:"True solution is transparent — particle size <1nm so no scattering of light (no Tyndall Effect)."},
+    {q:"Blood is classified as?",o:["True solution","Suspension","Colloid","Compound"],a:2,e:"Blood = colloid. This is a high-frequency trap — blood is NOT a solution despite being mostly liquid."}
+  ]},
+ {id:"separation",title:"Separation Methods",xp:15,type:"regular",
+  facts:["<b>Filtration</b>: separates insoluble solid from liquid (sand+water)","<b>Evaporation</b>: separates dissolved solid from solution (salt from water)","<b>Distillation</b>: separates liquids with different BPs. Simple = one liquid; Fractional = multiple (petroleum refining)","<b>Chromatography</b>: separates substances by differential movement on carrier","<b>Centrifugation</b>: separates based on density difference by spinning (cream from milk, blood components)","<b>Magnetic separation</b>: separates magnetic substances (iron filings from sand)","<b>Crystallisation</b>: separates pure crystals from impure solution (better than evaporation for heat-sensitive salts)"],
+  mcqs:[
+    {q:"Cream from milk is separated by?",o:["Filtration","Distillation","Centrifugation","Chromatography"],a:2,e:"Centrifugation uses spinning force to separate by density. Cream (lighter fat) goes to the top."},
+    {q:"Petroleum refining uses?",o:["Simple distillation","Fractional distillation","Filtration","Crystallisation"],a:1,e:"Petroleum = mixture of hydrocarbons with different boiling points → Fractional distillation separates them."},
+    {q:"Which method separates iron filings from sand?",o:["Filtration","Centrifugation","Magnetic separation","Distillation"],a:2,e:"Magnetic separation — iron is magnetic, sand is not. Simple and direct."},
+    {q:"Chromatography separates substances based on?",o:["Density","Magnetic property","Differential movement on carrier","Boiling point"],a:2,e:"Chromatography separates by differential movement rate on a carrier medium — used for dyes, amino acids, pigments."},
+    {q:"Crystallisation is preferred over evaporation for?",o:["Salt from sea water","Sand from water","Heat-sensitive salts (sugar)","Iron from copper"],a:2,e:"Crystallisation is used for heat-sensitive substances like sugar that decompose on strong heating. Gentler than evaporation."}
+  ]},
+ {id:"mixture-gold",title:"Mixture Master Node",xp:40,type:"gold",requires_pct:80,
+  golden:["<b>Tyndall Effect</b> = Colloids only. Saltwater, sugar water, copper sulphate = NO Tyndall.","<b>Alloys = Homogeneous MIXTURES</b> — NOT compounds. Brass, Bronze, Steel, Duralumin = mixtures.","<b>German Silver has NO silver</b> — Cu+Zn+Ni. 'Silver' is just the colour.","<b>Blood is a colloid</b> — not a solution, not a suspension.","<b>Proust's Law = Constant Proportions = Definite Proportions</b> — same law, three different names in exams.","<b>Centrifugation</b> separates: cream from milk, blood cells from plasma","<b>Fractional distillation</b>: petroleum refining. Simple distillation: salt from water."]},
+]},
+{id:"atom",title:"Atomic Structure",icon:"⚛️",nodes:[
+ {id:"atom-basics",title:"Sub-atomic Particles",xp:15,type:"regular",diag:"atom-structure",
+  facts:["<b>Atom</b>: smallest unit of element. Contains protons (+), neutrons (0), electrons (-)","<b>Electron (e⁻)</b>: discovered by <b>J.J. Thomson</b> — cathode ray experiment (1897)","<b>Proton (p⁺)</b>: discovered by <b>Rutherford</b> — gold foil experiment","<b>Neutron (n⁰)</b>: discovered by <b>James Chadwick</b> (1932)","<b>Atomic Number (Z)</b> = number of protons = number of electrons (neutral atom)","<b>Mass Number (A)</b> = protons + neutrons","<b>Bohr's shells</b>: K(2), L(8), M(18), N(32) | Formula: max electrons = 2n²","<b>AMU</b> = Atomic Mass Unit = 1/12 the mass of Carbon-12 atom"],
+  traps:["Chadwick discovered NEUTRON (1932) — NOT Thomson, NOT Rutherford","Thomson discovered ELECTRON via cathode ray","Millikan measured the CHARGE of electron (not the discovery — not the mass)","Atomic number = protons = electrons (in neutral atom). Mass number = p+n."],
+  mcqs:[
+    {q:"Neutron was discovered by?",o:["Thomson","Rutherford","Chadwick","Millikan"],a:2,e:"James Chadwick (1932) discovered neutron. Most asked discoverer after Thomson (electron)."},
+    {q:"Millikan's oil drop experiment determined?",o:["Mass of electron","Charge of electron","Number of electrons","Discovery of proton"],a:1,e:"Millikan measured the CHARGE (not mass, not discovery) of electron using the oil drop experiment."},
+    {q:"Atomic Number (Z) of an element equals?",o:["Number of neutrons","Number of protons only","Number of protons + neutrons","Number of electrons only"],a:1,e:"Atomic Number Z = number of protons (= number of electrons in a neutral atom). Mass number A = protons + neutrons."},
+    {q:"Maximum electrons in M shell (n=3)?",o:["2","8","18","32"],a:2,e:"Formula: max electrons = 2n². For M shell (n=3): 2×9 = 18. K=2, L=8, M=18, N=32."},
+    {q:"Cathode ray experiment proved existence of?",o:["Proton","Neutron","Electron","Nucleus"],a:2,e:"J.J. Thomson's cathode ray experiment (1897) proved electrons exist and are universal — same regardless of gas or cathode material."}
+  ]},
+ {id:"atomic-models",title:"Atomic Models — Thomson to Bohr",xp:20,type:"regular",diag:"atomic-models",
+  facts:["<b>Dalton (1803)</b>: atom = solid indivisible sphere. First atomic theory.","<b>Thomson (1904)</b>: Plum Pudding model — electrons embedded in positive sphere","<b>Rutherford (1911)</b>: Nuclear model — dense positive nucleus, electrons orbit outside","Rutherford's Gold Foil: most α-particles passed → atom mostly empty; very few bounced back → dense nucleus","<b>Bohr (1913)</b>: electrons in fixed energy shells (K,L,M,N); no radiation unless jumping shells","Bohr explained hydrogen spectrum successfully","<b>Modern/Quantum</b>: electrons in orbitals (probability clouds) — s,p,d,f sub-shells"],
+  table:{h:["Model","Year","Key Concept","Limitation"],r:[["Dalton","1803","Solid sphere","No electrons"],["Thomson","1904","Plum pudding (e⁻ in +ve)","No nucleus"],["Rutherford","1911","Nuclear model","e⁻ should spiral in"],["Bohr","1913","Fixed shells K,L,M,N","Only explains H"],["Quantum","Modern","Orbitals (probability)","Still valid"]]},
+  mcqs:[
+    {q:"Rutherford's model was based on which experiment?",o:["Cathode ray experiment","Gold foil experiment","Oil drop experiment","Spectroscopy"],a:1,e:"Gold foil experiment (1909): α-particles fired at gold foil. Most passed through (atom mostly empty); few bounced back → dense positive nucleus."},
+    {q:"Bohr's model successfully explained?",o:["All atomic spectra","Hydrogen spectrum only","Electron mass","Neutron discovery"],a:1,e:"Bohr model explains hydrogen spectrum. It fails for multi-electron atoms — that requires quantum mechanics."},
+    {q:"Thomson's Plum Pudding model said?",o:["Atom has a dense nucleus","Electrons move in fixed shells","Electrons embedded in a positive sphere","Atom is indivisible"],a:2,e:"Thomson (1904): electrons (plums) are embedded in a positively charged sphere (pudding). No nucleus — that's Rutherford's contribution."},
+    {q:"Limitation of Rutherford's model was?",o:["Did not explain nucleus","Did not explain electrons at all","Electrons should spiral into nucleus and atom should collapse","No mention of protons"],a:2,e:"Classical physics said orbiting electrons should radiate energy and spiral into nucleus → atom would collapse in nanoseconds. Bohr solved this."},
+    {q:"In modern quantum model, electrons are found in?",o:["Fixed circular orbits","Fixed shells only","Probability orbitals (s,p,d,f)","Random positions"],a:2,e:"Modern quantum model: electrons in orbitals = probability regions (not fixed paths). Sub-shells: s, p, d, f."}
+  ]},
+ {id:"isotopes-isobars",title:"Isotopes, Isobars & Isotones",xp:25,type:"trap",
+  facts:["<b>Isotopes</b>: same Atomic Number (Z), different Mass Number (A) → same element, different neutrons","Examples: H¹, H² (Deuterium), H³ (Tritium) | C¹²,C¹⁴ | U²³⁵,U²³⁸","<b>Isobars</b>: same Mass Number (A), different Atomic Number (Z) → different elements","Examples: Ca⁴⁰ and Ar⁴⁰ | K⁴⁰ and Ca⁴⁰","<b>Isotones</b>: same number of NEUTRONS, different A and Z","<b>Avogadro's Number</b>: 6.022 × 10²³ particles per mole","<b>1 mole</b> = 6.022 × 10²³ atoms/molecules","Molar mass: H₂O = 18 g/mol | CO₂ = 44 g/mol | NaCl = 58.5 g/mol"],
+  traps:["Isotopes: same Z, DIFFERENT A (same element)","Isobars: same A, DIFFERENT Z (DIFFERENT elements)","C-14 is a radioactive ISOTOPE of carbon — used in carbon dating","U-235 used in nuclear reactors; U-238 is more common"],
+  mcqs:[
+    {q:"Isotopes have same?",o:["Mass number","Atomic number","Number of neutrons","All of the above"],a:1,e:"Isotopes: same Z (atomic number = protons). Different mass number A (different neutrons). Examples: H¹, H², H³."},
+    {q:"Avogadro's number is?",o:["6.022 × 10²²","6.022 × 10²³","6.022 × 10²⁴","6.022 × 10²¹"],a:1,e:"6.022 × 10²³ = one mole of any substance. Must memorise exactly for SSC and RRB exams."},
+    {q:"C-12 and C-14 are?",o:["Isobars","Isotopes","Isotones","Allotropes"],a:1,e:"C-12 and C-14 = Isotopes (same Z=6, different A: 12 vs 14). C-14 is radioactive and used in carbon dating."},
+    {q:"Ca-40 and Ar-40 are examples of?",o:["Isotopes","Isobars","Isotones","None"],a:1,e:"Ca-40 and Ar-40 = Isobars (same mass number A=40, different atomic numbers: Ca=20, Ar=18). Different elements."},
+    {q:"Molar mass of CO₂ is?",o:["28 g/mol","44 g/mol","32 g/mol","56 g/mol"],a:1,e:"CO₂: C=12, O=16×2=32. Total = 44 g/mol. H₂O = 18 g/mol. NaCl = 58.5 g/mol."}
+  ]},
+ {id:"atom-hidden",title:"Examiner's Atomic Intelligence",xp:30,type:"hidden",requires:["atom-basics","atomic-models","isotopes-isobars"],
+  facts:["<b>Cathode rays</b>: negatively charged particles (electrons) — travel straight, deflect in fields","Thomson's cathode ray → proved electrons exist and are universal (same regardless of gas/cathode)","<b>Diatomic elements</b>: H₂, N₂, O₂, F₂, Cl₂, Br₂, I₂ — 'Have No Fear Of Ice Cold Beer'","<b>Phosphorus</b>: tetraatomic P₄ | <b>Sulphur</b>: octaatomic S₈","<b>Noble gases</b>: monoatomic (He, Ne, Ar, Kr, Xe, Rn)","OIL RIG: <b>O</b>xidation <b>I</b>s <b>L</b>oss (of electrons) | <b>R</b>eduction <b>I</b>s <b>G</b>ain (of electrons)","<b>Radioactivity</b>: α (He nucleus), β (electron), γ (electromagnetic wave, most penetrating)","γ rays most penetrating; α rays least penetrating"],
+  insight:[{h:"PYQ secret — atomicity",body:"'Atomicity of Sulphur is?' = S₈ = 8. 'Atomicity of Phosphorus?' = P₄ = 4. 'Nobel gases?' = 1 (monoatomic). Asked in SSC CGL 2020, MTS 2021, RRB NTPC 2022."}],
+  mcqs:[
+    {q:"Atomicity of Sulphur?",o:["1","4","6","8"],a:3,e:"Sulphur forms S₈ ring structure. Atomicity = 8. Phosphorus = P₄ (atomicity 4). Noble gases = 1 (monoatomic)."},
+    {q:"γ (gamma) rays compared to α and β?",o:["Least penetrating","Same penetrating power","Most penetrating","Cannot penetrate anything"],a:2,e:"γ rays most penetrating (no charge, no mass — pure electromagnetic radiation). α least penetrating (stopped by paper). β = medium."},
+    {q:"Mnemonic 'Have No Fear Of Ice Cold Beer' represents?",o:["Noble gases","Halogens","Diatomic elements","Radioactive elements"],a:2,e:"H₂, N₂, F₂, O₂, I₂, Cl₂, Br₂ — the seven diatomic elements. Memory: Have No Fear Of Ice Cold Beer."},
+    {q:"OIL RIG stands for?",o:["Oxygen In Liquid Reduces In Gas","Oxidation Is Loss, Reduction Is Gain","Only In Labs, Reactions Involve Gas","None of these"],a:1,e:"OIL RIG: Oxidation Is Loss (of electrons), Reduction Is Gain (of electrons). Essential mnemonic for redox reactions."},
+    {q:"Alpha (α) particle is identical to?",o:["Hydrogen nucleus","Helium nucleus","Electron","Proton"],a:1,e:"Alpha particle = Helium nucleus (2 protons + 2 neutrons). It has charge +2 and is the least penetrating radiation."}
+  ]},
+]},
+{id:"alloys_reactions",title:"Alloys & Reactions",icon:"⚗️",nodes:[
+ {id:"alloys",title:"Alloys — The Exam Goldmine",xp:20,type:"trap",diag:"alloys-table",
+  facts:["<b>Alloy</b>: homogeneous mixture of two or more metals (or metal+non-metal)","Properties better than pure metals: harder, corrosion resistant, specific melting points","<b>Steel</b>: Fe + C | <b>Stainless Steel</b>: Fe + C + Cr + Ni (rustproof)","<b>Brass</b>: Cu + Zn (musical instruments, coins)","<b>Bronze</b>: Cu + Sn (statues, bearings) — oldest alloy","<b>Duralumin</b>: Al + Cu (+Mn+Mg) — aeroplanes (light + strong)","<b>Nichrome</b>: Ni + Fe + Cr — heating elements, resistance wire","<b>German Silver</b>: Cu + Zn + Ni — ZERO silver (just silver coloured)","<b>Invar</b>: Fe + Ni + C — watch pendulums (minimal thermal expansion)","<b>Solder</b>: Pb + Sn — joins circuits"],
+  traps:["Alloys = MIXTURES not compounds","German Silver has NO silver — one of the most asked traps","Bronze = Cu+Sn | Brass = Cu+Zn (B comes before Bra — Bronze=Tin=Sn)","Duralumin is used in aeroplanes — lightweight aluminium alloy"],
+  mcqs:[
+    {q:"Bronze is composed of?",o:["Cu + Zn","Cu + Sn","Fe + C","Al + Cu"],a:1,e:"Bronze = Cu+Sn (copper + tin). Brass = Cu+Zn. Remember: Bronze has tin (Sn). Brass has Zinc (Zn)."},
+    {q:"Which alloy is used in aeroplane bodies?",o:["Steel","Brass","Duralumin","Bronze"],a:2,e:"Duralumin (Al+Cu+Mn+Mg) used in aeroplanes — lightweight yet strong. Aluminium base makes it light."},
+    {q:"Nichrome is used in?",o:["Aircraft frames","Coins and medals","Heating coils and resistance wires","Statues and bearings"],a:2,e:"Nichrome (Ni+Fe+Cr) has high resistance to electricity → used in heating coils of electric heaters, toasters."},
+    {q:"Stainless steel is rust-resistant because of?",o:["Zinc content","Chromium and Nickel content","Carbon content","Manganese content"],a:1,e:"Stainless steel = Fe+C+Cr+Ni. Chromium forms a protective oxide layer. Nickel adds shine and corrosion resistance."},
+    {q:"Solder (used to join circuits) is made of?",o:["Fe + Cu","Pb + Sn","Cu + Zn","Al + Mg"],a:1,e:"Solder = Lead (Pb) + Tin (Sn). Low melting point alloy used to join electrical circuit components."}
+  ]},
+ {id:"reactions",title:"Chemical Reactions",xp:15,type:"regular",
+  facts:["<b>Combination reaction</b>: A + B → AB (e.g. 2H₂ + O₂ → 2H₂O)","<b>Decomposition</b>: AB → A + B (e.g. CaCO₃ → CaO + CO₂)","<b>Displacement</b>: A + BC → AC + B (more reactive A displaces B)","<b>Double Displacement</b>: AB + CD → AD + CB (exchange ions)","<b>Exothermic</b>: releases heat (combustion, respiration, neutralisation)","<b>Endothermic</b>: absorbs heat (photosynthesis, cooking, melting ice)","<b>Oxidation</b>: loss of electrons (OIL) | <b>Reduction</b>: gain of electrons (RIG)","Combustion = C+H compound + O₂ → CO₂ + H₂O + heat","<b>Conservation of Mass</b>: mass of reactants = mass of products (Lavoisier's Law)"],
+  mcqs:[
+    {q:"Photosynthesis is which type of reaction?",o:["Exothermic","Endothermic","Neutralisation","Displacement"],a:1,e:"Photosynthesis absorbs sunlight (energy) to convert CO₂+H₂O into glucose → ENDOTHERMIC. Combustion = exothermic."},
+    {q:"OIL RIG means?",o:["Oxygen In Liquid Reduces In Gas","Oxidation Is Loss, Reduction Is Gain","Only In Labs, Reactions Involve Gases","None of these"],a:1,e:"OIL RIG: Oxidation Is Loss (of electrons), Reduction Is Gain (of electrons). Key redox mnemonic."},
+    {q:"CaCO₃ → CaO + CO₂ is which reaction?",o:["Combination","Decomposition","Displacement","Double displacement"],a:1,e:"One compound breaks into two products → Decomposition reaction. CaCO₃ (limestone) → CaO (quicklime) + CO₂."},
+    {q:"Neutralisation of acid with base is?",o:["Endothermic","Exothermic","Neither","Depends on acid"],a:1,e:"Neutralisation = exothermic reaction. Acid + Base → Salt + Water + Heat. The mixing of H⁺ and OH⁻ releases energy."},
+    {q:"Lavoisier's Law of Conservation of Mass states?",o:["Energy is conserved","Mass of reactants = mass of products","Atoms are indestructible","Elements combine in fixed ratios"],a:1,e:"Lavoisier's Law: mass of reactants = mass of products in a chemical reaction. Matter is neither created nor destroyed."}
+  ]},
+ {id:"pyq-master",title:"⚡ PYQ Command Centre",xp:50,type:"gold",requires_pct:80,
+  golden:["<b>Brass = Cu+Zn | Bronze = Cu+Sn</b> — asked in EVERY exam. Distinguish by: Bronze has Tin.","<b>German Silver = Cu+Zn+Ni (NO SILVER)</b> — asked in SSC CGL 2022, CHSL 2023","<b>Avogadro's Number = 6.022×10²³</b> — must memorise exactly","<b>Neutron discovered by Chadwick (1932)</b> — most tested discoverer after Thomson","<b>Alloys are MIXTURES</b> — NOT compounds. Elements not chemically bonded.","<b>Tyndall Effect: Colloids YES, Solutions NO</b> — saltwater has no Tyndall","<b>Isotopes: same Z, diff A | Isobars: same A, diff Z</b> — 3–4 questions per year","<b>Sublimation examples: Naphthalene, Camphor, Dry Ice (CO₂), Iodine</b>","<b>Humidity ↑ → Evaporation ↓</b> (inverse relationship — trap question)","<b>Ice is LESS dense than water</b> — anomalous expansion (most solids more dense than liquid)","<b>Proust's Law = Law of Constant Proportions = Law of Definite Proportions</b> — 3 names","<b>Millikan = CHARGE of electron</b> (not mass, not discovery)"]},
+]},
+];
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function allNodes(){return CHAPTERS.flatMap(c=>c.nodes)}
+function getNode(id){return allNodes().find(n=>n.id===id)}
+function isVisited(id){return!!S.visited[id]}
+function trapNodes(){return allNodes().filter(n=>n.type==="trap"||n.type==="hidden")}
+function trapVisited(){return trapNodes().filter(n=>isVisited(n.id)).length}
+function visitedCount(){return allNodes().filter(n=>isVisited(n.id)).length}
+function totalNodes(){return allNodes().length}
+function isUnlocked(node){
+  if(node.type==="hidden"&&node.requires){return node.requires.every(r=>isVisited(r));}
+  if(node.type==="gold"){const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===node.id));if(ch){const p=chPct(ch);return p>=(node.requires_pct||80);}}
+  return true;
+}
+function chPct(ch){const vis=ch.nodes.filter(n=>isVisited(n.id)).length;return Math.round(vis/ch.nodes.length*100);}
+function updateHeader(){
+  const vis=visitedCount(),tot=totalNodes(),xp=S.xp,tv=trapVisited(),tn=trapNodes().length;
+  ["hXP","mhXP"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=xp;});
+  ["hVis","mhVis"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=vis+"/"+tot;});
+  ["hTrap","mhTrap"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=tv+"/"+tn;});
+  const tb=document.getElementById("trapBadge");if(tb)tb.textContent=tn-tv;
+}
+let _toastT;
+function showToast(xp,msg){
+  const t=document.getElementById("toast"),v=document.getElementById("toastVal"),m=document.getElementById("toastMsg");
+  if(!t)return;
+  v.textContent=xp?"+"+xp+" XP":"✓";m.textContent=msg;
+  t.classList.add("show");clearTimeout(_toastT);
+  _toastT=setTimeout(()=>t.classList.remove("show"),2800);
+}
+function buildSidebar(){
+  ["sideInner","mobSideInner"].forEach(sid=>{
+    const el=document.getElementById(sid);if(!el)return;el.innerHTML="";
+    CHAPTERS.forEach(ch=>{
+      const pct=chPct(ch),isOpen=S.chOpen===ch.id;
+      const div=document.createElement("div");
+      div.className="ch-group"+(isOpen?" expanded":"");
+      div.innerHTML=`<button class="ch-toggle${isOpen?" open":""}" data-ch="${ch.id}">
+        <span style="font-size:16px">${ch.icon}</span><span>${ch.title}</span>
+        <span class="cht-pct">${pct}%</span>
+      </button>
+      <div class="node-items">${ch.nodes.map(n=>{
+        const unl=isUnlocked(n),vis=isVisited(n.id),cur=S.curNode===n.id;
+        let ico=vis?"✓":"○",tag="";
+        if(!unl){ico="🔒";tag=`<span class="ni-tag hidden">LOCKED</span>`;}
+        else if(n.type==="gold"){ico="⚡";tag=`<span class="ni-tag gold">GOLD</span>`;}
+        else if(n.type==="trap"){ico=vis?"⚠️":"⚠";tag=`<span class="ni-tag trap">TRAP</span>`;}
+        else if(n.type==="hidden"){ico=vis?"🔓":"???";tag=`<span class="ni-tag hidden">SECRET</span>`;}
+        return `<button class="ni-btn${cur?" current":""}${vis?" done":""}${!unl?" locked":""}" data-nid="${n.id}" data-unl="${unl}">
+          <span style="width:15px;text-align:center;font-size:12px">${ico}</span>
+          <span>${!unl&&n.type==="hidden"?"??? Hidden Node":n.title}</span>${tag}
+        </button>`;
+      }).join("")}</div>`;
+      el.appendChild(div);
+      div.querySelector(".ch-toggle").onclick=()=>{
+        S.chOpen=isOpen?null:ch.id;save();buildSidebar();
+        if(!isOpen){const first=ch.nodes.find(n=>isUnlocked(n));if(first)openNode(first.id);}
+      };
+      div.querySelectorAll(".ni-btn[data-unl='true']").forEach(b=>b.onclick=()=>{openNode(b.dataset.nid);closeDrawer();});
+      div.querySelectorAll(".ni-btn[data-unl='false']").forEach(b=>b.onclick=()=>{openLocked(b.dataset.nid);closeDrawer();});
+    });
+  });
+}
+function openNode(id){
+  const node=getNode(id);if(!node||!isUnlocked(node))return openLocked(id);
+  const fresh=!isVisited(id);
+  S.curNode=id;S.chOpen=CHAPTERS.find(c=>c.nodes.some(n=>n.id===id))?.id||S.chOpen;
+  if(fresh){S.visited[id]=Date.now();S.xp+=node.xp;
+    const msgs={trap:"⚠ Exam Trap Revealed!",hidden:"🔓 Secret Node Unlocked!",gold:"⚡ Gold Node Unlocked!"};
+    showToast(node.xp,msgs[node.type]||"Node Visited");}
+  save();buildSidebar();updateHeader();renderNode(node);
+  document.getElementById("mainArea").scrollTop=0;
+  // Start tracking session
+  if(node.mcqs&&node.mcqs.length){startNodeSession(id,node.mcqs.length);}
+  else{startNodeSession(id,0);}
+}
+function openLocked(id){
+  const node=getNode(id);if(!node)return;
+  S.curNode=id;save();buildSidebar();
+  const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===id));
+  let reqs="";
+  if(node.type==="hidden"&&node.requires)reqs=node.requires.map(rid=>{const rn=getNode(rid);return`<div class="lreq${isVisited(rid)?" met":""}">Visit: ${rn?.title||rid}</div>`;}).join("");
+  else if(node.type==="gold"){const pct=ch?chPct(ch):0;reqs=`<div class="lreq${pct>=(node.requires_pct||80)?" met":""}">Complete ${node.requires_pct||80}% of chapter (${pct}% done)</div>`;}
+  document.getElementById("viewWrap").innerHTML=`<div class="locked-view"><div class="lv-ico">🔒</div><h2>Locked</h2><p>${node.type==="hidden"?"Complete required nodes to reveal this secret.":"Complete chapter to unlock the Gold Node."}</p><div class="lock-req-list">${reqs}</div></div>`;
+}
+function buildTable(t){return`<div class="tbl-wrap"><table class="dt"><thead><tr>${t.h.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${t.r.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;}
+function buildHeatmap(items){return`<div class="heatmap">${items.map(i=>`<div class="hmap-item ${i.cls}">${i.label}</div>`).join("")}</div>`;}
+function renderNode(node){
+  const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===node.id));
+  const bm={regular:["◇ LEARN","regular"],trap:["⚠ EXAM TRAP","trap"],hidden:["🔓 SECRET","hidden"],gold:["⚡ GOLD","gold"]};
+  const [bl,bc]=bm[node.type]||["◇","regular"];
+  let content="";
+  if(node.type==="gold"){
+    content=`<div class="golden-block"><div class="gb-h">⚡ GOLD NODE — HIGHEST YIELD EXAM FACTS</div><ul>${(node.golden||[]).map(g=>`<li>${g}</li>`).join("")}</ul></div>`;
+  } else {
+    if(node.diag&&DIAGRAMS[node.diag]){content+=`<div class="diag-box"><div class="diag-head">📊 VISUAL DIAGRAM</div><div class="diag-body">${DIAGRAMS[node.diag]}</div></div>`;}
+    if(node.facts){content+=`<div class="fact-block"><div class="fb-head">◇ KEY FACTS</div><div class="fb-body"><ul class="facts">${node.facts.map(f=>`<li>${f}</li>`).join("")}</ul></div></div>`;}
+    if(node.table){content+=`<div class="section-lbl">◇ COMPARISON TABLE</div>${buildTable(node.table)}`;}
+    if(node.traps){content+=`<div class="trap-block"><div class="tb-h">⚠ EXAM TRAPS — HIGH YIELD</div><ul>${node.traps.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;}
+    if(node.insight){content+=node.insight.map(i=>`<div class="insight-block"><div class="ib-h">💎 INSIGHT — ${i.h}</div><p>${i.body}</p></div>`).join("");}
+  }
+  let mcqContent="";
+  if(node.mcqs?.length){
+    const best=S.mcq[node.id]||0;
+    mcqContent=`<div class="mcq-list">
+      ${best?`<div style="font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:8px">Best score: <span style="color:var(--green)">${best}%</span></div>`:""}
+      ${node.mcqs.map((q,qi)=>`<div class="mcq-card" data-qi="${qi}" data-nid="${node.id}">
+        <div class="mcq-q"><span class="mcq-qn">Q${qi+1}</span>${q.q}</div>
+        <div class="mcq-opts">${q.o.map((op,oi)=>`<button class="mopt" data-oi="${oi}">${String.fromCharCode(65+oi)}. ${op}</button>`).join("")}</div>
+        <div class="mcq-fb" id="fb_${node.id}_${qi}"></div>
+      </div>`).join("")}
+      <div class="mcq-score" id="scr_${node.id}">Answer all questions to see your score</div>
+    </div>`;
+  } else {
+    mcqContent=`<div style="text-align:center;padding:40px;color:var(--ink3);font-family:var(--mono);font-size:13px">No MCQs for this node</div>`;
+  }
+  const idx=ch?.nodes.findIndex(n=>n.id===node.id)??-1;
+  const prev=idx>0?ch.nodes[idx-1]:null;
+  const next=idx<(ch?.nodes.length-1)?ch.nodes[idx+1]:null;
+  const nav=`<div class="node-nav">
+    ${prev?`<button class="nnav" onclick="openNode('${prev.id}')">‹ ${prev.title.substring(0,22)}</button>`:""}
+    ${next&&isUnlocked(next)?`<button class="nnav primary" onclick="openNode('${next.id}')">Next ›</button>`:""}
+  </div>`;
+  document.getElementById("viewWrap").innerHTML=`<div class="node-view">
+    <div class="node-hd">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink3);margin-bottom:6px">${ch?.title||""} › ${node.title}</div>
+      <div class="node-badge ${bc}">${bl}</div>
+      <h1 class="nt">${node.title}</h1>
+      <div class="xp-pill">✦ +${node.xp} XP${isVisited(node.id)?" earned":""}</div>
+    </div>
+    <div class="tabs">
+      <button class="tab on" data-t="learn">📖 Learn</button>
+      <button class="tab" data-t="test">🎯 Test (${node.mcqs?.length||0}Q)</button>
+    </div>
+    <div id="pane-learn">${content}${nav}</div>
+    <div id="pane-test" style="display:none">${mcqContent}${nav}</div>
+  </div>`;
+  document.querySelectorAll(".tab").forEach(btn=>{
+    btn.onclick=()=>{
+      const t=btn.dataset.t;
+      document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
+      ["learn","test"].forEach(p=>{const e=document.getElementById("pane-"+p);if(e)e.style.display=p===t?"block":"none";});
+    };
+  });
+  bindMCQ(node);
+}
+
+function bindMCQ(node){
+  if(!node.mcqs)return;
+  let correct=0,answered=0,total=node.mcqs.length;
+  node.mcqs.forEach((q,qi)=>{
+    const card=document.querySelector(`.mcq-card[data-qi="${qi}"][data-nid="${node.id}"]`);if(!card)return;
+    card.querySelectorAll(".mopt").forEach(btn=>{
+      btn.onclick=()=>{
+        if(card.dataset.done)return; // lock on first attempt
+        card.dataset.done=1;
+        const oi=+btn.dataset.oi;
+        const fb=document.getElementById(`fb_${node.id}_${qi}`);
+        const isCorrect=(oi===q.a);
+        // Lock all options and highlight correct
+        card.querySelectorAll(".mopt").forEach((b,i)=>{
+          b.disabled=true;
+          if(i===q.a)b.classList.add("show-correct");
+        });
+        if(isCorrect){
+          btn.classList.add("correct");
+          correct++;
+          fb.className="mcq-fb show right";
+          fb.innerHTML="✓ "+q.e;
+        } else {
+          btn.classList.add("wrong");
+          fb.className="mcq-fb show wrong";
+          fb.innerHTML="✗ Wrong. "+q.e;
+        }
+        answered++;
+        // Send per-question tracking
+        trackAnswer(node.id,qi,isCorrect);
+        if(answered===total){
+          const pct=Math.round(correct/total*100);
+          const scr=document.getElementById(`scr_${node.id}`);
+          if(scr){
+            let grade=pct>=80?"🎯 Excellent":pct>=60?"✓ Good":"⚠ Revise";
+            scr.innerHTML=`Score: <span>${correct}/${total} = ${pct}%</span> ${grade}`;
+          }
+          if(pct>(S.mcq[node.id]||0)){S.mcq[node.id]=pct;save();}
+          if(pct>=80)showToast(0,"MCQ Cleared 🎯");
+          else if(pct>=60)showToast(0,"Good attempt ✓");
+          // Show completion banner
+          const testPane=document.getElementById("pane-test");
+          if(testPane){
+            const banner=document.createElement("div");
+            banner.className="node-complete-banner";
+            banner.innerHTML=`<div class="ncb-icon">${pct>=80?"🏆":pct>=60?"✅":"📖"}</div>
+              <div class="ncb-text">
+                <div class="ncb-title">NODE COMPLETE — ${pct}%</div>
+                <div class="ncb-sub">${correct}/${total} correct on first attempt${pct<60?" — revisit Learn tab":""}</div>
+              </div>`;
+            testPane.appendChild(banner);
+          }
+        }
+      };
+    });
+  });
+}
+
+function showDash(){
+  S.curNode=null;save();buildSidebar();
+  document.querySelectorAll(".mob-tab").forEach(t=>t.classList.toggle("active",t.id==="mbt-dash"));
+  const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
+  const missed=trapNodes().filter(n=>!isVisited(n.id));
+  document.getElementById("viewWrap").innerHTML=`<div class="dash">
+    <div class="dash-t">Chem Map A</div>
+    <div class="dash-s">MATTER & ATOM · SSC / RRB / TNPSC / PUDUCHERRY LDC</div>
+    <div class="dash-grid">
+      <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
+      <div class="dc g"><div class="dv">${vis}/${tot}</div><div class="dl">Nodes</div></div>
+      <div class="dc r"><div class="dv">${trapVisited()}/${trapNodes().length}</div><div class="dl">Traps</div></div>
+      <div class="dc b"><div class="dv">${pct}%</div><div class="dl">Done</div></div>
+    </div>
+    <div class="ch-prog">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--ink3);margin-bottom:12px">CHAPTER PROGRESS</div>
+      ${CHAPTERS.map(ch=>{const p=chPct(ch);return`<div class="cpr"><span class="cpr-n">${ch.icon} ${ch.title}</span><div class="cpr-bar"><div class="cpr-fill" style="width:${p}%"></div></div><span class="cpr-pct">${p}%</span></div>`;}).join("")}
+    </div>
+    ${missed.length?`<div class="mentor-box"><h3>⚠ EXAM TRAPS NOT YET VISITED</h3><ul>${missed.map(n=>`<li>${n.title} — ${n.xp} XP waiting</li>`).join("")}</ul></div>`:""}
+    <button class="start-btn" onclick="startLearning()">${visitedCount()===0?"Start Learning →":"Continue →"}</button>
+  </div>`;
+}
+function startLearning(){
+  const first=allNodes().find(n=>isUnlocked(n)&&!isVisited(n.id))||allNodes()[0];
+  if(first){S.chOpen=CHAPTERS.find(c=>c.nodes.some(n=>n.id===first.id))?.id;openNode(first.id);}
+}
+function goTraps(){
+  const t=trapNodes();if(!t.length)return;
+  const next=t.find(n=>!isVisited(n.id))||t[0];
+  openNode(next.id);
+}
+function openDrawer(){
+  document.getElementById("mobDrawer").classList.add("open");
+  document.getElementById("mobOverlay").classList.add("show");
+  // Prevent body scroll-through on iOS when drawer is open
+  document.getElementById("mainArea").style.overflow="hidden";
+}
+function closeDrawer(){
+  document.getElementById("mobDrawer").classList.remove("open");
+  document.getElementById("mobOverlay").classList.remove("show");
+  document.getElementById("mainArea").style.overflow="";
+}
+
+// ── Swipe-to-close drawer (iOS/Android gesture support) ───────────────────────
+(function(){
+  let startX=0,startY=0,dragging=false;
+  const drawer=document.getElementById("mobDrawer");
+  if(!drawer)return;
+  drawer.addEventListener("touchstart",e=>{
+    startX=e.touches[0].clientX;startY=e.touches[0].clientY;dragging=true;
+  },{passive:true});
+  drawer.addEventListener("touchmove",e=>{
+    if(!dragging)return;
+    const dx=e.touches[0].clientX-startX;
+    const dy=Math.abs(e.touches[0].clientY-startY);
+    if(dx<-30&&dy<50){closeDrawer();dragging=false;}
+  },{passive:true});
+  drawer.addEventListener("touchend",()=>{dragging=false;},{passive:true});
+})();
+
+if(!S.chOpen)S.chOpen=CHAPTERS[0].id;
+buildSidebar();updateHeader();showDash();
+</script></body></html>

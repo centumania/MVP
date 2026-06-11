@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
-import { LogoMark } from '@/src/components/ui/Logo'
+import { LogoMark, LogoFull } from '@/src/components/ui/Logo'
 
 // ── Icons ──────────────────────────────────────────────────────────
 function IcoDashboard({ a }: { a: boolean }) {
@@ -91,19 +91,10 @@ export function AppLayout({ children, userName, batchName }: {
 
         {/* Brand */}
         <div className="px-5 py-5" style={{ borderBottom: '1px solid #27342b' }}>
-          <div className="flex items-center gap-3">
-            <div className="shrink-0" style={{ filter: 'drop-shadow(0 0 8px rgba(111,207,143,0.4))' }}>
-              <LogoMark size={26} />
-            </div>
-            <div>
-              <p className="text-sm font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces, serif)' }}>
-                CentuMania
-              </p>
-              <p className="text-[10px] text-text-muted mt-0.5 tracking-wide font-mono">
-                {batchName ?? 'Winning is a Habit'}
-              </p>
-            </div>
-          </div>
+          <LogoFull size={26} glow />
+          <p className="text-[10px] text-text-muted mt-2 tracking-wide font-mono pl-0.5">
+            {batchName ?? 'Winning is a Habit'}
+          </p>
         </div>
 
         {/* Navigation */}
@@ -120,13 +111,13 @@ export function AppLayout({ children, userName, batchName }: {
                     ? 'text-primary font-medium'
                     : 'text-text-muted hover:text-text-secondary',
                 ].join(' ')}
-                style={active ? { background: 'rgba(111,207,143,0.08)' } : {}}
+                style={active ? { background: 'rgba(74,222,128,0.08)' } : {}}
                 onMouseEnter={e => { if (!active) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)' }}
                 onMouseLeave={e => { if (!active) (e.currentTarget as HTMLElement).style.background = '' }}
               >
                 {active && (
                   <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
-                    style={{ background: '#6fcf8f', boxShadow: '0 0 8px rgba(111,207,143,0.8)' }} />
+                    style={{ background: '#4ADE80', boxShadow: '0 0 8px rgba(74,222,128,0.8)' }} />
                 )}
                 <Icon a={active} />
                 <span className="tracking-tight">{label}</span>
@@ -140,7 +131,7 @@ export function AppLayout({ children, userName, batchName }: {
           {userName && (
             <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
               <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
-                style={{ background: 'linear-gradient(135deg,#6fcf8f,#3fae6a)', color: '#06140c', boxShadow: '0 0 10px rgba(111,207,143,0.30)' }}>
+                style={{ background: 'linear-gradient(135deg,#4ADE80,#22C55E)', color: '#06140c', boxShadow: '0 0 10px rgba(74,222,128,0.30)' }}>
                 {initials}
               </div>
               <p className="text-xs font-medium text-text-secondary truncate">{userName}</p>
@@ -171,46 +162,41 @@ export function AppLayout({ children, userName, batchName }: {
           <header className="md:hidden flex items-center justify-between px-4 h-14 sticky top-0 z-10"
             style={{ background: 'rgba(14,20,16,0.95)', backdropFilter: 'blur(6px)', borderBottom: '1px solid #27342b' }}>
             <div className="flex items-center gap-2.5">
-              <div style={{ filter: 'drop-shadow(0 0 6px rgba(111,207,143,0.5))' }}>
-                <LogoMark size={22} />
-              </div>
-              <div>
-                <span className="text-sm font-bold text-text tracking-tight block" style={{ fontFamily: 'var(--font-fraunces, serif)' }}>
-                  CentuMania
-                </span>
-                <span className="text-[9px] text-text-muted font-mono tracking-wide leading-none">
-                  Winning is a Habit
-                </span>
-              </div>
+              <LogoFull size={22} glow />
             </div>
             {userName && (
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ background: 'linear-gradient(135deg,#6fcf8f,#3fae6a)', color: '#06140c', boxShadow: '0 0 10px rgba(111,207,143,0.30)' }}>
+                style={{ background: 'linear-gradient(135deg,#4ADE80,#22C55E)', color: '#06140c', boxShadow: '0 0 10px rgba(74,222,128,0.30)' }}>
                 {initials}
               </div>
             )}
           </header>
 
-          {/* Page Content */}
-          <main id="main-content" className="flex-1 pb-20 md:pb-0">
+          {/* Page Content — extra bottom clearance for mobile nav + safe area */}
+          <main id="main-content" className="flex-1">
+            <style>{`
+              #main-content { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+              @media(min-width:768px){ #main-content { padding-bottom: 0; } }
+            `}</style>
             {children}
           </main>
         </div>
       </div>
 
       {/* ── Mobile Bottom Nav ────────────────────────────────────── */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 z-20 flex"
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-20 flex mobile-nav-safe"
         aria-label="Mobile navigation"
         style={{ background: 'rgba(14,20,16,0.97)', backdropFilter: 'blur(20px)', borderTop: '1px solid #27342b' }}>
-        {NAV.slice(0, 4).map(({ href, label, Icon }) => {
+        {NAV.map(({ href, label, Icon }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
             <Link
               key={href}
               href={href}
+              aria-current={active ? 'page' : undefined}
               className={[
-                'flex-1 flex flex-col items-center justify-center py-3 gap-1 transition-colors',
-                active ? 'text-primary' : 'text-text-muted hover:text-text-secondary',
+                'flex-1 flex flex-col items-center justify-center py-3 gap-1 transition-colors touch-target',
+                active ? 'text-primary' : 'text-text-muted',
               ].join(' ')}
             >
               <Icon a={active} />

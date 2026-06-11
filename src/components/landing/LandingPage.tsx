@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { LogoFull } from '@/src/components/ui/Logo'
 
 // ── Design tokens ─────────────────────────────────────────────────
 const C = {
@@ -21,22 +22,6 @@ const C = {
 }
 const D: React.CSSProperties = { fontFamily: "var(--font-fraunces, 'Georgia', serif)" }
 const SANS: React.CSSProperties = { fontFamily: "var(--font-hanken, 'Helvetica Neue', sans-serif)" }
-
-// ── Logo: "Centu" white · "Mania" green ───────────────────────────
-function Logo({ size = 36 }: { size?: number }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: size * 0.33 }}>
-      <div style={{ position: 'relative', width: size, height: size, flexShrink: 0 }}>
-        <div style={{ position: 'absolute', inset: 0, borderRadius: '50%', border: `${Math.max(1.5, size * 0.045)}px solid rgba(74,222,128,0.22)` }} />
-        <div style={{ position: 'absolute', inset: '18%', borderRadius: '50%', border: `${Math.max(1.5, size * 0.045)}px solid rgba(74,222,128,0.50)` }} />
-        <div style={{ position: 'absolute', inset: '36%', borderRadius: '50%', backgroundColor: C.green, boxShadow: `0 0 ${size * 0.4}px rgba(74,222,128,0.55)` }} />
-      </div>
-      <span style={{ ...D, fontWeight: 900, fontSize: size * 0.52, letterSpacing: '-0.025em', lineHeight: 1 }}>
-        <span style={{ color: C.text }}>Centu</span><span style={{ color: C.green }}>Mania</span>
-      </span>
-    </div>
-  )
-}
 
 // ── Landing Page ──────────────────────────────────────────────────
 export default function LandingPage() {
@@ -81,7 +66,7 @@ export default function LandingPage() {
       {/* ── NAV ──────────────────────────────────────────────────── */}
       <nav style={{ position:'sticky', top:0, zIndex:50, backgroundColor:'rgba(7,12,7,0.94)', backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)', borderBottom:`1px solid ${C.border}` }}>
         <div style={{ maxWidth:1100, margin:'0 auto', padding:'0 24px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-          <Logo size={30} />
+          <LogoFull size={30} />
           <div style={{ display:'flex', gap:8, alignItems:'center' }}>
             <Link href="/auth/login" style={{ color:C.muted, fontSize:14, padding:'8px 16px', textDecoration:'none' }}>Sign In</Link>
             <Link href="/auth/register" className="btn-p" style={{ backgroundColor:C.green, color:'#040C04', fontWeight:700, fontSize:14, padding:'9px 22px', borderRadius:8, textDecoration:'none' }}>
@@ -97,7 +82,7 @@ export default function LandingPage() {
         <div style={{ position:'absolute', inset:0, backgroundImage:`linear-gradient(rgba(74,222,128,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(74,222,128,0.025) 1px,transparent 1px)`, backgroundSize:'52px 52px', pointerEvents:'none' }} />
         <div style={{ maxWidth:760, margin:'0 auto', position:'relative', zIndex:1 }}>
           <div className="anim-logo anim-float" style={{ display:'flex', justifyContent:'center', marginBottom:44 }}>
-            <Logo size={80} />
+            <LogoFull size={80} glow />
           </div>
           <p className="anim-label" style={{ fontSize:13, letterSpacing:'0.16em', color:C.green, textTransform:'uppercase', marginBottom:20, fontWeight:600 }}>
             Welcome to CentuMania
@@ -458,7 +443,7 @@ export default function LandingPage() {
         <div style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:700, height:350, background:'radial-gradient(ellipse, rgba(74,222,128,0.09) 0%, transparent 68%)', pointerEvents:'none' }} />
         <div style={{ maxWidth:600, margin:'0 auto', position:'relative', zIndex:1 }}>
           <div style={{ display:'flex', justifyContent:'center', marginBottom:40 }}>
-            <Logo size={56} />
+            <LogoFull size={56} glow />
           </div>
           <p style={{ color:C.muted, fontSize:13, letterSpacing:'0.12em', textTransform:'uppercase', marginBottom:12, fontWeight:600 }}>
             LDC Exam · June 28, 2026
@@ -503,9 +488,7 @@ export default function LandingPage() {
             <circle cx="17.2" cy="6.8" r="1.3" fill="url(#ig)"/>
           </svg>
           <div style={{ textAlign:'left' }}>
-            <p style={{ ...D, fontWeight:900, fontSize:20, letterSpacing:'-0.025em', lineHeight:1, margin:0 }}>
-              <span style={{ color:C.text }}>Centu</span><span style={{ color:C.green }}>Mania</span>
-            </p>
+            <LogoFull size={20} />
             <p style={{ color:C.muted, fontSize:13, marginTop:3 }}>@centumania_official</p>
           </div>
           <span style={{ color:'#DD2A7B', fontSize:20, marginLeft:4 }}>→</span>
@@ -515,7 +498,7 @@ export default function LandingPage() {
       {/* ── FOOTER ───────────────────────────────────────────────── */}
       <footer style={{ borderTop:'1px solid rgba(255,255,255,0.05)', padding:'36px 24px' }}>
         <div style={{ maxWidth:1100, margin:'0 auto', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:16 }}>
-          <Logo size={26} />
+          <LogoFull size={26} />
           <p style={{ color:C.muted, fontSize:13 }}>centumania.co.in · Puducherry · LDC/UDC 2026</p>
           <div style={{ display:'flex', gap:24 }}>
             <Link href="/auth/login"    style={{ color:C.muted, fontSize:13, textDecoration:'none' }}>Sign In</Link>

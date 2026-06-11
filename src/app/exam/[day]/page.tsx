@@ -19,7 +19,7 @@ const OPTIONS: AnswerOption[] = ['A', 'B', 'C', 'D']
 
 // score → color mapping (bio-map palette)
 function scoreColor(pct: number) {
-  if (pct >= 80) return '#6fcf8f'
+  if (pct >= 80) return '#4ADE80'
   if (pct >= 60) return '#5ec8c0'
   if (pct >= 40) return '#e7b14c'
   return '#e8736b'
@@ -117,7 +117,7 @@ export default function ExamPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#0e1410' }}>
         <div className="w-8 h-8 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#6fcf8f', boxShadow: '0 0 12px rgba(111,207,143,0.3)' }} />
+          style={{ borderTopColor: '#4ADE80', boxShadow: '0 0 12px rgba(74,222,128,0.3)' }} />
         <p className="text-sm text-text-muted">
           {phase === 'submitting' ? 'Submitting your answers…' : 'Loading exam…'}
         </p>
@@ -221,9 +221,9 @@ export default function ExamPage() {
         </div>
 
         {/* Progress bar */}
-        <div className="h-0.5" style={{ background: 'rgba(111,207,143,0.08)' }}>
+        <div className="h-0.5" style={{ background: 'rgba(74,222,128,0.08)' }}>
           <div className="h-full transition-all duration-300"
-            style={{ width: `${(answered / total) * 100}%`, background: 'linear-gradient(90deg,#6fcf8f,#3fae6a)', boxShadow: '0 0 6px rgba(111,207,143,0.5)' }} />
+            style={{ width: `${(answered / total) * 100}%`, background: 'linear-gradient(90deg,#4ADE80,#22C55E)', boxShadow: '0 0 6px rgba(74,222,128,0.5)' }} />
         </div>
       </header>
 
@@ -244,8 +244,8 @@ export default function ExamPage() {
                 className="rounded-2xl p-5 transition-all duration-200"
                 style={{
                   background: '#16201a',
-                  border: `1px solid ${isActive ? 'rgba(111,207,143,0.25)' : '#27342b'}`,
-                  boxShadow: isActive ? '0 0 20px rgba(111,207,143,0.06)' : undefined,
+                  border: `1px solid ${isActive ? 'rgba(74,222,128,0.25)' : '#27342b'}`,
+                  boxShadow: isActive ? '0 0 20px rgba(74,222,128,0.06)' : undefined,
                 }}
                 onClick={() => setActiveQ(i)}
               >
@@ -285,10 +285,10 @@ export default function ExamPage() {
                         onClick={e => { e.stopPropagation(); setAnswers(p => ({ ...p, [q.id]: opt })); setActiveQ(i) }}
                         className="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-left transition-all duration-150 text-sm"
                         style={isSelected ? {
-                          background: 'rgba(111,207,143,0.10)',
-                          border: '1px solid rgba(111,207,143,0.35)',
-                          boxShadow: '0 0 12px rgba(111,207,143,0.10)',
-                          color: '#6fcf8f',
+                          background: 'rgba(74,222,128,0.10)',
+                          border: '1px solid rgba(74,222,128,0.35)',
+                          boxShadow: '0 0 12px rgba(74,222,128,0.10)',
+                          color: '#4ADE80',
                         } : {
                           background: 'rgba(255,255,255,0.02)',
                           border: '1px solid #27342b',
@@ -297,7 +297,7 @@ export default function ExamPage() {
                       >
                         <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-all font-mono"
                           style={isSelected ? {
-                            background: '#3fae6a',
+                            background: '#22C55E',
                             color: '#06140c',
                             boxShadow: '0 0 8px rgba(63,174,106,0.5)',
                           } : {
@@ -358,10 +358,10 @@ export default function ExamPage() {
                       color: '#e7b14c',
                       outline: isActive ? '2px solid rgba(231,177,76,0.5)' : undefined,
                     } : isAnswered ? {
-                      background: 'linear-gradient(135deg,#6fcf8f,#3fae6a)',
+                      background: 'linear-gradient(135deg,#4ADE80,#22C55E)',
                       color: '#06140c',
-                      boxShadow: isActive ? '0 0 8px rgba(111,207,143,0.5)' : undefined,
-                      outline: isActive ? '2px solid rgba(111,207,143,0.5)' : undefined,
+                      boxShadow: isActive ? '0 0 8px rgba(74,222,128,0.5)' : undefined,
+                      outline: isActive ? '2px solid rgba(74,222,128,0.5)' : undefined,
                     } : {
                       background: '#1b271f',
                       border: '1px solid #27342b',
@@ -375,7 +375,7 @@ export default function ExamPage() {
             </div>
             <div className="mt-4 space-y-1.5 pt-3" style={{ borderTop: '1px solid #27342b' }}>
               {[
-                { bg: 'linear-gradient(135deg,#6fcf8f,#3fae6a)',  label: 'Answered', text: '#06140c' },
+                { bg: 'linear-gradient(135deg,#4ADE80,#22C55E)',  label: 'Answered', text: '#06140c' },
                 { bg: 'rgba(231,177,76,0.12)', label: 'Flagged',  text: '#e7b14c',  border: 'rgba(231,177,76,0.25)' },
                 { bg: '#1b271f',               label: 'Skipped',  text: '#3a4a3d',  border: '#27342b' },
               ].map(({ bg, label, border }) => (
@@ -398,7 +398,7 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
   const { score, total, percentage, answerKey } = result
   const router = useRouter()
 
-  const col   = percentage >= 80 ? '#6fcf8f' : percentage >= 60 ? '#5ec8c0' : percentage >= 40 ? '#e7b14c' : '#e8736b'
+  const col   = percentage >= 80 ? '#4ADE80' : percentage >= 60 ? '#5ec8c0' : percentage >= 40 ? '#e7b14c' : '#e8736b'
   const label = percentage >= 80 ? 'Excellent' : percentage >= 60 ? 'Good' : percentage >= 40 ? 'Average' : 'Keep going'
 
   return (
@@ -428,13 +428,13 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
               onClick={() => router.push(`/mentor/${examId}`)}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
               style={{
-                background: 'rgba(111,207,143,0.08)',
-                border: '1px solid rgba(111,207,143,0.25)',
-                color: '#6fcf8f',
-                boxShadow: '0 0 16px rgba(111,207,143,0.08)',
+                background: 'rgba(74,222,128,0.08)',
+                border: '1px solid rgba(74,222,128,0.25)',
+                color: '#4ADE80',
+                boxShadow: '0 0 16px rgba(74,222,128,0.08)',
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(111,207,143,0.14)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(111,207,143,0.08)' }}>
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(74,222,128,0.14)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(74,222,128,0.08)' }}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
               </svg>
@@ -468,13 +468,13 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
             <div key={item.questionId} className="rounded-2xl p-4 transition-all"
               style={{
                 background: '#16201a',
-                border: `1px solid ${item.isCorrect ? 'rgba(111,207,143,0.15)' : 'rgba(232,115,107,0.15)'}`,
+                border: `1px solid ${item.isCorrect ? 'rgba(74,222,128,0.15)' : 'rgba(232,115,107,0.15)'}`,
               }}>
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest font-mono">Q{i + 1}</span>
                 <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md font-mono"
                   style={item.isCorrect
-                    ? { background: 'rgba(111,207,143,0.10)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }
+                    ? { background: 'rgba(74,222,128,0.10)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.20)' }
                     : { background: 'rgba(232,115,107,0.10)', color: '#e8736b', border: '1px solid rgba(232,115,107,0.20)' }
                   }>
                   {item.isCorrect ? 'Correct' : 'Incorrect'}
