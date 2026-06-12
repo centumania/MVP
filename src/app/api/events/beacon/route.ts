@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       session_id:      typeof session_id === 'string' ? session_id : null,
       event_name,
       event_timestamp: ts.toISOString(),
-      metadata:        metadata && typeof metadata === 'object' ? metadata as Record<string, unknown> : null,
+      metadata:        metadata && typeof metadata === 'object' && !Array.isArray(metadata) ? metadata as Record<string, unknown> : null,
     })
 
     return NextResponse.json({ ok: true })
