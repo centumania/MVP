@@ -209,6 +209,20 @@ export type CentumIndexLogRow = {
 }
 
 // ---------------------------------------------------------------------------
+// Analytics Events
+// ---------------------------------------------------------------------------
+
+export type AnalyticsEvent = {
+  id:              string
+  user_id:         string
+  session_id:      string | null
+  event_name:      string
+  event_timestamp: string
+  metadata:        Record<string, unknown> | null
+  created_at:      string
+}
+
+// ---------------------------------------------------------------------------
 // AI Mentor Report
 // ---------------------------------------------------------------------------
 
@@ -348,6 +362,12 @@ export type Database = {
         Row:           CentumIndexLogRow
         Insert:        Omit<CentumIndexLogRow, 'id'>
         Update:        Partial<Omit<CentumIndexLogRow, 'id'>>
+        Relationships: []
+      }
+      analytics_events: {
+        Row:           AnalyticsEvent
+        Insert:        Omit<AnalyticsEvent, 'id' | 'created_at'>
+        Update:        Partial<Omit<AnalyticsEvent, 'id' | 'created_at'>>
         Relationships: []
       }
     }
