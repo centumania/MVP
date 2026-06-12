@@ -21,13 +21,13 @@ export function getSessionId(): string {
   try {
     const stored = sessionStorage.getItem('cm:analytics_session')
     if (stored) { _sessionId = stored; return _sessionId }
-    const id = crypto.randomUUID()
+    const id = crypto.randomUUID?.() ?? Math.random().toString(36).slice(2)
     sessionStorage.setItem('cm:analytics_session', id)
     _sessionId = id
   } catch {
     if (!_sessionId) _sessionId = Math.random().toString(36).slice(2)
   }
-  return _sessionId!
+  return _sessionId ?? Math.random().toString(36).slice(2)
 }
 
 let _cachedToken: string | null = null
@@ -76,7 +76,10 @@ export function trackBeacon(
       _token:          _cachedToken,
     })
 
-    navigator.sendBeacon('/api/events/beacon', payload)
+    // sendBeacon can't set headers — send as Blob to control Content-Type.
+    // _token in body is intentional: sendBeacon cannot set Authorization header.
+    // The beacon endpoint validates _token then discards it before inserting.
+    navigator.sendBeacon('/api/events/beacon', new Blob([payload], { type: 'application/json' }))
   } catch {
     // Never throws
   }
