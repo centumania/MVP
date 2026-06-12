@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS public.analytics_events (
   user_id         UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   session_id      TEXT,
   event_name      TEXT        NOT NULL,
-  event_timestamp TIMESTAMPTZ NOT NULL,
+  event_timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   metadata        JSONB,
   created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
@@ -56,6 +56,10 @@ CREATE INDEX IF NOT EXISTS idx_analytics_events_metadata_gin
 
 ALTER TABLE public.analytics_events ENABLE ROW LEVEL SECURITY;
 
+-- Note: server-side inserts use getSupabaseAdminClient() (service role),
+-- which bypasses RLS. The INSERT policy below guards direct client inserts only.
+-- Auth is enforced at the API layer (/api/events route) before any insert.
+
 -- Students INSERT their own events only
 CREATE POLICY "analytics_events: student inserts own"
   ON public.analytics_events FOR INSERT TO authenticated
@@ -70,3 +74,8 @@ CREATE POLICY "analytics_events: admin reads all"
 CREATE POLICY "analytics_events: admin deletes"
   ON public.analytics_events FOR DELETE TO authenticated
   USING (public.requesting_user_is_admin());
+
+-- Append-only: nobody may update events after insertion
+CREATE POLICY "analytics_events: no updates"
+  ON public.analytics_events FOR UPDATE TO authenticated
+  USING (false);
