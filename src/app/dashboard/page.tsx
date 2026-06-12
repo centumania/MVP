@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { setCachedToken, trackEvent } from '@/src/lib/analytics/track'
 import { AppLayout } from '@/src/components/layout/AppLayout'
 import { Card, CardLabel } from '@/src/components/ui/Card'
 import { Badge } from '@/src/components/ui/Badge'
@@ -83,6 +84,8 @@ export default function DashboardPage() {
     getSupabaseBrowserClient().auth.getSession().then(({ data: { session } }) => {
       if (!session) { router.replace('/auth/login'); return }
       setName(session.user.user_metadata?.name ?? session.user.email?.split('@')[0] ?? 'Student')
+      setCachedToken(session.access_token)
+      trackEvent('login', {})
       fetchData(session.access_token)
     })
     // Only poll the window endpoint every 30s — avoid full dashboard refetch on each tick
