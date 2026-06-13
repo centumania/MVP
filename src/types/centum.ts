@@ -2,10 +2,10 @@
  * CentuMania — Centum Index Types
  *
  * Color palette matches the existing codebase design tokens:
- *   #4ADE80 = primary green (top tier)
- *   #5ec8c0 = teal (second tier)
- *   #e7b14c = amber/warning (third tier)
- *   #e8736b = error/red (below threshold)
+ *   #0B3D91 = primary green (top tier)
+ *   #0B3D91 = teal (second tier)
+ *   #F59E0B = amber/warning (third tier)
+ *   #EF4444 = error/red (below threshold)
  */
 
 export interface CentumIndexLog {
@@ -44,15 +44,15 @@ export function getRefundTier(score: number): {
   label: string
   color: string
 } {
-  if (score >= 95) return { tier: 'gold',   label: '50% Refund', color: '#4ADE80' }
-  if (score >= 85) return { tier: 'silver', label: '35% Refund', color: '#5ec8c0' }
-  if (score >= 75) return { tier: 'bronze', label: '25% Refund', color: '#e7b14c' }
-  return             { tier: 'none',   label: 'No Refund',  color: '#e8736b' }
+  if (score >= 95) return { tier: 'gold',   label: '50% Refund', color: '#0B3D91' }
+  if (score >= 85) return { tier: 'silver', label: '35% Refund', color: '#0B3D91' }
+  if (score >= 75) return { tier: 'bronze', label: '25% Refund', color: '#F59E0B' }
+  return             { tier: 'none',   label: 'No Refund',  color: '#EF4444' }
 }
 
 export function getCentumColor(score: number): string {
-  if (score >= 95) return '#4ADE80'
-  if (score >= 85) return '#5ec8c0'
-  if (score >= 75) return '#e7b14c'
-  return '#e8736b'
+  if (score >= 95) return '#0B3D91'
+  if (score >= 85) return '#0B3D91'
+  if (score >= 75) return '#F59E0B'
+  return '#EF4444'
 }

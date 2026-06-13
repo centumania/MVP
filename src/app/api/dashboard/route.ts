@@ -50,16 +50,29 @@ export async function GET(request: NextRequest) {
       supabase.from('leaderboard').select('*', { count: 'exact', head: true }),
     ])
 
-    // Fetch exam dates for submissions to calculate streak
+    // Fetch exam dates for submissions to calculate streak + history
     const examIds = (allSubmissions ?? []).map(s => s.exam_id).filter(Boolean)
-    const { data: examDates } = examIds.length > 0
-      ? await supabase.from('exams').select('id, day_number, exam_date').in('id', examIds)
-      : { data: [] }
+    const [
+      { data: examDates },
+      { data: allBatchExams },
+    ] = await Promise.all([
+      examIds.length > 0
+        ? supabase.from('exams').select('id, day_number, exam_date').in('id', examIds)
+        : Promise.resolve({ data: [] }),
+      batch
+        ? supabase.from('exams').select('exam_date').eq('batch_id', batch.id).eq('is_active', true).lte('exam_date', todayIST)
+        : Promise.resolve({ data: [] }),
+    ])
 
     const examDateMap: Record<string, { day_number: number; exam_date: string }> = {}
     for (const e of examDates ?? []) {
       examDateMap[e.id] = { day_number: e.day_number, exam_date: e.exam_date }
     }
+
+    // All scheduled exam dates up to today (for gap-aware streak calculation)
+    const scheduledExamDates = new Set<string>(
+      (allBatchExams ?? []).map(e => e.exam_date).filter(Boolean)
+    )
 
     // Today's exam
     let todayExam: { dayNumber: number; examId: string; alreadySubmitted: boolean; score?: number; totalMarks?: number } | null = null
@@ -95,7 +108,9 @@ export async function GET(request: NextRequest) {
     const xpInLevel = xp % 1000
     const xpToNext  = 1000
 
-    // Streak: consecutive exam days with submissions
+    // Streak: consecutive SCHEDULED exam days with submissions
+    // Uses scheduled exam dates (not calendar days) so weekend/holiday gaps
+    // don't break a student's streak.
     const submittedDates = new Set<string>()
     for (const s of allSubmissions ?? []) {
       const examInfo = examDateMap[s.exam_id]
@@ -103,21 +118,21 @@ export async function GET(request: NextRequest) {
     }
 
     function calcStreak(): number {
+      const scheduled = Array.from(scheduledExamDates).sort().reverse()
+      if (scheduled.length === 0) return 0
+
       let streak = 0
-      const d = new Date(now.getTime() + 5.5 * 3600 * 1000)
-      let dateStr = d.toISOString().slice(0, 10)
-
-      // If today not submitted, check if yesterday was (streak still alive if not yet today)
-      if (!submittedDates.has(dateStr)) {
-        d.setDate(d.getDate() - 1)
-        dateStr = d.toISOString().slice(0, 10)
-        if (!submittedDates.has(dateStr)) return 0
-      }
-
-      while (submittedDates.has(dateStr)) {
+      let started = false
+      for (const date of scheduled) {
+        const submitted = submittedDates.has(date)
+        if (!started) {
+          // Today's exam not yet submitted — streak is still alive, skip it
+          if (date === todayIST && !submitted) continue
+          if (!submitted) return 0
+          started = true
+        }
+        if (!submitted) break
         streak++
-        d.setDate(d.getDate() - 1)
-        dateStr = d.toISOString().slice(0, 10)
       }
       return streak
     }

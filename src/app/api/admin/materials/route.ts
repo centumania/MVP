@@ -1,6 +1,6 @@
 /**
  * GET  /api/admin/materials — list all materials for active batch
- * POST /api/admin/materials — create a new material
+ * POST /api/admin/materials — create a new material (URL or PDF key)
  */
 
 import { NextRequest, NextResponse } from 'next/server'
@@ -25,9 +25,10 @@ export async function GET(request: NextRequest) {
 
   const { data: materials, error } = await supabase
     .from('materials')
-    .select('id, day_number, title, html_url, published_at, expires_at')
+    .select('id, day_number, title, html_url, pdf_key, test_link, published_at, expires_at')
     .eq('batch_id', batch.id)
     .order('day_number', { ascending: true })
+    .order('created_at', { ascending: true })
 
   if (error) return NextResponse.json({ error: 'Failed to fetch materials' }, { status: 500 })
 
@@ -37,7 +38,10 @@ export async function GET(request: NextRequest) {
     dayNumber:   m.day_number,
     title:       m.title,
     htmlUrl:     m.html_url,
-    hasContent:  !!m.html_url,
+    pdfKey:      m.pdf_key,
+    testLink:    m.test_link,
+    contentType: m.pdf_key ? 'pdf' : m.html_url ? 'html' : null,
+    hasContent:  !!(m.html_url || m.pdf_key),
     publishedAt: m.published_at,
     expiresAt:   m.expires_at,
     isExpired:   m.expires_at < now,
@@ -59,14 +63,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { batchId, dayNumber, title, htmlUrl, publishedAt } = body as Record<string, string>
+  const { batchId, dayNumber, title, htmlUrl, pdfKey, testLink, publishedAt } = body as Record<string, string>
 
   if (!batchId || !dayNumber || !title) {
     return NextResponse.json({ error: 'Missing required: batchId, dayNumber, title' }, { status: 400 })
   }
 
-  if (!htmlUrl?.trim()) {
-    return NextResponse.json({ error: 'Hosted HTML URL is required' }, { status: 400 })
+  if (!htmlUrl?.trim() && !pdfKey?.trim() && !testLink?.trim()) {
+    return NextResponse.json({ error: 'Provide a URL, upload a PDF, or add a test link.' }, { status: 400 })
   }
 
   const publishTime = publishedAt ? new Date(publishedAt) : new Date()
@@ -78,12 +82,12 @@ export async function POST(request: NextRequest) {
       batch_id:     batchId,
       day_number:   Number(dayNumber),
       title:        String(title).trim(),
-      html_url:     String(htmlUrl).trim(),
+      html_url:     htmlUrl?.trim()  || null,
+      pdf_key:      pdfKey?.trim()   || null,
+      test_link:    testLink?.trim() || null,
       published_at: publishTime.toISOString(),
       expires_at:   expiresAt.toISOString(),
-      // Legacy columns kept nullable in schema
       video_url:    null,
-      pdf_key:      null,
       ppt_key:      null,
       html_key:     null,
     })
@@ -91,9 +95,6 @@ export async function POST(request: NextRequest) {
     .single()
 
   if (error) {
-    if (error.code === '23505') {
-      return NextResponse.json({ error: 'Material for this day already exists' }, { status: 409 })
-    }
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 

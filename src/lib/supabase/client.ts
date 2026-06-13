@@ -18,6 +18,46 @@ if (!supabaseUrl || !supabaseAnonKey) {
   )
 }
 
+// ── Session persistence preference ───────────────────────────────────────────
+// Written by the login page before sign-in. Controls where auth tokens are stored:
+//   'true'  → localStorage  (survives browser close — "Keep me signed in")
+//   'false' → sessionStorage (cleared when tab closes)
+const KEEP_KEY = 'cm:keep'
+
+export function setKeepSignedIn(keep: boolean) {
+  try { localStorage.setItem(KEEP_KEY, keep ? 'true' : 'false') } catch { /* private browsing */ }
+}
+
+// Custom storage adapter — reads from both stores on get (handles migration),
+// writes to whichever the user chose, clears the other.
+function makeAuthStorage() {
+  return {
+    getItem(key: string): string | null {
+      try {
+        return sessionStorage.getItem(key) ?? localStorage.getItem(key)
+      } catch { return null }
+    },
+    setItem(key: string, value: string): void {
+      try {
+        const keep = localStorage.getItem(KEEP_KEY) !== 'false'
+        if (keep) {
+          localStorage.setItem(key, value)
+          sessionStorage.removeItem(key)
+        } else {
+          sessionStorage.setItem(key, value)
+          localStorage.removeItem(key)
+        }
+      } catch { /* private browsing — silently ignore */ }
+    },
+    removeItem(key: string): void {
+      try {
+        localStorage.removeItem(key)
+        sessionStorage.removeItem(key)
+      } catch { /* ignore */ }
+    },
+  }
+}
+
 // Singleton — prevents multiple GoTrue instances in the browser
 let browserClient: ReturnType<typeof createClient<Database>> | null = null
 
@@ -29,6 +69,7 @@ export function getSupabaseBrowserClient() {
       persistSession: true,
       autoRefreshToken: true,
       detectSessionInUrl: true,
+      storage: typeof window !== 'undefined' ? makeAuthStorage() : undefined,
     },
   })
 

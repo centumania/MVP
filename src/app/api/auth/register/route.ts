@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
+import { rateLimit } from '@/src/lib/rate-limit'
 
 /**
  * POST /api/auth/register
@@ -10,8 +11,18 @@ import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
  * Admin manually controls access via payment_verified in the profiles table.
  * Email verification adds no security value for this flow.
  */
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 5 registrations per IP per 15 minutes
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
+    const limiter = await rateLimit(`register:${ip}`, { limit: 5, window: '15 m' })
+    if (!limiter.success) {
+      return NextResponse.json(
+        { error: 'Too many registration attempts. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil((limiter.reset - Date.now()) / 1000)) } },
+      )
+    }
+
     const { name, phone, email, password } = await req.json()
 
     // Basic server-side validation

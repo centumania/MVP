@@ -29,7 +29,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     const { day: dayParam } = await params
     const dayNumber = parseInt(dayParam, 10)
 
-    if (isNaN(dayNumber) || dayNumber < 1 || dayNumber > 25) {
+    if (isNaN(dayNumber) || dayNumber < 1) {
       return NextResponse.json({ error: 'Invalid day number' }, { status: 400 })
     }
 
@@ -70,7 +70,7 @@ export async function GET(request: NextRequest, { params }: Params) {
 
     const { data: exam } = await supabase
       .from('exams')
-      .select('id, open_time, close_time, day_number, title, exam_date')
+      .select('id, open_time, close_time, day_number, title, exam_date, link_url')
       .eq('batch_id', batch.id)
       .eq('day_number', dayNumber)
       .eq('is_active', true)
@@ -102,12 +102,14 @@ export async function GET(request: NextRequest, { params }: Params) {
     const windowOpen      = windowStatus.isOpen
     const alreadySubmitted = existingSubmission !== null
 
-    // If window is not open and student hasn't submitted, deny access
+    // If window is not open and student hasn't submitted, deny access.
+    // Still include linkUrl so the closed-window screen can show the external test button.
     if (!windowOpen && !alreadySubmitted) {
       return NextResponse.json(
         {
           error: 'Exam not accessible',
           windowStatus,
+          linkUrl: exam.link_url,
         },
         { status: 403 },
       )
@@ -141,11 +143,12 @@ export async function GET(request: NextRequest, { params }: Params) {
 
     return NextResponse.json({
       exam: {
-        id:         exam.id,
-        dayNumber:  exam.day_number,
-        title:      exam.title,
-        openTime:   exam.open_time,
-        closeTime:  exam.close_time,
+        id:        exam.id,
+        dayNumber: exam.day_number,
+        title:     exam.title,
+        openTime:  exam.open_time,
+        closeTime: exam.close_time,
+        linkUrl:   exam.link_url,
       },
       questions:        safeQuestions,
       alreadySubmitted,

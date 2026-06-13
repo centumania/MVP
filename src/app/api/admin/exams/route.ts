@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 
   const { data: exams, error } = await supabase
     .from('exams')
-    .select('id, day_number, title, exam_date, open_time, close_time, is_active')
+    .select('id, day_number, title, exam_date, open_time, close_time, is_active, link_url')
     .eq('batch_id', batch.id)
     .order('day_number', { ascending: true })
 
@@ -53,6 +53,7 @@ export async function GET(request: NextRequest) {
 
   const enriched = (exams ?? []).map(e => ({
     ...e,
+    linkUrl:         e.link_url,
     questionCount:   qMap[e.id] ?? 0,
     submissionCount: sMap[e.id] ?? 0,
   }))
@@ -73,7 +74,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { batchId, dayNumber, title, examDate, openTime, closeTime } = body as Record<string, unknown>
+  const { batchId, dayNumber, title, examDate, openTime, closeTime, linkUrl } = body as Record<string, unknown>
 
   if (!batchId || !dayNumber || !title || !examDate || !openTime || !closeTime) {
     return NextResponse.json({ error: 'Missing required fields: batchId, dayNumber, title, examDate, openTime, closeTime' }, { status: 400 })
@@ -89,6 +90,7 @@ export async function POST(request: NextRequest) {
       exam_date:   String(examDate),
       open_time:   String(openTime),
       close_time:  String(closeTime),
+      link_url:    ((linkUrl as string | undefined)?.trim() || null) as string | null,
       is_active:   true,
     })
     .select()

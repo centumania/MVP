@@ -62,13 +62,16 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'No active batch' }, { status: 404 })
     }
 
-    const { data: exam } = await adminSupabase
+    const { data: todayExams } = await adminSupabase
       .from('exams')
       .select('id, day_number')
       .eq('batch_id', batch.id)
       .eq('exam_date', todayIST)
       .eq('is_active', true)
-      .maybeSingle()
+      .order('day_number', { ascending: true })
+      .limit(1)
+
+    const exam = todayExams?.[0] ?? null
 
     if (!exam) {
       return NextResponse.json({ error: 'No exam today' }, { status: 404 })

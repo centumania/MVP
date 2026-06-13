@@ -1,26 +1,30 @@
 /**
  * GET /api/materials/open/[id]
  *
- * Auth + subscription gateway. Validates the Bearer token, checks subscription,
- * then returns { url } for the client to open in a new tab.
+ * Auth + subscription gateway.
  *
- * Browser navigation (new tab) cannot send Authorization headers, so a server-side
- * 302 redirect is not usable. Instead the client fetches this endpoint with the
- * Bearer token, receives the validated URL, and calls window.open(url, '_blank').
+ * type = 'html' → returns { url, type } — the raw hosted HTML URL.
+ *                  The viewer iframes it directly so the page runs in its own
+ *                  origin context (Netlify, etc.) and its JS/API calls work correctly.
+ * type = 'pdf'  → returns { url, type } — 1-hour Supabase Storage signed URL.
  *
  * Response codes:
- *   200 — { url: string } — validated, client should window.open this
+ *   200 — see above
  *   401 — not logged in
  *   402 — payment required (beyond free days)
- *   404 — material not found, expired, or has no html_url
+ *   404 — material not found, expired, or has no content
+ *   429 — rate limited
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
+import { rateLimit } from '@/src/lib/rate-limit'
 
 export const dynamic = 'force-dynamic'
 
 const FREE_DAYS = 2
+const BUCKET    = 'centumania-materials'
+const PDF_TTL   = 60 * 60 // 1-hour signed URL
 
 type Params = { params: Promise<{ id: string }> }
 
@@ -34,18 +38,28 @@ export async function GET(request: NextRequest, { params }: Params) {
   const { data: { user }, error: authError } = await supabase.auth.getUser(token)
   if (authError || !user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
+  // Rate limit: 30 opens per user per 10 minutes
+  const limiter = await rateLimit(`materials-open:${user.id}`, { limit: 30, window: '10 m' })
+  if (!limiter.success) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please wait before opening more materials.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil((limiter.reset - Date.now()) / 1000)) } },
+    )
+  }
+
   const now = new Date().toISOString()
   const { data: material } = await supabase
     .from('materials')
-    .select('html_url, day_number, expires_at')
+    .select('html_url, pdf_key, day_number, expires_at')
     .eq('id', id)
     .gt('expires_at', now)
     .maybeSingle()
 
-  if (!material?.html_url) {
+  if (!material || (!material.html_url && !material.pdf_key)) {
     return NextResponse.json({ error: 'Material not found or expired' }, { status: 404 })
   }
 
+  // Payment gate for content beyond free days
   if (material.day_number > FREE_DAYS) {
     const { data: profile } = await supabase
       .from('profiles')
@@ -58,5 +72,23 @@ export async function GET(request: NextRequest, { params }: Params) {
     }
   }
 
-  return NextResponse.json({ url: material.html_url })
+  // ── PDF: generate a short-lived signed URL ──────────────────────────────
+  if (material.pdf_key) {
+    const { data: signed, error: signErr } = await supabase.storage
+      .from(BUCKET)
+      .createSignedUrl(material.pdf_key, PDF_TTL)
+
+    if (signErr || !signed?.signedUrl) {
+      console.error('[materials/open] Failed to generate signed URL:', signErr)
+      return NextResponse.json({ error: 'Failed to generate download link' }, { status: 500 })
+    }
+
+    return NextResponse.json({ url: signed.signedUrl, type: 'pdf' })
+  }
+
+  // ── HTML: return the URL directly so the viewer iframes it from its real origin ─
+  // The Netlify-hosted page must run in its own origin context so its JS can reach
+  // its own APIs and localStorage. Proxying via blob URL breaks that — the page's
+  // fetch calls resolve to the wrong host (centumania.co.in instead of netlify.app).
+  return NextResponse.json({ url: material.html_url, type: 'html' })
 }

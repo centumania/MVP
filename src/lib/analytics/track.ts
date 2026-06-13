@@ -32,7 +32,7 @@ export function getSessionId(): string {
 
 let _cachedToken: string | null = null
 
-export function setCachedToken(token: string): void {
+export function setCachedToken(token: string | null): void {
   _cachedToken = token
 }
 

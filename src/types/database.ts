@@ -61,6 +61,7 @@ export type Exam = {
   close_time:  string           // ISO 8601 UTC — 8:30 AM IST stored as UTC
   exam_date:   string           // YYYY-MM-DD (IST date)
   is_active:   boolean
+  link_url:    string | null   // Optional external test link shown to students on the exam page
   created_at:  string
 }
 
@@ -95,6 +96,7 @@ export type Material = {
   video_url:    string | null   // YouTube URL or CloudFront path (admin-set)
   html_key:     string | null   // Legacy storage key — deprecated, use html_url
   html_url:     string | null   // Externally hosted HTML URL — redirect target after auth gate
+  test_link:    string | null   // Optional external test URL (Google Form, quiz platform, etc.)
   published_at: string          // ISO 8601
   expires_at:   string          // published_at + 24h — enforced server-side
   created_at:   string

@@ -35,10 +35,11 @@ export async function GET(request: NextRequest) {
 
     let query = supabase
       .from('materials')
-      .select('id, day_number, title, html_url, published_at, expires_at')
+      .select('id, day_number, title, html_url, pdf_key, test_link, published_at, expires_at')
       .eq('batch_id', batch.id)
       .gt('expires_at', new Date().toISOString())
       .order('day_number', { ascending: false })
+      .order('created_at', { ascending: true })
 
     if (!isPaid) query = query.lte('day_number', FREE_DAYS)
 
@@ -59,7 +60,8 @@ export async function GET(request: NextRequest) {
       id:          m.id,
       dayNumber:   m.day_number,
       title:       m.title,
-      hasContent:  !!m.html_url,
+      hasContent:  !!(m.html_url || m.pdf_key),
+      testLink:    m.test_link,
       isFree:      m.day_number <= FREE_DAYS,
       publishedAt: m.published_at,
       expiresAt:   m.expires_at,

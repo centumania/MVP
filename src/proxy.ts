@@ -74,11 +74,19 @@ export function proxy(request: NextRequest): NextResponse {
   const nonce    = Buffer.from(crypto.randomUUID()).toString('base64')
   const pathname = request.nextUrl.pathname
 
-  // Use permissive CSP for the MindMap viewer so the sandboxed iframe
+  // Block direct access to /study/* static files.
+  // Study HTML is served via the authenticated /materials/viewer/[id] page instead.
+  // Without this, anyone with the URL can access premium content without logging in.
+  if (pathname.startsWith('/study/')) {
+    return NextResponse.redirect(new URL('/auth/login', request.url), { status: 302 })
+  }
+
+  // Use permissive CSP for the materials viewer so the sandboxed iframe
   // (which inherits this page's CSP via allow-same-origin) can run
-  // interactive HTML including inline scripts and localStorage.
-  const isMindmap = pathname.startsWith('/materials/mindmap/')
-  const csp       = isMindmap ? buildMindmapCsp(nonce) : buildStrictCsp(nonce)
+  // interactive HTML including inline scripts and localStorage, and so
+  // the client-side fetch() to the external html_url is allowed by connect-src.
+  const isViewer = pathname.startsWith('/materials/viewer/') || pathname.startsWith('/materials/mindmap/')
+  const csp      = isViewer ? buildMindmapCsp(nonce) : buildStrictCsp(nonce)
 
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-nonce', nonce)
