@@ -443,5 +443,6 @@ function closeDrawer(){$("#side").classList.remove("open");}
 document.addEventListener("keydown",e=>{if(mode!=="study"||/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;if(e.key==="ArrowRight"||e.key==="j"){cur=(cur+1)%TOTAL;render();}else if(e.key==="ArrowLeft"||e.key==="k"){cur=(cur-1+TOTAL)%TOTAL;render();}else if(e.key===" "){e.preventDefault();toggleDone();}});
 buildNav();progress();setMode();render();
 </script>
+<script src="/study/centumania-tracker.js"></script>
 </body>
 </html>

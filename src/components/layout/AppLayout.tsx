@@ -87,12 +87,12 @@ export function AppLayout({ children, userName, batchName }: {
       {/* ── Desktop Sidebar ─────────────────────────────────────── */}
       <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 z-20"
         aria-label="Main navigation"
-        style={{ width: 228, background: '#0e1410', borderRight: '1px solid #27342b' }}>
+        style={{ width: 228, background: 'var(--color-surface)', borderRight: '1px solid var(--color-border)' }}>
 
         {/* Brand */}
-        <div className="px-5 py-5" style={{ borderBottom: '1px solid #27342b' }}>
-          <LogoFull size={26} glow />
-          <p className="text-[10px] text-text-muted mt-2 tracking-wide font-mono pl-0.5">
+        <div className="px-5 py-5" style={{ borderBottom: '1px solid var(--color-border)' }}>
+          <LogoFull size={26} />
+          <p className="text-[11px] text-text-muted mt-2 tracking-wide pl-0.5">
             {batchName ?? 'Winning is a Habit'}
           </p>
         </div>
@@ -108,16 +108,13 @@ export function AppLayout({ children, userName, batchName }: {
                 className={[
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 relative',
                   active
-                    ? 'text-primary font-medium'
-                    : 'text-text-muted hover:text-text-secondary',
+                    ? 'text-primary font-semibold bg-primary-subtle'
+                    : 'text-text-muted hover:text-text hover:bg-surface-overlay',
                 ].join(' ')}
-                style={active ? { background: 'rgba(74,222,128,0.08)' } : {}}
-                onMouseEnter={e => { if (!active) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)' }}
-                onMouseLeave={e => { if (!active) (e.currentTarget as HTMLElement).style.background = '' }}
               >
                 {active && (
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
-                    style={{ background: '#4ADE80', boxShadow: '0 0 8px rgba(74,222,128,0.8)' }} />
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 rounded-full"
+                    style={{ background: 'var(--color-primary)' }} />
                 )}
                 <Icon a={active} />
                 <span className="tracking-tight">{label}</span>
@@ -127,22 +124,19 @@ export function AppLayout({ children, userName, batchName }: {
         </nav>
 
         {/* User Section */}
-        <div className="px-3 py-4" style={{ borderTop: '1px solid #27342b' }}>
+        <div className="px-3 py-4" style={{ borderTop: '1px solid var(--color-border)' }}>
           {userName && (
             <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
-              <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
-                style={{ background: 'linear-gradient(135deg,#4ADE80,#22C55E)', color: '#06140c', boxShadow: '0 0 10px rgba(74,222,128,0.30)' }}>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
+                style={{ background: 'var(--color-primary)', color: '#FFFFFF' }}>
                 {initials}
               </div>
-              <p className="text-xs font-medium text-text-secondary truncate">{userName}</p>
+              <p className="text-xs font-semibold text-text-secondary truncate">{userName}</p>
             </div>
           )}
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-xs text-text-muted hover:text-text-secondary transition-colors"
-            style={{}}
-            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.03)')}
-            onMouseLeave={e => (e.currentTarget.style.background = '')}
+            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-xs text-text-muted hover:text-text hover:bg-surface-overlay transition-colors"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -159,14 +153,14 @@ export function AppLayout({ children, userName, batchName }: {
         <div className="main-shift flex-1 flex flex-col min-h-screen">
 
           {/* Mobile Top Bar */}
-          <header className="md:hidden flex items-center justify-between px-4 h-14 sticky top-0 z-10"
-            style={{ background: 'rgba(14,20,16,0.95)', backdropFilter: 'blur(6px)', borderBottom: '1px solid #27342b' }}>
+          <header className="surface-blur md:hidden flex items-center justify-between px-4 h-14 sticky top-0 z-10"
+            style={{ borderBottom: '1px solid var(--color-border)' }}>
             <div className="flex items-center gap-2.5">
-              <LogoFull size={22} glow />
+              <LogoFull size={22} />
             </div>
             {userName && (
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ background: 'linear-gradient(135deg,#4ADE80,#22C55E)', color: '#06140c', boxShadow: '0 0 10px rgba(74,222,128,0.30)' }}>
+                style={{ background: 'var(--color-primary)', color: '#FFFFFF' }}>
                 {initials}
               </div>
             )}
@@ -184,9 +178,9 @@ export function AppLayout({ children, userName, batchName }: {
       </div>
 
       {/* ── Mobile Bottom Nav ────────────────────────────────────── */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 z-20 flex mobile-nav-safe"
+      <nav className="surface-blur md:hidden fixed bottom-0 inset-x-0 z-20 flex mobile-nav-safe"
         aria-label="Mobile navigation"
-        style={{ background: 'rgba(14,20,16,0.97)', backdropFilter: 'blur(20px)', borderTop: '1px solid #27342b' }}>
+        style={{ borderTop: '1px solid var(--color-border)' }}>
         {NAV.map(({ href, label, Icon }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
@@ -195,10 +189,14 @@ export function AppLayout({ children, userName, batchName }: {
               href={href}
               aria-current={active ? 'page' : undefined}
               className={[
-                'flex-1 flex flex-col items-center justify-center py-3 gap-1 transition-colors touch-target',
+                'flex-1 flex flex-col items-center justify-center py-2.5 gap-1 transition-colors touch-target relative',
                 active ? 'text-primary' : 'text-text-muted',
               ].join(' ')}
             >
+              {active && (
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full"
+                  style={{ background: 'var(--color-primary)' }} />
+              )}
               <Icon a={active} />
               <span className="text-[9px] font-semibold tracking-widest uppercase">
                 {label.split("'")[0].split(' ')[0]}

@@ -13,6 +13,7 @@ type Material = {
   dayNumber:   number
   title:       string
   hasContent:  boolean
+  testLink:    string | null
   isFree:      boolean
   publishedAt: string
   expiresAt:   string
@@ -28,10 +29,9 @@ function timeUntil(iso: string, nowMs: number): string {
   return `${m}m left`
 }
 
-function MaterialCard({ m, token }: { m: Material; token: string }) {
-  const [now, setNow]         = useState(() => Date.now())
-  const [opening, setOpening] = useState(false)
-  const [error, setError]     = useState<string | null>(null)
+function MaterialCard({ m }: { m: Material }) {
+  const nav              = useRouter()
+  const [now, setNow]    = useState(() => Date.now())
 
   useEffect(() => {
     const id = setInterval(() => setNow(Date.now()), 60_000)
@@ -41,27 +41,11 @@ function MaterialCard({ m, token }: { m: Material; token: string }) {
   const ms     = new Date(m.expiresAt).getTime() - now
   const urgent = ms > 0 && ms < 2 * 3600 * 1000
 
-  async function openMaterial() {
-    setOpening(true)
-    setError(null)
-    try {
-      const res = await fetch(`/api/materials/open/${m.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-
-      if (res.status === 402) { setError('Your payment is pending. Contact your coordinator.'); return }
-      if (res.status === 404) { setError('This material is no longer available.'); return }
-      if (res.status === 401) { setError('Session expired. Please refresh the page.'); return }
-
-      if (res.ok) {
-        const { url } = await res.json()
-        window.open(url, '_blank', 'noopener')
-      }
-    } catch {
-      setError('Could not open material. Please try again.')
-    } finally {
-      setOpening(false)
-    }
+  function openMaterial() {
+    // Navigate directly — the viewer handles auth/payment/404 errors itself.
+    // Calling the open API here as a pre-check would double-fetch the HTML content
+    // (open API now proxies external HTML server-side, which is expensive).
+    nav.push(`/materials/viewer/${m.id}`)
   }
 
   return (
@@ -74,7 +58,7 @@ function MaterialCard({ m, token }: { m: Material; token: string }) {
             </p>
             {m.isFree && (
               <span className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded"
-                style={{ background: 'rgba(74,222,128,0.10)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.20)' }}>
+                style={{ background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
                 Free
               </span>
             )}
@@ -86,55 +70,75 @@ function MaterialCard({ m, token }: { m: Material; token: string }) {
         <Badge variant={urgent ? 'error' : 'warning'} dot>{timeUntil(m.expiresAt, now)}</Badge>
       </div>
 
-      {error && (
-        <div className="mb-4 px-3 py-2 rounded-lg text-xs font-mono"
-          style={{ background: 'rgba(232,115,107,0.08)', color: '#e8736b', border: '1px solid rgba(232,115,107,0.20)' }}>
-          {error}
-        </div>
-      )}
-
-      {m.hasContent ? (
-        <button
-          onClick={openMaterial}
-          disabled={opening}
-          className="w-full flex items-center justify-between px-5 py-4 rounded-xl transition-all disabled:opacity-60"
-          style={{
-            background: 'linear-gradient(135deg,rgba(74,222,128,0.12),rgba(94,200,192,0.08))',
-            border: '1px solid rgba(74,222,128,0.25)',
-          }}
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-              style={{ background: 'rgba(74,222,128,0.15)' }}>
-              {opening ? (
-                <div className="w-4 h-4 rounded-full border-2 animate-spin"
-                  style={{ borderColor: 'rgba(74,222,128,0.3)', borderTopColor: '#4ADE80' }} />
-              ) : (
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <div className="space-y-3">
+        {m.hasContent ? (
+          <button
+            onClick={openMaterial}
+            className="w-full flex items-center justify-between px-5 py-4 rounded-xl transition-all"
+            style={{
+              background: 'linear-gradient(135deg,rgba(11,61,145,0.12),rgba(11,61,145,0.08))',
+              border: '1px solid rgba(11,61,145,0.25)',
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: 'rgba(11,61,145,0.15)' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0B3D91" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
                 </svg>
-              )}
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-semibold text-primary">Open Study Material</p>
+                <p className="text-xs text-text-muted mt-0.5">Opens secure viewer</p>
+              </div>
             </div>
-            <div className="text-left">
-              <p className="text-sm font-semibold text-primary">Open Study Material</p>
-              <p className="text-xs text-text-muted mt-0.5">Opens in a new tab</p>
-            </div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0B3D91" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </button>
+        ) : (
+          <div className="flex items-center gap-3 px-5 py-4 rounded-xl"
+            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #E5E7EB' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="1.8" strokeLinecap="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <p className="text-sm text-text-muted">Content not yet published.</p>
           </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-            <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </button>
-      ) : (
-        <div className="flex items-center gap-3 px-5 py-4 rounded-xl"
-          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #27342b' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa893" strokeWidth="1.8" strokeLinecap="round">
-            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-          </svg>
-          <p className="text-sm text-text-muted">Content not yet published.</p>
-        </div>
-      )}
+        )}
+
+        {m.testLink && (
+          <a
+            href={m.testLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-between px-5 py-4 rounded-xl transition-all"
+            style={{
+              background: 'linear-gradient(135deg,rgba(245,158,11,0.12),rgba(245,158,11,0.08))',
+              border: '1px solid rgba(245,158,11,0.30)',
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: 'rgba(245,158,11,0.15)' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 11l3 3L22 4"/>
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                </svg>
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-semibold" style={{ color: '#D97706' }}>Take Today&apos;s Test</p>
+                <p className="text-xs text-text-muted mt-0.5">Opens in new tab</p>
+              </div>
+            </div>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        )}
+      </div>
     </Card>
   )
 }
@@ -142,7 +146,6 @@ function MaterialCard({ m, token }: { m: Material; token: string }) {
 export default function MaterialsPage() {
   const router                          = useRouter()
   const [userName, setUserName]         = useState('')
-  const [token,    setToken]            = useState('')
   const [materials, setMaterials]       = useState<Material[]>([])
   const [loading,   setLoading]         = useState(true)
   const [status,    setStatus]          = useState<'ok' | 'payment' | 'empty' | 'error'>('ok')
@@ -151,7 +154,6 @@ export default function MaterialsPage() {
     getSupabaseBrowserClient().auth.getSession().then(async ({ data: { session } }) => {
       if (!session) { router.replace('/auth/login'); return }
       setUserName(session.user.user_metadata?.name ?? session.user.email?.split('@')[0] ?? '')
-      setToken(session.access_token)
 
       const res = await fetch('/api/materials', {
         headers: { Authorization: `Bearer ${session.access_token}` },
@@ -188,9 +190,9 @@ export default function MaterialsPage() {
 
         {status === 'payment' && (
           <div className="flex items-start gap-4 p-5 rounded-2xl"
-            style={{ background: 'rgba(231,177,76,0.08)', border: '1px solid rgba(231,177,76,0.18)' }}>
+            style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.18)' }}>
             <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-              style={{ background: 'rgba(231,177,76,0.12)' }}>
+              style={{ background: 'rgba(245,158,11,0.12)' }}>
               <svg className="w-5 h-5 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
               </svg>
@@ -205,7 +207,7 @@ export default function MaterialsPage() {
         )}
 
         {status === 'error' && (
-          <div className="p-4 rounded-2xl" style={{ background: 'rgba(232,115,107,0.08)', border: '1px solid rgba(232,115,107,0.15)' }}>
+          <div className="p-4 rounded-2xl" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)' }}>
             <p className="text-sm text-error">Failed to load. Please refresh.</p>
           </div>
         )}
@@ -213,7 +215,7 @@ export default function MaterialsPage() {
         {status === 'empty' && (
           <div className="flex flex-col items-center py-16 gap-4">
             <div className="w-16 h-16 rounded-3xl flex items-center justify-center"
-              style={{ background: '#16201a', border: '1px solid #27342b' }}>
+              style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
               <svg className="w-7 h-7 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
@@ -228,7 +230,7 @@ export default function MaterialsPage() {
           </div>
         )}
 
-        {materials.map(m => <MaterialCard key={m.id} m={m} token={token} />)}
+        {materials.map(m => <MaterialCard key={m.id} m={m} />)}
       </div>
     </AppLayout>
   )

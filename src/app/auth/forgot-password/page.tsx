@@ -37,10 +37,10 @@ export default function ForgotPasswordPage() {
 
   if (sent) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#F8FAFC' }}>
         <div className="max-w-sm w-full text-center">
           <div className="w-16 h-16 rounded-3xl mx-auto mb-6 flex items-center justify-center"
-            style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.25)', boxShadow: '0 0 24px rgba(74,222,128,0.12)' }}>
+            style={{ background: 'rgba(11,61,145,0.10)', border: '1px solid rgba(11,61,145,0.25)', boxShadow: '0 0 24px rgba(11,61,145,0.12)' }}>
             <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
               <polyline points="22,6 12,13 2,6"/>
@@ -66,7 +66,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#0e1410' }}>
+    <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#F8FAFC' }}>
       <div className="w-full max-w-sm">
 
         {/* Logo */}
@@ -107,7 +107,7 @@ export default function ForgotPasswordPage() {
 
           {error && (
             <div className="flex items-start gap-2.5 p-3 rounded-xl"
-              style={{ background: 'rgba(232,115,107,0.08)', border: '1px solid rgba(232,115,107,0.20)' }}>
+              style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.20)' }}>
               <svg className="w-4 h-4 text-error shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>

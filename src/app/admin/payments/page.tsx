@@ -10,9 +10,9 @@ type Student = {
   daysAttended: number
 }
 
-const CARD = { background: '#16201a', border: '1px solid #27342b' }
-const TROW = { borderBottom: '1px solid rgba(39,52,43,0.6)' }
-const THHD = { background: '#1b271f', borderBottom: '1px solid #27342b' }
+const CARD = { background: '#FFFFFF', border: '1px solid #E5E7EB' }
+const TROW = { borderBottom: '1px solid rgba(229,231,235,0.6)' }
+const THHD = { background: '#FFFFFF', borderBottom: '1px solid #E5E7EB' }
 
 export default function AdminPayments() {
   const router = useRouter()
@@ -80,7 +80,7 @@ export default function AdminPayments() {
 
       {toast && (
         <div className="fixed top-4 right-4 z-50 text-sm px-4 py-2.5 rounded-lg shadow-lg"
-          style={{ background: '#1b271f', color: '#e8ead8', border: '1px solid #27342b' }}>
+          style={{ background: '#FFFFFF', color: '#111827', border: '1px solid #E5E7EB' }}>
           {toast}
         </div>
       )}
@@ -90,22 +90,22 @@ export default function AdminPayments() {
           Payments
         </h1>
         <p className="text-sm text-text-muted mt-0.5 font-mono">
-          <span style={{ color: '#e7b14c' }}>{pending.length} pending</span>
+          <span style={{ color: '#F59E0B' }}>{pending.length} pending</span>
           {' · '}
-          <span style={{ color: '#4ADE80' }}>{verified.length} verified</span>
+          <span style={{ color: '#0B3D91' }}>{verified.length} verified</span>
         </p>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 rounded-lg w-fit mb-6" style={{ background: '#1b271f' }}>
+      <div className="flex gap-1 p-1 rounded-lg w-fit mb-6" style={{ background: '#FFFFFF' }}>
         {(['pending', 'verified'] as const).map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className="px-4 py-1.5 text-sm font-medium rounded-md transition-colors capitalize font-mono"
             style={tab === t
-              ? { background: '#16201a', color: '#e8ead8', boxShadow: '0 1px 4px rgba(0,0,0,0.3)' }
-              : { color: '#6b7a63' }
+              ? { background: '#FFFFFF', color: '#111827', boxShadow: '0 1px 4px rgba(0,0,0,0.3)' }
+              : { color: '#9CA3AF' }
             }
           >
             {t === 'pending' ? `Pending (${pending.length})` : `Verified (${verified.length})`}
@@ -116,7 +116,7 @@ export default function AdminPayments() {
       {loading ? (
         <div className="rounded-xl p-12 text-center" style={CARD}>
           <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto"
-            style={{ borderColor: 'rgba(74,222,128,0.3)', borderTopColor: '#4ADE80' }} />
+            style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
         </div>
       ) : list.length === 0 ? (
         <div className="rounded-xl p-12 text-center" style={CARD}>
@@ -128,11 +128,11 @@ export default function AdminPayments() {
         <div className="rounded-xl overflow-hidden table-scroll" style={CARD}>
           {tab === 'pending' && (
             <div className="px-4 py-3 flex items-center gap-2"
-              style={{ background: 'rgba(231,177,76,0.06)', borderBottom: '1px solid rgba(231,177,76,0.15)' }}>
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{ color: '#e7b14c' }}>
+              style={{ background: 'rgba(245,158,11,0.06)', borderBottom: '1px solid rgba(245,158,11,0.15)' }}>
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" style={{ color: '#F59E0B' }}>
                 <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
               </svg>
-              <p className="text-xs font-medium font-mono" style={{ color: '#e7b14c' }}>
+              <p className="text-xs font-medium font-mono" style={{ color: '#F59E0B' }}>
                 {pending.length} students waiting for payment verification
               </p>
             </div>
@@ -164,9 +164,9 @@ export default function AdminPayments() {
                       <button
                         onClick={() => verify(s.id)}
                         className="px-4 py-1.5 text-xs font-medium rounded-lg transition-colors font-mono"
-                        style={{ background: '#22C55E', color: '#06140c' }}
+                        style={{ background: '#10B981', color: '#FFFFFF' }}
                         onMouseEnter={e => (e.currentTarget.style.background = '#2a8e57')}
-                        onMouseLeave={e => (e.currentTarget.style.background = '#22C55E')}
+                        onMouseLeave={e => (e.currentTarget.style.background = '#10B981')}
                       >
                         Verify Payment
                       </button>
@@ -174,9 +174,9 @@ export default function AdminPayments() {
                       <button
                         onClick={() => revoke(s.id)}
                         className="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors font-mono"
-                        style={{ background: '#1b271f', color: '#9aa893', border: '1px solid #27342b' }}
-                        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(232,115,107,0.08)')}
-                        onMouseLeave={e => (e.currentTarget.style.background = '#1b271f')}
+                        style={{ background: '#FFFFFF', color: '#6B7280', border: '1px solid #E5E7EB' }}
+                        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(239,68,68,0.08)')}
+                        onMouseLeave={e => (e.currentTarget.style.background = '#FFFFFF')}
                       >
                         Revoke
                       </button>

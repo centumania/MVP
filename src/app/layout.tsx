@@ -1,43 +1,49 @@
 import type { Metadata, Viewport } from 'next'
-import { Fraunces, Hanken_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { headers } from 'next/headers'
 import './globals.css'
 
-const fraunces = Fraunces({
+/**
+ * Inter only — per the CentuMania design system.
+ * One typeface family powers display, body, and numeric text. We expose it
+ * under the `--font-inter` variable AND the legacy variable names so existing
+ * `var(--font-fraunces|hanken|jetbrains)` references resolve to Inter without
+ * touching every component.
+ */
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-fraunces',
+  variable: '--font-inter',
   display: 'swap',
-  weight: ['400', '600', '900'],
-})
-
-const hankenGrotesk = Hanken_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-hanken',
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains',
-  display: 'swap',
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '600', '700', '800'],
 })
 
 export const metadata: Metadata = {
   title: 'CentuMania — Winning is a habit',
-  description: "India's most disciplined LDC/UDC exam prep platform. 15-day intensive programme for Puducherry competitive exam aspirants.",
+  description: "India's most disciplined LDC/UDC exam prep platform. 25-day intensive programme for Puducherry LDC/UDC competitive exam aspirants.",
   icons: {
     icon:  '/favicon.svg',
     apple: '/icons/apple-touch-icon.png',
   },
   manifest: '/manifest.json',
   appleWebApp: {
-    capable:       true,
+    capable:        true,
     statusBarStyle: 'black-translucent',
-    title:         'CentuMania',
+    title:          'CentuMania',
   },
   formatDetection: { telephone: false },
+  openGraph: {
+    type:        'website',
+    title:       'CentuMania — Winning is a habit',
+    description: "India's most disciplined LDC/UDC exam prep platform. 25-day intensive programme for Puducherry competitive exam aspirants.",
+    siteName:    'CentuMania',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CentuMania' }],
+  },
+  twitter: {
+    card:        'summary_large_image',
+    title:       'CentuMania — Winning is a habit',
+    description: "India's most disciplined LDC/UDC exam prep platform.",
+    images:      ['/og-image.png'],
+  },
 }
 
 export const viewport: Viewport = {
@@ -46,8 +52,8 @@ export const viewport: Viewport = {
   maximumScale:    1,
   viewportFit:     'cover',
   themeColor:      [
-    { media: '(prefers-color-scheme: dark)',  color: '#0e1410' },
-    { media: '(prefers-color-scheme: light)', color: '#0e1410' },
+    { media: '(prefers-color-scheme: light)', color: '#F8FAFC' },
+    { media: '(prefers-color-scheme: dark)',  color: '#F8FAFC' },
   ],
 }
 
@@ -73,14 +79,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       lang="en"
       nonce={nonce || undefined}
       suppressHydrationWarning
-      className={`${fraunces.variable} ${hankenGrotesk.variable} ${jetbrainsMono.variable}`}
+      className={inter.variable}
     >
       <body className="bg-bg text-text font-sans antialiased" suppressHydrationWarning>
         {/* Skip-to-content link — WCAG 2.1 SC 2.4.1 */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold focus:outline-none"
-          style={{ background: '#4ADE80', color: '#06140c' }}
+          style={{ background: '#0B3D91', color: '#FFFFFF' }}
         >
           Skip to main content
         </a>

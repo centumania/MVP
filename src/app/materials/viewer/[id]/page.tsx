@@ -50,7 +50,11 @@ export default function MaterialViewerPage() {
 
       // HTML: Netlify blocks iframing (X-Frame-Options). Redirect directly —
       // auth + payment have already been verified above.
+      // Store token + material_id in localStorage so the HTML file's
+      // centumania-tracker.js can authenticate its /api/study/interaction calls.
       if (data.type === 'html') {
+        try { localStorage.setItem('cm:access_token', session.access_token) } catch (_) {}
+        try { localStorage.setItem('cm:material_id', id) } catch (_) {}
         window.location.href = data.url
         return
       }
@@ -79,7 +83,7 @@ export default function MaterialViewerPage() {
   }, [id])
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#0e1410' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#F8FAFC' }}>
 
       {/* ── Top bar ─────────────────────────────────────────────────────── */}
       <header
@@ -87,7 +91,7 @@ export default function MaterialViewerPage() {
         style={{
           background: 'rgba(14,20,16,0.97)',
           backdropFilter: 'blur(8px)',
-          borderBottom: '1px solid #27342b',
+          borderBottom: '1px solid #E5E7EB',
           paddingTop: 'env(safe-area-inset-top)',
         }}
       >
@@ -105,8 +109,8 @@ export default function MaterialViewerPage() {
           <span
             className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded"
             style={contentType === 'pdf'
-              ? { background: 'rgba(94,200,192,0.10)', color: '#5ec8c0', border: '1px solid rgba(94,200,192,0.20)' }
-              : { background: 'rgba(74,222,128,0.10)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.20)' }
+              ? { background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }
+              : { background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }
             }
           >
             {contentType === 'pdf' ? 'PDF' : 'HTML'}
@@ -118,7 +122,7 @@ export default function MaterialViewerPage() {
         {state === 'loading' && (
           <div className="flex items-center gap-2 text-xs text-text-muted font-mono">
             <div className="w-3.5 h-3.5 rounded-full border animate-spin"
-              style={{ borderColor: 'rgba(74,222,128,0.2)', borderTopColor: '#4ADE80' }} />
+              style={{ borderColor: 'rgba(11,61,145,0.2)', borderTopColor: '#0B3D91' }} />
             Loading…
           </div>
         )}
@@ -130,8 +134,8 @@ export default function MaterialViewerPage() {
         {state === 'error' && (
           <div className="flex flex-col items-center justify-center flex-1 px-6 gap-5">
             <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
-              style={{ background: 'rgba(232,115,107,0.10)', border: '1px solid rgba(232,115,107,0.20)' }}>
-              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#e8736b" strokeWidth="2" strokeLinecap="round">
+              style={{ background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.20)' }}>
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round">
                 <circle cx="12" cy="12" r="10"/>
                 <line x1="12" y1="8" x2="12" y2="12"/>
                 <line x1="12" y1="16" x2="12.01" y2="16"/>
@@ -148,7 +152,7 @@ export default function MaterialViewerPage() {
         {state === 'loading' && (
           <div className="flex flex-col items-center justify-center flex-1 gap-3">
             <div className="w-8 h-8 rounded-full border-2 animate-spin"
-              style={{ borderColor: 'rgba(74,222,128,0.15)', borderTopColor: '#4ADE80' }} />
+              style={{ borderColor: 'rgba(11,61,145,0.15)', borderTopColor: '#0B3D91' }} />
             <p className="text-xs text-text-muted font-mono">Loading study material…</p>
           </div>
         )}

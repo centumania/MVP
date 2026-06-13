@@ -23,8 +23,8 @@ const TIER_BADGE: Record<PricingTier, { label: string; variant: BadgeVariant }> 
 
 // Green-palette podium metals
 const METAL = {
-  1: { grad: 'linear-gradient(135deg,#e7b14c 0%,#c98c1e 60%,#8b6110 100%)', glow: 'rgba(231,177,76,0.25)',  text: '#f5d48a', border: 'rgba(231,177,76,0.30)'  },
-  2: { grad: 'linear-gradient(135deg,#d0d8c8 0%,#9aa893 60%,#6b7a63 100%)', glow: 'rgba(154,168,147,0.20)', text: '#d0d8c8', border: 'rgba(154,168,147,0.25)' },
+  1: { grad: 'linear-gradient(135deg,#F59E0B 0%,#c98c1e 60%,#8b6110 100%)', glow: 'rgba(245,158,11,0.25)',  text: '#f5d48a', border: 'rgba(245,158,11,0.30)'  },
+  2: { grad: 'linear-gradient(135deg,#d0d8c8 0%,#6B7280 60%,#9CA3AF 100%)', glow: 'rgba(154,168,147,0.20)', text: '#d0d8c8', border: 'rgba(154,168,147,0.25)' },
   3: { grad: 'linear-gradient(135deg,#a37a50 0%,#7a5030 60%,#4a3018 100%)', glow: 'rgba(163,122,80,0.20)',  text: '#d4ad8a', border: 'rgba(163,122,80,0.30)'  },
 } as Record<number, { grad: string; glow: string; text: string; border: string }>
 
@@ -39,8 +39,8 @@ function Avatar({ name, isMe, size = 'md' }: { name: string; isMe?: boolean; siz
   return (
     <div className={`${sz} rounded-full flex items-center justify-center shrink-0 font-bold uppercase`}
       style={isMe
-        ? { background: 'linear-gradient(135deg,#4ADE80,#22C55E)', color: '#06140c', boxShadow: '0 0 12px rgba(74,222,128,0.4)' }
-        : { background: 'rgba(74,222,128,0.10)', color: '#4ADE80' }
+        ? { background: 'linear-gradient(135deg,#0B3D91,#10B981)', color: '#FFFFFF', boxShadow: '0 0 12px rgba(11,61,145,0.4)' }
+        : { background: 'rgba(11,61,145,0.10)', color: '#0B3D91' }
       }>
       {init}
     </div>
@@ -102,12 +102,12 @@ export default function LeaderboardPage() {
         {/* My Rank Banner */}
         {myRank && (
           <div className="relative rounded-2xl overflow-hidden px-5 py-4"
-            style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(74,222,128,0.20)' }}>
+            style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(11,61,145,0.20)' }}>
             <div className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse at left,rgba(74,222,128,0.08),transparent 60%)' }} />
+              style={{ background: 'radial-gradient(ellipse at left,rgba(11,61,145,0.08),transparent 60%)' }} />
             <div className="relative flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 font-bold text-sm font-mono"
-                style={{ background: 'rgba(74,222,128,0.12)', border: '1px solid rgba(74,222,128,0.25)', color: '#4ADE80' }}>
+                style={{ background: 'rgba(11,61,145,0.12)', border: '1px solid rgba(11,61,145,0.25)', color: '#0B3D91' }}>
                 #{myRank.rank}
               </div>
               <div className="flex-1 min-w-0">
@@ -145,11 +145,11 @@ export default function LeaderboardPage() {
                   style={{
                     background: 'rgba(255,255,255,0.02)',
                     border: `1px solid ${m.border}`,
-                    boxShadow: isMe ? `0 0 20px ${m.glow}, 0 0 0 2px rgba(74,222,128,0.3)` : `0 0 12px ${m.glow}`,
+                    boxShadow: isMe ? `0 0 20px ${m.glow}, 0 0 0 2px rgba(11,61,145,0.3)` : `0 0 12px ${m.glow}`,
                   }}
                 >
                   {isFirst && (
-                    <div className="absolute top-2 left-1/2 -translate-x-1/2" style={{ color: '#e7b14c' }}>
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2" style={{ color: '#F59E0B' }}>
                       <CrownIcon size={14} />
                     </div>
                   )}
@@ -180,7 +180,7 @@ export default function LeaderboardPage() {
         {/* RANKINGS TABLE */}
         {(top3.length < 3 ? entries : rest).length > 0 && (
           <Card noPadding>
-            <div className="px-4 py-3" style={{ borderBottom: '1px solid #27342b' }}>
+            <div className="px-4 py-3" style={{ borderBottom: '1px solid #E5E7EB' }}>
               <CardLabel>{top3.length >= 3 ? 'Rankings — #4 and below' : 'All students'}</CardLabel>
             </div>
             <div>
@@ -190,8 +190,8 @@ export default function LeaderboardPage() {
                   <div key={e.user_id}
                     className="flex items-center gap-3 px-4 py-3 transition-colors"
                     style={{
-                      borderBottom: idx < (top3.length < 3 ? entries : rest).length - 1 ? '1px solid rgba(39,52,43,0.5)' : undefined,
-                      background: isMe ? 'rgba(74,222,128,0.05)' : undefined,
+                      borderBottom: idx < (top3.length < 3 ? entries : rest).length - 1 ? '1px solid rgba(229,231,235,0.5)' : undefined,
+                      background: isMe ? 'rgba(11,61,145,0.05)' : undefined,
                     }}
                   >
                     <span className="text-xs font-mono text-text-muted w-8 text-center shrink-0 font-semibold">
@@ -221,7 +221,7 @@ export default function LeaderboardPage() {
         {entries.length === 0 && (
           <div className="flex flex-col items-center py-16 gap-4">
             <div className="w-16 h-16 rounded-3xl flex items-center justify-center"
-              style={{ background: '#16201a', border: '1px solid #27342b' }}>
+              style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
               <svg className="w-7 h-7 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
                 <path d="M4 22h16"/>

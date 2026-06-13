@@ -10,9 +10,9 @@ import type { Batch } from '@/src/types/database'
 type LeaderboardRow = CentumIndexLog & { rank: number; name: string }
 
 // ── Shared styles (match existing admin pages) ─────────────────────
-const CARD  = { background: '#16201a', border: '1px solid #27342b' }
-const THHD  = { background: '#1b271f', borderBottom: '1px solid #27342b' }
-const TROW  = { borderBottom: '1px solid rgba(39,52,43,0.6)' }
+const CARD  = { background: '#FFFFFF', border: '1px solid #E5E7EB' }
+const THHD  = { background: '#FFFFFF', borderBottom: '1px solid #E5E7EB' }
+const TROW  = { borderBottom: '1px solid rgba(229,231,235,0.6)' }
 
 export default function CentumPage() {
   const router = useRouter()
@@ -122,17 +122,17 @@ export default function CentumPage() {
           onClick={recalculateAll}
           disabled={recalcState.phase === 'running'}
           className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
-          style={{ background: '#1b271f', color: '#9aa893', border: '1px solid #27342b' }}
+          style={{ background: '#FFFFFF', color: '#6B7280', border: '1px solid #E5E7EB' }}
         >
           {recalcState.phase === 'running' ? (
             <>
               <div className="w-3.5 h-3.5 rounded-full border border-t-transparent animate-spin"
-                style={{ borderColor: 'rgba(94,200,192,0.3)', borderTopColor: '#5ec8c0' }} />
+                style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
               Calculating {recalcState.done}/{recalcState.total}…
             </>
           ) : recalcState.phase === 'done' ? (
             <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0B3D91" strokeWidth="2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
               Done
             </>
           ) : (
@@ -158,7 +158,7 @@ export default function CentumPage() {
               value={batchId}
               onChange={e => setBatchId(e.target.value)}
               className="text-xs rounded-lg px-3 py-1.5 focus:outline-none font-mono"
-              style={{ background: '#16201a', border: '1px solid #27342b', color: '#9aa893' }}
+              style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', color: '#6B7280' }}
             >
               <option value="">All batches</option>
               {batches.map(b => (
@@ -186,7 +186,7 @@ export default function CentumPage() {
                   <tr key={i} style={TROW}>
                     {[...Array(5)].map((_, j) => (
                       <td key={j} className="px-4 py-3">
-                        <div className="h-4 rounded animate-pulse" style={{ background: '#1b271f', width: j === 1 ? '60%' : '40%' }} />
+                        <div className="h-4 rounded animate-pulse" style={{ background: '#FFFFFF', width: j === 1 ? '60%' : '40%' }} />
                       </td>
                     ))}
                   </tr>
@@ -246,9 +246,9 @@ export default function CentumPage() {
         </p>
         <div className="grid grid-cols-3 gap-4">
           {[
-            { label: '50% Refund',  threshold: '95%+',    count: goldCount,   color: '#4ADE80' },
-            { label: '35% Refund',  threshold: '85–95%',  count: silverCount, color: '#5ec8c0' },
-            { label: '25% Refund',  threshold: '75–85%',  count: bronzeCount, color: '#e7b14c' },
+            { label: '50% Refund',  threshold: '95%+',    count: goldCount,   color: '#0B3D91' },
+            { label: '35% Refund',  threshold: '85–95%',  count: silverCount, color: '#0B3D91' },
+            { label: '25% Refund',  threshold: '75–85%',  count: bronzeCount, color: '#F59E0B' },
           ].map(({ label, threshold, count, color }) => (
             <div key={label} className="rounded-xl p-5" style={CARD}>
               <div className="flex items-center gap-2 mb-3">
@@ -263,7 +263,7 @@ export default function CentumPage() {
       </div>
 
       {/* ── Section 3: Formula ─────────────────────────────────────── */}
-      <div className="rounded-xl p-5" style={{ ...CARD, borderColor: 'rgba(94,200,192,0.15)' }}>
+      <div className="rounded-xl p-5" style={{ ...CARD, borderColor: 'rgba(11,61,145,0.15)' }}>
         <p className="text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono mb-4">
           Formula Reference
         </p>

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { setCachedToken } from '@/src/lib/analytics/track'
 import { LogoFull } from '@/src/components/ui/Logo'
 
 const NAV = [
@@ -89,7 +90,7 @@ function NavContent({
   return (
     <>
       {/* Logo */}
-      <div className="px-4 py-5" style={{ borderBottom: '1px solid #27342b' }}>
+      <div className="px-4 py-5" style={{ borderBottom: '1px solid #E5E7EB' }}>
         <LogoFull size={24} glow />
         <p className="text-[10px] text-text-muted leading-none mt-2 font-mono pl-0.5">Admin Console</p>
       </div>
@@ -104,14 +105,14 @@ function NavContent({
               className={`flex items-center gap-2.5 px-3 py-3 md:py-2 rounded-lg text-sm transition-colors ${
                 active ? 'text-primary font-medium' : 'text-text-muted hover:text-text-secondary'
               }`}
-              style={active ? { background: 'rgba(74,222,128,0.08)' } : {}}>
+              style={active ? { background: 'rgba(11,61,145,0.08)' } : {}}>
               <Icon active={active} />
               {label}
             </Link>
           )
         })}
 
-        <div className="pt-2 mt-2" style={{ borderTop: '1px solid #27342b' }}>
+        <div className="pt-2 mt-2" style={{ borderTop: '1px solid #E5E7EB' }}>
           <Link href="/dashboard"
             onClick={onNavClick}
             className="flex items-center gap-2.5 px-3 py-3 md:py-2 rounded-lg text-sm text-text-muted hover:text-text-secondary transition-colors">
@@ -126,10 +127,10 @@ function NavContent({
       </nav>
 
       {/* User footer */}
-      <div className="px-2 py-3" style={{ borderTop: '1px solid #27342b' }}>
+      <div className="px-2 py-3" style={{ borderTop: '1px solid #E5E7EB' }}>
         <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
           <div className="w-6 h-6 rounded-full text-xs font-semibold flex items-center justify-center shrink-0"
-            style={{ background: 'rgba(74,222,128,0.15)', color: '#4ADE80' }}>
+            style={{ background: 'rgba(11,61,145,0.15)', color: '#0B3D91' }}>
             {initials}
           </div>
           <p className="text-sm text-text-secondary truncate font-medium">{adminName}</p>
@@ -197,15 +198,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [router])
 
   async function handleLogout() {
+    setCachedToken(null)
     await getSupabaseBrowserClient().auth.signOut()
     router.replace('/auth/login')
   }
 
   if (checking) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF' }}>
         <div className="w-5 h-5 rounded-full animate-spin"
-          style={{ border: '2px solid rgba(74,222,128,0.2)', borderTopColor: '#4ADE80' }} />
+          style={{ border: '2px solid rgba(11,61,145,0.2)', borderTopColor: '#0B3D91' }} />
       </div>
     )
   }
@@ -215,12 +217,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   )?.label ?? 'Admin'
 
   return (
-    <div className="flex min-h-screen" style={{ background: '#0e1410' }}>
+    <div className="flex min-h-screen" style={{ background: '#FFFFFF' }}>
 
       {/* ── Desktop Sidebar ───────────────────────────────────────── */}
       <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 w-56 z-20"
         aria-label="Admin panel"
-        style={{ background: '#0e1410', borderRight: '1px solid #27342b' }}>
+        style={{ background: '#FFFFFF', borderRight: '1px solid #E5E7EB' }}>
         <NavContent
           pathname={pathname}
           adminName={adminName}
@@ -243,7 +245,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         className={`md:hidden fixed inset-y-0 left-0 w-72 z-50 flex flex-col drawer-slide ${drawerOpen ? 'open' : ''}`}
         aria-label="Admin panel"
         aria-hidden={!drawerOpen}
-        style={{ background: '#0e1410', borderRight: '1px solid #27342b', paddingBottom: 'env(safe-area-inset-bottom)' }}>
+        style={{ background: '#FFFFFF', borderRight: '1px solid #E5E7EB', paddingBottom: 'env(safe-area-inset-bottom)' }}>
         <NavContent
           pathname={pathname}
           adminName={adminName}
@@ -253,21 +255,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* ── Main content area ─────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col min-h-screen md:ml-56" style={{ background: '#141d17' }}>
+      <div className="flex-1 flex flex-col min-h-screen md:ml-56" style={{ background: '#F8FAFC' }}>
 
         {/* Mobile Top Bar */}
         <header className="md:hidden sticky top-0 z-30 flex items-center gap-3 px-4 h-14"
           style={{
-            background: 'rgba(14,20,16,0.97)',
+            background: 'rgba(255,255,255,0.85)',
             backdropFilter: 'blur(8px)',
-            borderBottom: '1px solid #27342b',
+            borderBottom: '1px solid #E5E7EB',
             paddingTop: 'env(safe-area-inset-top)',
           }}>
           <button
             onClick={() => setDrawerOpen(true)}
             aria-label="Open navigation menu"
             className="w-10 h-10 flex items-center justify-center rounded-xl transition-colors"
-            style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid #27342b' }}>
+            style={{ background: 'rgba(17,24,39,0.04)', border: '1px solid #E5E7EB' }}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <line x1="3" y1="6"  x2="21" y2="6"/>
               <line x1="3" y1="12" x2="21" y2="12"/>

@@ -14,19 +14,19 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variants: Record<Variant, string> = {
   primary:
-    'bg-primary text-[#06140c] font-semibold hover:bg-primary-hover active:bg-primary-active ' +
-    'shadow-[0_2px_16px_rgba(74,222,128,0.30)] hover:shadow-[0_4px_24px_rgba(74,222,128,0.45)]',
+    'bg-primary text-white font-semibold hover:bg-primary-hover active:bg-primary-active ' +
+    'shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-primary)]',
   secondary:
-    'bg-surface-overlay text-text border border-border ' +
-    'hover:bg-surface-raised hover:border-border-strong',
+    'bg-surface text-text border border-border-strong ' +
+    'shadow-[var(--shadow-xs)] hover:bg-surface-overlay hover:border-text-faint',
   ghost:
     'text-text-secondary hover:bg-surface-overlay hover:text-text',
   danger:
-    'bg-error/15 text-error border border-error/25 ' +
-    'hover:bg-error/20 hover:border-error/40',
+    'bg-error/10 text-error-text border border-error/25 ' +
+    'hover:bg-error/15 hover:border-error/40',
   outline:
-    'border border-primary/40 text-primary ' +
-    'hover:bg-primary-subtle hover:border-primary/60',
+    'border border-primary/35 text-primary bg-surface ' +
+    'hover:bg-primary-subtle hover:border-primary/55',
 }
 
 const sizes: Record<Size, string> = {

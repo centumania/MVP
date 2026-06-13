@@ -8,7 +8,7 @@ import { Badge } from '@/src/components/ui/Badge'
 import type { QuestionForClient, ExamSubmitResult, AnswerOption } from '@/src/types/database'
 
 type ExamData = {
-  exam: { id: string; dayNumber: number; title: string; openTime: string; closeTime: string }
+  exam: { id: string; dayNumber: number; title: string; openTime: string; closeTime: string; linkUrl: string | null }
   questions: QuestionForClient[]
   alreadySubmitted: boolean
   submission: { id: string; score: number; total_marks: number } | null
@@ -19,10 +19,10 @@ const OPTIONS: AnswerOption[] = ['A', 'B', 'C', 'D']
 
 // score → color mapping (bio-map palette)
 function scoreColor(pct: number) {
-  if (pct >= 80) return '#4ADE80'
-  if (pct >= 60) return '#5ec8c0'
-  if (pct >= 40) return '#e7b14c'
-  return '#e8736b'
+  if (pct >= 80) return '#0B3D91'
+  if (pct >= 60) return '#0B3D91'
+  if (pct >= 40) return '#F59E0B'
+  return '#EF4444'
 }
 
 function useCountdown(closeTime: string | null) {
@@ -47,15 +47,16 @@ export default function ExamPage() {
   const router = useRouter()
   const { day } = useParams() as { day: string }
 
-  const [token, setToken]       = useState<string | null>(null)
-  const [phase, setPhase]       = useState<Phase>('loading')
-  const [data, setData]         = useState<ExamData | null>(null)
-  const [answers, setAnswers]   = useState<Record<string, AnswerOption>>({})
-  const [flagged, setFlagged]   = useState<Set<string>>(new Set())
-  const [activeQ, setActiveQ]   = useState(0)
-  const [result, setResult]     = useState<ExamSubmitResult | null>(null)
-  const [errorMsg, setErrorMsg] = useState('')
-  const questionRefs            = useRef<(HTMLDivElement | null)[]>([])
+  const [token, setToken]           = useState<string | null>(null)
+  const [phase, setPhase]           = useState<Phase>('loading')
+  const [data, setData]             = useState<ExamData | null>(null)
+  const [answers, setAnswers]       = useState<Record<string, AnswerOption>>({})
+  const [flagged, setFlagged]       = useState<Set<string>>(new Set())
+  const [activeQ, setActiveQ]       = useState(0)
+  const [result, setResult]         = useState<ExamSubmitResult | null>(null)
+  const [errorMsg, setErrorMsg]     = useState('')
+  const [closedLinkUrl, setClosedLinkUrl] = useState<string | null>(null)
+  const questionRefs                = useRef<(HTMLDivElement | null)[]>([])
 
   const { remaining, urgent } = useCountdown(phase === 'exam' && data ? data.exam.closeTime : null)
 
@@ -64,7 +65,11 @@ export default function ExamPage() {
     if (res.status === 401) { router.replace('/auth/login'); return }
     if (res.status === 402) { router.replace('/dashboard');  return }
     if (res.status === 403) {
-      const b = await res.json(); setPhase('window-closed'); setErrorMsg(b?.windowStatus?.message ?? 'Exam window is not open.'); return
+      const b = await res.json()
+      setPhase('window-closed')
+      setErrorMsg(b?.windowStatus?.message ?? 'Exam window is not open.')
+      if (b?.linkUrl) setClosedLinkUrl(b.linkUrl)
+      return
     }
     if (!res.ok) { setPhase('error'); setErrorMsg('Failed to load exam.'); return }
     const d: ExamData = await res.json()
@@ -115,9 +120,9 @@ export default function ExamPage() {
   // ── Loading / Submitting ──────────────────────────────────────
   if (phase === 'loading' || phase === 'submitting') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#F8FAFC' }}>
         <div className="w-8 h-8 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#4ADE80', boxShadow: '0 0 12px rgba(74,222,128,0.3)' }} />
+          style={{ borderTopColor: '#0B3D91', boxShadow: '0 0 12px rgba(11,61,145,0.3)' }} />
         <p className="text-sm text-text-muted">
           {phase === 'submitting' ? 'Submitting your answers…' : 'Loading exam…'}
         </p>
@@ -128,11 +133,11 @@ export default function ExamPage() {
   // ── Window Closed / Error ─────────────────────────────────────
   if (phase === 'window-closed' || phase === 'error') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#F8FAFC' }}>
         <div className="w-16 h-16 rounded-3xl flex items-center justify-center mx-auto mb-6"
           style={phase === 'error'
-            ? { background: 'rgba(232,115,107,0.10)', border: '1px solid rgba(232,115,107,0.20)' }
-            : { background: 'rgba(154,168,147,0.06)', border: '1px solid #27342b' }}>
+            ? { background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.20)' }
+            : { background: 'rgba(154,168,147,0.06)', border: '1px solid #E5E7EB' }}>
           {phase === 'window-closed'
             ? <svg className="w-7 h-7 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             : <svg className="w-7 h-7 text-error" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -142,6 +147,17 @@ export default function ExamPage() {
           {phase === 'window-closed' ? 'Exam closed' : 'Something went wrong'}
         </h2>
         <p className="text-sm text-text-muted max-w-xs mb-6">{errorMsg}</p>
+        {phase === 'window-closed' && closedLinkUrl && (
+          <a
+            href={closedLinkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mb-3 px-6 py-3 rounded-xl text-sm font-semibold text-white"
+            style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.9), rgba(217,119,6,0.9))' }}
+          >
+            Open Test Link
+          </a>
+        )}
         <Button onClick={() => router.push('/dashboard')} variant="secondary">Back to dashboard</Button>
       </div>
     )
@@ -159,7 +175,7 @@ export default function ExamPage() {
       : 0
     const col = scoreColor(pct)
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#F8FAFC' }}>
         <Badge variant="success" className="mb-5">Submitted</Badge>
         <h2 className="text-2xl font-bold text-text mb-3" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
           Day {data.exam.dayNumber} complete
@@ -169,6 +185,24 @@ export default function ExamPage() {
           <span className="text-2xl text-text-muted">/ {data.submission.total_marks}</span>
         </div>
         <p className="text-sm font-bold mb-8" style={{ color: col }}>{pct}%</p>
+        {data.exam.linkUrl && (
+          <a
+            href={data.exam.linkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl mb-4 text-sm font-semibold transition-all"
+            style={{
+              background: 'linear-gradient(135deg,rgba(245,158,11,0.12),rgba(245,158,11,0.08))',
+              border: '1px solid rgba(245,158,11,0.30)',
+              color: '#D97706',
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+            Open Test Link
+          </a>
+        )}
         <Button onClick={() => router.push('/dashboard')}>Back to dashboard</Button>
       </div>
     )
@@ -180,18 +214,18 @@ export default function ExamPage() {
   const total     = questions.length
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#0e1410' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#F8FAFC' }}>
 
       {/* ── STICKY HEADER ───────────────────────────────────────── */}
       <header className="sticky top-0 z-20"
-        style={{ background: 'rgba(14,20,16,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid #27342b' }}>
+        style={{ background: 'rgba(14,20,16,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid #E5E7EB' }}>
         <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
             <button onClick={() => router.push('/dashboard')}
               className="p-1.5 -ml-1.5 rounded-lg transition-colors shrink-0"
-              style={{ color: '#6b7a63' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#e8ead8'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.04)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#6b7a63'; (e.currentTarget as HTMLButtonElement).style.background = '' }}>
+              style={{ color: '#9CA3AF' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#111827'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(17,24,39,0.04)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#9CA3AF'; (e.currentTarget as HTMLButtonElement).style.background = '' }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
               </svg>
@@ -210,8 +244,8 @@ export default function ExamPage() {
             aria-live="polite"
             aria-atomic="true"
             style={urgent
-              ? { background: 'rgba(232,115,107,0.10)', border: '1px solid rgba(232,115,107,0.30)', color: '#e8736b', boxShadow: '0 0 12px rgba(232,115,107,0.20)' }
-              : { background: 'rgba(255,255,255,0.03)', border: '1px solid #27342b', color: '#9aa893' }
+              ? { background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.30)', color: '#EF4444', boxShadow: '0 0 12px rgba(239,68,68,0.20)' }
+              : { background: 'rgba(17,24,39,0.03)', border: '1px solid #E5E7EB', color: '#6B7280' }
             }>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
@@ -221,9 +255,9 @@ export default function ExamPage() {
         </div>
 
         {/* Progress bar */}
-        <div className="h-0.5" style={{ background: 'rgba(74,222,128,0.08)' }}>
+        <div className="h-0.5" style={{ background: 'rgba(11,61,145,0.08)' }}>
           <div className="h-full transition-all duration-300"
-            style={{ width: `${(answered / total) * 100}%`, background: 'linear-gradient(90deg,#4ADE80,#22C55E)', boxShadow: '0 0 6px rgba(74,222,128,0.5)' }} />
+            style={{ width: `${(answered / total) * 100}%`, background: 'linear-gradient(90deg,#0B3D91,#10B981)', boxShadow: '0 0 6px rgba(11,61,145,0.5)' }} />
         </div>
       </header>
 
@@ -231,6 +265,35 @@ export default function ExamPage() {
 
         {/* ── Questions ─────────────────────────────────────────── */}
         <div className="flex-1 space-y-4">
+          {data.exam.linkUrl && (
+            <a
+              href={data.exam.linkUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between px-5 py-4 rounded-xl transition-all"
+              style={{
+                background: 'linear-gradient(135deg,rgba(245,158,11,0.12),rgba(245,158,11,0.08))',
+                border: '1px solid rgba(245,158,11,0.30)',
+              }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: 'rgba(245,158,11,0.15)' }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                  </svg>
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-semibold" style={{ color: '#D97706' }}>Open Test Link</p>
+                  <p className="text-xs text-text-muted mt-0.5">Opens in new tab</p>
+                </div>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          )}
           {questions.map((q, i) => {
             const sel       = answers[q.id] ?? null
             const isFlagged = flagged.has(q.id)
@@ -243,16 +306,16 @@ export default function ExamPage() {
                 ref={el => { questionRefs.current[i] = el }}
                 className="rounded-2xl p-5 transition-all duration-200"
                 style={{
-                  background: '#16201a',
-                  border: `1px solid ${isActive ? 'rgba(74,222,128,0.25)' : '#27342b'}`,
-                  boxShadow: isActive ? '0 0 20px rgba(74,222,128,0.06)' : undefined,
+                  background: '#FFFFFF',
+                  border: `1px solid ${isActive ? 'rgba(11,61,145,0.25)' : '#E5E7EB'}`,
+                  boxShadow: isActive ? '0 0 20px rgba(11,61,145,0.06)' : undefined,
                 }}
                 onClick={() => setActiveQ(i)}
               >
                 <div className="flex items-start justify-between gap-3 mb-4">
                   <div className="flex items-center gap-2.5">
                     <span className="text-[10px] font-bold text-text-muted px-2 py-1 rounded-lg uppercase tracking-widest font-mono"
-                      style={{ background: '#1b271f', border: '1px solid #27342b' }}>
+                      style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
                       Q{i + 1}
                     </span>
                     {q.marks > 1 && <span className="text-[10px] text-text-muted font-semibold font-mono">{q.marks} marks</span>}
@@ -262,7 +325,7 @@ export default function ExamPage() {
                     title={isFlagged ? 'Remove flag' : 'Flag for review'}
                     className="p-1.5 rounded-lg transition-all"
                     style={isFlagged
-                      ? { background: 'rgba(231,177,76,0.12)', color: '#e7b14c', border: '1px solid rgba(231,177,76,0.25)' }
+                      ? { background: 'rgba(245,158,11,0.12)', color: '#F59E0B', border: '1px solid rgba(245,158,11,0.25)' }
                       : { color: '#3a4a3d' }
                     }>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill={isFlagged ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -285,24 +348,24 @@ export default function ExamPage() {
                         onClick={e => { e.stopPropagation(); setAnswers(p => ({ ...p, [q.id]: opt })); setActiveQ(i) }}
                         className="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-left transition-all duration-150 text-sm"
                         style={isSelected ? {
-                          background: 'rgba(74,222,128,0.10)',
-                          border: '1px solid rgba(74,222,128,0.35)',
-                          boxShadow: '0 0 12px rgba(74,222,128,0.10)',
-                          color: '#4ADE80',
+                          background: 'rgba(11,61,145,0.10)',
+                          border: '1px solid rgba(11,61,145,0.35)',
+                          boxShadow: '0 0 12px rgba(11,61,145,0.10)',
+                          color: '#0B3D91',
                         } : {
                           background: 'rgba(255,255,255,0.02)',
-                          border: '1px solid #27342b',
-                          color: '#9aa893',
+                          border: '1px solid #E5E7EB',
+                          color: '#6B7280',
                         }}
                       >
                         <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-all font-mono"
                           style={isSelected ? {
-                            background: '#22C55E',
-                            color: '#06140c',
-                            boxShadow: '0 0 8px rgba(63,174,106,0.5)',
+                            background: '#10B981',
+                            color: '#FFFFFF',
+                            boxShadow: '0 0 8px rgba(16,185,129,0.5)',
                           } : {
-                            background: '#1b271f',
-                            border: '1px solid #27342b',
+                            background: '#FFFFFF',
+                            border: '1px solid #E5E7EB',
                             color: '#3a4a3d',
                           }}>
                           {opt}
@@ -320,7 +383,7 @@ export default function ExamPage() {
 
           {/* ── Submit Section ─────────────────────────────────── */}
           <div className="pb-6">
-            <div className="rounded-2xl p-5" style={{ background: '#16201a', border: '1px solid #27342b' }}>
+            <div className="rounded-2xl p-5" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <p className="text-sm font-bold text-text">Ready to submit?</p>
@@ -342,7 +405,7 @@ export default function ExamPage() {
 
         {/* ── Desktop Navigator ─────────────────────────────────── */}
         <aside className="hidden lg:block w-44 shrink-0">
-          <div className="sticky top-20 rounded-2xl p-4" style={{ background: '#16201a', border: '1px solid #27342b' }}>
+          <div className="sticky top-20 rounded-2xl p-4" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
             <p className="text-[9px] font-bold text-text-muted uppercase tracking-widest mb-3 font-mono">Navigator</p>
             <div className="grid grid-cols-5 gap-1.5">
               {questions.map((q, i) => {
@@ -353,18 +416,18 @@ export default function ExamPage() {
                   <button key={q.id} onClick={() => scrollTo(i)} title={`Q${i + 1}`}
                     className="w-7 h-7 rounded-lg text-[10px] font-bold transition-all duration-150 font-mono"
                     style={isFlagged ? {
-                      background: 'rgba(231,177,76,0.12)',
-                      border: '1px solid rgba(231,177,76,0.25)',
-                      color: '#e7b14c',
-                      outline: isActive ? '2px solid rgba(231,177,76,0.5)' : undefined,
+                      background: 'rgba(245,158,11,0.12)',
+                      border: '1px solid rgba(245,158,11,0.25)',
+                      color: '#F59E0B',
+                      outline: isActive ? '2px solid rgba(245,158,11,0.5)' : undefined,
                     } : isAnswered ? {
-                      background: 'linear-gradient(135deg,#4ADE80,#22C55E)',
-                      color: '#06140c',
-                      boxShadow: isActive ? '0 0 8px rgba(74,222,128,0.5)' : undefined,
-                      outline: isActive ? '2px solid rgba(74,222,128,0.5)' : undefined,
+                      background: 'linear-gradient(135deg,#0B3D91,#10B981)',
+                      color: '#FFFFFF',
+                      boxShadow: isActive ? '0 0 8px rgba(11,61,145,0.5)' : undefined,
+                      outline: isActive ? '2px solid rgba(11,61,145,0.5)' : undefined,
                     } : {
-                      background: '#1b271f',
-                      border: '1px solid #27342b',
+                      background: '#FFFFFF',
+                      border: '1px solid #E5E7EB',
                       color: '#3a4a3d',
                       outline: isActive ? '2px solid rgba(154,168,147,0.3)' : undefined,
                     }}>
@@ -373,11 +436,11 @@ export default function ExamPage() {
                 )
               })}
             </div>
-            <div className="mt-4 space-y-1.5 pt-3" style={{ borderTop: '1px solid #27342b' }}>
+            <div className="mt-4 space-y-1.5 pt-3" style={{ borderTop: '1px solid #E5E7EB' }}>
               {[
-                { bg: 'linear-gradient(135deg,#4ADE80,#22C55E)',  label: 'Answered', text: '#06140c' },
-                { bg: 'rgba(231,177,76,0.12)', label: 'Flagged',  text: '#e7b14c',  border: 'rgba(231,177,76,0.25)' },
-                { bg: '#1b271f',               label: 'Skipped',  text: '#3a4a3d',  border: '#27342b' },
+                { bg: 'linear-gradient(135deg,#0B3D91,#10B981)',  label: 'Answered', text: '#FFFFFF' },
+                { bg: 'rgba(245,158,11,0.12)', label: 'Flagged',  text: '#F59E0B',  border: 'rgba(245,158,11,0.25)' },
+                { bg: '#FFFFFF',               label: 'Skipped',  text: '#3a4a3d',  border: '#E5E7EB' },
               ].map(({ bg, label, border }) => (
                 <div key={label} className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-md shrink-0"
@@ -398,11 +461,11 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
   const { score, total, percentage, answerKey } = result
   const router = useRouter()
 
-  const col   = percentage >= 80 ? '#4ADE80' : percentage >= 60 ? '#5ec8c0' : percentage >= 40 ? '#e7b14c' : '#e8736b'
+  const col   = percentage >= 80 ? '#0B3D91' : percentage >= 60 ? '#0B3D91' : percentage >= 40 ? '#F59E0B' : '#EF4444'
   const label = percentage >= 80 ? 'Excellent' : percentage >= 60 ? 'Good' : percentage >= 40 ? 'Average' : 'Keep going'
 
   return (
-    <div className="min-h-screen" style={{ background: '#0e1410' }}>
+    <div className="min-h-screen" style={{ background: '#F8FAFC' }}>
       {/* Score header */}
       <div className="py-12 px-4 text-center">
         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-widest mb-5 font-mono"
@@ -416,7 +479,7 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
         </div>
         <p className="text-sm text-text-muted">Day {dayNumber} · {percentage}% accuracy</p>
 
-        <div className="max-w-xs mx-auto mt-5 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+        <div className="max-w-xs mx-auto mt-5 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(17,24,39,0.05)' }}>
           <div className="h-full rounded-full transition-all duration-700"
             style={{ width: `${percentage}%`, background: col, boxShadow: `0 0 8px ${col}60` }} />
         </div>
@@ -428,13 +491,13 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
               onClick={() => router.push(`/mentor/${examId}`)}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
               style={{
-                background: 'rgba(74,222,128,0.08)',
-                border: '1px solid rgba(74,222,128,0.25)',
-                color: '#4ADE80',
-                boxShadow: '0 0 16px rgba(74,222,128,0.08)',
+                background: 'rgba(11,61,145,0.08)',
+                border: '1px solid rgba(11,61,145,0.25)',
+                color: '#0B3D91',
+                boxShadow: '0 0 16px rgba(11,61,145,0.08)',
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(74,222,128,0.14)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(74,222,128,0.08)' }}>
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(11,61,145,0.14)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(11,61,145,0.08)' }}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
               </svg>
@@ -467,15 +530,15 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
           {answerKey.map((item, i) => (
             <div key={item.questionId} className="rounded-2xl p-4 transition-all"
               style={{
-                background: '#16201a',
-                border: `1px solid ${item.isCorrect ? 'rgba(74,222,128,0.15)' : 'rgba(232,115,107,0.15)'}`,
+                background: '#FFFFFF',
+                border: `1px solid ${item.isCorrect ? 'rgba(11,61,145,0.15)' : 'rgba(239,68,68,0.15)'}`,
               }}>
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest font-mono">Q{i + 1}</span>
                 <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md font-mono"
                   style={item.isCorrect
-                    ? { background: 'rgba(74,222,128,0.10)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.20)' }
-                    : { background: 'rgba(232,115,107,0.10)', color: '#e8736b', border: '1px solid rgba(232,115,107,0.20)' }
+                    ? { background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }
+                    : { background: 'rgba(239,68,68,0.10)', color: '#EF4444', border: '1px solid rgba(239,68,68,0.20)' }
                   }>
                   {item.isCorrect ? 'Correct' : 'Incorrect'}
                 </span>
@@ -491,7 +554,7 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
               )}
               {item.explanation && (
                 <p className="text-xs text-text-muted mt-2.5 pt-2.5 leading-relaxed"
-                  style={{ borderTop: '1px solid #27342b' }}>
+                  style={{ borderTop: '1px solid #E5E7EB' }}>
                   {item.explanation}
                 </p>
               )}
