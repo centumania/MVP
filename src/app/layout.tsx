@@ -1,14 +1,12 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Bebas_Neue } from 'next/font/google'
 import { headers } from 'next/headers'
 import './globals.css'
 
 /**
- * Inter only — per the CentuMania design system.
- * One typeface family powers display, body, and numeric text. We expose it
- * under the `--font-inter` variable AND the legacy variable names so existing
- * `var(--font-fraunces|hanken|jetbrains)` references resolve to Inter without
- * touching every component.
+ * Inter — body, numeric text, UI labels.
+ * Bebas Neue — screen titles, timer, major section headings.
+ * Both exposed as CSS variables for use in globals.css @theme.
  */
 const inter = Inter({
   subsets: ['latin'],
@@ -17,9 +15,16 @@ const inter = Inter({
   weight: ['400', '500', '600', '700', '800'],
 })
 
+const bebasNeue = Bebas_Neue({
+  subsets: ['latin'],
+  variable: '--font-bebas-neue',
+  display: 'swap',
+  weight: ['400'],
+})
+
 export const metadata: Metadata = {
   title: 'CentuMania — Winning is a habit',
-  description: "India's most disciplined LDC/UDC exam prep platform. 25-day intensive programme for Puducherry LDC/UDC competitive exam aspirants.",
+  description: "India's most disciplined LDC/UDC exam prep platform. Intensive daily programme for Puducherry LDC/UDC competitive exam aspirants.",
   icons: {
     icon:  '/favicon.svg',
     apple: '/icons/apple-touch-icon.png',
@@ -34,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     type:        'website',
     title:       'CentuMania — Winning is a habit',
-    description: "India's most disciplined LDC/UDC exam prep platform. 25-day intensive programme for Puducherry competitive exam aspirants.",
+    description: "India's most disciplined LDC/UDC exam prep platform. Intensive daily programme for Puducherry competitive exam aspirants.",
     siteName:    'CentuMania',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CentuMania' }],
   },
@@ -52,8 +57,8 @@ export const viewport: Viewport = {
   maximumScale:    1,
   viewportFit:     'cover',
   themeColor:      [
-    { media: '(prefers-color-scheme: light)', color: '#F8FAFC' },
-    { media: '(prefers-color-scheme: dark)',  color: '#F8FAFC' },
+    { media: '(prefers-color-scheme: light)', color: '#0B1020' },
+    { media: '(prefers-color-scheme: dark)',  color: '#0B1020' },
   ],
 }
 
@@ -79,9 +84,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       lang="en"
       nonce={nonce || undefined}
       suppressHydrationWarning
-      className={inter.variable}
+      className={`${inter.variable} ${bebasNeue.variable}`}
     >
-      <body className="bg-bg text-text font-sans antialiased" suppressHydrationWarning>
+      <body className="bg-cm-carbon text-cm-neutral-50 font-sans antialiased" suppressHydrationWarning>
         {/* Skip-to-content link — WCAG 2.1 SC 2.4.1 */}
         <a
           href="#main-content"

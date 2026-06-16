@@ -82,17 +82,17 @@ export function AppLayout({ children, userName, batchName }: {
     ?.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase() ?? '?'
 
   return (
-    <div className="flex min-h-screen bg-bg">
+    <div className="flex min-h-screen" style={{ background: 'var(--color-cm-carbon)' }}>
 
       {/* ── Desktop Sidebar ─────────────────────────────────────── */}
       <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 z-20"
         aria-label="Main navigation"
-        style={{ width: 228, background: 'var(--color-surface)', borderRight: '1px solid var(--color-border)' }}>
+        style={{ width: 228, background: '#0d1526', borderRight: '1px solid rgba(255,255,255,0.07)' }}>
 
         {/* Brand */}
-        <div className="px-5 py-5" style={{ borderBottom: '1px solid var(--color-border)' }}>
+        <div className="px-5 py-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
           <LogoFull size={26} />
-          <p className="text-[11px] text-text-muted mt-2 tracking-wide pl-0.5">
+          <p className="text-[11px] mt-2 tracking-wide pl-0.5" style={{ color: 'var(--color-cm-neutral-300)' }}>
             {batchName ?? 'Winning is a Habit'}
           </p>
         </div>
@@ -108,13 +108,17 @@ export function AppLayout({ children, userName, batchName }: {
                 className={[
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 relative',
                   active
-                    ? 'text-primary font-semibold bg-primary-subtle'
-                    : 'text-text-muted hover:text-text hover:bg-surface-overlay',
+                    ? 'font-semibold'
+                    : 'hover:bg-white/5',
                 ].join(' ')}
+                style={active
+                  ? { color: '#F9FAFB', background: 'rgba(37,51,255,0.18)', border: '1px solid rgba(37,51,255,0.25)' }
+                  : { color: 'var(--color-cm-neutral-300)' }
+                }
               >
                 {active && (
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 rounded-full"
-                    style={{ background: 'var(--color-primary)' }} />
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full"
+                    style={{ background: '#2533FF' }} />
                 )}
                 <Icon a={active} />
                 <span className="tracking-tight">{label}</span>
@@ -124,19 +128,20 @@ export function AppLayout({ children, userName, batchName }: {
         </nav>
 
         {/* User Section */}
-        <div className="px-3 py-4" style={{ borderTop: '1px solid var(--color-border)' }}>
+        <div className="px-3 py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
           {userName && (
             <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
               <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
-                style={{ background: 'var(--color-primary)', color: '#FFFFFF' }}>
+                style={{ background: 'linear-gradient(135deg,#2533FF,#0EA5A0)', color: '#FFFFFF' }}>
                 {initials}
               </div>
-              <p className="text-xs font-semibold text-text-secondary truncate">{userName}</p>
+              <p className="text-xs font-semibold truncate" style={{ color: 'var(--color-cm-neutral-50)' }}>{userName}</p>
             </div>
           )}
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-xs text-text-muted hover:text-text hover:bg-surface-overlay transition-colors"
+            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-xs transition-colors hover:bg-white/5"
+            style={{ color: 'var(--color-cm-neutral-300)' }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -154,13 +159,13 @@ export function AppLayout({ children, userName, batchName }: {
 
           {/* Mobile Top Bar */}
           <header className="surface-blur md:hidden flex items-center justify-between px-4 h-14 sticky top-0 z-10"
-            style={{ borderBottom: '1px solid var(--color-border)' }}>
+            style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
             <div className="flex items-center gap-2.5">
               <LogoFull size={22} />
             </div>
             {userName && (
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ background: 'var(--color-primary)', color: '#FFFFFF' }}>
+                style={{ background: 'linear-gradient(135deg,#2533FF,#0EA5A0)', color: '#FFFFFF' }}>
                 {initials}
               </div>
             )}
@@ -180,7 +185,7 @@ export function AppLayout({ children, userName, batchName }: {
       {/* ── Mobile Bottom Nav ────────────────────────────────────── */}
       <nav className="surface-blur md:hidden fixed bottom-0 inset-x-0 z-20 flex mobile-nav-safe"
         aria-label="Mobile navigation"
-        style={{ borderTop: '1px solid var(--color-border)' }}>
+        style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
         {NAV.map(({ href, label, Icon }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
@@ -188,14 +193,12 @@ export function AppLayout({ children, userName, batchName }: {
               key={href}
               href={href}
               aria-current={active ? 'page' : undefined}
-              className={[
-                'flex-1 flex flex-col items-center justify-center py-2.5 gap-1 transition-colors touch-target relative',
-                active ? 'text-primary' : 'text-text-muted',
-              ].join(' ')}
+              className="flex-1 flex flex-col items-center justify-center py-2.5 gap-1 transition-colors touch-target relative"
+              style={{ color: active ? '#F9FAFB' : 'var(--color-cm-neutral-300)' }}
             >
               {active && (
-                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full"
-                  style={{ background: 'var(--color-primary)' }} />
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] rounded-full"
+                  style={{ background: '#2533FF' }} />
               )}
               <Icon a={active} />
               <span className="text-[9px] font-semibold tracking-widest uppercase">

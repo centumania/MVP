@@ -161,7 +161,7 @@ export default function AdminExams() {
             <h2 className="text-lg font-semibold text-text mb-5" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>Create Exam</h2>
             <div className="space-y-4">
               {[
-                { label: 'Day Number (1–25)', field: 'dayNumber', type: 'number', placeholder: '1' },
+                { label: 'Day Number', field: 'dayNumber', type: 'number', placeholder: '1' },
                 { label: 'Title',             field: 'title',     type: 'text',   placeholder: 'Day 1 — General Knowledge' },
                 { label: 'Exam Date (IST)',    field: 'examDate',  type: 'date',   placeholder: '' },
               ].map(({ label, field, type, placeholder }) => (

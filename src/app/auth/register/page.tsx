@@ -128,7 +128,7 @@ export default function RegisterPage() {
           style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
           Create your account
         </h1>
-        <p className="text-sm mb-8 text-text-muted">Begin your 15-day intensive programme.</p>
+        <p className="text-sm mb-8 text-text-muted">Begin your intensive daily programme.</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}

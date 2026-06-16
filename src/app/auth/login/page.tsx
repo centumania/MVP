@@ -104,7 +104,7 @@ export default function LoginPage() {
             &ldquo;Discipline is the bridge between goals and accomplishment.&rdquo;
           </blockquote>
           <p className="text-sm text-text-muted">
-            25 days. Every morning. Zero shortcuts. This is where champions are built.
+            Every morning. Zero shortcuts. This is where champions are built.
           </p>
         </div>
 

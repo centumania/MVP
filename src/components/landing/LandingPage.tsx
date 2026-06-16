@@ -97,7 +97,7 @@ export default function LandingPage() {
               See How It Works
             </a>
           </div>
-          <p style={{ color:C.muted, fontSize:13 }}>UDC &amp; LDC · 15-day intensive · LDC exam June 28, 2026</p>
+          <p style={{ color:C.muted, fontSize:13 }}>UDC &amp; LDC · Daily intensive · LDC exam June 28, 2026</p>
         </div>
       </section>
 
@@ -211,11 +211,11 @@ export default function LandingPage() {
             <h3 style={{ ...D, fontWeight:800, fontSize:44, lineHeight:1, color:C.text, marginBottom:12 }}>LDC</h3>
             <div style={{ ...D, fontSize:36, fontWeight:800, color:C.primary, lineHeight:1, marginBottom:20 }}>₹499</div>
             <p style={{ color:C.text2, fontSize:15, lineHeight:1.6, marginBottom:24 }}>
-              A focused 15-day foundation programme for LDC aspirants. Build the daily execution habit, compete on the leaderboard, and track your Centum Index.
+              A focused daily foundation programme for LDC aspirants. Build the daily execution habit, compete on the leaderboard, and track your Centum Index.
             </p>
             <div style={{ display:'flex', flexDirection:'column', gap:10, marginBottom:30 }}>
               {[
-                '15-day foundation programme',
+                'Daily foundation programme',
                 'Daily tests: 6:00 AM – 8:00 AM',
                 '30-min test · Auto-submits at 8:00 AM',
                 'Live leaderboard & Centum Index',

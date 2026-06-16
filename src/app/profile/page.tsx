@@ -32,7 +32,7 @@ function getAchievements(data: DashData | null): Achievement[] {
     { id: 'streak-3',    title: '3-Day Fire',    desc: '3 consecutive days',           icon: '🔥', earned: data.streak >= 3,                      category: 'streak'     },
     { id: 'streak-7',    title: 'Week Warrior',  desc: '7 consecutive days',           icon: '⚡', earned: data.streak >= 7,                      category: 'streak'     },
     { id: 'streak-14',   title: 'Fortnight',     desc: '14 consecutive days',          icon: '💪', earned: data.streak >= 14,                     category: 'streak'     },
-    { id: 'streak-25',   title: 'Iron Will',     desc: 'Complete all 25 days',         icon: '🏆', earned: data.daysAttended >= 25,               category: 'completion' },
+    { id: 'streak-25',   title: 'Iron Will',     desc: 'Full batch completion',         icon: '🏆', earned: data.daysAttended >= (data.batchTotalDays ?? 25),               category: 'completion' },
     { id: 'top-10',      title: 'Top 10',        desc: 'Reach top 10 on leaderboard',  icon: '🥇', earned: (data.leaderboard?.rank ?? 999) <= 10, category: 'rank'       },
     { id: 'top-3',       title: 'Podium',        desc: 'Reach the top 3',              icon: '🏅', earned: (data.leaderboard?.rank ?? 999) <= 3,  category: 'rank'       },
     { id: 'xp-1000',     title: '1K XP',         desc: 'Earn 1,000 XP',               icon: '⭐', earned: data.xp >= 1000,                       category: 'xp'         },

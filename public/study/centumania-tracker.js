@@ -300,12 +300,40 @@
     }
   }
 
+  // ── Daily test score submission ──────────────────────────────────────────────
+  // Called by the map once when quiz mode ends. First submission per IST day wins —
+  // the DB unique(user_id, test_date) constraint silently rejects reshuffles.
+  function postTestScore(score, total, timeTakenS) {
+    try {
+      var token      = getToken();
+      var materialId = getMaterialId();
+      if (!token || !materialId) return;
+
+      fetch('/api/study/daily-test/submit', {
+        method:  'POST',
+        headers: {
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+          material_id:  materialId,
+          score:        score,
+          total:        total,
+          time_taken_s: timeTakenS || null
+        }),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   // ── Bootstrap ────────────────────────────────────────────────────────────────
   function init() {
     patchPhysicsMap();
     patchChemMap();
     patchNumSystem();
     patchBioMap();
+    // Expose to map scripts so they can submit scores without importing this module
+    window._cmPostTestScore = postTestScore;
   }
 
   if (document.readyState === 'loading') {

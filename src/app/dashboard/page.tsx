@@ -42,10 +42,10 @@ function ordinal(n: number) {
   return n + (s[(v - 20) % 10] || s[v] || s[0])
 }
 function scoreColor(pct: number): string {
-  if (pct >= 80) return '#10B981'
-  if (pct >= 60) return '#0B3D91'
-  if (pct >= 40) return '#F59E0B'
-  return '#EF4444'
+  if (pct >= 80) return '#22C55E'   // cm-success
+  if (pct >= 60) return '#2563EB'   // cm-info
+  if (pct >= 40) return '#FBBF24'   // cm-warning
+  return '#9CA3AF'                   // neutral (avoid red near exam results)
 }
 
 // ── Daily tips ─────────────────────────────────────────────────────
@@ -161,9 +161,10 @@ export default function DashboardPage() {
         {/* ── GREETING (slim header) ────────────────────────────── */}
         <div className="flex items-end justify-between pt-1">
           <div>
-            <p className="text-xs font-semibold text-text-muted uppercase tracking-widest mb-0.5">{greeting()}</p>
-            <h1 className="text-[26px] font-bold text-text tracking-tight leading-none">{firstName}</h1>
-            <p className="text-xs text-text-muted mt-1.5">{dateLabel}</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: 'var(--color-cm-neutral-300)' }}>{greeting()}</p>
+            {/* Bebas Neue for name — large, confident */}
+            <h1 className="font-bebas text-[42px] leading-none tracking-wide" style={{ color: '#F9FAFB' }}>{firstName}</h1>
+            <p className="text-xs mt-1" style={{ color: 'var(--color-cm-neutral-300)' }}>{dateLabel}</p>
           </div>
           <div className="flex flex-col items-end gap-1.5">
             {w && (
@@ -187,18 +188,18 @@ export default function DashboardPage() {
               <ProgressRing
                 value={Math.min(100, Math.round((d.streak / 7) * 100))}
                 size={84} strokeWidth={6}
-                color={d.streak >= 7 ? '#FFB703' : d.streak >= 3 ? '#0B3D91' : '#00C897'}
-                trackColor="#E5E7EB"
+                color={d.streak >= 7 ? '#F6B300' : d.streak >= 3 ? '#2533FF' : '#0EA5A0'}
+                trackColor="rgba(255,255,255,0.08)"
                 label={`${d.streak}d`}
                 sublabel="streak"
               />
             </div>
             <div className="flex-1 grid grid-cols-2 gap-2.5">
               {statItems.map(({ label, value, sub }) => (
-                <div key={label} className="rounded-xl px-3.5 py-2.5 bg-surface-sunken border border-border">
-                  <p className="text-lg font-bold text-text leading-none tracking-tight tabular">{value}</p>
-                  <p className="text-[10px] text-text-muted mt-1 uppercase tracking-wider font-semibold">{label}</p>
-                  <p className="text-[10px] text-primary/80 mt-0.5">{sub}</p>
+                <div key={label} className="rounded-xl px-3.5 py-2.5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <p className="text-lg font-bold leading-none tracking-tight tabular" style={{ color: '#F9FAFB' }}>{value}</p>
+                  <p className="text-[10px] mt-1 uppercase tracking-wider font-semibold" style={{ color: 'var(--color-cm-neutral-300)' }}>{label}</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: '#2533FF' }}>{sub}</p>
                 </div>
               ))}
             </div>
@@ -314,17 +315,19 @@ export default function DashboardPage() {
         </div>
 
         {/* ── DAILY TIP ─────────────────────────────────────────── */}
-        <div className="rounded-2xl px-5 py-4 flex items-start gap-4 bg-primary-tint border border-primary/15">
-          <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 bg-primary-subtle text-primary">
+        <div className="rounded-2xl px-5 py-4 flex items-start gap-4"
+          style={{ background: 'rgba(14,165,160,0.08)', border: '1px solid rgba(14,165,160,0.20)' }}>
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+            style={{ background: 'rgba(14,165,160,0.15)', color: '#0EA5A0' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
             </svg>
           </div>
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest mb-1 text-primary">
+            <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: '#0EA5A0' }}>
               Today&apos;s tip
             </p>
-            <p className="text-sm text-text-secondary leading-relaxed">{TIPS[tipIdx]}</p>
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--color-cm-neutral-100)' }}>{TIPS[tipIdx]}</p>
           </div>
         </div>
 
