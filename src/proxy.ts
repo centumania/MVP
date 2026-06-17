@@ -81,6 +81,16 @@ export function proxy(request: NextRequest): NextResponse {
     return NextResponse.redirect(new URL('/auth/login', request.url), { status: 302 })
   }
 
+  // Protect /content/* and /pdfs/* — require the cm_access session cookie.
+  // These paths serve premium study materials; unauthenticated requests are
+  // redirected to login.
+  if (pathname.startsWith('/content/') || pathname.startsWith('/pdfs/')) {
+    const accessCookie = request.cookies.get('cm_access')
+    if (!accessCookie) {
+      return NextResponse.redirect(new URL('/auth/login', request.url), { status: 302 })
+    }
+  }
+
   // Use permissive CSP for the materials viewer so the sandboxed iframe
   // (which inherits this page's CSP via allow-same-origin) can run
   // interactive HTML including inline scripts and localStorage, and so
