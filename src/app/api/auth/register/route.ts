@@ -9,11 +9,10 @@ import { rateLimit } from '@/src/lib/rate-limit'
  * is sent — bypasses Supabase free-tier email rate limit entirely.
  *
  * Admin manually controls access via payment_verified in the profiles table.
- * Email verification adds no security value for this flow.
+ * Auto-assigns a sequential registration_number (CM2026001, CM2026002, …).
  */
 export async function POST(req: NextRequest) {
   try {
-    // Rate limit: 5 registrations per IP per 15 minutes
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
     const limiter = await rateLimit(`register:${ip}`, { limit: 5, window: '15 m' })
     if (!limiter.success) {
@@ -25,7 +24,6 @@ export async function POST(req: NextRequest) {
 
     const { name, phone, email, password } = await req.json()
 
-    // Basic server-side validation
     if (!name || name.trim().length < 2) {
       return NextResponse.json({ error: 'Please enter your full name.' }, { status: 400 })
     }
@@ -41,7 +39,6 @@ export async function POST(req: NextRequest) {
 
     const supabase = getSupabaseAdminClient()
 
-    // Create user with email pre-confirmed — no email sent, no rate limit
     const { data, error } = await supabase.auth.admin.createUser({
       email: email.trim().toLowerCase(),
       password,
@@ -50,7 +47,6 @@ export async function POST(req: NextRequest) {
     })
 
     if (error) {
-      // Surface friendly messages for common cases
       const msg = error.message.toLowerCase()
       if (msg.includes('already registered') || msg.includes('already been registered') || msg.includes('user already exists')) {
         return NextResponse.json(
@@ -59,6 +55,22 @@ export async function POST(req: NextRequest) {
         )
       }
       return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+
+    if (data.user?.id) {
+      const year = new Date().getFullYear()
+      const { count } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .not('registration_number', 'is', null)
+
+      const nextSeq = (count ?? 0) + 1
+      const registrationNumber = `CM${year}${String(nextSeq).padStart(3, '0')}`
+
+      await supabase
+        .from('profiles')
+        .update({ registration_number: registrationNumber })
+        .eq('id', data.user.id)
     }
 
     return NextResponse.json({ userId: data.user?.id })
