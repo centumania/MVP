@@ -40,15 +40,16 @@ export type Batch = {
 }
 
 export type Profile = {
-  id:               string      // FK → auth.users.id
-  name:             string
-  email:            string
-  phone:            string | null
-  tier:             PricingTier | null
-  payment_verified: boolean
-  is_admin:         boolean
-  created_at:       string
-  updated_at:       string
+  id:                  string      // FK → auth.users.id
+  name:                string
+  email:               string
+  phone:               string | null
+  tier:                PricingTier | null
+  payment_verified:    boolean
+  is_admin:            boolean
+  registration_number: string | null
+  created_at:          string
+  updated_at:          string
 }
 
 export type Exam = {
