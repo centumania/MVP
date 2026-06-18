@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Fraunces, Hanken_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { Fraunces, Hanken_Grotesk, JetBrains_Mono, Bebas_Neue } from 'next/font/google'
 import { headers } from 'next/headers'
 import './globals.css'
 
@@ -24,6 +24,13 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500', '700'],
 })
 
+const bebasNeue = Bebas_Neue({
+  subsets: ['latin'],
+  variable: '--font-bebas',
+  display: 'swap',
+  weight: '400',
+})
+
 export const metadata: Metadata = {
   title: 'CentuMania — Winning is a habit',
   description: "India's most disciplined LDC/UDC exam prep platform. 15-day intensive programme for Puducherry competitive exam aspirants.",
@@ -46,8 +53,8 @@ export const viewport: Viewport = {
   maximumScale:    1,
   viewportFit:     'cover',
   themeColor:      [
-    { media: '(prefers-color-scheme: dark)',  color: '#0e1410' },
-    { media: '(prefers-color-scheme: light)', color: '#0e1410' },
+    { media: '(prefers-color-scheme: dark)',  color: '#0B1020' },
+    { media: '(prefers-color-scheme: light)', color: '#0B1020' },
   ],
 }
 
@@ -73,14 +80,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       lang="en"
       nonce={nonce || undefined}
       suppressHydrationWarning
-      className={`${fraunces.variable} ${hankenGrotesk.variable} ${jetbrainsMono.variable}`}
+      className={`${fraunces.variable} ${hankenGrotesk.variable} ${jetbrainsMono.variable} ${bebasNeue.variable}`}
     >
       <body className="bg-bg text-text font-sans antialiased" suppressHydrationWarning>
         {/* Skip-to-content link — WCAG 2.1 SC 2.4.1 */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold focus:outline-none"
-          style={{ background: '#4ADE80', color: '#06140c' }}
+          style={{ background: '#2533FF', color: '#F9FAFB' }}
         >
           Skip to main content
         </a>

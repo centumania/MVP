@@ -87,10 +87,10 @@ export function AppLayout({ children, userName, batchName }: {
       {/* ── Desktop Sidebar ─────────────────────────────────────── */}
       <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 z-20"
         aria-label="Main navigation"
-        style={{ width: 228, background: '#0e1410', borderRight: '1px solid #27342b' }}>
+        style={{ width: 228, background: '#0B1020', borderRight: '1px solid rgba(255,255,255,0.09)' }}>
 
         {/* Brand */}
-        <div className="px-5 py-5" style={{ borderBottom: '1px solid #27342b' }}>
+        <div className="px-5 py-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.09)' }}>
           <LogoFull size={26} glow />
           <p className="text-[10px] text-text-muted mt-2 tracking-wide font-mono pl-0.5">
             {batchName ?? 'Winning is a Habit'}
@@ -111,13 +111,13 @@ export function AppLayout({ children, userName, batchName }: {
                     ? 'text-primary font-medium'
                     : 'text-text-muted hover:text-text-secondary',
                 ].join(' ')}
-                style={active ? { background: 'rgba(74,222,128,0.08)' } : {}}
+                style={active ? { background: 'rgba(37,51,255,0.10)' } : {}}
                 onMouseEnter={e => { if (!active) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)' }}
                 onMouseLeave={e => { if (!active) (e.currentTarget as HTMLElement).style.background = '' }}
               >
                 {active && (
                   <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
-                    style={{ background: '#4ADE80', boxShadow: '0 0 8px rgba(74,222,128,0.8)' }} />
+                    style={{ background: '#2533FF', boxShadow: '0 0 8px rgba(37,51,255,0.6)' }} />
                 )}
                 <Icon a={active} />
                 <span className="tracking-tight">{label}</span>
@@ -127,11 +127,11 @@ export function AppLayout({ children, userName, batchName }: {
         </nav>
 
         {/* User Section */}
-        <div className="px-3 py-4" style={{ borderTop: '1px solid #27342b' }}>
+        <div className="px-3 py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.09)' }}>
           {userName && (
             <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
               <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
-                style={{ background: 'linear-gradient(135deg,#4ADE80,#22C55E)', color: '#06140c', boxShadow: '0 0 10px rgba(74,222,128,0.30)' }}>
+                style={{ background: 'linear-gradient(135deg,#2533FF,#1925c0)', color: '#F9FAFB', boxShadow: '0 0 10px rgba(37,51,255,0.30)' }}>
                 {initials}
               </div>
               <p className="text-xs font-medium text-text-secondary truncate">{userName}</p>
@@ -160,13 +160,13 @@ export function AppLayout({ children, userName, batchName }: {
 
           {/* Mobile Top Bar */}
           <header className="md:hidden flex items-center justify-between px-4 h-14 sticky top-0 z-10"
-            style={{ background: 'rgba(14,20,16,0.95)', backdropFilter: 'blur(6px)', borderBottom: '1px solid #27342b' }}>
+            style={{ background: 'rgba(11,16,32,0.95)', backdropFilter: 'blur(6px)', borderBottom: '1px solid rgba(255,255,255,0.09)' }}>
             <div className="flex items-center gap-2.5">
               <LogoFull size={22} glow />
             </div>
             {userName && (
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ background: 'linear-gradient(135deg,#4ADE80,#22C55E)', color: '#06140c', boxShadow: '0 0 10px rgba(74,222,128,0.30)' }}>
+                style={{ background: 'linear-gradient(135deg,#2533FF,#1925c0)', color: '#F9FAFB', boxShadow: '0 0 10px rgba(37,51,255,0.30)' }}>
                 {initials}
               </div>
             )}
@@ -186,7 +186,7 @@ export function AppLayout({ children, userName, batchName }: {
       {/* ── Mobile Bottom Nav ────────────────────────────────────── */}
       <nav className="md:hidden fixed bottom-0 inset-x-0 z-20 flex mobile-nav-safe"
         aria-label="Mobile navigation"
-        style={{ background: 'rgba(14,20,16,0.97)', backdropFilter: 'blur(20px)', borderTop: '1px solid #27342b' }}>
+        style={{ background: 'rgba(11,16,32,0.97)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.09)' }}>
         {NAV.map(({ href, label, Icon }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
