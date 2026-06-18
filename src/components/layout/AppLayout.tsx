@@ -56,11 +56,11 @@ function IcoProfile({ a }: { a: boolean }) {
 }
 
 const NAV = [
-  { href: '/dashboard',   label: 'Dashboard',    Icon: IcoDashboard   },
-  { href: '/exam/today',  label: "Today's Exam",  Icon: IcoExam        },
-  { href: '/materials',   label: 'Materials',     Icon: IcoBook        },
-  { href: '/leaderboard', label: 'Leaderboard',   Icon: IcoLeaderboard },
-  { href: '/profile',     label: 'Profile',       Icon: IcoProfile     },
+  { href: '/dashboard',   label: 'Dashboard',   short: 'Home',  Icon: IcoDashboard   },
+  { href: '/exam/today',  label: "Today's Exam", short: 'Exam',  Icon: IcoExam        },
+  { href: '/materials',   label: 'Materials',    short: 'Study', Icon: IcoBook        },
+  { href: '/leaderboard', label: 'Leaderboard',  short: 'Ranks', Icon: IcoLeaderboard },
+  { href: '/profile',     label: 'Profile',      short: 'Me',    Icon: IcoProfile     },
 ] as const
 
 
@@ -99,7 +99,7 @@ export function AppLayout({ children, userName, batchName }: {
 
         {/* Navigation */}
         <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto" aria-label="Main navigation">
-          {NAV.map(({ href, label, Icon }) => {
+          {NAV.map(({ href, label, short: _short, Icon }) => {
             const active = pathname === href || pathname.startsWith(href + '/')
             return (
               <Link
@@ -186,14 +186,14 @@ export function AppLayout({ children, userName, batchName }: {
       <nav className="surface-blur md:hidden fixed bottom-0 inset-x-0 z-20 flex mobile-nav-safe"
         aria-label="Mobile navigation"
         style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-        {NAV.map(({ href, label, Icon }) => {
+        {NAV.map(({ href, short, Icon }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
             <Link
               key={href}
               href={href}
               aria-current={active ? 'page' : undefined}
-              className="flex-1 flex flex-col items-center justify-center py-2.5 gap-1 transition-colors touch-target relative"
+              className="flex-1 flex flex-col items-center justify-center py-2 gap-0.5 transition-colors touch-target relative"
               style={{ color: active ? '#F9FAFB' : 'var(--color-cm-neutral-300)' }}
             >
               {active && (
@@ -201,8 +201,8 @@ export function AppLayout({ children, userName, batchName }: {
                   style={{ background: '#2533FF' }} />
               )}
               <Icon a={active} />
-              <span className="text-[9px] font-semibold tracking-widest uppercase">
-                {label.split("'")[0].split(' ')[0]}
+              <span className="text-[11px] font-medium tracking-wide">
+                {short}
               </span>
             </Link>
           )

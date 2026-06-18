@@ -389,6 +389,19 @@ input::placeholder, textarea::placeholder { color: #9CA3AF; }
   .stat-number { font-size: 1.6rem; }
 }
 
+/* ── Mobile readability ──────────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* Prevent long words / UPI IDs from overflowing card edges */
+  p, span, h1, h2, h3, h4, li, td, th {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  /* Slightly more generous line-height for readability at small sizes */
+  p { line-height: 1.65; }
+  /* Never let body text go below 13px; Tailwind text-xs = 12px */
+  .text-xs { font-size: 13px !important; line-height: 1.6 !important; }
+}
+
 /* ── iOS input zoom fix ──────────────────────────────────────────── */
 @media (max-width: 767px) {
   input, textarea, select { font-size: max(16px, 1em); }

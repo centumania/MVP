@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     .filter('metadata->>material_id', 'eq', materialId)
 
   const nodesCompleted = new Set(
-    (completedRows ?? []).map((r: { metadata: Record<string, unknown> }) => r.metadata?.html_node_id).filter(Boolean)
+    (completedRows ?? []).map((r: { metadata: Record<string, unknown> | null }) => r.metadata?.html_node_id).filter(Boolean)
   ).size
 
   // ── MCQ first-attempt accuracy ────────────────────────────────────
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
 
   const mcqTotal   = mcqRows?.length ?? 0
   const mcqCorrect = (mcqRows ?? []).filter(
-    (r: { metadata: Record<string, unknown> }) => r.metadata?.is_correct === true
+    (r: { metadata: Record<string, unknown> | null }) => r.metadata?.is_correct === true
   ).length
   const accuracyPct = mcqTotal > 0 ? Math.round(mcqCorrect / mcqTotal * 100) : 0
 

@@ -184,7 +184,7 @@ function ComingSoonCard({ day }: { day: number }) {
           </svg>
         </div>
         <div>
-          <p className="text-sm font-semibold text-text-secondary" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+          <p className="text-sm font-semibold text-text-secondary" style={{ fontFamily: 'var(--font-inter,Inter,sans-serif)' }}>
             Day {day} — Coming Soon
           </p>
           <p className="text-xs text-text-muted mt-0.5">Content will be published before your scheduled day.</p>
@@ -263,7 +263,7 @@ export default function MaterialsPage() {
             <div>
               <p className="text-sm font-bold text-warning mb-1">Payment verification pending</p>
               <p className="text-xs text-text-muted leading-relaxed">
-                Days 1–2 are available as a free preview. All 30 days unlock once your coordinator verifies your payment.
+                Complete your payment and contact your coordinator to unlock all materials.
               </p>
             </div>
           </div>
@@ -285,9 +285,7 @@ export default function MaterialsPage() {
           const daysLeft           = daysUntilUnlock(status.enrolledDate, day)
           const isScheduleUnlocked = daysLeft <= 0
           const isPublished        = status.activeDays.includes(day)
-          const isFreeDay          = day <= 2
-          const isPaidOrFree       = status.paymentVerified || isFreeDay
-          const isAvailable        = isScheduleUnlocked && isPublished && isPaidOrFree
+          const isAvailable        = isScheduleUnlocked && isPublished && status.paymentVerified
 
           return (
             <div key={day}>

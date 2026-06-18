@@ -439,33 +439,14 @@ function CopyButton({ value }: { value: string }) {
 }
 
 function QrBox() {
-  const [missing, setMissing] = useState(false)
+  const upiData = 'upi://pay?pa=anandhamuruugan-1@okicici&pn=Anandh Muruugan&cu=INR'
+  const qrSrc  = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(upiData)}&margin=10&color=000000&bgcolor=ffffff`
   const upiLink = 'upi://pay?pa=anandhamuruugan-1@okicici&pn=Anandh%20Muruugan&cu=INR'
   return (
-    <div className="rounded-2xl overflow-hidden mb-4"
-      style={{ background: '#FFFFFF', width: 196, height: 196, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      {!missing ? (
-        <img
-          src="/upi-qr.png" alt="UPI QR Code" width={172} height={172}
-          style={{ display: 'block', imageRendering: 'pixelated' }}
-          onError={() => setMissing(true)}
-        />
-      ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: 16 }}>
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round">
-            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-            <rect x="3" y="14" width="7" height="7" rx="1"/>
-            <path d="M14 14h2v2h-2zm2 2h2v2h-2zm2-2h1v2h-1z"/>
-          </svg>
-          <p style={{ fontSize: 10, color: '#6B7280', textAlign: 'center', fontFamily: 'monospace', lineHeight: 1.5 }}>
-            Save QR as<br /><b>public/upi-qr.png</b>
-          </p>
-          <a href={upiLink}
-            style={{ fontSize: 11, fontWeight: 700, color: '#2533FF', textDecoration: 'none', background: 'rgba(37,51,255,0.08)', padding: '6px 14px', borderRadius: 8, border: '1px solid rgba(37,51,255,0.25)' }}>
-            Tap to Pay
-          </a>
-        </div>
-      )}
-    </div>
+    <a href={upiLink} className="rounded-2xl overflow-hidden mb-4 block"
+      style={{ background: '#FFFFFF', width: 220, height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+      <img src={qrSrc} alt="UPI QR — tap to pay" width={200} height={200}
+        style={{ display: 'block' }} />
+    </a>
   )
 }
