@@ -123,13 +123,13 @@ export default function StudentMaterialViewer() {
   }, [day])
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#0e1410' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#0B1020' }}>
       <header
         className="sticky top-0 z-20 flex items-center gap-3 px-4 h-12 shrink-0"
         style={{
-          background: 'rgba(14,20,16,0.97)',
+          background: 'rgba(11,16,32,0.97)',
           backdropFilter: 'blur(8px)',
-          borderBottom: '1px solid #27342b',
+          borderBottom: '1px solid rgba(255,255,255,0.09)',
           paddingTop: 'env(safe-area-inset-top)',
         }}
       >
@@ -152,7 +152,7 @@ export default function StudentMaterialViewer() {
         {state === 'loading' && (
           <div className="flex items-center gap-2 text-xs text-text-muted font-mono">
             <div className="w-3.5 h-3.5 rounded-full border animate-spin"
-              style={{ borderColor: 'rgba(74,222,128,0.2)', borderTopColor: '#4ADE80' }} />
+              style={{ borderColor: 'rgba(37,51,255,0.2)', borderTopColor: '#2533FF' }} />
             Loading…
           </div>
         )}
@@ -181,7 +181,7 @@ export default function StudentMaterialViewer() {
         {state === 'loading' && (
           <div className="flex flex-col items-center justify-center flex-1 gap-3">
             <div className="w-8 h-8 rounded-full border-2 animate-spin"
-              style={{ borderColor: 'rgba(74,222,128,0.15)', borderTopColor: '#4ADE80' }} />
+              style={{ borderColor: 'rgba(37,51,255,0.15)', borderTopColor: '#2533FF' }} />
             <p className="text-xs text-text-muted font-mono">Loading study material…</p>
           </div>
         )}
