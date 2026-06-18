@@ -5,23 +5,21 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getSupabaseBrowserClient, setKeepSignedIn } from '@/src/lib/supabase/client'
 import { Button } from '@/src/components/ui/Button'
-import { LogoFull } from '@/src/components/ui/Logo'
 
 export default function LoginPage() {
   const router = useRouter()
-  const [email, setEmail]           = useState('')
-  const [password, setPassword]     = useState('')
-  const [showPassword, setShowPw]   = useState(false)
-  const [keepSignedIn, setKeep]     = useState(true)
-  const [error, setError]           = useState<string | null>(null)
-  const [loading, setLoading]       = useState(false)
+  const [email, setEmail]         = useState('')
+  const [password, setPassword]   = useState('')
+  const [showPassword, setShowPw] = useState(false)
+  const [keepSignedIn, setKeep]   = useState(true)
+  const [error, setError]         = useState<string | null>(null)
+  const [loading, setLoading]     = useState(false)
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setError(null)
     setLoading(true)
     try {
-      // Write preference BEFORE the singleton is used so the storage adapter picks it up
       setKeepSignedIn(keepSignedIn)
       const supabase = getSupabaseBrowserClient()
       const { data, error: authError } = await supabase
@@ -38,24 +36,16 @@ export default function LoginPage() {
         return
       }
 
-      // ── Admin routing: check is_admin from profiles ──────────────
-      // This is a UX convenience — security is enforced server-side in /admin routes.
       if (data.user) {
         const { data: profile } = await supabase
           .from('profiles')
           .select('is_admin')
           .eq('id', data.user.id)
           .single()
-
-        if (profile?.is_admin) {
-          router.push('/admin')
-        } else {
-          router.push('/dashboard')
-        }
+        router.push(profile?.is_admin ? '/admin' : '/dashboard')
         router.refresh()
         return
       }
-
       router.push('/dashboard')
       router.refresh()
     } catch {
@@ -66,62 +56,72 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex" style={{ background: '#F8FAFC' }}>
+    <div className="min-h-screen flex" style={{ background: '#0B1020' }}>
 
-      {/* ── Left Panel — Brand ─────────────────────────────────── */}
-      <div className="hidden lg:flex lg:w-[48%] relative flex-col justify-between p-12 overflow-hidden"
-        style={{ background: 'linear-gradient(160deg,#0b1e45 0%,#163070 55%,#e8ecf5 100%)' }}>
+      {/* ── Left Panel ─────────────────────────────────────────── */}
+      <div className="hidden lg:flex lg:w-[46%] relative flex-col justify-between p-12 overflow-hidden"
+        style={{ background: '#080D1A', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
 
-        {/* Geometric decoration */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" viewBox="0 0 500 700" fill="none">
-          <circle cx="400" cy="100" r="200" stroke="rgba(11,61,145,0.4)" strokeWidth="1"/>
-          <circle cx="400" cy="100" r="140" stroke="rgba(11,61,145,0.25)" strokeWidth="1"/>
-          <circle cx="400" cy="100" r="80"  stroke="rgba(11,61,145,0.15)" strokeWidth="1"/>
-          <line x1="400" y1="-100" x2="400" y2="300" stroke="rgba(11,61,145,0.15)" strokeWidth="1"/>
-          <line x1="200" y1="100"  x2="600" y2="100" stroke="rgba(11,61,145,0.15)" strokeWidth="1"/>
-          <circle cx="100" cy="600" r="120" stroke="rgba(11,61,145,0.15)" strokeWidth="1"/>
-          <polygon points="50,650 150,500 250,650" stroke="rgba(11,61,145,0.12)" strokeWidth="1" fill="none"/>
-          {/* Large arrow decoration */}
-          <line x1="50" y1="450" x2="250" y2="250" stroke="rgba(11,61,145,0.08)" strokeWidth="2"/>
-          <polygon points="250,250 230,280 280,270" fill="rgba(11,61,145,0.08)"/>
+        {/* Indigo radial glow */}
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse 80% 60% at 60% 30%, rgba(37,51,255,0.12), transparent 70%)' }} />
+
+        {/* Grid lines */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 500 800" fill="none" style={{ opacity: 0.07 }}>
+          {[100,200,300,400].map(y => <line key={y} x1="0" y1={y} x2="500" y2={y} stroke="rgba(37,51,255,0.6)" strokeWidth="0.5"/>)}
+          {[100,200,300,400].map(x => <line key={x} x1={x} y1="0" x2={x} y2="800" stroke="rgba(37,51,255,0.6)" strokeWidth="0.5"/>)}
+          <circle cx="400" cy="180" r="160" stroke="rgba(37,51,255,0.8)" strokeWidth="0.5" fill="none"/>
+          <circle cx="400" cy="180" r="100" stroke="rgba(37,51,255,0.6)" strokeWidth="0.5" fill="none"/>
+          <circle cx="400" cy="180" r="50"  stroke="rgba(246,179,0,0.4)"  strokeWidth="0.5" fill="none"/>
         </svg>
-        <div className="absolute top-0 right-0 w-64 h-64 pointer-events-none"
-          style={{ background: 'radial-gradient(circle,rgba(11,61,145,0.08),transparent 70%)' }} />
 
         {/* Logo */}
-        <div className="relative">
-          <LogoFull size={30} glow />
-          <span className="text-[10px] text-text-muted font-mono tracking-wide block mt-1 pl-0.5">Winning is a Habit</span>
+        <div className="relative z-10">
+          <div style={{ fontFamily: 'var(--font-bebas-neue,"Bebas Neue",sans-serif)', fontSize: 28, letterSpacing: '0.08em', color: '#F6B300' }}>
+            CENTU<span style={{ color: '#F9FAFB' }}>MANIA</span>
+          </div>
+          <p style={{ fontSize: 11, color: '#6B7280', marginTop: 4, letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'monospace' }}>
+            Winning is a Habit
+          </p>
         </div>
 
-        {/* Hero text */}
-        <div className="relative space-y-6">
-          <p className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: '#0B3D91' }}>
+        {/* Quote */}
+        <div className="relative z-10 space-y-5">
+          <p style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.14em', color: '#2533FF', fontFamily: 'monospace' }}>
             LDC/UDC · Puducherry · 2026
           </p>
-          <blockquote className="text-4xl font-bold text-text leading-tight tracking-tight"
-            style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-            &ldquo;Discipline is the bridge between goals and accomplishment.&rdquo;
+          <blockquote style={{ fontFamily: 'var(--font-bebas-neue,"Bebas Neue",sans-serif)', fontSize: 38, lineHeight: 1.05, letterSpacing: '0.03em', color: '#F9FAFB' }}>
+            &ldquo;DISCIPLINE IS THE BRIDGE BETWEEN GOALS AND ACCOMPLISHMENT.&rdquo;
           </blockquote>
-          <p className="text-sm text-text-muted">
+          <p style={{ fontSize: 14, color: '#9CA3AF', lineHeight: 1.6 }}>
             Every morning. Zero shortcuts. This is where champions are built.
           </p>
+          <div style={{ display: 'flex', gap: 24, marginTop: 8 }}>
+            {[['30', 'Day Programme'], ['100+', 'Daily Qs'], ['3×', 'Score Lift']].map(([n, l]) => (
+              <div key={l}>
+                <div style={{ fontFamily: 'var(--font-bebas-neue,"Bebas Neue",sans-serif)', fontSize: 26, letterSpacing: '0.04em', color: '#2533FF' }}>{n}</div>
+                <div style={{ fontSize: 10, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>{l}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Batch info */}
-        <div className="relative">
-          <p className="text-xs text-text-muted font-mono">Puducherry LDC/UDC Exam Preparation · Batch 2026</p>
+        {/* Footer */}
+        <div className="relative z-10">
+          <p style={{ fontSize: 11, color: '#4B5563', fontFamily: 'monospace' }}>Puducherry LDC/UDC Exam Preparation · Batch 2026</p>
         </div>
       </div>
 
       {/* ── Right Panel — Form ─────────────────────────────────── */}
-      <div className="flex-1 flex items-center justify-center px-6 py-12"
-        style={{ background: '#F8FAFC' }}>
+      <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm">
 
-          {/* Back to landing */}
           <Link href="/"
-            className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-text-secondary transition-colors font-mono mb-8">
+            className="inline-flex items-center gap-1.5 mb-10 transition-colors"
+            style={{ fontSize: 12, color: '#6B7280', fontFamily: 'monospace' }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#9CA3AF')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#6B7280')}
+          >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6"/>
             </svg>
@@ -129,22 +129,21 @@ export default function LoginPage() {
           </Link>
 
           {/* Mobile logo */}
-          <div className="mb-10 lg:hidden">
-            <LogoFull size={24} glow />
-            <span className="text-[10px] text-text-muted font-mono tracking-wide block mt-1 pl-0.5">Winning is a Habit</span>
+          <div className="lg:hidden mb-8">
+            <div style={{ fontFamily: 'var(--font-bebas-neue,"Bebas Neue",sans-serif)', fontSize: 24, letterSpacing: '0.08em', color: '#F6B300' }}>
+              CENTU<span style={{ color: '#F9FAFB' }}>MANIA</span>
+            </div>
           </div>
 
-          <h1 className="text-3xl font-bold text-text tracking-tight mb-1.5"
-            style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-            Welcome back
+          <h1 style={{ fontFamily: 'var(--font-bebas-neue,"Bebas Neue",sans-serif)', fontSize: 40, letterSpacing: '0.04em', color: '#F9FAFB', lineHeight: 1, marginBottom: 8 }}>
+            WELCOME BACK
           </h1>
-          <p className="text-sm mb-8 text-text-muted">Sign in to continue your journey.</p>
+          <p style={{ fontSize: 14, color: '#9CA3AF', marginBottom: 32 }}>Sign in to continue your journey.</p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email */}
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div>
-              <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-widest mb-2 text-text-muted font-mono">
-                Email address
+              <label htmlFor="email" style={{ display: 'block', fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#6B7280', fontFamily: 'monospace', marginBottom: 8 }}>
+                Email Address
               </label>
               <input
                 id="email" type="email" autoComplete="email" required
@@ -154,85 +153,66 @@ export default function LoginPage() {
               />
             </div>
 
-            {/* Password + visibility toggle */}
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <label htmlFor="password" className="text-xs font-semibold uppercase tracking-widest text-text-muted font-mono">
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                <label htmlFor="password" style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#6B7280', fontFamily: 'monospace' }}>
                   Password
                 </label>
-                <Link
-                  href="/auth/forgot-password"
-                  className="text-xs text-text-muted hover:text-primary transition-colors font-mono"
+                <Link href="/auth/forgot-password" style={{ fontSize: 12, color: '#6B7280', fontFamily: 'monospace' }}
+                  onMouseEnter={e => ((e.target as HTMLElement).style.color = '#2533FF')}
+                  onMouseLeave={e => ((e.target as HTMLElement).style.color = '#6B7280')}
                 >
                   Forgot password?
                 </Link>
               </div>
-              <div className="relative">
+              <div style={{ position: 'relative' }}>
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password" required
                   value={password} onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="input-premium pr-11"
+                  className="input-premium"
+                  style={{ paddingRight: 44 }}
                 />
-                <button
-                  type="button"
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  onClick={() => setShowPw(v => !v)}
-                  className="absolute inset-y-0 right-0 flex items-center px-3 text-text-muted hover:text-text-secondary transition-colors"
-                  tabIndex={-1}
-                >
+                <button type="button" aria-label={showPassword ? 'Hide' : 'Show'} onClick={() => setShowPw(v => !v)}
+                  style={{ position: 'absolute', inset: '0 0 0 auto', display: 'flex', alignItems: 'center', padding: '0 12px', color: '#6B7280', background: 'none', border: 'none', cursor: 'pointer' }}
+                  tabIndex={-1}>
                   {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                 </button>
               </div>
             </div>
 
             {/* Keep me signed in */}
-            <label className="flex items-center gap-2.5 cursor-pointer select-none group">
-              <span
-                className="relative flex items-center justify-center w-4 h-4 rounded shrink-0 transition-all"
-                style={{
-                  background: keepSignedIn ? 'rgba(11,61,145,0.15)' : 'transparent',
-                  border: `1.5px solid ${keepSignedIn ? '#0B3D91' : '#3a4a3d'}`,
-                }}
-              >
+            <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+              <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 16, height: 16, borderRadius: 4, flexShrink: 0, transition: 'all 0.15s', background: keepSignedIn ? 'rgba(37,51,255,0.15)' : 'transparent', border: `1.5px solid ${keepSignedIn ? '#2533FF' : 'rgba(255,255,255,0.20)'}` }}>
                 {keepSignedIn && (
-                  <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#0B3D91" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="9" height="9" viewBox="0 0 12 12" fill="none" stroke="#2533FF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="2 6 5 9 10 3"/>
                   </svg>
                 )}
-                <input
-                  type="checkbox"
-                  checked={keepSignedIn}
-                  onChange={e => setKeep(e.target.checked)}
-                  className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                />
+                <input type="checkbox" checked={keepSignedIn} onChange={e => setKeep(e.target.checked)}
+                  style={{ position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }} />
               </span>
-              <span className="text-xs text-text-muted font-mono group-hover:text-text-secondary transition-colors">
-                Keep me signed in
-              </span>
+              <span style={{ fontSize: 12, color: '#9CA3AF', fontFamily: 'monospace' }}>Keep me signed in</span>
             </label>
 
             {error && (
-              <div className="flex items-start gap-2.5 p-3 rounded-xl"
-                style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.20)' }}>
-                <svg className="w-4 h-4 text-error shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 12px', borderRadius: 10, background: 'rgba(227,65,58,0.08)', border: '1px solid rgba(227,65,58,0.20)' }}>
+                <svg style={{ width: 15, height: 15, color: '#E3413A', flexShrink: 0, marginTop: 1 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
-                <p className="text-xs text-error">{error}</p>
+                <p style={{ fontSize: 12, color: '#E3413A', margin: 0 }}>{error}</p>
               </div>
             )}
 
-            <Button type="submit" loading={loading} fullWidth size="lg">
-              Sign in
-            </Button>
+            <Button type="submit" loading={loading} fullWidth size="lg">Sign in</Button>
           </form>
 
-          <div className="mt-4 pt-4 text-center" style={{ borderTop: '1px solid #E5E7EB' }}>
-            <p className="text-sm text-text-muted">
+          <div style={{ marginTop: 20, paddingTop: 20, textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+            <p style={{ fontSize: 13, color: '#9CA3AF' }}>
               New student?{' '}
-              <Link href="/auth/register" className="font-semibold text-primary hover:text-primary-hover transition-colors">
+              <Link href="/auth/register" style={{ fontWeight: 600, color: '#2533FF' }}>
                 Create account
               </Link>
             </p>
@@ -243,12 +223,10 @@ export default function LoginPage() {
   )
 }
 
-// ── Eye icons ──────────────────────────────────────────────────────
 function EyeIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-      <circle cx="12" cy="12" r="3"/>
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
     </svg>
   )
 }
