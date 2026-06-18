@@ -120,19 +120,82 @@ export default function DashboardPage() {
   if (data?.paymentPending) {
     return (
       <AppLayout userName={name}>
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 flex flex-col items-center text-center">
-          <div className="w-16 h-16 rounded-3xl flex items-center justify-center mb-6 bg-accent-subtle border border-[rgba(255,183,3,0.30)]">
-            <svg className="w-7 h-7 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-            </svg>
+        <div className="max-w-md mx-auto px-4 sm:px-6 py-10">
+
+          {/* Header */}
+          <div className="mb-6 text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-4"
+              style={{ background: 'rgba(246,179,0,0.10)', border: '1px solid rgba(246,179,0,0.25)' }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#F6B300] animate-pulse inline-block" />
+              <span className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: '#F6B300' }}>
+                Payment Pending
+              </span>
+            </div>
+            <h2 className="text-2xl font-bold text-text mb-2"
+              style={{ fontFamily: 'var(--font-bebas-neue,"Bebas Neue",sans-serif)', letterSpacing: '0.04em', fontSize: 32 }}>
+              COMPLETE YOUR PAYMENT
+            </h2>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              Scan the QR code or use the UPI ID below to pay and unlock full access.
+            </p>
           </div>
-          <h2 className="text-xl font-bold text-text mb-2">
-            Enrolment pending
-          </h2>
-          <p className="text-sm text-text-secondary max-w-xs leading-relaxed mb-6">
-            Your registration is complete. Contact your coordinator to complete payment and unlock full access.
+
+          {/* QR Card */}
+          <div className="rounded-2xl overflow-hidden mb-4"
+            style={{ background: 'var(--surface)', border: '1px solid rgba(255,255,255,0.08)' }}>
+
+            {/* QR Code */}
+            <div className="flex flex-col items-center py-7 px-6"
+              style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              <div className="rounded-2xl overflow-hidden p-3 mb-4"
+                style={{ background: '#FFFFFF', width: 196, height: 196, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {/* Save your QR code image as public/upi-qr.png */}
+                <img src="/upi-qr.png" alt="UPI QR Code" width={172} height={172}
+                  style={{ display: 'block', imageRendering: 'pixelated' }}
+                  onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none' }} />
+              </div>
+              <p className="text-xs text-text-muted font-mono mb-1">Scan with any UPI app</p>
+              <p className="text-xs font-mono" style={{ color: '#9CA3AF' }}>
+                PhonePe · GPay · Paytm · BHIM
+              </p>
+            </div>
+
+            {/* UPI ID row */}
+            <div className="px-5 py-4 flex items-center justify-between gap-3"
+              style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              <div>
+                <p className="text-[10px] uppercase tracking-widest font-mono text-text-muted mb-0.5">UPI ID</p>
+                <p className="text-sm font-mono font-semibold text-text select-all">
+                  anandhamuruugan-1@okicici
+                </p>
+              </div>
+              <CopyButton value="anandhamuruugan-1@okicici" />
+            </div>
+
+            {/* Payee name */}
+            <div className="px-5 py-4">
+              <p className="text-[10px] uppercase tracking-widest font-mono text-text-muted mb-0.5">Pay to</p>
+              <p className="text-sm text-text font-medium">Anandh Muruugan</p>
+            </div>
+          </div>
+
+          {/* After payment note */}
+          <div className="rounded-xl px-4 py-3 flex items-start gap-3 mb-4"
+            style={{ background: 'rgba(37,51,255,0.06)', border: '1px solid rgba(37,51,255,0.15)' }}>
+            <svg className="w-4 h-4 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="#2533FF" strokeWidth="2" strokeLinecap="round">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <p className="text-xs text-text-secondary leading-relaxed">
+              After paying, your coordinator will verify the payment and unlock your access — usually within a few hours.
+            </p>
+          </div>
+
+          <p className="text-center text-xs text-text-muted">
+            Already paid?{' '}
+            <a href="https://wa.me/91XXXXXXXXXX" className="text-primary font-semibold" target="_blank" rel="noopener noreferrer">
+              Message us on WhatsApp →
+            </a>
           </p>
-          <Link href="/profile" className="text-sm font-semibold text-primary">View enrolment details →</Link>
         </div>
       </AppLayout>
     )
@@ -356,5 +419,27 @@ function BookOpenIcon({ className }: { className?: string }) {
       <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
       <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
     </svg>
+  )
+}
+
+function CopyButton({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false)
+  function copy() {
+    navigator.clipboard.writeText(value).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+  return (
+    <button onClick={copy}
+      className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-colors"
+      style={{ background: copied ? 'rgba(37,51,255,0.12)' : 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', color: copied ? '#818cf8' : '#9CA3AF' }}>
+      {copied ? (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+      ) : (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      )}
+      {copied ? 'Copied' : 'Copy'}
+    </button>
   )
 }
