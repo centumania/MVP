@@ -105,8 +105,18 @@ export function proxy(request: NextRequest): NextResponse {
 
   response.headers.set('Content-Security-Policy', csp)
 
+  // Study/content files are iframed by the viewer — allow same-origin framing.
+  // All other routes keep DENY.
+  const isFrameable = pathname.startsWith('/study/') ||
+                      pathname.startsWith('/content/') ||
+                      pathname.startsWith('/pdfs/')
+
   for (const [key, value] of STATIC_HEADERS) {
-    response.headers.set(key, value)
+    if (key === 'X-Frame-Options') {
+      response.headers.set(key, isFrameable ? 'SAMEORIGIN' : 'DENY')
+    } else {
+      response.headers.set(key, value)
+    }
   }
 
   response.headers.delete('X-Powered-By')

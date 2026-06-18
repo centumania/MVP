@@ -301,7 +301,7 @@ export default function LandingPage() {
           <h2 className="heading-lg section-heading">Numbers that speak</h2>
           <p className="section-sub">Built by toppers, trusted by Puducherry&apos;s most serious exam aspirants.</p>
           <div className="grid-4" style={{maxWidth:880,margin:'0 auto'}}>
-            {[{n:'500+',l:'Students Enrolled',c:'var(--indigo)'},{n:'92%',l:'Completion Rate',c:'var(--gold)'},{n:'3x',l:'Avg Score Improvement',c:'var(--success)'},{n:'30',l:'Days to Mastery',c:'var(--teal)'}].map(s=>(
+            {[{n:'30',l:'Days to Mastery',c:'var(--indigo)'},{n:'92%',l:'Completion Rate',c:'var(--gold)'},{n:'3x',l:'Avg Score Improvement',c:'var(--success)'},{n:'100+',l:'Daily Practice Questions',c:'var(--teal)'}].map(s=>(
               <div key={s.l} className="card" style={{textAlign:'center'}}>
                 <div className="big-stat" style={{color:s.c}}>{s.n}</div>
                 <div style={{fontSize:13,color:'var(--n300)',marginTop:6}}>{s.l}</div>
