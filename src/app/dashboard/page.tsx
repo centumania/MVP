@@ -147,13 +147,7 @@ export default function DashboardPage() {
             {/* QR Code */}
             <div className="flex flex-col items-center py-7 px-6"
               style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-              <div className="rounded-2xl overflow-hidden p-3 mb-4"
-                style={{ background: '#FFFFFF', width: 196, height: 196, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {/* Save your QR code image as public/upi-qr.png */}
-                <img src="/upi-qr.png" alt="UPI QR Code" width={172} height={172}
-                  style={{ display: 'block', imageRendering: 'pixelated' }}
-                  onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none' }} />
-              </div>
+              <QrBox />
               <p className="text-xs text-text-muted font-mono mb-1">Scan with any UPI app</p>
               <p className="text-xs font-mono" style={{ color: '#9CA3AF' }}>
                 PhonePe · GPay · Paytm · BHIM
@@ -441,5 +435,37 @@ function CopyButton({ value }: { value: string }) {
       )}
       {copied ? 'Copied' : 'Copy'}
     </button>
+  )
+}
+
+function QrBox() {
+  const [missing, setMissing] = useState(false)
+  const upiLink = 'upi://pay?pa=anandhamuruugan-1@okicici&pn=Anandh%20Muruugan&cu=INR'
+  return (
+    <div className="rounded-2xl overflow-hidden mb-4"
+      style={{ background: '#FFFFFF', width: 196, height: 196, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {!missing ? (
+        <img
+          src="/upi-qr.png" alt="UPI QR Code" width={172} height={172}
+          style={{ display: 'block', imageRendering: 'pixelated' }}
+          onError={() => setMissing(true)}
+        />
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: 16 }}>
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <path d="M14 14h2v2h-2zm2 2h2v2h-2zm2-2h1v2h-1z"/>
+          </svg>
+          <p style={{ fontSize: 10, color: '#6B7280', textAlign: 'center', fontFamily: 'monospace', lineHeight: 1.5 }}>
+            Save QR as<br /><b>public/upi-qr.png</b>
+          </p>
+          <a href={upiLink}
+            style={{ fontSize: 11, fontWeight: 700, color: '#2533FF', textDecoration: 'none', background: 'rgba(37,51,255,0.08)', padding: '6px 14px', borderRadius: 8, border: '1px solid rgba(37,51,255,0.25)' }}>
+            Tap to Pay
+          </a>
+        </div>
+      )}
+    </div>
   )
 }

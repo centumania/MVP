@@ -31,12 +31,10 @@ function DayHeader({ day, status }: { day: number; status: Status }) {
   const daysLeft           = daysUntilUnlock(status.enrolledDate, day)
   const isScheduleUnlocked = daysLeft <= 0
   const isPublished        = status.activeDays.includes(day)
-  const isFreeDay          = day <= 2
-  const isPaidOrFree       = status.paymentVerified || isFreeDay
-  const isAvailable        = isScheduleUnlocked && isPublished && isPaidOrFree
+  const isAvailable        = isScheduleUnlocked && isPublished && status.paymentVerified
 
   let badge: React.ReactNode
-  if (!isPaidOrFree) {
+  if (!status.paymentVerified) {
     badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(231,177,76,0.12)', color: '#e7b14c', border: '1px solid rgba(231,177,76,0.2)' }}>Payment required</span>
   } else if (isAvailable) {
     badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(74,222,128,0.10)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.2)' }}>Open today</span>

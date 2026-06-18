@@ -86,9 +86,9 @@ export default function StudentMaterialViewer() {
         return
       }
 
-      // Check payment
-      if (material.day > 2 && !status.paymentVerified) {
-        if (!cancelled) { setErrorMsg('Your payment is pending. Contact your coordinator.'); setState('error') }
+      // Check payment — ALL days require payment verification
+      if (!status.paymentVerified) {
+        if (!cancelled) { setErrorMsg('Your payment is pending. Contact your coordinator to unlock access.'); setState('error') }
         return
       }
 
