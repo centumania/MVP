@@ -833,6 +833,37 @@ document.addEventListener('keydown', function(e) {
   else if (e.key === ' ') { e.preventDefault(); toggleDone(); }
 });
 
+/* ── Mode unlock from viewer (passed as ?unlock=study|revise|quiz) ── */
+(function() {
+  var unlock  = new URLSearchParams(window.location.search).get('unlock') || 'study';
+  var allowed = { study: true, revise: unlock === 'revise' || unlock === 'quiz', quiz: unlock === 'quiz' };
+  document.querySelectorAll('.modes button').forEach(function(b) {
+    var m = b.dataset.mode;
+    if (!allowed[m]) {
+      b.setAttribute('data-locked', '1');
+      b.style.opacity    = '0.35';
+      b.style.cursor     = 'not-allowed';
+      b.style.filter     = 'grayscale(0.6)';
+      b.title = m === 'revise' ? 'Complete 50% of Study nodes first' : 'Complete Revise first';
+    }
+  });
+  document.querySelectorAll('.modes button').forEach(function(b) {
+    var orig = b.onclick;
+    b.onclick = function(e) {
+      if (b.getAttribute('data-locked')) {
+        var msg = b.dataset.mode === 'revise' ? 'Complete 50% of Study nodes first' : 'Complete Revise mode first';
+        var t = document.createElement('div');
+        t.textContent = msg;
+        t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a2235;color:#F9FAFB;padding:10px 22px;border-radius:10px;font-size:13px;font-family:JetBrains Mono,monospace;z-index:9999;border:1px solid rgba(37,51,255,0.3);box-shadow:0 4px 20px rgba(0,0,0,0.6);pointer-events:none';
+        document.body.appendChild(t);
+        setTimeout(function() { if (t.parentNode) t.remove(); }, 2400);
+        return;
+      }
+      if (orig) orig.call(this, e);
+    };
+  });
+})();
+
 /* ── Init ─────────────────────────────────────────────────────────── */
 buildNav(); progress(); setMode(); render();
 </script>

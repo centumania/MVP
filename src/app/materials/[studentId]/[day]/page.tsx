@@ -8,6 +8,13 @@ import { setCachedToken, trackEvent, trackBeacon } from '@/src/lib/analytics/tra
 import { getMaterialById } from '@/src/data/materials'
 
 type ViewerState = 'loading' | 'ready' | 'error'
+type Metrics = {
+  nodes_completed: number
+  total_nodes: number | null
+  first_accuracy_pct: number
+  xp: number
+  mode_unlock: 'study' | 'revise' | 'quiz'
+}
 
 export default function StudentMaterialViewer() {
   const { studentId, day } = useParams<{ studentId: string; day: string }>()
@@ -17,6 +24,7 @@ export default function StudentMaterialViewer() {
   const [errorMsg,  setErrorMsg] = useState('')
   const [iframeSrc, setIframeSrc]= useState<string | null>(null)
   const [title,     setTitle]    = useState('')
+  const [metrics,   setMetrics]  = useState<Metrics | null>(null)
 
   const openedAtRef = useRef<number>(0)
 
@@ -97,9 +105,26 @@ export default function StudentMaterialViewer() {
       openedAtRef.current = Date.now()
       trackEvent('material_opened', { material_id: day, day: material.day, student_id: studentId })
 
+      // Write to localStorage so centumania-tracker.js inside the iframe can read them
+      try {
+        localStorage.setItem('cm:access_token', session.access_token)
+        localStorage.setItem('cm:material_id', material.id)
+      } catch {}
+
+      // Fetch backend metrics (non-blocking — OK if it fails)
+      let metricsData: Metrics | null = null
+      try {
+        const mRes = await fetch(`/api/study/progress?material_id=${encodeURIComponent(material.id)}`, {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        })
+        if (mRes.ok) metricsData = await mRes.json()
+      } catch {}
+
       if (!cancelled) {
         setTitle(material.title)
-        setIframeSrc(material.htmlPath)
+        setMetrics(metricsData)
+        const unlockParam = metricsData?.mode_unlock ?? 'study'
+        setIframeSrc(material.htmlPath + '?unlock=' + unlockParam)
         setState('ready')
       }
     }
@@ -186,16 +211,67 @@ export default function StudentMaterialViewer() {
           </div>
         )}
 
+        {state === 'ready' && metrics && (
+          <div className="flex items-center gap-0 shrink-0 overflow-x-auto"
+            style={{ height: 36, background: 'rgba(17,24,39,0.95)', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingLeft: 16, paddingRight: 16 }}>
+            {/* Nodes */}
+            <MetricChip
+              label={metrics.total_nodes ? `${metrics.nodes_completed}/${metrics.total_nodes}` : String(metrics.nodes_completed)}
+              sub="Nodes"
+              color="#4ADE80"
+            />
+            <Divider />
+            {/* Accuracy */}
+            <MetricChip label={`${metrics.first_accuracy_pct}%`} sub="Accuracy" color="#2533FF" />
+            <Divider />
+            {/* XP */}
+            <MetricChip label={`${metrics.xp} XP`} sub="Earned" color="#F6B300" />
+            <Divider />
+            {/* Mode pills */}
+            <div className="flex items-center gap-1.5 ml-1">
+              <ModePill label="STUDY" done />
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+              <ModePill label="REVISE" done={metrics.mode_unlock === 'revise' || metrics.mode_unlock === 'quiz'} />
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+              <ModePill label="QUIZ"   done={metrics.mode_unlock === 'quiz'} />
+            </div>
+          </div>
+        )}
+
         {state === 'ready' && iframeSrc && (
           <iframe
             src={iframeSrc}
             title={title}
             className="flex-1 w-full border-0"
-            style={{ minHeight: 'calc(100vh - 48px)' }}
+            style={{ minHeight: metrics ? 'calc(100vh - 84px)' : 'calc(100vh - 48px)' }}
             allow="fullscreen"
           />
         )}
       </main>
     </div>
+  )
+}
+
+function MetricChip({ label, sub, color }: { label: string; sub: string; color: string }) {
+  return (
+    <div className="flex items-baseline gap-1 shrink-0">
+      <span className="text-xs font-bold font-mono tabular" style={{ color }}>{label}</span>
+      <span className="text-[10px] text-text-muted font-mono">{sub}</span>
+    </div>
+  )
+}
+function Divider() {
+  return <div className="mx-3 h-3 w-px shrink-0" style={{ background: 'rgba(255,255,255,0.08)' }} />
+}
+function ModePill({ label, done }: { label: string; done: boolean }) {
+  return (
+    <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded"
+      style={{
+        background: done ? 'rgba(37,51,255,0.15)' : 'rgba(255,255,255,0.04)',
+        color:      done ? '#818cf8'               : '#4B5563',
+        border:     `1px solid ${done ? 'rgba(37,51,255,0.3)' : 'rgba(255,255,255,0.06)'}`,
+      }}>
+      {!done && '🔒 '}{label}
+    </span>
   )
 }

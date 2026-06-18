@@ -11,13 +11,14 @@ export interface Material {
   videoUrl?: string
   pdfPath?: string
   isStaticLocked?: boolean
+  totalNodes?: number   // total study nodes in the HTML file; used for mode-unlock threshold
 }
 
 export const materials: Material[] = [
   // ── Day 1 ──────────────────────────────────────────────────────────────────
-  { id: 'day-1-bio',  day: 1, title: 'Biology — Foundations & Diversity', htmlPath: '/study/bio-map.html' },
-  { id: 'day-1-chem', day: 1, title: 'Chemistry — Matter & Atom',         htmlPath: '/study/chem-map-a.html' },
-  { id: 'day-1-math', day: 1, title: 'Maths — Number System',             htmlPath: '/study/num-system.html' },
+  { id: 'day-1-bio',  day: 1, title: 'Biology — Foundations & Diversity', htmlPath: '/study/bio-map.html',    totalNodes: 45 },
+  { id: 'day-1-chem', day: 1, title: 'Chemistry — Matter & Atom',         htmlPath: '/study/chem-map-a.html', totalNodes: 35 },
+  { id: 'day-1-math', day: 1, title: 'Maths — Number System',             htmlPath: '/study/num-system.html', totalNodes: 28 },
   { id: 'day-1-eng',  day: 1, title: 'English Grammar',        htmlPath: '/content/day-1/english.html' },
   { id: 'day-1-ca',   day: 1, title: 'Current Affairs',        htmlPath: '/content/day-1/current-affairs.html' },
 
