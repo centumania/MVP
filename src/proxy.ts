@@ -91,10 +91,15 @@ export function proxy(request: NextRequest): NextResponse {
   // (which inherits this page's CSP via allow-same-origin) can run
   // interactive HTML including inline scripts and localStorage, and so
   // the client-side fetch() to the external html_url is allowed by connect-src.
-  // Student viewer /materials/[studentId]/[day] also iframes study HTML with inline scripts
+  // Student viewer /materials/[studentId]/[day] also iframes study HTML with inline scripts.
+  // /study/, /content/, /pdfs/ serve the HTML files themselves — they load CDN scripts
+  // (e.g. Mermaid) and must have the permissive CSP or their inline JS is blocked.
   const isViewer = pathname.startsWith('/materials/viewer/') ||
                    pathname.startsWith('/materials/mindmap/') ||
-                   (pathname.startsWith('/materials/') && pathname.split('/').filter(Boolean).length >= 3)
+                   (pathname.startsWith('/materials/') && pathname.split('/').filter(Boolean).length >= 3) ||
+                   pathname.startsWith('/study/') ||
+                   pathname.startsWith('/content/') ||
+                   pathname.startsWith('/pdfs/')
   const csp      = isViewer ? buildMindmapCsp(nonce) : buildStrictCsp(nonce)
 
   const requestHeaders = new Headers(request.headers)

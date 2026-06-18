@@ -91,7 +91,7 @@ function MaterialCard({
   return (
     <Card>
       <div className="mb-4">
-        <h2 className="text-base font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+        <h2 className="text-sm font-semibold text-text" style={{ fontFamily: 'var(--font-inter,Inter,sans-serif)', letterSpacing: '0.01em' }}>
           {m.title}
         </h2>
         {m.description && <p className="text-xs text-text-muted mt-0.5">{m.description}</p>}
