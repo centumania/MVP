@@ -5,16 +5,18 @@
  * When you run a new migration, update this file in the same commit.
  *
  * Actual tables in Supabase:
- *   batches           — exam cohorts (LDC 2026, UDC 2026…)
- *   profiles          — extends auth.users
- *   exams             — daily exam sessions
- *   questions         — MCQ questions (separate table, NOT jsonb on exams)
- *   materials         — daily study content (24hr expiry)
- *   submissions       — student exam submissions
+ *   batches            — exam cohorts (LDC 2026, UDC 2026…)
+ *   profiles           — extends auth.users
+ *   exams              — daily exam sessions
+ *   questions          — MCQ questions (separate table, NOT jsonb on exams)
+ *   materials          — daily study content (24hr expiry)
+ *   submissions        — student exam submissions
  *   submission_answers — per-question answers
+ *   daily_test_scores  — study-quiz scores (migration 020)
  *
  * Views:
- *   leaderboard       — cumulative rank, score, days, accuracy
+ *   leaderboard        — formal-exam cumulative rank (do NOT union with study_leaderboard)
+ *   study_leaderboard  — study-quiz cumulative rank (migration 020)
  */
 
 // ---------------------------------------------------------------------------
@@ -134,27 +136,36 @@ export type LeaderboardEntry = {
   rank:             number
 }
 
+// Formal-exam leaderboard and study-quiz leaderboard are intentionally separate.
+// Do not union public.leaderboard with public.study_leaderboard.
+export type StudyLeaderboardEntry = {
+  name:             string       // no user_id — stripped by API before sending to client
+  tier:             PricingTier | null
+  total_score:      number
+  days_attended:    number
+  accuracy_percent: number       // 0.0–100.0
+  rank:             number
+}
+
+// ---------------------------------------------------------------------------
+// Study-quiz tables (migration 020)
+// ---------------------------------------------------------------------------
+
+export type DailyTestScore = {
+  id:                string
+  user_id:           string
+  material_id:       string
+  test_date:         string    // YYYY-MM-DD (IST), server-computed — client never supplies
+  score:             number
+  total:             number
+  in_morning_window: boolean   // label only: true if 06:00–08:29 IST; never a gate
+  time_taken_s:      number | null
+  submitted_at:      string
+}
+
 // ---------------------------------------------------------------------------
 // Centum Index tables
 // ---------------------------------------------------------------------------
-
-export type DailyTest = {
-  id:              string
-  batch_id:        string
-  test_date:       string    // YYYY-MM-DD
-  is_published:    boolean
-  total_questions: number
-  created_at:      string
-}
-
-export type TestSubmission = {
-  id:              string
-  user_id:         string
-  test_id:         string
-  submitted_at:    string
-  score:           number
-  total_questions: number
-}
 
 export type Node = {
   id:         string
@@ -325,16 +336,10 @@ export type Database = {
         Update:        Partial<Omit<AiReport, 'id'>>
         Relationships: []
       }
-      daily_tests: {
-        Row:           DailyTest
-        Insert:        Omit<DailyTest, 'id' | 'created_at'>
-        Update:        Partial<Omit<DailyTest, 'id' | 'created_at'>>
-        Relationships: []
-      }
-      test_submissions: {
-        Row:           TestSubmission
-        Insert:        Omit<TestSubmission, 'id' | 'submitted_at'> & { submitted_at?: string }
-        Update:        Partial<Omit<TestSubmission, 'id'>>
+      daily_test_scores: {
+        Row:           DailyTestScore
+        Insert:        Omit<DailyTestScore, 'id' | 'submitted_at'> & { submitted_at?: string }
+        Update:        Partial<Omit<DailyTestScore, 'id'>>
         Relationships: []
       }
       nodes: {
@@ -377,6 +382,14 @@ export type Database = {
     Views: {
       leaderboard: {
         Row:           LeaderboardEntry
+        Insert:        Record<string, never>
+        Update:        Record<string, never>
+        Relationships: []
+      }
+      // study_leaderboard Row includes user_id for server-side rank lookup.
+      // The API strips user_id before responding to clients (see StudyLeaderboardEntry).
+      study_leaderboard: {
+        Row:           StudyLeaderboardEntry & { user_id: string }
         Insert:        Record<string, never>
         Update:        Record<string, never>
         Relationships: []

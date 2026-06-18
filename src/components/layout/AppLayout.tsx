@@ -82,17 +82,17 @@ export function AppLayout({ children, userName, batchName }: {
     ?.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase() ?? '?'
 
   return (
-    <div className="flex min-h-screen bg-bg">
+    <div className="flex min-h-screen" style={{ background: 'var(--color-cm-carbon)' }}>
 
       {/* ── Desktop Sidebar ─────────────────────────────────────── */}
       <aside className="hidden md:flex flex-col fixed inset-y-0 left-0 z-20"
         aria-label="Main navigation"
-        style={{ width: 228, background: '#0B1020', borderRight: '1px solid rgba(255,255,255,0.09)' }}>
+        style={{ width: 228, background: '#0d1526', borderRight: '1px solid rgba(255,255,255,0.07)' }}>
 
         {/* Brand */}
-        <div className="px-5 py-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.09)' }}>
-          <LogoFull size={26} glow />
-          <p className="text-[10px] text-text-muted mt-2 tracking-wide font-mono pl-0.5">
+        <div className="px-5 py-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+          <LogoFull size={26} />
+          <p className="text-[11px] mt-2 tracking-wide pl-0.5" style={{ color: 'var(--color-cm-neutral-300)' }}>
             {batchName ?? 'Winning is a Habit'}
           </p>
         </div>
@@ -108,16 +108,17 @@ export function AppLayout({ children, userName, batchName }: {
                 className={[
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 relative',
                   active
-                    ? 'text-primary font-medium'
-                    : 'text-text-muted hover:text-text-secondary',
+                    ? 'font-semibold'
+                    : 'hover:bg-white/5',
                 ].join(' ')}
-                style={active ? { background: 'rgba(37,51,255,0.10)' } : {}}
-                onMouseEnter={e => { if (!active) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)' }}
-                onMouseLeave={e => { if (!active) (e.currentTarget as HTMLElement).style.background = '' }}
+                style={active
+                  ? { color: '#F9FAFB', background: 'rgba(37,51,255,0.18)', border: '1px solid rgba(37,51,255,0.25)' }
+                  : { color: 'var(--color-cm-neutral-300)' }
+                }
               >
                 {active && (
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full"
-                    style={{ background: '#2533FF', boxShadow: '0 0 8px rgba(37,51,255,0.6)' }} />
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full"
+                    style={{ background: '#2533FF' }} />
                 )}
                 <Icon a={active} />
                 <span className="tracking-tight">{label}</span>
@@ -127,22 +128,20 @@ export function AppLayout({ children, userName, batchName }: {
         </nav>
 
         {/* User Section */}
-        <div className="px-3 py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.09)' }}>
+        <div className="px-3 py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
           {userName && (
             <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
-              <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
-                style={{ background: 'linear-gradient(135deg,#2533FF,#1925c0)', color: '#F9FAFB', boxShadow: '0 0 10px rgba(37,51,255,0.30)' }}>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
+                style={{ background: 'linear-gradient(135deg,#2533FF,#0EA5A0)', color: '#FFFFFF' }}>
                 {initials}
               </div>
-              <p className="text-xs font-medium text-text-secondary truncate">{userName}</p>
+              <p className="text-xs font-semibold truncate" style={{ color: 'var(--color-cm-neutral-50)' }}>{userName}</p>
             </div>
           )}
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-xs text-text-muted hover:text-text-secondary transition-colors"
-            style={{}}
-            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.03)')}
-            onMouseLeave={e => (e.currentTarget.style.background = '')}
+            className="flex items-center gap-2.5 px-3 py-2 w-full rounded-xl text-xs transition-colors hover:bg-white/5"
+            style={{ color: 'var(--color-cm-neutral-300)' }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -159,14 +158,14 @@ export function AppLayout({ children, userName, batchName }: {
         <div className="main-shift flex-1 flex flex-col min-h-screen">
 
           {/* Mobile Top Bar */}
-          <header className="md:hidden flex items-center justify-between px-4 h-14 sticky top-0 z-10"
-            style={{ background: 'rgba(11,16,32,0.95)', backdropFilter: 'blur(6px)', borderBottom: '1px solid rgba(255,255,255,0.09)' }}>
+          <header className="surface-blur md:hidden flex items-center justify-between px-4 h-14 sticky top-0 z-10"
+            style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
             <div className="flex items-center gap-2.5">
-              <LogoFull size={22} glow />
+              <LogoFull size={22} />
             </div>
             {userName && (
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ background: 'linear-gradient(135deg,#2533FF,#1925c0)', color: '#F9FAFB', boxShadow: '0 0 10px rgba(37,51,255,0.30)' }}>
+                style={{ background: 'linear-gradient(135deg,#2533FF,#0EA5A0)', color: '#FFFFFF' }}>
                 {initials}
               </div>
             )}
@@ -184,9 +183,9 @@ export function AppLayout({ children, userName, batchName }: {
       </div>
 
       {/* ── Mobile Bottom Nav ────────────────────────────────────── */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 z-20 flex mobile-nav-safe"
+      <nav className="surface-blur md:hidden fixed bottom-0 inset-x-0 z-20 flex mobile-nav-safe"
         aria-label="Mobile navigation"
-        style={{ background: 'rgba(11,16,32,0.97)', backdropFilter: 'blur(20px)', borderTop: '1px solid rgba(255,255,255,0.09)' }}>
+        style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
         {NAV.map(({ href, label, Icon }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
@@ -194,11 +193,13 @@ export function AppLayout({ children, userName, batchName }: {
               key={href}
               href={href}
               aria-current={active ? 'page' : undefined}
-              className={[
-                'flex-1 flex flex-col items-center justify-center py-3 gap-1 transition-colors touch-target',
-                active ? 'text-primary' : 'text-text-muted',
-              ].join(' ')}
+              className="flex-1 flex flex-col items-center justify-center py-2.5 gap-1 transition-colors touch-target relative"
+              style={{ color: active ? '#F9FAFB' : 'var(--color-cm-neutral-300)' }}
             >
+              {active && (
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] rounded-full"
+                  style={{ background: '#2533FF' }} />
+              )}
               <Icon a={active} />
               <span className="text-[9px] font-semibold tracking-widest uppercase">
                 {label.split("'")[0].split(' ')[0]}

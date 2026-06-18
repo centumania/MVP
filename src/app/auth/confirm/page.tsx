@@ -99,9 +99,9 @@ function ConfirmInner() {
   // ── Loading ──────────────────────────────────────────────────
   if (state === 'loading') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#F8FAFC' }}>
         <div className="w-8 h-8 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#4ADE80', boxShadow: '0 0 12px rgba(74,222,128,0.3)' }} />
+          style={{ borderTopColor: '#0B3D91', boxShadow: '0 0 12px rgba(11,61,145,0.3)' }} />
         <p className="text-sm text-text-muted">Confirming your account…</p>
         <p className="text-xs text-text-muted" style={{ opacity: 0.4 }}>This takes just a moment</p>
       </div>
@@ -111,10 +111,10 @@ function ConfirmInner() {
   // ── Error ────────────────────────────────────────────────────
   if (state === 'error') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#F8FAFC' }}>
         <div className="w-16 h-16 rounded-3xl mx-auto mb-6 flex items-center justify-center"
-          style={{ background: 'rgba(232,115,107,0.08)', border: '1px solid rgba(232,115,107,0.18)' }}>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#e8736b" strokeWidth="2" strokeLinecap="round">
+          style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.18)' }}>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round">
             <circle cx="12" cy="12" r="10"/>
             <line x1="12" y1="8" x2="12" y2="12"/>
             <line x1="12" y1="16" x2="12.01" y2="16"/>
@@ -129,7 +129,7 @@ function ConfirmInner() {
           <a
             href="/auth/register"
             className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
-            style={{ background: '#22C55E', color: '#06140c' }}
+            style={{ background: '#10B981', color: '#FFFFFF' }}
           >
             Register again
           </a>
@@ -143,9 +143,9 @@ function ConfirmInner() {
 
   // ── Success (brief flash before redirect) ────────────────────
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#0e1410' }}>
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#F8FAFC' }}>
       <div className="w-16 h-16 rounded-3xl flex items-center justify-center"
-        style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.25)' }}>
+        style={{ background: 'rgba(11,61,145,0.10)', border: '1px solid rgba(11,61,145,0.25)' }}>
         <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="20 6 9 17 4 12"/>
         </svg>
@@ -158,9 +158,9 @@ function ConfirmInner() {
 export default function ConfirmPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex flex-col items-center justify-center gap-3" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-3" style={{ background: '#F8FAFC' }}>
         <div className="w-6 h-6 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#4ADE80' }} />
+          style={{ borderTopColor: '#0B3D91' }} />
         <p className="text-sm text-text-muted">Loading…</p>
       </div>
     }>

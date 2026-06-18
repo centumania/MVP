@@ -3,96 +3,208 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bio Map · Foundations & Diversity (Polished)</title>
+<title>Bio Map · Foundations &amp; Diversity · Centumania</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0e1410;--bg2:#141d17;--panel:#16201a;--panel2:#1b271f;--ink:#e8ead8;--ink-dim:#9aa893;--line:#27342b;
-  --green:#6fcf8f;--green-deep:#3fae6a;--green-glow:rgba(111,207,143,.16);
-  --amber:#e7b14c;--amber-bg:rgba(231,177,76,.10);--crimson:#e8736b;--crimson-bg:rgba(232,115,107,.10);--teal:#5ec8c0;
-  --mono:'JetBrains Mono',monospace;--disp:'Fraunces',serif;--body:'Hanken Grotesk',sans-serif;
+/* ═══════════════════════════════════════════════════════════════════
+   CENTUMANIA DESIGN SYSTEM · Bio Map (Foundations & Diversity)
+   Carbon Black · Centumania Indigo · Champion Gold
+   ═══════════════════════════════════════════════════════════════════ */
+:root {
+  --bg:             #0B1020;
+  --bg2:            #111827;
+  --surface:        #111827;
+  --surface-up:     #1a2235;
+  --surface-high:   #1e2a40;
+  --indigo:         #2533FF;
+  --indigo-hover:   #1f2bdb;
+  --indigo-tint:    rgba(37,51,255,0.10);
+  --indigo-border:  rgba(37,51,255,0.30);
+  --gold:           #F6B300;
+  --gold-tint:      rgba(246,179,0,0.12);
+  --gold-border:    rgba(246,179,0,0.28);
+  --success:        #22C55E;
+  --success-tint:   rgba(34,197,94,0.12);
+  --success-border: rgba(34,197,94,0.28);
+  --danger:         #E3413A;
+  --danger-tint:    rgba(227,65,58,0.12);
+  --danger-border:  rgba(227,65,58,0.28);
+  --warning:        #FBBF24;
+  --warning-tint:   rgba(251,191,36,0.06);
+  --warning-border: rgba(251,191,36,0.22);
+  --text:           #F9FAFB;
+  --text-dim:       #D1D5DB;
+  --text-muted:     #9CA3AF;
+  --text-faint:     #6B7280;
+  --border:         rgba(255,255,255,0.08);
+  --border-strong:  rgba(255,255,255,0.15);
+  --font-disp:  'Bebas Neue', sans-serif;
+  --font-body:  'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:  'JetBrains Mono', monospace;
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.5);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.6);
 }
-*{box-sizing:border-box}html,body{margin:0;height:100%}
-body{background:radial-gradient(1200px 600px at 85% -10%,rgba(63,174,106,.10),transparent 60%),radial-gradient(900px 500px at -10% 110%,rgba(94,200,192,.07),transparent 55%),var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
-.app{position:relative;z-index:1;display:grid;grid-template-columns:312px 1fr;grid-template-rows:auto 1fr;height:100vh;grid-template-areas:"top top" "side main";}
-header{grid-area:top;display:flex;align-items:center;gap:18px;padding:12px 22px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(20,29,23,.9),rgba(14,20,16,.6));backdrop-filter:blur(6px);}
-.brand{font-family:var(--disp);font-weight:900;font-size:20px;white-space:nowrap}
-.brand small{font-family:var(--mono);font-weight:500;color:var(--green);font-size:11px;display:block;letter-spacing:2px;text-transform:uppercase}
-.modes{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:4px}
-.modes button{font-family:var(--mono);font-size:12px;color:var(--ink-dim);background:none;border:0;padding:7px 13px;border-radius:8px;cursor:pointer;transition:.18s}
-.modes button.on{background:var(--green-deep);color:#06140c;font-weight:700}.modes button:hover:not(.on){color:var(--ink)}
-.prog{margin-left:auto;display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;color:var(--ink-dim)}
-.bar{width:150px;height:7px;border-radius:5px;background:var(--panel2);overflow:hidden;border:1px solid var(--line)}
-.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green-deep),var(--green));transition:width .4s}
-.reset{font-family:var(--mono);font-size:11px;color:var(--ink-dim);background:none;border:1px solid var(--line);border-radius:7px;padding:5px 9px;cursor:pointer}.reset:hover{color:var(--crimson);border-color:var(--crimson)}
-aside{grid-area:side;border-right:1px solid var(--line);background:linear-gradient(180deg,var(--bg2),var(--bg));overflow-y:auto;padding:14px 10px 40px}
-.search{width:100%;font-family:var(--mono);font-size:12px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-bottom:12px}.search:focus{outline:none;border-color:var(--green-deep)}
-.chap{margin-bottom:6px}
-.chap>.chead{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:none;border:0;color:var(--ink);font-family:var(--disp);font-weight:600;font-size:15px;padding:9px 8px;border-radius:8px;cursor:pointer}.chap>.chead:hover{background:var(--panel)}
-.chead .dot{width:9px;height:9px;border-radius:50%;background:var(--green-deep);flex:0 0 auto;box-shadow:0 0 8px var(--green-glow)}
-.chead .cnt{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink-dim)}
-.seclist{list-style:none;margin:2px 0 8px;padding:0 0 0 6px;border-left:1px solid var(--line);margin-left:12px}
-.seclist li{margin:1px 0}
-.seclist button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:0;color:var(--ink-dim);font-size:13.5px;padding:6px 9px;border-radius:7px;cursor:pointer;transition:.15s}
-.seclist button:hover{color:var(--ink);background:var(--panel)}
-.seclist button.active{color:var(--green);background:var(--green-glow)}
-.seclist button .chk{font-family:var(--mono);font-size:11px;opacity:.5}.seclist button.done .chk{color:var(--green);opacity:1}
-main{grid-area:main;overflow-y:auto;padding:30px clamp(20px,4vw,56px) 90px}
-.wrap{max-width:880px;margin:0 auto}
-.crumb{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:6px}
-h1.node{font-family:var(--disp);font-weight:900;font-size:clamp(28px,4vw,42px);line-height:1.05;margin:0 0 18px}
-.points{list-style:none;padding:0;margin:0 0 8px}
-.points li{position:relative;padding:9px 0 9px 26px;border-bottom:1px dashed var(--line);font-size:15.5px}
-.points li:before{content:"›";position:absolute;left:4px;top:8px;color:var(--green);font-weight:700}
-.points b{color:#fff}.points .star{color:var(--amber);font-family:var(--mono);font-size:11px;vertical-align:super}
-.block{margin:22px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
-.block .bh{display:flex;align-items:center;gap:9px;padding:11px 16px;font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-dim);border-bottom:1px solid var(--line);background:var(--panel2)}
-table{width:100%;border-collapse:collapse;font-size:13.5px}
-th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-thead th{background:var(--green-deep);color:#06140c;font-family:var(--mono);font-size:11px;text-transform:uppercase}
-tbody tr:nth-child(even){background:rgba(255,255,255,.015)}td:first-child{color:var(--green);font-weight:600}
-.diagram{padding:18px;background:var(--panel);overflow-x:auto}
-.diagram .mermaid{display:flex;justify-content:center;min-width:max-content;font-family:var(--mono);font-size:12px;color:var(--ink-dim);white-space:pre}
-.diagram .mermaid[data-processed]{white-space:normal;color:var(--ink)}
-.trap{padding:14px 16px;display:flex;gap:12px;align-items:flex-start;border-bottom:1px solid var(--line)}.trap:last-child{border-bottom:0}
-.trap .t{font-family:var(--mono);font-size:11px;font-weight:700;color:#06140c;background:var(--amber);border-radius:6px;padding:3px 7px;white-space:nowrap;margin-top:1px}
-.trap.err .t{background:var(--crimson)}.trap p{margin:0;font-size:14px}
-.block.trapbox{border-color:var(--amber);background:var(--amber-bg)}.block.trapbox .bh{color:var(--amber);background:transparent;border-color:rgba(231,177,76,.25)}
-.mcq{margin:14px;border:1px solid var(--line);border-radius:13px;padding:16px 18px;background:var(--panel2)}
-.mcq .q{font-weight:600;margin-bottom:11px;font-size:15px}.mcq .q .qn{font-family:var(--mono);color:var(--green);font-size:12px;margin-right:8px}
-.opt{display:block;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px 13px;margin:6px 0;color:var(--ink);cursor:pointer;font-size:14px;transition:.14s}
-.opt:hover{border-color:var(--green-deep)}.opt.correct{border-color:var(--green);background:var(--green-glow);color:var(--green)}.opt.wrong{border-color:var(--crimson);background:var(--crimson-bg);color:var(--crimson)}.opt[disabled]{cursor:default}
-.expl{margin-top:10px;font-size:13.5px;color:var(--ink-dim);padding:10px 13px;border-left:2px solid var(--green-deep);background:var(--bg2);border-radius:0 8px 8px 0;display:none}.expl.show{display:block}.expl b{color:var(--green)}
-.nav{display:flex;gap:12px;align-items:center;margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}
-.nav button{font-family:var(--body);font-weight:600;font-size:14px;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:.16s}.nav button:hover{border-color:var(--green-deep)}
-.nav .mark{margin-left:auto;background:var(--green-deep);color:#06140c;border-color:var(--green-deep);font-weight:700}.nav .mark.done{background:var(--panel);color:var(--green);border-color:var(--green)}
-.hint{font-family:var(--mono);font-size:11px;color:var(--ink-dim);text-align:center;margin-top:14px}
-.quizhead{display:flex;align-items:center;gap:16px;margin-bottom:22px;flex-wrap:wrap}
-.score{font-family:var(--mono);font-size:13px;color:var(--ink-dim)}.score b{color:var(--green);font-size:22px;font-family:var(--disp)}
-.pill{font-family:var(--mono);font-size:11px;color:var(--green);border:1px solid var(--green-deep);border-radius:20px;padding:4px 11px}
-.flash{border:1px solid var(--line);border-radius:14px;padding:18px;margin:12px 0;background:var(--panel);cursor:pointer}.flash .ft{font-family:var(--disp);font-weight:600;font-size:17px}
-.flash .fb{display:none;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}.flash.open .fb{display:block}.flash .tap{font-family:var(--mono);font-size:11px;color:var(--ink-dim);margin-top:8px}
-.menutoggle{display:none}
-@media(max-width:820px){.app{grid-template-columns:1fr}aside{position:fixed;z-index:30;top:60px;bottom:0;left:0;width:84%;max-width:340px;transform:translateX(-105%);transition:.25s;box-shadow:0 0 40px rgba(0,0,0,.6)}aside.open{transform:none}.menutoggle{display:inline-flex;background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:7px 11px;cursor:pointer;font-size:16px}.prog .bar{width:80px}.brand{font-size:15px}}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.app {
+  display: grid;
+  grid-template-columns: 296px 1fr;
+  grid-template-rows: 52px 1fr;
+  height: 100vh;
+  grid-template-areas: "top top" "side main";
+}
+header {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(11,16,32,0.97);
+  backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 20;
+}
+.brand { display: flex; align-items: center; gap: 9px; }
+.brand-name { font-family: var(--font-disp); font-size: 20px; letter-spacing: 0.5px; color: var(--text); line-height: 1; white-space: nowrap; }
+.brand-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--indigo); background: var(--indigo-tint); border: 1px solid var(--indigo-border); border-radius: 4px; padding: 2px 6px; }
+.modes { display: flex; gap: 2px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 3px; }
+.modes button { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); background: none; border: 0; padding: 5px 11px; border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+.modes button:hover:not(.on) { color: var(--text); background: var(--surface-up); }
+.modes button.on { background: var(--indigo); color: #fff; font-weight: 700; box-shadow: 0 1px 6px rgba(37,51,255,0.45); }
+.prog { margin-left: auto; display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.bar { width: 110px; height: 4px; border-radius: 2px; background: var(--surface-up); overflow: hidden; border: 1px solid var(--border); }
+.bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--indigo) 0%, var(--gold) 100%); transition: width 0.5s ease; border-radius: 2px; }
+.reset { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-faint); background: none; border: 1px solid var(--border); border-radius: 5px; padding: 4px 8px; cursor: pointer; transition: all 0.15s; }
+.reset:hover { color: var(--danger); border-color: var(--danger-border); }
+aside { grid-area: side; border-right: 1px solid var(--border); background: var(--surface); overflow-y: auto; padding: 12px 8px 40px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+aside::-webkit-scrollbar { width: 3px; }
+aside::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.search { width: 100%; font-family: var(--font-mono); font-size: 11px; color: var(--text); background: var(--surface-up); border: 1px solid var(--border); border-radius: 7px; padding: 7px 10px; margin-bottom: 10px; outline: none; transition: border-color 0.15s; }
+.search::placeholder { color: var(--text-faint); }
+.search:focus { border-color: var(--indigo); }
+.chap { margin-bottom: 3px; }
+.chap > .chead { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; background: none; border: 0; color: var(--text-dim); font-family: var(--font-disp); font-size: 13px; letter-spacing: 0.5px; padding: 7px 8px; border-radius: 7px; cursor: pointer; transition: background 0.14s; }
+.chap > .chead:hover { background: var(--surface-up); }
+.chead .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--indigo); flex: 0 0 auto; box-shadow: 0 0 6px rgba(37,51,255,0.5); }
+.chead .cnt { margin-left: auto; font-family: var(--font-mono); font-size: 9px; color: var(--text-faint); }
+.seclist { list-style: none; margin: 1px 0 6px; padding: 0 0 0 6px; border-left: 1px solid var(--border); margin-left: 11px; }
+.seclist li { margin: 1px 0; }
+.seclist button { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; background: none; border: 0; color: var(--text-muted); font-family: var(--font-body); font-size: 12.5px; padding: 5px 8px; border-radius: 6px; cursor: pointer; transition: all 0.13s; line-height: 1.3; }
+.seclist button:hover { color: var(--text); background: var(--surface-up); }
+.seclist button.active { color: var(--indigo); background: var(--indigo-tint); }
+.seclist button.done { color: var(--gold); }
+.seclist button.active.done { color: var(--gold); background: var(--gold-tint); }
+.seclist button .chk { font-family: var(--font-mono); font-size: 9px; opacity: 0.45; flex: 0 0 auto; }
+.seclist button.done .chk { color: var(--gold); opacity: 1; }
+main { grid-area: main; overflow-y: auto; padding: 28px clamp(16px,4vw,52px) 80px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+main::-webkit-scrollbar { width: 3px; }
+main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.wrap { max-width: 820px; margin: 0 auto; }
+.crumb { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--indigo); margin-bottom: 6px; }
+h1.node { font-family: var(--font-disp); font-size: clamp(34px,5vw,52px); letter-spacing: 1px; line-height: 1; margin: 0 0 22px; color: var(--text); }
+.points { list-style: none; padding: 0; margin: 0 0 6px; }
+.points li { position: relative; padding: 9px 0 9px 22px; border-bottom: 1px solid var(--border); font-size: 14.5px; color: var(--text-dim); line-height: 1.55; }
+.points li:last-child { border-bottom: none; }
+.points li::before { content: '›'; position: absolute; left: 5px; top: 8px; color: var(--indigo); font-weight: 700; font-size: 16px; }
+.points b { color: var(--text); }
+.points i { color: var(--text-muted); }
+.points .star { color: var(--gold); font-family: var(--font-mono); font-size: 10px; vertical-align: super; }
+.block { margin: 18px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow-sm); }
+.block .bh { display: flex; align-items: center; gap: 8px; padding: 9px 14px; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-faint); border-bottom: 1px solid var(--border); background: var(--surface-up); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+thead th { background: var(--indigo); color: rgba(255,255,255,0.95); font-family: var(--font-mono); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: rgba(255,255,255,0.018); }
+td:first-child { color: var(--gold); font-weight: 600; font-size: 12.5px; }
+.diagram { padding: 16px; background: var(--surface); overflow-x: auto; }
+.diagram .mermaid { display: flex; justify-content: center; min-width: max-content; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); white-space: pre; }
+.diagram .mermaid[data-processed] { white-space: normal; color: var(--text); }
+.trap { padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; border-bottom: 1px solid var(--border); }
+.trap:last-child { border-bottom: none; }
+.trap .t { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.5px; color: #1a1200; background: var(--warning); border-radius: 4px; padding: 2px 6px; white-space: nowrap; margin-top: 2px; flex: 0 0 auto; }
+.trap.err .t { background: var(--danger); color: #fff; }
+.trap p { margin: 0; font-size: 13.5px; color: var(--text-dim); line-height: 1.5; }
+.block.trapbox { border-color: var(--warning-border); background: var(--warning-tint); }
+.block.trapbox .bh { color: var(--warning); background: transparent; border-color: var(--warning-border); }
+.mcq { margin: 12px; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; background: var(--surface-up); }
+.mcq .q { font-weight: 600; margin-bottom: 10px; font-size: 14.5px; color: var(--text); line-height: 1.4; }
+.mcq .q .qn { font-family: var(--font-mono); color: var(--indigo); font-size: 10px; font-weight: 700; margin-right: 6px; letter-spacing: 0.5px; }
+.opt { display: block; width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; padding: 9px 12px; margin: 5px 0; color: var(--text-dim); cursor: pointer; font-size: 13.5px; font-family: var(--font-body); transition: all 0.12s; line-height: 1.4; }
+.opt:hover:not([disabled]) { border-color: var(--indigo-border); color: var(--text); background: var(--indigo-tint); }
+.opt.correct { border-color: var(--success-border); background: var(--success-tint); color: var(--success); font-weight: 500; }
+.opt.wrong { border-color: var(--danger-border); background: var(--danger-tint); color: var(--danger); }
+.opt[disabled] { cursor: default; }
+.expl { margin-top: 8px; font-size: 13px; color: var(--text-muted); padding: 9px 12px; border-left: 2px solid var(--indigo); background: var(--indigo-tint); border-radius: 0 6px 6px 0; display: none; line-height: 1.5; }
+.expl.show { display: block; }
+.expl b { color: var(--gold); }
+.nav { display: flex; gap: 10px; align-items: center; margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--border); }
+.nav button { font-family: var(--font-body); font-weight: 600; font-size: 13px; border-radius: 8px; padding: 9px 16px; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text-dim); transition: all 0.14s; }
+.nav button:hover { border-color: var(--border-strong); color: var(--text); }
+.nav .mark { margin-left: auto; background: var(--gold-tint); color: var(--gold); border-color: var(--gold-border); font-weight: 700; }
+.nav .mark:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+.nav .mark.done { background: var(--success-tint); color: var(--success); border-color: var(--success-border); }
+.nav .mark.done:hover { background: var(--success); color: var(--bg); border-color: var(--success); }
+.hint { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); text-align: center; margin-top: 12px; letter-spacing: 0.5px; }
+.quizhead { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+.score { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.score b { color: var(--gold); font-size: 22px; font-family: var(--font-disp); letter-spacing: 0.5px; }
+.pill { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.5px; color: var(--indigo); border: 1px solid var(--indigo-border); border-radius: 20px; padding: 3px 10px; background: var(--indigo-tint); }
+.flash { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin: 8px 0; background: var(--surface); cursor: pointer; transition: border-color 0.14s; }
+.flash:hover { border-color: var(--border-strong); }
+.flash.open { border-color: var(--indigo-border); }
+.flash .ft { font-family: var(--font-disp); font-size: 18px; letter-spacing: 0.5px; color: var(--text); }
+.flash .fb { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+.flash.open .fb { display: block; }
+.flash .tap { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); margin-top: 6px; letter-spacing: 0.5px; }
+.menutoggle { display: none; }
+@media (max-width: 820px) {
+  .app { grid-template-columns: 1fr; }
+  aside { position: fixed; z-index: 30; top: 52px; bottom: 0; left: 0; width: 85%; max-width: 320px; transform: translateX(-110%); transition: transform 0.24s ease; box-shadow: 0 0 48px rgba(0,0,0,0.8); }
+  aside.open { transform: none; }
+  .menutoggle { display: inline-flex; align-items: center; justify-content: center; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); border-radius: 7px; padding: 6px 10px; cursor: pointer; font-size: 15px; }
+  .prog .bar { width: 60px; }
+  .brand-name { font-size: 17px; }
+  .brand-badge { display: none; }
+}
 </style>
 </head>
 <body>
 <div class="app">
   <header>
-    <button class="menutoggle" id="menuBtn">☰</button>
-    <div class="brand">Bio Map<small>Foundations &amp; Diversity</small></div>
-    <div class="modes"><button data-mode="study" class="on">Study</button><button data-mode="revise">Revise</button><button data-mode="quiz">Quiz</button></div>
-    <div class="prog"><span id="progTxt">0 / 0</span><div class="bar"><i id="progBar"></i></div><button class="reset" id="resetBtn">reset</button></div>
+    <button class="menutoggle" id="menuBtn">&#9776;</button>
+    <div class="brand">
+      <span class="brand-name">BIO MAP</span>
+      <span class="brand-badge">FOUNDATIONS &amp; DIVERSITY</span>
+    </div>
+    <div class="modes">
+      <button data-mode="study" class="on">STUDY</button>
+      <button data-mode="revise">REVISE</button>
+      <button data-mode="quiz">QUIZ</button>
+    </div>
+    <div class="prog">
+      <span id="progTxt">0 / 0</span>
+      <div class="bar"><i id="progBar"></i></div>
+      <button class="reset" id="resetBtn">RESET</button>
+    </div>
   </header>
-  <aside id="side"><input class="search" id="search" placeholder="filter nodes…"><div id="nav"></div></aside>
+  <aside id="side">
+    <input class="search" id="search" placeholder="filter nodes&hellip;">
+    <div id="nav"></div>
+  </aside>
   <main><div class="wrap" id="view"></div></main>
 </div>
-
 <script>
-/* ---------- Mermaid diagrams (lifted from the polished MD, v10-safe quoting) ---------- */
 const DIAG={
 twoCells:`flowchart LR
   CELL["All Cells"] --> PRO["Prokaryotic"]
@@ -100,10 +212,9 @@ twoCells:`flowchart LR
   PRO --> P1["No defined nucleus"]
   PRO --> P2["Genetic material in nucleoid"]
   PRO --> P4["Examples: Bacteria · Blue-green Algae"]
-  PRO --> P5["Parts: Nucleoid · Plasmid · Mesosome · Ribosomes"]
   EUK --> E1["Well-defined nucleus"]
   EUK --> E2["Membrane-bound organelles"]
-  EUK --> E3["Examples: All except bacteria and blue-green algae"]`,
+  EUK --> E3["Examples: All except bacteria and cyanobacteria"]`,
 organelles:`flowchart TD
   ROOT["Cell Organelles"] --> NUC["Nucleus: double membrane · pores · chromosomes"]
   ROOT --> RER["Rough ER: ribosomes · protein synthesis"]
@@ -151,7 +262,7 @@ connective:`flowchart TD
   AR --> AR2["Ligament: bone to bone"]
   AD --> AD1["Fat storage + heat"]
   SK --> SK1["Bone + cartilage: support"]
-  FL --> FL1["Blood: O₂ · WBC defence · platelets clot"]
+  FL --> FL1["Blood: O2 · WBC defence · platelets clot"]
   FL --> FL2["Lymph: defence"]`,
 taxonomy:`flowchart TD
   K["Kingdom (highest)"] --> P["Phylum / Division"]
@@ -159,7 +270,7 @@ taxonomy:`flowchart TD
   C --> O["Order"]
   O --> F["Family"]
   F --> G["Genus (Capital)"]
-  G --> Sp["Species (lowest · interbreed → fertile offspring)"]`,
+  G --> Sp["Species (lowest · interbreed to fertile offspring)"]`,
 plantKingdom:`flowchart TD
   PK["Plant Kingdom"] --> CRY["Cryptogamae: spores · no seeds"]
   PK --> PHA["Phanerogamae: seed-bearing"]
@@ -178,7 +289,7 @@ animalia:`flowchart TD
   INV --> PL["Platyhelminthes: flatworms · flame cells (tapeworm)"]
   INV --> NE["Nematoda: roundworms · pseudocoelom (Ascaris)"]
   INV --> A2["Annelida: first TRUE coelom · segmented (earthworm)"]
-  INV --> AR["Arthropoda: largest ~80% · chitin · cockroach 13-chamber heart"]
+  INV --> AR["Arthropoda: largest 80pct · chitin · cockroach 13-chamber heart"]
   INV --> MO["Mollusca: soft body · shell (octopus)"]
   INV --> EC["Echinodermata: spiny · marine · ossicles (starfish)"]
   CH --> PI["Pisces: 2-chamber · gills"]
@@ -193,17 +304,17 @@ amoeba:`flowchart LR
   D --> E["Absorption + assimilation"]
   E --> F["Egestion"]`,
 photosynthesis:`flowchart LR
-  CO2["CO₂ via stomata"] --> LEAF["Chloroplast: thylakoids / stroma"]
-  H2O["H₂O via xylem"] --> LEAF
-  LIGHT["Sunlight → chlorophyll"] --> LEAF
-  LEAF --> GLU["Glucose C₆H₁₂O₆"]
-  LEAF --> O2["O₂ released"]`,
+  CO2["CO2 via stomata"] --> LEAF["Chloroplast: thylakoids / stroma"]
+  H2O["H2O via xylem"] --> LEAF
+  LIGHT["Sunlight + chlorophyll"] --> LEAF
+  LEAF --> GLU["Glucose C6H12O6"]
+  LEAF --> O2["O2 released"]`,
 movements:`flowchart TD
   MOV["Plant Movements"] --> NAST["Nastic: non-directional"]
   MOV --> TROP["Tropic: directional"]
   NAST --> TN["Thigmonasty: touch-me-not"]
-  TROP --> PHO["Phototropism: stems +ve, roots −ve"]
-  TROP --> GEO["Geotropism: roots +ve, shoots −ve"]
+  TROP --> PHO["Phototropism: stems +ve, roots -ve"]
+  TROP --> GEO["Geotropism: roots +ve, shoots -ve"]
   TROP --> HYD["Hydrotropism: roots to moisture"]
   TROP --> CHE["Chemotropism: pollen tube to ovule"]
   TROP --> THI["Thigmotropism: tendrils wrap support"]`,
@@ -219,11 +330,11 @@ repro:`flowchart TD
   POLL --> SELF["Self (autogamy)"]
   POLL --> CROSS["Cross (allogamy)"]`,
 doubleFert:`flowchart TD
-  PG["Pollen → 2 male nuclei"] --> F1["Nucleus 1 + egg = ZYGOTE"]
+  PG["Pollen gives 2 male nuclei"] --> F1["Nucleus 1 + egg = ZYGOTE"]
   PG --> F2["Nucleus 2 + 2 polar nuclei = TRIPLOID endosperm"]
-  F1 --> EM["Embryo → future plant"]
-  F2 --> EN["Endosperm → nutrition"]
-  EM --> FR["Ovary → fruit · ovules → seeds"]`,
+  F1 --> EM["Embryo to future plant"]
+  F2 --> EN["Endosperm to nutrition"]
+  EM --> FR["Ovary to fruit · ovules to seeds"]`,
 trophic:`flowchart TD
   T1["T1 Producers (grass)"] -->|"10%"| T2["T2 Primary consumers (deer)"]
   T2 -->|"10%"| T3["T3 Secondary (frog)"]
@@ -241,27 +352,26 @@ skin:`flowchart TD
   FN --> F5["Vitamin D via UV"]`
 };
 
-/* ---------- CONTENT ---------- */
 const CONTENT={chapters:[
- {id:"cell",title:"1 · The Cell",sections:[
+ {id:"cell",title:"1 · THE CELL",sections:[
   {id:"c-basics",title:"Basics",points:["<b>Cell</b> = basic structural &amp; functional unit of life.","Discovered by <b>Robert Hooke</b>.","Cells → tissues → organs.","Smallest cell 0.1–0.5 µm (bacteria); <b>mycoplasma</b> = smallest organism overall.","Largest cell: <b>ostrich egg</b> (170×130 mm).","Amoeba feeds by <b>endocytosis</b>."],
    mcqs:[{q:"Who discovered the cell?",options:["Robert Brown","Robert Hooke","Schleiden","Purkinje"],answer:1,explain:"<b>Robert Hooke</b>, 1665."},{q:"Smallest organism overall:",options:["Bacteria","RBC","Mycoplasma","Ovum"],answer:2,explain:"<b>Mycoplasma</b>."}]},
   {id:"c-types",title:"Two Cell Types",mermaid:"twoCells",points:["<b>Prokaryotic</b>: no true nucleus, DNA in nucleoid, no membrane-bound organelles (bacteria, blue-green algae).","<b>Eukaryotic</b>: well-defined nucleus + membrane-bound organelles (everything else)."],
    mcqs:[{q:"Prokaryotic DNA sits in the:",options:["Nucleus","Nucleolus","Nucleoid","Mitochondrion"],answer:2,explain:"<b>Nucleoid</b> region."},{q:"Which are prokaryotes?",options:["Fungi","Bacteria & blue-green algae","Protozoa","Plants"],answer:1,explain:"Bacteria and cyanobacteria (blue-green algae)."}]},
-  {id:"c-membrane",title:"Membrane & Transport",points:["Cell membrane = <b>phospholipid bilayer</b>, selectively permeable; <b>fluid mosaic model</b>.","<b>Diffusion</b>: high→low concentration (O₂, CO₂); no energy.","<b>Osmosis</b>: water across a semi-permeable membrane.","Isotonic: no net movement · Hypotonic: water IN → cell may <b>rupture</b> · Hypertonic: water OUT → cell <b>shrinks</b>.","<b>Endocytosis</b>: membrane invaginates → vesicle (phagocytosis in Amoeba)."],
+  {id:"c-membrane",title:"Membrane &amp; Transport",points:["Cell membrane = <b>phospholipid bilayer</b>, selectively permeable; <b>fluid mosaic model</b>.","<b>Diffusion</b>: high→low concentration (O₂, CO₂); no energy.","<b>Osmosis</b>: water across a semi-permeable membrane.","Isotonic: no net movement · Hypotonic: water IN → cell may <b>rupture</b> · Hypertonic: water OUT → cell <b>shrinks</b>.","<b>Endocytosis</b>: membrane invaginates → vesicle (phagocytosis in Amoeba)."],
    traps:[["confuse","Hypo<i>tonic</i> = cell swells/bursts; Hyper<i>tonic</i> = cell shrinks. Easy to flip."]],
    mcqs:[{q:"Membrane structure is explained by the:",options:["Lock & key model","Fluid mosaic model","Sandwich model","Unit model"],answer:1,explain:"<b>Fluid mosaic model</b> (Singer–Nicolson)."},{q:"A cell in hypertonic solution will:",options:["Swell","Burst","Shrink","Stay same"],answer:2,explain:"Water leaves → it <b>shrinks</b>."}]},
   {id:"c-wall",title:"Cell Wall",points:["Plant wall = <b>cellulose</b>; rigid support.","Fungi wall = <b>chitin</b>; bacteria wall = <b>polysaccharide</b>.","Lets the cell survive a hypotonic solution without bursting."],
    traps:[["confuse","Plant = cellulose · Fungi = chitin · Bacteria = peptidoglycan/polysaccharide."]],
    mcqs:[{q:"Fungal cell wall is made of:",options:["Cellulose","Chitin","Peptidoglycan","Lignin"],answer:1,explain:"<b>Chitin</b>."}]},
-  {id:"c-organelles",title:"Organelles",mermaid:"organelles",points:["<b>Nucleus</b>: double membrane, pores, controls division/inheritance; <b>nucleolus</b> stores proteins.","<b>Chromosomes</b>: DNA + protein; chromatin (uncoiled) ↔ chromosome (condensed). Humans <b>23 pairs (46)</b>; pea <b>14</b>, dog <b>78</b>.","<b>ER</b>: Rough (ribosomes → protein) / Smooth (lipids + detox); <b>membrane biogenesis</b> builds new membranes.","<b>Golgi</b> post office; <b>lysosome</b> suicide bag; <b>mitochondria</b> powerhouse (own mtDNA); <b>plastids</b> (plants); <b>centrioles</b> (animals)."],
+  {id:"c-organelles",title:"Organelles",mermaid:"organelles",points:["<b>Nucleus</b>: double membrane, pores, controls division/inheritance; <b>nucleolus</b> stores proteins.","<b>Chromosomes</b>: DNA + protein; humans <b>23 pairs (46)</b>; pea <b>14</b>, dog <b>78</b>.","<b>ER</b>: Rough (ribosomes → protein) / Smooth (lipids + detox).","<b>Golgi</b> post office; <b>lysosome</b> suicide bag; <b>mitochondria</b> powerhouse (own mtDNA); <b>plastids</b> (plants); <b>centrioles</b> (animals)."],
    tables:[
-     {title:"Organelle functions",headers:["Organelle","Role / nickname"],rows:[["Rough ER","ribosomes → protein synthesis & folding"],["Smooth ER","lipid metabolism & detox"],["Golgi","'post office' → packages proteins; builds lysosomes"],["Lysosome","'suicide bag' → enzymes, defence, waste"],["Mitochondria","'powerhouse' → ATP; own mtDNA; semi-autonomous"],["Centriole","initiates cell division (animal cells)"]]},
-     {title:"Plastids (plants only)",headers:["Plastid","Colour","Function"],rows:[["Chloroplast","Green","photosynthesis; chlorophyll; thylakoids in stroma"],["Leucoplast","Colourless","stores starch, oil, protein"],["Chromoplast","Coloured","colour of flowers & fruits"]]}],
-   traps:[["confuse","Lysosome = suicide bag · Golgi = post office · Mitochondria = powerhouse."],["confuse","Mitochondria <b>absent</b> in bacteria & mammalian RBCs. Plastids only in plant cells. Both carry own DNA."]],
+     {title:"Organelle Functions",headers:["Organelle","Role / Nickname"],rows:[["Rough ER","ribosomes → protein synthesis & folding"],["Smooth ER","lipid metabolism & detox"],["Golgi","'post office' → packages proteins; builds lysosomes"],["Lysosome","'suicide bag' → enzymes, defence, waste"],["Mitochondria","'powerhouse' → ATP; own mtDNA; semi-autonomous"],["Centriole","initiates cell division (animal cells)"]]},
+     {title:"Plastids (Plants Only)",headers:["Plastid","Colour","Function"],rows:[["Chloroplast","Green","photosynthesis; chlorophyll; thylakoids in stroma"],["Leucoplast","Colourless","stores starch, oil, protein"],["Chromoplast","Coloured","colour of flowers & fruits"]]}],
+   traps:[["confuse","Lysosome = suicide bag · Golgi = post office · Mitochondria = powerhouse."],["confuse","Mitochondria <b>absent</b> in bacteria & mammalian RBCs. Plastids only in plant cells."]],
    mcqs:[{q:"'Powerhouse of the cell':",options:["Ribosome","Golgi","Mitochondrion","Lysosome"],answer:2,explain:"Mitochondria make <b>ATP</b>."},{q:"'Suicide bag' of the cell:",options:["Lysosome","Vacuole","Nucleolus","Centriole"],answer:0,explain:"<b>Lysosomes</b>."},{q:"Mitochondria are absent in:",options:["Liver cells","Mammalian RBCs","Muscle cells","Nerve cells"],answer:1,explain:"Mature <b>RBCs</b> (and bacteria)."},{q:"Coloured plastid giving colour to fruits:",options:["Chloroplast","Leucoplast","Chromoplast","Amyloplast"],answer:2,explain:"<b>Chromoplast</b>."}]},
-  {id:"c-division",title:"Cell Division",mermaid:"division",points:["<b>Mitosis</b>: 1 division → 2 identical daughter cells. Phases <b>Prophase → Metaphase → Anaphase → Telophase (PMAT)</b><span class='star'>✱</span>.","<b>Meiosis</b>: 2 divisions → 4 haploid cells; genetic variation."],
-   traps:[["err","The 'PMATI' mnemonic (still in the source) wrongly lists Interphase as a mitosis phase. Mitosis is <b>PMAT</b>; <b>interphase precedes</b> mitosis (DNA replication) and is not part of it."],["confuse","Mitosis = 1 division, identical. Meiosis = 2 divisions, halved chromosomes, variation."]],
+  {id:"c-division",title:"Cell Division",mermaid:"division",points:["<b>Mitosis</b>: 1 division → 2 identical daughter cells. Phases <b>Prophase → Metaphase → Anaphase → Telophase (PMAT)</b>.","<b>Meiosis</b>: 2 divisions → 4 haploid cells; genetic variation."],
+   traps:[["err","Mitosis is <b>PMAT</b>; <b>interphase precedes</b> mitosis (DNA replication) and is not part of it."],["confuse","Mitosis = 1 division, identical. Meiosis = 2 divisions, halved chromosomes, variation."]],
    mcqs:[{q:"Correct order of mitosis:",options:["Prophase, Metaphase, Anaphase, Telophase","Interphase, Prophase, Metaphase, Anaphase","Metaphase, Prophase, Anaphase, Telophase","Anaphase, Telophase, Prophase, Metaphase"],answer:0,explain:"<b>PMAT</b>. Interphase is not a phase of mitosis."},{q:"Meiosis involves how many divisions?",options:["One","Two","Three","Four"],answer:1,explain:"<b>Two</b> → 4 haploid cells."}]},
   {id:"c-pva",title:"Plant vs Animal Cell",tables:[{title:"Comparison",headers:["Feature","Plant","Animal"],rows:[["Cell wall","Present","Absent"],["Chloroplast","Present","Absent"],["Vacuole","Large, central","Small / absent"],["Nucleus","Periphery","Centre"],["Centrioles","Absent","Present"]]}],
    points:["Plant cells have wall + chloroplast + large vacuole; centrioles are <b>animal</b>-specific."],
@@ -269,7 +379,7 @@ const CONTENT={chapters:[
   {id:"c-facts",title:"Key Cell Facts",points:["Longest animal cells = <b>nerve cells</b>.","Smallest human cell = <b>RBC</b>; largest = <b>ovum</b>.","No nucleus: mature mammalian RBC, sieve tubes.","~3 million cells die per minute in the body."],
    mcqs:[{q:"Largest human cell:",options:["Nerve cell","RBC","Ovum","Liver cell"],answer:2,explain:"Female <b>ovum</b>."}]}
  ]},
- {id:"tissue",title:"2 · Tissues",sections:[
+ {id:"tissue",title:"2 · TISSUES",sections:[
   {id:"t-plant",title:"Plant Tissues",mermaid:"plantTissue",points:["<b>Meristematic</b> (dividing): Apical (height) · Lateral (girth) · Intercalary (branching).","<b>Permanent</b> — Simple: Parenchyma (storage/photosynthesis) · Collenchyma (flexible support) · Sclerenchyma (DEAD, lignified, strength).","Complex: Xylem & Phloem."],
    tables:[{title:"Meristematic vs Permanent",headers:["Trait","Meristematic","Permanent"],rows:[["Division","Yes","No"],["Differentiation","No","Yes"],["Vacuole","Absent","Present"],["Walls","Thin","Thin/thick"]]}],
    traps:[["confuse","Sclerenchyma is <b>dead</b> (lignin); parenchyma & collenchyma are living."]],
@@ -278,15 +388,15 @@ const CONTENT={chapters:[
    points:["Only <b>phloem fibres</b> are dead among phloem components."],
    traps:[["confuse","Xylem = dead, water, one-way. Phloem = living, food, both ways."]],
    mcqs:[{q:"Xylem conducts:",options:["Food","Water and minerals","Hormones","Oxygen"],answer:1,explain:"<b>Water + minerals</b>, upward."},{q:"Which phloem part is dead?",options:["Sieve tube","Companion cell","Phloem fibre","Phloem parenchyma"],answer:2,explain:"Only <b>phloem fibres</b>."}]},
-  {id:"t-struct",title:"Plant Structure & Function",tables:[{title:"Structure ↔ function",headers:["Organ","Structure","Function"],rows:[["Leaves","Thin, large area, chloroplasts","Photosynthesis"],["Stems","Cylindrical, xylem+phloem","Support + transport"],["Roots","Branched, root hairs, root cap","Anchorage + uptake"]]}],
+  {id:"t-struct",title:"Plant Structure &amp; Function",tables:[{title:"Structure to Function",headers:["Organ","Structure","Function"],rows:[["Leaves","Thin, large area, chloroplasts","Photosynthesis"],["Stems","Cylindrical, xylem+phloem","Support + transport"],["Roots","Branched, root hairs, root cap","Anchorage + uptake"]]}],
    mcqs:[{q:"Main site of photosynthesis:",options:["Stem","Root","Leaf","Flower"],answer:2,explain:"<b>Leaves</b>."}]},
   {id:"t-animal",title:"Animal Tissues",mermaid:"connective",points:["<b>Epithelial</b>: squamous (gas exchange) · cuboidal (glands/kidney) · columnar (absorption) · stratified squamous (skin).","<b>Connective</b>: areolar, adipose, skeletal (bone/cartilage), fluid (blood/lymph)."],
-   tables:[{title:"Muscular tissue",headers:["Type","Control","Features","Location"],rows:[["Skeletal/striated","Voluntary","Cylindrical, multinucleate","Bones"],["Smooth","Involuntary","Spindle, uninucleate","Gut, vessels"],["Cardiac","Involuntary","Branched, intercalated discs","Heart"]]}],
+   tables:[{title:"Muscular Tissue",headers:["Type","Control","Features","Location"],rows:[["Skeletal/striated","Voluntary","Cylindrical, multinucleate","Bones"],["Smooth","Involuntary","Spindle, uninucleate","Gut, vessels"],["Cardiac","Involuntary","Branched, intercalated discs","Heart"]]}],
    traps:[["confuse","Cardiac muscle is involuntary BUT branched + striated with intercalated discs."],["confuse","Smooth muscle = involuntary; skeletal/striated = voluntary."]],
-   mcqs:[{q:"Cardiac muscle is:",options:["Voluntary, unbranched","Involuntary, branched","Voluntary, branched","Involuntary, unbranched"],answer:1,explain:"<b>Involuntary & branched</b>."},{q:"Skin epithelium:",options:["Simple squamous","Cuboidal","Columnar","Stratified squamous"],answer:3,explain:"<b>Stratified squamous</b>."},{q:"Tendon connects:",options:["Bone to bone","Muscle to bone","Muscle to muscle","Skin to muscle"],answer:1,explain:"Muscle→bone (ligament = bone→bone)."}]}
+   mcqs:[{q:"Cardiac muscle is:",options:["Voluntary, unbranched","Involuntary, branched","Voluntary, branched","Involuntary, unbranched"],answer:1,explain:"<b>Involuntary & branched</b>."},{q:"Skin epithelium:",options:["Simple squamous","Cuboidal","Columnar","Stratified squamous"],answer:3,explain:"<b>Stratified squamous</b>."},{q:"Tendon connects:",options:["Bone to bone","Muscle to bone","Muscle to muscle","Skin to muscle"],answer:1,explain:"Muscle to bone (ligament = bone to bone)."}]}
  ]},
- {id:"div",title:"3 · Diversity & Taxonomy",sections:[
-  {id:"d-concepts",title:"Diversity, Evolution, Darwin",points:["<b>Diversity</b> → balanced ecosystem. <b>Evolution</b> = slow change to survive.","<b>Darwin</b>: HMS Beagle → Galapagos; <i>On the Origin of Species</i> (<b>1859</b>); <b>natural selection</b>."],
+ {id:"div",title:"3 · DIVERSITY &amp; TAXONOMY",sections:[
+  {id:"d-concepts",title:"Diversity &amp; Evolution",points:["<b>Diversity</b> → balanced ecosystem. <b>Evolution</b> = slow change to survive.","<b>Darwin</b>: HMS Beagle → Galapagos; <i>On the Origin of Species</i> (<b>1859</b>); <b>natural selection</b>."],
    mcqs:[{q:"Darwin's book year:",options:["1859","1869","1809","1882"],answer:0,explain:"<b>1859</b>."},{q:"Darwin's mechanism:",options:["Use & disuse","Mutation","Natural selection","Genetic drift"],answer:2,explain:"<b>Natural selection</b>."}]},
   {id:"d-hierarchy",title:"Taxonomic Hierarchy",mermaid:"taxonomy",points:["<b>K</b>ing <b>P</b>hilip <b>C</b>ame <b>O</b>ver <b>F</b>or <b>G</b>ood <b>S</b>oup → Kingdom→Phylum→Class→Order→Family→Genus→Species.","<b>Species</b> = lowest; interbreed → fertile offspring."],
    mcqs:[{q:"Basic/lowest unit of classification:",options:["Genus","Family","Species","Order"],answer:2,explain:"<b>Species</b>."},{q:"Descending order:",options:["Kingdom-Class-Phylum-Order","Kingdom-Phylum-Class-Order","Phylum-Kingdom-Class-Order","Class-Order-Phylum-Kingdom"],answer:1,explain:"Kingdom → Phylum → Class → Order."}]},
@@ -294,29 +404,29 @@ const CONTENT={chapters:[
    traps:[["confuse","Genus capitalised, species lowercase."]],
    mcqs:[{q:"Father of taxonomy:",options:["Darwin","Linnaeus","Whittaker","Aristotle"],answer:1,explain:"<b>Linnaeus</b>."}]}
  ]},
- {id:"king",title:"4 · Five Kingdoms",sections:[
-  {id:"k-table",title:"Five Kingdom Comparison",tables:[{title:"R.H. Whittaker",headers:["Trait","Monera","Protista","Fungi","Plantae","Animalia"],rows:[["Cell","Prokaryote","Eukaryote","Eukaryote","Eukaryote","Eukaryote"],["Wall","Non-cellulosic","Some","Chitin","Cellulose","Absent"],["Nutrition","Auto/hetero","Auto/hetero","Hetero","Auto","Hetero"],["Example","Bacteria","Amoeba","Yeast","Plants","Animals"]]}],
+ {id:"king",title:"4 · FIVE KINGDOMS",sections:[
+  {id:"k-table",title:"Five Kingdom Comparison",tables:[{title:"R.H. Whittaker's System",headers:["Trait","Monera","Protista","Fungi","Plantae","Animalia"],rows:[["Cell","Prokaryote","Eukaryote","Eukaryote","Eukaryote","Eukaryote"],["Wall","Non-cellulosic","Some","Chitin","Cellulose","Absent"],["Nutrition","Auto/hetero","Auto/hetero","Hetero","Auto","Hetero"],["Example","Bacteria","Amoeba","Yeast","Plants","Animals"]]}],
    points:["Given by <b>R.H. Whittaker</b>; kingdoms Monera, Protista, Fungi, Plantae, Animalia."],
    traps:[["confuse","Only <b>Monera</b> is prokaryotic; only <b>Animalia</b> has no cell wall; fungi wall = chitin."]],
    mcqs:[{q:"Five-kingdom system by:",options:["Linnaeus","Whittaker","Darwin","Haeckel"],answer:1,explain:"<b>R.H. Whittaker</b>."},{q:"Prokaryotic kingdom:",options:["Protista","Fungi","Monera","Plantae"],answer:2,explain:"<b>Monera</b>."}]},
-  {id:"k-monera",title:"Monera · Protista · Fungi",points:["<b>Monera</b>: prokaryotes; Archaea (extreme, ancient); Eubacteria; Gram +ve thick wall (violet, often pathogenic) / −ve thin (pink).","<b>Protista</b>: eukaryotic unicellular (except yeast); protozoa amoeba/paramecium/Plasmodium.","<b>Fungi</b>: saprophytic; uni + multicellular; chitin wall."],
+  {id:"k-monera",title:"Monera · Protista · Fungi",points:["<b>Monera</b>: prokaryotes; Archaea (extreme, ancient); Eubacteria; Gram +ve thick wall (violet) / −ve thin (pink).","<b>Protista</b>: eukaryotic unicellular; protozoa amoeba/paramecium/Plasmodium.","<b>Fungi</b>: saprophytic; uni + multicellular; chitin wall."],
    mcqs:[{q:"Gram +ve bacteria stain:",options:["Pink","Violet","Green","Colourless"],answer:1,explain:"Thick wall → <b>violet</b>."}]},
   {id:"k-plantae",title:"Kingdom Plantae",mermaid:"plantKingdom",points:["Cryptogamae (spores): Thallophyta · Bryophyta · Pteridophyta.","Phanerogamae (seeds): Gymnosperms (naked) · Angiosperms (in fruit).","Dicot = 2 cotyledons, tap root, reticulate; Monocot = 1, fibrous, parallel."],
    traps:[["confuse","Dicot: 2 cotyledons, tap root, reticulate (mango). Monocot: 1, fibrous, parallel (wheat/rice)."]],
    mcqs:[{q:"Gymnosperms have:",options:["Seeds in fruit","Naked seeds","No seeds","Spores"],answer:1,explain:"<b>Naked seeds</b>."},{q:"Monocot venation:",options:["Reticulate","Parallel","Branched","None"],answer:1,explain:"<b>Parallel</b>."}]},
   {id:"k-animalia",title:"Kingdom Animalia",mermaid:"animalia",points:["Non-chordates: Porifera, Coelenterata, Platyhelminthes, Nematoda, Annelida (first true coelom), Arthropoda (largest), Mollusca, Echinodermata.","Chordates: Pisces (2-ch) · Amphibia (3-ch) · Reptilia (3-ch; crocodile 4) · Aves (4-ch) · Mammalia (4-ch).","Mammals: Prototheria (egg-laying), Metatheria (immature young), Eutheria (developed young)."],
-   traps:[["confuse","<b>Arthropoda</b> = largest phylum (~80%); cockroach heart = 13 chambers."],["confuse","Heart chambers: fish 2 · amphibian/reptile 3 · <b>crocodile 4</b> · bird/mammal 4."],["confuse","Echinoderms: only invertebrates with bone-like <b>ossicles</b>; water vascular system."]],
+   traps:[["confuse","<b>Arthropoda</b> = largest phylum (~80%); cockroach heart = 13 chambers."],["confuse","Heart chambers: fish 2 · amphibian/reptile 3 · <b>crocodile 4</b> · bird/mammal 4."]],
    mcqs:[{q:"Largest animal phylum:",options:["Chordata","Mollusca","Arthropoda","Annelida"],answer:2,explain:"<b>Arthropoda</b> (~80%)."},{q:"Reptile with 4-chambered heart:",options:["Snake","Lizard","Crocodile","Turtle"],answer:2,explain:"<b>Crocodile</b>."},{q:"First true coelom:",options:["Platyhelminthes","Nematoda","Annelida","Porifera"],answer:2,explain:"<b>Annelida</b>."},{q:"Egg-laying mammals are:",options:["Eutheria","Metatheria","Prototheria","Aves"],answer:2,explain:"<b>Prototheria</b> (Echidna, Platypus)."}]}
  ]},
- {id:"life",title:"5 · Life Processes",sections:[
+ {id:"life",title:"5 · LIFE PROCESSES",sections:[
   {id:"l-nutrition",title:"Nutrition",mermaid:"amoeba",points:["<b>Autotrophic</b>: photoautotrophs (plants), chemoautotrophs (some bacteria).","<b>Heterotrophic</b>: holozoic / saprophytic / parasitic. Cuscuta = parasitic plant.","Amoeba: holozoic — pseudopodia → phagocytosis → vacuole → egestion."],
    mcqs:[{q:"Cuscuta is a ___ plant:",options:["Saprophytic","Parasitic","Autotrophic","Insectivorous"],answer:1,explain:"<b>Parasitic</b>."}]},
   {id:"l-photo",title:"Photosynthesis",mermaid:"photosynthesis",points:["<b>6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</b>.","Chlorophyll absorbs light → splits water → reduces CO₂ → glucose.","<b>Stomata</b>: leaf pores; guard cells control opening via water content."],
-   mcqs:[{q:"Glucose formula:",options:["C₆H₁₂O₁₁","C₆H₁₂O₆","C₁₂H₂₂O₁₁","CH₂O"],answer:1,explain:"<b>C₆H₁₂O₆</b>."},{q:"Gas exchange via:",options:["Cuticle","Stomata","Xylem","Lenticels only"],answer:1,explain:"<b>Stomata</b>."}]},
-  {id:"l-transport",title:"Transport & Excretion",points:["Xylem water up (one-way); Phloem food (translocation, two-way, ATP).","Upward water forces: <b>imbibition, osmosis, root pressure, transpiration pull</b>.","Excretion: animals have organs; plants none special; unicellular use diffusion."],
+   mcqs:[{q:"Glucose formula:",options:["C6H12O11","C6H12O6","C12H22O11","CH2O"],answer:1,explain:"<b>C₆H₁₂O₆</b>."},{q:"Gas exchange via:",options:["Cuticle","Stomata","Xylem","Lenticels only"],answer:1,explain:"<b>Stomata</b>."}]},
+  {id:"l-transport",title:"Transport &amp; Excretion",points:["Xylem water up (one-way); Phloem food (translocation, two-way, ATP).","Upward water forces: <b>imbibition, osmosis, root pressure, transpiration pull</b>.","Excretion: animals have organs; plants none special; unicellular use diffusion."],
    mcqs:[{q:"Upward pull of water in tall plants is mainly:",options:["Root pressure","Transpiration pull","Gravity","Osmosis only"],answer:1,explain:"<b>Transpiration pull</b>."}]},
-  {id:"l-hormone",title:"Hormones & Movements",mermaid:"movements",tables:[{title:"Plant hormones",headers:["Hormone","Function"],rows:[["Auxin","growth of tissue"],["Cytokinin","cell division; delays ageing"],["Gibberellin","stem growth, germination, flowering"],["Abscisic acid","inhibits growth; wilting; dormancy"],["Ethylene","gaseous → fruit ripening"]]}],
-   traps:[["confuse","Auxin = growth · Cytokinin = division · Ethylene = ripening · ABA = stress/dormancy."],["confuse","Root: +ve geotropism, −ve phototropism. Shoot: opposite."]],
+  {id:"l-hormone",title:"Hormones &amp; Movements",mermaid:"movements",tables:[{title:"Plant Hormones",headers:["Hormone","Function"],rows:[["Auxin","growth of tissue"],["Cytokinin","cell division; delays ageing"],["Gibberellin","stem growth, germination, flowering"],["Abscisic acid","inhibits growth; wilting; dormancy"],["Ethylene","gaseous → fruit ripening"]]}],
+   traps:[["confuse","Auxin = growth · Cytokinin = division · Ethylene = ripening · ABA = stress/dormancy."],["confuse","Root: +ve geotropism, -ve phototropism. Shoot: opposite."]],
    mcqs:[{q:"Hormone for fruit ripening:",options:["Auxin","Cytokinin","Ethylene","Gibberellin"],answer:2,explain:"<b>Ethylene</b>."},{q:"Roots growing toward gravity show:",options:["Negative geotropism","Positive geotropism","Phototropism","Hydrotropism"],answer:1,explain:"<b>Positive geotropism</b>."}]},
   {id:"l-repro",title:"Reproduction in Plants",mermaid:"repro",points:["Non-essential: sepals (protect), petals (attract). Essential: androecium (male, stamen→pollen), gynoecium (female, pistil→ovule).","Pollination self (autogamy) / cross (allogamy)."],
    traps:[["confuse","Androecium = male; Gynoecium = female."]],
@@ -324,124 +434,408 @@ const CONTENT={chapters:[
   {id:"l-fert",title:"Double Fertilization",mermaid:"doubleFert",points:["Pollen → 2 male nuclei. One + egg = <b>zygote</b> → embryo. Other + 2 polar nuclei = <b>triploid endosperm</b> (nutrition).","Ovary → fruit; ovules → seeds."],
    mcqs:[{q:"The triploid endosperm forms from:",options:["1 male nucleus + egg","1 male nucleus + 2 polar nuclei","2 eggs","Two pollen"],answer:1,explain:"Male nucleus + <b>2 polar nuclei</b> → triploid."}]}
  ]},
- {id:"eco",title:"6 · Ecology",sections:[
-  {id:"e-trophic",title:"Ecosystem & Trophic Levels",mermaid:"trophic",points:["Ecosystem = biotic + abiotic. Producers → consumers → decomposers.","<b>10% Law</b> (Lindemann): only ~10% energy passes up; 90% lost as heat.","Food chain (linear) vs food web (interconnected)."],
+ {id:"eco",title:"6 · ECOLOGY",sections:[
+  {id:"e-trophic",title:"Ecosystem &amp; Trophic Levels",mermaid:"trophic",points:["Ecosystem = biotic + abiotic. Producers → consumers → decomposers.","<b>10% Law</b> (Lindemann): only ~10% energy passes up; 90% lost as heat.","Food chain (linear) vs food web (interconnected)."],
    mcqs:[{q:"Energy passed between trophic levels:",options:["1%","10%","50%","90%"],answer:1,explain:"<b>10% Law</b>."}]},
   {id:"e-pyramid",title:"Ecological Pyramids",tables:[{title:"Pyramids",headers:["Type","Based on","Shape"],rows:[["Numbers","organisms/level","upright or inverted"],["Biomass","dry weight/level","upright or inverted"],["Energy","energy/level","ALWAYS upright"]]}],
-   traps:[["confuse","Energy pyramid is <b>always upright</b>; number/biomass can invert. All start with producers."]],
+   traps:[["confuse","Energy pyramid is <b>always upright</b>; number/biomass can invert."]],
    mcqs:[{q:"Always-upright pyramid:",options:["Numbers","Biomass","Energy","All invert"],answer:2,explain:"<b>Energy</b>."}]},
-  {id:"e-poll",title:"Pollution & Environment",points:["Air pollution: natural (fires, volcanoes) / man-made (industry, transport).","<b>Ozone depletion</b>: CFCs → UV reaches Earth.","Waste: segregation → collection → transport → treatment → recycling → disposal."],
+  {id:"e-poll",title:"Pollution &amp; Environment",points:["Air pollution: natural (fires, volcanoes) / man-made (industry, transport).","<b>Ozone depletion</b>: CFCs → UV reaches Earth.","Waste: segregation → collection → transport → treatment → recycling → disposal."],
    traps:[["confuse","Ozone depletion (CFCs, UV) ≠ greenhouse effect/global warming (CO₂)."]],
    mcqs:[{q:"Ozone layer protects from:",options:["Infrared","UV radiation","Visible light","X-rays"],answer:1,explain:"<b>UV</b>; depleted by CFCs."}]}
  ]},
- {id:"bio",title:"7 · Biomolecules",sections:[
+ {id:"bio",title:"7 · BIOMOLECULES",sections:[
   {id:"b-carb",title:"Carbohydrates",tables:[{title:"Types",headers:["Type","Note","Examples"],rows:[["Monosaccharides","cannot hydrolyse","glucose, fructose"],["Oligosaccharides","2–10 units","sucrose, lactose, maltose"],["Polysaccharides","non-sweet","cellulose, glycogen, starch"]]}],
-   points:["Polyhydroxy aldehydes/ketones; C:H:O ≈ 1:2:1; 50–75% of body energy; 1 g ≈ 17 kJ / 4.2 kcal.","<b>D-fructose</b> sweetest; cellulose = roughage (humans can't digest)."],
+   points:["Polyhydroxy aldehydes/ketones; C:H:O ≈ 1:2:1; 50–75% of body energy; 1 g ≈ 17 kJ / 4.2 kcal.","<b>D-fructose</b> sweetest; cellulose = roughage (humans cannot digest)."],
    traps:[["err","Source says blood glucose '100–120 mg/mL' — correct unit is <b>mg/dL</b>."]],
    mcqs:[{q:"Sweetest sugar:",options:["Glucose","Sucrose","D-Fructose","Lactose"],answer:2,explain:"<b>D-fructose</b>."},{q:"Cellulose in humans acts as:",options:["Energy source","Roughage","Hormone","Vitamin"],answer:1,explain:"<b>Roughage</b>."}]},
-  {id:"b-prot",title:"Proteins & Lipids",tables:[{title:"Protein deficiency",headers:["Disease","Age","Sign"],rows:[["Kwashiorkor","1–5 yrs","pot belly, slim limbs"],["Marasmus","<1 yr","severe wasting"]]}],
+  {id:"b-prot",title:"Proteins &amp; Lipids",tables:[{title:"Protein Deficiency",headers:["Disease","Age","Sign"],rows:[["Kwashiorkor","1–5 yrs","pot belly, slim limbs"],["Marasmus","<1 yr","severe wasting"]]}],
    points:["Proteins: C,H,O,N,S; ~15% body; growth/repair. Sources: pulses, soybean, fish.","Lipids: glycerol + fatty acids; ~2× energy of carbs (9 kcal/g); saturated → arteriosclerosis."],
    traps:[["confuse","Kwashiorkor = protein deficiency, 1–5 yr. Marasmus = protein+calorie, <1 yr."]],
    mcqs:[{q:"Kwashiorkor is caused by deficiency of:",options:["Carbohydrate","Protein","Fat","Vitamin"],answer:1,explain:"<b>Protein</b>, ages 1–5."},{q:"Fats give energy vs carbs:",options:["Half","Equal","About twice","None"],answer:2,explain:"~<b>2×</b> (9 kcal/g)."}]},
-  {id:"b-vit",title:"Vitamins",tables:[{title:"Key vitamins",headers:["Vitamin","Name","Deficiency"],rows:[["A","Retinol","night blindness"],["B1","Thiamine","beriberi"],["B3","Niacin","pellagra"],["B12","Cyanocobalamin","pernicious anaemia (has cobalt)"],["C","Ascorbic acid","scurvy"],["D","Cholecalciferol","rickets"],["K","Phylloquinone","poor clotting"]]}],
-   points:["Discovered by FG Hopkins; term by C Funk; no calories.","Fat-soluble <b>A D E K</b>; rest water-soluble. D made in skin (UV); K by colon bacteria; B12 has cobalt."],
+  {id:"b-vit",title:"Vitamins",tables:[{title:"Key Vitamins",headers:["Vitamin","Name","Deficiency"],rows:[["A","Retinol","night blindness"],["B1","Thiamine","beriberi"],["B3","Niacin","pellagra"],["B12","Cyanocobalamin","pernicious anaemia (has cobalt)"],["C","Ascorbic acid","scurvy"],["D","Cholecalciferol","rickets"],["K","Phylloquinone","poor clotting"]]}],
+   points:["Fat-soluble <b>A D E K</b>; rest water-soluble. D made in skin (UV); K by colon bacteria; B12 has cobalt."],
    traps:[["confuse","Fat-soluble = A, D, E, K. Scurvy=C, Beriberi=B1, Pellagra=B3, Rickets=D, Night blindness=A."]],
    mcqs:[{q:"Scurvy is deficiency of vitamin:",options:["A","B1","C","D"],answer:2,explain:"Vitamin <b>C</b>."},{q:"Fat-soluble vitamins:",options:["B and C","A, D, E, K","Only C","B-complex"],answer:1,explain:"<b>A, D, E, K</b>."},{q:"Vitamin made in skin by UV:",options:["A","C","D","K"],answer:2,explain:"Vitamin <b>D</b>."}]}
  ]},
- {id:"body",title:"8 · Body Systems",sections:[
+ {id:"body",title:"8 · BODY SYSTEMS",sections:[
   {id:"s-skin",title:"Integumentary System",mermaid:"skin",points:["Epidermis (outer, no blood vessels) · Dermis (keratin → nails ~1 mm/week) · Hypodermis (adipose).","Functions: protection, homeostasis, sensation, <b>melanin</b> (UV), Vitamin D synthesis."],
    traps:[["confuse","Epidermis is avascular (no blood vessels); melanin gives UV protection."]],
    mcqs:[{q:"Pigment protecting against UV:",options:["Keratin","Melanin","Collagen","Haemoglobin"],answer:1,explain:"<b>Melanin</b>."},{q:"Skin layer lacking blood vessels:",options:["Dermis","Hypodermis","Epidermis","All have them"],answer:2,explain:"<b>Epidermis</b>."}]}
  ]}
 ]};
 
-/* ---------- engine ---------- */
-const flat=[];CONTENT.chapters.forEach(c=>c.sections.forEach(s=>flat.push({...s,chap:c.title,chapId:c.id})));
-const TOTAL=flat.length, KEY="biomap_polished_v2";
-let store={done:[],best:0};
-try{const r=localStorage.getItem(KEY);if(r)store=JSON.parse(r);}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(store));}catch(e){}}
-const isDone=id=>store.done.includes(id);
-let cur=0,mode="study";
-const $=s=>document.querySelector(s),view=$("#view"),nav=$("#nav");
+/* ─────────────────────────────────────────────────────────────────
+   ENGINE — window globals for centumania-tracker.js (BioMap flavour)
+   ───────────────────────────────────────────────────────────────── */
+const flat = [];
+CONTENT.chapters.forEach(c => c.sections.forEach(s => flat.push({...s, chap: c.title, chapId: c.id})));
+window.flat = flat;
 
-let mermaidLib=null;
-function runMermaid(){if(!mermaidLib)return;const nodes=[...view.querySelectorAll(".mermaid:not([data-processed])")];if(nodes.length){try{mermaidLib.run({nodes}).catch(()=>{});}catch(e){}}}
-import("https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs").then(m=>{mermaidLib=m.default;mermaidLib.initialize({startOnLoad:false,theme:"base",themeVariables:{darkMode:true,background:"#16201a",mainBkg:"#1b271f",primaryColor:"#1b271f",primaryTextColor:"#e8ead8",primaryBorderColor:"#3fae6a",lineColor:"#6fcf8f",fontFamily:"Hanken Grotesk"},flowchart:{useMaxWidth:true,htmlLabels:true,curve:"basis"}});runMermaid();}).catch(()=>{});
+const TOTAL = flat.length;
+const KEY   = 'cm_biomap_v3';
 
-function buildNav(filter=""){
-  nav.innerHTML="";
-  CONTENT.chapters.forEach(c=>{
-    const secs=c.sections.filter(s=>!filter||(s.title+" "+(s.points||[]).join(" ")).toLowerCase().includes(filter));
-    if(!secs.length)return;
-    const dc=c.sections.filter(s=>isDone(s.id)).length;
-    const wrap=document.createElement("div");wrap.className="chap";
-    wrap.innerHTML=`<button class="chead"><span class="dot"></span>${c.title}<span class="cnt">${dc}/${c.sections.length}</span></button>`;
-    const ul=document.createElement("ul");ul.className="seclist";
-    secs.forEach(s=>{const gi=flat.findIndex(f=>f.id===s.id);const li=document.createElement("li");li.innerHTML=`<button data-i="${gi}" class="${gi===cur?'active':''} ${isDone(s.id)?'done':''}"><span class="chk">${isDone(s.id)?'✓':'○'}</span>${s.title}</button>`;ul.appendChild(li);});
-    wrap.appendChild(ul);nav.appendChild(wrap);
+let store = { done: [], best: 0 };
+try { const r = localStorage.getItem(KEY); if (r) store = JSON.parse(r); } catch(e) {}
+window.store = store;
+
+function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e) {} }
+const isDone = id => store.done.includes(id);
+
+let cur  = 0;
+let mode = 'study';
+window.cur  = cur;
+window.mode = mode;
+
+/* Centum Index metric helpers */
+window._cmNodeOpenedAt = Date.now();
+window._cmMcqStats     = {};   /* { nodeId: { total, correct } } */
+
+const $ = s => document.querySelector(s);
+
+/* ── Mermaid ─────────────────────────────────────────────────────── */
+let mermaidLib = null;
+function runMermaid() {
+  if (!mermaidLib) return;
+  const nodes = [...document.querySelectorAll('.mermaid:not([data-processed])')];
+  if (nodes.length) { try { mermaidLib.run({ nodes }).catch(() => {}); } catch(e) {} }
+}
+import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m => {
+  mermaidLib = m.default;
+  mermaidLib.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    themeVariables: {
+      darkMode:           true,
+      background:         '#111827',
+      mainBkg:            '#1a2235',
+      primaryColor:       '#1a2235',
+      primaryTextColor:   '#F9FAFB',
+      primaryBorderColor: '#2533FF',
+      lineColor:          '#6B7280',
+      fontFamily:         'Inter, system-ui, sans-serif',
+      fontSize:           '13px',
+    },
+    flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
   });
-  nav.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{cur=+b.dataset.i;mode="study";setMode();render();closeDrawer();});
-  nav.querySelectorAll(".chead").forEach(h=>h.onclick=()=>{const ul=h.nextElementSibling;ul.style.display=ul.style.display==="none"?"":"none";});
-}
-function progress(){$("#progTxt").textContent=`${store.done.length} / ${TOTAL}`;$("#progBar").style.width=(store.done.length/TOTAL*100)+"%";}
-function tableHTML(t){return `<div class="block"><div class="bh">▦ ${t.title||'Table'}</div><table><thead><tr>${t.headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;}
-function trapHTML(tr){return `<div class="block trapbox"><div class="bh">⚠ Exam Traps</div>${tr.map(t=>`<div class="trap ${t[0]==='err'?'err':''}"><span class="t">${t[0]==='err'?'SOURCE ✗':'TRAP'}</span><p>${t[1]}</p></div>`).join("")}</div>`;}
-function diagHTML(k){return `<div class="block"><div class="bh">◈ Diagram</div><div class="diagram"><pre class="mermaid">${DIAG[k]}</pre></div></div>`;}
-function mcqHTML(ms,base){return `<div class="block"><div class="bh">✎ Quick Check</div>${ms.map((m,i)=>oneMcq(m,base+"_"+i)).join("")}</div>`;}
-function oneMcq(m,id){return `<div class="mcq" data-mcq="${id}"><div class="q"><span class="qn">Q</span>${m.q}</div>${m.options.map((o,i)=>`<button class="opt" data-i="${i}" data-a="${m.answer}">${o}</button>`).join("")}<div class="expl"><b>Answer.</b> ${m.explain}</div></div>`;}
-function wireMcq(scope){scope.querySelectorAll("[data-mcq]").forEach(box=>box.querySelectorAll(".opt").forEach(opt=>opt.onclick=()=>{const a=+opt.dataset.a,ch=+opt.dataset.i;box.querySelectorAll(".opt").forEach(o=>{o.disabled=true;if(+o.dataset.i===a)o.classList.add("correct");});if(ch!==a)opt.classList.add("wrong");box.querySelector(".expl").classList.add("show");}));}
+  runMermaid();
+}).catch(() => {});
 
-function render(){
-  if(mode==="quiz")return renderQuiz();
-  if(mode==="revise")return renderRevise();
-  const s=flat[cur];
-  view.innerHTML=`
-    <div class="crumb">${s.chap}</div><h1 class="node">${s.title}</h1>
-    ${s.points?`<ul class="points">${s.points.map(p=>`<li>${p}</li>`).join("")}</ul>`:""}
-    ${s.mermaid?diagHTML(s.mermaid):""}
-    ${(s.tables||[]).map(t=>tableHTML(t)).join("")}
-    ${s.traps&&s.traps.length?trapHTML(s.traps):""}
-    ${s.mcqs&&s.mcqs.length?mcqHTML(s.mcqs,s.id):""}
-    <div class="nav"><button id="prev">‹ Prev</button><button id="next">Next ›</button><button id="mark" class="mark ${isDone(s.id)?'done':''}">${isDone(s.id)?'✓ Reviewed':'Mark reviewed'}</button></div>
-    <div class="hint">← / → or J / K to move · Space to mark reviewed</div>`;
-  wireMcq(view);runMermaid();
-  $("#prev").onclick=()=>{cur=(cur-1+TOTAL)%TOTAL;render();sync();};
-  $("#next").onclick=()=>{cur=(cur+1)%TOTAL;render();sync();};
-  $("#mark").onclick=toggleDone;view.parentElement.scrollTop=0;sync();
-}
-function toggleDone(){const id=flat[cur].id;if(isDone(id))store.done=store.done.filter(x=>x!==id);else store.done.push(id);save();progress();render();}
-function sync(){buildNav($("#search").value.trim().toLowerCase());}
-
-function renderRevise(){
-  const allTraps=[];flat.forEach(s=>(s.traps||[]).forEach(t=>allTraps.push({chap:s.chap,sec:s.title,kind:t[0],txt:t[1]})));
-  view.innerHTML=`<div class="crumb">Revision</div><h1 class="node">Active Recall + Trap Sheet</h1>
-   <p style="color:var(--ink-dim);margin-top:-8px">Flip each card, recall the points, then reveal. Below: every trap & source error.</p>
-   <div class="block"><div class="bh">⟳ Flashcards</div><div style="padding:8px 14px">
-   ${flat.map((s,i)=>`<div class="flash" data-f="${i}"><div class="ft">${s.title} <span style="font-family:var(--mono);font-size:11px;color:var(--ink-dim)">· ${s.chap}</span></div><div class="fb"><ul class="points" style="margin:0">${(s.points||["(diagram / table node)"]).map(p=>`<li>${p}</li>`).join("")}</ul></div><div class="tap">tap to reveal</div></div>`).join("")}
-   </div></div>
-   <div class="block trapbox"><div class="bh">⚠ All Traps & Source Errors (${allTraps.length})</div>
-   ${allTraps.map(t=>`<div class="trap ${t.kind==='err'?'err':''}"><span class="t">${t.kind==='err'?'SOURCE ✗':'TRAP'}</span><p><b style="color:var(--ink)">${t.sec}:</b> ${t.txt}</p></div>`).join("")}</div>`;
-  view.querySelectorAll(".flash").forEach(f=>f.onclick=()=>f.classList.toggle("open"));view.parentElement.scrollTop=0;
+/* ── Nav ─────────────────────────────────────────────────────────── */
+function buildNav(filter) {
+  filter = filter || '';
+  const navEl = $('#nav');
+  if (!navEl) return;
+  navEl.innerHTML = '';
+  CONTENT.chapters.forEach(c => {
+    const secs = c.sections.filter(s =>
+      !filter || (s.title + ' ' + (s.points||[]).join(' ')).toLowerCase().includes(filter)
+    );
+    if (!secs.length) return;
+    const dc   = c.sections.filter(s => isDone(s.id)).length;
+    const wrap = document.createElement('div');
+    wrap.className = 'chap';
+    wrap.innerHTML = '<button class="chead"><span class="dot"></span>' + c.title + '<span class="cnt">' + dc + '/' + c.sections.length + '</span></button>';
+    const ul = document.createElement('ul');
+    ul.className = 'seclist';
+    secs.forEach(s => {
+      const gi = flat.findIndex(f => f.id === s.id);
+      const li = document.createElement('li');
+      li.innerHTML = '<button data-i="' + gi + '" class="' + (gi===cur?'active ':'') + (isDone(s.id)?'done':'') + '"><span class="chk">' + (isDone(s.id)?'✓':'○') + '</span>' + s.title + '</button>';
+      ul.appendChild(li);
+    });
+    wrap.appendChild(ul);
+    navEl.appendChild(wrap);
+  });
+  navEl.querySelectorAll('[data-i]').forEach(b => b.onclick = () => {
+    cur = +b.dataset.i; window.cur = cur;
+    mode = 'study';    window.mode = mode;
+    setMode(); render(); closeDrawer();
+  });
+  navEl.querySelectorAll('.chead').forEach(h => h.onclick = () => {
+    const ul = h.nextElementSibling;
+    ul.style.display = ul.style.display === 'none' ? '' : 'none';
+  });
 }
 
-let quiz=null;
-function renderQuiz(){
-  if(!quiz){const all=[];flat.forEach(s=>(s.mcqs||[]).forEach(m=>all.push(m)));for(let i=all.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[all[i],all[j]]=[all[j],all[i]];}quiz={qs:all,answered:0,correct:0};}
-  view.innerHTML=`<div class="crumb">Quiz · all chapters</div><h1 class="node">Test Yourself</h1>
-   <div class="quizhead"><span class="pill">${quiz.qs.length} questions</span><span class="score">Score <b id="liveScore">${quiz.correct}</b> / ${quiz.answered}</span><span class="score">Best: <b style="font-size:14px">${store.best}%</b></span><button class="reset" id="reQuiz" style="margin-left:auto">↻ new shuffle</button></div>
-   <div id="quizList">${quiz.qs.map((m,i)=>oneMcq(m,"quiz_"+i)).join("")}</div>`;
-  view.querySelectorAll("[data-mcq]").forEach(box=>box.querySelectorAll(".opt").forEach(opt=>opt.onclick=()=>{if(box.dataset.lock)return;box.dataset.lock=1;const a=+opt.dataset.a,ch=+opt.dataset.i;box.querySelectorAll(".opt").forEach(o=>{o.disabled=true;if(+o.dataset.i===a)o.classList.add("correct");});if(ch!==a)opt.classList.add("wrong");else quiz.correct++;quiz.answered++;box.querySelector(".expl").classList.add("show");$("#liveScore").textContent=quiz.correct;const pct=Math.round(quiz.correct/quiz.qs.length*100);if(quiz.answered===quiz.qs.length&&pct>store.best){store.best=pct;save();}}));
-  $("#reQuiz").onclick=()=>{quiz=null;renderQuiz();};view.parentElement.scrollTop=0;
+function progress() {
+  $('#progTxt').textContent = store.done.length + ' / ' + TOTAL;
+  $('#progBar').style.width = (store.done.length / TOTAL * 100) + '%';
 }
-function setMode(){document.querySelectorAll(".modes button").forEach(b=>b.classList.toggle("on",b.dataset.mode===mode));}
-document.querySelectorAll(".modes button").forEach(b=>b.onclick=()=>{mode=b.dataset.mode;if(mode==="quiz")quiz=null;setMode();render();});
-$("#search").oninput=e=>buildNav(e.target.value.trim().toLowerCase());
-$("#resetBtn").onclick=()=>{if(confirm("Clear all progress and best score?")){store={done:[],best:0};save();progress();render();sync();}};
-$("#menuBtn").onclick=()=>$("#side").classList.toggle("open");
-function closeDrawer(){$("#side").classList.remove("open");}
-document.addEventListener("keydown",e=>{if(mode!=="study"||/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;if(e.key==="ArrowRight"||e.key==="j"){cur=(cur+1)%TOTAL;render();}else if(e.key==="ArrowLeft"||e.key==="k"){cur=(cur-1+TOTAL)%TOTAL;render();}else if(e.key===" "){e.preventDefault();toggleDone();}});
-buildNav();progress();setMode();render();
+
+/* ── Builders ────────────────────────────────────────────────────── */
+function tableHTML(t) {
+  return '<div class="block"><div class="bh">&#9638; ' + (t.title||'TABLE') + '</div><table><thead><tr>' + t.headers.map(function(h){return '<th>'+h+'</th>';}).join('') + '</tr></thead><tbody>' + t.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>';}).join('')+'</tr>';}).join('') + '</tbody></table></div>';
+}
+
+function trapHTML(tr) {
+  return '<div class="block trapbox"><div class="bh">&#9888; EXAM TRAPS</div>' + tr.map(function(t){return '<div class="trap '+(t[0]==='err'?'err':'')+'"><span class="t">'+(t[0]==='err'?'SOURCE ✗':'TRAP')+'</span><p>'+t[1]+'</p></div>';}).join('') + '</div>';
+}
+
+function diagHTML(k) {
+  return '<div class="block"><div class="bh">&#9672; DIAGRAM</div><div class="diagram"><pre class="mermaid">' + DIAG[k] + '</pre></div></div>';
+}
+
+function oneMcq(m, id) {
+  return '<div class="mcq" data-mcq="' + id + '"><div class="q"><span class="qn">Q</span>' + m.q + '</div>' +
+    m.options.map(function(o,i){return '<button class="opt" data-i="'+i+'" data-a="'+m.answer+'">'+o+'</button>';}).join('') +
+    '<div class="expl"><b>Answer.</b> ' + m.explain + '</div></div>';
+}
+
+function mcqHTML(ms, base) {
+  return '<div class="block"><div class="bh">&#9998; QUICK CHECK</div>' + ms.map(function(m,i){return oneMcq(m, base+'_'+i);}).join('') + '</div>';
+}
+
+function wireMcq(scope) {
+  scope.querySelectorAll('[data-mcq]').forEach(function(box) {
+    box.querySelectorAll('.opt').forEach(function(opt) {
+      opt.onclick = function() {
+        var a = +opt.dataset.a, ch = +opt.dataset.i;
+        box.querySelectorAll('.opt').forEach(function(o) {
+          o.disabled = true;
+          if (+o.dataset.i === a) o.classList.add('correct');
+        });
+        if (ch !== a) opt.classList.add('wrong');
+        box.querySelector('.expl').classList.add('show');
+        /* local Centum Index MCQ tally */
+        var nodeId = flat[cur] && flat[cur].id;
+        if (nodeId) {
+          if (!window._cmMcqStats[nodeId]) window._cmMcqStats[nodeId] = { total: 0, correct: 0 };
+          window._cmMcqStats[nodeId].total++;
+          if (ch === a) window._cmMcqStats[nodeId].correct++;
+        }
+      };
+    });
+  });
+}
+
+/* ── Main render (tracker patches this → fires node_opened) ─────── */
+function render() {
+  if (mode === 'quiz')   return renderQuiz();
+  if (mode === 'revise') return renderRevise();
+
+  window._cmNodeOpenedAt = Date.now();
+
+  var s   = flat[cur];
+  var vEl = $('#view');
+  var html = '<div class="crumb">' + s.chap + '</div><h1 class="node">' + s.title + '</h1>';
+  if (s.points) html += '<ul class="points">' + s.points.map(function(p){return '<li>'+p+'</li>';}).join('') + '</ul>';
+  if (s.mermaid) html += diagHTML(s.mermaid);
+  if (s.tables) s.tables.forEach(function(t){ html += tableHTML(t); });
+  if (s.traps && s.traps.length) html += trapHTML(s.traps);
+  if (s.mcqs && s.mcqs.length) html += mcqHTML(s.mcqs, s.id);
+  html += '<div class="nav"><button id="prev">‹ Prev</button><button id="next">Next ›</button><button id="mark" class="mark ' + (isDone(s.id)?'done':'') + '">' + (isDone(s.id)?'✓ Reviewed':'Mark reviewed') + '</button></div>';
+  html += '<div class="hint">← / → or J / K to navigate · Space to mark reviewed</div>';
+  vEl.innerHTML = html;
+
+  wireMcq(vEl);
+  runMermaid();
+  $('#prev').onclick = function() { cur=(cur-1+TOTAL)%TOTAL; window.cur=cur; render(); sync(); };
+  $('#next').onclick = function() { cur=(cur+1)%TOTAL;        window.cur=cur; render(); sync(); };
+  $('#mark').onclick = toggleDone;
+  vEl.parentElement.scrollTop = 0;
+  sync();
+}
+window.render = render;
+
+/* ── toggleDone (tracker patches this → fires node_completed) ────── */
+function toggleDone() {
+  var id = flat[cur].id;
+  if (isDone(id)) store.done = store.done.filter(function(x){ return x !== id; });
+  else            store.done.push(id);
+  save(); progress(); render();
+}
+window.toggleDone = toggleDone;
+
+function sync() { buildNav($('#search').value.trim().toLowerCase()); }
+
+/* ── Revise ──────────────────────────────────────────────────────── */
+function renderRevise() {
+  var allTraps = [];
+  flat.forEach(function(s){ (s.traps||[]).forEach(function(t){ allTraps.push({chap:s.chap,sec:s.title,kind:t[0],txt:t[1]}); }); });
+  var vEl = $('#view');
+  var html = '<div class="crumb">REVISION MODE</div><h1 class="node">Active Recall + Trap Sheet</h1>';
+  html += '<p style="color:var(--text-muted);margin-top:-10px;font-size:13.5px">Flip each card to reveal. Every exam trap is listed below.</p>';
+  html += '<div class="block"><div class="bh">&#10227; FLASHCARDS &mdash; ' + flat.length + ' NODES</div><div style="padding:8px 12px">';
+  flat.forEach(function(s,i){
+    html += '<div class="flash" data-f="'+i+'"><div class="ft">'+s.title+' <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-faint)">· '+s.chap+'</span></div>';
+    html += '<div class="fb"><ul class="points" style="margin:0">'+(s.points||['(diagram / table node)']).map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul></div>';
+    html += '<div class="tap">tap to reveal</div></div>';
+  });
+  html += '</div></div>';
+  html += '<div class="block trapbox"><div class="bh">&#9888; ALL TRAPS &amp; SOURCE ERRORS &mdash; '+allTraps.length+' ITEMS</div>';
+  allTraps.forEach(function(t){
+    html += '<div class="trap '+(t.kind==='err'?'err':'')+'"><span class="t">'+(t.kind==='err'?'SOURCE ✗':'TRAP')+'</span><p><b style="color:var(--text)">'+t.sec+':</b> '+t.txt+'</p></div>';
+  });
+  html += '</div>';
+  vEl.innerHTML = html;
+  vEl.querySelectorAll('.flash').forEach(function(f){ f.onclick = function(){ f.classList.toggle('open'); }; });
+  vEl.parentElement.scrollTop = 0;
+}
+
+/* ── Quiz ────────────────────────────────────────────────────────── */
+var quiz = null;
+function renderQuiz() {
+  if (!quiz) {
+    var all = [];
+    flat.forEach(function(s){ (s.mcqs||[]).forEach(function(m){ all.push(m); }); });
+    for (var i = all.length-1; i>0; i--) {
+      var j = Math.random()*(i+1)|0;
+      var tmp = all[i]; all[i] = all[j]; all[j] = tmp;
+    }
+    quiz = { qs: all, answered: 0, correct: 0 };
+  }
+  var vEl = $('#view');
+  var html = '<div class="crumb">QUIZ MODE</div><h1 class="node">Test Yourself</h1>';
+  html += '<div class="quizhead"><span class="pill">'+quiz.qs.length+' QUESTIONS</span>';
+  html += '<span class="score">Score <b id="liveScore">'+quiz.correct+'</b> / '+quiz.answered+'</span>';
+  html += '<span class="score">Best: <b style="font-size:16px">'+store.best+'%</b></span>';
+  html += '<button class="reset" id="reQuiz" style="margin-left:auto">&#8635; NEW SHUFFLE</button></div>';
+  quiz.qs.forEach(function(m,i){ html += oneMcq(m,'quiz_'+i); });
+  vEl.innerHTML = html;
+
+  vEl.querySelectorAll('[data-mcq]').forEach(function(box) {
+    box.querySelectorAll('.opt').forEach(function(opt) {
+      opt.onclick = function() {
+        if (box.dataset.lock) return;
+        box.dataset.lock = '1';
+        var a = +opt.dataset.a, ch = +opt.dataset.i;
+        box.querySelectorAll('.opt').forEach(function(o){
+          o.disabled = true;
+          if (+o.dataset.i === a) o.classList.add('correct');
+        });
+        if (ch !== a) opt.classList.add('wrong'); else quiz.correct++;
+        quiz.answered++;
+        box.querySelector('.expl').classList.add('show');
+        $('#liveScore').textContent = quiz.correct;
+        var pct = Math.round(quiz.correct/quiz.qs.length*100);
+        if (quiz.answered === quiz.qs.length) {
+          if (pct > store.best) { store.best = pct; save(); }
+          if (typeof window._cmPostTestScore === 'function') {
+            window._cmPostTestScore(quiz.correct, quiz.qs.length, null);
+          }
+          _cmShowLeaderboard(quiz.correct, quiz.qs.length);
+        }
+      };
+    });
+  });
+  $('#reQuiz').onclick = function(){ quiz=null; renderQuiz(); };
+  vEl.parentElement.scrollTop = 0;
+}
+
+/* ── Study leaderboard panel (shown once after quiz completion) ──── */
+var _cmLbShown = false;
+function _cmShowLeaderboard(myScore, myTotal) {
+  if (_cmLbShown) return; // show once per page load; reshuffles don't re-show
+  _cmLbShown = true;
+
+  var token = (function(){ try { return localStorage.getItem('cm:access_token'); } catch(e){ return null; } })();
+  if (!token) return;
+
+  // Inject styles once
+  if (!document.getElementById('cm-lb-style')) {
+    var s = document.createElement('style');
+    s.id = 'cm-lb-style';
+    s.textContent = [
+      '#cm-lb{margin:0 0 28px;padding:18px 20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;}',
+      '#cm-lb h3{font-family:var(--font-disp);font-size:17px;letter-spacing:.5px;color:var(--text);margin:0 0 14px;}',
+      '#cm-lb table{width:100%;border-collapse:collapse;font-family:var(--font-mono);font-size:11px;}',
+      '#cm-lb th{text-align:left;color:var(--text-faint);font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:0 8px 8px 0;border-bottom:1px solid var(--border);}',
+      '#cm-lb td{padding:7px 8px 7px 0;color:var(--text-dim);border-bottom:1px solid var(--border);}',
+      '#cm-lb tr.you td{color:var(--gold);font-weight:700;}',
+      '#cm-lb .rank-num{color:var(--text-faint);}',
+      '#cm-lb .my-score{margin-top:10px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);}',
+      '#cm-lb .err{color:var(--text-faint);font-family:var(--font-mono);font-size:11px;}'
+    ].join('');
+    document.head.appendChild(s);
+  }
+
+  // Insert placeholder while fetching
+  var view = $('#view');
+  var lb = document.createElement('div');
+  lb.id = 'cm-lb';
+  lb.innerHTML = '<h3>LEADERBOARD</h3><p class="err">Loading…</p>';
+  view.insertBefore(lb, view.firstChild);
+
+  fetch('/api/study/leaderboard', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+  .then(function(data) {
+    var rows = (data.entries || []).slice(0, 10);
+    var myRank = data.myRank;
+    var inTop10 = rows.some(function(r){ return r.rank === (myRank && myRank.rank); });
+
+    var html = '<h3>LEADERBOARD</h3>';
+    html += '<table><thead><tr>';
+    html += '<th>#</th><th>Name</th><th>Score</th><th>Days</th><th>Acc</th>';
+    html += '</tr></thead><tbody>';
+    rows.forEach(function(r) {
+      var isMe = myRank && r.rank === myRank.rank;
+      html += '<tr' + (isMe ? ' class="you"' : '') + '>';
+      html += '<td class="rank-num">' + r.rank + '</td>';
+      html += '<td>' + _cmEsc(r.name) + (isMe ? ' &#9733;' : '') + '</td>';
+      html += '<td>' + r.total_score + '</td>';
+      html += '<td>' + r.days_attended + '</td>';
+      html += '<td>' + r.accuracy_percent + '%</td>';
+      html += '</tr>';
+    });
+    if (myRank && !inTop10) {
+      html += '<tr><td colspan="5" style="color:var(--text-faint);padding:4px 0">⋯</td></tr>';
+      html += '<tr class="you">';
+      html += '<td class="rank-num">' + myRank.rank + '</td>';
+      html += '<td>You &#9733;</td>';
+      html += '<td>' + myRank.total_score + '</td>';
+      html += '<td>' + myRank.days_attended + '</td>';
+      html += '<td>' + myRank.accuracy_percent + '%</td>';
+      html += '</tr>';
+    }
+    html += '</tbody></table>';
+    html += '<p class="my-score">Today: ' + myScore + ' / ' + myTotal + ' correct</p>';
+    lb.innerHTML = html;
+  })
+  .catch(function() {
+    lb.innerHTML = '<h3>LEADERBOARD</h3><p class="err">Could not load — check back later.</p>';
+  });
+}
+function _cmEsc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ── Mode switcher ───────────────────────────────────────────────── */
+function setMode() {
+  document.querySelectorAll('.modes button').forEach(function(b){ b.classList.toggle('on', b.dataset.mode===mode); });
+}
+document.querySelectorAll('.modes button').forEach(function(b) {
+  b.onclick = function() {
+    mode = b.dataset.mode; window.mode = mode;
+    if (mode === 'quiz') quiz = null;
+    setMode(); render();
+  };
+});
+
+/* ── Controls ────────────────────────────────────────────────────── */
+$('#search').oninput = function(e){ buildNav(e.target.value.trim().toLowerCase()); };
+$('#resetBtn').onclick = function() {
+  if (confirm('Clear all progress and best score?')) {
+    store = {done:[],best:0}; window.store = store;
+    save(); progress(); render(); sync();
+  }
+};
+$('#menuBtn').onclick = function(){ $('#side').classList.toggle('open'); };
+function closeDrawer() { $('#side').classList.remove('open'); }
+
+/* ── Keyboard ─────────────────────────────────────────────────────── */
+document.addEventListener('keydown', function(e) {
+  if (mode !== 'study' || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight' || e.key === 'j') { cur=(cur+1)%TOTAL; window.cur=cur; render(); }
+  else if (e.key === 'ArrowLeft' || e.key === 'k') { cur=(cur-1+TOTAL)%TOTAL; window.cur=cur; render(); }
+  else if (e.key === ' ') { e.preventDefault(); toggleDone(); }
+});
+
+/* ── Init ─────────────────────────────────────────────────────────── */
+buildNav(); progress(); setMode(); render();
 </script>
+<script src="/study/centumania-tracker.js"></script>
 </body>
 </html>

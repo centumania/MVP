@@ -939,5 +939,6 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){try{loadState();renderHome();show('home');}catch(e){document.getElementById('worlds-list').innerHTML='<p style="color:#f76f6f;padding:16px;font-size:.8rem">Error loading content. Please reload.</p>';console.error(e);}});}else{try{loadState();renderHome();show('home');}catch(e){console.error(e);}}
 </script>
 
+<script src="/study/centumania-tracker.js"></script>
 </body>
 </html>

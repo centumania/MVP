@@ -16,10 +16,10 @@ import type { AiReport } from '@/src/types/database'
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function readinessColor(score: number) {
-  if (score >= 80) return '#4ADE80'
-  if (score >= 60) return '#5ec8c0'
-  if (score >= 40) return '#e7b14c'
-  return '#e8736b'
+  if (score >= 80) return '#0B3D91'
+  if (score >= 60) return '#0B3D91'
+  if (score >= 40) return '#F59E0B'
+  return '#EF4444'
 }
 
 function readinessLabel(score: number) {
@@ -39,7 +39,7 @@ function ReadinessRing({ score }: { score: number }) {
   return (
     <div className="relative flex items-center justify-center" style={{ width: 120, height: 120 }}>
       <svg width={120} height={120} viewBox="0 0 120 120" className="absolute inset-0" style={{ transform: 'rotate(-90deg)' }}>
-        <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="10" />
+        <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(17,24,39,0.05)" strokeWidth="10" />
         <circle
           cx="60" cy="60" r={r} fill="none"
           stroke={col} strokeWidth="10"
@@ -131,9 +131,9 @@ export default function MentorReportPage() {
   // ── Loading / Generating ─────────────────────────────────────────────────
   if (phase === 'loading' || phase === 'generating') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#F8FAFC' }}>
         <div className="w-8 h-8 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#4ADE80', boxShadow: '0 0 12px rgba(74,222,128,0.3)' }} />
+          style={{ borderTopColor: '#0B3D91', boxShadow: '0 0 12px rgba(11,61,145,0.3)' }} />
         <p className="text-sm text-text-muted">
           {phase === 'generating' ? 'Your mentor report is being generated…' : 'Loading report…'}
         </p>
@@ -147,10 +147,10 @@ export default function MentorReportPage() {
   // ── Error ────────────────────────────────────────────────────────────────
   if (phase === 'error') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#F8FAFC' }}>
         <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
-          style={{ background: 'rgba(232,115,107,0.10)', border: '1px solid rgba(232,115,107,0.20)' }}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8736b" strokeWidth="2" strokeLinecap="round">
+          style={{ background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.20)' }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round">
             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
         </div>
@@ -159,7 +159,7 @@ export default function MentorReportPage() {
         <button
           onClick={() => router.back()}
           className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
-          style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid #27342b', color: '#9aa893' }}>
+          style={{ background: 'rgba(17,24,39,0.04)', border: '1px solid #E5E7EB', color: '#6B7280' }}>
           Go back
         </button>
       </div>
@@ -172,18 +172,18 @@ export default function MentorReportPage() {
 
   // ── Report ──────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen" style={{ background: '#0e1410' }}>
+    <div className="min-h-screen" style={{ background: '#F8FAFC' }}>
 
       {/* Header */}
       <header className="sticky top-0 z-20"
-        style={{ background: 'rgba(14,20,16,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid #27342b' }}>
+        style={{ background: 'rgba(14,20,16,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid #E5E7EB' }}>
         <div className="max-w-2xl mx-auto px-4 h-14 flex items-center gap-3">
           <button
             onClick={() => router.back()}
             className="p-1.5 -ml-1.5 rounded-lg transition-colors"
-            style={{ color: '#6b7a63' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#e8ead8'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.04)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#6b7a63'; (e.currentTarget as HTMLButtonElement).style.background = '' }}>
+            style={{ color: '#9CA3AF' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#111827'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(17,24,39,0.04)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#9CA3AF'; (e.currentTarget as HTMLButtonElement).style.background = '' }}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
@@ -200,7 +200,7 @@ export default function MentorReportPage() {
       <div className="max-w-2xl mx-auto px-4 py-8 space-y-4">
 
         {/* ── Metrics row ─────────────────────────────────────────── */}
-        <div className="rounded-2xl p-6" style={{ background: '#16201a', border: '1px solid #27342b' }}>
+        <div className="rounded-2xl p-6" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
 
             {/* Readiness ring */}
@@ -212,7 +212,7 @@ export default function MentorReportPage() {
             {/* Right stats */}
             <div className="flex-1 w-full space-y-3">
               {/* Predicted range */}
-              <div className="rounded-xl px-4 py-3" style={{ background: '#1b271f', border: '1px solid #27342b' }}>
+              <div className="rounded-xl px-4 py-3" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-text-muted font-mono mb-1">Predicted Score Range</p>
                 <p className="text-xl font-bold font-mono" style={{ color: col }}>
                   {report.predicted_low}–{report.predicted_high}
@@ -221,7 +221,7 @@ export default function MentorReportPage() {
               </div>
 
               {/* Learning profile */}
-              <div className="rounded-xl px-4 py-3" style={{ background: '#1b271f', border: '1px solid #27342b' }}>
+              <div className="rounded-xl px-4 py-3" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-text-muted font-mono mb-1">Learning Profile</p>
                 <p className="text-sm font-bold text-text">{report.learning_profile}</p>
               </div>
@@ -233,8 +233,8 @@ export default function MentorReportPage() {
         {report.strengths_text && (
           <ReportSection
             icon={<StrengthIcon />}
-            accent="rgba(74,222,128,0.12)"
-            accentBorder="rgba(74,222,128,0.20)"
+            accent="rgba(11,61,145,0.12)"
+            accentBorder="rgba(11,61,145,0.20)"
             label="Strengths"
             text={report.strengths_text}
           />
@@ -244,8 +244,8 @@ export default function MentorReportPage() {
         {report.weaknesses_text && (
           <ReportSection
             icon={<WeaknessIcon />}
-            accent="rgba(232,115,107,0.08)"
-            accentBorder="rgba(232,115,107,0.18)"
+            accent="rgba(239,68,68,0.08)"
+            accentBorder="rgba(239,68,68,0.18)"
             label="Weaknesses & Gaps"
             text={report.weaknesses_text}
           />
@@ -255,8 +255,8 @@ export default function MentorReportPage() {
         {report.recommendations_text && (
           <ReportSection
             icon={<RecommendIcon />}
-            accent="rgba(94,200,192,0.08)"
-            accentBorder="rgba(94,200,192,0.18)"
+            accent="rgba(11,61,145,0.08)"
+            accentBorder="rgba(11,61,145,0.18)"
             label="Today's Mission"
             text={report.recommendations_text}
           />
@@ -285,7 +285,7 @@ function ReportSection({
   text:         string
 }) {
   return (
-    <div className="rounded-2xl p-5" style={{ background: '#16201a', border: '1px solid #27342b' }}>
+    <div className="rounded-2xl p-5" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
       <div className="flex items-center gap-2.5 mb-3">
         <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
           style={{ background: accent, border: `1px solid ${accentBorder}` }}>
@@ -300,7 +300,7 @@ function ReportSection({
 
 function StrengthIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0B3D91" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="20 6 9 17 4 12"/>
     </svg>
   )
@@ -308,7 +308,7 @@ function StrengthIcon() {
 
 function WeaknessIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e8736b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <line x1="12" y1="2" x2="12" y2="22"/>
       <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
     </svg>
@@ -317,7 +317,7 @@ function WeaknessIcon() {
 
 function RecommendIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5ec8c0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0B3D91" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
     </svg>
   )

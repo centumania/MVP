@@ -15,13 +15,13 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     const base = 'rounded-2xl border transition-all duration-200'
 
     const variants: Record<CardVariant, string> = {
-      default: 'bg-surface border-border',
-      glass:   'glass',
+      default: 'bg-surface border-border shadow-[var(--shadow-sm)]',
+      glass:   'glass rounded-2xl',
       ghost:   'bg-transparent border-border',
     }
 
     const hoverClass = hoverable
-      ? 'hover:border-border-strong hover:bg-surface-raised cursor-pointer hover:shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
+      ? 'cursor-pointer hover:border-border-strong hover:shadow-[var(--shadow-md)] hover:-translate-y-0.5'
       : ''
 
     const glowClass = glow ? 'glow-primary' : ''
@@ -31,7 +31,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         className={[
           base,
-          highlight ? 'border-primary/40 shadow-[0_0_24px_rgba(74,222,128,0.12)]' : variants[variant],
+          highlight ? 'border-primary/30 bg-primary-tint shadow-[var(--shadow-sm)]' : variants[variant],
           !noPadding && 'p-5',
           hoverClass,
           glowClass,

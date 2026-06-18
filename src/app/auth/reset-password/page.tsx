@@ -17,6 +17,7 @@
 import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { setCachedToken } from '@/src/lib/analytics/track'
 import { Button } from '@/src/components/ui/Button'
 import { LogoFull } from '@/src/components/ui/Logo'
 
@@ -102,6 +103,7 @@ function ResetForm() {
 
       setDone(true)
       // Sign out so the user is prompted to log in fresh with the new password
+      setCachedToken(null)
       await getSupabaseBrowserClient().auth.signOut()
       setTimeout(() => router.replace('/auth/login?message=Password+reset+successfully'), 1500)
     } catch {
@@ -116,7 +118,7 @@ function ResetForm() {
     return (
       <div className="flex flex-col items-center justify-center gap-3 py-12">
         <div className="w-6 h-6 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#4ADE80' }} />
+          style={{ borderTopColor: '#0B3D91' }} />
         <p className="text-sm text-text-muted">Verifying reset link…</p>
       </div>
     )
@@ -127,8 +129,8 @@ function ResetForm() {
     return (
       <div className="text-center py-8">
         <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5"
-          style={{ background: 'rgba(232,115,107,0.10)', border: '1px solid rgba(232,115,107,0.20)' }}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8736b" strokeWidth="2" strokeLinecap="round">
+          style={{ background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.20)' }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round">
             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
         </div>
@@ -149,7 +151,7 @@ function ResetForm() {
     return (
       <div className="text-center py-8">
         <div className="w-16 h-16 rounded-3xl mx-auto mb-6 flex items-center justify-center"
-          style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.25)' }}>
+          style={{ background: 'rgba(11,61,145,0.10)', border: '1px solid rgba(11,61,145,0.25)' }}>
           <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
@@ -209,7 +211,7 @@ function ResetForm() {
 
       {error && (
         <div className="flex items-start gap-2.5 p-3 rounded-xl"
-          style={{ background: 'rgba(232,115,107,0.08)', border: '1px solid rgba(232,115,107,0.20)' }}>
+          style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.20)' }}>
           <svg className="w-4 h-4 text-error shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
           </svg>
@@ -226,7 +228,7 @@ function ResetForm() {
 
 export default function ResetPasswordPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#0e1410' }}>
+    <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#F8FAFC' }}>
       <div className="w-full max-w-sm">
 
         {/* Logo */}
@@ -246,7 +248,7 @@ export default function ResetPasswordPage() {
         <Suspense fallback={
           <div className="flex flex-col items-center justify-center gap-3 py-12">
             <div className="w-6 h-6 rounded-full border-2 border-transparent animate-spin"
-              style={{ borderTopColor: '#4ADE80' }} />
+              style={{ borderTopColor: '#0B3D91' }} />
           </div>
         }>
           <ResetForm />

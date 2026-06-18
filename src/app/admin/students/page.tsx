@@ -14,9 +14,9 @@ type Student = {
 type TierValue = 'rookie' | 'warrior' | 'legend' | null
 
 // ── Shared dark table styles ───────────────────────────────────────
-const CARD  = { background: '#16201a', border: '1px solid #27342b' }
-const THHD  = { background: '#1b271f', borderBottom: '1px solid #27342b' }
-const TROW  = { borderBottom: '1px solid rgba(39,52,43,0.6)' }
+const CARD  = { background: '#FFFFFF', border: '1px solid #E5E7EB' }
+const THHD  = { background: '#FFFFFF', borderBottom: '1px solid #E5E7EB' }
+const TROW  = { borderBottom: '1px solid rgba(229,231,235,0.6)' }
 
 export default function AdminStudents() {
   const router = useRouter()
@@ -139,7 +139,7 @@ export default function AdminStudents() {
       {/* Toast */}
       {toast && (
         <div className="fixed top-4 right-4 z-50 text-sm px-4 py-2.5 rounded-lg shadow-lg"
-          style={{ background: '#1b271f', color: '#e8ead8', border: '1px solid #27342b' }}>
+          style={{ background: '#FFFFFF', color: '#111827', border: '1px solid #E5E7EB' }}>
           {toast}
         </div>
       )}
@@ -161,9 +161,9 @@ export default function AdminStudents() {
           value={search}
           onChange={e => { setSearch(e.target.value); setPage(1) }}
           className="flex-1 max-w-xs h-11 px-3 text-sm rounded-lg text-text font-mono placeholder-text-muted focus:outline-none"
-          style={{ background: '#16201a', border: '1px solid #27342b' }}
-          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(74,222,128,0.5)')}
-          onBlur={e => (e.currentTarget.style.borderColor = '#27342b')}
+          style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}
+          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(11,61,145,0.5)')}
+          onBlur={e => (e.currentTarget.style.borderColor = '#E5E7EB')}
         />
         {(['all', 'verified', 'pending'] as const).map(s => (
           <button
@@ -171,8 +171,8 @@ export default function AdminStudents() {
             onClick={() => { setStatus(s); setPage(1) }}
             className="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors capitalize font-mono"
             style={status === s
-              ? { background: '#22C55E', color: '#06140c', border: '1px solid #22C55E' }
-              : { background: '#16201a', color: '#9aa893', border: '1px solid #27342b' }
+              ? { background: '#10B981', color: '#FFFFFF', border: '1px solid #10B981' }
+              : { background: '#FFFFFF', color: '#6B7280', border: '1px solid #E5E7EB' }
             }
           >
             {s}
@@ -201,7 +201,7 @@ export default function AdminStudents() {
                 <tr key={i} style={TROW}>
                   {[...Array(6)].map((_, j) => (
                     <td key={j} className="px-4 py-3">
-                      <div className="h-4 rounded animate-pulse" style={{ background: '#1b271f', width: j === 0 ? '80%' : '60%' }} />
+                      <div className="h-4 rounded animate-pulse" style={{ background: '#FFFFFF', width: j === 0 ? '80%' : '60%' }} />
                     </td>
                   ))}
                 </tr>
@@ -226,13 +226,13 @@ export default function AdminStudents() {
                 <td className="px-4 py-3">
                   {s.payment_verified ? (
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium font-mono"
-                      style={{ background: 'rgba(74,222,128,0.08)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.20)' }}>
+                      style={{ background: 'rgba(11,61,145,0.08)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
                       <span className="w-1.5 h-1.5 bg-primary rounded-full" />Verified
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium font-mono"
-                      style={{ background: 'rgba(231,177,76,0.08)', color: '#e7b14c', border: '1px solid rgba(231,177,76,0.20)' }}>
-                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#e7b14c' }} />Pending
+                      style={{ background: 'rgba(245,158,11,0.08)', color: '#F59E0B', border: '1px solid rgba(245,158,11,0.20)' }}>
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#F59E0B' }} />Pending
                     </span>
                   )}
                 </td>
@@ -241,7 +241,7 @@ export default function AdminStudents() {
                     value={s.tier ?? ''}
                     onChange={e => updateTier(s.id, (e.target.value || null) as TierValue)}
                     className="text-xs rounded-md px-2 py-1 focus:outline-none font-mono"
-                    style={{ background: '#1b271f', border: '1px solid #27342b', color: '#9aa893' }}
+                    style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', color: '#6B7280' }}
                   >
                     <option value="">—</option>
                     <option value="rookie">Rookie</option>
@@ -272,7 +272,7 @@ export default function AdminStudents() {
                       className="p-1.5 rounded-md transition-colors hidden lg:flex items-center"
                       title="View student detail"
                       style={{ color: '#3a4a3d' }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#4ADE80'; (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(74,222,128,0.08)' }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#0B3D91'; (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(11,61,145,0.08)' }}
                       onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLAnchorElement).style.background = '' }}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
@@ -284,11 +284,11 @@ export default function AdminStudents() {
                       title="Recalculate Centum Index"
                       className="p-1.5 rounded-md transition-colors hidden lg:flex items-center disabled:opacity-40"
                       style={{ color: '#3a4a3d' }}
-                      onMouseEnter={e => { if (!calculatingIds.has(s.id)) { (e.currentTarget as HTMLButtonElement).style.color = '#5ec8c0'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(94,200,192,0.08)' } }}
+                      onMouseEnter={e => { if (!calculatingIds.has(s.id)) { (e.currentTarget as HTMLButtonElement).style.color = '#0B3D91'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(11,61,145,0.08)' } }}
                       onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLButtonElement).style.background = '' }}>
                       {calculatingIds.has(s.id) ? (
                         <div className="w-3 h-3 rounded-full border border-t-transparent animate-spin"
-                          style={{ borderColor: 'rgba(94,200,192,0.3)', borderTopColor: '#5ec8c0' }} />
+                          style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
                       ) : (
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
@@ -299,7 +299,7 @@ export default function AdminStudents() {
                       <button
                         onClick={() => verifyPayment(s.id)}
                         className="px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors font-mono"
-                        style={{ background: 'rgba(74,222,128,0.10)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.20)' }}
+                        style={{ background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}
                       >
                         Verify
                       </button>
@@ -308,7 +308,7 @@ export default function AdminStudents() {
                       onClick={() => deleteStudent(s.id, s.name)}
                       className="p-1.5 rounded-md transition-colors"
                       style={{ color: '#3a4a3d' }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#e8736b'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(232,115,107,0.08)' }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#EF4444'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(239,68,68,0.08)' }}
                       onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLButtonElement).style.background = '' }}
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -324,14 +324,14 @@ export default function AdminStudents() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="px-4 py-3 flex items-center justify-between" style={{ borderTop: '1px solid #27342b' }}>
+          <div className="px-4 py-3 flex items-center justify-between" style={{ borderTop: '1px solid #E5E7EB' }}>
             <p className="text-xs text-text-muted font-mono">Page {page} of {totalPages}</p>
             <div className="flex gap-2">
               <button
                 disabled={page <= 1}
                 onClick={() => setPage(p => p - 1)}
                 className="px-3 py-1.5 text-xs rounded-lg disabled:opacity-40 transition-colors font-mono"
-                style={{ border: '1px solid #27342b', background: '#1b271f', color: '#9aa893' }}
+                style={{ border: '1px solid #E5E7EB', background: '#FFFFFF', color: '#6B7280' }}
               >
                 Previous
               </button>
@@ -339,7 +339,7 @@ export default function AdminStudents() {
                 disabled={page >= totalPages}
                 onClick={() => setPage(p => p + 1)}
                 className="px-3 py-1.5 text-xs rounded-lg disabled:opacity-40 transition-colors font-mono"
-                style={{ border: '1px solid #27342b', background: '#1b271f', color: '#9aa893' }}
+                style={{ border: '1px solid #E5E7EB', background: '#FFFFFF', color: '#6B7280' }}
               >
                 Next
               </button>

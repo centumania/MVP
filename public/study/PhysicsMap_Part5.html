@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Physics Map · Part 5 — Modern & Applied Physics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e1611;--panel:#131d17;--panel2:#182318;--line:#1e2e22;--teal:#22d3c8;--green:#3dd68c;--gold:#f4c430;--red:#f06b6b;--ink1:#e8f5f0;--ink2:#9dc4b4;--ink3:#5a8a72;--mono:'JetBrains Mono',monospace;--serif:'Bebas Neue',sans-serif;--sans:'DM Sans',sans-serif;--nav-h:56px;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--ink1);font-family:var(--sans)}
+.shell{display:flex;flex-direction:column;height:100%}
+.topbar{height:var(--nav-h);background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 14px;gap:12px;flex-shrink:0;z-index:10}
+.logo{font-family:var(--serif);font-size:18px;color:var(--green);letter-spacing:1px;display:flex;align-items:center;gap:6px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.nav-stats{margin-left:auto;display:flex;gap:16px;align-items:center}
+.ns{font-family:var(--mono);font-size:11px;color:var(--ink3);display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.ns b{color:var(--green);font-size:13px}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);opacity:0;transition:opacity .3s;margin-left:8px}
+.sync-dot.show{opacity:1}
+.body-wrap{display:flex;flex:1;overflow:hidden}
+aside{width:260px;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
+.side-hd{padding:12px 14px 8px;font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--ink3)}
+#sideInner{flex:1;overflow-y:auto;padding:0 6px 20px}
+#sideInner::-webkit-scrollbar{width:4px}#sideInner::-webkit-scrollbar-thumb{background:var(--line);border-radius:2px}
+main{flex:1;overflow:hidden;display:flex;flex-direction:column}
+#mainArea{flex:1;overflow-y:auto;padding:0}
+#mainArea::-webkit-scrollbar{width:5px}#mainArea::-webkit-scrollbar-thumb{background:var(--line)}
+.bot-nav{height:52px;background:var(--panel);border-top:1px solid var(--line);display:flex;align-items:stretch;flex-shrink:0}
+.bot-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:none;border:none;color:var(--ink3);font-family:var(--mono);font-size:9px;cursor:pointer;letter-spacing:1px;transition:color .2s;min-height:44px}
+.bot-btn:hover,.bot-btn.active{color:var(--green)}
+.bot-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ch-group{margin-bottom:2px}
+.ch-toggle{width:100%;background:none;border:none;padding:8px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--ink2);font-family:var(--mono);font-size:10px;letter-spacing:.5px;border-radius:6px;transition:background .15s;text-align:left}
+.ch-toggle:hover,.ch-toggle.open{background:var(--line);color:var(--ink1)}
+.cht-pct{margin-left:auto;color:var(--teal);font-size:10px}
+.node-items{display:none}
+.ch-group.expanded .node-items{display:block}
+.ni-btn{width:100%;background:none;border:none;padding:7px 10px 7px 22px;display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--ink3);font-family:var(--sans);font-size:12px;border-radius:4px;transition:background .12s,color .12s;text-align:left;min-height:44px}
+.ni-btn:hover{background:rgba(255,255,255,.04);color:var(--ink2)}
+.ni-btn.current{background:rgba(61,214,140,.08);color:var(--green)}
+.ni-btn.done{color:var(--ink2)}
+.ni-btn.locked{opacity:.45;cursor:default}
+.ni-tag{font-family:var(--mono);font-size:8px;padding:1px 5px;border-radius:3px;margin-left:auto;letter-spacing:.5px}
+.ni-tag.trap{background:rgba(240,107,107,.12);color:var(--red)}
+.ni-tag.hidden{background:rgba(122,122,255,.12);color:#9fa8ff}
+.ni-tag.gold{background:rgba(244,196,48,.12);color:var(--gold)}
+#viewWrap{min-height:100%;padding-bottom:40px}
+.dash{padding:28px clamp(14px,3vw,48px) 80px;max-width:680px;margin:0 auto}
+.dash-t{font-family:var(--serif);font-size:clamp(28px,5vw,46px);font-style:italic;color:var(--green);letter-spacing:1px;line-height:1}
+.dash-s{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-bottom:24px;margin-top:4px;letter-spacing:1px}
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
+.dc{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 8px;text-align:center}
+.dc .dv{font-family:var(--serif);font-size:26px;line-height:1}
+.dc .dl{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:1px;margin-top:2px}
+.dc.gold .dv{color:var(--gold)}.dc.g .dv{color:var(--green)}.dc.r .dv{color:var(--red)}.dc.b .dv{color:var(--teal)}
+.ch-prog{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+.cpr{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-family:var(--mono);font-size:11px}
+.cpr:last-child{margin-bottom:0}
+.cpr-n{width:160px;color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.cpr-bar{flex:1;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.cpr-fill{height:100%;background:var(--green);border-radius:3px;transition:width .4s}
+.cpr-pct{width:36px;text-align:right;color:var(--teal);font-size:10px}
+.mentor-box{background:rgba(240,107,107,.07);border:1px solid rgba(240,107,107,.2);border-radius:10px;padding:14px;margin-bottom:16px}
+.mentor-box h3{font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:1px;margin-bottom:8px}
+.mentor-box ul{padding-left:16px;font-size:12px;color:var(--ink2);line-height:1.8}
+.start-btn{width:100%;padding:14px;background:var(--green);color:#0e1611;font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:2px;border:none;border-radius:10px;cursor:pointer;margin-top:8px;min-height:48px}
+.start-btn:hover{background:#4aeaa0}
+.node-view{padding:20px clamp(14px,3vw,40px) 60px;max-width:760px;margin:0 auto}
+.node-hd{margin-bottom:18px}
+.node-badge{display:inline-block;font-family:var(--mono);font-size:9px;padding:3px 8px;border-radius:4px;letter-spacing:2px;margin-bottom:8px}
+.node-badge.regular{background:rgba(61,214,140,.1);color:var(--green);border:1px solid rgba(61,214,140,.2)}
+.node-badge.trap{background:rgba(240,107,107,.1);color:var(--red);border:1px solid rgba(240,107,107,.2)}
+.node-badge.gold{background:rgba(244,196,48,.1);color:var(--gold);border:1px solid rgba(244,196,48,.2)}
+.nt{font-family:var(--serif);font-size:clamp(22px,4vw,34px);color:var(--ink1);line-height:1.1;margin-bottom:6px}
+.xp-pill{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:1px}
+.tabs{display:flex;gap:4px;margin-bottom:16px;background:var(--panel2);padding:4px;border-radius:8px;border:1px solid var(--line)}
+.tab{flex:1;padding:8px;background:none;border:none;color:var(--ink3);font-family:var(--mono);font-size:11px;cursor:pointer;border-radius:5px;letter-spacing:.5px;min-height:40px}
+.tab.on{background:var(--line);color:var(--ink1)}
+.diag-box{background:var(--panel2);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.diag-head{font-family:var(--mono);font-size:9px;color:var(--ink3);padding:8px 14px;letter-spacing:2px;border-bottom:1px solid var(--line)}
+.diag-body{padding:12px;overflow-x:auto}
+.diag-body svg{max-width:100%;height:auto}
+.fact-block{margin-bottom:16px}
+.fb-head{font-family:var(--mono);font-size:9px;color:var(--teal);letter-spacing:2px;margin-bottom:8px}
+.facts{padding-left:0;list-style:none}
+.facts li{padding:6px 0 6px 18px;border-bottom:1px solid var(--line);position:relative;font-size:13px;line-height:1.6;color:var(--ink2)}
+.facts li:last-child{border-bottom:none}
+.facts li::before{content:"›";position:absolute;left:0;color:var(--green);font-weight:700}
+.facts li b{color:var(--ink1)}
+.section-lbl{font-family:var(--mono);font-size:9px;color:var(--teal);letter-spacing:2px;margin:16px 0 8px}
+.tbl-wrap{overflow-x:auto;margin-bottom:16px;border-radius:8px;border:1px solid var(--line)}
+table.dt{width:100%;border-collapse:collapse;font-size:12px}
+table.dt th{background:var(--panel2);padding:8px 12px;font-family:var(--mono);font-size:10px;color:var(--teal);text-align:left;letter-spacing:.5px;white-space:nowrap}
+table.dt td{padding:8px 12px;border-top:1px solid var(--line);color:var(--ink2);line-height:1.5}
+table.dt tr:hover td{background:rgba(255,255,255,.02)}
+table.dt td b{color:var(--ink1)}
+.trap-block{background:rgba(240,107,107,.07);border:1px solid rgba(240,107,107,.18);border-radius:10px;padding:14px;margin-bottom:16px}
+.tb-h{font-family:var(--mono);font-size:9px;color:var(--red);letter-spacing:2px;margin-bottom:10px}
+.trap-block ul{padding-left:18px}.trap-block li{color:var(--ink2);font-size:13px;line-height:1.7;margin-bottom:4px}
+.insight-block{background:rgba(244,196,48,.06);border:1px solid rgba(244,196,48,.15);border-radius:10px;padding:14px;margin-bottom:16px}
+.ib-h{font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:2px;margin-bottom:8px}
+.insight-block p{font-size:13px;color:var(--ink2);line-height:1.7}
+.mcq-list{display:flex;flex-direction:column;gap:14px}
+.mcq-card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.mcq-q{padding:12px 14px;font-size:13px;color:var(--ink1);line-height:1.6;display:flex;gap:10px}
+.mcq-qn{font-family:var(--mono);font-size:10px;color:var(--teal);flex-shrink:0;padding-top:1px}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 12px 12px}
+.mopt{padding:9px 12px;background:var(--line);border:1px solid transparent;border-radius:7px;color:var(--ink2);font-size:12px;cursor:pointer;text-align:left;transition:all .15s;min-height:44px}
+.mopt:hover:not(:disabled){background:rgba(61,214,140,.1);border-color:rgba(61,214,140,.25);color:var(--ink1)}
+.mopt.show-correct{border-color:var(--green)!important;background:rgba(61,214,140,.15)!important;color:var(--green)!important}
+.mopt.correct{background:rgba(61,214,140,.18);border-color:var(--green);color:var(--green)}
+.mopt.wrong{background:rgba(240,107,107,.18);border-color:var(--red);color:var(--red)}
+.mopt:disabled{cursor:default}
+.mcq-fb{padding:0 14px;font-size:12px;color:var(--ink3);max-height:0;overflow:hidden;transition:max-height .3s,padding .3s}
+.mcq-fb.show{max-height:140px;padding:10px 14px}
+.mcq-fb.show.right{color:var(--green)}.mcq-fb.show.wrong{color:var(--red)}
+.mcq-score{text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink3);padding:12px}
+.mcq-score span{color:var(--gold);font-weight:700}
+.node-complete-banner{display:flex;align-items:center;gap:14px;background:rgba(61,214,140,.07);border:1px solid rgba(61,214,140,.2);border-radius:10px;padding:14px;margin-top:16px}
+.ncb-icon{font-size:28px}
+.ncb-title{font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:1px}
+.ncb-sub{font-size:12px;color:var(--ink3);margin-top:2px}
+.golden-block{background:rgba(244,196,48,.06);border:1px solid rgba(244,196,48,.2);border-radius:12px;padding:18px}
+.gb-h{font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:2px;margin-bottom:12px}
+.golden-block ul{padding-left:0;list-style:none}
+.golden-block li{padding:7px 0;border-bottom:1px solid rgba(244,196,48,.08);font-size:13px;color:var(--ink2);line-height:1.6;padding-left:16px;position:relative}
+.golden-block li::before{content:"⚡";position:absolute;left:0;font-size:10px}
+.golden-block li b{color:var(--ink1)}
+.locked-view{padding:60px 20px;text-align:center}
+.lv-ico{font-size:48px;margin-bottom:12px}
+.locked-view h2{font-family:var(--serif);font-size:28px;color:var(--ink3);margin-bottom:8px}
+.locked-view p{font-size:13px;color:var(--ink3);margin-bottom:16px}
+.lock-req-list{display:flex;flex-direction:column;gap:6px;align-items:center}
+.lreq{font-family:var(--mono);font-size:11px;color:var(--red);padding:6px 14px;border:1px solid rgba(240,107,107,.2);border-radius:6px}
+.lreq.met{color:var(--green);border-color:rgba(61,214,140,.2)}
+.node-nav{display:flex;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid var(--line)}
+.nnav{flex:1;padding:10px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--ink2);font-family:var(--mono);font-size:11px;cursor:pointer;min-height:44px}
+.nnav:hover{border-color:var(--teal);color:var(--teal)}
+.nnav.primary{background:rgba(61,214,140,.1);border-color:var(--green);color:var(--green)}
+.toast{position:fixed;bottom:64px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel);border:1px solid var(--green);border-radius:8px;padding:8px 16px;font-family:var(--mono);font-size:12px;display:flex;gap:8px;align-items:center;opacity:0;pointer-events:none;transition:all .3s;z-index:100;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toastVal{color:var(--gold)}#toastMsg{color:var(--ink2)}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:40}
+.mob-overlay.show{display:block}
+.mob-drawer{position:fixed;left:0;top:0;bottom:52px;width:80vw;max-width:300px;background:var(--panel);border-right:1px solid var(--line);z-index:45;transform:translateX(-100%);transition:transform .25s;display:flex;flex-direction:column;overflow:hidden}
+.mob-drawer.open{transform:translateX(0)}
+.mob-drawer-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line);flex-shrink:0}
+.mob-drawer-hd span{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:2px}
+.mob-drawer-close{background:none;border:none;color:var(--ink3);font-size:18px;cursor:pointer;padding:4px 8px;min-height:44px;min-width:44px}
+#mobSideInner{flex:1;overflow-y:auto;padding:0 6px 20px}
+.mob-stats{display:none;background:var(--panel);border-bottom:1px solid var(--line);padding:6px 14px;gap:16px;font-family:var(--mono);font-size:10px}
+@media(max-width:720px){
+  aside{display:none}
+  #mainArea{padding:0}
+  .dash{padding:18px 14px 80px}
+  .dash-grid{grid-template-columns:repeat(2,1fr)}
+  .mcq-opts{grid-template-columns:1fr}
+  .node-view{padding:16px 12px 80px}
+  .mopt,.nnav,.ni-btn{min-height:44px}
+  .tab{min-height:40px}
+  .mob-stats{display:flex}
+}
+</style>
+<body>
+<div class="shell">
+<nav class="topbar">
+  <div class="logo"><span class="logo-dot"></span>Physics Map</div>
+  <div class="nav-stats">
+    <div class="ns"><b id="hXP">0</b><span>XP</span></div>
+    <div class="ns"><b id="hVis">0/0</b><span>Nodes</span></div>
+    <div class="ns"><b id="hTrap">0/0</b><span>Traps</span></div>
+  </div>
+  <div class="sync-dot" id="syncDot"></div>
+</nav>
+<div class="mob-stats">
+  <div style="display:flex;flex-direction:column;align-items:center"><b id="mhXP" style="color:var(--green);font-size:12px">0</b><span style="color:var(--ink3);font-size:8px;letter-spacing:1px">XP</span></div>
+  <div style="display:flex;flex-direction:column;align-items:center"><b id="mhVis" style="color:var(--green);font-size:12px">0/0</b><span style="color:var(--ink3);font-size:8px;letter-spacing:1px">NODES</span></div>
+  <div style="display:flex;flex-direction:column;align-items:center"><b id="mhTrap" style="color:var(--red);font-size:12px">0/0</b><span style="color:var(--ink3);font-size:8px;letter-spacing:1px">TRAPS</span></div>
+</div>
+<div class="body-wrap">
+  <aside><div class="side-hd">TOPICS</div><div id="sideInner"></div></aside>
+  <main><div id="mainArea"><div id="viewWrap"></div></div></main>
+</div>
+<nav class="bot-nav">
+  <button class="bot-btn active" onclick="showDash()">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>Home
+  </button>
+  <button class="bot-btn" onclick="openDrawer()">
+    <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Topics
+  </button>
+  <button class="bot-btn" onclick="goTraps()">
+    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Traps
+  </button>
+</nav>
+</div>
+<div class="mob-overlay" id="mobOverlay" onclick="closeDrawer()"></div>
+<div class="mob-drawer" id="mobDrawer">
+  <div class="mob-drawer-hd"><span>TOPICS</span><button class="mob-drawer-close" onclick="closeDrawer()">✕</button></div>
+  <div id="mobSideInner"></div>
+</div>
+<div class="toast" id="toast"><span id="toastVal"></span><span id="toastMsg"></span></div>
+<script>
+
+const DIAGRAMS={
+"temp-scales":`<svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg">
+<rect width="760" height="230" rx="6" fill="#0e1611"/>
+<text x="380" y="22" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="2">TEMPERATURE SCALES — 4 SYSTEMS</text>
+<rect x="6" y="32" width="140" height="24" fill="#182318"/><rect x="150" y="32" width="140" height="24" fill="#1a2820"/><rect x="294" y="32" width="140" height="24" fill="#1a2028"/><rect x="438" y="32" width="148" height="24" fill="#281a28"/><rect x="590" y="32" width="164" height="24" fill="#28201a"/>
+<text x="76" y="49" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">REFERENCE POINT</text>
+<text x="220" y="49" fill="#3dd68c" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">CELSIUS °C</text>
+<text x="364" y="49" fill="#22d3c8" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">FAHRENHEIT °F</text>
+<text x="512" y="49" fill="#f4c430" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">KELVIN K</text>
+<text x="672" y="49" fill="#f06b6b" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">RANKINE °R</text>
+<rect x="6" y="58" width="748" height="26" fill="rgba(240,107,107,.06)"/>
+<text x="76" y="75" fill="#e8f5f0" font-size="11" text-anchor="middle" font-family="DM Sans,sans-serif">Absolute Zero</text>
+<text x="220" y="75" fill="#f06b6b" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">−273.15</text>
+<text x="364" y="75" fill="#f06b6b" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">−459.67</text>
+<text x="512" y="75" fill="#f4c430" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">0 K ★</text>
+<text x="672" y="75" fill="#f06b6b" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">0</text>
+<rect x="6" y="86" width="748" height="26" fill="rgba(34,211,200,.05)"/>
+<text x="76" y="103" fill="#e8f5f0" font-size="11" text-anchor="middle" font-family="DM Sans,sans-serif">Freezing (Water)</text>
+<text x="220" y="103" fill="#22d3c8" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">0</text>
+<text x="364" y="103" fill="#22d3c8" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">32</text>
+<text x="512" y="103" fill="#22d3c8" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">273.15</text>
+<text x="672" y="103" fill="#22d3c8" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">491.67</text>
+<rect x="6" y="114" width="748" height="26" fill="rgba(244,196,48,.05)"/>
+<text x="76" y="131" fill="#e8f5f0" font-size="11" text-anchor="middle" font-family="DM Sans,sans-serif">Body Temperature ★</text>
+<text x="220" y="131" fill="#f4c430" font-size="13" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">37</text>
+<text x="364" y="131" fill="#f4c430" font-size="13" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">98.6</text>
+<text x="512" y="131" fill="#f4c430" font-size="13" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">310</text>
+<text x="672" y="131" fill="#f4c430" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">558</text>
+<rect x="6" y="142" width="748" height="26" fill="rgba(240,107,107,.06)"/>
+<text x="76" y="159" fill="#e8f5f0" font-size="11" text-anchor="middle" font-family="DM Sans,sans-serif">Boiling (Water)</text>
+<text x="220" y="159" fill="#f06b6b" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">100</text>
+<text x="364" y="159" fill="#f06b6b" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">212</text>
+<text x="512" y="159" fill="#f06b6b" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">373.15</text>
+<text x="672" y="159" fill="#f06b6b" font-size="12" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">671.67</text>
+<rect x="6" y="172" width="748" height="52" rx="4" fill="rgba(61,214,140,.05)" stroke="#1e2e22" stroke-width="1"/>
+<text x="14" y="189" fill="#f4c430" font-size="9" font-family="JetBrains Mono,monospace" letter-spacing="1">FORMULAS:</text>
+<text x="14" y="207" fill="#9dc4b4" font-size="11" font-family="JetBrains Mono,monospace">°F=(°C×9/5)+32</text>
+<text x="190" y="207" fill="#9dc4b4" font-size="11" font-family="JetBrains Mono,monospace">°C=(°F−32)×5/9</text>
+<text x="390" y="207" fill="#9dc4b4" font-size="11" font-family="JetBrains Mono,monospace">K=°C+273</text>
+<text x="530" y="207" fill="#f06b6b" font-size="10" font-family="JetBrains Mono,monospace">−40°C=−40°F (unique!)</text>
+<text x="14" y="219" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace">Kelvin has NO negative values. Rankine used in US engineering only.</text>
+</svg>`,
+
+"heat-transfer":`<svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg">
+<rect width="760" height="250" rx="6" fill="#0e1611"/>
+<text x="380" y="22" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="2">3 MODES OF HEAT TRANSFER</text>
+<rect x="6" y="32" width="236" height="208" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="124" y="54" fill="#22d3c8" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">CONDUCTION</text>
+<text x="124" y="68" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">NEEDS SOLID / MEDIUM</text>
+<circle cx="48" cy="130" r="14" fill="rgba(240,107,107,.5)" stroke="#f06b6b" stroke-width="1.5"/>
+<circle cx="84" cy="130" r="11" fill="rgba(244,100,48,.4)" stroke="#f09050" stroke-width="1.5"/>
+<circle cx="116" cy="130" r="9" fill="rgba(244,180,48,.3)" stroke="#f4c430" stroke-width="1.5"/>
+<circle cx="146" cy="130" r="7" fill="rgba(100,180,100,.2)" stroke="#3dd68c" stroke-width="1.5"/>
+<circle cx="172" cy="130" r="5" fill="rgba(34,211,200,.1)" stroke="#22d3c8" stroke-width="1"/>
+<text x="48" y="134" fill="#0e1611" font-size="8" font-weight="bold" text-anchor="middle">HOT</text>
+<text x="172" y="133" fill="#22d3c8" font-size="7" text-anchor="middle">COLD</text>
+<line x1="64" y1="130" x2="72" y2="130" stroke="#f4c430" stroke-width="1" stroke-dasharray="3,2"/>
+<line x1="97" y1="130" x2="105" y2="130" stroke="#f4c430" stroke-width="1" stroke-dasharray="3,2"/>
+<line x1="127" y1="130" x2="137" y2="130" stroke="#3dd68c" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="124" y="165" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Ag&gt;Cu&gt;Au&gt;Al&gt;Fe</text>
+<text x="124" y="180" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Cooking pan, metal rod</text>
+<text x="124" y="198" fill="#f06b6b" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">✗ Cannot occur in vacuum</text>
+<text x="124" y="212" fill="#5a8a72" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">slowest mode</text>
+<rect x="252" y="32" width="256" height="208" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="380" y="54" fill="#22d3c8" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">CONVECTION</text>
+<text x="380" y="68" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">NEEDS FLUID (LIQ/GAS)</text>
+<rect x="296" y="148" width="168" height="48" rx="4" fill="rgba(240,107,107,.08)" stroke="#f06b6b" stroke-width="1"/>
+<text x="380" y="168" fill="#f06b6b" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">HOT FLUID (less dense)</text>
+<text x="380" y="184" fill="#f06b6b" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">RISES ↑↑↑</text>
+<rect x="296" y="90" width="168" height="54" rx="4" fill="rgba(34,211,200,.08)" stroke="#22d3c8" stroke-width="1"/>
+<text x="380" y="110" fill="#22d3c8" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">COOL FLUID (more dense)</text>
+<text x="380" y="126" fill="#22d3c8" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">SINKS ↓↓↓</text>
+<text x="292" y="123" fill="#3dd68c" font-size="18" text-anchor="middle">↑</text>
+<text x="469" y="160" fill="#f06b6b" font-size="18" text-anchor="middle">↓</text>
+<text x="380" y="218" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Sea breeze, boiling water</text>
+<text x="380" y="232" fill="#f4c430" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">hot rises · cool sinks</text>
+<rect x="518" y="32" width="236" height="208" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="636" y="54" fill="#22d3c8" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">RADIATION</text>
+<text x="636" y="68" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">NO MEDIUM — VACUUM OK</text>
+<circle cx="566" cy="138" r="28" fill="rgba(244,196,48,.15)" stroke="#f4c430" stroke-width="2"/>
+<text x="566" y="134" fill="#f4c430" font-size="9" font-weight="bold" text-anchor="middle">SUN</text>
+<text x="566" y="146" fill="#f4c430" font-size="8" text-anchor="middle">5500°C</text>
+<line x1="598" y1="126" x2="680" y2="112" stroke="#f06b6b" stroke-dasharray="4,3" stroke-width="1.5"/>
+<line x1="600" y1="138" x2="690" y2="138" stroke="#f06b6b" stroke-dasharray="4,3" stroke-width="1.5"/>
+<line x1="598" y1="150" x2="680" y2="164" stroke="#f06b6b" stroke-dasharray="4,3" stroke-width="1.5"/>
+<text x="648" y="103" fill="#9dc4b4" font-size="8" font-family="JetBrains Mono,monospace">infrared</text>
+<text x="648" y="114" fill="#9dc4b4" font-size="8" font-family="JetBrains Mono,monospace">waves</text>
+<circle cx="702" cy="138" r="14" fill="rgba(34,211,200,.15)" stroke="#22d3c8" stroke-width="1.5"/>
+<text x="702" y="142" fill="#22d3c8" font-size="8" text-anchor="middle">Earth</text>
+<text x="636" y="200" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">EM waves at 3×10⁸ m/s</text>
+<text x="636" y="214" fill="#3dd68c" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">✓ Black absorbs most</text>
+<text x="636" y="228" fill="#5a8a72" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">fastest mode (speed of light)</text>
+</svg>`,
+
+"gas-laws":`<svg viewBox="0 0 760 270" xmlns="http://www.w3.org/2000/svg">
+<rect width="760" height="270" rx="6" fill="#0e1611"/>
+<text x="380" y="22" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="2">GAS LAWS — VISUAL SUMMARY</text>
+<rect x="6" y="32" width="238" height="120" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="125" y="52" fill="#f4c430" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">BOYLE'S LAW</text>
+<text x="125" y="65" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">P × V = const (T fixed)</text>
+<rect x="26" y="74" width="30" height="54" rx="3" fill="rgba(34,211,200,.15)" stroke="#22d3c8"/>
+<rect x="74" y="88" width="50" height="40" rx="3" fill="rgba(34,211,200,.15)" stroke="#22d3c8"/>
+<rect x="142" y="94" width="74" height="34" rx="3" fill="rgba(34,211,200,.15)" stroke="#22d3c8"/>
+<text x="41" y="138" fill="#22d3c8" font-size="8" text-anchor="middle" font-family="JetBrains Mono,monospace">P=3,V=2</text>
+<text x="99" y="138" fill="#22d3c8" font-size="8" text-anchor="middle" font-family="JetBrains Mono,monospace">P=2,V=3</text>
+<text x="179" y="138" fill="#22d3c8" font-size="8" text-anchor="middle" font-family="JetBrains Mono,monospace">P=1,V=6</text>
+<text x="125" y="148" fill="#3dd68c" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle">P₁V₁ = P₂V₂</text>
+<rect x="258" y="32" width="238" height="120" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="377" y="52" fill="#f4c430" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">CHARLES'S LAW</text>
+<text x="377" y="65" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">V/T = const (P fixed, KELVIN!)</text>
+<rect x="276" y="108" width="28" height="28" rx="2" fill="rgba(34,211,200,.15)" stroke="#22d3c8"/>
+<rect x="322" y="96" width="28" height="40" rx="2" fill="rgba(244,196,48,.15)" stroke="#f4c430"/>
+<rect x="368" y="80" width="28" height="56" rx="2" fill="rgba(240,107,107,.15)" stroke="#f06b6b"/>
+<rect x="416" y="64" width="28" height="72" rx="2" fill="rgba(240,80,80,.2)" stroke="#f06b6b"/>
+<text x="290" y="148" fill="#22d3c8" font-size="8" text-anchor="middle">150K</text>
+<text x="336" y="148" fill="#f4c430" font-size="8" text-anchor="middle">200K</text>
+<text x="382" y="148" fill="#f06b6b" font-size="8" text-anchor="middle">300K</text>
+<text x="430" y="148" fill="#f06b6b" font-size="8" text-anchor="middle">400K</text>
+<text x="377" y="148" fill="#3dd68c" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" dy="10">V₁/T₁ = V₂/T₂</text>
+<rect x="510" y="32" width="244" height="120" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="632" y="52" fill="#f4c430" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">GAY-LUSSAC'S LAW</text>
+<text x="632" y="65" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">P/T = const (V fixed)</text>
+<line x1="530" y1="140" x2="530" y2="82" stroke="#5a8a72" stroke-width="1.5"/>
+<line x1="530" y1="140" x2="730" y2="140" stroke="#5a8a72" stroke-width="1.5"/>
+<line x1="538" y1="132" x2="718" y2="88" stroke="#f06b6b" stroke-width="2.5"/>
+<circle cx="575" cy="122" r="3" fill="#f4c430"/>
+<circle cx="625" cy="111" r="3" fill="#f4c430"/>
+<circle cx="675" cy="100" r="3" fill="#f4c430"/>
+<text x="527" y="80" fill="#9dc4b4" font-size="8" text-anchor="end">P↑</text>
+<text x="732" y="144" fill="#9dc4b4" font-size="8">T→</text>
+<text x="632" y="156" fill="#3dd68c" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">P₁/T₁ = P₂/T₂</text>
+<rect x="6" y="162" width="748" height="50" rx="6" fill="rgba(61,214,140,.05)" stroke="#1e2e22"/>
+<text x="14" y="180" fill="#f4c430" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">IDEAL GAS LAW: PV = nRT   R = 8.314 J/mol·K</text>
+<text x="14" y="197" fill="#22d3c8" font-size="11" font-family="JetBrains Mono,monospace">At STP (0°C, 1 atm): 1 mole of any gas = 22.4 litres</text>
+<text x="460" y="197" fill="#9dc4b4" font-size="10" font-family="JetBrains Mono,monospace">Avogadro: N = 6.022×10²³/mole</text>
+<rect x="6" y="220" width="748" height="44" rx="4" fill="rgba(240,107,107,.05)" stroke="#1e2e22"/>
+<text x="14" y="237" fill="#f06b6b" font-size="9" font-family="JetBrains Mono,monospace">⚠ TRAPS: Charles's Law uses KELVIN not Celsius | Boyle: P↑→V↓ (inverse) | Gay-Lussac: P↑→T↑ (direct)</text>
+<text x="14" y="256" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace">ALWAYS convert °C → K before applying any gas law formula. K = °C + 273</text>
+</svg>`,
+
+"rotation-diagram":`<svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg">
+<rect width="760" height="240" rx="6" fill="#0e1611"/>
+<text x="380" y="22" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="2">CONSERVATION OF ANGULAR MOMENTUM: L = Iω = constant</text>
+<rect x="6" y="32" width="358" height="198" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="185" y="54" fill="#22d3c8" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">ARMS OUT → SLOW SPIN</text>
+<circle cx="185" cy="135" r="18" fill="rgba(34,211,200,.15)" stroke="#22d3c8" stroke-width="2"/>
+<text x="185" y="139" fill="#22d3c8" font-size="8" text-anchor="middle">body</text>
+<line x1="78" y1="135" x2="167" y2="135" stroke="#22d3c8" stroke-width="3"/>
+<line x1="203" y1="135" x2="292" y2="135" stroke="#22d3c8" stroke-width="3"/>
+<circle cx="78" cy="135" r="7" fill="#f4c430" stroke="#f4c430"/>
+<circle cx="292" cy="135" r="7" fill="#f4c430" stroke="#f4c430"/>
+<path d="M152,94 Q130,86 124,108" fill="none" stroke="#5a8a72" stroke-width="1.5" stroke-dasharray="3,2"/>
+<text x="185" y="72" fill="#9dc4b4" font-size="14" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">ω SLOW</text>
+<text x="185" y="90" fill="#3dd68c" font-size="11" font-family="JetBrains Mono,monospace" text-anchor="middle">I = LARGE</text>
+<text x="185" y="192" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">mass far from axis → large I</text>
+<text x="185" y="206" fill="#22d3c8" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle">I×ω = constant (L conserved)</text>
+<text x="380" y="135" fill="#3dd68c" font-size="20" text-anchor="middle">⟷</text>
+<text x="380" y="152" fill="#3dd68c" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">L=Iω</text>
+<text x="380" y="165" fill="#3dd68c" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">const</text>
+<rect x="396" y="32" width="358" height="198" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="575" y="54" fill="#f06b6b" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">ARMS IN → FAST SPIN</text>
+<circle cx="575" cy="135" r="22" fill="rgba(240,107,107,.15)" stroke="#f06b6b" stroke-width="2"/>
+<text x="575" y="139" fill="#f06b6b" font-size="8" text-anchor="middle">body</text>
+<line x1="515" y1="135" x2="553" y2="135" stroke="#f06b6b" stroke-width="3"/>
+<line x1="597" y1="135" x2="635" y2="135" stroke="#f06b6b" stroke-width="3"/>
+<circle cx="515" cy="135" r="7" fill="#f4c430"/>
+<circle cx="635" cy="135" r="7" fill="#f4c430"/>
+<path d="M553,90 Q538,74 524,84 Q510,95 522,108" fill="none" stroke="#f06b6b" stroke-width="2"/>
+<path d="M597,90 Q612,74 626,84 Q640,95 628,108" fill="none" stroke="#f06b6b" stroke-width="2"/>
+<text x="575" y="72" fill="#f06b6b" font-size="16" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">ω FAST ×4</text>
+<text x="575" y="90" fill="#f06b6b" font-size="11" font-family="JetBrains Mono,monospace" text-anchor="middle">I = SMALL</text>
+<text x="575" y="192" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">mass near axis → small I</text>
+<text x="575" y="206" fill="#f06b6b" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle">I halves → ω doubles</text>
+</svg>`,
+
+"wave-optics":`<svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg">
+<rect width="760" height="260" rx="6" fill="#0e1611"/>
+<text x="380" y="22" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="2">YOUNG'S DOUBLE SLIT EXPERIMENT (YDSE)</text>
+<circle cx="56" cy="140" r="22" fill="rgba(244,196,48,.12)" stroke="#f4c430" stroke-width="1.5"/>
+<text x="56" y="136" fill="#f4c430" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Light</text>
+<text x="56" y="148" fill="#f4c430" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Source</text>
+<line x1="78" y1="140" x2="128" y2="140" stroke="#f4c430" stroke-width="1.5"/>
+<rect x="130" y="38" width="10" height="83" rx="0" fill="#22d3c8"/>
+<rect x="130" y="160" width="10" height="84" rx="0" fill="#22d3c8"/>
+<text x="135" y="125" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="JetBrains Mono,monospace">S₁</text>
+<text x="135" y="165" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="JetBrains Mono,monospace">S₂</text>
+<text x="148" y="145" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">d</text>
+<line x1="140" y1="121" x2="480" y2="76" stroke="#3dd68c" stroke-width="1.2" stroke-dasharray="5,3" opacity=".7"/>
+<line x1="140" y1="121" x2="480" y2="140" stroke="#3dd68c" stroke-width="1.2" stroke-dasharray="5,3" opacity=".7"/>
+<line x1="140" y1="121" x2="480" y2="204" stroke="#3dd68c" stroke-width="1.2" stroke-dasharray="5,3" opacity=".7"/>
+<line x1="140" y1="163" x2="480" y2="76" stroke="#f4c430" stroke-width="1.2" stroke-dasharray="5,3" opacity=".7"/>
+<line x1="140" y1="163" x2="480" y2="140" stroke="#f4c430" stroke-width="1.2" stroke-dasharray="5,3" opacity=".7"/>
+<line x1="140" y1="163" x2="480" y2="204" stroke="#f4c430" stroke-width="1.2" stroke-dasharray="5,3" opacity=".7"/>
+<rect x="484" y="38" width="8" height="206" rx="0" fill="#182318" stroke="#22d3c8" stroke-width="1"/>
+<rect x="496" y="52" width="24" height="14" rx="2" fill="rgba(244,196,48,.85)"/>
+<rect x="496" y="70" width="24" height="14" rx="2" fill="rgba(14,22,17,.95)"/>
+<rect x="496" y="88" width="24" height="14" rx="2" fill="rgba(244,196,48,.85)"/>
+<rect x="496" y="106" width="24" height="14" rx="2" fill="rgba(14,22,17,.95)"/>
+<rect x="496" y="124" width="24" height="18" rx="2" fill="rgba(244,196,48,1)"/>
+<rect x="496" y="146" width="24" height="14" rx="2" fill="rgba(14,22,17,.95)"/>
+<rect x="496" y="164" width="24" height="14" rx="2" fill="rgba(244,196,48,.85)"/>
+<rect x="496" y="182" width="24" height="14" rx="2" fill="rgba(14,22,17,.95)"/>
+<rect x="496" y="200" width="24" height="14" rx="2" fill="rgba(244,196,48,.85)"/>
+<text x="528" y="134" fill="#f4c430" font-size="8" font-weight="bold" font-family="JetBrains Mono,monospace">Central</text>
+<text x="528" y="144" fill="#f4c430" font-size="8" font-family="JetBrains Mono,monospace">bright</text>
+<line x1="140" y1="38" x2="484" y2="38" stroke="#5a8a72" stroke-width="0.5" stroke-dasharray="2,3"/>
+<text x="312" y="34" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">D = screen distance</text>
+<rect x="568" y="32" width="186" height="180" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="661" y="54" fill="#f4c430" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">KEY FORMULA</text>
+<text x="661" y="80" fill="#3dd68c" font-size="20" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">β = λD/d</text>
+<text x="661" y="100" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">β = fringe width</text>
+<text x="661" y="114" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">λ = wavelength</text>
+<text x="661" y="128" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">D = screen distance</text>
+<text x="661" y="142" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">d = slit separation</text>
+<rect x="576" y="152" width="170" height="20" rx="3" fill="rgba(61,214,140,.08)"/>
+<text x="661" y="166" fill="#3dd68c" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">d↑ → β↓ (INVERSE!)</text>
+<text x="661" y="186" fill="#f06b6b" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">⚠ 2 bulbs ≠ interference</text>
+<text x="661" y="200" fill="#5a8a72" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">needs coherent sources</text>
+<text x="380" y="228" fill="#22d3c8" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">Constructive (bright): path diff = nλ | Destructive (dark): path diff = (2n−1)λ/2</text>
+<text x="380" y="246" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">Thomas Young (1801) — YDSE was first proof that light has wave nature</text>
+</svg>`,
+
+"photoelectric":`<svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg">
+<rect width="760" height="240" rx="6" fill="#0e1611"/>
+<text x="380" y="22" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="2">PHOTOELECTRIC EFFECT — EINSTEIN'S EQUATION</text>
+<rect x="160" y="40" width="180" height="130" rx="6" fill="#182318" stroke="#22d3c8" stroke-width="2"/>
+<text x="250" y="90" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">METAL</text>
+<text x="250" y="106" fill="#9dc4b4" font-size="9" text-anchor="middle">φ = work function</text>
+<text x="250" y="120" fill="#5a8a72" font-size="8" text-anchor="middle">minimum energy to</text>
+<text x="250" y="132" fill="#5a8a72" font-size="8" text-anchor="middle">release an electron</text>
+<line x1="30" y1="72" x2="154" y2="90" stroke="#f4c430" stroke-width="2.5"/>
+<line x1="30" y1="92" x2="154" y2="108" stroke="#f4c430" stroke-width="2.5"/>
+<line x1="30" y1="112" x2="154" y2="126" stroke="#f4c430" stroke-width="2.5"/>
+<circle cx="28" cy="72" r="5" fill="#f4c430"/>
+<circle cx="28" cy="92" r="5" fill="#f4c430"/>
+<circle cx="28" cy="112" r="5" fill="#f4c430"/>
+<text x="80" y="66" fill="#f4c430" font-size="9" font-family="JetBrains Mono,monospace">hν</text>
+<text x="74" y="78" fill="#9dc4b4" font-size="8" font-family="JetBrains Mono,monospace">photons</text>
+<line x1="340" y1="80" x2="420" y2="55" stroke="#f06b6b" stroke-width="1.5" stroke-dasharray="3,2"/>
+<line x1="340" y1="100" x2="450" y2="100" stroke="#f06b6b" stroke-width="1.5" stroke-dasharray="3,2"/>
+<line x1="340" y1="120" x2="420" y2="145" stroke="#f06b6b" stroke-width="1.5" stroke-dasharray="3,2"/>
+<circle cx="426" cy="54" r="5" fill="#f06b6b"/>
+<circle cx="456" cy="99" r="5" fill="#f06b6b"/>
+<circle cx="426" cy="146" r="5" fill="#f06b6b"/>
+<text x="462" y="57" fill="#f06b6b" font-size="9" font-family="JetBrains Mono,monospace">e⁻</text>
+<text x="466" y="102" fill="#f06b6b" font-size="9" font-family="JetBrains Mono,monospace">e⁻</text>
+<text x="462" y="149" fill="#f06b6b" font-size="9" font-family="JetBrains Mono,monospace">e⁻</text>
+<rect x="510" y="38" width="244" height="84" rx="6" fill="rgba(240,107,107,.07)" stroke="#f06b6b" stroke-width="1"/>
+<text x="632" y="58" fill="#f4c430" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">KE = hν − φ</text>
+<text x="632" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">h = 6.626×10⁻³⁴ J·s (Planck)</text>
+<text x="632" y="90" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">ν = frequency of light</text>
+<text x="632" y="104" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">φ = work function of metal</text>
+<text x="632" y="116" fill="#22d3c8" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">Threshold: hν₀ = φ</text>
+<rect x="6" y="180" width="748" height="22" rx="4" fill="rgba(244,196,48,.05)" stroke="#1e2e22"/>
+<text x="14" y="195" fill="#f4c430" font-size="9" font-family="JetBrains Mono,monospace">Intensity↑ → more electrons (NOT faster) | Frequency↑ → faster electrons (NOT more) | Below threshold → NO emission ever</text>
+<rect x="6" y="208" width="748" height="26" rx="4" fill="rgba(34,211,200,.05)" stroke="#1e2e22"/>
+<text x="14" y="222" fill="#22d3c8" font-size="9" font-family="JetBrains Mono,monospace">de Broglie: λ = h/mv (matter waves) | Davisson-Germer (1927) confirmed electron diffraction</text>
+<text x="14" y="228" fill="#5a8a72" font-size="8" font-family="JetBrains Mono,monospace" dy="8">Discovered: Hertz (1887) | Explained: Einstein (1905) → Nobel Prize 1921</text>
+</svg>`,
+
+"nuclear-radiation":`<svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg">
+<rect width="760" height="230" rx="6" fill="#0e1611"/>
+<text x="380" y="22" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="2">α · β · γ RADIATION COMPARISON</text>
+<rect x="6" y="32" width="110" height="24" fill="#182318"/>
+<rect x="120" y="32" width="178" height="24" fill="rgba(240,107,107,.1)"/>
+<rect x="302" y="32" width="178" height="24" fill="rgba(34,211,200,.1)"/>
+<rect x="484" y="32" width="270" height="24" fill="rgba(61,214,140,.1)"/>
+<text x="61" y="49" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">PROPERTY</text>
+<text x="209" y="49" fill="#f06b6b" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">α (ALPHA)</text>
+<text x="391" y="49" fill="#22d3c8" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">β (BETA)</text>
+<text x="619" y="49" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">γ (GAMMA)</text>
+<rect x="6" y="58" width="748" height="22" fill="rgba(255,255,255,.02)"/>
+<text x="61" y="73" fill="#9dc4b4" font-size="9" text-anchor="middle">Nature</text>
+<text x="209" y="73" fill="#f06b6b" font-size="9" text-anchor="middle">He nucleus ⁴₂He</text>
+<text x="391" y="73" fill="#22d3c8" font-size="9" text-anchor="middle">Electron β⁻ or Positron β⁺</text>
+<text x="619" y="73" fill="#3dd68c" font-size="9" text-anchor="middle">EM wave (photon)</text>
+<rect x="6" y="82" width="748" height="22" fill="rgba(255,255,255,.01)"/>
+<text x="61" y="97" fill="#9dc4b4" font-size="9" text-anchor="middle">Charge</text>
+<text x="209" y="97" fill="#f06b6b" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">+2</text>
+<text x="391" y="97" fill="#22d3c8" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">±1</text>
+<text x="619" y="97" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">0</text>
+<rect x="6" y="106" width="748" height="22" fill="rgba(255,255,255,.02)"/>
+<text x="61" y="121" fill="#9dc4b4" font-size="9" text-anchor="middle">Penetration</text>
+<text x="209" y="121" fill="#f06b6b" font-size="10" font-weight="bold" text-anchor="middle">LEAST (paper)</text>
+<text x="391" y="121" fill="#22d3c8" font-size="10" font-weight="bold" text-anchor="middle">MEDIUM (Al sheet)</text>
+<text x="619" y="121" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle">MOST (Pb/concrete)</text>
+<rect x="6" y="130" width="748" height="22" fill="rgba(255,255,255,.01)"/>
+<text x="61" y="145" fill="#9dc4b4" font-size="9" text-anchor="middle">Ionizing Power</text>
+<text x="209" y="145" fill="#f06b6b" font-size="11" font-weight="bold" text-anchor="middle">HIGHEST ★★★</text>
+<text x="391" y="145" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle">MEDIUM ★★</text>
+<text x="619" y="145" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle">LEAST ★</text>
+<rect x="6" y="160" width="748" height="62" rx="6" fill="#182318" stroke="#1e2e22"/>
+<text x="14" y="178" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace" letter-spacing="1">PENETRATION:</text>
+<text x="14" y="196" fill="#f06b6b" font-size="11" font-family="JetBrains Mono,monospace">α ─|</text>
+<rect x="50" y="186" width="28" height="14" rx="2" fill="rgba(240,107,107,.2)" stroke="#f06b6b"/>
+<text x="82" y="197" fill="#9dc4b4" font-size="8">paper</text>
+<text x="14" y="214" fill="#22d3c8" font-size="11" font-family="JetBrains Mono,monospace">β ──────────|</text>
+<rect x="140" y="204" width="38" height="14" rx="2" fill="rgba(34,211,200,.2)" stroke="#22d3c8"/>
+<text x="182" y="215" fill="#9dc4b4" font-size="8">Al</text>
+<text x="280" y="196" fill="#3dd68c" font-size="11" font-family="JetBrains Mono,monospace">γ ────────────────────────────────────────────────────────────────|</text>
+<rect x="682" y="186" width="62" height="14" rx="2" fill="rgba(61,214,140,.2)" stroke="#3dd68c"/>
+<text x="685" y="197" fill="#9dc4b4" font-size="8">Pb/concrete</text>
+<text x="14" y="214" fill="#f4c430" font-size="9" font-family="JetBrains Mono,monospace" x="400">KEY: α=most ionizing · γ=most penetrating (OPPOSITE each other!)</text>
+</svg>`,
+
+"logic-gates":`<svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg">
+<rect width="760" height="280" rx="6" fill="#0e1611"/>
+<text x="380" y="22" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="2">LOGIC GATES — COMPLETE TRUTH TABLES</text>
+<rect x="6" y="32" width="112" height="108" rx="6" fill="#182318" stroke="#1e2e22"/>
+<text x="62" y="50" fill="#f4c430" font-size="9" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">AND  A·B</text>
+<text x="18" y="64" fill="#5a8a72" font-size="8" font-family="JetBrains Mono,monospace">A B OUT</text>
+<text x="18" y="78" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0 0  <tspan fill="#f06b6b">0</tspan></text>
+<text x="18" y="91" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0 1  <tspan fill="#f06b6b">0</tspan></text>
+<text x="18" y="104" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1 0  <tspan fill="#f06b6b">0</tspan></text>
+<text x="18" y="117" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1 1  <tspan fill="#3dd68c" font-weight="bold">1</tspan></text>
+<text x="62" y="133" fill="#9dc4b4" font-size="8" text-anchor="middle">Both=1 only</text>
+<rect x="130" y="32" width="112" height="108" rx="6" fill="#182318" stroke="#1e2e22"/>
+<text x="186" y="50" fill="#f4c430" font-size="9" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">OR  A+B</text>
+<text x="142" y="64" fill="#5a8a72" font-size="8" font-family="JetBrains Mono,monospace">A B OUT</text>
+<text x="142" y="78" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0 0  <tspan fill="#f06b6b">0</tspan></text>
+<text x="142" y="91" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0 1  <tspan fill="#3dd68c">1</tspan></text>
+<text x="142" y="104" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1 0  <tspan fill="#3dd68c">1</tspan></text>
+<text x="142" y="117" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1 1  <tspan fill="#3dd68c">1</tspan></text>
+<text x="186" y="133" fill="#9dc4b4" font-size="8" text-anchor="middle">Any=1 → out=1</text>
+<rect x="254" y="32" width="112" height="108" rx="6" fill="#182318" stroke="#1e2e22"/>
+<text x="310" y="50" fill="#f4c430" font-size="9" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">NOT  Ā</text>
+<text x="266" y="66" fill="#5a8a72" font-size="8" font-family="JetBrains Mono,monospace">A  OUT</text>
+<text x="266" y="84" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0  →  <tspan fill="#3dd68c">1</tspan></text>
+<text x="266" y="104" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1  →  <tspan fill="#f06b6b">0</tspan></text>
+<text x="310" y="133" fill="#9dc4b4" font-size="8" text-anchor="middle">Inverts input</text>
+<rect x="378" y="32" width="116" height="108" rx="6" fill="#182318" stroke="rgba(240,107,107,.4)"/>
+<text x="436" y="50" fill="#f06b6b" font-size="9" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">NAND ★</text>
+<text x="390" y="64" fill="#5a8a72" font-size="8" font-family="JetBrains Mono,monospace">A B OUT</text>
+<text x="390" y="78" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0 0  <tspan fill="#3dd68c">1</tspan></text>
+<text x="390" y="91" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0 1  <tspan fill="#3dd68c">1</tspan></text>
+<text x="390" y="104" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1 0  <tspan fill="#3dd68c">1</tspan></text>
+<text x="390" y="117" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1 1  <tspan fill="#f06b6b" font-weight="bold">0</tspan></text>
+<text x="436" y="133" fill="#f06b6b" font-size="8" text-anchor="middle">UNIVERSAL ★</text>
+<rect x="506" y="32" width="116" height="108" rx="6" fill="#182318" stroke="rgba(240,107,107,.4)"/>
+<text x="564" y="50" fill="#f06b6b" font-size="9" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">NOR ★</text>
+<text x="518" y="64" fill="#5a8a72" font-size="8" font-family="JetBrains Mono,monospace">A B OUT</text>
+<text x="518" y="78" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0 0  <tspan fill="#3dd68c">1</tspan></text>
+<text x="518" y="91" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0 1  <tspan fill="#f06b6b">0</tspan></text>
+<text x="518" y="104" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1 0  <tspan fill="#f06b6b">0</tspan></text>
+<text x="518" y="117" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1 1  <tspan fill="#f06b6b">0</tspan></text>
+<text x="564" y="133" fill="#f06b6b" font-size="8" text-anchor="middle">UNIVERSAL ★</text>
+<rect x="634" y="32" width="120" height="108" rx="6" fill="#182318" stroke="#1e2e22"/>
+<text x="694" y="50" fill="#f4c430" font-size="9" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">XOR  A⊕B</text>
+<text x="646" y="64" fill="#5a8a72" font-size="8" font-family="JetBrains Mono,monospace">A B OUT</text>
+<text x="646" y="78" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0 0  <tspan fill="#f06b6b">0</tspan></text>
+<text x="646" y="91" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">0 1  <tspan fill="#3dd68c">1</tspan></text>
+<text x="646" y="104" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1 0  <tspan fill="#3dd68c">1</tspan></text>
+<text x="646" y="117" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">1 1  <tspan fill="#f06b6b">0</tspan></text>
+<text x="694" y="133" fill="#9dc4b4" font-size="8" text-anchor="middle">DIFF inputs=1</text>
+<rect x="6" y="148" width="748" height="32" rx="4" fill="rgba(240,107,107,.07)" stroke="rgba(240,107,107,.2)"/>
+<text x="380" y="164" fill="#f4c430" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">★ NAND and NOR are UNIVERSAL GATES — any logic circuit can be built using ONLY NAND (or ONLY NOR)</text>
+<text x="380" y="178" fill="#9dc4b4" font-size="9" text-anchor="middle">NAND = flip AND outputs | NOR = flip OR outputs | XOR = 1 only when inputs DIFFER</text>
+<rect x="6" y="186" width="748" height="88" rx="6" fill="#182318" stroke="#1e2e22"/>
+<text x="14" y="204" fill="#f4c430" font-size="10" font-weight="bold" font-family="JetBrains Mono,monospace">CAPACITORS vs RESISTORS — COMPLETELY OPPOSITE BEHAVIOUR</text>
+<rect x="6" y="210" width="374" height="24" fill="rgba(34,211,200,.05)"/>
+<rect x="380" y="210" width="374" height="24" fill="rgba(240,107,107,.05)"/>
+<text x="193" y="226" fill="#22d3c8" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle">SERIES R: R=R₁+R₂ (ADDS)</text>
+<text x="567" y="226" fill="#f06b6b" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle">SERIES C: 1/C=1/C₁+1/C₂ (REDUCES)</text>
+<rect x="6" y="236" width="374" height="24" fill="rgba(240,107,107,.05)"/>
+<rect x="380" y="236" width="374" height="24" fill="rgba(34,211,200,.05)"/>
+<text x="193" y="252" fill="#f06b6b" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle">PARALLEL R: 1/R reduces</text>
+<text x="567" y="252" fill="#22d3c8" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle">PARALLEL C: C=C₁+C₂ (ADDS)</text>
+<text x="380" y="268" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">Capacitor: blocks DC · allows AC | Energy stored: U = ½CV²</text>
+</svg>`,
+
+"lenz-law":`<svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg">
+<rect width="760" height="230" rx="6" fill="#0e1611"/>
+<text x="380" y="22" fill="#3dd68c" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="2">LENZ'S LAW — FARADAY'S LAW OF EM INDUCTION</text>
+<rect x="6" y="32" width="368" height="158" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="190" y="52" fill="#f4c430" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">MAGNET APPROACHING</text>
+<rect x="26" y="98" width="56" height="50" rx="4" fill="rgba(240,107,107,.15)" stroke="#f06b6b" stroke-width="2"/>
+<text x="54" y="118" fill="#f06b6b" font-size="12" font-weight="bold" text-anchor="middle">N</text>
+<text x="54" y="136" fill="#f06b6b" font-size="12" font-weight="bold" text-anchor="middle">S</text>
+<line x1="84" y1="122" x2="140" y2="122" stroke="#f4c430" stroke-width="2"/>
+<text x="112" y="115" fill="#f4c430" font-size="10">→→→</text>
+<ellipse cx="195" cy="122" rx="14" ry="36" fill="none" stroke="#22d3c8" stroke-width="2.5"/>
+<ellipse cx="215" cy="122" rx="14" ry="36" fill="none" stroke="#22d3c8" stroke-width="2.5"/>
+<ellipse cx="235" cy="122" rx="14" ry="36" fill="none" stroke="#22d3c8" stroke-width="2.5"/>
+<path d="M165,84 Q185,70 200,80" fill="none" stroke="#3dd68c" stroke-width="2"/>
+<path d="M200,80 L196,88 M200,80 L208,82" fill="none" stroke="#3dd68c" stroke-width="2"/>
+<text x="190" y="67" fill="#3dd68c" font-size="8" font-family="JetBrains Mono,monospace">induced N</text>
+<text x="190" y="170" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Flux increases → induced N to REPEL</text>
+<text x="190" y="184" fill="#22d3c8" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">opposes increase (Lenz)</text>
+<rect x="386" y="32" width="368" height="158" rx="8" fill="#182318" stroke="#1e2e22"/>
+<text x="570" y="52" fill="#f4c430" font-size="11" font-weight="bold" font-family="JetBrains Mono,monospace" text-anchor="middle">MAGNET MOVING AWAY</text>
+<rect x="694" y="98" width="56" height="50" rx="4" fill="rgba(34,211,200,.15)" stroke="#22d3c8" stroke-width="2"/>
+<text x="722" y="118" fill="#22d3c8" font-size="12" font-weight="bold" text-anchor="middle">N</text>
+<text x="722" y="136" fill="#22d3c8" font-size="12" font-weight="bold" text-anchor="middle">S</text>
+<line x1="688" y1="122" x2="640" y2="122" stroke="#f4c430" stroke-width="2"/>
+<text x="660" y="115" fill="#f4c430" font-size="10">←←←</text>
+<ellipse cx="535" cy="122" rx="14" ry="36" fill="none" stroke="#22d3c8" stroke-width="2.5"/>
+<ellipse cx="555" cy="122" rx="14" ry="36" fill="none" stroke="#22d3c8" stroke-width="2.5"/>
+<ellipse cx="575" cy="122" rx="14" ry="36" fill="none" stroke="#22d3c8" stroke-width="2.5"/>
+<path d="M535,164 Q556,176 570,166" fill="none" stroke="#3dd68c" stroke-width="2"/>
+<path d="M570,166 L566,158 M570,166 L578,168" fill="none" stroke="#3dd68c" stroke-width="2"/>
+<text x="555" y="180" fill="#3dd68c" font-size="8" font-family="JetBrains Mono,monospace" text-anchor="middle">induced S</text>
+<text x="570" y="170" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Flux decreases → induced S to ATTRACT</text>
+<text x="570" y="184" fill="#22d3c8" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">opposes decrease (Lenz)</text>
+<rect x="6" y="196" width="748" height="28" rx="4" fill="rgba(61,214,140,.05)" stroke="#1e2e22"/>
+<text x="380" y="208" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">EMF = −NdΦ/dt (Faraday) | F=BILsinθ (force on conductor) | Fleming LHR: F(thumb)=B(index)×I(middle) — FBI</text>
+<text x="380" y="220" fill="#5a8a72" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">Eddy currents: reduced by laminated cores | Applications: induction cooker, maglev braking</text>
+</svg>`,
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const SKEY="centumania_physics5_v1";
+const AKEY="centumania_physics5_astore_v1";
+const BACKEND_URL=""; // Set to your Supabase Edge Function URL
+let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
+let ASTORE={};
+try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
+try{const r=localStorage.getItem(AKEY);if(r)ASTORE=Object.assign(ASTORE,JSON.parse(r));}catch(e){}
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
+function asave(){try{localStorage.setItem(AKEY,JSON.stringify(ASTORE));}catch(e){}}
+
+// ── ANALYTICS ENGINE ──────────────────────────────────────────────────────────
+let _sess={nodeId:null,openedAt:null,answered:0,correctFirst:0,total:0};
+
+function _send(event,payload){
+  if(!BACKEND_URL)return;
+  const body=Object.assign({event,mapId:"physics_5",ts:new Date().toISOString()},payload);
+  try{fetch(BACKEND_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body),keepalive:true}).catch(()=>{});}catch(e){}
+}
+function flashSync(){const d=document.getElementById("syncDot");if(!d)return;d.classList.add("show");setTimeout(()=>d.classList.remove("show"),900);}
+
+// track node_opened — timestamp on open; fires node_abandoned for previous session if incomplete
+function trackNodeOpened(nodeId,totalQ){
+  if(_sess.nodeId && _sess.nodeId!==nodeId && _sess.total>0 && _sess.answered>0 && _sess.answered<_sess.total){
+    const payload={nodeId:_sess.nodeId,timeSpentSeconds:Math.floor((Date.now()-_sess.openedAt)/1000),questionsAnswered:_sess.answered,totalQuestions:_sess.total};
+    if(!ASTORE[_sess.nodeId])ASTORE[_sess.nodeId]={};
+    ASTORE[_sess.nodeId].abandoned=Object.assign({ts:Date.now()},payload);
+    asave();
+    _send("node_abandoned",payload);
+  }
+  _sess={nodeId,openedAt:Date.now(),answered:0,correctFirst:0,total:totalQ};
+  if(!ASTORE[nodeId])ASTORE[nodeId]={};
+  ASTORE[nodeId].last_opened=Date.now();
+  ASTORE[nodeId].open_count=(ASTORE[nodeId].open_count||0)+1;
+  asave();
+  _send("node_opened",{nodeId,totalQuestions:totalQ});
+  flashSync();
+}
+
+// track question_answered — first attempt lock, send per question
+function trackQuestionAnswered(nodeId,qi,correct){
+  _sess.answered++;
+  if(correct)_sess.correctFirst++;
+  if(!ASTORE[nodeId])ASTORE[nodeId]={};
+  if(!ASTORE[nodeId].questions)ASTORE[nodeId].questions={};
+  const key="q"+qi;
+  if(!ASTORE[nodeId].questions[key]){  // first-attempt lock — only record first try
+    ASTORE[nodeId].questions[key]={correct,ts:Date.now(),timeIntoNode:Math.floor((Date.now()-_sess.openedAt)/1000)};
+    asave();
+  }
+  _send("question_answered",{nodeId,questionIndex:qi,firstAttemptCorrect:correct,timeIntoNodeSeconds:Math.floor((Date.now()-_sess.openedAt)/1000)});
+  flashSync();
+  // Check node_completed
+  if(_sess.answered>=_sess.total && _sess.total>0){
+    const timeSpent=Math.floor((Date.now()-_sess.openedAt)/1000);
+    const accuracy=Math.round(_sess.correctFirst/_sess.total*100);
+    ASTORE[nodeId].completed={ts:Date.now(),timeSpentSeconds:timeSpent,accuracy,correct:_sess.correctFirst,total:_sess.total};
+    asave();
+    _send("node_completed",{nodeId,totalQuestions:_sess.total,correctOnFirstAttempt:_sess.correctFirst,firstAttemptAccuracyPct:accuracy,timeSpentSeconds:timeSpent,completedAt:new Date().toISOString()});
+  }
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function allNodes(){return CHAPTERS.flatMap(c=>c.nodes)}
+function getNode(id){return allNodes().find(n=>n.id===id)}
+function isVisited(id){return!!S.visited[id]}
+function trapNodes(){return allNodes().filter(n=>n.type==="trap")}
+function trapVisited(){return trapNodes().filter(n=>isVisited(n.id)).length}
+function visitedCount(){return allNodes().filter(n=>isVisited(n.id)).length}
+function totalNodes(){return allNodes().length}
+function isUnlocked(node){
+  if(node.type==="gold"){const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===node.id));if(ch){return chPct(ch)>=(node.requires_pct||80);}}
+  return true;
+}
+function chPct(ch){const vis=ch.nodes.filter(n=>isVisited(n.id)).length;return Math.round(vis/ch.nodes.length*100);}
+function updateHeader(){
+  const vis=visitedCount(),tot=totalNodes(),xp=S.xp,tv=trapVisited(),tn=trapNodes().length;
+  ["hXP","mhXP"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=xp;});
+  ["hVis","mhVis"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=vis+"/"+tot;});
+  ["hTrap","mhTrap"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=tv+"/"+tn;});
+}
+let _toastT;
+function showToast(xp,msg){
+  const t=document.getElementById("toast"),v=document.getElementById("toastVal"),m=document.getElementById("toastMsg");
+  if(!t)return;
+  v.textContent=xp?"+"+xp+" XP":"✓";m.textContent=msg;
+  t.classList.add("show");clearTimeout(_toastT);
+  _toastT=setTimeout(()=>t.classList.remove("show"),2800);
+}
+function buildTable(t){return`<div class="tbl-wrap"><table class="dt"><thead><tr>${t.h.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${t.r.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;}
+
+function buildSidebar(){
+  ["sideInner","mobSideInner"].forEach(sid=>{
+    const el=document.getElementById(sid);if(!el)return;el.innerHTML="";
+    CHAPTERS.forEach(ch=>{
+      const pct=chPct(ch),isOpen=S.chOpen===ch.id;
+      const div=document.createElement("div");
+      div.className="ch-group"+(isOpen?" expanded":"");
+      div.innerHTML=`<button class="ch-toggle${isOpen?" open":""}" data-ch="${ch.id}">
+        <span style="font-size:16px">${ch.icon}</span><span>${ch.title}</span>
+        <span class="cht-pct">${pct}%</span>
+      </button>
+      <div class="node-items">${ch.nodes.map(n=>{
+        const unl=isUnlocked(n),vis=isVisited(n.id),cur=S.curNode===n.id;
+        let ico=vis?"✓":"○",tag="";
+        if(!unl){ico="🔒";tag=`<span class="ni-tag hidden">LOCKED</span>`;}
+        else if(n.type==="gold"){ico="⚡";tag=`<span class="ni-tag gold">GOLD</span>`;}
+        else if(n.type==="trap"){ico=vis?"⚠️":"⚠";tag=`<span class="ni-tag trap">TRAP</span>`;}
+        return `<button class="ni-btn${cur?" current":""}${vis?" done":""}${!unl?" locked":""}" data-nid="${n.id}" data-unl="${unl}">
+          <span style="width:15px;text-align:center;font-size:12px">${ico}</span>
+          <span>${n.title}</span>${tag}
+        </button>`;
+      }).join("")}</div>`;
+      el.appendChild(div);
+      div.querySelector(".ch-toggle").onclick=()=>{
+        S.chOpen=isOpen?null:ch.id;save();buildSidebar();
+        if(!isOpen){const first=ch.nodes.find(n=>isUnlocked(n));if(first)openNode(first.id);}
+      };
+      div.querySelectorAll(".ni-btn[data-unl='true']").forEach(b=>b.onclick=()=>{openNode(b.dataset.nid);closeDrawer();});
+      div.querySelectorAll(".ni-btn[data-unl='false']").forEach(b=>b.onclick=()=>{openLocked(b.dataset.nid);closeDrawer();});
+    });
+  });
+}
+
+function openNode(id){
+  const node=getNode(id);if(!node||!isUnlocked(node))return openLocked(id);
+  const fresh=!isVisited(id);
+  S.curNode=id;S.chOpen=CHAPTERS.find(c=>c.nodes.some(n=>n.id===id))?.id||S.chOpen;
+  if(fresh){S.visited[id]=Date.now();S.xp+=node.xp;
+    const msgs={trap:"⚠ Exam Trap Revealed!",gold:"⚡ Gold Node!"};
+    showToast(node.xp,msgs[node.type]||"Node Visited");}
+  save();buildSidebar();updateHeader();renderNode(node);
+  document.getElementById("mainArea").scrollTop=0;
+  trackNodeOpened(id,node.mcqs?.length||0);
+}
+function openLocked(id){
+  const node=getNode(id);if(!node)return;
+  S.curNode=id;save();buildSidebar();
+  const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===id));
+  const pct=ch?chPct(ch):0;
+  const req=`<div class="lreq${pct>=(node.requires_pct||80)?" met":""}">Complete ${node.requires_pct||80}% of chapter (currently ${pct}%)</div>`;
+  document.getElementById("viewWrap").innerHTML=`<div class="locked-view"><div class="lv-ico">🔒</div><h2>Locked</h2><p>Complete the chapter to unlock the Gold Node.</p><div class="lock-req-list">${req}</div></div>`;
+}
+
+function renderNode(node){
+  const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===node.id));
+  const bm={regular:["◇ LEARN","regular"],trap:["⚠ EXAM TRAP","trap"],gold:["⚡ GOLD","gold"]};
+  const [bl,bc]=bm[node.type]||["◇","regular"];
+  let content="";
+  if(node.type==="gold"){
+    content=`<div class="golden-block"><div class="gb-h">⚡ GOLD NODE — HIGHEST YIELD EXAM FACTS</div><ul>${(node.golden||[]).map(g=>`<li>${g}</li>`).join("")}</ul></div>`;
+  } else {
+    if(node.diag&&DIAGRAMS[node.diag]){content+=`<div class="diag-box"><div class="diag-head">📊 VISUAL DIAGRAM</div><div class="diag-body">${DIAGRAMS[node.diag]}</div></div>`;}
+    if(node.facts?.length){content+=`<div class="fact-block"><div class="fb-head">◇ KEY FACTS</div><ul class="facts">${node.facts.map(f=>`<li>${f}</li>`).join("")}</ul></div>`;}
+    if(node.table){content+=`<div class="section-lbl">◇ COMPARISON TABLE</div>${buildTable(node.table)}`;}
+    if(node.examples?.length){content+=`<div class="section-lbl">📝 WORKED EXAMPLES</div>`+node.examples.map(ex=>`<div class="example-box"><div class="ex-q"><b>Q:</b> ${ex.q}</div><div class="ex-sol"><b>Solution:</b> ${ex.s}</div></div>`).join("");}
+    if(node.traps?.length){content+=`<div class="trap-block"><div class="tb-h">⚠ EXAM TRAPS — HIGH YIELD</div><ul>${node.traps.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;}
+  }
+  let mcqHtml="";
+  if(node.mcqs?.length){
+    const best=S.mcq[node.id]||0;
+    mcqHtml=`<div class="mcq-list">${best?`<div style="font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:8px">Best: <span style="color:var(--green)">${best}%</span></div>`:""}${node.mcqs.map((q,qi)=>`<div class="mcq-card" data-qi="${qi}" data-nid="${node.id}"><div class="mcq-q"><span class="mcq-qn">Q${qi+1}</span>${q.q}</div><div class="mcq-opts">${q.o.map((op,oi)=>`<button class="mopt" data-oi="${oi}">${String.fromCharCode(65+oi)}. ${op}</button>`).join("")}</div><div class="mcq-fb" id="fb_${node.id}_${qi}"></div></div>`).join("")}<div class="mcq-score" id="scr_${node.id}">Answer all questions to see your score</div></div>`;
+  }
+  const idx=ch?.nodes.findIndex(n=>n.id===node.id)??-1;
+  const prev=idx>0?ch.nodes[idx-1]:null;
+  const next=idx<(ch?.nodes.length-1)?ch.nodes[idx+1]:null;
+  const nav=`<div class="node-nav">${prev?`<button class="nnav" onclick="openNode('${prev.id}')">‹ ${prev.title.substring(0,24)}</button>`:""}${next&&isUnlocked(next)?`<button class="nnav primary" onclick="openNode('${next.id}')">Next ›</button>`:""}</div>`;
+  document.getElementById("viewWrap").innerHTML=`<div class="node-view">
+    <div class="node-hd">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink3);margin-bottom:6px">${ch?.title||""} › ${node.title}</div>
+      <div class="node-badge ${bc}">${bl}</div>
+      <h1 class="nt">${node.title}</h1>
+      <div class="xp-pill">✦ +${node.xp} XP${isVisited(node.id)?" earned":""}</div>
+    </div>
+    <div class="tabs"><button class="tab on" data-t="learn">📖 Learn</button><button class="tab" data-t="test">🎯 Test (${node.mcqs?.length||0}Q)</button></div>
+    <div id="pane-learn">${content}${nav}</div>
+    <div id="pane-test" style="display:none">${mcqHtml}${nav}</div>
+  </div>`;
+  document.querySelectorAll(".tab").forEach(btn=>{btn.onclick=()=>{const t=btn.dataset.t;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.t===t));["learn","test"].forEach(p=>{const e=document.getElementById("pane-"+p);if(e)e.style.display=p===t?"block":"none";});};});
+  bindMCQ(node);
+}
+
+function bindMCQ(node){
+  if(!node.mcqs)return;
+  let correct=0,answered=0,total=node.mcqs.length;
+  node.mcqs.forEach((q,qi)=>{
+    const card=document.querySelector(`.mcq-card[data-qi="${qi}"][data-nid="${node.id}"]`);if(!card)return;
+    card.querySelectorAll(".mopt").forEach(btn=>{
+      btn.onclick=()=>{
+        if(card.dataset.done)return; // first-attempt lock
+        card.dataset.done=1;
+        const oi=+btn.dataset.oi,isCorrect=(oi===q.a);
+        const fb=document.getElementById(`fb_${node.id}_${qi}`);
+        card.querySelectorAll(".mopt").forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("show-correct");});
+        if(isCorrect){btn.classList.add("correct");correct++;fb.className="mcq-fb show right";fb.innerHTML="✓ "+q.e;}
+        else{btn.classList.add("wrong");fb.className="mcq-fb show wrong";fb.innerHTML="✗ Wrong. "+q.e;}
+        answered++;
+        trackQuestionAnswered(node.id,qi,isCorrect);
+        if(answered===total){
+          const pct=Math.round(correct/total*100);
+          const scr=document.getElementById(`scr_${node.id}`);
+          if(scr)scr.innerHTML=`Score: <span>${correct}/${total} = ${pct}%</span> ${pct>=80?"🎯 Excellent":pct>=60?"✓ Good":"⚠ Revise"}`;
+          if(pct>(S.mcq[node.id]||0)){S.mcq[node.id]=pct;save();}
+          if(pct>=80)showToast(0,"MCQ Cleared 🎯");
+          const tp=document.getElementById("pane-test");
+          if(tp){const b=document.createElement("div");b.className="node-complete-banner";b.innerHTML=`<div class="ncb-icon">${pct>=80?"🏆":pct>=60?"✅":"📖"}</div><div class="ncb-text"><div class="ncb-title">NODE COMPLETE — ${pct}%</div><div class="ncb-sub">${correct}/${total} correct on first attempt${pct<60?" — revisit Learn tab":""}</div></div>`;tp.appendChild(b);}
+        }
+      };
+    });
+  });
+}
+
+const CHAPTERS=[
+// ═══════════════════════════════════════════════════════
+// CH 1: THERMODYNAMICS & HEAT
+// ═══════════════════════════════════════════════════════
+{id:"thermo",title:"Thermodynamics & Heat",icon:"🌡️",nodes:[
+{id:"temp-scales-node",title:"Temperature Scales & Conversion",xp:20,type:"trap",diag:"temp-scales",
+facts:[
+  "<b>4 Temperature Scales:</b> Celsius (°C), Fahrenheit (°F), Kelvin (K), Rankine (°R)",
+  "<b>Celsius → Fahrenheit:</b> °F = (°C × 9/5) + 32",
+  "<b>Fahrenheit → Celsius:</b> °C = (°F − 32) × 5/9",
+  "<b>Celsius → Kelvin:</b> K = °C + 273 (exact: +273.15)",
+  "<b>Kelvin → Celsius:</b> °C = K − 273",
+  "<b>Body temperature:</b> 37°C = 98.6°F = 310 K (most-asked MCQ value)",
+  "<b>Freezing point:</b> 0°C = 32°F = 273 K | <b>Boiling point:</b> 100°C = 212°F = 373 K",
+  "<b>Absolute zero:</b> 0 K = −273.15°C — lowest possible temperature",
+  "<b>Kelvin has NO negative values</b> — this is its defining feature",
+  "Celsius and Fahrenheit read the SAME at <b>−40°</b> — unique crossing point",
+  "Rankine scale: used in US engineering only. Absolute scale based on Fahrenheit."
+],
+table:{h:["Scale","Freezing","Boiling","Abs Zero","Key Fact"],r:[
+  ["Celsius (°C)","0°C","100°C","−273.15°C","Used in India, most countries"],
+  ["Fahrenheit (°F)","32°F","212°F","−459.67°F","Used in USA"],
+  ["Kelvin (K)","273.15 K","373.15 K","0 K","SI unit — no negatives!"],
+  ["Rankine (°R)","491.67°R","671.67°R","0°R","US engineering only"]
+]},
+examples:[
+  {q:"Convert 25°C to Fahrenheit.",s:"°F = (25 × 9/5) + 32 = 45 + 32 = <b>77°F</b>"},
+  {q:"Body temperature is 98.6°F. Convert to Celsius and Kelvin.",s:"°C = (98.6 − 32) × 5/9 = 66.6 × 5/9 = <b>37°C</b> | K = 37 + 273 = <b>310 K</b>"},
+  {q:"At what temperature do °C and °F show the same reading?",s:"Let x = °C = °F: x = (9x/5)+32 → −4x/5 = 32 → x = <b>−40°</b> (both scales same at −40°)"}
+],
+traps:[
+  "Body temp = <b>37°C = 98.6°F</b>. MCQ options often give 98°F or 99°F — it's exactly 98.6°F",
+  "Kelvin has NO negative values — 0 K is absolute zero (minimum possible)",
+  "Celsius and Fahrenheit read the same at <b>−40°</b> — unique single crossing",
+  "°C → °F: multiply by 9/5 THEN add 32. Forgetting +32 is the most common error"
+],
+mcqs:[
+  {q:"Convert 37°C (body temperature) to Fahrenheit.",o:["96.6°F","98.6°F","99.0°F","100.4°F"],a:1,e:"°F = (37×9/5)+32 = 66.6+32 = 98.6°F. Body temperature is exactly 98.6°F — options 98°F and 99°F are traps."},
+  {q:"The Kelvin scale is unique because it has?",o:["100 degrees between freezing and boiling","No negative values","Values same as Celsius","Units same as Fahrenheit"],a:1,e:"Kelvin starts from absolute zero (0 K = coldest possible). It has NO negative values. 0°C = 273 K, not 0 K."},
+  {q:"At what temperature do Celsius and Fahrenheit show the SAME reading?",o:["0°","−32°","−40°","−273°"],a:2,e:"Solve: x = (9x/5)+32 → −4x/5=32 → x=−40. Both scales read −40° at this unique point."},
+  {q:"Convert 100°C to Kelvin.",o:["100 K","273 K","373 K","473 K"],a:2,e:"K = °C + 273 = 100 + 273 = 373 K. Water boils at 100°C = 373 K. Freezes at 0°C = 273 K."},
+  {q:"Rankine scale differs from Kelvin scale in that?",o:["It has negative values","It is based on Fahrenheit divisions","It measures only heat","It starts at 100"],a:1,e:"Rankine uses Fahrenheit-sized degrees but starts from absolute zero (like Kelvin). Used in US engineering. 0°R = 0 K = absolute zero."}
+]},
+
+{id:"specific-latent",title:"Specific Heat & Latent Heat",xp:20,type:"regular",
+facts:[
+  "<b>Specific Heat Capacity (c)</b> = heat to raise 1 kg by 1°C. Unit: J/kg·K",
+  "<b>Q = mcΔT</b> — fundamental heat equation (heat = mass × specific heat × temp change)",
+  "<b>Water: c = 4200 J/kg·K</b> — HIGHEST of all common substances → used as coolant",
+  "Ice: 2100 | Steam: 2010 | Aluminium: 900 | Iron: 450–500 | Lead: 128 J/kg·K",
+  "<b>1 calorie = 4.186 J | 1 kcal = 4186 J</b> (nutrition labels use kcal)",
+  "<b>Latent Heat</b> = heat for phase change at CONSTANT temperature",
+  "<b>Latent Heat of Fusion (L_f)</b>: ice ↔ water = <b>336,000 J/kg</b>",
+  "<b>Latent Heat of Vaporization (L_v)</b>: water ↔ steam = <b>2,260,000 J/kg</b>",
+  "<b>Q = mL</b> for phase change (no temperature change occurs)",
+  "L_v >> L_f: separating gas molecules needs far more energy than melting",
+  "Evaporation causes cooling — fastest molecules escape, lowering average KE"
+],
+table:{h:["Substance","Specific Heat J/kg·K","Note"],r:[
+  ["Water","4200","HIGHEST — used as coolant in engines, marine climate"],
+  ["Ice","2100","Half of liquid water"],
+  ["Steam","2010","Less than liquid water"],
+  ["Aluminium","900","Cookware — heats quickly"],
+  ["Iron/Steel","450–500","Heavy machinery"],
+  ["Lead","128","Lowest of common metals"]
+]},
+examples:[
+  {q:"A 2 kg iron block (c=450 J/kg·K) is heated from 25°C to 125°C. Heat required?",s:"Q = mcΔT = 2 × 450 × (125−25) = 2 × 450 × 100 = <b>90,000 J = 90 kJ</b>"},
+  {q:"Heat to convert 500g ice (0°C) to steam (100°C)? [L_f=336 kJ/kg, L_v=2260 kJ/kg, c=4200 J/kg·K]",s:"Step1 melt ice: 0.5×336,000=168,000 J\nStep2 heat water 0→100°C: 0.5×4200×100=210,000 J\nStep3 vaporize: 0.5×2,260,000=1,130,000 J\n<b>Total = 1,508,000 J = 1508 kJ</b>"}
+],
+traps:[
+  "Highest specific heat = WATER (4200). Among metals: Sodium (1235) — NOT iron or copper",
+  "During phase change: temperature stays CONSTANT despite heat being supplied",
+  "Steam at 100°C burns MORE than water at 100°C — steam releases 2260 kJ/kg extra on condensing",
+  "Evaporation cools the surface (earthen pot, sweating) — latent heat absorbed from surroundings"
+],
+mcqs:[
+  {q:"Why is water used as coolant in car engines?",o:["It is cheap","It has the highest specific heat capacity","It boils at 100°C","It is a good conductor of electricity"],a:1,e:"Water's highest specific heat (4200 J/kg·K) means it absorbs large heat with small temperature rise — ideal as coolant. A metal coolant would heat up quickly."},
+  {q:"During melting of ice at 0°C, the temperature of the system?",o:["Rises gradually","Drops below 0°C","Stays constant at 0°C","Jumps to 100°C"],a:2,e:"During phase change, ALL energy goes into breaking intermolecular bonds (latent heat). Temperature stays CONSTANT at 0°C until all ice melts."},
+  {q:"Steam at 100°C causes more severe burns than water at 100°C because?",o:["Steam is hotter","Steam carries more pressure","Steam releases latent heat of vaporization on the skin","Steam moves faster"],a:2,e:"When steam condenses on skin, it releases 2260 kJ/kg extra (latent heat of vaporization) IN ADDITION to the heat from cooling. Water at 100°C only releases sensible heat."},
+  {q:"A 3 kg aluminium block (c=900 J/kg·K) is heated from 20°C to 70°C. Heat absorbed?",o:["45,000 J","90,000 J","135,000 J","270,000 J"],a:2,e:"Q = mcΔT = 3 × 900 × (70−20) = 3 × 900 × 50 = 135,000 J = 135 kJ."},
+  {q:"Latent heat of vaporization is LARGER than latent heat of fusion because?",o:["Boiling requires more time","Gas molecules must completely overcome all intermolecular forces to separate","Water is a liquid","Fusion requires less energy"],a:1,e:"Converting liquid to gas requires completely separating molecules against intermolecular forces (2260 kJ/kg). Melting only partially disrupts the crystal structure (336 kJ/kg). Hence L_v >> L_f."}
+]},
+
+{id:"heat-transfer-node",title:"Heat Transfer & Thermodynamics Laws",xp:20,type:"regular",diag:"heat-transfer",
+facts:[
+  "<b>Conduction:</b> atom vibration; needs medium; best in metals. Silver > Cu > Au > Al > Fe",
+  "<b>Convection:</b> bulk fluid movement; hot fluid rises (less dense), cold sinks (more dense)",
+  "<b>Radiation:</b> electromagnetic waves (infrared); NO medium needed; travels at 3×10⁸ m/s",
+  "<b>Black/dark surfaces:</b> best absorbers AND emitters of radiation",
+  "<b>White/shiny surfaces:</b> poor absorbers (reflect) — wear white in summer",
+  "<b>Newton's Law of Cooling:</b> rate of heat loss ∝ (T_body − T_surroundings)",
+  "<b>Greenhouse Effect:</b> CO₂, CH₄, H₂O vapour absorb & re-emit infrared → trap heat",
+  "<b>Zeroth Law:</b> A in equilibrium with C, B in equilibrium with C → A in equilibrium with B",
+  "<b>First Law:</b> ΔU = Q − W (conservation of energy for thermodynamic systems)",
+  "<b>Second Law:</b> Heat flows spontaneously from hot to cold ONLY; entropy always increases",
+  "<b>Third Law:</b> Entropy → 0 as T → 0 K; absolute zero is unattainable in practice"
+],
+table:{h:["Mode","Medium?","Mechanism","Speed","Examples"],r:[
+  ["Conduction","YES (solid)","Atom/electron vibration","Slowest","Cooking pan, metal rod in fire"],
+  ["Convection","YES (fluid)","Bulk movement: hot rises","Medium","Sea breeze, boiling water, AC"],
+  ["Radiation","NO (vacuum OK)","EM waves (infrared)","Fastest (c)","Sun's heat, fire warmth"]
+]},
+examples:[
+  {q:"Why is ice packed in sawdust during transport?",s:"Sawdust (mostly trapped air) is a <b>bad conductor of heat</b>. It insulates the ice from the surrounding temperature, slowing heat conduction. Same principle: wooden pot handles, thermos flask double wall."}
+],
+traps:[
+  "Conduction and Convection CANNOT occur in vacuum — they need medium. Radiation CAN.",
+  "Convection: hot fluid RISES (less dense), cold sinks (more dense) — remember this direction",
+  "Refrigerator does NOT violate 2nd Law — it uses external work to move heat from cold to hot",
+  "Sea breeze (day): land heats faster → hot air rises → cool sea air fills in. Night: reversed."
+],
+mcqs:[
+  {q:"The Sun heats Earth by which mode of heat transfer?",o:["Conduction","Convection","Radiation","All three"],a:2,e:"Space between Sun and Earth is vacuum — conduction and convection need medium. Only radiation (infrared EM waves) travels through vacuum at speed of light."},
+  {q:"Sea breeze blows from sea to land during daytime because?",o:["Sea temperature rises faster","Land heats faster → hot air rises → cool sea air replaces it","Wind direction follows Sun","Sea water evaporates"],a:1,e:"Land heats faster than sea → air above land rises (convection) → cool sea air moves in to replace it. At night the reverse happens (land breeze from land to sea)."},
+  {q:"First Law of Thermodynamics is a statement of?",o:["Law of entropy","Conservation of energy","Direction of heat flow","Absolute zero"],a:1,e:"First Law: ΔU = Q − W. The change in internal energy = heat added − work done by system. This is conservation of energy applied to thermodynamic systems."},
+  {q:"Black surfaces are better radiators than white surfaces because?",o:["Black is heavier","Black absorbs and emits radiation most efficiently","Black has higher specific heat","Black conducts heat better"],a:1,e:"Black/dark surfaces are the best absorbers AND emitters of radiation (Stefan-Boltzmann law). White/shiny surfaces reflect most radiation — that's why white clothes are worn in summer."},
+  {q:"A refrigerator moves heat from cold interior to hot room. This?",o:["Violates 1st Law","Violates 2nd Law","Does NOT violate any law (uses external work)","Violates both laws"],a:2,e:"The 2nd Law says heat cannot spontaneously flow from cold to hot. A refrigerator uses electrical work (external energy) to pump heat from cold to hot — no violation."}
+]},
+
+{id:"thermal-expansion",title:"Thermal Expansion & Applications",xp:15,type:"trap",
+facts:[
+  "All substances generally EXPAND on heating (exception: water 0–4°C)",
+  "<b>Order of expansion for same ΔT: Gases >> Liquids > Solids</b>",
+  "<b>Anomalous expansion of water:</b> contracts from 0°C to 4°C, then expands above 4°C",
+  "<b>Maximum density of water at 4°C</b> — ice (0°C) is less dense → floats",
+  "<b>Linear expansion:</b> ΔL = αLΔT | <b>Volume expansion:</b> ΔV = γVΔT (γ ≈ 3α)",
+  "<b>Bimetallic strip:</b> two metals bonded together; bends on heating (different expansion rates)",
+  "Applications: thermostats, thermometers, railway track gaps, pendulum clocks"
+],
+table:{h:["Application","Physics Principle","Consequence If Ignored"],r:[
+  ["Railway track expansion gaps","Rails expand in summer","Tracks buckle and bend"],
+  ["Pendulum clock slow in summer","Rod expands → longer → slower swing","Clock loses time in summer"],
+  ["Bimetallic thermostat","Strip bends at set temperature","Breaks/makes circuit to control temperature"],
+  ["Power line sags in summer","Wire expands → sags","Wire snaps in winter if no slack given"],
+  ["Tire burst in summer","Air inside expands with heat","Pressure exceeds tire limit"]
+]},
+traps:[
+  "Water CONTRACTS from 0°C to 4°C (anomalous) — most other substances expand. Density MAX at 4°C.",
+  "Ice is LESS dense than water at 4°C — that's why ice floats (crucial for aquatic life in winters)",
+  "Bimetallic strip bends toward the metal with LOWER expansion rate (it expands less = inner curve)"
+],
+mcqs:[
+  {q:"Why do railway tracks have gaps at regular intervals?",o:["To reduce cost","To allow for expansion in summer heat","For drainage","For sound absorption"],a:1,e:"Metal rails expand in summer heat. Without gaps (expansion joints), the tracks would buckle and bend under thermal expansion stress."},
+  {q:"Water has maximum density at?",o:["0°C","2°C","4°C","100°C"],a:2,e:"Anomalous expansion: water contracts from 0°C to 4°C (density increases), then expands above 4°C. Maximum density at 4°C — that's why ice (at 0°C) is less dense and floats."},
+  {q:"A pendulum clock will run slower in summer because?",o:["Air becomes denser","Pendulum rod expands → longer period → slower ticks","Gravity decreases in heat","Clock spring weakens"],a:1,e:"T = 2π√(L/g). In summer, rod expands → L increases → time period T increases → clock ticks more slowly → loses time."},
+  {q:"Bimetallic strips are used in thermostats because?",o:["Both metals conduct equally","Two metals expand at different rates → strip bends at set temperature","Both metals are magnetic","They are cheaper"],a:1,e:"Two metals with different expansion coefficients bonded together. As temperature rises, the metal with higher expansion rate expands more → strip bends → triggers the circuit on/off."},
+  {q:"Gases expand MORE than liquids for the same temperature rise because?",o:["Gas molecules are heavier","Gas molecules have less intermolecular forces and more freedom of movement","Gases are transparent","Gases have higher specific heat"],a:1,e:"Gas molecules are nearly free — minimal intermolecular forces. Thermal energy directly increases separation. Liquids have stronger intermolecular forces, solids even stronger. Hence: expansion order Gases >> Liquids > Solids."}
+]},
+
+{id:"thermo-gold",title:"⚡ Thermodynamics Gold Node",xp:50,type:"gold",requires_pct:80,
+golden:[
+  "<b>Body temp = 37°C = 98.6°F = 310 K</b> — exam freebie, answer in 2 seconds",
+  "<b>°C and °F same at −40°</b> — unique crossing, rare but asked",
+  "<b>Kelvin: NO negative values</b>. 0 K = absolute zero",
+  "<b>Formulas:</b> °F=(°C×9/5)+32 | °C=(°F−32)×5/9 | K=°C+273",
+  "<b>Water: highest specific heat = 4200 J/kg·K</b> → engine coolant, marine climate",
+  "<b>Steam burns worse</b> than water at 100°C (extra 2260 kJ/kg latent heat)",
+  "<b>Phase change: temp stays CONSTANT</b> — all heat goes into changing state",
+  "<b>Radiation: no medium needed</b> — only mode that works in vacuum (Sun→Earth)",
+  "<b>Anomalous expansion: water densest at 4°C</b> → ice floats → fish survive winter",
+  "<b>Conduction order: Ag > Cu > Au > Al > Fe</b>",
+  "<b>1st Law = energy conservation | 2nd Law = heat flows hot→cold only</b>"
+]}
+]},
+
+// ═══════════════════════════════════════════════════════
+// CH 2: GAS LAWS & KINETIC THEORY
+// ═══════════════════════════════════════════════════════
+{id:"gaslaws",title:"Gas Laws & Kinetic Theory",icon:"💨",nodes:[
+{id:"gas-laws-node",title:"Boyle's, Charles's & Gas Laws",xp:20,type:"regular",diag:"gas-laws",
+facts:[
+  "<b>CRITICAL: ALWAYS use KELVIN (K = °C + 273) in gas law calculations</b>",
+  "<b>Boyle's Law</b> (Boyle, 1662): PV = constant at fixed T. Formula: <b>P₁V₁ = P₂V₂</b>",
+  "<b>Charles's Law</b> (Charles, 1787): V/T = constant at fixed P. Formula: <b>V₁/T₁ = V₂/T₂</b>",
+  "<b>Gay-Lussac's Law</b> (1802): P/T = constant at fixed V. Formula: <b>P₁/T₁ = P₂/T₂</b>",
+  "<b>Avogadro's Law</b> (1811): V ∝ n at fixed T and P. Formula: V₁/n₁ = V₂/n₂",
+  "<b>Ideal Gas Equation: PV = nRT</b> | R = 8.314 J/mol·K",
+  "<b>Graham's Law:</b> diffusion rate ∝ 1/√density | r₁/r₂ = √(d₂/d₁)",
+  "<b>STP (0°C, 1 atm): 1 mole of any gas = 22.4 litres</b> — direct MCQ fact",
+  "Avogadro's number: N_A = 6.022 × 10²³ molecules/mole"
+],
+table:{h:["Law","Held Constant","Relationship","Formula"],r:[
+  ["Boyle's","Temperature T","P ∝ 1/V (inverse)","P₁V₁ = P₂V₂"],
+  ["Charles's","Pressure P","V ∝ T (direct, Kelvin)","V₁/T₁ = V₂/T₂"],
+  ["Gay-Lussac's","Volume V","P ∝ T (direct, Kelvin)","P₁/T₁ = P₂/T₂"],
+  ["Ideal Gas","—","PV = nRT","R = 8.314 J/mol·K"],
+  ["Graham's","T and P","rate ∝ 1/√density","r₁/r₂ = √(d₂/d₁)"]
+]},
+examples:[
+  {q:"A gas occupies 4 L at 27°C. Volume at 127°C at constant pressure?",s:"T₁ = 27+273 = 300 K, T₂ = 127+273 = 400 K\nV₂ = V₁ × T₂/T₁ = 4 × 400/300 = <b>5.33 L</b>"},
+  {q:"Gas at 2 atm, 5 L compressed to 2 L at same temperature. New pressure?",s:"P₁V₁ = P₂V₂ → 2×5 = P₂×2 → P₂ = <b>5 atm</b>"},
+  {q:"Gas at 27°C heated to 327°C at constant volume. Initial P = 1.5 atm. Final pressure?",s:"T₁=300K, T₂=600K. P₂ = P₁×T₂/T₁ = 1.5×600/300 = <b>3 atm</b>"}
+],
+traps:[
+  "Charles's Law uses KELVIN — using Celsius (e.g., 27°C/127°C = 0.21) gives completely wrong answer",
+  "At STP: 1 mole any gas = 22.4 L (standard exam fact — do not confuse with 22.4 litres at any conditions)",
+  "Boyle's Law: P and V are INVERSE — when P doubles, V halves (not doubles)"
+],
+mcqs:[
+  {q:"A gas at 27°C is heated to 327°C at constant pressure. By what factor does volume increase?",o:["2 times","3 times","4 times","11 times"],a:0,e:"T₁=300K, T₂=600K. V₂/V₁ = T₂/T₁ = 600/300 = 2. Volume doubles. MUST use Kelvin — Charles's Law."},
+  {q:"At STP, volume of 1 mole of any ideal gas is?",o:["11.2 L","22.4 L","44.8 L","2.24 L"],a:1,e:"STP (0°C, 1 atm): 1 mole of any ideal gas occupies exactly 22.4 litres. Direct exam fact — memorise."},
+  {q:"A gas is compressed from 10 L to 5 L at constant temperature. Pressure doubles. Which law?",o:["Charles's","Gay-Lussac's","Boyle's","Avogadro's"],a:2,e:"Constant temperature, P×V = constant — this is Boyle's Law. PV = constant → compress V by half → P doubles."},
+  {q:"In ideal gas equation PV = nRT, R is called?",o:["Boltzmann constant","Universal gas constant","Avogadro constant","Planck's constant"],a:1,e:"R = universal gas constant = 8.314 J/mol·K. Same for all ideal gases — that's why 'universal'. Boltzmann constant k = R/N_A."},
+  {q:"Gas A has density 4 times that of gas B at same T and P. Ratio of their diffusion rates (A:B)?",o:["4:1","2:1","1:2","1:4"],a:2,e:"Graham's Law: rate ∝ 1/√density. r_A/r_B = √(d_B/d_A) = √(1/4) = 1/2. Gas A diffuses at half the rate of B."}
+]},
+
+{id:"kinetic-theory-node",title:"Kinetic Theory of Gases",xp:15,type:"regular",
+facts:[
+  "<b>Kinetic Theory:</b> matter = tiny particles in constant random motion",
+  "<b>Temperature ∝ average kinetic energy</b> of molecules",
+  "<b>Average KE per molecule = (3/2)kT</b> | k = Boltzmann constant = 1.38 × 10⁻²³ J/K",
+  "<b>RMS speed v_rms = √(3RT/M)</b> — increases with T, decreases with molar mass M",
+  "<b>At 0 K (absolute zero): molecular motion practically stops</b>",
+  "<b>Pressure</b> = force from molecular collisions on container walls",
+  "<b>Ideal gas:</b> no intermolecular forces, negligible molecular volume, elastic collisions",
+  "<b>Real gas deviates from ideal at HIGH pressure and LOW temperature</b>",
+  "Avogadro's number: N_A = 6.022 × 10²³ molecules per mole"
+],
+traps:[
+  "Higher temperature = faster molecules (more KE) — molecules don't become smaller",
+  "Real gas: deviates at HIGH pressure + LOW temperature (not high temperature)",
+  "Avogadro's number is 6.022 × 10²³ (not 6.022 × 10²² or ×10²⁴)"
+],
+mcqs:[
+  {q:"Temperature of a gas is a direct measure of?",o:["Total kinetic energy","Average kinetic energy of its molecules","Pressure of gas","Volume of gas"],a:1,e:"Temperature ∝ average KE per molecule = (3/2)kT. Higher temperature = faster moving molecules on average. Total KE depends on number of moles too."},
+  {q:"At absolute zero, molecular motion in an ideal gas?",o:["Is maximum","Is the same as at room temperature","Practically stops","Doubles"],a:2,e:"At 0 K, average KE = (3/2)k×0 = 0. Molecular motion practically stops (quantum mechanics allows zero-point energy, but for exam purposes: stops)."},
+  {q:"Which gas at same T and P will have higher RMS speed — H₂ (M=2) or O₂ (M=32)?",o:["O₂, as it's heavier","H₂, as it's lighter","Both the same","Depends on pressure"],a:1,e:"v_rms = √(3RT/M). Lower M = higher speed. H₂ (M=2) is 16 times lighter than O₂ (M=32) → v_rms of H₂ is 4 times higher."},
+  {q:"Real gases deviate most from ideal behaviour at?",o:["High T, low P","Low T, high P","High T, high P","Low T, low P"],a:1,e:"At low T: molecules slow down → intermolecular attractions matter. At high P: molecules close together → volume non-negligible. Both conditions cause maximum deviation from ideal gas."},
+  {q:"Avogadro's number (6.022 × 10²³) represents?",o:["Molecules in 1 litre of gas","Molecules in 1 mole of any substance","Atoms in 1 gram","Molecules per cubic metre"],a:1,e:"Avogadro's number = 6.022 × 10²³ particles (atoms/molecules/ions) per mole of any substance. One mole of H₂O = 6.022×10²³ water molecules."}
+]}
+]},
+
+// ═══════════════════════════════════════════════════════
+// CH 3: ROTATIONAL MOTION
+// ═══════════════════════════════════════════════════════
+{id:"rotation",title:"Rotational Motion",icon:"🔄",nodes:[
+{id:"torque-moi-node",title:"Torque & Moment of Inertia",xp:20,type:"regular",diag:"rotation-diagram",
+facts:[
+  "<b>Torque (τ)</b> = r × F sinθ — rotational effect of force; max when F ⊥ r (θ=90°); unit: N·m",
+  "<b>Moment of Inertia (I)</b> = Σmr² — rotational 'mass'; depends on mass AND distribution from axis",
+  "<b>Angular Momentum L = Iω</b> | <b>τ = Iα</b> (rotational Newton's 2nd law)",
+  "<b>Rotational KE = ½Iω²</b> (compare: translational KE = ½mv²)",
+  "<b>Conservation of Angular Momentum:</b> L = Iω = constant when net external torque = 0",
+  "Skater pulls arms in → I decreases → ω increases (spins faster) — same L",
+  "Diver tucks body → I decreases → rotates faster",
+  "Neutron star formation → star collapses → enormous ω"
+],
+table:{h:["Linear Quantity","Rotational Equivalent","Unit"],r:[
+  ["Displacement (s)","Angular displacement (θ)","radians"],
+  ["Velocity (v)","Angular velocity (ω)","rad/s"],
+  ["Force (F)","Torque (τ = rF sinθ)","N·m"],
+  ["Mass (m)","Moment of Inertia (I = Σmr²)","kg·m²"],
+  ["Momentum (p=mv)","Angular momentum (L=Iω)","kg·m²/s"],
+  ["F = ma","τ = Iα","—"],
+  ["KE = ½mv²","Rotational KE = ½Iω²","J"]
+]},
+examples:[
+  {q:"A figure skater with I=3 kg·m² spins at 4 rad/s. She pulls arms in to I=1 kg·m². New angular velocity?",s:"Conservation: I₁ω₁ = I₂ω₂ → 3×4 = 1×ω₂ → ω₂ = <b>12 rad/s</b> (3× faster)"},
+  {q:"Torque of 20 N·m acts on a body with I=5 kg·m². Angular acceleration?",s:"τ = Iα → 20 = 5×α → α = <b>4 rad/s²</b>"}
+],
+traps:[
+  "Torque (N·m) and Work (J) have same dimensional formula but are COMPLETELY different quantities",
+  "Angular momentum conserved only when net EXTERNAL TORQUE = 0 — not just any rotation",
+  "Rolling body has HIGHER total KE than sliding body at same speed (has rotational KE too)"
+],
+mcqs:[
+  {q:"A figure skater (I=4 kg·m², ω=3 rad/s) pulls arms in to I=1 kg·m². New ω?",o:["3 rad/s","6 rad/s","12 rad/s","48 rad/s"],a:2,e:"I₁ω₁ = I₂ω₂ (L conserved, no external torque). 4×3 = 1×ω₂ → ω₂ = 12 rad/s. I drops to 1/4 → ω increases 4× to conserve L."},
+  {q:"A torque of 15 N·m acts on a flywheel with I=3 kg·m². Angular acceleration?",o:["0.2 rad/s²","3 rad/s²","5 rad/s²","45 rad/s²"],a:2,e:"τ = Iα → α = τ/I = 15/3 = 5 rad/s². Rotational Newton's 2nd law: torque = moment of inertia × angular acceleration."},
+  {q:"Angular momentum is conserved when?",o:["Linear velocity is constant","Net external force is zero","Net external torque is zero","Moment of inertia is constant"],a:2,e:"L = Iω is conserved when net external torque = 0. Analogous to linear momentum (p=mv) conserved when net force = 0. Figure skaters, divers exploit this."},
+  {q:"A diver tucks her body mid-dive. Her rotation rate?",o:["Decreases","Stays the same","Increases","Becomes zero"],a:2,e:"Tucking reduces her moment of inertia (I). Since L = Iω is conserved (no external torque), ω must increase when I decreases. She spins faster."},
+  {q:"Torque and Work both have units N·m. The key difference is?",o:["Torque is larger","Work is scalar, torque is a vector quantity","They are the same","Torque only applies to liquids"],a:1,e:"Work = F·d (scalar, dot product). Torque = r×F (vector, cross product). Same units N·m but completely different physical concepts — torque causes rotation, work is energy transfer."}
+]}
+]},
+
+// ═══════════════════════════════════════════════════════
+// CH 4: WAVE OPTICS
+// ═══════════════════════════════════════════════════════
+{id:"waveoptics",title:"Wave Optics",icon:"🌊",nodes:[
+{id:"interference-node",title:"Interference, Diffraction & Polarization",xp:20,type:"regular",diag:"wave-optics",
+facts:[
+  "<b>Interference:</b> superposition of two coherent waves → bright and dark fringes",
+  "<b>Constructive interference:</b> path difference = nλ → bright fringe (crests meet)",
+  "<b>Destructive interference:</b> path difference = (2n−1)λ/2 → dark fringe",
+  "<b>Coherent sources:</b> same frequency, constant phase difference — REQUIRED for stable fringes",
+  "<b>YDSE (Thomas Young, 1801):</b> first experimental proof that light is a wave",
+  "<b>Fringe width β = λD/d</b> — D=screen distance, d=slit separation, λ=wavelength",
+  "β INCREASES when: λ↑, D↑, or d↓",
+  "<b>Diffraction:</b> bending of light around edges; prominent when obstacle size ≈ wavelength",
+  "Sound diffracts around corners (λ in cm–m) | Light barely diffracts (λ = 400–700 nm)",
+  "<b>Polarization:</b> restriction to one plane — ONLY transverse waves can be polarized",
+  "<b>Malus's Law:</b> I = I₀ cos²θ (transmitted intensity through analyser)"
+],
+examples:[
+  {q:"YDSE: slit separation=0.5 mm, screen distance=1 m, λ=600 nm. Find fringe width.",s:"β = λD/d = (600×10⁻⁹ × 1) / (0.5×10⁻³) = 600×10⁻⁹ / 5×10⁻⁴ = <b>1.2×10⁻³ m = 1.2 mm</b>"}
+],
+traps:[
+  "Two independent bulbs CANNOT produce interference — they are NOT coherent sources",
+  "Increasing slit separation (d↑) DECREASES fringe width — β=λD/d is INVERSELY proportional to d",
+  "Sound (longitudinal) CANNOT be polarized — polarization is only for transverse waves",
+  "Diffraction is MOST pronounced when obstacle/slit size ≈ wavelength (not much larger/smaller)"
+],
+mcqs:[
+  {q:"In YDSE, slit separation=0.5mm, screen=1m, λ=500nm. Fringe width?",o:["0.5 mm","1.0 mm","1.5 mm","2.0 mm"],a:1,e:"β = λD/d = (500×10⁻⁹ × 1)/(0.5×10⁻³) = 500×10⁻⁹/5×10⁻⁴ = 1.0×10⁻³ m = 1.0 mm."},
+  {q:"Young's Double Slit Experiment proved that light?",o:["Travels in straight lines","Has wave nature (shows interference)","Has particle nature","Cannot be polarized"],a:1,e:"YDSE (1801) demonstrated interference fringes — a characteristic of waves. It was the first experimental proof that light has wave nature (transverse wave showing interference and diffraction)."},
+  {q:"If slit separation (d) in YDSE is doubled, fringe width will?",o:["Double","Halve","Stay same","Become zero"],a:1,e:"β = λD/d. Fringe width is INVERSELY proportional to d. If d doubles → β halves. Smaller slits = wider fringes, wider slits = narrower fringes."},
+  {q:"Which of these CANNOT be polarized?",o:["Visible light","Radio waves","Sound waves","X-rays"],a:2,e:"Polarization restricts vibration to one plane — only possible for TRANSVERSE waves. Sound is a LONGITUDINAL wave (particles vibrate along direction of travel) — has no perpendicular plane to restrict."},
+  {q:"Two independent sodium lamps illuminating the same slit will?",o:["Produce bright fringes","Produce dark fringes","NOT produce stable interference","Produce coloured fringes"],a:2,e:"Independent sources are NOT coherent — their phase difference is random and constantly changing. For stable interference, sources must have constant phase difference (coherent). Use single source split by two slits."}
+]}
+]},
+
+// ═══════════════════════════════════════════════════════
+// CH 5: DUAL NATURE & PHOTOELECTRIC
+// ═══════════════════════════════════════════════════════
+{id:"modern",title:"Dual Nature & Photoelectric",icon:"⚛️",nodes:[
+{id:"photoelectric-node",title:"Photoelectric Effect & de Broglie",xp:25,type:"trap",diag:"photoelectric",
+facts:[
+  "<b>Photoelectric Effect:</b> emission of electrons when light strikes metal surface",
+  "<b>Discovered:</b> Heinrich Hertz (1887) | <b>Explained:</b> Albert Einstein (1905) | Nobel Prize 1921",
+  "<b>Work Function (φ):</b> minimum energy to release an electron from metal surface",
+  "<b>Threshold frequency (ν₀):</b> minimum frequency for emission; hν₀ = φ",
+  "<b>Einstein's equation: KE_max = hν − φ = h(ν − ν₀)</b>",
+  "h = Planck's constant = 6.626 × 10⁻³⁴ J·s | Photon energy: E = hν = hc/λ",
+  "<b>Stopping potential (V₀):</b> voltage to stop fastest electrons; eV₀ = KE_max",
+  "<b>Intensity↑ → more electrons emitted (NOT faster)</b>",
+  "<b>Frequency↑ → faster electrons (NOT more)</b>",
+  "<b>Below threshold: ZERO emission regardless of intensity or duration</b>",
+  "<b>de Broglie wavelength: λ = h/mv = h/p</b> (all moving matter has wave nature)",
+  "Confirmed by Davisson-Germer experiment (1927) — electron diffraction observed"
+],
+table:{h:["Change","Effect on number of electrons","Effect on KE of electrons"],r:[
+  ["Intensity ↑ (same frequency)","INCREASES (more photons → more electrons)","NO CHANGE"],
+  ["Frequency ↑ (same intensity)","Slight change above threshold","INCREASES"],
+  ["Below threshold frequency","ZERO — no emission at all","No emission"]
+]},
+examples:[
+  {q:"Light λ=4×10⁻⁷ m hits metal with work function 2 eV. KE of emitted electrons? (h=6.6×10⁻³⁴, c=3×10⁸)",s:"E = hc/λ = (6.6×10⁻³⁴ × 3×10⁸)/(4×10⁻⁷) = 4.95×10⁻¹⁹ J = 3.09 eV\nKE = E − φ = 3.09 − 2.0 = <b>1.09 eV</b>"}
+],
+traps:[
+  "Photoelectric effect CANNOT be explained by wave theory — it proves PARTICLE nature of light",
+  "Below threshold: NO emission regardless of how INTENSE or how LONG the light shines",
+  "Intensity↑ → MORE electrons (not faster). Frequency↑ → FASTER electrons (not more).",
+  "de Broglie: heavier/faster objects have SHORTER wavelength (λ=h/mv inversely proportional to mv)"
+],
+mcqs:[
+  {q:"Photoelectric effect proves that light has?",o:["Wave nature","Particle nature","Both wave and particle simultaneously","Neither"],a:1,e:"Wave theory predicts intensity should determine electron energy — but experiments show frequency determines KE and intensity determines number. Einstein's photon model explains this — proving particle nature."},
+  {q:"Intensity of light doubled, same frequency (above threshold). Effect on photoelectric emission?",o:["Twice as many electrons, twice the KE","Twice as many electrons, same KE","Same electrons, twice the KE","No change at all"],a:1,e:"Intensity↑ = more photons hitting per second = more electrons ejected. But each photon energy (hν) is unchanged → same KE per electron. Number doubles, speed unchanged."},
+  {q:"Below threshold frequency, no electrons are emitted even if?",o:["Frequency is doubled","Light shines for a very long time with very high intensity","The metal is heated","All of the above"],a:1,e:"Each photon must individually have enough energy (hν ≥ φ) to release an electron. Brightness (intensity) just means more photons, each still below threshold energy. No accumulation — each photon interacts independently."},
+  {q:"de Broglie wavelength of a particle INCREASES when?",o:["Its speed increases","Its mass increases","Its momentum decreases","Its temperature increases"],a:2,e:"λ = h/mv = h/p. Wavelength is INVERSELY proportional to momentum. Smaller momentum → longer wavelength. Slower or lighter particles have longer de Broglie wavelengths."},
+  {q:"The stopping potential in photoelectric effect is related to?",o:["Number of emitted electrons","KE of fastest emitted electrons","Intensity of incident light","Temperature of metal"],a:1,e:"Stopping potential V₀ is the reverse voltage needed to stop the fastest electrons: eV₀ = KE_max = hν − φ. It depends only on frequency of light and work function — not on intensity."}
+]}
+]},
+
+// ═══════════════════════════════════════════════════════
+// CH 6: ATOMS & NUCLEI
+// ═══════════════════════════════════════════════════════
+{id:"atoms-nuclei",title:"Atoms & Nuclei",icon:"☢️",nodes:[
+{id:"atomic-models-node",title:"Atomic Models & Bohr's Theory",xp:20,type:"regular",
+facts:[
+  "<b>Dalton (1803):</b> atom = solid indivisible sphere — first atomic theory",
+  "<b>Thomson (1898):</b> Plum Pudding — electrons embedded in +ve sphere",
+  "<b>Rutherford (1911):</b> nuclear model from gold foil — dense +ve nucleus; electrons orbit",
+  "Rutherford's result: most α-particles pass through → atom mostly empty; few bounce → dense nucleus",
+  "<b>Bohr (1913):</b> electrons in fixed quantized shells K,L,M,N; En = −13.6/n² eV",
+  "<b>Ground state (n=1): −13.6 eV | n=2: −3.4 eV | n=3: −1.51 eV</b>",
+  "<b>Ionization energy of hydrogen = 13.6 eV</b>",
+  "Electron EMITS photon when jumping to LOWER orbit; ABSORBS photon to go HIGHER",
+  "<b>Angular momentum quantized: mvr = nh/2π</b>",
+  "Quantum mechanical model (Schrödinger): electrons in probability orbitals s,p,d,f"
+],
+table:{h:["Model","Scientist","Year","Key Idea","Failure"],r:[
+  ["Plum Pudding","Thomson","1898","e⁻ in +ve sphere","Failed to explain Rutherford scattering"],
+  ["Nuclear","Rutherford","1911","Dense nucleus; e⁻ orbit","e⁻ should spiral in → collapse"],
+  ["Bohr's","Bohr","1913","Fixed shells K,L,M,N","Only works for hydrogen"],
+  ["Quantum","Schrödinger","1926","Probability orbitals","Current accepted model"]
+]},
+traps:[
+  "Rutherford's model failed: orbiting electrons should radiate energy and spiral into nucleus",
+  "Bohr model works ONLY for hydrogen (single electron). Fails for multi-electron atoms.",
+  "Thomson = electron discovery | Rutherford = nucleus + proton | Chadwick = neutron (1932)"
+],
+mcqs:[
+  {q:"Rutherford's gold foil experiment showed that most alpha particles passed through. This means?",o:["Gold atoms are small","The atom is mostly empty space with a tiny dense nucleus","Electrons stop alpha particles","Alpha particles have no charge"],a:1,e:"Most α-particles pass straight through → atom is mostly empty. The few that bounce back (1 in 8000) hit a tiny, dense, positively charged nucleus. This disproved Thomson's plum pudding model."},
+  {q:"Energy of hydrogen electron in ground state (n=1) is?",o:["+13.6 eV","−3.4 eV","−13.6 eV","0 eV"],a:2,e:"En = −13.6/n² eV. For n=1: E = −13.6/1 = −13.6 eV. Negative sign = electron is bound (needs +13.6 eV to escape — ionization energy)."},
+  {q:"Bohr's atomic model could NOT explain?",o:["Hydrogen spectrum","Spectral lines of helium and other atoms","Quantization of energy","Radius of hydrogen orbit"],a:1,e:"Bohr model works perfectly for hydrogen (1 electron). It fails completely for helium, lithium etc. (2+ electrons) because electron-electron repulsion is not accounted for."},
+  {q:"Neutron was discovered by?",o:["J.J. Thomson","Ernest Rutherford","James Chadwick","Niels Bohr"],a:2,e:"James Chadwick (1932) discovered the neutron. Thomson (1897) = electron. Rutherford (1911) = proton/nucleus. Bohr (1913) = atomic model. Chadwick got Nobel Prize 1935."},
+  {q:"When hydrogen electron jumps from n=3 to n=2, it?",o:["Absorbs a photon","Emits a photon","Gains kinetic energy","Loses mass"],a:1,e:"Jumping to LOWER orbit (higher n → lower n) = releases energy = emits a photon. Energy emitted = E₃ − E₂ = −1.51 − (−3.4) = 1.89 eV (red light, Balmer series H-alpha line)."}
+]},
+
+{id:"radioactivity-node",title:"Radioactivity & Nuclear Reactions",xp:25,type:"trap",diag:"nuclear-radiation",
+facts:[
+  "<b>Radioactivity discovered:</b> Henri Becquerel (1896) | Radium: Marie Curie (1898)",
+  "<b>Alpha (α):</b> ⁴₂He nucleus | charge +2 | mass 4u | LEAST penetration | MOST ionizing",
+  "<b>Beta (β):</b> electron β⁻ or positron β⁺ | charge ±1 | medium penetration/ionizing",
+  "<b>Gamma (γ):</b> EM wave (photon) | charge 0 | MOST penetrating | LEAST ionizing",
+  "<b>Stopped by:</b> α = paper/skin | β = Al sheet | γ = thick Pb or concrete",
+  "<b>Half-life (T½):</b> time for half the nuclei to decay — constant, element-specific",
+  "<b>Decay law: N = N₀ × (½)^(t/T½)</b>",
+  "<b>Half-life constant:</b> NOT affected by temperature, pressure, or chemical state",
+  "<b>Nuclear Fission:</b> heavy nucleus → lighter nuclei + energy + neutrons (chain reaction)",
+  "<b>Nuclear Fusion:</b> light nuclei → heavier + MORE energy than fission (Sun's source)",
+  "<b>E = mc²:</b> mass-energy equivalence (Einstein)"
+],
+table:{h:["Radiation","Nature","Charge","Penetration","Ionizing Power","Stopped By"],r:[
+  ["Alpha (α)","He nucleus ⁴₂He","+2","LEAST (few cm air)","HIGHEST","Paper, skin"],
+  ["Beta (β)","Electron (β⁻)","±1","Medium (metres of air)","Medium","Aluminium sheet"],
+  ["Gamma (γ)","EM wave","0","MOST (penetrates lead)","LEAST","Thick Pb or concrete"]
+]},
+examples:[
+  {q:"Radioactive element has half-life 5 years. Fraction remaining after 20 years?",s:"No. of half-lives = 20/5 = 4\nFraction remaining = (½)⁴ = 1/16 = <b>6.25%</b>"}
+],
+traps:[
+  "Alpha: LEAST penetrating but MOST ionizing. Gamma: MOST penetrating but LEAST ionizing — OPPOSITE!",
+  "Fusion releases MORE energy per unit mass than fission. Sun = fusion (H→He) NOT fission.",
+  "Half-life is a NUCLEAR property — constant regardless of temperature, pressure, chemistry"
+],
+mcqs:[
+  {q:"Which radiation has the highest ionizing power but least penetrating power?",o:["Gamma (γ)","Beta (β)","Alpha (α)","X-rays"],a:2,e:"Alpha particles (He nucleus, charge +2, mass 4u) interact strongly with matter → high ionizing power. But they lose energy quickly → stopped by paper. Gamma = most penetrating, least ionizing (opposite)."},
+  {q:"Half-life of radioactive element is 8 years. Fraction remaining after 32 years?",o:["1/4","1/8","1/16","1/32"],a:2,e:"No. of half-lives = 32/8 = 4. Fraction = (½)⁴ = 1/16. After 32 years, only 1/16 (6.25%) remains."},
+  {q:"The Sun produces energy mainly by?",o:["Nuclear fission","Nuclear fusion","Chemical combustion","Radioactive decay"],a:1,e:"Sun: hydrogen nuclei fuse to form helium — nuclear fusion. Releases enormous energy (4H→He+2e⁺+2ν+26.7MeV). Fusion gives MORE energy per unit mass than fission."},
+  {q:"In beta decay (β⁻), which particle is emitted?",o:["Helium nucleus","Proton","Electron","Photon"],a:2,e:"β⁻ decay: neutron → proton + electron (β⁻) + antineutrino. Atomic number increases by 1, mass number unchanged. Example: ¹⁴C → ¹⁴N + e⁻ + ν̄ (carbon dating)."},
+  {q:"Half-life of carbon-14 is 5730 years. Changing its temperature by 1000°C will?",o:["Decrease half-life","Increase half-life","Have no effect on half-life","Cause nuclear fusion"],a:2,e:"Half-life is a property of the NUCLEUS — completely independent of temperature, pressure, chemical environment. No physical or chemical process can change the half-life."}
+]}
+]},
+
+// ═══════════════════════════════════════════════════════
+// CH 7: SEMICONDUCTORS & LOGIC GATES
+// ═══════════════════════════════════════════════════════
+{id:"semiconductor",title:"Semiconductors & Logic Gates",icon:"💻",nodes:[
+{id:"semiconductor-node",title:"Semiconductors & p-n Junction",xp:20,type:"regular",
+facts:[
+  "<b>Conductor:</b> low R | <b>Insulator:</b> very high R | <b>Semiconductor:</b> between these",
+  "<b>Semiconductor R DECREASES with temperature</b> (opposite of metals which increase)",
+  "Pure semiconductors: Silicon (Si), Germanium (Ge)",
+  "<b>n-type:</b> doped with pentavalent (P, As, Sb — 5 valence e⁻) → extra electrons as majority carriers",
+  "<b>p-type:</b> doped with trivalent (B, Al, In — 3 valence e⁻) → holes as majority carriers",
+  "<b>p-n junction:</b> depletion region at junction — no free carriers in neutral state",
+  "<b>Forward bias:</b> p→+ve, n→−ve → current flows (depletion region narrows)",
+  "<b>Reverse bias:</b> p→−ve, n→+ve → no current (depletion region widens)",
+  "<b>Rectifier:</b> converts AC → DC. Half-wave: 1 diode. Full-wave (bridge): 4 diodes",
+  "<b>Zener diode:</b> reverse breakdown at fixed voltage → voltage regulator",
+  "<b>LED:</b> emits light when forward biased | <b>Solar cell:</b> light → electricity"
+],
+table:{h:["Device","Type","Key Property","Main Use"],r:[
+  ["p-n Diode","Junction","One-way current only","Rectifier (AC→DC)"],
+  ["Zener Diode","Special junction","Fixed reverse breakdown voltage","Voltage regulator"],
+  ["LED","Forward biased diode","Emits photons when conducting","Indicator lights, displays"],
+  ["Solar Cell","Reverse of LED","Converts photons → electricity","Solar panels"],
+  ["Transistor","NPN or PNP","Current amplifier and switch","Amplifiers, computers"]
+]},
+traps:[
+  "Semiconductor R DECREASES with T — OPPOSITE of metals (metal R increases with T)",
+  "Solar cell ≠ photodiode: solar cell generates power; photodiode detects light",
+  "Transistor can AMPLIFY. Diode and LED cannot amplify."
+],
+mcqs:[
+  {q:"Resistance of a semiconductor with increasing temperature?",o:["Increases like metals","Decreases","Stays constant","First increases then decreases"],a:1,e:"Semiconductors: higher T → more electrons jump to conduction band → more charge carriers → lower resistance. OPPOSITE of metals (metals: higher T → more collisions → higher R)."},
+  {q:"n-type semiconductor is made by doping with?",o:["Trivalent elements (3 valence e⁻)","Pentavalent elements (5 valence e⁻)","Divalent elements","No doping needed"],a:1,e:"Pentavalent dopant (P, As, Sb) has 5 valence electrons. 4 form covalent bonds with Si/Ge; 1 extra electron is free to conduct. Majority carriers = electrons (negative) → n-type."},
+  {q:"p-n junction in reverse bias allows?",o:["Large forward current","Large reverse current","Only tiny leakage current","No current at all"],a:2,e:"Reverse bias: depletion region widens → only tiny reverse saturation current (minority carriers). This makes diodes useful as one-way switches. True 'no current' is ideal; in reality, tiny leakage flows."},
+  {q:"Full-wave bridge rectifier requires how many diodes?",o:["1","2","3","4"],a:3,e:"Bridge rectifier uses 4 diodes in a bridge configuration — both half-cycles of AC are converted to DC. Half-wave rectifier uses 1 diode (only one half-cycle). Full-wave gives smoother DC output."},
+  {q:"Zener diode is primarily used as?",o:["Light emitter","Current amplifier","Voltage regulator","AC to DC converter"],a:2,e:"Zener diode operates in controlled reverse breakdown — it maintains a constant voltage (Zener voltage) regardless of current variation. Used in voltage regulator circuits in power supplies."}
+]},
+
+{id:"logic-gates-node",title:"Logic Gates — Complete Reference",xp:20,type:"trap",diag:"logic-gates",
+facts:[
+  "<b>AND:</b> A·B — output 1 ONLY when ALL inputs = 1",
+  "<b>OR:</b> A+B — output 1 when ANY input = 1",
+  "<b>NOT:</b> Ā — inverts single input",
+  "<b>NAND:</b> NOT(A·B) — output is complement of AND. UNIVERSAL GATE ★",
+  "<b>NOR:</b> NOT(A+B) — output is complement of OR. UNIVERSAL GATE ★",
+  "<b>XOR:</b> A⊕B — output 1 when inputs are DIFFERENT",
+  "<b>XNOR:</b> NOT(A⊕B) — output 1 when inputs are SAME (complement of XOR)",
+  "<b>UNIVERSAL GATES: NAND and NOR</b> — any Boolean function built from NAND alone or NOR alone"
+],
+table:{h:["Gate","A=0,B=0","A=0,B=1","A=1,B=0","A=1,B=1","Rule"],r:[
+  ["AND","0","0","0","1","All inputs must be 1"],
+  ["OR","0","1","1","1","Any input = 1 → output 1"],
+  ["NAND ★","1","1","1","0","Flip all AND outputs"],
+  ["NOR ★","1","0","0","0","Flip all OR outputs"],
+  ["XOR","0","1","1","0","Different inputs → 1"],
+  ["XNOR","1","0","0","1","Same inputs → 1"]
+]},
+traps:[
+  "NAND and NOR are UNIVERSAL GATES — any circuit can be built using only NAND or only NOR",
+  "NAND = NOT AND: flip all AND outputs (0,0,0,1 → 1,1,1,0)",
+  "NOR = NOT OR: flip all OR outputs (0,1,1,1 → 1,0,0,0)",
+  "XOR output = 1 when inputs are DIFFERENT | XNOR = 1 when inputs are SAME"
+],
+mcqs:[
+  {q:"NAND gate output when A=1, B=1 is?",o:["0","1","Undefined","Same as AND"],a:0,e:"NAND = NOT(AND). AND(1,1)=1. NOT(1)=0. NAND(1,1)=0. This is the ONLY case where NAND outputs 0. For all other input combinations, NAND outputs 1."},
+  {q:"Which gate is called a UNIVERSAL gate?",o:["AND","OR","NAND","XOR"],a:2,e:"NAND (and NOR) are universal gates — any logic function can be built using only NAND gates. NOT, AND, OR, XOR — all can be constructed from NAND alone. This makes circuit design simpler."},
+  {q:"XOR gate output is 1 when?",o:["Both inputs are 1","Both inputs are 0","Inputs are different","Inputs are the same"],a:2,e:"XOR = Exclusive OR. Output 1 when exactly ONE input is 1 (different inputs). Output 0 when both are same (00 or 11). Used in binary adders, parity checkers."},
+  {q:"Output of NOR gate when A=0, B=0?",o:["0","1","Undefined","Same as OR"],a:1,e:"NOR = NOT(OR). OR(0,0)=0. NOT(0)=1. NOR(0,0)=1. NOR only outputs 1 when ALL inputs are 0 — it's the most restrictive gate."},
+  {q:"NOT gate can be implemented using a NAND gate by?",o:["Using only one input","Connecting both inputs together","Adding a resistor","Using three inputs"],a:1,e:"NAND(A,A) = NOT(A·A) = NOT(A). Connecting both inputs of a NAND gate together creates a NOT gate. This is why NAND is universal — NOT can be made from it."}
+]}
+]},
+
+// ═══════════════════════════════════════════════════════
+// CH 8: KIRCHHOFF'S, CAPACITORS, LENZ, F=BIL
+// ═══════════════════════════════════════════════════════
+{id:"em-advanced",title:"Kirchhoff's, Capacitors & EM",icon:"⚡",nodes:[
+{id:"kirchhoff-cap-node",title:"Kirchhoff's Laws & Capacitors",xp:20,type:"regular",
+facts:[
+  "<b>KCL (Junction Rule):</b> ΣI_in = ΣI_out at any junction. Based on CHARGE conservation.",
+  "<b>KVL (Loop Rule):</b> ΣV = 0 around any closed loop. Based on ENERGY conservation.",
+  "<b>Wheatstone Bridge:</b> P/Q = R/S when balanced (galvanometer = 0 current)",
+  "<b>Capacitor:</b> stores charge between conductors. C = Q/V. Unit: Farad (F).",
+  "<b>Parallel plate capacitor:</b> C = ε₀A/d — increases if area↑ or gap↓",
+  "<b>Dielectric</b> between plates: increases C by factor κ (dielectric constant)",
+  "<b>Energy stored: U = ½CV² = Q²/2C</b>",
+  "<b>Capacitors in SERIES: 1/C = 1/C₁ + 1/C₂</b> (REDUCES — opposite of resistors)",
+  "<b>Capacitors in PARALLEL: C = C₁ + C₂</b> (ADDS — opposite of resistors)",
+  "<b>Capacitor blocks DC; allows AC to pass</b>"
+],
+table:{h:["Combination","Resistors (R)","Capacitors (C)","Key Difference"],r:[
+  ["Series","R=R₁+R₂ (ADDS UP)","1/C=1/C₁+1/C₂ (REDUCES)","OPPOSITE behaviour"],
+  ["Parallel","1/R reduces","C=C₁+C₂ (ADDS UP)","OPPOSITE behaviour"]
+]},
+examples:[
+  {q:"Three capacitors 2μF, 4μF, 6μF in series. Equivalent capacitance?",s:"1/C = 1/2 + 1/4 + 1/6 = 6/12 + 3/12 + 2/12 = 11/12\nC = 12/11 ≈ <b>1.09 μF</b> (less than smallest — correct for series)"}
+],
+traps:[
+  "Capacitors in SERIES → total C LESS than smallest (opposite of series resistors which ADD)",
+  "Capacitors in PARALLEL → total C ADDS (opposite of parallel resistors which reduce)",
+  "KCL = conservation of CHARGE | KVL = conservation of ENERGY (not interchangeable)"
+],
+mcqs:[
+  {q:"Three capacitors 3μF, 6μF, 9μF connected in parallel. Equivalent capacitance?",o:["2 μF","6 μF","9 μF","18 μF"],a:3,e:"Parallel capacitors ADD: C = 3+6+9 = 18 μF. Note: parallel resistors REDUCE. Capacitors and resistors behave OPPOSITELY in series and parallel."},
+  {q:"Kirchhoff's Voltage Law (KVL) is based on?",o:["Conservation of charge","Conservation of mass","Conservation of energy","Ohm's law"],a:2,e:"KVL: sum of all potential differences in a closed loop = 0. This is conservation of energy — energy gained from EMF sources = energy lost in resistors in a complete loop."},
+  {q:"Capacitor blocks DC but allows AC. This is because?",o:["Capacitor conducts DC better","DC charges capacitor → no more current | AC keeps reversing → capacitor charges/discharges continuously","Capacitor is only for AC circuits","DC creates magnetic field"],a:1,e:"For DC: capacitor charges up → opposes further current → blocks DC. For AC: polarity reverses continuously → capacitor keeps charging and discharging → AC 'flows through' capacitor circuit."},
+  {q:"Two capacitors 4μF and 12μF in series. Equivalent capacitance?",o:["3 μF","8 μF","16 μF","48 μF"],a:0,e:"1/C = 1/4 + 1/12 = 3/12 + 1/12 = 4/12 = 1/3. C = 3 μF. Series capacitance is less than smallest (4μF) — this is always the case for series capacitors."},
+  {q:"Wheatstone bridge is balanced when?",o:["Current through galvanometer is maximum","Current through galvanometer is zero","Voltage across bridge is zero","All resistors are equal"],a:1,e:"Bridge balanced: P/Q = R/S — no potential difference across galvanometer → zero current. Used to find unknown resistance precisely. Meter bridge is practical application of Wheatstone bridge."}
+]},
+
+{id:"lenz-force-node",title:"Lenz's Law & Force on Conductors",xp:20,type:"trap",diag:"lenz-law",
+facts:[
+  "<b>Faraday's 1st Law:</b> EMF induced whenever magnetic flux through circuit changes",
+  "<b>Faraday's 2nd Law:</b> Induced EMF = −dΦ/dt (proportional to rate of flux change)",
+  "<b>Lenz's Law:</b> Induced current OPPOSES the change in flux that caused it",
+  "Lenz's Law = conservation of energy (opposing force prevents perpetual motion)",
+  "Magnet pushed into coil → coil face becomes N-pole to REPEL",
+  "Magnet pulled away → coil becomes S-pole to ATTRACT (both oppose the change)",
+  "<b>Eddy currents:</b> induced in bulk conductors; cause energy loss as heat",
+  "Eddy currents reduced by: <b>laminated cores</b>, slots cut in metal",
+  "Eddy current uses: induction cooker, magnetic braking, speedometer",
+  "<b>F = BIL sinθ</b> — force on conductor; max when I ⊥ B (θ=90°)",
+  "<b>Fleming's Left Hand Rule (Motors):</b> FBI — index=B, middle=I, thumb=F",
+  "<b>Fleming's Right Hand Rule (Generators):</b> index=B, thumb=motion, middle=current",
+  "<b>Lorentz Force:</b> F = q(v × B) — on moving charged particle in magnetic field"
+],
+examples:[
+  {q:"Coil of 100 turns: flux changes from 0.02 Wb to 0.06 Wb in 0.4 s. Induced EMF?",s:"EMF = N × ΔΦ/Δt = 100 × (0.06−0.02)/0.4 = 100 × 0.04/0.4 = <b>10 V</b>"},
+  {q:"Wire 0.5 m long, current 3 A, perpendicular to B=2 T. Force on wire?",s:"F = BIL sinθ = 2 × 3 × 0.5 × sin90° = <b>3 N</b>"}
+],
+traps:[
+  "Lenz's Law: induced current OPPOSES the flux change — it does NOT cancel or reverse it completely",
+  "Eddy currents cause ENERGY LOSS — that's why transformer cores are laminated to reduce them",
+  "Fleming's LEFT hand = Motors (current-carrying conductor in field). RIGHT hand = Generators.",
+  "F=BIL maximum when current ⊥ field (θ=90°), ZERO when current ∥ field (θ=0°)"
+],
+mcqs:[
+  {q:"Lenz's Law is a consequence of?",o:["Conservation of charge","Conservation of momentum","Conservation of energy","Newton's second law"],a:2,e:"If induced current aided the flux change instead of opposing it, we'd get self-reinforcing current (perpetual motion) — violating energy conservation. Lenz's Law ensures energy is properly accounted for."},
+  {q:"Transformer cores are made of laminated (thin insulated layers) iron to?",o:["Increase magnetic flux","Reduce eddy current losses","Improve mechanical strength","Reduce weight"],a:1,e:"Eddy currents in solid iron core cause heating (energy loss). Laminated cores break the eddy current paths into thin layers → smaller loops → reduced eddy currents → less energy loss as heat."},
+  {q:"A wire of length 1 m carries 5 A current in a field B=3 T at 90°. Force on wire?",o:["5 N","10 N","15 N","25 N"],a:2,e:"F = BIL sinθ = 3 × 5 × 1 × sin90° = 3 × 5 × 1 × 1 = 15 N."},
+  {q:"Fleming's Left Hand Rule applies to?",o:["Generators","Transformers","Electric motors (current-carrying conductor in magnetic field)","Capacitors"],a:2,e:"Left Hand Rule (Motors): FBI — Force (thumb), B-field (index finger), current I (middle finger). Right Hand Rule is for generators where motion induces current. Left = Motor, Right = Generator."},
+  {q:"In EM induction, if a magnet is pulled away from a coil, the induced current will?",o:["Repel the magnet (push away)","Attract the magnet (pull it back)","Have no interaction with magnet","Reverse and repel"],a:1,e:"Lenz's Law: induced current opposes the CHANGE. Magnet pulling away = flux decreasing. Induced current must create flux to oppose decrease → coil becomes S-pole facing retreating N-pole → ATTRACTS the magnet (tries to prevent it leaving)."}
+]},
+
+{id:"em-gold",title:"⚡ Electricity & EM Gold Node",xp:50,type:"gold",requires_pct:80,
+golden:[
+  "<b>KCL = charge conservation | KVL = energy conservation</b>",
+  "<b>Capacitors OPPOSITE to resistors: series REDUCES, parallel ADDS</b>",
+  "<b>Lenz's Law: induced current OPPOSES flux change</b> — energy conservation",
+  "<b>Eddy currents → laminated cores to reduce energy loss in transformers</b>",
+  "<b>F = BIL sinθ — max when I ⊥ B; zero when I ∥ B</b>",
+  "<b>LEFT hand = Motors (FBI rule) | RIGHT hand = Generators</b>",
+  "<b>Semiconductor: R DECREASES with temperature (opposite of metals)</b>",
+  "<b>NAND and NOR = Universal Gates — build any logic from only NAND or NOR</b>",
+  "<b>XOR: 1 when inputs DIFFERENT | XNOR: 1 when inputs SAME</b>",
+  "<b>Photoelectric: Intensity↑→more electrons | Frequency↑→faster electrons</b>",
+  "<b>Below threshold frequency: ZERO emission regardless of intensity</b>",
+  "<b>Alpha: least penetrating, most ionizing | Gamma: most penetrating, least ionizing</b>"
+]}
+]}
+];
+
+// ── DASHBOARD ─────────────────────────────────────────────────────────────────
+function showDash(){
+  S.curNode=null;buildSidebar();
+  const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
+  const missed=trapNodes().filter(n=>!isVisited(n.id));
+  document.getElementById("viewWrap").innerHTML=`<div class="dash">
+    <div class="dash-t">Physics Map 5</div>
+    <div class="dash-s">MODERN &amp; APPLIED PHYSICS · SSC / RRB / TNPSC / LDC UDC</div>
+    <div class="dash-grid">
+      <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
+      <div class="dc g"><div class="dv">${vis}/${tot}</div><div class="dl">Nodes</div></div>
+      <div class="dc r"><div class="dv">${trapVisited()}/${trapNodes().length}</div><div class="dl">Traps</div></div>
+      <div class="dc b"><div class="dv">${pct}%</div><div class="dl">Done</div></div>
+    </div>
+    <div class="ch-prog">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--ink3);margin-bottom:12px">CHAPTER PROGRESS</div>
+      ${CHAPTERS.map(ch=>{const p=chPct(ch);return`<div class="cpr"><span class="cpr-n">${ch.icon} ${ch.title}</span><div class="cpr-bar"><div class="cpr-fill" style="width:${p}%"></div></div><span class="cpr-pct">${p}%</span></div>`;}).join("")}
+    </div>
+    ${missed.length?`<div class="mentor-box"><h3>⚠ EXAM TRAPS NOT YET VISITED</h3><ul>${missed.map(n=>`<li>${n.title} — ${n.xp} XP waiting</li>`).join("")}</ul></div>`:""}
+    <button class="start-btn" onclick="startLearning()">${visitedCount()===0?"Start Learning →":"Continue →"}</button>
+  </div>`;
+}
+
+function startLearning(){
+  const first=allNodes().find(n=>isUnlocked(n)&&!isVisited(n.id))||allNodes()[0];
+  if(first){S.chOpen=CHAPTERS.find(c=>c.nodes.some(n=>n.id===first.id))?.id;openNode(first.id);}
+}
+function goTraps(){
+  const t=trapNodes();if(!t.length)return;
+  const next=t.find(n=>!isVisited(n.id))||t[0];
+  openNode(next.id);
+}
+function openDrawer(){document.getElementById("mobDrawer").classList.add("open");document.getElementById("mobOverlay").classList.add("show");}
+function closeDrawer(){document.getElementById("mobDrawer").classList.remove("open");document.getElementById("mobOverlay").classList.remove("show");}
+
+// ── EXAMPLE BOX CSS (inject) ─────────────────────────────────────────────────
+(function(){
+  const s=document.createElement("style");
+  s.textContent=`.example-box{background:rgba(34,211,200,.05);border:1px solid rgba(34,211,200,.2);border-radius:8px;padding:12px 14px;margin-bottom:12px}.ex-q{font-size:13px;color:var(--ink1);font-style:italic;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--line)}.ex-sol{font-size:12px;color:var(--ink2);line-height:1.8;font-family:var(--mono);white-space:pre-wrap}`;
+  document.head.appendChild(s);
+})();
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+if(!S.chOpen)S.chOpen=CHAPTERS[0].id;
+buildSidebar();updateHeader();showDash();
+
+</script>
+<script src="/study/centumania-tracker.js"></script>
+</body>
+</html>

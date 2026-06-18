@@ -42,10 +42,10 @@ function ordinal(n: number) {
   return n + (s[(v - 20) % 10] || s[v] || s[0])
 }
 function scoreColor(pct: number): string {
-  if (pct >= 80) return '#4ADE80'
-  if (pct >= 60) return '#5ec8c0'
-  if (pct >= 40) return '#e7b14c'
-  return '#e8736b'
+  if (pct >= 80) return '#22C55E'   // cm-success
+  if (pct >= 60) return '#2563EB'   // cm-info
+  if (pct >= 40) return '#FBBF24'   // cm-warning
+  return '#9CA3AF'                   // neutral (avoid red near exam results)
 }
 
 // ── Daily tips ─────────────────────────────────────────────────────
@@ -105,14 +105,13 @@ export default function DashboardPage() {
     return (
       <AppLayout userName={name}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 flex flex-col items-center justify-center min-h-64 gap-4">
-          <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
-            style={{ background: 'rgba(232,115,107,0.10)', border: '1px solid rgba(232,115,107,0.20)' }}>
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-error-subtle border border-error/20">
             <svg className="w-5 h-5 text-error" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
             </svg>
           </div>
           <p className="text-sm text-text-secondary">Failed to load.{' '}
-            <button className="text-primary underline" onClick={() => setState('loading')}>Retry</button>
+            <button className="text-primary font-semibold underline" onClick={() => setState('loading')}>Retry</button>
           </p>
         </div>
       </AppLayout>
@@ -122,18 +121,18 @@ export default function DashboardPage() {
     return (
       <AppLayout userName={name}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16 flex flex-col items-center text-center">
-          <div className="w-16 h-16 rounded-3xl flex items-center justify-center mb-6"
-            style={{ background: 'rgba(231,177,76,0.10)', border: '1px solid rgba(231,177,76,0.20)' }}>
+          <div className="w-16 h-16 rounded-3xl flex items-center justify-center mb-6 bg-accent-subtle border border-[rgba(255,183,3,0.30)]">
             <svg className="w-7 h-7 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
               <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-text mb-2" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+          <h2 className="text-xl font-bold text-text mb-2">
             Enrolment pending
           </h2>
-          <p className="text-sm text-text-secondary max-w-xs leading-relaxed">
+          <p className="text-sm text-text-secondary max-w-xs leading-relaxed mb-6">
             Your registration is complete. Contact your coordinator to complete payment and unlock full access.
           </p>
+          <Link href="/profile" className="text-sm font-semibold text-primary">View enrolment details →</Link>
         </div>
       </AppLayout>
     )
@@ -159,63 +158,53 @@ export default function DashboardPage() {
     <AppLayout userName={name} batchName="LDC Batch · 2026">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 space-y-4">
 
-        {/* ── HERO ──────────────────────────────────────────────── */}
-        <div className="relative rounded-3xl overflow-hidden"
-          style={{ background: 'linear-gradient(135deg,#112215 0%,#0d1c10 60%,#112219 100%)', border: '1px solid rgba(74,222,128,0.12)' }}>
-          <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full opacity-20 pointer-events-none"
-            style={{ background: 'radial-gradient(circle,#4ADE80,transparent 70%)' }} />
-          <div className="absolute -bottom-10 -left-10 w-32 h-32 rounded-full opacity-10 pointer-events-none"
-            style={{ background: 'radial-gradient(circle,#22C55E,transparent 70%)' }} />
-
-          <div className="relative p-6">
-            <div className="flex items-start justify-between mb-5">
-              <div>
-                <p className="text-xs font-semibold text-text-muted uppercase tracking-widest mb-1 font-mono">{greeting()}</p>
-                <h1 className="text-2xl font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-                  {firstName}
-                </h1>
-                <p className="text-xs text-text-muted mt-1 font-mono">{dateLabel}</p>
-              </div>
-              <div className="flex flex-col items-end gap-2">
-                {w && (
-                  <Badge variant={w.isOpen ? 'success' : 'neutral'} dot>
-                    {w.isOpen ? 'Exam live' : 'Closed'}
-                  </Badge>
-                )}
-                {daysLeft > 0 && (
-                  <span className="text-[10px] font-mono text-text-muted">{daysLeft} days left</span>
-                )}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-5">
-              <div className="shrink-0">
-                {/* Streak ring — replaces XP/Level display */}
-                <ProgressRing
-                  value={Math.min(100, Math.round((d.streak / 7) * 100))}
-                  size={84} strokeWidth={5}
-                  color={d.streak >= 7 ? '#e7b14c' : d.streak >= 3 ? '#4ADE80' : '#5ec8c0'}
-                  trackColor="rgba(255,255,255,0.05)"
-                  label={`${d.streak}d`}
-                  sublabel="streak"
-                />
-              </div>
-              <div className="flex-1 grid grid-cols-2 gap-2.5">
-                {statItems.map(({ label, value, sub }) => (
-                  <div key={label} className="rounded-2xl px-3.5 py-2.5"
-                    style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                    <p className="text-lg font-bold text-text font-mono leading-none tracking-tight">{value}</p>
-                    <p className="text-[10px] text-text-muted mt-1 uppercase tracking-wider font-mono">{label}</p>
-                    <p className="text-[10px] text-primary/70 mt-0.5">{sub}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+        {/* ── GREETING (slim header) ────────────────────────────── */}
+        <div className="flex items-end justify-between pt-1">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: 'var(--color-cm-neutral-300)' }}>{greeting()}</p>
+            {/* Bebas Neue for name — large, confident */}
+            <h1 className="font-bebas text-[42px] leading-none tracking-wide" style={{ color: '#F9FAFB' }}>{firstName}</h1>
+            <p className="text-xs mt-1" style={{ color: 'var(--color-cm-neutral-300)' }}>{dateLabel}</p>
+          </div>
+          <div className="flex flex-col items-end gap-1.5">
+            {w && (
+              <Badge variant={w.isOpen ? 'success' : 'neutral'} dot>
+                {w.isOpen ? 'Exam live' : 'Window closed'}
+              </Badge>
+            )}
+            {daysLeft > 0 && (
+              <span className="text-[11px] text-text-muted tabular">{daysLeft} days to go</span>
+            )}
           </div>
         </div>
 
-        {/* ── EXAM CARD ─────────────────────────────────────────── */}
+        {/* ── TODAY'S MISSION (dominant — first thing you see) ───── */}
         {w && <ExamCard w={w} today={today} />}
+
+        {/* ── STATS STRIP — streak + standings ──────────────────── */}
+        <Card noPadding>
+          <div className="flex items-center gap-4 p-5">
+            <div className="shrink-0">
+              <ProgressRing
+                value={Math.min(100, Math.round((d.streak / 7) * 100))}
+                size={84} strokeWidth={6}
+                color={d.streak >= 7 ? '#F6B300' : d.streak >= 3 ? '#2533FF' : '#0EA5A0'}
+                trackColor="rgba(255,255,255,0.08)"
+                label={`${d.streak}d`}
+                sublabel="streak"
+              />
+            </div>
+            <div className="flex-1 grid grid-cols-2 gap-2.5">
+              {statItems.map(({ label, value, sub }) => (
+                <div key={label} className="rounded-xl px-3.5 py-2.5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <p className="text-lg font-bold leading-none tracking-tight tabular" style={{ color: '#F9FAFB' }}>{value}</p>
+                  <p className="text-[10px] mt-1 uppercase tracking-wider font-semibold" style={{ color: 'var(--color-cm-neutral-300)' }}>{label}</p>
+                  <p className="text-[10px] mt-0.5" style={{ color: '#2533FF' }}>{sub}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Card>
 
         {/* ── BATCH PROGRESS BAR ────────────────────────────────── */}
         <BatchProgress attended={d.daysAttended} total={d.batchTotalDays} pct={progressPct} />
@@ -240,12 +229,12 @@ export default function DashboardPage() {
                 )
               })}
             </div>
-            <div className="flex items-center gap-4 mt-3 pt-3" style={{ borderTop: '1px dashed #27342b' }}>
+            <div className="flex items-center gap-4 mt-3 pt-3" style={{ borderTop: '1px dashed var(--color-border)' }}>
               {[
-                { col: '#4ADE80', label: '≥80%' },
-                { col: '#5ec8c0', label: '60–79%' },
-                { col: '#e7b14c', label: '40–59%' },
-                { col: '#e8736b', label: '<40%' },
+                { col: '#10B981', label: '≥80%' },
+                { col: '#0B3D91', label: '60–79%' },
+                { col: '#F59E0B', label: '40–59%' },
+                { col: '#EF4444', label: '<40%' },
               ].map(({ col, label }) => (
                 <div key={label} className="flex items-center gap-1.5">
                   <div className="w-2 h-2 rounded-sm" style={{ background: col }} />
@@ -272,7 +261,7 @@ export default function DashboardPage() {
                     key={i}
                     className="flex items-center gap-4 px-5 py-3 transition-colors"
                     style={{
-                      borderTop: i > 0 ? '1px solid rgba(39,52,43,0.7)' : undefined,
+                      borderTop: i > 0 ? '1px solid var(--color-border)' : undefined,
                     }}
                   >
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 font-mono text-sm font-bold"
@@ -286,7 +275,7 @@ export default function DashboardPage() {
                         </span>
                         <span className="text-xs text-text-muted font-mono">({h.pct}%)</span>
                       </div>
-                      <div className="mt-1.5 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                      <div className="mt-1.5 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--color-bg2)' }}>
                         <div className="h-full rounded-full" style={{ width: `${h.pct}%`, background: col }} />
                       </div>
                     </div>
@@ -317,28 +306,28 @@ export default function DashboardPage() {
             </Card>
           </Link>
           <Link href="/materials">
-            <Card hoverable className="text-center py-5">
+            <Card hoverable className="text-center py-5 h-full">
               <BookOpenIcon className="w-7 h-7 text-primary mx-auto mb-2" />
-              <p className="text-xs font-semibold text-text-secondary uppercase tracking-widest font-mono">Materials</p>
-              <p className="text-[10px] text-text-muted mt-1">Bio Map + more</p>
+              <p className="text-xs font-semibold text-text-secondary uppercase tracking-widest">Continue Learning</p>
+              <p className="text-[10px] text-text-muted mt-1">Study notes & guides</p>
             </Card>
           </Link>
         </div>
 
         {/* ── DAILY TIP ─────────────────────────────────────────── */}
         <div className="rounded-2xl px-5 py-4 flex items-start gap-4"
-          style={{ background: 'rgba(94,200,192,0.06)', border: '1px solid rgba(94,200,192,0.15)' }}>
+          style={{ background: 'rgba(14,165,160,0.08)', border: '1px solid rgba(14,165,160,0.20)' }}>
           <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: 'rgba(94,200,192,0.12)', color: '#5ec8c0' }}>
+            style={{ background: 'rgba(14,165,160,0.15)', color: '#0EA5A0' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
             </svg>
           </div>
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest font-mono mb-1" style={{ color: '#5ec8c0' }}>
+            <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: '#0EA5A0' }}>
               Today&apos;s tip
             </p>
-            <p className="text-sm text-text-secondary leading-relaxed">{TIPS[tipIdx]}</p>
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--color-cm-neutral-100)' }}>{TIPS[tipIdx]}</p>
           </div>
         </div>
 

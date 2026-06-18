@@ -11,12 +11,12 @@ interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 const variants: Record<BadgeVariant, string> = {
   primary: 'bg-primary/10 text-primary border-primary/20',
-  success: 'bg-success/10 text-success border-success/20',
-  warning: 'bg-warning/10 text-warning border-warning/20',
-  error:   'bg-error/10 text-error border-error/20',
+  success: 'bg-success/10 text-success-text border-success/20',
+  warning: 'bg-warning/10 text-warning-text border-warning/25',
+  error:   'bg-error/10 text-error-text border-error/20',
   neutral: 'bg-surface-overlay text-text-secondary border-border',
   info:    'bg-info/10 text-info border-info/20',
-  gold:    'bg-[rgba(231,177,76,0.12)] text-[#e7b14c] border-[rgba(231,177,76,0.25)]',
+  gold:    'bg-accent-subtle text-gold-text border-[rgba(255,183,3,0.30)]',
 }
 
 const sizes: Record<BadgeSize, string> = {
@@ -31,7 +31,7 @@ const dotColors: Record<BadgeVariant, string> = {
   error:   'bg-error',
   neutral: 'bg-text-muted',
   info:    'bg-info',
-  gold:    'bg-[#e7b14c]',
+  gold:    'bg-accent',
 }
 
 export function Badge({ variant = 'neutral', size = 'sm', dot = false, className = '', children, ...props }: BadgeProps) {

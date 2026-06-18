@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Allow: /privacy
+
+# Keep authenticated areas out of search results
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /dashboard/
+Disallow: /exam/
+Disallow: /materials/
+Disallow: /profile/
+Disallow: /leaderboard/
+Disallow: /mentor/
+Disallow: /study/
+
+Sitemap: https://centumania.in/sitemap.xml

@@ -17,7 +17,7 @@ type StudentDetail = {
 type LatestCentum = CentumIndexLog | null
 
 // ── Shared styles (match existing admin pages) ─────────────────────
-const CARD = { background: '#16201a', border: '1px solid #27342b' }
+const CARD = { background: '#FFFFFF', border: '1px solid #E5E7EB' }
 
 export default function StudentDetailPage() {
   const router = useRouter()
@@ -92,8 +92,8 @@ export default function StudentDetailPage() {
         <div className="space-y-4">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="rounded-xl p-5 animate-pulse" style={CARD}>
-              <div className="h-4 rounded w-1/3 mb-3" style={{ background: '#1b271f' }} />
-              <div className="h-8 rounded w-1/4"      style={{ background: '#1b271f' }} />
+              <div className="h-4 rounded w-1/3 mb-3" style={{ background: '#FFFFFF' }} />
+              <div className="h-8 rounded w-1/4"      style={{ background: '#FFFFFF' }} />
             </div>
           ))}
         </div>
@@ -106,14 +106,14 @@ export default function StudentDetailPage() {
   const { profile, submissions, stats } = student
   const centum  = latestCentum
   const refund  = centum ? getRefundTier(Number(centum.centum_index)) : null
-  const centCol = centum ? getCentumColor(Number(centum.centum_index)) : '#9aa893'
+  const centCol = centum ? getCentumColor(Number(centum.centum_index)) : '#6B7280'
 
   const tierColors: Record<string, string> = {
-    rookie:  '#9aa893',
-    warrior: '#e7b14c',
+    rookie:  '#6B7280',
+    warrior: '#F59E0B',
     legend:  '#6fcf8f',
   }
-  const tierCol = profile.tier ? (tierColors[profile.tier] ?? '#9aa893') : '#9aa893'
+  const tierCol = profile.tier ? (tierColors[profile.tier] ?? '#6B7280') : '#6B7280'
 
   return (
     <div className="p-4 sm:p-6 md:p-8 max-w-4xl">
@@ -121,7 +121,7 @@ export default function StudentDetailPage() {
       {/* Toast */}
       {toast && (
         <div className="fixed top-4 right-4 z-50 text-sm px-4 py-2.5 rounded-lg shadow-lg"
-          style={{ background: '#1b271f', color: '#e8ead8', border: '1px solid #27342b' }}>
+          style={{ background: '#FFFFFF', color: '#111827', border: '1px solid #E5E7EB' }}>
           {toast}
         </div>
       )}
@@ -154,7 +154,7 @@ export default function StudentDetailPage() {
             <span className="text-[10px] font-bold font-mono px-2 py-0.5 rounded-md uppercase tracking-wider"
               style={profile.payment_verified
                 ? { background: 'rgba(111,207,143,0.08)', color: '#6fcf8f', border: '1px solid rgba(111,207,143,0.20)' }
-                : { background: 'rgba(231,177,76,0.08)',  color: '#e7b14c', border: '1px solid rgba(231,177,76,0.20)' }
+                : { background: 'rgba(245,158,11,0.08)',  color: '#F59E0B', border: '1px solid rgba(245,158,11,0.20)' }
               }>
               {profile.payment_verified ? 'Verified' : 'Pending'}
             </span>
@@ -167,7 +167,7 @@ export default function StudentDetailPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mt-5 pt-5" style={{ borderTop: '1px solid #27342b' }}>
+        <div className="grid grid-cols-3 gap-4 mt-5 pt-5" style={{ borderTop: '1px solid #E5E7EB' }}>
           {[
             { label: 'Days Attended', value: String(stats.daysAttended) },
             { label: 'Total Score',   value: String(stats.totalScore) },
@@ -191,11 +191,11 @@ export default function StudentDetailPage() {
             onClick={recalculate}
             disabled={calculating}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors disabled:opacity-50 font-mono"
-            style={{ background: '#1b271f', color: '#9aa893', border: '1px solid #27342b' }}>
+            style={{ background: '#FFFFFF', color: '#6B7280', border: '1px solid #E5E7EB' }}>
             {calculating ? (
               <>
                 <div className="w-3 h-3 rounded-full border border-t-transparent animate-spin"
-                  style={{ borderColor: 'rgba(94,200,192,0.3)', borderTopColor: '#5ec8c0' }} />
+                  style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
                 Calculating…
               </>
             ) : (
@@ -216,7 +216,7 @@ export default function StudentDetailPage() {
               onClick={recalculate}
               disabled={calculating}
               className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-              style={{ background: 'rgba(94,200,192,0.08)', color: '#5ec8c0', border: '1px solid rgba(94,200,192,0.20)' }}>
+              style={{ background: 'rgba(11,61,145,0.08)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
               Calculate Now
             </button>
           </div>
@@ -241,7 +241,7 @@ export default function StudentDetailPage() {
             {/* Sub-scores */}
             <div className="grid grid-cols-2 gap-4 mb-5">
               {/* Attendance */}
-              <div className="rounded-xl p-4" style={{ background: '#1b271f', border: '1px solid #27342b' }}>
+              <div className="rounded-xl p-4" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
                 <p className="text-[10px] text-text-muted uppercase tracking-widest font-mono mb-1.5">
                   Attendance Index (×60%)
                 </p>
@@ -254,7 +254,7 @@ export default function StudentDetailPage() {
               </div>
 
               {/* Node Index */}
-              <div className="rounded-xl p-4" style={{ background: '#1b271f', border: '1px solid #27342b' }}>
+              <div className="rounded-xl p-4" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
                 <p className="text-[10px] text-text-muted uppercase tracking-widest font-mono mb-1.5">
                   Node Index (×40%)
                 </p>
@@ -276,14 +276,14 @@ export default function StudentDetailPage() {
       {/* ── Last 7 days ────────────────────────────────────────── */}
       {history.length > 0 && (
         <div className="rounded-xl overflow-hidden mb-6" style={CARD}>
-          <div className="px-5 py-4" style={{ borderBottom: '1px solid #27342b' }}>
+          <div className="px-5 py-4" style={{ borderBottom: '1px solid #E5E7EB' }}>
             <p className="text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono">
               Last 7 Days
             </p>
           </div>
           <table className="w-full text-sm">
             <thead>
-              <tr style={{ background: '#1b271f', borderBottom: '1px solid #27342b' }}>
+              <tr style={{ background: '#FFFFFF', borderBottom: '1px solid #E5E7EB' }}>
                 <th className="text-left px-5 py-2.5 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono">Date</th>
                 <th className="text-left px-5 py-2.5 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono">Centum</th>
                 <th className="text-left px-5 py-2.5 text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono hidden md:table-cell">Attendance</th>
@@ -294,7 +294,7 @@ export default function StudentDetailPage() {
               {history.map((h, i) => {
                 const col = getCentumColor(Number(h.centum_index))
                 return (
-                  <tr key={h.id} style={{ borderBottom: i < history.length - 1 ? '1px solid rgba(39,52,43,0.6)' : undefined }}>
+                  <tr key={h.id} style={{ borderBottom: i < history.length - 1 ? '1px solid rgba(229,231,235,0.6)' : undefined }}>
                     <td className="px-5 py-3 text-xs text-text-muted font-mono">
                       {new Date(h.calculated_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                     </td>
@@ -321,7 +321,7 @@ export default function StudentDetailPage() {
       {/* ── Exam history ───────────────────────────────────────── */}
       {submissions.length > 0 && (
         <div className="rounded-xl overflow-hidden" style={CARD}>
-          <div className="px-5 py-4" style={{ borderBottom: '1px solid #27342b' }}>
+          <div className="px-5 py-4" style={{ borderBottom: '1px solid #E5E7EB' }}>
             <p className="text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono">
               Exam Submissions
             </p>
@@ -329,11 +329,11 @@ export default function StudentDetailPage() {
           <div>
             {submissions.slice(0, 10).map((s, i) => {
               const pct = s.total_marks > 0 ? Math.round((s.score / s.total_marks) * 100) : 0
-              const col = pct >= 80 ? '#6fcf8f' : pct >= 60 ? '#5ec8c0' : pct >= 40 ? '#e7b14c' : '#e8736b'
+              const col = pct >= 80 ? '#6fcf8f' : pct >= 60 ? '#0B3D91' : pct >= 40 ? '#F59E0B' : '#EF4444'
               return (
                 <div key={s.id}
                   className="flex items-center gap-4 px-5 py-3"
-                  style={{ borderTop: i > 0 ? '1px solid rgba(39,52,43,0.6)' : undefined }}>
+                  style={{ borderTop: i > 0 ? '1px solid rgba(229,231,235,0.6)' : undefined }}>
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-xs font-bold font-mono"
                     style={{ background: `${col}15`, color: col, border: `1px solid ${col}30` }}>
                     {pct}%
@@ -343,7 +343,7 @@ export default function StudentDetailPage() {
                       {s.score} / {s.total_marks}
                       <span className="text-text-muted font-normal ml-2 text-xs">({pct}%)</span>
                     </p>
-                    <div className="mt-1.5 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                    <div className="mt-1.5 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(17,24,39,0.05)' }}>
                       <div className="h-full rounded-full" style={{ width: `${pct}%`, background: col }} />
                     </div>
                   </div>

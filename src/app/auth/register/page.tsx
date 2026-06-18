@@ -9,6 +9,7 @@ import { LogoFull } from '@/src/components/ui/Logo'
 export default function RegisterPage() {
   const [form, setForm]           = useState({ name: '', phone: '', email: '', password: '' })
   const [showPassword, setShowPw] = useState(false)
+  const [consent, setConsent]     = useState(false)
   const [error, setError]         = useState<string | null>(null)
   const [success, setSuccess]     = useState(false)
   const [loading, setLoading]     = useState(false)
@@ -24,9 +25,10 @@ export default function RegisterPage() {
     if (form.name.trim().length < 2) { setError('Please enter your full name.'); return }
     if (!/^[6-9][0-9]{9}$/.test(form.phone)) { setError('Enter a valid 10-digit Indian mobile number.'); return }
     if (form.password.length < 8) { setError('Password must be at least 8 characters.'); return }
+    if (!consent) { setError('Please agree to the Privacy Policy and Terms to continue.'); return }
     setLoading(true)
     try {
-      // Step 1 — create user server-side (email pre-confirmed, no rate limit)
+      // Step 1 — create user server-side (email pre-confirmed)
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -66,10 +68,10 @@ export default function RegisterPage() {
   // ── Success State ──────────────────────────────────────────────
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#0e1410' }}>
+      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#F8FAFC' }}>
         <div className="max-w-sm w-full text-center">
           <div className="w-16 h-16 rounded-3xl mx-auto mb-6 flex items-center justify-center"
-            style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.25)', boxShadow: '0 0 24px rgba(74,222,128,0.12)' }}>
+            style={{ background: 'rgba(11,61,145,0.10)', border: '1px solid rgba(11,61,145,0.25)', boxShadow: '0 0 24px rgba(11,61,145,0.12)' }}>
             <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
@@ -83,7 +85,7 @@ export default function RegisterPage() {
             <span className="font-semibold text-text">{form.name}</span>.
           </p>
           <p className="text-xs mb-8 px-4 py-3 rounded-xl text-text-muted"
-            style={{ background: 'rgba(74,222,128,0.06)', border: '1px solid rgba(74,222,128,0.15)' }}>
+            style={{ background: 'rgba(11,61,145,0.06)', border: '1px solid rgba(11,61,145,0.15)' }}>
             Your account is ready. Sign in to access your dashboard.
           </p>
           <Link href="/auth/login" className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors">
@@ -95,8 +97,17 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 py-12" style={{ background: '#0e1410' }}>
+    <div className="min-h-screen flex items-center justify-center px-6 py-12" style={{ background: '#F8FAFC' }}>
       <div className="w-full max-w-sm">
+
+        {/* Back to landing */}
+        <Link href="/"
+          className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-text-secondary transition-colors font-mono mb-8">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back to home
+        </Link>
 
         {/* Logo */}
         <div className="mb-10">
@@ -106,7 +117,7 @@ export default function RegisterPage() {
 
         {/* Batch badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl mb-6"
-          style={{ background: 'rgba(74,222,128,0.08)', border: '1px solid rgba(74,222,128,0.15)' }}>
+          style={{ background: 'rgba(11,61,145,0.08)', border: '1px solid rgba(11,61,145,0.15)' }}>
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
           <span className="text-[10px] font-bold text-primary uppercase tracking-widest font-mono">
             LDC Batch 2026 — Open Enrolment
@@ -117,7 +128,7 @@ export default function RegisterPage() {
           style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
           Create your account
         </h1>
-        <p className="text-sm mb-8 text-text-muted">Begin your 15-day intensive programme.</p>
+        <p className="text-sm mb-8 text-text-muted">Begin your intensive daily programme.</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
@@ -177,9 +188,41 @@ export default function RegisterPage() {
             </div>
           </div>
 
+          {/* Consent checkbox — required by DPDP Act */}
+          <label className="flex items-start gap-3 cursor-pointer group">
+            <div className="relative mt-0.5 shrink-0">
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={e => setConsent(e.target.checked)}
+                className="sr-only"
+              />
+              <div
+                className="w-4 h-4 rounded flex items-center justify-center transition-colors"
+                style={{
+                  background: consent ? '#0B3D91' : 'transparent',
+                  border: `1.5px solid ${consent ? '#0B3D91' : '#E5E7EB'}`,
+                }}
+              >
+                {consent && (
+                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
+                    <polyline points="1 3.5 3.5 6 8 1" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </div>
+            </div>
+            <span className="text-xs text-text-muted leading-relaxed">
+              I have read and agree to the{' '}
+              <Link href="/privacy" target="_blank" className="text-primary hover:text-primary-hover underline underline-offset-2">
+                Privacy Policy
+              </Link>
+              {' '}and confirm I am enrolling in the LDC/UDC 2026 cohort.
+            </span>
+          </label>
+
           {error && (
             <div className="flex items-start gap-2.5 p-3 rounded-xl"
-              style={{ background: 'rgba(232,115,107,0.08)', border: '1px solid rgba(232,115,107,0.20)' }}>
+              style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.20)' }}>
               <svg className="w-4 h-4 text-error shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
               </svg>
@@ -187,16 +230,12 @@ export default function RegisterPage() {
             </div>
           )}
 
-          <Button type="submit" loading={loading} fullWidth size="lg">
+          <Button type="submit" loading={loading} fullWidth size="lg" disabled={!consent}>
             Create account
           </Button>
-
-          <p className="text-[10px] text-center leading-relaxed text-text-disabled">
-            By registering you confirm you are enrolling in the LDC 2026 cohort and agree to our terms.
-          </p>
         </form>
 
-        <div className="mt-5 pt-5 text-center" style={{ borderTop: '1px solid #27342b' }}>
+        <div className="mt-5 pt-5 text-center" style={{ borderTop: '1px solid #E5E7EB' }}>
           <p className="text-sm text-text-muted">
             Already have an account?{' '}
             <Link href="/auth/login" className="font-semibold text-primary hover:text-primary-hover transition-colors">

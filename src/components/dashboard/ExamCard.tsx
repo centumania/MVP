@@ -15,10 +15,10 @@ type TodayExam = {
 }
 
 function scoreColor(pct: number): string {
-  if (pct >= 80) return '#4ADE80'
-  if (pct >= 60) return '#5ec8c0'
-  if (pct >= 40) return '#e7b14c'
-  return '#e8736b'
+  if (pct >= 80) return '#10B981'
+  if (pct >= 60) return '#0B3D91'
+  if (pct >= 40) return '#F59E0B'
+  return '#EF4444'
 }
 
 interface ExamCardProps {
@@ -40,15 +40,15 @@ export function ExamCard({ w, today }: ExamCardProps) {
         </div>
         <div className="flex items-end gap-2 mb-4">
           <span className="text-5xl font-bold font-mono tracking-tight" style={{ color: col }}>{today.score}</span>
-          <span className="text-xl text-text-muted mb-1">/ {today.totalMarks}</span>
+          <span className="text-xl mb-1" style={{ color: 'var(--color-cm-neutral-300)' }}>/ {today.totalMarks}</span>
           <span className="text-lg font-bold mb-1 ml-auto" style={{ color: col }}>{pct}%</span>
         </div>
-        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
           <div className="h-full rounded-full transition-all duration-700"
-            style={{ width: `${pct}%`, background: col, boxShadow: `0 0 8px ${col}60` }} />
+            style={{ width: `${pct}%`, background: col }} />
         </div>
         <Link href={`/exam/${today.dayNumber}`}>
-          <Button variant="ghost" size="sm" className="mt-3 -ml-2 text-primary hover:text-primary">
+          <Button variant="ghost" size="sm" className="mt-3 -ml-2" style={{ color: '#2533FF' }}>
             View answer key →
           </Button>
         </Link>
@@ -58,27 +58,29 @@ export function ExamCard({ w, today }: ExamCardProps) {
 
   if (w.isOpen && today) {
     return (
-      <div className="relative rounded-2xl overflow-hidden animate-pulse-glow"
-        style={{ background: 'linear-gradient(135deg,rgba(74,222,128,0.12),rgba(74,222,128,0.04))', border: '1px solid rgba(74,222,128,0.25)' }}>
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at top right,rgba(74,222,128,0.08),transparent 60%)' }} />
-        <div className="relative p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 bg-primary rounded-full animate-pulse"
-              style={{ boxShadow: '0 0 6px rgba(74,222,128,0.8)' }} />
-            <span className="text-[10px] font-bold text-primary uppercase tracking-widest font-mono">Live now</span>
+      /* Live exam hero card — Centumania Indigo surface */
+      <div className="relative rounded-2xl overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #1a24e8 0%, #2533FF 60%, #0d1db8 100%)', boxShadow: '0 8px 32px rgba(37,51,255,0.35)' }}>
+        <div className="relative p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="inline-flex items-center gap-2 rounded-full px-3 py-1" style={{ background: 'rgba(255,255,255,0.15)' }}>
+              <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse-soft" />
+              <span className="text-[10px] font-bold uppercase tracking-widest text-white">Live · Day {today.dayNumber}</span>
+            </div>
+            <span className="streak-pill">🔥 streak</span>
           </div>
-          <p className="text-2xl font-bold text-text tracking-tight mb-1" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-            Closes in {w.closesIn}
-          </p>
-          <p className="text-sm text-text-secondary mb-5">Window closes at 8:30 AM IST. No late submissions.</p>
+          {/* Bebas Neue timer display */}
+          <p className="text-[11px] text-white/65 mb-1 font-medium">Window closes in</p>
+          <p className="font-bebas text-[52px] leading-none tracking-wide text-white mb-1">{w.closesIn}</p>
+          <p className="text-xs text-white/60 mb-6">6:00 – 8:30 AM IST · auto-submits · no late entries</p>
           <Link href={`/exam/${today.dayNumber}`}>
-            <Button size="lg" fullWidth className="font-bold">
-              Attempt Exam — Day {today.dayNumber}
-              <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <button className="w-full h-12 rounded-xl font-bold text-[15px] inline-flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+              style={{ background: '#F6B300', color: '#0B1020', boxShadow: '0 4px 16px rgba(246,179,0,0.30)' }}>
+              Start Today&apos;s Test
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
-            </Button>
+            </button>
           </Link>
         </div>
       </div>
@@ -88,11 +90,14 @@ export function ExamCard({ w, today }: ExamCardProps) {
   if (!w.isOpen && w.opensIn) {
     return (
       <Card>
-        <CardLabel className="mb-3">Next exam</CardLabel>
-        <p className="text-2xl font-bold text-text tracking-tight mb-1" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-          Opens in {w.opensIn}
+        <div className="flex items-center justify-between mb-2">
+          <CardLabel>Today&apos;s Mission</CardLabel>
+          <Badge variant="primary" size="sm">Up next</Badge>
+        </div>
+        <p className="font-bebas text-[36px] leading-none tracking-wide mb-1" style={{ color: '#F9FAFB' }}>
+          {w.opensIn}
         </p>
-        <p className="text-sm text-text-secondary">Daily window: 6:00 AM – 8:30 AM IST</p>
+        <p className="text-sm" style={{ color: 'var(--color-cm-neutral-300)' }}>Daily window: 6:00 AM – 8:30 AM IST. Be ready.</p>
       </Card>
     )
   }
@@ -100,7 +105,7 @@ export function ExamCard({ w, today }: ExamCardProps) {
   return (
     <Card>
       <CardLabel className="mb-2">Exam status</CardLabel>
-      <p className="text-sm text-text-secondary">{w.message}</p>
+      <p className="text-sm" style={{ color: 'var(--color-cm-neutral-300)' }}>{w.message}</p>
     </Card>
   )
 }

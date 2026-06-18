@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { setCachedToken } from '@/src/lib/analytics/track'
 import { AppLayout } from '@/src/components/layout/AppLayout'
 import { Card, CardLabel } from '@/src/components/ui/Card'
 import { Badge } from '@/src/components/ui/Badge'
@@ -31,7 +32,7 @@ function getAchievements(data: DashData | null): Achievement[] {
     { id: 'streak-3',    title: '3-Day Fire',    desc: '3 consecutive days',           icon: '🔥', earned: data.streak >= 3,                      category: 'streak'     },
     { id: 'streak-7',    title: 'Week Warrior',  desc: '7 consecutive days',           icon: '⚡', earned: data.streak >= 7,                      category: 'streak'     },
     { id: 'streak-14',   title: 'Fortnight',     desc: '14 consecutive days',          icon: '💪', earned: data.streak >= 14,                     category: 'streak'     },
-    { id: 'streak-25',   title: 'Iron Will',     desc: 'Complete all 25 days',         icon: '🏆', earned: data.daysAttended >= 25,               category: 'completion' },
+    { id: 'streak-25',   title: 'Iron Will',     desc: 'Full batch completion',         icon: '🏆', earned: data.daysAttended >= (data.batchTotalDays ?? 25),               category: 'completion' },
     { id: 'top-10',      title: 'Top 10',        desc: 'Reach top 10 on leaderboard',  icon: '🥇', earned: (data.leaderboard?.rank ?? 999) <= 10, category: 'rank'       },
     { id: 'top-3',       title: 'Podium',        desc: 'Reach the top 3',              icon: '🏅', earned: (data.leaderboard?.rank ?? 999) <= 3,  category: 'rank'       },
     { id: 'xp-1000',     title: '1K XP',         desc: 'Earn 1,000 XP',               icon: '⭐', earned: data.xp >= 1000,                       category: 'xp'         },
@@ -71,6 +72,7 @@ export default function ProfilePage() {
   }, [router])
 
   async function handleLogout() {
+    setCachedToken(null)
     await getSupabaseBrowserClient().auth.signOut()
     router.replace('/auth/login')
   }
@@ -85,9 +87,9 @@ export default function ProfilePage() {
     return (
       <AppLayout userName={name}>
         <div className="max-w-2xl mx-auto px-4 py-8 space-y-4 animate-pulse">
-          <div className="h-32 rounded-2xl" style={{ background: '#16201a' }} />
-          <div className="h-24 rounded-2xl" style={{ background: '#16201a' }} />
-          <div className="h-48 rounded-2xl" style={{ background: '#16201a' }} />
+          <div className="h-32 rounded-2xl" style={{ background: '#FFFFFF' }} />
+          <div className="h-24 rounded-2xl" style={{ background: '#FFFFFF' }} />
+          <div className="h-48 rounded-2xl" style={{ background: '#FFFFFF' }} />
         </div>
       </AppLayout>
     )
@@ -103,15 +105,15 @@ export default function ProfilePage() {
 
         {/* ── Identity Card ───────────────────────────────────────── */}
         <div className="relative rounded-2xl overflow-hidden p-5"
-          style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(74,222,128,0.12)' }}>
+          style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(11,61,145,0.12)' }}>
           <div className="absolute top-0 right-0 w-32 h-32 pointer-events-none opacity-15"
-            style={{ background: 'radial-gradient(circle,#4ADE80,transparent 70%)' }} />
+            style={{ background: 'radial-gradient(circle,#0B3D91,transparent 70%)' }} />
           <div className="relative flex items-center gap-4">
             <div className="relative shrink-0">
-              <ProgressRing value={xpPct} size={64} strokeWidth={3} color="#4ADE80" trackColor="rgba(74,222,128,0.10)" />
+              <ProgressRing value={xpPct} size={64} strokeWidth={3} color="#0B3D91" trackColor="rgba(11,61,145,0.10)" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
-                  style={{ background: 'linear-gradient(135deg,#4ADE80,#22C55E)', color: '#06140c' }}>
+                  style={{ background: 'linear-gradient(135deg,#0B3D91,#10B981)', color: '#FFFFFF' }}>
                   {initials}
                 </div>
               </div>
@@ -124,13 +126,13 @@ export default function ProfilePage() {
               <div className="flex items-center gap-2 mt-2 flex-wrap">
                 {dashData && (
                   <span className="text-[10px] font-bold text-primary px-2 py-0.5 rounded-lg uppercase tracking-wider font-mono"
-                    style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.20)' }}>
-                    Level {dashData.xpLevel} · {dashData.xp.toLocaleString()} XP
+                    style={{ background: 'rgba(11,61,145,0.10)', border: '1px solid rgba(11,61,145,0.20)' }}>
+                    Level {dashData.xpLevel ?? 1} · {(dashData.xp ?? 0).toLocaleString()} XP
                   </span>
                 )}
                 {dashData && dashData.streak > 0 && (
                   <span className="text-[10px] font-bold text-warning px-2 py-0.5 rounded-lg font-mono"
-                    style={{ background: 'rgba(231,177,76,0.10)', border: '1px solid rgba(231,177,76,0.20)' }}>
+                    style={{ background: 'rgba(245,158,11,0.10)', border: '1px solid rgba(245,158,11,0.20)' }}>
                     🔥 {dashData.streak}d streak
                   </span>
                 )}
@@ -188,14 +190,14 @@ export default function ProfilePage() {
 
                 {/* Sub-scores */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
-                  <div className="rounded-xl p-3" style={{ background: '#1b271f', border: '1px solid #27342b' }}>
+                  <div className="rounded-xl p-3" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
                     <p className="text-[10px] text-text-muted uppercase tracking-widest font-mono mb-1">Attendance ×60%</p>
                     <p className="text-xl font-bold font-mono text-text">{Number(centumToday.attendance_index).toFixed(1)}%</p>
                     <p className="text-[10px] text-text-muted font-mono mt-0.5">
                       {centumToday.tests_submitted}/{centumToday.tests_conducted} tests
                     </p>
                   </div>
-                  <div className="rounded-xl p-3" style={{ background: '#1b271f', border: '1px solid #27342b' }}>
+                  <div className="rounded-xl p-3" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
                     <p className="text-[10px] text-text-muted uppercase tracking-widest font-mono mb-1">Node Index ×40%</p>
                     <p className="text-xl font-bold font-mono text-text">{Number(centumToday.node_index).toFixed(1)}</p>
                     <p className="text-[10px] text-text-muted font-mono mt-0.5">
@@ -220,7 +222,7 @@ export default function ProfilePage() {
                         <span className="text-xs text-text-muted font-mono">
                           {new Date(h.calculated_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                         </span>
-                        <div className="flex-1 mx-3 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                        <div className="flex-1 mx-3 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(17,24,39,0.05)' }}>
                           <div className="h-full rounded-full" style={{ width: `${Math.min(Number(h.centum_index), 100)}%`, background: col }} />
                         </div>
                         <span className="text-xs font-bold font-mono w-10 text-right" style={{ color: col }}>
@@ -266,8 +268,8 @@ export default function ProfilePage() {
                 key={a.id}
                 className={`flex items-start gap-3 p-3 rounded-xl border transition-all`}
                 style={a.earned
-                  ? { border: '1px solid rgba(231,177,76,0.25)', background: 'rgba(231,177,76,0.06)', boxShadow: '0 0 12px rgba(231,177,76,0.10)' }
-                  : { border: '1px solid #27342b', background: '#1b271f', opacity: 0.4 }
+                  ? { border: '1px solid rgba(245,158,11,0.25)', background: 'rgba(245,158,11,0.06)', boxShadow: '0 0 12px rgba(245,158,11,0.10)' }
+                  : { border: '1px solid #E5E7EB', background: '#FFFFFF', opacity: 0.4 }
                 }
               >
                 <span className={`text-xl shrink-0 ${!a.earned && 'grayscale'}`}>{a.icon}</span>
@@ -286,7 +288,7 @@ export default function ProfilePage() {
           {profile?.payment_verified ? (
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: 'rgba(74,222,128,0.10)', border: '1px solid rgba(74,222,128,0.20)' }}>
+                style={{ background: 'rgba(11,61,145,0.10)', border: '1px solid rgba(11,61,145,0.20)' }}>
                 <svg className="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
@@ -299,7 +301,7 @@ export default function ProfilePage() {
           ) : (
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: 'rgba(231,177,76,0.10)', border: '1px solid rgba(231,177,76,0.20)' }}>
+                style={{ background: 'rgba(245,158,11,0.10)', border: '1px solid rgba(245,158,11,0.20)' }}>
                 <svg className="w-4 h-4 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
                 </svg>

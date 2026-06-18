@@ -18,14 +18,14 @@ function StatCard({ label, value, sub, accent = 'green' }: {
   label: string; value: string | number; sub?: string; accent?: 'green' | 'amber' | 'teal' | 'crimson'
 }) {
   const accents = {
-    green:   { text: '#4ADE80', bg: 'rgba(74,222,128,0.08)', dot: 'rgba(74,222,128,0.6)' },
-    amber:   { text: '#e7b14c', bg: 'rgba(231,177,76,0.08)',  dot: 'rgba(231,177,76,0.6)' },
-    teal:    { text: '#5ec8c0', bg: 'rgba(94,200,192,0.08)',  dot: 'rgba(94,200,192,0.6)' },
-    crimson: { text: '#e8736b', bg: 'rgba(232,115,107,0.08)', dot: 'rgba(232,115,107,0.6)' },
+    green:   { text: '#0B3D91', bg: 'rgba(11,61,145,0.08)', dot: 'rgba(11,61,145,0.6)' },
+    amber:   { text: '#F59E0B', bg: 'rgba(245,158,11,0.08)',  dot: 'rgba(245,158,11,0.6)' },
+    teal:    { text: '#0B3D91', bg: 'rgba(11,61,145,0.08)',  dot: 'rgba(11,61,145,0.6)' },
+    crimson: { text: '#EF4444', bg: 'rgba(239,68,68,0.08)', dot: 'rgba(239,68,68,0.6)' },
   }
   const a = accents[accent]
   return (
-    <div className="rounded-xl p-5" style={{ background: '#16201a', border: '1px solid #27342b' }}>
+    <div className="rounded-xl p-5" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
       <div className="flex items-center gap-2 mb-3">
         <span className="w-1.5 h-1.5 rounded-full" style={{ background: a.dot, boxShadow: `0 0 6px ${a.dot}` }} />
         <p className="text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono">{label}</p>
@@ -78,9 +78,9 @@ export default function AdminDashboard() {
       {loading ? (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="rounded-xl p-5 animate-pulse" style={{ background: '#16201a', border: '1px solid #27342b' }}>
-              <div className="h-3 rounded w-24 mb-3" style={{ background: '#1b271f' }} />
-              <div className="h-8 rounded w-16" style={{ background: '#1b271f' }} />
+            <div key={i} className="rounded-xl p-5 animate-pulse" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
+              <div className="h-3 rounded w-24 mb-3" style={{ background: '#FFFFFF' }} />
+              <div className="h-8 rounded w-16" style={{ background: '#FFFFFF' }} />
             </div>
           ))}
         </div>
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
             <StatCard label="Total Submissions" value={stats?.submissions.total ?? 0} sub="All time" accent="teal" />
             <StatCard label="Avg Accuracy"      value={`${stats?.avgAccuracy ?? 0}%`} sub="Across all exams" accent="green" />
             <StatCard label="Avg Centum Index"  value={avgCentum > 0 ? avgCentum : 0} sub="Today across all students" accent="teal" />
-            <div className="col-span-2 rounded-xl p-5" style={{ background: '#16201a', border: '1px solid #27342b' }}>
+            <div className="col-span-2 rounded-xl p-5" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
               <p className="text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono mb-3">Active Batch</p>
               {stats?.activeBatch ? (
                 <>
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Quick actions */}
-          <div className="rounded-xl p-6 mb-8" style={{ background: '#16201a', border: '1px solid #27342b' }}>
+          <div className="rounded-xl p-6 mb-8" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
             <p className="text-sm font-semibold text-text mb-4">Quick Actions</p>
             <div className="flex flex-wrap gap-3">
               {[
@@ -134,10 +134,10 @@ export default function AdminDashboard() {
                   href={a.href}
                   className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   style={a.primary
-                    ? { background: '#22C55E', color: '#06140c' }
+                    ? { background: '#10B981', color: '#FFFFFF' }
                     : a.amber
-                    ? { background: 'rgba(231,177,76,0.10)', color: '#e7b14c', border: '1px solid rgba(231,177,76,0.20)' }
-                    : { background: '#1b271f', color: '#9aa893', border: '1px solid #27342b' }
+                    ? { background: 'rgba(245,158,11,0.10)', color: '#F59E0B', border: '1px solid rgba(245,158,11,0.20)' }
+                    : { background: '#FFFFFF', color: '#6B7280', border: '1px solid #E5E7EB' }
                   }
                 >
                   {a.label}
