@@ -57,10 +57,8 @@ const CSS = `
 .nav-right{display:flex;align-items:center;gap:12px;}
 .hero{padding:96px 5% 80px;text-align:center;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(900px 600px at 50% -10%,rgba(37,51,255,.18),transparent 60%),radial-gradient(600px 400px at 80% 80%,rgba(14,165,160,.08),transparent 50%);pointer-events:none;}
-.hero-badge{margin-bottom:20px;}
 .cm-landing .hero h1{margin-bottom:10px;}
 .cm-landing .hero h1 em{color:var(--gold);font-style:normal;}
-.hero-program{font-family:var(--font-bebas,'Bebas Neue',sans-serif);font-size:clamp(18px,2.5vw,28px);letter-spacing:.14em;color:var(--indigo);margin-bottom:24px;display:block;}
 .cm-landing .hero p{font-size:18px;color:var(--n300);max-width:560px;margin:0 auto 36px;line-height:1.65;}
 .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;}
 .countdown{display:inline-flex;align-items:center;gap:20px;background:var(--carbon-soft);border:1px solid var(--border-strong);border-radius:16px;padding:20px 32px;flex-wrap:wrap;justify-content:center;margin-bottom:52px;}
@@ -74,8 +72,6 @@ const CSS = `
 .hero-stat-num{font-family:var(--font-bebas,'Bebas Neue',sans-serif);font-size:40px;color:var(--n50);line-height:1;letter-spacing:.04em;}
 .hero-stat-num span{color:var(--indigo);}
 .hero-stat-label{font-size:12px;color:var(--n500);font-weight:600;margin-top:4px;}
-.trust-bar{background:linear-gradient(90deg,var(--indigo) 0%,#1820c8 100%);padding:14px 5%;text-align:center;font-size:14px;font-weight:500;letter-spacing:.2px;color:rgba(255,255,255,.92);}
-.trust-bar strong{color:var(--gold);}
 .fail-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:880px;margin:0 auto;}
 .fail-col{padding:32px;}
 .fail-col:first-child{border-right:1px solid var(--border);}
@@ -86,25 +82,6 @@ const CSS = `
 .fail-text{font-size:14px;color:var(--n300);line-height:1.6;}
 .fail-col h3{font-family:var(--font-bebas,'Bebas Neue',sans-serif);font-size:22px;letter-spacing:.06em;margin-bottom:16px;}
 .fail-col-bad h3{color:#E3413A;}.fail-col-good h3{color:var(--success);}
-.steps-row{display:flex;gap:0;max-width:900px;margin:0 auto;flex-wrap:wrap;justify-content:center;position:relative;}
-.step{flex:1;min-width:200px;text-align:center;padding:0 24px;position:relative;}
-.step-num{width:60px;height:60px;background:var(--indigo);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-bebas,'Bebas Neue',sans-serif);font-size:26px;letter-spacing:.04em;margin:0 auto 16px;box-shadow:0 8px 24px var(--indigo-glow);}
-.step::after{content:'→';position:absolute;top:20px;right:-8px;color:var(--n700);font-size:18px;}
-.step:last-child::after{display:none;}
-.step h3{font-size:15px;font-weight:700;margin-bottom:8px;}
-.cm-landing .step p{font-size:13px;color:var(--n300);line-height:1.6;}
-.roadmap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
-.roadmap-week{display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:center;background:var(--carbon-soft);border:1px solid var(--border);border-radius:14px;padding:20px 24px;transition:border-color .15s;}
-.roadmap-week:hover{border-color:var(--indigo-border);}
-.week-label{font-family:var(--font-bebas,'Bebas Neue',sans-serif);font-size:28px;letter-spacing:.05em;line-height:1;}
-.week-label small{display:block;font-family:var(--font-hanken,'Inter',sans-serif);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.10em;color:var(--n500);margin-top:2px;}
-.week-content h4{font-size:15px;font-weight:700;margin-bottom:4px;}
-.cm-landing .week-content p{font-size:13px;color:var(--n300);line-height:1.55;}
-.week-tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
-.week-tag{font-size:11px;font-weight:600;padding:2px 10px;border-radius:6px;background:var(--indigo-subtle);color:#818cf8;border:1px solid var(--indigo-border);}
-.roadmap-sprint{background:linear-gradient(135deg,rgba(246,179,0,.10),rgba(246,179,0,.04));border-color:var(--gold-border);}
-.roadmap-sprint .week-label{color:var(--gold);}
-.roadmap-sprint .week-tag{background:var(--gold-subtle);color:var(--gold);border-color:var(--gold-border);}
 .test-card-hero{background:linear-gradient(135deg,#1a24e8 0%,var(--indigo) 60%,#0d1db8 100%);border-radius:20px;padding:32px;box-shadow:0 12px 40px var(--indigo-glow);max-width:480px;}
 .test-timer{font-family:var(--font-bebas,'Bebas Neue',sans-serif);font-size:72px;line-height:1;letter-spacing:.06em;color:#fff;margin:8px 0;}
 .test-feat{display:flex;gap:14px;align-items:flex-start;background:var(--carbon-soft);border:1px solid var(--border);border-radius:12px;padding:16px;}
@@ -133,11 +110,6 @@ const CSS = `
 .mini-bar{flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;}
 .mini-bar-fill{height:100%;border-radius:999px;}
 .mini-bar-val{font-size:12px;color:var(--n300);min-width:36px;text-align:right;}
-.material-card{background:var(--carbon-soft);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;gap:14px;align-items:flex-start;transition:border-color .15s;}
-.material-card:hover{border-color:var(--indigo-border);}
-.material-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;background:var(--indigo-subtle);}
-.material-card h4{font-size:14px;font-weight:700;margin-bottom:4px;}
-.cm-landing .material-card p{font-size:13px;color:var(--n300);line-height:1.55;}
 .refund-card{max-width:720px;margin:0 auto;background:var(--carbon-soft);border:1px solid var(--gold-border);border-radius:20px;padding:40px;}
 .refund-card h3{font-family:var(--font-bebas,'Bebas Neue',sans-serif);font-size:32px;letter-spacing:.05em;margin-bottom:8px;}
 .refund-conditions{display:flex;flex-direction:column;gap:10px;margin:24px 0;}
@@ -151,7 +123,6 @@ const CSS = `
 .testi-author{display:flex;align-items:center;gap:10px;}
 .testi-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;}
 .testi-name{font-size:14px;font-weight:700;}.testi-role{font-size:12px;color:var(--n500);}
-.score-jump{display:inline-flex;align-items:center;gap:6px;background:var(--success-subtle);border:1px solid rgba(34,197,94,.25);border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--success);}
 .pricing-card{max-width:440px;margin:0 auto;background:var(--carbon-soft);border:2px solid var(--indigo-border);border-radius:24px;padding:40px;text-align:center;box-shadow:0 0 60px rgba(37,51,255,.12);}
 .price-amount{font-family:var(--font-bebas,'Bebas Neue',sans-serif);font-size:80px;line-height:1;letter-spacing:.04em;color:var(--n50);}
 .price-amount sup{font-size:32px;vertical-align:super;color:var(--n300);}
@@ -185,13 +156,11 @@ const CSS = `
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 @media(max-width:767px){
   .cm-landing .nav-links{display:none;}
+  .nav-sign-in{display:none;}
   .cm-landing .section{padding:60px 5%;}
   .hero{padding:64px 5% 56px;}
   .fail-grid{grid-template-columns:1fr;}
   .fail-col:first-child{border-right:none;border-bottom:1px solid var(--border);}
-  .steps-row{flex-direction:column;align-items:center;}
-  .step::after{display:none;}
-  .roadmap-week{grid-template-columns:1fr;}
   .analytics-grid{grid-template-columns:1fr !important;}
   .cta-card{padding:36px 24px;}
   .pricing-card{padding:32px 24px;}
@@ -199,29 +168,32 @@ const CSS = `
   .countdown{padding:16px 20px;gap:12px;}
   .cd-num{font-size:32px;}
   .test-layout,.lb-layout{grid-template-columns:1fr !important;}
+  .lb-row{grid-template-columns:32px 1fr 60px;gap:8px;padding:12px 16px;}
+  .lb-streak{display:none;}
+  .footer-links{gap:16px 24px;}
+  .footer-inner{gap:16px;}
+  .section-sub{font-size:15px;}
 }
 @media(max-width:479px){
   .heading-xl{font-size:42px;}
-  .hero-stats{gap:28px;}
+  .hero-stats{gap:24px;}
   .hero-stat-num{font-size:32px;}
+  .countdown{padding:12px 14px;gap:8px;}
+  .cd-num{font-size:28px;min-width:40px;}
+  .cd-divider{font-size:24px;}
+  .btn-lg{padding:14px 28px;font-size:15px;}
+  .nav-right .btn{font-size:13px;padding:8px 14px;}
+  .price-amount{font-size:64px;}
 }
 `
 
 const FAQS = [
-  { q: "What if I miss a day's exam?", a: "If you miss the 6:00–8:30 AM window, that day's exam is automatically marked as missed. Your rank won't update for that day. Consecutive misses affect your streak. The programme rewards consistency — plan your 30 days before you start." },
-  { q: "Which exam is this specifically for?", a: "CentuMania is purpose-built for Puducherry LDC (Lower Division Clerk), UDC (Upper Division Clerk), and Puducherry State PSC exams. All content is calibrated to the actual exam syllabus and question pattern." },
-  { q: "What language are the exams in?", a: "Exams are available in English and Tamil. You can switch your preferred language in account settings. Study materials are available in both languages." },
-  { q: "How does the refund work?", a: "If you attempt all 30 exams, maintain average below 50%, and apply within 7 days of completion — you get a full refund. Eligibility is verified automatically from your submission data. No arguments, no hassle." },
-  { q: "Can I join mid-programme?", a: "No. Each batch starts on a fixed date and runs for exactly 30 days. This structure is intentional — the leaderboard resets per batch. Join the next available batch to get the full experience and refund eligibility." },
+  { q: "What if I miss a day's exam?", a: "If you miss the 6:00–8:30 AM window, that day's exam is automatically marked as missed. Your rank won't update for that day. Consecutive misses affect your streak. The programme rewards consistency — plan your schedule before you start." },
+  { q: "Which exam is this specifically for?", a: "CentuMania is purpose-built for LDC (Lower Division Clerk) and UDC (Upper Division Clerk) government competitive exams. All content is calibrated to the actual exam syllabus and question pattern." },
+  { q: "What language are the exams in?", a: "Exams are available in English and Tamil. You can switch your preferred language in account settings." },
+  { q: "How does the refund work?", a: "If you attempt all daily exams, maintain an average below 50%, and apply within 7 days of programme completion — you get a full refund. Eligibility is verified automatically from your submission data. No arguments, no hassle." },
+  { q: "Can I join mid-programme?", a: "No. Each batch starts on a fixed date and runs for a fixed duration. This structure is intentional — the leaderboard resets per batch. Join the next available batch to get the full experience and refund eligibility." },
   { q: "Is there a free trial?", a: "Day 1 of each batch is accessible to all registered users as a preview. You can attempt the first daily exam free of charge. Full programme access requires payment before Day 2 begins." },
-]
-
-const ROADMAP = [
-  { color: 'var(--indigo)',  label: 'Week 1', sub: 'Days 1–7',    title: 'Foundation — Tamil, English & General Knowledge', desc: 'Build the base. Daily exams cover core language skills and essential GK topics specific to Puducherry and national context.', tags: ['Tamil Grammar','English Basics','Current Affairs','Indian Constitution'], sprint: false },
-  { color: '#818cf8',        label: 'Week 2', sub: 'Days 8–14',   title: 'Core — Aptitude, Reasoning & General Science',       desc: 'Attack quantitative ability and logical reasoning. Timed exams build speed under pressure. Science fundamentals locked in.', tags: ['Quantitative Aptitude','Logical Reasoning','General Science','Data Interpretation'], sprint: false },
-  { color: 'var(--teal)',    label: 'Week 3', sub: 'Days 15–21',  title: 'Intensive — Mixed Exams & Timed Mock Practice',       desc: 'Rotate all subjects. Mixed daily exams mirror the actual exam pattern. Focus shifts to speed, accuracy, and revision.', tags: ['Mixed Pattern','Full Syllabus','Speed Drills','Weak Area Fix'], sprint: false },
-  { color: 'var(--success)', label: 'Week 4', sub: 'Days 22–28',  title: 'Mastery — Full-Length Mocks & Leaderboard Push',      desc: 'Full-length mock exams at exam-level difficulty. Leaderboard competition reaches peak. Track improvement across all metrics.', tags: ['Full Mocks','Rank Battle','Performance Review','Strategy'], sprint: false },
-  { color: 'var(--gold)',    label: 'Days 29–30', sub: 'Final Sprint', title: '🏆 Final Sprint — Revision + Exam Strategy',    desc: 'Rapid-fire revision of highest-yield topics. Exam-day strategy session. Mental preparation. You are ready.', tags: ['Rapid Revision','High-Yield Focus','Exam Strategy','Mindset'], sprint: true },
 ]
 
 export default function LandingPage() {
@@ -252,26 +224,23 @@ export default function LandingPage() {
       <nav>
         <div className="nav-logo"><em>Centu</em>Mania</div>
         <div className="nav-links">
-          <a href="#how" onClick={e=>{e.preventDefault();goto('how')}}>How It Works</a>
-          <a href="#roadmap" onClick={e=>{e.preventDefault();goto('roadmap')}}>30-Day Plan</a>
+          <Link href="/about">About</Link>
+          <Link href="/contact">Contact</Link>
           <a href="#pricing" onClick={e=>{e.preventDefault();goto('pricing')}}>Pricing</a>
           <a href="#faq" onClick={e=>{e.preventDefault();goto('faq')}}>FAQ</a>
         </div>
         <div className="nav-right">
-          <Link href="/auth/login" style={{color:'var(--n300)',fontSize:14,padding:'9px 16px',display:'inline-flex',alignItems:'center'}}>Sign In</Link>
+          <Link href="/auth/login" className="nav-sign-in" style={{color:'var(--n300)',fontSize:14,padding:'9px 16px',display:'inline-flex',alignItems:'center'}}>Sign In</Link>
           <Link href="/auth/register" className="btn btn-primary" style={{padding:'9px 20px',fontSize:14}}>Join the Program →</Link>
         </div>
       </nav>
 
       {/* HERO */}
       <section className="hero">
-        <div className="hero-badge"><span className="badge badge-gold">🏆 Puducherry&apos;s #1 UDC Prep Platform</span></div>
         <h1 className="heading-xl">Winning is<br /><em>a habit.</em></h1>
-        <span className="hero-program">30 DAY UDC MASTERY PROGRAM</span>
-        <p>India&apos;s most disciplined LDC / UDC exam prep. A structured 30-day intensive programme that transforms aspirants into exam-ready toppers.</p>
+        <p>The most disciplined LDC / UDC exam prep. A structured intensive programme that transforms aspirants into exam-ready toppers.</p>
         <div className="hero-btns">
           <Link href="/auth/register" className="btn btn-gold btn-lg">Start the Programme →</Link>
-          <a href="#how" className="btn btn-ghost btn-lg" onClick={e=>{e.preventDefault();goto('how')}}>See How It Works</a>
         </div>
         <div className="countdown">
           <span className="cd-label">Next batch starts in</span>
@@ -284,30 +253,8 @@ export default function LandingPage() {
           <div className="cd-unit"><span className="cd-num">{cd.s}</span><span className="cd-tag">Sec</span></div>
         </div>
         <div className="hero-stats">
-          <div className="hero-stat"><div className="hero-stat-num"><span>30</span></div><div className="hero-stat-label">Day Programme</div></div>
-          <div className="hero-stat"><div className="hero-stat-num"><span>100</span>+</div><div className="hero-stat-label">Daily Practice Questions</div></div>
           <div className="hero-stat"><div className="hero-stat-num">Live</div><div className="hero-stat-label">Leaderboard</div></div>
           <div className="hero-stat"><div className="hero-stat-num"><span>3</span>x</div><div className="hero-stat-label">Score Improvement</div></div>
-        </div>
-      </section>
-
-      {/* TRUST BAR */}
-      <div className="trust-bar">🏛️ Purpose-built for <strong>Puducherry LDC · UDC · State PSC</strong> aspirants — structured, disciplined, results-focused.</div>
-
-      {/* TRUST STATS */}
-      <section className="section section-alt">
-        <div className="container">
-          <span className="label label-indigo" style={{textAlign:'center',display:'block'}}>Why trust us</span>
-          <h2 className="heading-lg section-heading">Numbers that speak</h2>
-          <p className="section-sub">Built by toppers, trusted by Puducherry&apos;s most serious exam aspirants.</p>
-          <div className="grid-4" style={{maxWidth:880,margin:'0 auto'}}>
-            {[{n:'30',l:'Days to Mastery',c:'var(--indigo)'},{n:'92%',l:'Completion Rate',c:'var(--gold)'},{n:'3x',l:'Avg Score Improvement',c:'var(--success)'},{n:'100+',l:'Daily Practice Questions',c:'var(--teal)'}].map(s=>(
-              <div key={s.l} className="card" style={{textAlign:'center'}}>
-                <div className="big-stat" style={{color:s.c}}>{s.n}</div>
-                <div style={{fontSize:13,color:'var(--n300)',marginTop:6}}>{s.l}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -321,51 +268,17 @@ export default function LandingPage() {
             <div className="fail-grid">
               <div className="fail-col fail-col-bad">
                 <h3>❌ Without CentuMania</h3>
-                {['Scattered preparation — studying randomly, no structure','No daily accountability or consistent practice','No benchmark — don\'t know where you stand vs. peers','Generic content not tailored to Puducherry exam pattern','Motivation collapses after the first week'].map(t=>(
+                {['Scattered preparation — studying randomly, no structure','No daily accountability or consistent practice','No benchmark — don\'t know where you stand vs. peers','Generic content not tailored to the exam pattern','Motivation collapses after the first week'].map(t=>(
                   <div key={t} className="fail-item"><span className="fail-x">✗</span><p className="fail-text">{t}</p></div>
                 ))}
               </div>
               <div className="fail-col fail-col-good">
                 <h3>✓ With CentuMania</h3>
-                {['Day-by-day structured plan covering every topic','Daily timed exam at 6 AM builds iron discipline','Live leaderboard — see your rank update in real time','Questions modelled on actual LDC/UDC exam pattern','30-day momentum system keeps you going until exam day'].map(t=>(
+                {['Day-by-day structured plan covering every topic','Daily timed exam at 6 AM builds iron discipline','Live leaderboard — see your rank update in real time','Questions modelled on actual LDC/UDC exam pattern','Daily momentum system keeps you going until exam day'].map(t=>(
                   <div key={t} className="fail-item"><span className="check-x">✓</span><p className="fail-text">{t}</p></div>
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section className="section section-alt" id="how">
-        <div className="container">
-          <span className="label label-indigo" style={{textAlign:'center',display:'block'}}>The process</span>
-          <h2 className="heading-lg section-heading">Simple. Consistent. Effective.</h2>
-          <p className="section-sub">Four steps. Thirty days. One result — you crack the exam.</p>
-          <div className="steps-row">
-            {[{n:1,h:'Register & Join',p:'Sign up in under a minute. Your 30-day countdown begins immediately.'},{n:2,h:'Attempt Daily Exam',p:'Every morning at 6 AM, a fresh timed test unlocks. Window closes at 8:30 AM.'},{n:3,h:'Study Smart',p:'Review mistakes, access curated mind maps and study materials for that day\'s topics.'},{n:4,h:'Track & Win',p:'Watch your rank rise on the leaderboard as consistency compounds into real skill.'}].map(s=>(
-              <div key={s.n} className="step"><div className="step-num">{s.n}</div><h3>{s.h}</h3><p>{s.p}</p></div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ROADMAP */}
-      <section className="section" id="roadmap">
-        <div className="container">
-          <span className="label label-gold" style={{textAlign:'center',display:'block'}}>The 30-day plan</span>
-          <h2 className="heading-lg section-heading">Your complete UDC roadmap</h2>
-          <p className="section-sub">Every day is planned. Every topic is covered. No gaps, no surprises.</p>
-          <div className="roadmap">
-            {ROADMAP.map(w=>(
-              <div key={w.label} className={`roadmap-week${w.sprint?' roadmap-sprint':''}`}>
-                <div><div className="week-label" style={{color:w.color}}>{w.label}<small>{w.sub}</small></div></div>
-                <div className="week-content">
-                  <h4>{w.title}</h4><p>{w.desc}</p>
-                  <div className="week-tags">{w.tags.map(t=><span key={t} className="week-tag">{t}</span>)}</div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -386,11 +299,11 @@ export default function LandingPage() {
               <div className="test-timer">01:24:37</div>
               <div style={{fontSize:12,color:'rgba(255,255,255,.55)',marginBottom:4}}>6:00 – 8:30 AM IST · auto-submits</div>
               <div style={{height:4,background:'rgba(255,255,255,.10)',borderRadius:999,margin:'16px 0'}}><div style={{height:'100%',background:'var(--gold)',borderRadius:999,width:'62%'}} /></div>
-              <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'rgba(255,255,255,.60)',marginBottom:4}}><span>62 / 100 questions</span><span>Accuracy 78%</span></div>
+              <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'rgba(255,255,255,.60)',marginBottom:4}}><span>Q62 answered</span><span>Accuracy 78%</span></div>
               <Link href="/auth/login" className="btn btn-gold" style={{width:'100%',justifyContent:'center',marginTop:16}}>Start Today&apos;s Test →</Link>
             </div>
             <div style={{display:'flex',flexDirection:'column',gap:12}}>
-              {[{i:'⏱️',h:'30-Minute Timed Window',p:'Opens at 6 AM, closes at 8:30 AM. Auto-submits when time runs out. No exceptions — builds exam-day discipline.'},{i:'📝',h:'100 Questions Per Exam',p:'Full-length UDC pattern exam every single day. Covers all subjects in rotation — nothing gets left behind.'},{i:'🎯',h:'Instant Answer Key',p:'Detailed explanations for every question after submission. Understand your mistakes while they\'re fresh.'},{i:'📊',h:'Performance Tracking',p:'Every score is logged. See your accuracy trend, rank trajectory, and subject-wise improvement over 30 days.'}].map(f=>(
+              {[{i:'⏱️',h:'30-Minute Timed Window',p:'Opens at 6 AM, closes at 8:30 AM. Auto-submits when time runs out. No exceptions — builds exam-day discipline.'},{i:'🎯',h:'Instant Answer Key',p:'Detailed explanations for every question after submission. Understand your mistakes while they\'re fresh.'},{i:'📊',h:'Performance Tracking',p:'Every score is logged. See your accuracy trend, rank trajectory, and subject-wise improvement over time.'}].map(f=>(
                 <div key={f.h} className="test-feat"><div className="test-feat-icon">{f.i}</div><div><h4>{f.h}</h4><p>{f.p}</p></div></div>
               ))}
             </div>
@@ -416,7 +329,7 @@ export default function LandingPage() {
             <div style={{display:'flex',flexDirection:'column',gap:16,paddingTop:8}}>
               <div className="card card-indigo"><h4 style={{fontSize:15,fontWeight:700,marginBottom:6}}>Public accountability</h4><p style={{fontSize:14,color:'var(--n300)',lineHeight:1.6}}>Your rank is visible to every aspirant in the batch. The social pressure is the point — it keeps you showing up even when motivation runs low.</p></div>
               <div className="card card-gold"><h4 style={{fontSize:15,fontWeight:700,marginBottom:6}}>🏆 Centum Index</h4><p style={{fontSize:14,color:'var(--n300)',lineHeight:1.6}}>Achieve a perfect 100 on any exam and earn the Centum badge — a permanent mark of excellence on your leaderboard profile.</p></div>
-              <div className="card card-teal"><h4 style={{fontSize:15,fontWeight:700,marginBottom:6}}>🔥 Streak Rewards</h4><p style={{fontSize:14,color:'var(--n300)',lineHeight:1.6}}>Maintain a 7-day streak to unlock streak badges. 30-day completion earns the Mastery badge — shown permanently on your profile.</p></div>
+              <div className="card card-teal"><h4 style={{fontSize:15,fontWeight:700,marginBottom:6}}>🔥 Streak Rewards</h4><p style={{fontSize:14,color:'var(--n300)',lineHeight:1.6}}>Maintain a 7-day streak to unlock streak badges. Full programme completion earns the Mastery badge — shown permanently on your profile.</p></div>
             </div>
           </div>
         </div>
@@ -455,22 +368,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* STUDY MATERIALS */}
-      <section className="section">
-        <div className="container">
-          <span className="label label-indigo" style={{textAlign:'center',display:'block'}}>Everything included</span>
-          <h2 className="heading-lg section-heading">Study materials &amp; mind maps</h2>
-          <p className="section-sub">Curated resources for every topic — always accessible, always relevant to the exam.</p>
-          <div className="grid-2" style={{maxWidth:880,margin:'0 auto'}}>
-            {[{i:'🧬',h:'Biology Mind Maps',p:'Visual concept maps covering cell biology, human physiology, genetics, and ecology — built for quick retention.'},{i:'⚗️',h:'Chemistry Mind Maps',p:'Organic, inorganic, and physical chemistry concepts mapped visually for Puducherry PSC level.'},{i:'⚡',h:'Physics Mind Maps',p:'Mechanics, thermodynamics, optics, and electricity — each unit as an interactive, zoomable map.'},{i:'🔢',h:'Numerical Systems',p:'Number theory, arithmetic, percentages and data interpretation — all mapped to exam frequency.'},{i:'📖',h:'Topic Notes',p:'Concise, exam-focused summaries for GK, history, polity, and economics — no fluff, just marks.'},{i:'🗺️',h:'Puducherry Special',p:'Local history, geography, government schemes, and current affairs specific to Puducherry state.'}].map(m=>(
-              <div key={m.h} className="material-card"><div className="material-icon">{m.i}</div><div><h4>{m.h}</h4><p>{m.p}</p></div></div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* REFUND */}
-      <section className="section section-alt">
+      <section className="section">
         <div className="container">
           <span className="label label-gold" style={{textAlign:'center',display:'block'}}>Zero risk</span>
           <h2 className="heading-lg section-heading">Refund eligibility system</h2>
@@ -479,7 +378,7 @@ export default function LandingPage() {
             <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:6}}><span className="badge badge-gold">🛡️ Money Back Guarantee</span></div>
             <h3>Qualify for a full refund if you:</h3>
             <div className="refund-conditions">
-              {[{i:'📅',t:'Attempted all 30 daily exams without missing a single day'},{i:'📊',t:'Maintained an average score below 50% across all 30 exams'},{i:'⏰',t:'Submitted the refund request within 7 days of programme completion'},{i:'✅',t:'Completed all study material sessions for each exam day'}].map(r=>(
+              {[{i:'📅',t:'Attempted all daily exams without missing a single day'},{i:'📊',t:'Maintained an average score below 50% across all exams'},{i:'⏰',t:'Submitted the refund request within 7 days of programme completion'},{i:'✅',t:'Completed all exam sessions for each programme day'}].map(r=>(
                 <div key={r.t} className="refund-item"><span>{r.i}</span><p>{r.t}</p></div>
               ))}
             </div>
@@ -489,17 +388,20 @@ export default function LandingPage() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="section">
+      <section className="section section-alt">
         <div className="container">
           <span className="label" style={{textAlign:'center',display:'block'}}>Real results</span>
           <h2 className="heading-lg section-heading">Student transformation stories</h2>
-          <p className="section-sub">Aspirants who trusted the process — and what 30 days of discipline actually looks like.</p>
+          <p className="section-sub">Aspirants who trusted the process — and what consistent daily discipline actually looks like.</p>
           <div className="grid-3" style={{maxWidth:880,margin:'0 auto'}}>
-            {[{stars:'★★★★★',text:'"The daily exam discipline completely changed how I prepare. I went from scattered studying to a focused routine. My score jumped from 52 to 84 in just 3 weeks."',jump:'↑ 52 → 84',ini:'AK',name:'Arun K.',role:'LDC Aspirant, Puducherry'},{stars:'★★★★★',text:'"The leaderboard kept me accountable every single day. I couldn\'t skip because I could see my rank dropping in real time. That pressure was exactly what I needed."',jump:'↑ Rank #89 → #4',ini:'MP',name:'Meena P.',role:'UDC Aspirant, Puducherry'},{stars:'★★★★★',text:'"Finally a platform that understands Puducherry exam patterns. The mind maps made everything visual and the 30-day plan made the whole journey feel manageable."',jump:'↑ 61 → 91 in 30 days',ini:'RV',name:'Ravi V.',role:'State PSC Aspirant'}].map(t=>(
+            {[
+              {stars:'★★★★★',text:'"I used to study for hours without knowing if it was actually helping. The daily exam gave me an honest score every morning. By week 3, I could see real improvement in my accuracy across subjects."',ini:'AK',name:'Arun K.',role:'LDC Aspirant'},
+              {stars:'★★★★★',text:'"The 6 AM routine was hard to keep up the first week. By week 2 it became automatic. Knowing my rank updated daily pushed me to show up even on days I felt completely unprepared."',ini:'MP',name:'Meena P.',role:'Government Exam Aspirant'},
+              {stars:'★★★★★',text:'"Finally a system where I could see exactly which subjects needed work. My aptitude accuracy improved noticeably over the programme because I had a clear picture of where I was losing marks."',ini:'RV',name:'Ravi V.',role:'Competitive Exam Aspirant'}
+            ].map(t=>(
               <div key={t.name} className="testi-card">
                 <div className="testi-stars">{t.stars}</div>
                 <p className="testi-text">{t.text}</p>
-                <div><span className="score-jump">{t.jump}</span></div>
                 <div className="testi-author"><div className="testi-avatar">{t.ini}</div><div><div className="testi-name">{t.name}</div><div className="testi-role">{t.role}</div></div></div>
               </div>
             ))}
@@ -508,26 +410,32 @@ export default function LandingPage() {
       </section>
 
       {/* PRICING */}
-      <section className="section section-alt" id="pricing">
+      <section className="section" id="pricing">
         <div className="container">
           <span className="label label-indigo" style={{textAlign:'center',display:'block'}}>Simple pricing</span>
           <h2 className="heading-lg section-heading">One plan. Everything included.</h2>
-          <p className="section-sub">No tiers, no upsells. One payment unlocks the full 30-day programme.</p>
+          <p className="section-sub">No tiers, no upsells. One payment unlocks full programme access.</p>
           <div className="pricing-card">
-            <span className="badge badge-gold" style={{marginBottom:20}}>🏆 30 Day UDC Mastery</span>
+            <span className="badge badge-gold" style={{marginBottom:20}}>🏆 UDC Mastery Programme</span>
             <div className="price-amount"><sup>₹</sup>999</div>
-            <div className="price-period">one-time · full 30-day access</div>
+            <div className="price-period">one-time · full programme access</div>
             <ul className="price-features">
-              {['30 daily timed exams (100 questions each)','Live leaderboard & rank tracking','Full study material library','Biology, Chemistry, Physics mind maps','AI Mentor coaching reports','Performance analytics dashboard','Centum & streak achievement badges','Puducherry-specific content library','Performance-linked refund guarantee'].map(f=><li key={f}>{f}</li>)}
+              {['Daily timed exams — full-length, timed','Live leaderboard & rank tracking','AI Mentor coaching reports','Performance analytics dashboard','Centum & streak achievement badges','Performance-linked refund guarantee'].map(f=><li key={f}>{f}</li>)}
             </ul>
-            <Link href="/auth/register" className="btn btn-gold" style={{width:'100%',justifyContent:'center',fontSize:17,padding:'16px 28px',borderRadius:12}}>Start My 30-Day Journey →</Link>
+            <Link href="/auth/register" className="btn btn-gold" style={{width:'100%',justifyContent:'center',fontSize:17,padding:'16px 28px',borderRadius:12}}>Start My Journey →</Link>
             <p className="price-note">Secure payment · Instant access · Refund eligible</p>
+            <p style={{marginTop:12,fontSize:12,color:'var(--n500)',textAlign:'center'}}>
+              Have a question?{' '}
+              <a href="https://wa.me/917200132957" target="_blank" rel="noopener noreferrer" style={{color:'#22C55E',fontWeight:700}}>
+                WhatsApp us →
+              </a>
+            </p>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="section" id="faq">
+      <section className="section section-alt" id="faq">
         <div className="container">
           <span className="label" style={{textAlign:'center',display:'block'}}>Got questions?</span>
           <h2 className="heading-lg section-heading">Frequently asked questions</h2>
@@ -548,12 +456,11 @@ export default function LandingPage() {
       {/* FINAL CTA */}
       <section className="cta-section">
         <div className="cta-card">
-          <span className="badge badge-indigo" style={{marginBottom:18}}>🚀 30 Day UDC Mastery Program</span>
-          <h2 className="heading-lg">Your 30-day transformation starts today.</h2>
-          <p>Join Puducherry&apos;s most disciplined aspirants. One batch. One shot. Make it count.</p>
+          <span className="badge badge-indigo" style={{marginBottom:18}}>🚀 Your Exam Journey Starts Here</span>
+          <h2 className="heading-lg">Your transformation starts today.</h2>
+          <p>Join the most disciplined aspirants. One batch. One shot. Make it count.</p>
           <div className="cta-btns">
             <Link href="/auth/register" className="btn btn-gold btn-lg">Start the Programme →</Link>
-            <a href="#how" className="btn btn-ghost btn-lg" onClick={e=>{e.preventDefault();goto('how')}}>See How It Works</a>
           </div>
           <div style={{marginTop:24,fontSize:13,color:'var(--n500)'}}>🛡️ Performance-linked refund guarantee · ⚡ Instant access after payment</div>
         </div>
@@ -564,32 +471,39 @@ export default function LandingPage() {
         <div className="footer-inner">
           <div className="footer-brand">
             <div className="nav-logo"><em>Centu</em>Mania</div>
-            <p>India&apos;s most disciplined LDC/UDC exam prep platform. Built for Puducherry aspirants. Winning is a habit.</p>
+            <p>The most disciplined LDC/UDC exam prep platform. Winning is a habit.</p>
           </div>
           <div className="footer-links">
             <div className="footer-col">
               <h4>Programme</h4>
-              <a href="#how" onClick={e=>{e.preventDefault();goto('how')}}>How It Works</a>
-              <a href="#roadmap" onClick={e=>{e.preventDefault();goto('roadmap')}}>30-Day Roadmap</a>
               <a href="#pricing" onClick={e=>{e.preventDefault();goto('pricing')}}>Pricing</a>
               <a href="#faq" onClick={e=>{e.preventDefault();goto('faq')}}>FAQ</a>
+            </div>
+            <div className="footer-col">
+              <h4>Company</h4>
+              <Link href="/about">About Us</Link>
+              <Link href="/contact">Contact Us</Link>
             </div>
             <div className="footer-col">
               <h4>Platform</h4>
               <Link href="/dashboard">Dashboard</Link>
               <Link href="/exam/today">Daily Exam</Link>
               <Link href="/leaderboard">Leaderboard</Link>
-              <Link href="/materials">Study Materials</Link>
             </div>
             <div className="footer-col">
               <h4>Legal</h4>
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms of Service</a>
-              <a href="#">Refund Policy</a>
+              <Link href="/privacy">Privacy Policy</Link>
+              <Link href="/terms">Terms &amp; Conditions</Link>
+              <Link href="/refund">Refund Policy</Link>
+            </div>
+            <div className="footer-col">
+              <h4>Contact</h4>
+              <a href="https://wa.me/917200132957" target="_blank" rel="noopener noreferrer">WhatsApp Support</a>
+              <a href="https://wa.me/917200132957" target="_blank" rel="noopener noreferrer" style={{color:'var(--n700)'}}>+91 72001 32957</a>
             </div>
           </div>
         </div>
-        <div className="footer-copy">© 2026 CentuMania. Built for Puducherry aspirants. Winning is a habit.</div>
+        <div className="footer-copy">© 2026 CentuMania. Winning is a habit.</div>
       </footer>
     </div>
   )

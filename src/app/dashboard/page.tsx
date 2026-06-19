@@ -135,6 +135,14 @@ export default function DashboardPage() {
               style={{ fontFamily: 'var(--font-bebas-neue,"Bebas Neue",sans-serif)', letterSpacing: '0.04em', fontSize: 32 }}>
               COMPLETE YOUR PAYMENT
             </h2>
+            <div className="flex items-baseline justify-center gap-1 mb-3">
+              <span className="text-lg font-bold" style={{ color: '#9CA3AF' }}>₹</span>
+              <span className="font-bold leading-none"
+                style={{ fontFamily: 'var(--font-bebas-neue,"Bebas Neue",sans-serif)', fontSize: 64, letterSpacing: '0.04em', color: '#F6B300' }}>
+                999
+              </span>
+              <span className="text-xs font-semibold ml-1" style={{ color: '#6B7280' }}>one-time</span>
+            </div>
             <p className="text-sm text-text-secondary leading-relaxed">
               Scan the QR code or use the UPI ID below to pay and unlock full access.
             </p>
@@ -186,7 +194,7 @@ export default function DashboardPage() {
 
           <p className="text-center text-xs text-text-muted">
             Already paid?{' '}
-            <a href="https://wa.me/91XXXXXXXXXX" className="text-primary font-semibold" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/917200132957" className="text-primary font-semibold" target="_blank" rel="noopener noreferrer">
               Message us on WhatsApp →
             </a>
           </p>
