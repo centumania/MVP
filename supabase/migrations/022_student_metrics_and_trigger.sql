@@ -250,24 +250,29 @@ GRANT EXECUTE ON FUNCTION public.refresh_student_metrics() TO authenticated;
 -- 4. Replace study_leaderboard view
 --    total_score now = quiz_score (daily_test_scores) + engagement_score (student_metrics)
 --    Rank breaks ties by days_attended as before.
+--
+--    NOTE: CREATE OR REPLACE VIEW cannot change column types (bigint → integer).
+--    Must DROP first, then recreate.
 -- =============================================================================
 
-CREATE OR REPLACE VIEW public.study_leaderboard AS
+DROP VIEW IF EXISTS public.study_leaderboard;
+
+CREATE VIEW public.study_leaderboard AS
   SELECT
-    p.id                                                                           AS user_id,
+    p.id                                                                 AS user_id,
     p.name,
     p.tier,
-    COALESCE(SUM(d.score), 0) + COALESCE(MAX(sm.engagement_score), 0)             AS total_score,
-    COUNT(d.id)::integer                                                           AS days_attended,
+    COALESCE(SUM(d.score), 0) + COALESCE(MAX(sm.engagement_score), 0)   AS total_score,
+    COUNT(d.id)                                                          AS days_attended,
     CASE
       WHEN SUM(d.total) = 0 OR SUM(d.total) IS NULL THEN 0
       ELSE ROUND((SUM(d.score)::numeric / SUM(d.total)::numeric) * 100, 1)
-    END                                                                            AS accuracy_percent,
+    END                                                                  AS accuracy_percent,
     RANK() OVER (
       ORDER BY
         (COALESCE(SUM(d.score), 0) + COALESCE(MAX(sm.engagement_score), 0)) DESC,
         COUNT(d.id) DESC
-    )::integer                                                                     AS rank
+    )                                                                    AS rank
   FROM public.profiles p
   LEFT JOIN public.daily_test_scores  d  ON d.user_id  = p.id
   LEFT JOIN public.student_metrics    sm ON sm.user_id = p.id
