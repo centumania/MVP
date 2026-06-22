@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CentuMania · Geography Part 1</title>
+<style>
+:root{
+--bg:#030B17;--bg2:#020710;--panel:#071A30;--panel2:#0A2040;--line:#1A3A5C;
+--ink:#D4E0EC;--ink2:#88AACC;--ink3:#4A6888;
+--gold:#38BDF8;--gold2:#1D4ED8;--gold-glow:rgba(56,189,248,.15);
+--amber:#60A5FA;--gold-bg:rgba(56,189,248,.08);
+--red:#f87171;--red-bg:rgba(248,113,113,.10);
+--blue:#93C5FD;--green:#4ade80;--orange:#fb923c;--purple:#c084fc;
+--r:12px;--r2:8px;--tr:.22s;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden}
+/* ── TOPBAR ── */
+#topbar{position:fixed;top:0;left:0;right:0;height:52px;background:var(--bg2);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 16px;gap:12px;z-index:200}
+#hamburger{background:none;border:none;color:var(--ink);font-size:22px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:background var(--tr)}
+#hamburger:hover{background:var(--panel)}
+#tb-title{flex:1;font-size:15px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-badge{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:3px 11px;font-size:12px;font-weight:600;color:var(--amber);white-space:nowrap}
+/* ── ASIDE/DRAWER ── */
+#aside{position:fixed;top:52px;left:0;bottom:0;width:280px;background:var(--bg2);border-right:1px solid var(--line);z-index:150;transform:translateX(-100%);transition:transform .28s ease;overflow:hidden;display:flex;flex-direction:column}
+#aside.open{transform:translateX(0)}
+#drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:140}
+#drawer-overlay.active{display:block}
+#sidebar-inner{flex:1;overflow-y:auto;padding:12px 0 80px}
+.ch-label{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink3);padding:14px 16px 4px;margin-top:4px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;border-radius:0;transition:background var(--tr);font-size:13px;color:var(--ink2);border-left:3px solid transparent}
+.nav-item:hover{background:var(--panel);color:var(--ink)}
+.nav-item.active{background:var(--panel2);color:var(--gold);border-left-color:var(--gold)}
+.nav-item.locked{opacity:.4;cursor:not-allowed}
+.nav-item.gold-nav{color:var(--gold)}
+.nav-icon{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.nav-info{flex:1;min-width:0}
+.nav-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-xp{font-size:11px;color:var(--ink3);margin-top:1px}
+.nav-badge{font-size:10px;background:var(--panel2);color:var(--amber);border-radius:10px;padding:1px 7px;margin-left:auto;flex-shrink:0}
+/* ── MAIN ── */
+#main{margin-top:52px;padding:20px 16px;max-width:860px;margin-left:auto;margin-right:auto}
+/* ── HOME DASHBOARD ── */
+#dash{display:block}
+.dash-hero{background:linear-gradient(135deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r);padding:28px 24px;margin-bottom:20px;text-align:center}
+.dash-hero h1{font-size:24px;font-weight:700;color:var(--gold);margin-bottom:6px}
+.dash-hero p{color:var(--ink2);font-size:14px}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:16px;text-align:center}
+.stat-val{font-size:28px;font-weight:700;color:var(--gold)}
+.stat-lbl{font-size:11px;color:var(--ink3);margin-top:2px;text-transform:uppercase;letter-spacing:.8px}
+.dash-btn{display:block;width:100%;padding:13px;background:var(--gold2);color:#fff;border:none;border-radius:var(--r2);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;transition:opacity var(--tr)}
+.dash-btn:hover{opacity:.85}
+.dash-btn.outline{background:transparent;border:1px solid var(--line);color:var(--ink2)}
+/* ── NODE CONTENT ── */
+#node-content{display:none}
+.node-header{background:linear-gradient(135deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-bottom:16px}
+.node-chapter{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);margin-bottom:4px}
+.node-title{font-size:20px;font-weight:700;color:var(--gold)}
+.node-meta{font-size:12px;color:var(--ink3);margin-top:4px}
+/* ── TABS ── */
+.tabs{display:flex;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:4px;margin-bottom:16px}
+.tab-btn{flex:1;padding:8px 4px;border:none;background:none;color:var(--ink3);font-size:12px;font-weight:600;cursor:pointer;border-radius:6px;transition:all var(--tr);text-align:center;letter-spacing:.5px;text-transform:uppercase}
+.tab-btn.active{background:var(--panel2);color:var(--gold)}
+/* ── LEARN PANE ── */
+.section-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:16px;margin-bottom:12px}
+.section-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.fact-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.fact-list li{font-size:13px;color:var(--ink);line-height:1.5;padding:7px 10px;background:var(--bg);border-radius:6px;border-left:3px solid var(--line)}
+.fact-list li b,.fact-list li strong{color:var(--amber)}
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{background:var(--panel2);color:var(--ink2);padding:7px 10px;text-align:left;font-weight:600;border-bottom:1px solid var(--line)}
+.data-table td{padding:7px 10px;border-bottom:1px solid var(--line);color:var(--ink);vertical-align:top}
+.data-table tr:hover td{background:rgba(255,255,255,.03)}
+.data-table td b,.data-table td strong{color:var(--amber)}
+.mn-box{background:var(--gold-bg);border:1px solid var(--gold2);border-radius:var(--r2);padding:14px;font-size:13px;color:var(--gold);line-height:1.6}
+.trap-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.trap-list li{font-size:13px;padding:8px 12px;background:var(--red-bg);border:1px solid rgba(248,113,113,.25);border-radius:6px;color:var(--ink);line-height:1.5}
+.trap-list li::before{content:"⚠ ";color:var(--red)}
+.trap-list li b,.trap-list li strong{color:var(--red)}
+.rev-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.rev-list li{font-size:12px;padding:6px 10px;background:var(--bg);border:1px solid var(--line);border-radius:6px;color:var(--ink2);line-height:1.4}
+.rev-list li b,.rev-list li strong{color:var(--amber)}
+.ol-list{list-style:none;display:flex;flex-direction:column;gap:4px;columns:1}
+.ol-list li{font-size:12px;padding:5px 9px;background:var(--bg);border-radius:5px;color:var(--ink2);line-height:1.4;border-left:2px solid var(--line)}
+.ol-list li b,.ol-list li strong{color:var(--amber)}
+/* ── FLASH CARDS ── */
+.flash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.flash-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:14px;cursor:pointer;min-height:90px;display:flex;flex-direction:column;justify-content:center;transition:border-color var(--tr)}
+.flash-card:hover{border-color:var(--gold2)}
+.flash-q{font-size:12px;color:var(--ink2);line-height:1.4}
+.flash-a{font-size:13px;color:var(--gold);font-weight:600;margin-top:6px;display:none;line-height:1.4}
+.flash-card.revealed .flash-a{display:block}
+.flash-card.revealed{border-color:var(--green)}
+.flash-hint{font-size:10px;color:var(--ink3);margin-top:8px;text-align:center}
+/* ── TEST PANE ── */
+.test-start-box{text-align:center;padding:30px 20px}
+.test-start-box h3{font-size:18px;color:var(--gold);margin-bottom:8px}
+.test-start-box p{color:var(--ink2);font-size:13px;margin-bottom:20px}
+.btn-primary{background:var(--gold2);color:#fff;border:none;border-radius:var(--r2);padding:11px 28px;font-size:14px;font-weight:600;cursor:pointer;transition:opacity var(--tr)}
+.btn-primary:hover{opacity:.85}
+.q-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:12px}
+.q-counter{font-size:11px;color:var(--ink3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px}
+.q-text{font-size:14px;color:var(--ink);line-height:1.6;margin-bottom:14px;font-weight:500}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt-btn{width:100%;text-align:left;padding:10px 14px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r2);color:var(--ink);font-size:13px;cursor:pointer;transition:all var(--tr);line-height:1.4}
+.opt-btn:hover:not(:disabled){background:var(--panel2);border-color:var(--gold2)}
+.opt-btn.correct{background:rgba(74,222,128,.12);border-color:var(--green);color:var(--green)}
+.opt-btn.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.exp-box{background:var(--panel2);border:1px solid var(--line);border-radius:var(--r2);padding:10px 14px;font-size:12px;color:var(--ink2);margin-top:10px;line-height:1.5;display:none}
+.exp-box.show{display:block}
+.progress-bar{height:4px;background:var(--line);border-radius:4px;margin-bottom:16px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:4px;transition:width .3s}
+/* ── NODE NAV ── */
+#node-nav-bar{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.nav-arrow{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:9px 18px;color:var(--ink2);font-size:13px;cursor:pointer;font-weight:500;transition:all var(--tr)}
+.nav-arrow:hover{background:var(--panel2);color:var(--gold);border-color:var(--gold2)}
+/* ── RESULTS ── */
+.result-box{text-align:center;padding:28px 20px}
+.result-score{font-size:48px;font-weight:700;color:var(--gold);margin-bottom:4px}
+.result-msg{font-size:15px;color:var(--ink2);margin-bottom:20px}
+.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.r-stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:12px}
+.r-stat-val{font-size:20px;font-weight:700;color:var(--amber)}
+.r-stat-lbl{font-size:11px;color:var(--ink3);margin-top:2px}
+/* ── TOAST ── */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--panel2);border:1px solid var(--gold2);color:var(--gold);border-radius:20px;padding:10px 22px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:all .3s;white-space:nowrap;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ── GOLD NODE ── */
+.gold-hero{background:linear-gradient(135deg,var(--gold-bg),var(--panel));border:2px solid var(--gold);border-radius:var(--r);padding:24px;margin-bottom:16px;text-align:center}
+.gold-hero h2{font-size:22px;font-weight:700;color:var(--gold);margin-bottom:6px}
+.gold-hero p{color:var(--ink2);font-size:13px}
+.gold-fact{background:var(--gold-bg);border:1px solid rgba(56,189,248,.3);border-radius:6px;padding:8px 12px;font-size:13px;color:var(--ink);line-height:1.5;margin-bottom:6px}
+.gold-fact strong,.gold-fact b{color:var(--gold)}
+/* ── LOCKED ── */
+.locked-box{text-align:center;padding:40px 20px}
+.locked-box .lock-icon{font-size:48px;margin-bottom:12px}
+.locked-box h3{font-size:18px;color:var(--ink2);margin-bottom:8px}
+.locked-box p{color:var(--ink3);font-size:13px}
+/* ── RESPONSIVE ── */
+@media(min-width:768px){
+  #aside{transform:translateX(0)}
+  #main{margin-left:280px;padding:24px}
+  #drawer-overlay{display:none!important}
+  #hamburger{display:none}
+}
+@media(max-width:480px){
+  .flash-grid{grid-template-columns:1fr}
+  .rev-list{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <button id="hamburger" onclick="toggleDrawer()">☰</button>
+  <span id="tb-title">CentuMania · Geography Part 1</span>
+  <span class="tb-badge" id="tb-xp">0 XP</span>
+  <span class="tb-badge" id="tb-pct">0%</span>
+</div>
+<aside id="aside">
+  <div id="sidebar-inner"></div>
+</aside>
+<div id="drawer-overlay" onclick="closeDrawer()"></div>
+<main id="main">
+  <div id="dash"></div>
+  <div id="node-content"></div>
+</main>
+<div id="toast"></div>
+<script>
+
+// ── Analytics ──────────────────────────────────────────────────────────────
+const METRICS={events:[],startTime:Date.now()};
+let _mToken=null,_mSid=null;
+function initMetrics(){
+  try{
+    const stores=[localStorage,sessionStorage];
+    for(const store of stores){
+      if(_mToken)break;
+      for(let i=0;i<store.length;i++){
+        const k=store.key(i);
+        if(k&&k.startsWith('sb-')&&k.endsWith('-auth-token')){
+          const d=JSON.parse(store.getItem(k)||'{}');
+          _mToken=d?.access_token||null;
+          break;
+        }
+      }
+    }
+  }catch(e){}
+  _mSid='geo1-'+(Date.now().toString(36));
+}
+function track(event,data={}){
+  METRICS.events.push({event,ts:Date.now()-METRICS.startTime,data});
+  try{const s=JSON.parse(localStorage.getItem('cm_metrics_geo1')||'[]');s.push({event,ts:new Date().toISOString(),...data});localStorage.setItem('cm_metrics_geo1',JSON.stringify(s.slice(-200)));}catch(e){}
+  if(_mToken){fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},body:JSON.stringify({event_name:event,session_id:_mSid,event_timestamp:new Date().toISOString(),metadata:data})}).catch(()=>{});}
+}
+// ── State ──────────────────────────────────────────────────────────────────
+const SK='centumania_geo1_v1';
+let S={xp:0,mcq:{},faa:{},tabTime:{}};
+function loadS(){try{const d=localStorage.getItem(SK);if(d)S=JSON.parse(d);}catch(e){}}
+function saveS(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
+const CHAPTERS=[
+// ── CHAPTER 1 ── COSMOS
+{"id": "universe_solar_system", "chapter": "Cosmos 🌌", "seqIdx": 0, "xp": 50, "icon": "🌌", "title": "Universe & Solar System", "facts": ["Universe contains <b>10¹¹ (100 billion) galaxies</b>", "Our Solar System is in the <b>Milky Way</b> galaxy (~400 billion stars)", "<b>Andromeda (M31)</b> = nearest galaxy to Milky Way", "Sun = <b>Main sequence star</b>; contains <b>99.86%</b> of Solar System mass", "Sun's corona temperature = <b>6,000°C</b>; core = <b>20,00,000°C</b>", "Sun is <b>13 lakh times bigger</b> than Earth — Father of Solar System", "Sun's nuclear process = <b>Hydrogen fuses into Helium</b>", "<b>Sirius</b> = brightest star in night sky; also called <b>Dog Star</b>", "<b>Proxima Centauri</b> = closest star to the Sun", "<b>Super Nova</b> = primitive exploded star; origin of Universe", "<b>Neutron Star</b> = tiny (~30 km radius); very high density; from supernova", "<b>Pulsar</b> = highly magnetised rotating neutron star", "<b>Asteroids</b> = rock fragments between <b>Mars and Jupiter</b>", "<b>Black Hole</b> = formed when a star is too massive to become neutron star", "<b>Lyman Alpha Blobs</b> = heaviest cluster bodies in Universe", "<b>Ursa Major</b> = Big Dipper / Great Bear / Saptarshi; 7 stars; visible <b>summer evenings</b>", "<b>Orion (Hunter)</b> = 7–8 bright stars; visible <b>winter evenings</b>; 3 belt stars", "<b>Cassiopeia</b> = W or M shape; visible winter early night; 5 bright stars", "<b>Pole Star (Dhruva)</b> = above Earth's axis; only star that doesn't appear to move", "Pole Star is <b>NOT visible from Southern Hemisphere</b>", "Ursa Major moves <b>around the Pole Star</b>", "Orion's 3 belt stars are near <b>Sirius</b>", "Cassiopeia resembles a <b>seated queen</b>", "<b>Light year</b> = distance light travels in 1 year (~9.46 × 10¹² km)"], "table": "<table class='data-table'><tr><th>Object</th><th>Key Fact</th></tr><tr><td><b>Universe</b></td><td>10¹¹ galaxies</td></tr><tr><td><b>Milky Way</b></td><td>Our galaxy; ~400 billion stars</td></tr><tr><td><b>Andromeda</b></td><td>Nearest galaxy to Milky Way</td></tr><tr><td><b>Sirius</b></td><td>Brightest star in night sky; Dog Star</td></tr><tr><td><b>Proxima Centauri</b></td><td>Closest star to Sun</td></tr><tr><td><b>Pulsar</b></td><td>Rotating magnetised neutron star</td></tr><tr><td><b>Asteroids</b></td><td>Between Mars &amp; Jupiter</td></tr><tr><td><b>Pole Star</b></td><td>Above Earth's axis; never moves</td></tr></table>", "mn": "<b>SOUP</b> = Sirius (Dog Star), Orion (winter), Ursa Major (summer), Pole Star (fixed) — the 4 key sky objects for SSC", "traps": ["<b>Brightest star = Sirius</b> (night sky) — NOT the Sun (Sun is a star but in daytime)", "<b>Closest star to Sun = Proxima Centauri</b> — Sirius is just the brightest in night sky", "<b>Ursa Major visible in SUMMER</b>; Orion visible in WINTER — commonly swapped", "<b>Asteroids = between Mars & Jupiter</b> — NOT between Earth & Mars", "<b>Pole Star is NOT visible from Southern Hemisphere</b>"], "revision": ["Universe = 10¹¹ galaxies", "Milky Way = our galaxy", "Andromeda = nearest galaxy", "Sirius = brightest night star = Dog Star", "Proxima Centauri = closest to Sun", "Sun mass = 99.86% of Solar System", "Sun core = 20,00,000°C", "Asteroids = Mars–Jupiter belt", "Pulsar = rotating neutron star", "Ursa Major = summer | Orion = winter", "Pole Star = doesn't move", "Cassiopeia = W or M shape"], "oneliners": ["Universe has 10¹¹ galaxies", "Solar System in Milky Way", "Andromeda = nearest galaxy to Milky Way", "Sun = Main sequence star", "Sun mass = 99.86% of SS", "Sun core = 20 lakh °C", "Sun = 13 lakh × bigger than Earth", "Sirius = brightest night star = Dog Star", "Proxima Centauri = closest star to Sun", "SuperNova = exploded primitive star", "Neutron Star = 30 km radius; very dense", "Pulsar = rotating neutron star", "Black Hole = over-massive collapsed star", "Asteroids = Mars–Jupiter belt", "Ursa Major = Big Dipper; summer visible", "Orion = winter evenings; 7–8 stars", "Cassiopeia = W/M shape; 5 stars; winter", "Pole Star = only fixed star in sky", "Pole Star = NOT visible from S. Hemisphere", "Lyman Alpha Blobs = heaviest cosmic clusters", "Light year = distance light travels in 1 year", "Corona temp = 6,000°C"], "flashcards": [{"q": "Which star is called the Dog Star?", "a": "Sirius — brightest star in night sky"}, {"q": "Closest star to our Sun?", "a": "Proxima Centauri"}, {"q": "Which galaxy contains our Solar System?", "a": "Milky Way"}, {"q": "Which is the nearest galaxy to Milky Way?", "a": "Andromeda (M31)"}, {"q": "What % of Solar System mass is in the Sun?", "a": "99.86%"}, {"q": "What is a Pulsar?", "a": "Highly magnetised rotating neutron star"}, {"q": "Asteroids are found between which planets?", "a": "Mars and Jupiter"}, {"q": "Which constellation looks like W or M?", "a": "Cassiopeia"}, {"q": "Which constellation is visible in summer evenings?", "a": "Ursa Major (Big Dipper)"}, {"q": "Which star appears fixed / never moves?", "a": "Pole Star (Dhruva)"}, {"q": "Sun's core temperature?", "a": "20,00,000°C"}, {"q": "What process powers the Sun?", "a": "Hydrogen fuses into Helium (nuclear fusion)"}], "mcqs": [{"q": "Which is the brightest star in Earth's night sky?", "opts": ["Proxima Centauri", "Sirius", "Polaris", "Betelgeuse"], "ans": 1, "exp": "Sirius (Dog Star) is the brightest star visible in Earth's night sky."}, {"q": "The closest star to our Sun is:", "opts": ["Sirius", "Barnard's Star", "Proxima Centauri", "Alpha Centauri A"], "ans": 2, "exp": "Proxima Centauri is the nearest star to our Sun at ~4.24 light years."}, {"q": "Asteroids in our Solar System orbit between:", "opts": ["Earth and Mars", "Mars and Jupiter", "Jupiter and Saturn", "Saturn and Uranus"], "ans": 1, "exp": "The Asteroid Belt lies between Mars and Jupiter."}, {"q": "Which constellation is visible in winter evenings?", "opts": ["Ursa Major", "Cassiopeia", "Orion", "Leo"], "ans": 2, "exp": "Orion (the Hunter) is visible in winter evenings in the Northern Hemisphere."}, {"q": "The Pole Star (Dhruva) is NOT visible from:", "opts": ["Northern Hemisphere", "Equator", "Arctic Circle", "Southern Hemisphere"], "ans": 3, "exp": "The Pole Star lies above the North Pole and is not visible from the Southern Hemisphere."}, {"q": "What percentage of the Solar System's mass does the Sun contain?", "opts": ["85.5%", "99.86%", "95.2%", "88.6%"], "ans": 1, "exp": "The Sun contains 99.86% of the total mass of the Solar System."}, {"q": "A Pulsar is best described as a:", "opts": ["Supernova explosion", "Black hole remnant", "Rotating magnetised neutron star", "White dwarf"], "ans": 2, "exp": "A Pulsar is a highly magnetised, rapidly rotating neutron star that emits beams of electromagnetic radiation."}, {"q": "Which galaxy is nearest to our Milky Way?", "opts": ["Triangulum Galaxy", "Large Magellanic Cloud", "Andromeda (M31)", "Whirlpool Galaxy"], "ans": 2, "exp": "Andromeda (M31) is the nearest large galaxy to the Milky Way."}, {"q": "The Sun's corona temperature is approximately:", "opts": ["1,000°C", "20,00,000°C", "6,000°C", "50,000°C"], "ans": 2, "exp": "The Sun's corona (outer atmosphere) is about 6,000°C; the core is ~20,00,000°C."}, {"q": "Ursa Major constellation is best visible during:", "opts": ["Winter mornings", "Summer evenings", "Spring mornings", "Autumn nights"], "ans": 1, "exp": "Ursa Major (Big Dipper/Saptarshi) is prominently visible during summer evenings."}, {"q": "Which object is formed when a massive star collapses beyond a neutron star?", "opts": ["Pulsar", "White Dwarf", "Asteroid", "Black Hole"], "ans": 3, "exp": "When a star is too massive to form a neutron star, it collapses into a Black Hole."}, {"q": "How many stars are approximately in the Milky Way galaxy?", "opts": ["10 billion", "100 billion", "400 billion", "1 trillion"], "ans": 2, "exp": "The Milky Way contains approximately 400 billion (4×10¹¹) stars."}, {"q": "Cassiopeia constellation looks like which shape?", "opts": ["Big spoon", "Arrow", "Cross", "Distorted W or M"], "ans": 3, "exp": "Cassiopeia looks like a distorted W or M shape and represents a seated queen."}, {"q": "Nuclear fusion in the Sun converts:", "opts": ["Helium to Hydrogen", "Carbon to Oxygen", "Hydrogen to Helium", "Nitrogen to Helium"], "ans": 2, "exp": "The Sun's energy comes from nuclear fusion where Hydrogen is converted to Helium in its core."}, {"q": "Lyman Alpha Blobs are:", "opts": ["Bright pulsars", "Heavy cluster bodies in Universe", "Type of asteroids", "Exploded supernovae"], "ans": 1, "exp": "Lyman Alpha Blobs are extremely large (up to 400,000 light-years wide) concentrations of gas in the Universe."}]},
+{"id": "solar_planets", "chapter": "Cosmos 🌌", "seqIdx": 1, "xp": 60, "icon": "🪐", "title": "Solar System Planets", "facts": ["<b>Mercury</b>: 0 moons; 88-day revolution; fastest planet; nearest to Sun; greatest diurnal temp range", "<b>Venus</b>: 0 moons; 225-day revolution; <b>475°C</b>; hottest planet; brightest planet; Earth's Twin", "Venus = <b>Morning Star + Evening Star</b>; atmosphere = <b>97% CO₂</b>; clouds of <b>Sulphuric Acid</b>", "<b>Earth</b>: 1 moon; 365.25-day revolution; Blue Planet; Densest planet; Life exists", "<b>Mars</b>: 2 moons (Phobos, Deimos); 687-day revolution; Red Planet (iron oxide); CO₂ atmosphere", "Smallest satellite = <b>Deimos</b> (Mars's moon)", "<b>Jupiter</b>: <b>95 moons</b>; 12-year revolution; <b>-123°C</b>; Biggest planet; Gas giant", "Jupiter = <b>Big Red Spot</b> (giant storm); <b>Lord of Heavens</b>; biggest satellite = <b>Ganymede</b>", "<b>Saturn</b>: <b>146 moons</b> (highest); 29.5-year revolution; <b>-178°C</b>; 2nd largest; <b>7 rings</b>", "Saturn = least dense planet; last visible by <b>naked eye</b>; largest satellite = <b>Titan</b>", "<b>Uranus</b>: 27 moons; 84-year revolution; <b>-224°C</b> (coldest); Green Planet; <b>5 rings</b>", "Uranus discovered by <b>William Herschel (1781)</b>; Ice giant; 3rd largest", "<b>Neptune</b>: 14 moons; 165-year revolution; <b>-214°C</b>; farthest from Sun; 1 day = ~16 hours", "<b>Pluto</b>: discovered 1930 by <b>Clyde Tombaugh</b>; demoted to dwarf planet by <b>IAU in 2006</b>", "Total dwarf planets = <b>7</b> (Pluto, Haumea, Makemake, Eris, Hygiea, Ceres, Sedna)", "Gas Giants: <b>Jupiter, Saturn</b> | Ice Giants: <b>Uranus, Neptune</b>", "All 4 outer planets have rings: <b>Jupiter, Saturn, Uranus, Neptune</b>", "Moon weight vs Earth weight = <b>1/6th</b>; Moon diameter = <b>1/4 of Earth</b>", "Planet with most satellites = <b>Saturn (146)</b>", "Biggest satellite in Solar System = <b>Ganymede</b> (Jupiter's moon)", "Hottest planet = <b>Venus (475°C)</b> — not Mercury despite being nearest to Sun", "Coldest planet = <b>Uranus (-224°C)</b> — not Neptune despite being farther", "Smallest planet = <b>Mercury</b>; Biggest = <b>Jupiter</b>", "Nearest planet to Earth = <b>Venus</b>"], "table": "<table class='data-table'><tr><th>Planet</th><th>Revolution</th><th>Key Fact</th></tr><tr><td><b>Mercury</b></td><td>88 days</td><td>Nearest to Sun; Fastest; No moon</td></tr><tr><td><b>Venus</b></td><td>225 days</td><td>Hottest (475°C); Brightest; Earth's Twin</td></tr><tr><td><b>Earth</b></td><td>365.25 days</td><td>Blue Planet; Densest; Life</td></tr><tr><td><b>Mars</b></td><td>687 days</td><td>Red Planet; 2 moons</td></tr><tr><td><b>Jupiter</b></td><td>12 years</td><td>Biggest; 95 moons; Big Red Spot</td></tr><tr><td><b>Saturn</b></td><td>29.5 years</td><td>146 moons; 7 rings; Least dense</td></tr><tr><td><b>Uranus</b></td><td>84 years</td><td>Coldest (-224°C); Green; 5 rings</td></tr><tr><td><b>Neptune</b></td><td>165 years</td><td>Farthest; 14 moons</td></tr></table>", "mn": "<b>My Very Educated Mother Just Served Us Noodles</b> = Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune. <b>Hot Cold trick</b>: Venus = Hottest (nearest blanket effect); Uranus = Coldest (axial tilt traps cold)", "traps": ["<b>Hottest = Venus</b> (not Mercury) — Venus has thick CO₂ atmosphere causing greenhouse effect", "<b>Coldest = Uranus (-224°C)</b>, not Neptune (-214°C) — despite Neptune being farther", "<b>Most moons = Saturn (146)</b>, not Jupiter (Jupiter has 95)", "<b>Biggest satellite = Ganymede</b> (Jupiter) — Saturn's largest is Titan, not Ganymede", "<b>Pluto is a dwarf planet since 2006</b> (IAU decision) — 7 dwarf planets total", "<b>Green planet = Uranus</b> (due to high sulphur content / methane)", "Saturn last visible by naked eye — Uranus/Neptune need telescope"], "revision": ["Mercury: 0 moons; 88 days", "Venus: 0 moons; 225 days; Hottest 475°C", "Earth: 1 moon; 365.25 days", "Mars: 2 moons (Phobos/Deimos); 687 days", "Jupiter: 95 moons; 12 years; Biggest", "Saturn: 146 moons; 29.5 years; 7 rings", "Uranus: 27 moons; 84 years; Coldest -224°C", "Neptune: 14 moons; 165 years; Farthest", "Ganymede = biggest satellite (Jupiter)", "Deimos = smallest satellite (Mars)", "Titan = Saturn's largest moon", "Pluto = dwarf planet since 2006"], "oneliners": ["Mercury = nearest to Sun; 0 moons; 88 days", "Venus = hottest (475°C); brightest; Earth's twin", "Venus = Morning + Evening Star; 97% CO₂", "Earth = Blue planet; densest; 1 moon", "Mars = Red planet; Phobos + Deimos", "Jupiter = biggest; 95 moons; Big Red Spot", "Saturn = 146 moons; 7 rings; least dense", "Uranus = coldest (-224°C); green; 5 rings; 84 years", "Neptune = farthest; 14 moons; 165 years", "Ganymede = biggest satellite in Solar System (Jupiter)", "Deimos = smallest satellite (Mars)", "Titan = Saturn's largest moon", "Gas giants = Jupiter, Saturn", "Ice giants = Uranus, Neptune", "All 4 outer planets have rings", "Pluto demoted 2006 by IAU", "7 dwarf planets total", "Saturn last visible by naked eye", "Moon = 1/6 Earth weight; 1/4 Earth diameter", "Hottest ≠ Nearest to Sun (Venus vs Mercury)"], "flashcards": [{"q": "Which is the hottest planet?", "a": "Venus (475°C) — thick CO₂ atmosphere"}, {"q": "Which is the coldest planet?", "a": "Uranus (-224°C) — not Neptune"}, {"q": "Which planet has the most moons?", "a": "Saturn (146 moons)"}, {"q": "What is the biggest satellite in the Solar System?", "a": "Ganymede (moon of Jupiter)"}, {"q": "Which planet is known as the Green Planet?", "a": "Uranus (due to sulphur/methane)"}, {"q": "When was Pluto demoted to dwarf planet?", "a": "2006 by IAU (International Astronomical Union)"}, {"q": "Which is the least dense planet?", "a": "Saturn"}, {"q": "What is Jupiter's famous giant storm called?", "a": "Great Red Spot"}, {"q": "Which planet has 7 rings?", "a": "Saturn"}, {"q": "Who discovered Uranus?", "a": "William Herschel (1781)"}, {"q": "How long is Saturn's revolution around the Sun?", "a": "29.5 years"}, {"q": "Which planet is farthest from the Sun?", "a": "Neptune"}], "mcqs": [{"q": "Which planet is called 'Earth's Twin' or 'Sister Planet'?", "opts": ["Mars", "Mercury", "Venus", "Saturn"], "ans": 2, "exp": "Venus is called Earth's Twin because of similar size and mass. It is also the brightest planet and Morning/Evening Star."}, {"q": "Which planet has the highest number of moons?", "opts": ["Jupiter (95)", "Saturn (146)", "Uranus (27)", "Neptune (14)"], "ans": 1, "exp": "Saturn has 146 known moons, the highest number among all planets. Jupiter has 95."}, {"q": "The biggest satellite in the entire Solar System is:", "opts": ["Titan (Saturn)", "Deimos (Mars)", "Ganymede (Jupiter)", "Charon (Pluto)"], "ans": 2, "exp": "Ganymede, a moon of Jupiter, is the largest satellite in the Solar System — even larger than Mercury."}, {"q": "Pluto was classified as a Dwarf Planet in which year?", "opts": ["1930", "1992", "2000", "2006"], "ans": 3, "exp": "The International Astronomical Union (IAU) demoted Pluto to Dwarf Planet status in 2006."}, {"q": "Which gas giant planet has 7 distinct rings?", "opts": ["Jupiter", "Uranus", "Saturn", "Neptune"], "ans": 2, "exp": "Saturn is famous for its 7 prominent rings made of ice and rock particles."}, {"q": "The Great Red Spot on Jupiter is:", "opts": ["A volcanic eruption", "A giant storm", "A crater", "An ocean"], "ans": 1, "exp": "Jupiter's Great Red Spot is a giant storm/anticyclone that has persisted for centuries."}, {"q": "Which planet is called the Green Planet?", "opts": ["Neptune", "Mars", "Earth", "Uranus"], "ans": 3, "exp": "Uranus appears green-blue due to methane in its atmosphere and is specifically called the Green Planet."}, {"q": "Venus rotates in which direction (compared to Earth)?", "opts": ["Same direction", "Retrograde (opposite)", "Doesn't rotate", "Tilted 90°"], "ans": 1, "exp": "Venus rotates retrograde (east to west), opposite to most other planets. The Sun rises in the west on Venus."}, {"q": "Which is the smallest planet in the Solar System?", "opts": ["Pluto", "Mars", "Mercury", "Venus"], "ans": 2, "exp": "Mercury is the smallest planet (Pluto is a dwarf planet, not a planet)."}, {"q": "Saturn can be seen with the naked eye up to which planet?", "opts": ["Jupiter", "Saturn", "Uranus", "Neptune"], "ans": 1, "exp": "Saturn is the last planet visible to the naked eye. Uranus and Neptune require telescopes."}, {"q": "Which planet has revolution period of 84 years?", "opts": ["Saturn", "Neptune", "Jupiter", "Uranus"], "ans": 3, "exp": "Uranus takes 84 Earth years to complete one revolution around the Sun."}, {"q": "The atmosphere of Venus mainly consists of:", "opts": ["Nitrogen", "Oxygen", "97% CO₂", "Methane"], "ans": 2, "exp": "Venus's atmosphere is about 97% carbon dioxide with clouds of sulphuric acid, causing extreme greenhouse effect."}, {"q": "Gas Giants in our Solar System are:", "opts": ["Earth and Venus", "Mars and Jupiter", "Jupiter and Saturn", "Uranus and Neptune"], "ans": 2, "exp": "Jupiter and Saturn are Gas Giants. Uranus and Neptune are Ice Giants."}, {"q": "Mars has how many moons?", "opts": ["0", "1", "2", "4"], "ans": 2, "exp": "Mars has 2 moons: Phobos (larger) and Deimos (smallest moon in Solar System)."}, {"q": "Which planet takes approximately 165 years to orbit the Sun?", "opts": ["Uranus", "Saturn", "Pluto", "Neptune"], "ans": 3, "exp": "Neptune takes about 165 Earth years to complete one revolution around the Sun."}]},
+// ── CHAPTER 2 ── PLANET EARTH
+{"id": "earth_facts", "chapter": "Planet Earth 🌍", "seqIdx": 2, "xp": 50, "icon": "🌍", "title": "Facts About Earth", "facts": ["Earth's distance from Sun = <b>14.96 crore km (149 million km)</b>", "Earth's water cover = <b>71.96%</b> of surface", "Earth's shape = <b>Oblate Spheroid</b> — flattened at poles, bulge at equator", "Earth's circumference = <b>40,232 km</b>", "Earth's total area = <b>510 million sq km</b>", "Polar radius = <b>6,357 km</b> | Equatorial radius = <b>6,378 km</b>", "Equatorial diameter = <b>12,756 km</b> | Polar diameter = <b>12,714 km</b>", "Rotation period = <b>23 hrs 56 min 4 sec</b> (Sidereal day)", "Revolution period = <b>365 days 6 hrs</b> (~365¼ days)", "Revolution speed = <b>29.8 km/sec</b>", "Equatorial rotation speed = <b>1,667 km/h</b> (decreases to 0 at poles)", "<b>Perihelion</b> = Earth nearest to Sun = <b>January 3</b> (147 million km)", "<b>Aphelion</b> = Earth farthest from Sun = <b>July 4</b> (152 million km)", "Sunlight takes <b>8 minutes 18 seconds</b> to reach Earth", "Highest point = <b>Mt. Everest (8,848.86 m)</b>", "Deepest point = <b>Mariana Trench</b> — Pacific Ocean (10,994 m)", "Longest day in N. Hemisphere = <b>June 21</b> (Summer Solstice)", "Shortest day in N. Hemisphere = <b>December 22</b> (Winter Solstice)", "Equinox = Day equals night = <b>March 21</b> (Spring) & <b>Sept 23</b> (Autumn)", "Rotation causes: <b>days & nights</b>, 1-hour difference per 15°", "Revolution causes: <b>change of seasons</b>, variation in day/night lengths", "Earth is the <b>densest planet</b> in Solar System", "Earth is called the <b>Blue Planet</b> due to 71.96% water cover", "Seasons occur due to Earth's <b>axial tilt (23½°)</b> — NOT due to distance from Sun"], "table": "<table class='data-table'><tr><th>Feature</th><th>Value</th></tr><tr><td><b>Shape</b></td><td>Oblate Spheroid</td></tr><tr><td><b>Circumference</b></td><td>40,232 km</td></tr><tr><td><b>Equatorial Radius</b></td><td>6,378 km</td></tr><tr><td><b>Polar Radius</b></td><td>6,357 km</td></tr><tr><td><b>Rotation</b></td><td>23 hr 56 min 4 sec</td></tr><tr><td><b>Revolution</b></td><td>365 days 6 hrs</td></tr><tr><td><b>Perihelion</b></td><td>Jan 3 (147 mn km)</td></tr><tr><td><b>Aphelion</b></td><td>July 4 (152 mn km)</td></tr><tr><td><b>Deepest</b></td><td>Mariana Trench (-10,994 m)</td></tr><tr><td><b>Highest</b></td><td>Mt. Everest (+8,848.86 m)</td></tr></table>", "mn": "<b>PAJ</b> = Perihelion in JAnuary (closer, colder N. Hemisphere), Aphelion in July (farther, summer N. Hemisphere). Seasons = TILT not DISTANCE.", "traps": ["<b>Seasons are caused by Earth's axial tilt (23½°)</b>, NOT by distance from Sun", "<b>Perihelion = January 3</b> (Earth nearest to Sun) — yet N. Hemisphere has winter (due to tilt)", "<b>Rotation = 23 hr 56 min 4 sec</b> (sidereal day, not exactly 24 hrs)", "<b>Equatorial radius > Polar radius</b> (6,378 vs 6,357) — Earth is wider at equator", "<b>Sunlight takes 8 min 18 sec</b> — not '8 minutes' exactly"], "revision": ["Shape = Oblate Spheroid", "Rotation = 23 hr 56 min 4 sec", "Revolution = 365¼ days", "Perihelion = Jan 3 (nearest)", "Aphelion = July 4 (farthest)", "Sunlight = 8 min 18 sec", "Mariana Trench = deepest (10,994m)", "Everest = highest (8,848.86m)", "June 21 = longest day N.H.", "Dec 22 = shortest day N.H.", "Equinox = March 21 & Sept 23", "Seasons due to axial tilt not distance"], "oneliners": ["Earth = Oblate Spheroid", "71.96% Earth surface = water", "Earth circumference = 40,232 km", "Equatorial radius = 6,378 km; Polar = 6,357 km", "Rotation = 23 hr 56 min 4 sec", "Revolution = 365 days 6 hrs at 29.8 km/sec", "Perihelion = Jan 3 (nearest to Sun)", "Aphelion = July 4 (farthest from Sun)", "Sunlight = 8 min 18 sec to reach Earth", "Deepest = Mariana Trench (10,994m) Pacific", "Highest = Mt. Everest (8,848.86m)", "Longest day N.H. = June 21", "Shortest day N.H. = Dec 22", "Equinox = March 21 + Sept 23 (day = night)", "Seasons = axial tilt NOT distance", "Earth = densest planet in Solar System", "Earth = Blue Planet", "Equatorial rotation speed = 1,667 km/h", "1,667 km/h at equator → 0 at poles", "Earth's area = 510 million sq km"], "flashcards": [{"q": "What is the shape of the Earth?", "a": "Oblate Spheroid — flattened at poles, bulge at equator"}, {"q": "When is Earth closest to the Sun (Perihelion)?", "a": "January 3 (147 million km)"}, {"q": "When is Earth farthest from the Sun (Aphelion)?", "a": "July 4 (152 million km)"}, {"q": "How long does sunlight take to reach Earth?", "a": "8 minutes 18 seconds"}, {"q": "What is the deepest point on Earth?", "a": "Mariana Trench, Pacific Ocean (10,994 m)"}, {"q": "What causes seasons on Earth?", "a": "Axial tilt of 23½° — NOT distance from Sun"}, {"q": "Earth's rotation period (sidereal day)?", "a": "23 hours 56 minutes 4 seconds"}, {"q": "Longest day in Northern Hemisphere?", "a": "June 21 (Summer Solstice)"}, {"q": "Equatorial radius vs Polar radius?", "a": "Equatorial (6,378 km) > Polar (6,357 km)"}, {"q": "Earth's revolution speed?", "a": "29.8 km/sec"}], "mcqs": [{"q": "The shape of the Earth is technically called:", "opts": ["Sphere", "Geoid", "Oblate Spheroid", "Prolate Spheroid"], "ans": 2, "exp": "Earth is an Oblate Spheroid — slightly flattened at the poles and bulging at the equator."}, {"q": "Earth is nearest to the Sun (Perihelion) on:", "opts": ["June 21", "July 4", "January 3", "March 21"], "ans": 2, "exp": "Perihelion occurs on January 3, when Earth is at 147 million km from the Sun."}, {"q": "Seasons on Earth are caused primarily by:", "opts": ["Earth's distance from Sun", "Earth's axial tilt of 23½°", "Revolution speed", "Earth's shape"], "ans": 1, "exp": "Seasons are caused by Earth's axial tilt (23½°), not its distance from the Sun."}, {"q": "The Mariana Trench, the deepest point on Earth, is located in:", "opts": ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"], "ans": 3, "exp": "The Mariana Trench lies in the western Pacific Ocean at a depth of ~10,994 m."}, {"q": "How long does light from the Sun take to reach Earth?", "opts": ["3 min 20 sec", "5 min 30 sec", "8 min 18 sec", "12 min 40 sec"], "ans": 2, "exp": "Light from the Sun travels at 3×10⁸ m/s and takes approximately 8 minutes 18 seconds to reach Earth."}, {"q": "Earth's rotation period (sidereal day) is:", "opts": ["24 hours exactly", "23 hr 56 min 4 sec", "23 hr 30 min", "24 hr 6 min"], "ans": 1, "exp": "Earth's actual rotation period is 23 hours 56 minutes 4 seconds, also called a sidereal day."}, {"q": "The Summer Solstice (longest day in Northern Hemisphere) occurs on:", "opts": ["March 21", "June 21", "September 23", "December 22"], "ans": 1, "exp": "June 21 is the Summer Solstice when the Sun is directly over the Tropic of Cancer, giving the longest day in N. Hemisphere."}, {"q": "Earth's equatorial rotation speed is approximately:", "opts": ["500 km/h", "1,000 km/h", "1,667 km/h", "3,000 km/h"], "ans": 2, "exp": "Earth rotates at about 1,667 km/h at the equator, decreasing to zero at the poles."}, {"q": "Earth's equatorial radius compared to its polar radius:", "opts": ["Equal", "Equatorial is greater", "Polar is greater", "Varies seasonally"], "ans": 1, "exp": "Earth's equatorial radius (6,378 km) is larger than its polar radius (6,357 km) due to the oblate spheroid shape."}, {"q": "The Vernal (Spring) Equinox occurs on approximately:", "opts": ["June 21", "December 22", "March 21", "January 3"], "ans": 2, "exp": "The Spring Equinox (Vernal Equinox) occurs around March 21, when day and night are equal everywhere."}, {"q": "Earth's distance from the Sun is approximately:", "opts": ["14.96 crore km", "10 crore km", "20 crore km", "5 crore km"], "ans": 0, "exp": "Earth is approximately 14.96 crore km (149.6 million km) from the Sun on average."}, {"q": "The shortest day in the Northern Hemisphere occurs on:", "opts": ["September 23", "March 21", "December 22", "June 21"], "ans": 2, "exp": "December 22 is the Winter Solstice, giving the shortest day in the Northern Hemisphere."}, {"q": "What percentage of Earth's surface is covered by water?", "opts": ["60.5%", "65.2%", "71.96%", "75.4%"], "ans": 2, "exp": "Approximately 71.96% of Earth's surface is covered by water."}, {"q": "Earth's revolution speed around the Sun is:", "opts": ["15.5 km/sec", "22.0 km/sec", "29.8 km/sec", "35.4 km/sec"], "ans": 2, "exp": "Earth orbits the Sun at approximately 29.8 km/sec."}, {"q": "Which is Earth's densest quality that distinguishes it in Solar System?", "opts": ["Largest planet", "Most moons", "Densest planet", "Fastest rotation"], "ans": 2, "exp": "Earth is the densest planet in the Solar System with a mean density of 5.51 g/cm³."}]},
+{"id": "lat_long_time", "chapter": "Planet Earth 🌍", "seqIdx": 3, "xp": 60, "icon": "🌐", "title": "Latitude, Longitude & Time Zones", "facts": ["Equator = <b>0° latitude</b>; North Pole = <b>90°N</b>; South Pole = <b>90°S</b>", "Total latitudes = <b>181</b> (including equator) | 1° latitude = <b>111 km</b>", "Greatest circle = <b>Equator</b> | Distance between 2 parallels = always equal", "Tropic of Cancer = <b>23½°N</b> | Tropic of Capricorn = <b>23½°S</b>", "Arctic Circle = <b>66½°N</b> | Antarctic Circle = <b>66½°S</b>", "Prime Meridian = <b>0° longitude</b> through <b>Greenwich, London</b>", "Total meridians = <b>360</b> | Distance between meridians decreases toward poles (NOT equal)", "IST = <b>82½°E Meridian</b> through <b>Mirzapur, Uttar Pradesh</b>", "IST is <b>5 hours 30 minutes ahead of GMT</b>", "Time lag Gujarat to Arunachal Pradesh = <b>2 hours</b> (Sun rises 2 hrs earlier in east)", "1° longitude = <b>4 minutes</b> time difference | 15° = <b>1 hour</b>", "<b>International Date Line (IDL)</b> = 180° meridian over Pacific Ocean; zig-zag line", "Crossing IDL East→West (Japan→USA) = <b>Lose a day</b>", "Crossing IDL West→East (USA→Japan) = <b>Gain a day</b>", "Summer Solstice = June 21; Sun directly over <b>Tropic of Cancer</b>", "Winter Solstice = Dec 22; Sun directly over <b>Tropic of Capricorn</b>", "Equinox = day = night; March 21 (Spring) & Sept 23 (Autumn)", "<b>Tropic of Cancer passes through 8 Indian states</b>: Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, WB, Tripura, Mizoram", "<b>Mahi River</b> crosses Tropic of Cancer <b>twice</b>", "Equator passes through <b>13 countries, 3 continents, 3 oceans</b>", "All 3 (Tropic of Cancer, Equator, Tropic of Capricorn) pass through <b>Africa</b>", "Prime Meridian + Tropic of Cancer = <b>Algeria</b>", "Prime Meridian + Equator = <b>Gulf of Guinea (Atlantic Ocean)</b>", "<b>Horse Latitude</b> = 30–35°N & S; high pressure; calm winds; little rainfall"], "table": "<table class='data-table'><tr><th>Line</th><th>Degree</th><th>Key Fact</th></tr><tr><td><b>Equator</b></td><td>0°</td><td>Greatest circle; 13 countries</td></tr><tr><td><b>Tropic of Cancer</b></td><td>23½°N</td><td>8 Indian states; Sun Jun 21</td></tr><tr><td><b>Tropic of Capricorn</b></td><td>23½°S</td><td>S. America, Africa, Australia</td></tr><tr><td><b>Arctic Circle</b></td><td>66½°N</td><td>Midnight sun in summer</td></tr><tr><td><b>Antarctic Circle</b></td><td>66½°S</td><td>Midnight sun in summer</td></tr><tr><td><b>Prime Meridian</b></td><td>0°</td><td>Greenwich, London</td></tr><tr><td><b>IST Meridian</b></td><td>82½°E</td><td>Mirzapur, UP; GMT+5:30</td></tr><tr><td><b>IDL</b></td><td>180°</td><td>Pacific; zig-zag; date changes</td></tr></table>", "mn": "<b>GRMAJ</b> = Gujarat, Rajasthan, MP, CG (Chhattisgarh), JH (Jharkhand), WB, Tripura, Mizoram — 8 states on Tropic of Cancer. Mnemonic: <b>GuRu MaCh JaTrMi</b>", "traps": ["<b>IST = 82½°E through Mirzapur</b> (NOT 82°E; NOT through Allahabad or Varanasi directly)", "<b>IDL = 180° but NOT a straight line</b> — it zig-zags to avoid island groups", "Crossing IDL <b>West→East = Gain a day</b>; East→West = Lose a day (commonly reversed)", "Distance between meridians is <b>NOT equal</b> — decreases toward poles (unlike latitudes)", "<b>Horse Latitude = 30–35°N/S</b>, NOT at 0° or 90°", "Prime Meridian + Equator meet in <b>Gulf of Guinea</b> (in ocean, not on land)"], "revision": ["IST = 82½°E Mirzapur", "GMT+5:30 = IST", "IDL = 180° Pacific zig-zag", "1° lat = 111 km", "1° long = 4 min time", "15° long = 1 hour time", "Tropic of Cancer = 8 Indian states", "Mahi River crosses Cancer twice", "Equator = 13 countries 3 continents", "All 3 tropics pass through Africa", "Horse Latitude = 30-35°N/S", "E→W across IDL = lose a day"], "oneliners": ["Equator = 0° latitude; greatest circle", "Total latitudes = 181", "1° latitude = 111 km always equal", "Tropic of Cancer = 23½°N", "Tropic of Capricorn = 23½°S", "Arctic Circle = 66½°N", "Prime Meridian = 0° through Greenwich", "Total meridians = 360", "IST = 82½°E = Mirzapur UP", "IST = GMT + 5:30 hours", "1° longitude = 4 minutes time", "15° longitude = 1 hour time", "IDL = 180° Pacific; zig-zag", "East→West IDL = lose a day", "8 Indian states on Tropic of Cancer", "Mahi River crosses Cancer twice", "Equator: 13 countries, 3 continents, 3 oceans", "Africa: all 3 tropics pass through", "Horse Latitude = 30-35°N/S high pressure", "Summer Solstice June 21 = Sun over Cancer"], "flashcards": [{"q": "What meridian does IST follow?", "a": "82½°E passing through Mirzapur, Uttar Pradesh"}, {"q": "IST is ahead of GMT by how much?", "a": "5 hours 30 minutes"}, {"q": "What is the International Date Line?", "a": "180° meridian over Pacific Ocean; zig-zag line"}, {"q": "Which 8 Indian states does Tropic of Cancer pass through?", "a": "Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, WB, Tripura, Mizoram"}, {"q": "Which river crosses Tropic of Cancer twice?", "a": "Mahi River (India)"}, {"q": "How many countries does the Equator pass through?", "a": "13 countries across 3 continents"}, {"q": "Horse Latitude is located at:", "a": "30–35°N and S — high pressure, calm winds"}, {"q": "1° longitude time difference?", "a": "4 minutes"}, {"q": "Where do Prime Meridian and Equator meet?", "a": "Gulf of Guinea (Atlantic Ocean)"}, {"q": "Which continent do all 3 tropics pass through?", "a": "Africa"}], "mcqs": [{"q": "The Standard Meridian of India (IST) passes through:", "opts": ["Allahabad", "Varanasi", "Mirzapur", "Lucknow"], "ans": 2, "exp": "The Indian Standard Time meridian (82½°E) passes through Mirzapur, Uttar Pradesh."}, {"q": "IST is ahead of GMT by:", "opts": ["4 hours 30 minutes", "5 hours", "5 hours 30 minutes", "6 hours"], "ans": 2, "exp": "Indian Standard Time (IST) is GMT + 5 hours 30 minutes."}, {"q": "The International Date Line is located at:", "opts": ["0° longitude", "90° E longitude", "180° longitude", "66½° N latitude"], "ans": 2, "exp": "The International Date Line is at 180° longitude in the Pacific Ocean, though it zig-zags to avoid island groups."}, {"q": "How many Indian states does the Tropic of Cancer pass through?", "opts": ["6", "7", "8", "9"], "ans": 2, "exp": "The Tropic of Cancer passes through 8 Indian states: Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, WB, Tripura, Mizoram."}, {"q": "Which river in India crosses the Tropic of Cancer twice?", "opts": ["Narmada", "Ganga", "Sabarmati", "Mahi"], "ans": 3, "exp": "The Mahi River crosses the Tropic of Cancer twice due to its meandering course in Gujarat."}, {"q": "The Equator passes through how many countries?", "opts": ["8", "10", "13", "16"], "ans": 2, "exp": "The Equator passes through 13 countries across 3 continents (Africa, South America, Asia) and 3 oceans."}, {"q": "1° difference in longitude equals how much time?", "opts": ["1 minute", "2 minutes", "4 minutes", "15 minutes"], "ans": 2, "exp": "Earth rotates 360° in 24 hours, so 1° = 24×60/360 = 4 minutes of time difference."}, {"q": "Horse Latitude is found at approximately:", "opts": ["0°", "23½°N & S", "30–35°N & S", "60°N & S"], "ans": 2, "exp": "Horse Latitude (30–35°N and S) is characterized by high pressure, calm winds, and little rainfall."}, {"q": "The Prime Meridian and Equator intersect in:", "opts": ["Mediterranean Sea", "Gulf of Aden", "Gulf of Guinea", "North Sea"], "ans": 2, "exp": "The Prime Meridian (0°) and Equator (0°) intersect in the Gulf of Guinea in the Atlantic Ocean."}, {"q": "Which of the following is NOT correct about the Tropic of Cancer?", "opts": ["It is 23½°N", "Sun is directly over it on June 21", "It passes through 8 Indian states", "It is 66½°N"], "ans": 3, "exp": "The Tropic of Cancer is at 23½°N, not 66½°N. 66½°N is the Arctic Circle."}, {"q": "When crossing IDL from East to West (Japan to USA), you:", "opts": ["Gain a day", "Lose a day", "No change", "Lose 12 hours"], "ans": 1, "exp": "Crossing IDL from East to West (e.g. from Asia to USA) means you lose a calendar day."}, {"q": "The distance between two meridians of longitude:", "opts": ["Is always equal like latitudes", "Is greatest at equator and zero at poles", "Is zero at equator", "Is greatest at poles"], "ans": 1, "exp": "Unlike latitudes, the distance between meridians is not equal — it is maximum at the equator and reduces to zero at the poles."}, {"q": "Which continent do ALL THREE of these pass through: Tropic of Cancer, Equator, Tropic of Capricorn?", "opts": ["Asia", "South America", "Africa", "Australia"], "ans": 2, "exp": "Africa is the only continent through which all three major parallels pass: Tropic of Cancer, Equator, and Tropic of Capricorn."}, {"q": "Arctic Circle is located at:", "opts": ["23½°N", "45°N", "60°N", "66½°N"], "ans": 3, "exp": "The Arctic Circle is located at 66½°N latitude. The Antarctic Circle is at 66½°S."}, {"q": "The time difference between Gujarat and Arunachal Pradesh is approximately:", "opts": ["30 minutes", "1 hour", "2 hours", "3 hours"], "ans": 2, "exp": "Due to India's east-west extent of about 30°, there is approximately a 2-hour difference in sunrise times between Gujarat (west) and Arunachal Pradesh (east)."}]},
+// ── CHAPTER 3 ── INDIA
+{"id": "india_basics", "chapter": "India 🇮🇳", "seqIdx": 4, "xp": 60, "icon": "🇮🇳", "title": "India — Location, Facts & National Symbols", "facts": ["India's latitudinal extent = <b>8°4'N to 37°6'N</b> | Longitudinal = <b>68°7'E to 97°25'E</b>", "India's area = <b>3.28 million sq km</b> = <b>7th largest</b> country in world", "India's share of world area = <b>2.4%</b>", "Total land boundary = <b>~15,200 km</b>", "Coastline <b>with islands = 7,516.6 km</b> | without islands = 6,100 km", "India has <b>28 States</b> and <b>8 UTs</b>", "IST meridian = <b>82°30'E</b> through Mirzapur, UP | IST = GMT + 5:30", "Biggest state (area) = <b>Rajasthan</b> | Smallest = <b>Goa</b>", "Biggest UT (area) = <b>Ladakh</b> | Smallest UT = <b>Lakshadweep</b>", "Biggest state (population) = <b>Uttar Pradesh</b> | Smallest = <b>Sikkim</b>", "<b>National Animal = Bengal Tiger</b> | National Heritage Animal = Elephant", "<b>National Bird = Peacock</b> | National Tree = Banyan | National Flower = Lotus", "National Anthem = <b>Jana Gana Mana</b> (Rabindranath Tagore)", "National Song = <b>Vande Mataram</b> (Bankim Chandra Chattopadhyay)", "National Aquatic Animal = <b>River Dolphin (Gangetic Dolphin)</b> — NOT Whale", "National River = <b>Ganga</b> | National Vegetable = <b>Pumpkin</b> (not Potato!)", "National Game = <b>Hockey</b> | National Reptile = <b>King Cobra</b>", "<b>Lakshadweep</b> = 30 islands; only 10 inhabited; capital = <b>Kavaratti</b>", "Lakshadweep = coral islands; population = <b>Mappila</b> from Kerala", "<b>8° Channel</b> separates Minicoy (Lakshadweep) & Maldives", "<b>Andaman & Nicobar</b> = 572 islands; capital = <b>Port Blair</b>", "<b>10° Channel</b> separates Andaman & Nicobar", "India's only active volcano = <b>Barren Island</b> (Andaman)", "<b>Southernmost point = Indira Point</b> on Great Nicobar Island", "Tribes of Andaman: <b>Onges, Sentinelese, Jarawas, Shompens</b>"], "table": "<table class='data-table'><tr><th>National Symbol</th><th>Name</th></tr><tr><td><b>Animal</b></td><td>Bengal Tiger</td></tr><tr><td><b>Heritage Animal</b></td><td>Elephant</td></tr><tr><td><b>Bird</b></td><td>Peacock</td></tr><tr><td><b>Tree</b></td><td>Banyan Tree</td></tr><tr><td><b>Flower</b></td><td>Lotus</td></tr><tr><td><b>Aquatic Animal</b></td><td>River Dolphin</td></tr><tr><td><b>River</b></td><td>Ganga</td></tr><tr><td><b>Vegetable</b></td><td>Pumpkin</td></tr><tr><td><b>Game</b></td><td>Hockey</td></tr><tr><td><b>Anthem</b></td><td>Jana Gana Mana (Tagore)</td></tr><tr><td><b>Song</b></td><td>Vande Mataram (Bankim Chandra)</td></tr><tr><td><b>Calendar</b></td><td>Saka Calendar</td></tr></table>", "mn": "<b>TAPE BRG</b> = Tiger (Animal), Aquatic (Dolphin), Peacock (Bird), Elephant (Heritage), Banyan (tree), River Ganga, Game Hockey. For vegetable remember: <b>Pumpkin ≠ Potato</b>", "traps": ["<b>National Game = Hockey</b> — NOT Cricket (cricket is most popular but not official)", "<b>National Vegetable = Pumpkin</b> — most confuse it with Potato", "<b>National Aquatic Animal = River Dolphin</b> — NOT Whale or regular Dolphin", "<b>National Heritage Animal = Elephant</b> (separate from National Animal = Tiger)", "<b>Jana Gana Mana = Tagore</b> | Vande Mataram = Bankim Chandra Chattopadhyay", "<b>8° Channel = Minicoy & Maldives</b> | 10° Channel = Andaman & Nicobar", "<b>Coastline with islands = 7,516.6 km</b>; WITHOUT islands = 6,100 km"], "revision": ["India = 7th largest; 3.28 mn sq km", "Coastline with islands = 7,516.6 km", "Biggest state = Rajasthan", "Smallest state = Goa", "Biggest UT area = Ladakh", "Smallest UT = Lakshadweep", "National Animal = Bengal Tiger", "National Bird = Peacock", "National Game = Hockey (not Cricket!)", "National Vegetable = Pumpkin", "8° Channel = Minicoy-Maldives", "10° Channel = Andaman-Nicobar", "Barren Island = India's only active volcano", "Indira Point = southernmost India"], "oneliners": ["India = 7th largest country in world", "India area = 3.28 mn sq km", "Land boundary = 15,200 km", "Coastline with islands = 7,516.6 km", "28 States + 8 UTs", "Biggest state area = Rajasthan", "Smallest state = Goa", "Biggest UT = Ladakh", "Smallest UT = Lakshadweep", "National Animal = Bengal Tiger", "National Heritage Animal = Elephant", "National Bird = Peacock", "National Tree = Banyan", "National Flower = Lotus", "National Aquatic Animal = River Dolphin", "National River = Ganga", "National Vegetable = Pumpkin", "National Game = Hockey", "National Reptile = King Cobra", "Jana Gana Mana = Tagore", "Vande Mataram = Bankim Chandra", "Lakshadweep capital = Kavaratti", "10° Channel = Andaman-Nicobar", "8° Channel = Minicoy-Maldives", "Barren Island = India's only active volcano", "Indira Point = southernmost point"], "flashcards": [{"q": "What is India's National Vegetable?", "a": "Pumpkin (NOT Potato — common SSC trap)"}, {"q": "What is India's National Game?", "a": "Hockey (NOT Cricket)"}, {"q": "Who composed Jana Gana Mana?", "a": "Rabindranath Tagore"}, {"q": "Who wrote Vande Mataram?", "a": "Bankim Chandra Chattopadhyay"}, {"q": "Which channel separates Andaman and Nicobar?", "a": "10° Channel"}, {"q": "Which channel separates Minicoy from Maldives?", "a": "8° Channel"}, {"q": "Where is India's only active volcano?", "a": "Barren Island (Andaman & Nicobar)"}, {"q": "What is the southernmost point of India?", "a": "Indira Point on Great Nicobar Island"}, {"q": "What is the capital of Lakshadweep?", "a": "Kavaratti"}, {"q": "What is India's National Aquatic Animal?", "a": "River Dolphin (Gangetic Dolphin)"}], "mcqs": [{"q": "India's National Vegetable is:", "opts": ["Potato", "Brinjal", "Pumpkin", "Onion"], "ans": 2, "exp": "India's National Vegetable is Pumpkin. This is a common exam trap — many assume Potato."}, {"q": "India's National Game is:", "opts": ["Cricket", "Hockey", "Kabaddi", "Chess"], "ans": 1, "exp": "Hockey is India's National Game. While Cricket is the most popular sport, Hockey holds the official National Game status."}, {"q": "Jana Gana Mana was composed by:", "opts": ["Bankim Chandra", "Rabindranath Tagore", "Subramanya Bharati", "Sarojini Naidu"], "ans": 1, "exp": "Jana Gana Mana (National Anthem) was composed by Rabindranath Tagore. Vande Mataram was written by Bankim Chandra."}, {"q": "Which channel separates Andaman from Nicobar Islands?", "opts": ["8° Channel", "Duncan Passage", "10° Channel", "Palk Strait"], "ans": 2, "exp": "The 10° Channel separates Andaman and Nicobar groups. Duncan Passage separates Little Andaman from South Andaman."}, {"q": "India's only active volcano is located at:", "opts": ["Narcondam Island", "Barren Island", "Great Nicobar", "Havelock Island"], "ans": 1, "exp": "Barren Island (east of Middle Andaman) is India's only known active volcano."}, {"q": "The southernmost point of India is:", "opts": ["Cape Comorin (Kanyakumari)", "Indira Point", "Minicoy", "Pamban Island"], "ans": 1, "exp": "Indira Point on Great Nicobar Island is the southernmost tip of India (6°45'N)."}, {"q": "The capital of Lakshadweep is:", "opts": ["Minicoy", "Agatti", "Andrott", "Kavaratti"], "ans": 3, "exp": "Kavaratti is the capital of Lakshadweep UT."}, {"q": "India is the _____ largest country in the world by area:", "opts": ["5th", "6th", "7th", "8th"], "ans": 2, "exp": "India is the 7th largest country in the world with an area of 3.28 million sq km."}, {"q": "India's National Aquatic Animal is:", "opts": ["Whale", "Dugong", "River Dolphin", "Blue Shark"], "ans": 2, "exp": "The Gangetic River Dolphin (Platanista gangetica) is India's National Aquatic Animal."}, {"q": "Which is the smallest state in India by area?", "opts": ["Sikkim", "Tripura", "Goa", "Manipur"], "ans": 2, "exp": "Goa is the smallest state in India by area. Sikkim is the smallest by population."}, {"q": "The 8° Channel separates:", "opts": ["Andaman & Nicobar", "India & Sri Lanka", "Minicoy & Maldives", "Lakshadweep & Kerala"], "ans": 2, "exp": "The 8° Channel separates Minicoy Island (southernmost Lakshadweep) and Maldives."}, {"q": "India's coastline including islands is:", "opts": ["5,400 km", "6,100 km", "7,516.6 km", "8,200 km"], "ans": 2, "exp": "India's total coastline is 7,516.6 km (with islands). Without islands it is approximately 6,100 km."}, {"q": "Which is the largest Union Territory of India by area?", "opts": ["Delhi", "Jammu & Kashmir", "Ladakh", "Andaman & Nicobar"], "ans": 2, "exp": "Ladakh is the largest Union Territory of India by area after its creation in 2019."}, {"q": "National Heritage Animal of India is:", "opts": ["Lion", "Tiger", "Elephant", "Rhinoceros"], "ans": 2, "exp": "Elephant is India's National Heritage Animal. Bengal Tiger is the National Animal."}, {"q": "Tropic of Cancer passes through how many Indian states?", "opts": ["6", "7", "8", "9"], "ans": 2, "exp": "Tropic of Cancer passes through 8 Indian states: Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, WB, Tripura, Mizoram."}]},
+// ── CHAPTER 4 ── HIMALAYAS
+{"id": "himalayan_ranges", "chapter": "Himalayas ⛰️", "seqIdx": 5, "xp": 60, "icon": "⛰️", "title": "Himalayan Ranges & Mountains", "facts": ["Himalaya means <b>'Abode of Snow'</b> in Sanskrit", "Himalayas are <b>Young Fold Mountains</b> formed in Tertiary period", "Formed by folding of <b>Tethys Sea</b> due to collision of Indian & Eurasian plates", "Himalayan rocks are mainly <b>sedimentary</b>", "<b>Pamirs</b> = 'Roof of the World'; connects Himalayas to Central Asian ranges; width 240–320 km", "<b>Trans Himalaya</b>: No life; always ice; Karakoram, Zanskar, Ladakh, Kailash Mountains", "<b>Greater Himalaya (Himadri)</b>: Always ice; highest peaks; no agriculture", "<b>Middle Himalaya (Lesser Himalaya)</b>: Half-year ice; some agriculture; Pir Panjal, Dhauladhar, Mussoorie", "<b>Shivalik (Outer Himalaya)</b>: No year-round ice; agriculture; youngest; height 900–1,200 m", "Major crop of Lower Himalayas = <b>Potatoes</b>", "Mt. Everest = <b>8,848.86 m</b>; Nepal & Tibet; called <b>Sagarmatha</b> (Nepal) & <b>Chomolungma</b> (China)", "<b>Kangchenjunga (8,586m)</b> = highest peak IN India (Sikkim border) = '5 Treasures of Snow'", "<b>K2 (Godwin Austin) = 8,611 m</b> in POK — higher than Kangchenjunga but in disputed territory", "<b>Nanga Parbat (8,126m)</b> = Kashmir = 'Man Eater Mountain / Murder Mountain'", "<b>Annapurna (8,091m)</b> Nepal | <b>Dhaulagiri (8,167m)</b> Nepal | <b>Makalu (8,466m)</b> Nepal-Tibet", "<b>Pir Panjal</b> = Largest range of Lower/Middle Himalayas (J&K)", "<b>Nag Tibba</b> = highest peak in Lesser Himalaya (Uttarakhand)", "Hill stations in Lesser Himalaya: Shimla, Mussoorie, Nainital, Almora, Darjeeling", "Shivalik regional names: Jammu Hills (JK), Dafla-Miri-Abor-Mishmi Hills (Arunachal), Mikir (Assam)", "<b>Highest in Western Ghats = Anaimudi (Kerala)</b>", "<b>Highest in Eastern Ghats = Mahendragiri (Odisha)</b>", "<b>Highest peak in Aravallis = Guru Shikhar</b>", "<b>Highest peak in Satpura = Dhupgarhi</b>", "Parasnath (1,366m, Jharkhand) = highest in Chhotanagpur Plateau"], "table": "<table class='data-table'><tr><th>Range</th><th>Key Feature</th></tr><tr><td><b>Trans Himalaya</b></td><td>No life; always ice; Karakoram, Ladakh ranges</td></tr><tr><td><b>Greater Himalaya</b></td><td>Highest peaks; always snow; Everest, K2, Kangchenjunga</td></tr><tr><td><b>Middle/Lesser Himalaya</b></td><td>Half-ice; hill stations; Pir Panjal, Dhauladhar</td></tr><tr><td><b>Shivalik</b></td><td>Youngest; foothills; 900–1200m; agriculture</td></tr><tr><td><b>Pamirs</b></td><td>Roof of World; connects Himalayas &amp; Central Asia</td></tr></table>", "mn": "<b>TGMS</b> = Trans → Greater → Middle/Lesser → Shivalik (from north to south). Everest = <b>Sagarmatha</b> (Nepal) = <b>Chomolungma</b> (China). Kangchenjunga = <b>5 Treasures</b>. Nanga Parbat = <b>Man Eater</b>", "traps": ["<b>Highest IN India = Kangchenjunga (8,586m)</b> on Sikkim border — K2 (8,611m) is in POK", "<b>Sagarmatha = Nepal name for Everest</b>; Chomolungma = China/Tibet name", "<b>Highest W. Ghats peak = Anaimudi (Kerala)</b> — NOT in Tamil Nadu", "<b>Highest E. Ghats peak = Mahendragiri (Odisha)</b> — NOT Nilgiri or other", "<b>Pir Panjal = Largest range of Lesser Himalaya</b> (often confused with Greater Himalaya)", "<b>Himalayas are Young Fold Mountains</b> — NOT Old Fold Mountains (those are Aravallis)"], "revision": ["Himalaya = Abode of Snow", "Young Fold Mountains; Tertiary period", "Pamirs = Roof of World", "Trans→Greater→Middle→Shivalik (N to S)", "Kangchenjunga = highest IN India (8,586m)", "K2 = 8,611m in POK", "Everest = 8,848.86m = Sagarmatha (Nepal)", "Nanga Parbat = Man Eater (Kashmir)", "Pir Panjal = largest Lesser Himalaya range", "Anaimudi = highest W.Ghats", "Mahendragiri = highest E.Ghats", "Guru Shikhar = highest Aravallis"], "oneliners": ["Himalaya = Abode of Snow", "Young Fold Mountains; sedimentary rocks", "Pamirs = Roof of World; connects Himalayas to Central Asia", "Trans Himalaya = Karakoram, Ladakh, Zanskar", "Greater Himalaya = always ice; highest peaks", "Shivalik = youngest; 900-1200m", "Everest = 8,848.86m; Nepal-Tibet border", "Sagarmatha = Nepal name for Everest", "Chomolungma = China name for Everest", "Kangchenjunga = 5 Treasures of Snow", "Kangchenjunga = highest peak IN India (8,586m)", "K2 = 8,611m in POK = world's 2nd highest", "Nanga Parbat = Man Eater Mountain (Kashmir)", "Dhaulagiri = 8,167m Nepal", "Pir Panjal = largest range of Lesser Himalaya", "Nag Tibba = highest peak in Lesser Himalaya", "Anaimudi = highest in Western Ghats (Kerala)", "Mahendragiri = highest in Eastern Ghats", "Guru Shikhar = highest Aravalli peak", "Himalayas formed from Tethys Sea collision"], "flashcards": [{"q": "What is the highest peak in India?", "a": "Kangchenjunga (8,586m) — on Sikkim border. K2 (8,611m) is in POK."}, {"q": "What is Mt. Everest called in Nepal?", "a": "Sagarmatha ('Goddess of the Sky')"}, {"q": "What is Mt. Everest called in China/Tibet?", "a": "Chomolungma ('Mother of the World')"}, {"q": "Which is the highest peak in Western Ghats?", "a": "Anaimudi (Kerala)"}, {"q": "Which is the highest peak in Eastern Ghats?", "a": "Mahendragiri (Odisha)"}, {"q": "What does 'Pamirs' mean in geography?", "a": "'Roof of the World' — connecting Himalayas to Central Asian ranges"}, {"q": "Which Himalayan range is the youngest?", "a": "Shivalik (Outer Himalaya)"}, {"q": "Nanga Parbat is known by what nickname?", "a": "Man Eater Mountain / Murder Mountain (Kashmir)"}, {"q": "What is Kangchenjunga also known as?", "a": "'5 Treasures of Snow' — on Sikkim-Tibet border"}], "mcqs": [{"q": "Which is the highest peak entirely within India?", "opts": ["K2 (8,611m)", "Mt. Everest", "Kangchenjunga (8,586m)", "Nanda Devi"], "ans": 2, "exp": "Kangchenjunga (8,586m) on the Sikkim-Tibet border is the highest peak in India. K2 is in POK (disputed territory)."}, {"q": "Himalayas are classified as:", "opts": ["Old Fold Mountains", "Block Mountains", "Young Fold Mountains", "Residual Mountains"], "ans": 2, "exp": "Himalayas are Young Fold Mountains formed during the Tertiary period by the collision of the Indian and Eurasian plates."}, {"q": "Mt. Everest is known as 'Sagarmatha' in:", "opts": ["Tibet/China", "Bhutan", "Nepal", "India"], "ans": 2, "exp": "Sagarmatha ('Goddess of the Sky') is the Nepali name for Everest. Chomolungma is the Chinese/Tibetan name."}, {"q": "'Pamirs' is known as:", "opts": ["Roof of Africa", "Roof of the World", "Roof of Asia", "Roof of South Asia"], "ans": 1, "exp": "The Pamirs are called the 'Roof of the World' as they connect the Himalayas to other Central Asian mountain ranges."}, {"q": "Which is the highest peak in the Western Ghats?", "opts": ["Doda Betta", "Guru Shikhar", "Anaimudi", "Nilgiri Peak"], "ans": 2, "exp": "Anaimudi in Kerala is the highest peak in the Western Ghats (and South India) at 2,695m."}, {"q": "Nanga Parbat (8,126m) is located in:", "opts": ["Nepal", "Uttarakhand", "Tibet", "Kashmir (J&K)"], "ans": 3, "exp": "Nanga Parbat is located in J&K (Kashmir), India and is nicknamed 'Man Eater Mountain' or 'Killer Mountain'."}, {"q": "The Shivalik range is:", "opts": ["Oldest and highest", "Northern and always icy", "Youngest and southernmost foothills", "Middle range with hill stations"], "ans": 2, "exp": "Shivalik (Outer Himalaya) is the youngest range and forms the southernmost foothills with heights 900–1,200m."}, {"q": "Which range is the largest in the Middle/Lesser Himalaya?", "opts": ["Dhauladhar", "Mussoorie Range", "Pir Panjal", "Mahabharat Lekh"], "ans": 2, "exp": "Pir Panjal is the largest range of the Middle (Lesser) Himalayas, located in J&K."}, {"q": "The highest peak in Eastern Ghats is:", "opts": ["Anaimudi", "Nilgiri Peak", "Mahendragiri", "Agasthyamala"], "ans": 2, "exp": "Mahendragiri (1,501m) in Odisha is the highest peak of the Eastern Ghats."}, {"q": "Himalayan rocks are mainly:", "opts": ["Igneous", "Sedimentary", "Metamorphic", "Volcanic"], "ans": 1, "exp": "Himalayan rocks are mainly sedimentary, as the Himalayas were formed from the sediments of the ancient Tethys Sea."}, {"q": "Kangchenjunga is called the '5 Treasures of Snow' because:", "opts": ["It has 5 glaciers", "It has 5 distinct peaks", "It has 5 faces", "It produces 5 types of minerals"], "ans": 1, "exp": "Kangchenjunga (Khangchendzonga) means 'Five Treasures of Snow' referring to its five distinct peaks on the Sikkim-Tibet border."}, {"q": "The Himalayas were formed due to collision of:", "opts": ["African and Eurasian Plates", "Pacific and American Plates", "Indian and Eurasian Plates", "Arabian and Indian Plates"], "ans": 2, "exp": "The Himalayas were formed when the northward-moving Indian Plate collided with the Eurasian Plate, folding up the Tethys Sea sediments."}, {"q": "Highest peak in Aravallis?", "opts": ["Abu Peak", "Kumbhalgarh", "Guru Shikhar", "Taragarh"], "ans": 2, "exp": "Guru Shikhar (1,722m) near Mount Abu in Rajasthan is the highest peak of the Aravalli range."}, {"q": "Which Himalayan range has hill stations like Shimla, Mussoorie, Nainital?", "opts": ["Trans Himalaya", "Greater Himalaya", "Middle/Lesser Himalaya", "Shivalik"], "ans": 2, "exp": "Major hill stations (Shimla, Mussoorie, Nainital, Darjeeling) are located in the Middle/Lesser Himalaya range."}, {"q": "Nanda Devi peak is located in:", "opts": ["Himachal Pradesh", "J&K", "Uttarakhand", "Nepal"], "ans": 2, "exp": "Nanda Devi (7,816m) is located in Uttarakhand and is the highest peak entirely within India excluding disputed territories."}]},
+{"id": "passes_tunnels", "chapter": "Himalayas ⛰️", "seqIdx": 6, "xp": 60, "icon": "🏔️", "title": "Important Passes & Tunnels", "facts": ["<b>Umling La</b> (Ladakh) = World's <b>highest motorable pass</b> at 19,300 ft; built by BRO", "<b>Khardung La</b> (Ladakh) = 2nd highest motorable pass; gateway to Siachen glacier", "<b>Zoji La</b> (Ladakh) = NH1; connects Srinagar–Kargil–Leh", "<b>Nathu La</b> (Sikkim) = Ancient Silk Route; closed 1962 → reopened <b>2006</b>; India–China border", "<b>Diphu Pass</b> (Arunachal Pradesh) = India–China–Myanmar <b>trijunction</b>; on McMahon Line", "<b>Lipu Lekh</b> (Uttarakhand) = India–Tibet–Nepal <b>trijunction</b>; Kailash-Mansarowar route", "<b>Shipki La</b> (HP) = Indo-China border; Hindustan-Tibet Road", "<b>Rohtang Pass</b> (HP) = connects Kullu, Lahaul & Spiti; now bypassed by Atal Tunnel", "<b>Jelep La</b> (Sikkim) = connects Kalimpong to Lhasa; Teesta River created pass", "<b>Bom Di La</b> (Arunachal) = connects Arunachal with Lhasa (Tibet)", "<b>Palghat Gap (Palakkad Gap)</b> = lowest gap in Western Ghats; connects Kerala to Tamil Nadu", "<b>Asirgarh Pass</b> (MP, Satpura) = 'Dakkani Darwaza / Door to the Deccan'; N. India ↔ Deccan", "<b>Haldighati</b> (Rajasthan, Aravalli) = Battle of Haldighati 1576: Maharana Pratap vs Akbar", "<b>Atal Tunnel (Rohtang)</b> = connects Manali to Lahaul Spiti; length <b>9.02 km</b>; altitude 3,048m", "Atal Tunnel = <b>Longest high-altitude highway tunnel in world</b>", "<b>Syama Prasad Mukherjee Tunnel</b> (Chenani-Nashri) = <b>9.34 km</b> = Longest road tunnel in India", "<b>Pir Panjal Railway Tunnel</b> = <b>11.22 km</b> = Longest railway tunnel in India (J&K)", "<b>Jawahar Tunnel (Banihal)</b> = 2.85 km; NH44; Jammu ↔ Srinagar", "<b>Sangaldan Railway Tunnel</b> = 8 km; 2nd longest railway tunnel in India", "<b>Bara Lacha La</b> (HP) = connects HP to Ladakh via Leh-Mandi Highway", "<b>Pensi La</b> = Gateway to Zanskar valley", "<b>Thal Ghat</b> (Maharashtra) = W. Ghats; connects Nasik to Mumbai", "<b>Bhor Ghat</b> (Maharashtra) = W. Ghats; connects Mumbai to Pune", "<b>Mintaka Pass</b> = near trijunction India-China-Afghanistan"], "table": "<table class='data-table'><tr><th>Tunnel</th><th>Length</th><th>Record</th></tr><tr><td><b>Atal (Rohtang)</b></td><td>9.02 km</td><td>Longest HIGH-ALTITUDE highway tunnel (world)</td></tr><tr><td><b>Syama Prasad (Chenani-Nashri)</b></td><td>9.34 km</td><td>Longest ROAD tunnel in India</td></tr><tr><td><b>Pir Panjal Railway</b></td><td>11.22 km</td><td>Longest RAILWAY tunnel in India</td></tr><tr><td><b>Sangaldan Railway</b></td><td>8 km</td><td>2nd longest railway tunnel</td></tr><tr><td><b>Jawahar (Banihal)</b></td><td>2.85 km</td><td>Connects Jammu &amp; Srinagar (NH44)</td></tr></table>", "mn": "<b>Three Tunnel Records</b>: Atal (9.02) = HIGH ALTITUDE world record | Syama Prasad (9.34) = LONGEST ROAD India | Pir Panjal (11.22) = LONGEST RAILWAY India. <b>UKD</b> for Ladakh passes: Umling La (highest), Khardung La (2nd), Zoji La (NH1)", "traps": ["<b>Umling La = highest motorable pass</b> (not Khardung La — that's 2nd)", "<b>Atal Tunnel (9.02 km) = longest HIGH-ALTITUDE highway</b> tunnel; Syama Prasad (9.34 km) = longest ROAD tunnel overall", "<b>Pir Panjal Railway (11.22 km) = longest RAILWAY tunnel</b> — NOT road tunnel", "<b>Nathu La reopened in 2006</b> after being closed since 1962 Indo-China war", "<b>Diphu Pass = India-China-Myanmar trijunction</b> (on McMahon Line) — NOT India-Nepal-China", "<b>Lipu Lekh = India-Tibet-Nepal trijunction</b> — for Kailash-Mansarowar yatra"], "revision": ["Umling La = world's highest motorable (19,300 ft)", "Khardung La = 2nd highest motorable", "Nathu La = Silk Route; closed 1962; reopened 2006", "Diphu Pass = India-China-Myanmar trijunction", "Lipu Lekh = India-Tibet-Nepal trijunction", "Atal Tunnel = 9.02 km; world's longest high-altitude", "Syama Prasad = 9.34 km; longest road tunnel India", "Pir Panjal Railway = 11.22 km; longest railway India", "Palghat Gap = lowest in W. Ghats", "Asirgarh = Door to Deccan (MP)", "Haldighati = Battle 1576; Maharana Pratap", "Zoji La = NH1; Srinagar-Leh"], "oneliners": ["Umling La = world's highest motorable pass (19,300 ft, Ladakh)", "Khardung La = 2nd highest motorable pass", "Zoji La = NH1; Srinagar-Kargil-Leh", "Nathu La = Silk Route; reopened 2006", "Diphu Pass = India-China-Myanmar trijunction", "Lipu Lekh = India-Tibet-Nepal trijunction", "Palghat Gap = lowest gap in W. Ghats", "Asirgarh = Dakkani Darwaza; N India–Deccan", "Haldighati = Battle 1576; Maharana Pratap vs Akbar", "Atal Tunnel = 9.02 km; longest high-altitude (world)", "Syama Prasad = 9.34 km; longest road tunnel India", "Pir Panjal Railway = 11.22 km; longest railway India", "Jawahar Tunnel = 2.85 km; NH44; Jammu-Srinagar", "Bara Lacha La = HP–Ladakh (Leh-Mandi Hwy)", "Jelep La = Kalimpong–Lhasa (Sikkim)", "Bom Di La = AP–Lhasa (Tibet)", "Pensi La = Gateway to Zanskar", "Thal Ghat = Nasik–Mumbai (W.Ghats)", "Bhor Ghat = Mumbai–Pune (W.Ghats)", "Shipki La = HP–Tibet (Hindustan-Tibet Rd)"], "flashcards": [{"q": "Which is the world's highest motorable pass?", "a": "Umling La (Ladakh) at 19,300 ft — built by BRO"}, {"q": "Longest high-altitude highway tunnel in world?", "a": "Atal Tunnel (Rohtang) — 9.02 km at 10,000 ft"}, {"q": "Longest road tunnel in India?", "a": "Syama Prasad Mukherjee Tunnel (Chenani-Nashri) — 9.34 km"}, {"q": "Longest railway tunnel in India?", "a": "Pir Panjal Railway Tunnel — 11.22 km (J&K)"}, {"q": "When did Nathu La reopen after 1962 closure?", "a": "2006"}, {"q": "Which pass is India-China-Myanmar trijunction?", "a": "Diphu Pass (Arunachal Pradesh) — on McMahon Line"}, {"q": "Kailash-Mansarowar pilgrims use which pass?", "a": "Lipu Lekh (Uttarakhand) — India-Tibet-Nepal trijunction"}, {"q": "Which is the lowest gap in Western Ghats?", "a": "Palghat Gap (Palakkad Gap) — connects Kerala to Tamil Nadu"}, {"q": "What is Asirgarh Pass known as?", "a": "'Dakkani Darwaza' / Door to the Deccan (Satpura, MP)"}, {"q": "Battle of Haldighati (1576) was fought between?", "a": "Maharana Pratap vs Akbar (Man Singh) at Haldighati, Rajasthan"}], "mcqs": [{"q": "The world's highest motorable pass is:", "opts": ["Khardung La", "Rohtang Pass", "Zoji La", "Umling La"], "ans": 3, "exp": "Umling La in Ladakh at 19,300 ft (5,883m) is the world's highest motorable pass, built by BRO."}, {"q": "Atal Tunnel (Rohtang) is notable for being:", "opts": ["Longest railway tunnel in India", "Longest road tunnel overall", "Longest high-altitude highway tunnel in world", "Deepest tunnel in Asia"], "ans": 2, "exp": "Atal Tunnel (9.02 km) at 10,000 ft altitude is the world's longest high-altitude highway tunnel."}, {"q": "The longest road tunnel in India is:", "opts": ["Jawahar Tunnel", "Atal Tunnel", "Pir Panjal Railway Tunnel", "Syama Prasad Mukherjee Tunnel"], "ans": 3, "exp": "Syama Prasad Mukherjee Tunnel (Chenani-Nashri) at 9.34 km is the longest road tunnel in India."}, {"q": "Nathu La pass (Sikkim) was reopened in:", "opts": ["1999", "2004", "2006", "2008"], "ans": 2, "exp": "Nathu La, an ancient Silk Route pass, was closed after the 1962 Indo-China war and reopened in 2006."}, {"q": "Diphu Pass is a trijunction of:", "opts": ["India-Nepal-China", "India-China-Myanmar", "India-Bhutan-China", "India-Myanmar-Bangladesh"], "ans": 1, "exp": "Diphu Pass in Arunachal Pradesh is at the trijunction of India, China, and Myanmar, and lies on the McMahon Line."}, {"q": "Lipu Lekh pass (Uttarakhand) is used for:", "opts": ["Trade with China", "Kailash-Mansarowar Yatra", "Military supply to Siachen", "Silk Route trade"], "ans": 1, "exp": "Lipu Lekh is an important pass for the Kailash-Mansarowar pilgrimage and lies at the India-Tibet-Nepal trijunction."}, {"q": "The Palghat (Palakkad) Gap is significant because:", "opts": ["It is the highest pass in W. Ghats", "It is the lowest gap in W. Ghats connecting Kerala to TN", "It is a railway tunnel", "It connects Mumbai to Pune"], "ans": 1, "exp": "Palghat Gap is the lowest gap in the Western Ghats between the Nilgiri and Anamalai hills, connecting Kerala and Tamil Nadu."}, {"q": "Asirgarh Pass in Madhya Pradesh is known as:", "opts": ["Gateway to Kashmir", "Silk Route", "Dakkani Darwaza (Door to Deccan)", "Gateway to Northeast"], "ans": 2, "exp": "Asirgarh Pass in Satpura, MP is known as 'Dakkani Darwaza' connecting North India with the Deccan Plateau."}, {"q": "Battle of Haldighati (1576) was fought at which pass?", "opts": ["Bhor Ghat", "Thal Ghat", "Haldighati Pass (Rajasthan)", "Goram Ghat"], "ans": 2, "exp": "The Battle of Haldighati (1576) between Maharana Pratap and Akbar's general Man Singh was fought at the Haldighati Pass in Rajasthan's Aravalli range."}, {"q": "Pir Panjal Railway Tunnel (11.22 km) is located in:", "opts": ["Himachal Pradesh", "Uttarakhand", "J&K", "Ladakh"], "ans": 2, "exp": "Pir Panjal Railway Tunnel (11.22 km) is India's longest railway tunnel located in J&K."}, {"q": "Khardung La pass is known for:", "opts": ["Being world's highest motorable pass", "Being gateway to Shyok and Nubra Valleys", "Being on Silk Route", "Being trijunction pass"], "ans": 1, "exp": "Khardung La is the gateway to the Shyok and Nubra Valleys and was claimed (incorrectly) to be the world's highest motorable pass. Umling La is actually higher."}, {"q": "The Bhor Ghat (Western Ghats) connects:", "opts": ["Nasik to Mumbai", "Mumbai to Pune", "Kochi to Chennai", "Coimbatore to Mysore"], "ans": 1, "exp": "Bhor Ghat in the Western Ghats connects Mumbai to Pune."}, {"q": "Which pass connects Srinagar to Kargil and Leh via NH1?", "opts": ["Burzil Pass", "Banihal Pass", "Zoji La", "Pir Panjal Pass"], "ans": 2, "exp": "Zoji La in Ladakh is on NH1 connecting Srinagar to Kargil and Leh (the Srinagar-Leh Highway)."}, {"q": "Jawahar Tunnel (Banihal, 2.85 km) connects:", "opts": ["Delhi to Manali", "Jammu to Srinagar", "Srinagar to Kargil", "Manali to Lahaul"], "ans": 1, "exp": "Jawahar Tunnel on NH44 connects Jammu to Srinagar through the Banihal Pass."}, {"q": "Which Himalayan pass did the Silk Route use in Sikkim?", "opts": ["Jelep La", "Nathu La", "Zoji La", "Pensi La"], "ans": 1, "exp": "Nathu La in Sikkim was an ancient Silk Route pass connecting India and Tibet/China."}]},
+// ── GOLDEN NODE ──
+{"id": "master_geography", "chapter": "Master Node 🏆", "seqIdx": 7, "xp": 200, "icon": "🏹", "type": "gold", "requires_pct": 80, "title": "Geography Part 1 — Master Revision", "goldFacts": ["<b>Hottest planet = Venus (475°C)</b> — NOT Mercury; thick CO₂ causes greenhouse effect", "<b>Coldest planet = Uranus (-224°C)</b> — NOT Neptune (-214°C)", "<b>Most moons = Saturn (146)</b> — Jupiter has 95; Ganymede = biggest satellite", "<b>Pluto = Dwarf planet since 2006</b> (IAU); Clyde Tombaugh discovered it in 1930", "<b>Sirius = brightest night star = Dog Star</b>; Proxima Centauri = closest star to Sun", "<b>Asteroids = between Mars & Jupiter</b>; Ursa Major = summer; Orion = winter", "<b>Earth = Oblate Spheroid</b>; Rotation = 23 hr 56 min 4 sec", "<b>Perihelion = Jan 3</b> (nearest to Sun, 147 mn km); Aphelion = July 4", "<b>Sunlight = 8 min 18 sec</b>; Deepest = Mariana Trench (10,994m) Pacific", "<b>June 21 = longest day N.H.</b> (Summer Solstice) | Dec 22 = shortest", "<b>Seasons = axial tilt (23½°)</b> — NOT distance from Sun", "<b>IST = 82½°E through Mirzapur, UP</b>; IST = GMT + 5:30", "<b>IDL = 180°</b> Pacific; zig-zag; East→West = lose a day", "<b>1° longitude = 4 min time</b>; 15° = 1 hour", "<b>8 Indian states on Tropic of Cancer</b>: Gujarat, Rajasthan, MP, CG, JH, WB, Tripura, Mizoram", "<b>Mahi River crosses Tropic of Cancer TWICE</b>; Limpopo crosses Capricorn twice", "<b>Equator: 13 countries, 3 continents, 3 oceans</b>; All 3 tropics pass through Africa", "<b>India = 7th largest</b> (3.28 mn sq km); Coastline with islands = 7,516.6 km", "<b>National Game = Hockey</b> (NOT Cricket); National Vegetable = Pumpkin (NOT Potato)", "<b>National Aquatic Animal = River Dolphin</b>; National Heritage Animal = Elephant", "<b>Jana Gana Mana = Tagore</b>; Vande Mataram = Bankim Chandra", "<b>Barren Island = India's only active volcano</b>; Indira Point = southernmost India", "<b>Kangchenjunga (8,586m) = highest peak IN India</b>; K2 (8,611m) in POK", "<b>Umling La = world's highest motorable pass</b> (19,300 ft, Ladakh)", "<b>Atal Tunnel (9.02 km)</b> = longest high-altitude highway (world) | <b>Syama Prasad (9.34 km)</b> = longest road India | <b>Pir Panjal (11.22 km)</b> = longest railway India"], "goldTraps": ["Hottest = Venus (NOT Mercury) | Coldest = Uranus (NOT Neptune)", "Most moons = Saturn 146 (NOT Jupiter 95) | Ganymede = biggest satellite (Jupiter, not Saturn)", "Seasons = TILT not DISTANCE from Sun", "Perihelion = January (nearest) — yet N.H. has winter (tilt effect)", "IST = 82½°E (Mirzapur) — NOT 82°E; NOT through Allahabad", "National Vegetable = PUMPKIN (not Potato) | National Game = HOCKEY (not Cricket)", "8° Channel = Minicoy-Maldives | 10° Channel = Andaman-Nicobar", "Highest IN India = Kangchenjunga | K2 is in POK (disputed)", "Umling La = world's highest motorable (NOT Khardung La)", "3 tunnel records: Atal = high-altitude world | Syama Prasad = road India | Pir Panjal = railway India", "Nathu La reopened in 2006 (NOT 2005 or 2010)", "Diphu Pass = India-China-Myanmar | Lipu Lekh = India-Tibet-Nepal", "Palghat Gap = LOWEST gap in W. Ghats (not highest)", "Pole Star NOT visible from Southern Hemisphere", "Andromeda = nearest galaxy to Milky Way (NOT another spiral galaxy)"], "goldMCQs": [{"q": "Which planet is hottest despite NOT being nearest to Sun?", "opts": ["Mercury", "Venus", "Mars", "Jupiter"], "ans": 1, "exp": "Venus (475°C) is hotter than Mercury because its thick CO₂ atmosphere creates an extreme greenhouse effect."}, {"q": "Earth's shape is technically called:", "opts": ["Sphere", "Geoid", "Oblate Spheroid", "Ellipsoid"], "ans": 2, "exp": "Earth is an Oblate Spheroid — slightly flattened at poles and bulging at the equator."}, {"q": "IST is based on which meridian?", "opts": ["80°E", "82°E", "82½°E", "85°E"], "ans": 2, "exp": "India's IST is based on the 82°30'E (82½°E) meridian passing through Mirzapur, UP."}, {"q": "India's National Vegetable is:", "opts": ["Potato", "Tomato", "Pumpkin", "Brinjal"], "ans": 2, "exp": "Pumpkin is India's National Vegetable. This is one of the most commonly tested SSC tricks."}, {"q": "Which is the highest peak IN India (excluding POK)?", "opts": ["K2", "Nanda Devi", "Kangchenjunga", "Nanga Parbat"], "ans": 2, "exp": "Kangchenjunga (8,586m) on the Sikkim-Tibet border is the highest peak within India. K2 (8,611m) is in POK."}, {"q": "The world's highest motorable road pass is:", "opts": ["Khardung La", "Rohtang Pass", "Umling La", "Zoji La"], "ans": 2, "exp": "Umling La in Ladakh at 19,300 ft (5,883m) is the world's highest motorable pass, completed by BRO."}, {"q": "Which has highest moons count — Saturn (146) vs Jupiter (?):", "opts": ["Jupiter 95", "Jupiter 82", "Jupiter 112", "Jupiter 63"], "ans": 0, "exp": "Jupiter has 95 known moons, while Saturn leads with 146. Common confusion: Saturn > Jupiter for moon count."}, {"q": "Seasons on Earth are caused by:", "opts": ["Distance from Sun", "Axial tilt of 23½°", "Revolution speed", "Earth's shape"], "ans": 1, "exp": "Earth's axial tilt of 23½° causes seasons. The Earth is actually CLOSER to Sun in January (winter for N.H.)."}, {"q": "Which channel separates Andaman from Nicobar Islands?", "opts": ["8° Channel", "Duncan Passage", "Palk Strait", "10° Channel"], "ans": 3, "exp": "The 10° Channel separates the Andaman group from the Nicobar group of islands."}, {"q": "The Diphu Pass is at the trijunction of:", "opts": ["India-Nepal-Tibet", "India-China-Myanmar", "India-Bhutan-China", "India-Myanmar-Bangladesh"], "ans": 1, "exp": "Diphu Pass in Arunachal Pradesh marks the trijunction of India, China, and Myanmar and lies on the McMahon Line."}, {"q": "Which river in India crosses Tropic of Cancer twice?", "opts": ["Narmada", "Tapti", "Sabarmati", "Mahi"], "ans": 3, "exp": "The Mahi River in Gujarat crosses the Tropic of Cancer twice due to its meandering path."}, {"q": "Jana Gana Mana was composed by:", "opts": ["Bankim Chandra", "Rabindranath Tagore", "Sarojini Naidu", "Subramanya Bharati"], "ans": 1, "exp": "Jana Gana Mana (India's National Anthem) was composed by Rabindranath Tagore in 1911."}, {"q": "How long does sunlight take to reach Earth?", "opts": ["5 min 30 sec", "8 min 18 sec", "12 min 20 sec", "3 min 45 sec"], "ans": 1, "exp": "Sunlight travels approximately 149.6 million km at 3×10⁸ m/s, taking about 8 minutes 18 seconds."}, {"q": "Nathu La (Sikkim) was reopened for trade in:", "opts": ["1999", "2004", "2006", "2010"], "ans": 2, "exp": "Nathu La was closed after the 1962 Indo-China war and reopened in 2006 as a trade route."}, {"q": "Which is the longest railway tunnel in India?", "opts": ["Jawahar Tunnel (2.85 km)", "Atal Tunnel (9.02 km)", "Pir Panjal Tunnel (11.22 km)", "Sangaldan Tunnel (8 km)"], "ans": 2, "exp": "Pir Panjal Railway Tunnel (11.22 km) in J&K is the longest railway tunnel in India. The Atal Tunnel is a highway (road) tunnel."}]}
+];
+
+// ── ENGINE ──────────────────────────────────────────────────────────────────
+function allNodes(){return CHAPTERS;}
+function seqNodes(){return CHAPTERS.filter(n=>n.type!=='gold').sort((a,b)=>a.seqIdx-b.seqIdx);}
+function goldNode(){return CHAPTERS.find(n=>n.type==='gold');}
+
+function isUnlocked(node){
+  if(node.type==='gold'){
+    const sn=seqNodes();
+    if(!sn.length)return false;
+    const totPct=sn.reduce((a,n)=>a+(S.mcq[n.id]?.pct||0),0)/sn.length;
+    return totPct>=(node.requires_pct||80);
+  }
+  if(node.seqIdx===0)return true;
+  const prev=seqNodes().find(n=>n.seqIdx===node.seqIdx-1);
+  return prev?((S.mcq[prev.id]?.pct||0)>=60):true;
+}
+
+function refreshTopbar(nid){
+  const sn=seqNodes();
+  const tot=sn.reduce((a,n)=>a+(S.mcq[n.id]?.pct||0),0);
+  const pct=sn.length?Math.round(tot/sn.length):0;
+  document.getElementById('tb-xp').textContent=S.xp+' XP';
+  document.getElementById('tb-pct').textContent=pct+'%';
+  if(nid){const n=CHAPTERS.find(c=>c.id===nid);if(n)document.getElementById('tb-title').textContent=n.icon+' '+n.title;}
+}
+
+function buildSidebar(){
+  const el=document.getElementById('sidebar-inner');
+  if(!el)return;
+  let h='<div class="nav-item" onclick="showDash()" style="border-left:3px solid transparent"><span class="nav-icon">🏠</span><span class="nav-info"><span class="nav-name">Home</span></span></div>';
+  const sn=seqNodes();
+  let lastCh='';
+  sn.forEach(n=>{
+    if(n.chapter!==lastCh){h+=`<div class="ch-label">${n.chapter}</div>`;lastCh=n.chapter;}
+    const locked=!isUnlocked(n);
+    const pct=S.mcq[n.id]?.pct||0;
+    const badge=pct>=60?`<span class="nav-badge">✓${pct}%</span>`:(pct>0?`<span class="nav-badge">${pct}%</span>`:'');
+    h+=`<div class="nav-item${locked?' locked':''}" onclick="${locked?'showToast(\"Complete previous node first!\")':'openNode(\"'+n.id+'\")'}">`+
+       `<span class="nav-icon">${n.icon}</span>`+
+       `<span class="nav-info"><span class="nav-name">${n.title}</span><span class="nav-xp">${n.xp} XP</span></span>${badge}</div>`;
+  });
+  const gn=goldNode();
+  if(gn){
+    const gl=isUnlocked(gn);
+    h+=`<div class="ch-label">Master Node 🏆</div>`;
+    h+=`<div class="nav-item gold-nav${gl?'':' locked'}" onclick="${gl?'openNode(\"'+gn.id+'\")':'showToast(\"Score 80% avg to unlock Master Node!\")'}">`;
+    h+=`<span class="nav-icon">🏹</span><span class="nav-info"><span class="nav-name">${gn.title}</span><span class="nav-xp">${gn.xp} XP</span></span></div>`;
+  }
+  el.innerHTML=h;
+}
+
+function openNode(nid){
+  const n=CHAPTERS.find(c=>c.id===nid);
+  if(!n)return;
+  if(!isUnlocked(n)){showToast('🔒 Complete previous nodes first!');return;}
+  track('node_open',{node:nid});
+  document.getElementById('dash').style.display='none';
+  const nc=document.getElementById('node-content');
+  nc.style.display='block';
+  renderNode(n,'learn');
+  buildSidebar();
+  refreshTopbar(nid);
+  closeDrawer();
+}
+
+function renderNode(n,tab){
+  const nc=document.getElementById('node-content');
+  const isGold=n.type==='gold';
+  let h=`<div class="node-header"><div class="node-chapter">${n.chapter}</div>`;
+  h+=`<div class="node-title">${n.icon} ${n.title}</div>`;
+  h+=`<div class="node-meta">${n.xp} XP · ${isGold?'Master Node':'seqIdx '+(n.seqIdx+1)}</div></div>`;
+  if(!isGold){
+    h+=`<div class="tabs">`;
+    ['learn','flashcards','test'].forEach(t=>{
+      const lbl=t==='learn'?'📖 Learn':t==='flashcards'?'⚡ Flashcards':'🎯 Test';
+      h+=`<button class="tab-btn${tab===t?' active':''}" onclick="switchTab('${n.id}','${t}')">${lbl}</button>`;
+    });
+    h+='</div>';
+    if(tab==='learn')h+=buildLearnPane(n);
+    else if(tab==='flashcards')h+=buildFlashPane(n);
+    else h+=buildTestPane(n);
+  } else {
+    h+=`<div class="tabs">`;
+    ['learn','test'].forEach(t=>{
+      const lbl=t==='learn'?'🏹 Master Facts':'🎯 Master Test';
+      h+=`<button class="tab-btn${tab===t?' active':''}" onclick="switchTab('${n.id}','${t}')">${lbl}</button>`;
+    });
+    h+='</div>';
+    if(tab==='learn')h+=buildGoldPane(n);
+    else h+=buildTestPane(n);
+  }
+  h+='<div id="node-nav-bar"></div>';
+  nc.innerHTML=h;
+  if(tab==='test'||tab==='learn'){}
+}
+
+function switchTab(nid,tab){
+  const n=CHAPTERS.find(c=>c.id===nid);
+  if(n)renderNode(n,tab);
+  track('tab_switch',{node:nid,tab});
+}
+
+function buildLearnPane(n){
+  let h='';
+  if(n.facts?.length){
+    h+=`<div class="section-card"><div class="section-title">📌 Key Facts</div><ul class="fact-list">`;
+    n.facts.forEach(f=>h+=`<li>${f}</li>`);
+    h+=`</ul></div>`;
+  }
+  if(n.table){h+=`<div class="section-card"><div class="section-title">📊 Reference Table</div>${n.table}</div>`;}
+  if(n.mn){h+=`<div class="section-card"><div class="section-title">🧠 Memory Hook</div><div class="mn-box">${n.mn}</div></div>`;}
+  if(n.traps?.length){
+    h+=`<div class="section-card"><div class="section-title">⚠️ Exam Traps</div><ul class="trap-list">`;
+    n.traps.forEach(t=>h+=`<li>${t}</li>`);
+    h+=`</ul></div>`;
+  }
+  if(n.revision?.length){
+    h+=`<div class="section-card"><div class="section-title">⚡ Rapid Revision</div><ul class="rev-list">`;
+    n.revision.forEach(r=>h+=`<li>${r}</li>`);
+    h+=`</ul></div>`;
+  }
+  if(n.oneliners?.length){
+    h+=`<div class="section-card"><div class="section-title">🎯 One-Liners</div><ul class="ol-list">`;
+    n.oneliners.forEach(o=>h+=`<li>${o}</li>`);
+    h+=`</ul></div>`;
+  }
+  return h;
+}
+
+function buildGoldPane(n){
+  let h=`<div class="gold-hero"><h2>🏹 Master Revision</h2><p>High-probability points for exam day</p></div>`;
+  if(n.goldFacts?.length){
+    h+=`<div class="section-card"><div class="section-title">🌟 Gold Facts</div>`;
+    n.goldFacts.forEach(f=>h+=`<div class="gold-fact">${f}</div>`);
+    h+=`</div>`;
+  }
+  if(n.goldTraps?.length){
+    h+=`<div class="section-card"><div class="section-title">⚠️ Critical Traps</div><ul class="trap-list">`;
+    n.goldTraps.forEach(t=>h+=`<li>${t}</li>`);
+    h+=`</ul></div>`;
+  }
+  return h;
+}
+
+function buildFlashPane(n){
+  if(!n.flashcards?.length)return '<div class="section-card"><p>No flashcards available.</p></div>';
+  let h=`<div class="section-card"><div class="section-title">⚡ Tap to reveal answer</div><div class="flash-grid">`;
+  n.flashcards.forEach((fc,i)=>{
+    h+=`<div class="flash-card" id="fc${i}" onclick="this.classList.toggle('revealed')">`;
+    h+=`<div class="flash-q">${fc.q}</div>`;
+    h+=`<div class="flash-a">${fc.a}</div>`;
+    h+=`<div class="flash-hint">Tap to reveal</div></div>`;
+  });
+  h+=`</div></div>`;
+  return h;
+}
+
+function buildTestPane(n){
+  const mcqs=getMcqs(n);
+  if(!mcqs.length)return '<div class="section-card"><p>No questions available.</p></div>';
+  const done=S.mcq[n.id]?.done;
+  const pct=S.mcq[n.id]?.pct||0;
+  if(!done){
+    return `<div class="section-card"><div class="test-start-box">
+      <h3>Ready to test yourself?</h3>
+      <p>${mcqs.length} questions · Earn up to ${n.xp} XP<br>Score 60%+ to unlock next node</p>
+      <button class="btn-primary" onclick="startTest('${n.id}')">Start Test 🎯</button>
+    </div></div>`;
+  }
+  return `<div class="section-card"><div class="result-box">
+    <div class="result-score">${pct}%</div>
+    <div class="result-msg">${pct>=60?'✅ Node Unlocked!':'Keep Practicing!'}</div>
+    <div class="result-stats">
+      <div class="r-stat"><div class="r-stat-val">${S.mcq[n.id]?.correct||0}</div><div class="r-stat-lbl">Correct</div></div>
+      <div class="r-stat"><div class="r-stat-val">${S.mcq[n.id]?.total||0}</div><div class="r-stat-lbl">Total</div></div>
+      <div class="r-stat"><div class="r-stat-val">${S.xp}</div><div class="r-stat-lbl">Total XP</div></div>
+    </div>
+    <button class="btn-primary" onclick="startTest('${n.id}')">Retake Test 🔄</button>
+  </div></div>`;
+}
+
+function getMcqs(n){
+  if(n.type==='gold')return n.goldMCQs||[];
+  return n.mcqs||[];
+}
+
+let CUR={nid:'',qi:0,correct:0,total:0,answers:[]};
+
+function startTest(nid){
+  const n=CHAPTERS.find(c=>c.id===nid);
+  if(!n)return;
+  const mcqs=getMcqs(n);
+  CUR={nid,qi:0,correct:0,total:mcqs.length,answers:[]};
+  if(!S.faa[nid])S.faa[nid]={};
+  track('test_start',{node:nid,prefix:'geo1-'});
+  renderQ(n,0);
+}
+
+function renderQ(n,qi){
+  const mcqs=getMcqs(n);
+  if(qi>=mcqs.length){finishAttempt(n);return;}
+  const q=mcqs[qi];
+  const nc=document.getElementById('node-content');
+  let h=`<div class="node-header"><div class="node-chapter">${n.chapter}</div>`;
+  h+=`<div class="node-title">${n.icon} ${n.title}</div></div>`;
+  h+=`<div class="progress-bar"><div class="progress-fill" style="width:${(qi/mcqs.length*100).toFixed(0)}%"></div></div>`;
+  h+=`<div class="q-box">`;
+  h+=`<div class="q-counter">Q${qi+1} of ${mcqs.length}</div>`;
+  h+=`<div class="q-text">${q.q}</div>`;
+  h+=`<div class="opts">`;
+  q.opts.forEach((o,i)=>{
+    h+=`<button class="opt-btn" id="opt${i}" onclick="chooseOpt('${n.id}',${qi},${i})">${String.fromCharCode(65+i)}. ${o}</button>`;
+  });
+  h+=`</div><div class="exp-box" id="expbox">${q.exp||''}</div></div>`;
+  h+='<div id="node-nav-bar"></div>';
+  nc.innerHTML=h;
+}
+
+function chooseOpt(nid,qi,chosen){
+  const n=CHAPTERS.find(c=>c.id===nid);
+  const mcqs=getMcqs(n);
+  const q=mcqs[qi];
+  const correct=q.ans;
+  const isCorrect=chosen===correct;
+  if(isCorrect)CUR.correct++;
+  if(S.faa[nid]&&S.faa[nid][qi]===undefined)S.faa[nid][qi]=isCorrect?1:0;
+  CUR.answers.push({qi,chosen,correct,isCorrect});
+  document.querySelectorAll('.opt-btn').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===correct)b.classList.add('correct');
+    else if(i===chosen&&!isCorrect)b.classList.add('wrong');
+  });
+  const eb=document.getElementById('expbox');
+  if(eb)eb.classList.add('show');
+  track('answer',{node:nid,qi,correct:isCorrect,prefix:'geo1-'});
+  setTimeout(()=>{
+    if(qi+1>=mcqs.length)finishAttempt(n);
+    else renderQ(n,qi+1);
+  },1400);
+}
+
+function finishAttempt(n){
+  const pct=Math.round((CUR.correct/CUR.total)*100);
+  const xpEarned=pct>=60?Math.round(n.xp*(pct/100)):0;
+  if(!S.mcq[n.id]||pct>(S.mcq[n.id]?.pct||0)){
+    S.mcq[n.id]={done:true,pct,correct:CUR.correct,total:CUR.total};
+    S.xp+=xpEarned;
+    saveS();
+  }
+  track('test_finish',{node:n.id,pct,xp:xpEarned,prefix:'geo1-'});
+  const nc=document.getElementById('node-content');
+  let h=`<div class="node-header"><div class="node-chapter">${n.chapter}</div>`;
+  h+=`<div class="node-title">${n.icon} ${n.title}</div></div>`;
+  h+=`<div class="section-card"><div class="result-box">`;
+  h+=`<div class="result-score">${pct}%</div>`;
+  h+=`<div class="result-msg">${pct>=60?'✅ Node Unlocked! +'+xpEarned+' XP':'📚 Keep Practicing!'}</div>`;
+  h+=`<div class="result-stats">`;
+  h+=`<div class="r-stat"><div class="r-stat-val">${CUR.correct}</div><div class="r-stat-lbl">Correct</div></div>`;
+  h+=`<div class="r-stat"><div class="r-stat-val">${CUR.total}</div><div class="r-stat-lbl">Total</div></div>`;
+  h+=`<div class="r-stat"><div class="r-stat-val">${S.xp}</div><div class="r-stat-lbl">Total XP</div></div>`;
+  h+=`</div>`;
+  h+=`<button class="btn-primary" onclick="startTest('${n.id}')">Retake 🔄</button> `;
+  h+=`<button class="btn-primary outline" onclick="switchTab('${n.id}','learn')" style="margin-top:8px;display:inline-block;background:transparent;border:1px solid var(--line);color:var(--ink2)">Review 📖</button>`;
+  h+=`</div></div>`;
+  h+='<div id="node-nav-bar"></div>';
+  nc.innerHTML=h;
+  refreshTopbar(n.id);
+  buildSidebar();
+  setTimeout(()=>buildNodeNav(n.id),100);
+}
+
+function buildNodeNav(nid){
+  const bar=document.getElementById('node-nav-bar');
+  if(!bar)return;
+  const sn=seqNodes();
+  const idx=sn.findIndex(n=>n.id===nid);
+  let h='';
+  if(idx>0)h+=`<button class="nav-arrow" onclick="openNode('${sn[idx-1].id}')">← ${sn[idx-1].title}</button>`;
+  h+=`<button class="nav-arrow" onclick="showDash()">🏠 Home</button>`;
+  if(idx<sn.length-1&&isUnlocked(sn[idx+1]))h+=`<button class="nav-arrow" onclick="openNode('${sn[idx+1].id}')">${sn[idx+1].title} →</button>`;
+  const gn=goldNode();
+  if(gn&&isUnlocked(gn))h+=`<button class="nav-arrow" style="color:var(--gold)" onclick="openNode('${gn.id}')">🏹 Master</button>`;
+  bar.innerHTML=h;
+}
+
+function showDash(){
+  document.getElementById('dash').style.display='block';
+  document.getElementById('node-content').style.display='none';
+  const sn=seqNodes();
+  const tot=sn.reduce((a,n)=>a+(S.mcq[n.id]?.pct||0),0);
+  const pct=sn.length?Math.round(tot/sn.length):0;
+  const done=sn.filter(n=>(S.mcq[n.id]?.pct||0)>=60).length;
+  const gn=goldNode();
+  let h=`<div class="dash-hero"><h1>🌏 Geography Part 1</h1><p>Universe · Earth · India · Himalayas · Passes</p></div>`;
+  h+=`<div class="stats-row">`;
+  h+=`<div class="stat-card"><div class="stat-val">${S.xp}</div><div class="stat-lbl">Total XP</div></div>`;
+  h+=`<div class="stat-card"><div class="stat-val">${pct}%</div><div class="stat-lbl">Avg Score</div></div>`;
+  h+=`<div class="stat-card"><div class="stat-val">${done}/${sn.length}</div><div class="stat-lbl">Nodes Done</div></div>`;
+  h+=`</div>`;
+  const first=sn.find(n=>!S.mcq[n.id]?.done)||sn[0];
+  h+=`<button class="dash-btn" onclick="openNode('${first.id}')">▶ Continue Learning</button>`;
+  if(gn&&isUnlocked(gn))h+=`<button class="dash-btn" style="background:var(--gold2)" onclick="openNode('${gn.id}')">🏹 Master Node</button>`;
+  document.getElementById('dash').innerHTML=h;
+  refreshTopbar();
+  buildSidebar();
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+function toggleDrawer(){
+  const a=document.getElementById('aside');
+  const o=document.getElementById('drawer-overlay');
+  const open=a.classList.toggle('open');
+  if(o){if(open)o.classList.add('active');else o.classList.remove('active');}
+}
+function closeDrawer(){
+  const a=document.getElementById('aside');
+  const o=document.getElementById('drawer-overlay');
+  if(a)a.classList.remove('open');
+  if(o)o.classList.remove('active');
+}
+
+function init(){
+  loadS();
+  initMetrics();
+  track('material_opened',{material:'geography_part1'});
+  showDash();
+  track('session_start',{prefix:'geo1-'});
+}
+
+document.addEventListener('DOMContentLoaded',init);
+window.addEventListener('beforeunload',()=>track('session_end',{prefix:'geo1-'}));
+</script>
+</body>
+</html>

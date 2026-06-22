@@ -6,6 +6,13 @@ export const ALLOWED_EVENTS = [
   'node_completed',
   'mcq_started',
   'mcq_completed',
+  'session_start',
+  'session_end',
+  'node_open',
+  'tab_switch',
+  'test_start',
+  'answer',
+  'test_finish',
 ] as const
 
 export type EventName = typeof ALLOWED_EVENTS[number]

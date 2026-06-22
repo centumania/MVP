@@ -16,11 +16,9 @@ export interface Material {
 
 export const materials: Material[] = [
   // ── Day 1 ──────────────────────────────────────────────────────────────────
-  { id: 'day-1-bio',  day: 1, title: 'Biology — Foundations & Diversity', htmlPath: '/study/bio-map.html',    totalNodes: 45 },
-  { id: 'day-1-chem', day: 1, title: 'Chemistry — Matter & Atom',         htmlPath: '/study/chem-map-a.html', totalNodes: 35 },
-  { id: 'day-1-math', day: 1, title: 'Maths — Number System',             htmlPath: '/study/num-system.html', totalNodes: 28 },
-  { id: 'day-1-eng',  day: 1, title: 'English Grammar',        htmlPath: '/content/day-1/english.html' },
-  { id: 'day-1-ca',   day: 1, title: 'Current Affairs',        htmlPath: '/content/day-1/current-affairs.html' },
+  { id: 'day-1-anc1', day: 1, title: 'Ancient History — Part 1', htmlPath: '/study/anc-history-1.html', totalNodes: 22 },
+  { id: 'day-1-anc2', day: 1, title: 'Ancient History — Part 2', htmlPath: '/study/anc-history-2.html', totalNodes: 20 },
+  { id: 'day-1-geo1', day: 1, title: 'Geography — Part 1',       htmlPath: '/study/geo-part1.html',     totalNodes: 8  },
 
   // ── Day 2 ──────────────────────────────────────────────────────────────────
   { id: 'day-2-bio',  day: 2, title: 'Biology — Part 2',       htmlPath: '/study/biology-day1.html' },

@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>CentuMania · Ancient History Part 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#13100a;--bg2:#0f0d07;--panel:#1e1a0f;--panel2:#24200f;--line:#2e2a16;
+  --ink:#f0e8d0;--ink2:#c4a86a;--ink3:#7a6840;
+  --gold:#f0bc45;--gold2:#c8960e;--gold-glow:rgba(240,188,69,.13);
+  --amber:#e67e22;--gold-bg:rgba(240,188,69,.12);
+  --red:#f06b6b;--red-bg:rgba(240,107,107,.10);
+  --blue:#4f8ef7;--green:#3dd68c;
+  --mono:"JetBrains Mono",monospace;--serif:"Instrument Serif",serif;--sans:"DM Sans",sans-serif;
+  --nav:56px;--aside:268px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px}
+.shell{display:grid;grid-template-rows:var(--nav) 1fr;height:100vh;overflow:hidden}
+.topbar{display:flex;align-items:center;padding:0 18px;gap:12px;border-bottom:1px solid var(--line);background:rgba(15,13,7,.97);backdrop-filter:blur(14px);z-index:60}
+.logo{font-family:var(--serif);font-size:19px;font-style:italic;color:var(--gold);display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);flex-shrink:0}
+.nav-stats{display:flex;gap:16px;margin-left:auto;align-items:center}
+.stat{font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.stat b{font-size:13px}.stat.xp b{color:var(--gold)}.stat.nd b{color:var(--amber)}.stat.tp b{color:var(--red)}
+.body-wrap{display:grid;grid-template-columns:var(--aside) 1fr;overflow:hidden;height:calc(100vh - var(--nav))}
+aside{background:var(--bg2);border-right:1px solid var(--line);overflow-y:auto}
+aside::-webkit-scrollbar{width:3px}aside::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+main{overflow-y:auto;background:var(--bg)}
+main::-webkit-scrollbar{width:4px}main::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+#sidebar-inner{padding:10px 8px 60px}
+.ch-group{margin-bottom:3px}
+.ch-toggle{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink2);padding:9px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:.13s;font-family:var(--sans)}
+.ch-toggle:hover{background:var(--panel);color:var(--ink)}
+.ch-icon{font-size:15px}.ch-label{flex:1}.ch-prog{font-family:var(--mono);font-size:10px;color:var(--ink3)}.ch-arr{font-size:11px;color:var(--ink3);flex-shrink:0}
+.node-items{padding:3px 4px 3px 10px}
+.ni-btn{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink3);padding:7px 9px;border-radius:8px;cursor:pointer;font-size:13px;transition:.12s;font-family:var(--sans);margin-bottom:1px;min-height:44px}
+.ni-btn:hover:not(.locked){background:var(--panel);color:var(--ink)}
+.ni-btn.active{background:var(--gold-glow);border-color:var(--gold2);color:var(--gold)}
+.ni-btn.passed:not(.active){color:var(--ink)}
+.ni-btn.locked{cursor:default;opacity:.4}
+.ni-title{flex:1;line-height:1.3}.ni-xp{font-family:var(--mono);font-size:10px;color:var(--ink3);flex-shrink:0}
+.ni-tag{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:4px;flex-shrink:0}
+.ni-tag.lock{color:var(--ink3)}.ni-tag.done{background:rgba(61,214,140,.1);color:var(--green);border:1px solid rgba(61,214,140,.25)}.ni-tag.vis{color:var(--amber)}
+.view{padding:28px clamp(16px,3.5vw,52px) 80px;max-width:900px;margin:0 auto}
+.tabs{display:flex;gap:3px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:22px;width:fit-content}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:8px;cursor:pointer;border:0;background:none;color:var(--ink2);transition:.14s}
+.tab:hover:not(.active){color:var(--ink)}.tab.active{background:var(--gold2);color:#fff;font-weight:700}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.node-hd-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.node-type-tag{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px}
+.node-type-tag.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.3)}
+.node-type-tag.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(240,188,69,.3)}
+.xp-pill{font-family:var(--mono);font-size:11px;color:var(--gold);background:var(--gold-bg);border:1px solid rgba(240,188,69,.2);border-radius:6px;padding:3px 8px;margin-left:auto}
+.node-title{font-family:var(--serif);font-size:clamp(24px,4vw,36px);font-style:italic;line-height:1.1;margin-bottom:12px}
+.node-stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.ns-item{display:flex;flex-direction:column;gap:3px}
+.ns-label{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:1px}
+.ns-val{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink)}
+.ns-val.faa-col{color:var(--amber)}.ns-val.pass-col{color:var(--green)}.ns-val.pend-col{color:var(--ink2)}
+.fact-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
+.fact-block.gold-block{background:linear-gradient(135deg,rgba(240,188,69,.07),rgba(230,126,34,.04));border-color:rgba(240,188,69,.3)}
+.fb-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink2);border-bottom:1px solid var(--line);background:var(--panel2)}
+.fb-body{padding:14px 16px}
+ul.facts{list-style:none;padding:0}
+ul.facts li{padding:7px 0 7px 22px;border-bottom:1px dashed var(--line);font-size:14px;position:relative;line-height:1.55}
+ul.facts li:last-child{border-bottom:0}
+ul.facts li::before{content:"\25B8";position:absolute;left:3px;top:9px;color:var(--amber);font-size:11px}
+ul.facts b{color:var(--gold)}
+.trap-block{background:var(--red-bg);border:1px solid rgba(240,107,107,.35);border-radius:12px;overflow:hidden;margin:12px 0}
+.trap-block .fb-head{background:rgba(240,107,107,.08);color:var(--red);border-color:rgba(240,107,107,.35)}
+.mnemonic-block{background:rgba(79,142,247,.07);border:1px solid rgba(79,142,247,.3);border-radius:12px;overflow:hidden;margin:12px 0}
+.mnemonic-block .fb-head{background:rgba(79,142,247,.07);color:var(--blue);border-color:rgba(79,142,247,.3)}
+.revision-block{background:rgba(79,142,247,.05);border:1px solid rgba(79,142,247,.2);border-radius:12px;overflow:hidden;margin:12px 0}
+.revision-block .fb-head{background:rgba(79,142,247,.06);color:var(--blue);border-color:rgba(79,142,247,.2)}
+.revision-block ul.facts li::before{content:"\26A1";color:var(--blue);font-size:10px}
+.oneliner-block{background:rgba(61,214,140,.05);border:1px solid rgba(61,214,140,.18);border-radius:12px;overflow:hidden;margin:12px 0}
+.oneliner-block .fb-head{background:rgba(61,214,140,.06);color:var(--green);border-color:rgba(61,214,140,.18)}
+.oneliner-block ul.facts li::before{content:"\1F3AF";color:var(--green);font-size:10px}
+.flash-hint{font-family:var(--mono);font-size:11px;color:var(--ink3);text-align:center;margin-bottom:12px;letter-spacing:.5px}
+.flash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:14px}
+.flash-card{perspective:900px;cursor:pointer;height:150px}
+.flash-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+.flash-front,.flash-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;line-height:1.45;border:1px solid var(--line)}
+.flash-front{background:var(--panel);color:var(--ink)}
+.flash-back{background:rgba(240,188,69,.1);border-color:rgba(240,188,69,.3);color:var(--gold);transform:rotateY(180deg)}
+.flash-reset-row{text-align:center;margin-top:4px}
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--line);margin:12px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+table th{padding:9px 13px;text-align:left;background:var(--gold2);color:#fff;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+table td{padding:9px 13px;border-bottom:1px solid var(--line);color:var(--ink)}
+table tr:last-child td{border-bottom:0}
+table td:first-child{color:var(--amber);font-weight:600;font-family:var(--mono);font-size:12px}
+table b{color:var(--gold)}
+.trap-box{background:var(--red-bg);border:1px solid rgba(240,107,107,.35);border-radius:10px;padding:12px 14px;margin:12px 0;font-size:13px;line-height:1.6;color:var(--ink)}
+h2{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--gold);margin:0 0 14px}
+h3{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ink2);margin:18px 0 8px;border-bottom:1px solid var(--line);padding-bottom:6px}
+p{font-size:14px;line-height:1.65;color:var(--ink);margin:8px 0}
+ol,ul{padding-left:20px;margin:8px 0}
+ol li,ul li{font-size:14px;line-height:1.65;padding:3px 0}
+strong{color:var(--gold)}
+.mcq-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.mcq-q{font-size:15px;font-weight:600;margin-bottom:12px;line-height:1.45}
+.q-num{font-family:var(--mono);font-size:12px;color:var(--amber);margin-right:4px}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0}
+.mopt{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);font-size:13px;cursor:pointer;text-align:left;font-family:var(--sans);transition:.13s;width:100%}
+.mopt:hover:not([disabled]){border-color:var(--gold2);background:var(--gold-glow)}
+.mopt.correct{background:rgba(61,214,140,.12);border-color:var(--green);color:var(--green)}
+.mopt.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.mcq-fb{margin-top:10px;font-size:13px;padding:9px 12px;border-radius:8px;background:var(--panel2);color:var(--ink2);line-height:1.5;border:1px solid var(--line)}
+.mcq-faa{margin-top:7px}
+.faa-chip{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:6px}
+.faa-chip.faa-ok{background:rgba(61,214,140,.1);color:var(--green);border:1px solid rgba(61,214,140,.25)}
+.faa-chip.faa-err{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.25)}
+.retry-btn{margin-top:4px;padding:6px 16px;background:var(--panel2);border:1px solid var(--gold2);color:var(--gold);border-radius:8px;cursor:pointer;font-family:var(--mono);font-size:11px}
+.retry-btn:hover{background:var(--gold-glow)}
+.unlock-banner{border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:14px;line-height:1.5}
+.pass-banner{background:rgba(61,214,140,.1);border:1px solid rgba(61,214,140,.35);color:var(--green)}
+.fail-banner{background:var(--red-bg);border:1px solid rgba(240,107,107,.35);color:var(--ink)}
+.node-nav{display:flex;gap:10px;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+.nav-btn{font-family:var(--sans);font-weight:600;font-size:13px;border-radius:9px;padding:9px 15px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:.14s;flex:1;text-align:center}
+.nav-btn:hover:not([disabled]){border-color:var(--gold2)}.nav-btn[disabled]{opacity:.35;cursor:default}
+.nav-btn.home-btn{flex:0 0 auto;background:var(--panel2)}
+.dash-hero{background:linear-gradient(135deg,rgba(240,188,69,.08),rgba(230,126,34,.05));border:1px solid rgba(240,188,69,.2);border-radius:16px;padding:28px;margin-bottom:22px;text-align:center}
+.dh-title{font-family:var(--serif);font-size:clamp(28px,5vw,44px);font-style:italic;margin-bottom:4px}
+.dh-sub{font-family:var(--mono);font-size:12px;color:var(--ink3);letter-spacing:1px}
+.dh-xp{font-family:var(--mono);font-size:32px;font-weight:700;color:var(--gold);margin:12px 0 4px}
+.dh-bar-wrap{height:8px;background:var(--line);border-radius:4px;overflow:hidden;max-width:400px;margin:0 auto 8px}
+.dh-bar{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:4px;transition:.6s}
+.dh-label{font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.dash-chapters{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:22px}
+.dc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.dc-icon{font-size:22px;margin-bottom:6px}
+.dc-label{font-size:13px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.dc-prog-bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.dc-bar{height:100%;background:var(--gold);border-radius:3px;transition:.5s}
+.dc-nums{font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.cta-btn{padding:12px 24px;border-radius:12px;font-size:14px;font-weight:700;font-family:var(--sans);cursor:pointer;border:0;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#000;transition:.15s}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(240,188,69,.3)}
+.cta-btn.sec{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+.cta-btn[disabled]{opacity:.4;cursor:default;transform:none;box-shadow:none}
+.toast{position:fixed;top:64px;right:18px;background:var(--panel2);border:1px solid var(--gold);border-radius:12px;padding:10px 16px;z-index:500;opacity:0;transform:translateY(-8px);transition:.3s;pointer-events:none;font-size:13px;max-width:340px;line-height:1.4}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.err{border-color:var(--red)}.toast.warn{border-color:var(--amber);color:var(--ink)}
+.mob-bar{display:none}
+@media(max-width:720px){
+  .shell{grid-template-rows:var(--nav) 1fr 56px;height:100dvh}
+  .body-wrap{grid-template-columns:1fr;height:calc(100dvh - var(--nav) - 56px)}
+  aside{display:none}
+  .mob-bar{display:flex;background:rgba(15,13,7,.98);backdrop-filter:blur(16px);border-top:1px solid var(--line);align-items:stretch}
+  .mob-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;color:var(--ink3);cursor:pointer;padding:8px 4px;font-family:var(--mono);font-size:9px;transition:.13s}
+  .mob-tab .mt-ico{font-size:20px}.mob-tab.act{color:var(--gold)}
+  .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;opacity:0;pointer-events:none;transition:.2s}
+  .mob-overlay.show{opacity:1;pointer-events:all}
+  .mob-drawer{position:fixed;left:-100%;top:0;bottom:0;width:min(300px,88vw);background:var(--bg2);border-right:1px solid var(--line);z-index:200;transition:.28s;overflow-y:auto}
+  .mob-drawer.open{left:0}
+  .mob-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px;border-bottom:1px solid var(--line)}
+  .mob-close{background:none;border:1px solid var(--line);color:var(--ink2);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px}
+  .nav-stats{display:none}
+  .view{padding:16px 14px 100px}
+  .node-title{font-size:24px}
+  .mcq-opts{grid-template-columns:1fr}
+  .flash-grid{grid-template-columns:1fr}
+  .tabs{overflow-x:auto;width:100%;scrollbar-width:none}
+  .toast{top:auto;bottom:68px;left:14px;right:14px}
+}
+@media(min-width:721px){.mob-drawer,.mob-overlay{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar">
+    <div class="logo"><span class="logo-dot"></span>CentuMania</div>
+    <div class="nav-stats">
+      <div class="stat xp">XP <b id="h-xp">0</b></div>
+      <div class="stat nd">Nodes <b id="h-nd">0/0</b></div>
+      <div class="stat tp">Traps <b id="h-tp">0/0</b></div>
+    </div>
+  </nav>
+  <div class="body-wrap">
+    <aside><div id="sidebar-inner"></div></aside>
+    <main id="main-area">
+      <div class="dash-view view" id="dash-view">
+        <div id="dash-content"></div>
+      </div>
+      <div class="node-view view" id="node-view" style="display:none">
+        <div id="node-content"></div>
+        <div class="node-nav" id="node-nav"></div>
+      </div>
+    </main>
+  </div>
+  <nav class="mob-bar">
+    <button class="mob-tab act" id="mob-home"><span class="mt-ico">&#9672;</span>Home</button>
+    <button class="mob-tab" id="mob-menu"><span class="mt-ico">&#9776;</span>Topics</button>
+  </nav>
+</div>
+<div class="mob-overlay" id="mob-overlay"></div>
+<div class="mob-drawer" id="mob-drawer">
+  <div class="mob-drawer-head">
+    <div class="logo"><span class="logo-dot"></span>Topics</div>
+    <button class="mob-close" id="mob-close">&#10005;</button>
+  </div>
+  <div id="mob-sidebar-inner"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const CHAPTERS=[
+{id:"jainism",title:"Jainism",icon:"🕉️",nodes:[
+{id:"j1",title:"Mahavira & Tirthankaras",xp:50,type:"regular",seqIdx:0,
+learn:`<h2>Mahavira &amp; Tirthankaras</h2>
+<p>Jainism recognises <strong>24 Tirthankaras</strong> (ford-makers) who achieved liberation and showed the way.</p>
+<h3>Key Tirthankaras</h3>
+<div class="tbl-wrap"><table><thead><tr><th>#</th><th>Tirthankara</th><th>Symbol</th></tr></thead><tbody>
+<tr><td>1st</td><td><strong>Rishabhanath (Adinath)</strong></td><td><strong>Bull</strong></td></tr>
+<tr><td>2nd</td><td>Ajitnath</td><td>Elephant</td></tr>
+<tr><td>7th</td><td>Suparaswanath</td><td><strong>Swastika</strong></td></tr>
+<tr><td>22nd</td><td><strong>Arishtanemi (Neminath)</strong></td><td><strong>Conch Shell</strong></td></tr>
+<tr><td>23rd</td><td><strong>Parshvanath</strong></td><td><strong>Serpent</strong> — preached 4 vows</td></tr>
+<tr><td>24th</td><td><strong>Mahavira (Vardhaman)</strong></td><td><strong>Lion</strong></td></tr>
+</tbody></table></div>
+<h3>Mahavira — Complete Profile</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody>
+<tr><td>Birth year</td><td><strong>599 BC</strong> (Shvetambara / SSC standard)</td></tr>
+<tr><td>Birth place</td><td><strong>Kundagrama</strong> near <strong>Vaishali</strong></td></tr>
+<tr><td>Childhood name</td><td><strong>Vardhaman</strong></td></tr>
+<tr><td>Father / Mother</td><td><strong>Siddhartha</strong> / <strong>Trishla</strong></td></tr>
+<tr><td>Wife / Daughter</td><td><strong>Yashoda</strong> / Annoja Priyadarsni</td></tr>
+<tr><td>1st disciple / Son-in-law</td><td><strong>Jamali</strong></td></tr>
+<tr><td>Renounced home at age</td><td><strong>30</strong></td></tr>
+<tr><td>Kaivalya (enlightenment)</td><td><strong>Rajupalika River</strong>, under Saal tree</td></tr>
+<tr><td>Language preached</td><td><strong>Prakrit</strong></td></tr>
+<tr><td>Death (Nirvana)</td><td><strong>527 BC</strong> at <strong>Pavapuri</strong></td></tr>
+</tbody></table></div>
+<h3>Mahavira vs Parshvanath</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Feature</th><th>Parshvanath (23rd)</th><th>Mahavira (24th)</th></tr></thead><tbody>
+<tr><td>Vows</td><td><strong>4 vows</strong> (Ahimsa, Satya, Asteya, Aparigraha)</td><td><strong>5 vows</strong> + added Brahmacharya</td></tr>
+<tr><td>Period</td><td>~800 BC</td><td>599–527 BC</td></tr>
+</tbody></table></div>
+<div class="trap-box">⚠ TRAPS: Brahmacharya added by <strong>Mahavira</strong> (not Parshvanath). Mahavira died at <strong>Pavapuri</strong>, not Vaishali. 1st disciple = <strong>Jamali</strong> (Ananda = Buddha's disciple). Rishabha &amp; Aristanemi mentioned in <strong>Rigveda</strong>.</div>`,
+revision:[
+"Mahavira = 24th/last Tirthankara, born 599 BC Kundagrama, died 527 BC Pavapuri",
+"1st=Rishabhanath(Bull) | 23rd=Parshvanath(Serpent,4 vows) | 24th=Mahavira(Lion,5 vows)",
+"Only Rishabha and Aristanemi (22nd) mentioned in Rigveda",
+"1st disciple/son-in-law = Jamali (NOT Ananda — that's Buddha's attendant)",
+"Kaivalya attained at Rajupalika River, under a Saal tree"
+],
+oneliners:[
+"Mahavira was born in 599 BC (Shvetambara/SSC standard date)",
+"Mahavira was born at Kundagrama, near Vaishali",
+"Mahavira's childhood name was Vardhaman",
+"Mahavira's father was Siddhartha and mother was Trishla",
+"Mahavira's wife was Yashoda and daughter was Annoja Priyadarsni",
+"Jamali was Mahavira's first disciple and also his son-in-law",
+"Mahavira renounced home at age 30",
+"Mahavira attained Kaivalya (enlightenment) at the Rajupalika River, under a Saal tree",
+"Mahavira preached in Prakrit",
+"Mahavira attained Nirvana (death) in 527 BC at Pavapuri",
+"Rishabhanath (Adinath), the 1st Tirthankara, has the Bull as his symbol",
+"Parshvanath, the 23rd Tirthankara, has the Serpent as his symbol and preached only 4 vows",
+"Mahavira, the 24th Tirthankara, has the Lion as his symbol and added the 5th vow",
+"Brahmacharya was the vow added by Mahavira, not present in Parshvanath's code",
+"Only Rishabha (1st) and Aristanemi/Neminath (22nd) Tirthankaras are mentioned in the Rigveda",
+"Suparaswanath, the 7th Tirthankara, has the Swastika as his symbol",
+"Ajitnath, the 2nd Tirthankara, has the Elephant as his symbol",
+"Mahavira lived from approximately 599 to 527 BC",
+"Parshvanath lived approximately 250 years before Mahavira, around 800 BC"
+],
+flashcards:[
+{q:"When and where was Mahavira born?",a:"599 BC, at Kundagrama, near Vaishali"},
+{q:"What was Mahavira's childhood name?",a:"Vardhaman"},
+{q:"Where and how did Mahavira attain Kaivalya (enlightenment)?",a:"At the Rajupalika River, under a Saal tree"},
+{q:"Where and when did Mahavira attain Nirvana (death)?",a:"527 BC, at Pavapuri"},
+{q:"Who was Mahavira's first disciple, and what other relation did he have to Mahavira?",a:"Jamali — also Mahavira's son-in-law"},
+{q:"What are the symbols of the 1st, 23rd, and 24th Tirthankaras?",a:"1st (Rishabhanath) = Bull; 23rd (Parshvanath) = Serpent; 24th (Mahavira) = Lion"},
+{q:"How many vows did Parshvanath preach, and how many did Mahavira add?",a:"Parshvanath preached 4 vows; Mahavira added a 5th (Brahmacharya)"},
+{q:"Which two Tirthankaras are mentioned in the Rigveda?",a:"Rishabha (1st) and Aristanemi/Neminath (22nd)"},
+{q:"In which language did Mahavira preach?",a:"Prakrit"},
+{q:"Who was Buddha's attendant, often confused with Mahavira's disciple Jamali?",a:"Ananda — a common SSC trap"}
+],
+mcqs:[
+{q:"Who was the 1st Tirthankara of Jainism?",o:["Parshvanath","Rishabhanath (Adinath)","Mahavira","Neminath"],a:1,e:"Rishabhanath (Adinath) was the 1st Tirthankara; his symbol is the Bull."},
+{q:"What is the symbol of Mahavira (24th Tirthankara)?",o:["Serpent","Bull","Elephant","Lion"],a:3,e:"Mahavira's symbol is the Lion. Parshvanath (23rd) = Serpent; Rishabhanath (1st) = Bull."},
+{q:"Mahavira was born at Kundagrama near which city?",o:["Pataliputra","Rajgriha","Vaishali","Taxila"],a:2,e:"Kundagrama (Kundalpur) is near Vaishali, in present-day Bihar."},
+{q:"Who was Mahavira's father?",o:["Chetaka","Nandiverdhan","Siddhartha","Bimbisara"],a:2,e:"Mahavira's father was Siddhartha, head of the Jnatrika Kshatriya clan."},
+{q:"Who was Mahavira's 1st disciple (also his son-in-law)?",o:["Ananda","Jamali","Kondanna","Upagupta"],a:1,e:"Jamali was both Mahavira's son-in-law and his first disciple. SSC trap: Ananda = Buddha's attendant."},
+{q:"Mahavira attained Kaivalya near which river?",o:["Ganga","Niranjana","Rajupalika","Godavari"],a:2,e:"Mahavira attained Kaivalya at the Rajupalika River, under a Saal tree, near Jrimbhikgrama."},
+{q:"Which Tirthankara preached only 4 vows (not 5)?",o:["Rishabhanath","Neminath","Parshvanath","Mahavira"],a:2,e:"Parshvanath (23rd Tirthankara) preached 4 vows. Mahavira added the 5th — Brahmacharya."},
+{q:"Mahavira attained Nirvana (death) at?",o:["Vaishali","Bodh Gaya","Kundagrama","Pavapuri"],a:3,e:"Mahavira died at Pavapuri (Bihar) in 527 BC. SSC trap: not Vaishali (birth place)."},
+{q:"Symbol of Parshvanath (23rd Tirthankara)?",o:["Bull","Lion","Serpent","Swastika"],a:2,e:"Parshvanath's symbol is the Serpent. He is the 23rd Tirthankara."},
+{q:"Which two Tirthankaras are mentioned in the Rigveda?",o:["Mahavira & Parshvanath","Rishabha & Aristanemi","Adinath & Neminath","Parshvanath & Rishabha"],a:1,e:"Only Rishabha (1st) and Aristanemi/Neminath (22nd) are mentioned in the Rigveda."}
+]},
+{id:"j2",title:"Jain Doctrine, Councils & Sects",xp:50,type:"regular",seqIdx:1,
+learn:`<h2>Jain Doctrine, Councils &amp; Sects</h2>
+<h3>Tri-Ratna (Three Jewels)</h3>
+<ol><li><strong>Samyaka Darshan</strong> — Right Faith</li>
+<li><strong>Samyaka Gyan</strong> — Right Knowledge</li>
+<li><strong>Samyaka Acharan</strong> — Right Conduct</li></ol>
+<h3>Pancha Mahavrata (Five Great Vows)</h3>
+<ol><li><strong>Ahimsa</strong> — Non-injury (most extreme in Jainism)</li>
+<li><strong>Satya</strong> — Non-lying</li>
+<li><strong>Asteya</strong> — Non-stealing</li>
+<li><strong>Aparigraha</strong> — Non-possession</li>
+<li><strong>Brahmacharya</strong> — Celibacy ← <strong>Added by Mahavira</strong></li></ol>
+<h3>Jaina Councils</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Council</th><th>Place</th><th>Leader</th><th>Period</th><th>Outcome</th></tr></thead><tbody>
+<tr><td><strong>1st Jain Council</strong></td><td><strong>Pataliputra</strong></td><td><strong>Sthulabahu</strong></td><td>3rd century BC</td><td>Compiled 12 Angas</td></tr>
+<tr><td><strong>2nd Jain Council</strong></td><td><strong>Valabhi</strong></td><td><strong>Devaradhikshamasramana</strong></td><td><strong>513 AD</strong></td><td>12 Angas + 12 Upangas</td></tr>
+</tbody></table></div>
+<h3>Sects of Jainism</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Sect</th><th>Practice</th><th>Leader</th><th>Location</th></tr></thead><tbody>
+<tr><td><strong>Digambara</strong></td><td>Sky-clad (<strong>naked</strong>)</td><td><strong>Bhadrabahu</strong></td><td>South (Deccan)</td></tr>
+<tr><td><strong>Shvetambara</strong></td><td><strong>White-clad</strong></td><td><strong>Sthulabhadra</strong></td><td>North (Magadha)</td></tr>
+</tbody></table></div>
+<p>Split during Chandragupta Maurya's reign — <strong>famine</strong> in Magadha. Bhadrabahu led group to Deccan → <strong>Digambara</strong>. Sthulabhadra stayed North → <strong>Shvetambara</strong>.</p>
+<h3>Jainism vs Buddhism</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Feature</th><th>Jainism</th><th>Buddhism</th></tr></thead><tbody>
+<tr><td>Salvation</td><td>Extreme austerity</td><td>Middle path</td></tr>
+<tr><td>Soul</td><td><strong>Believes in soul</strong></td><td>Does NOT believe in soul</td></tr>
+<tr><td>Language</td><td><strong>Prakrit</strong></td><td><strong>Pali</strong></td></tr>
+<tr><td>Spread</td><td>Confined to India; survived</td><td>Died in India; spread abroad</td></tr>
+</tbody></table></div>
+<div class="trap-box">⚠ TRAPS: 1st Jain Council = <strong>Pataliputra</strong> (not Vaishali). 2nd Jain Council = <strong>Valabhi</strong> (not Pataliputra). Digambara = <strong>naked</strong>; Shvetambara = <strong>white</strong>. Tri-Ratna ≠ Buddhist 3 Ratnas.</div>`,
+revision:[
+"Tri-Ratna: Right Faith+Knowledge+Conduct | 5 Mahavratas incl. Brahmacharya(Mahavira's addition)",
+"1st Jain Council=Pataliputra(Sthulabahu,3rd c.BC) | 2nd=Valabhi(Devaradhikshamasramana,513AD)",
+"Digambara=naked(Bhadrabahu,south) | Shvetambara=white(Sthulabhadra,north)",
+"Split during Chandragupta Maurya's reign, due to famine in Magadha",
+"Jainism: believes in soul, Prakrit, confined to India | Buddhism: no soul, Pali, spread abroad"
+],
+oneliners:[
+"Tri-Ratna (3 Jewels): Samyaka Darshan (Right Faith), Samyaka Gyan (Right Knowledge), Samyaka Acharan (Right Conduct)",
+"Pancha Mahavrata (5 great vows): Ahimsa, Satya, Asteya, Aparigraha, Brahmacharya",
+"Ahimsa (non-injury) is the most extreme vow in Jainism",
+"Brahmacharya (celibacy) was added by Mahavira to the existing 4 vows",
+"The 1st Jain Council was held at Pataliputra, led by Sthulabahu, in the 3rd century BC",
+"The 1st Jain Council compiled the 12 Angas",
+"The 2nd Jain Council was held at Valabhi in 513 AD, led by Devaradhikshamasramana",
+"The 2nd Jain Council compiled the 12 Angas plus 12 Upangas",
+"Digambara monks are sky-clad (go naked); their leader was Bhadrabahu",
+"Digambara sect is associated with South India (Deccan)",
+"Shvetambara monks are white-clad; their leader was Sthulabhadra",
+"Shvetambara sect is associated with North India (Magadha)",
+"The Jain schism occurred during Chandragupta Maurya's reign, due to a famine in Magadha",
+"Jain canonical literature was written in Prakrit",
+"Buddhist canonical literature was written in Pali",
+"Jainism believes firmly in the existence of the soul (Jiva)",
+"Buddhism does not believe in a permanent soul",
+"Jainism remained largely confined to India and survived there",
+"Buddhism eventually declined in India but spread abroad",
+"The Kalpasutra, a biography of the Tirthankaras, was written by Bhadrabahu"
+],
+flashcards:[
+{q:"What do the three terms in Tri-Ratna mean?",a:"Samyaka Darshan (Right Faith), Samyaka Gyan (Right Knowledge), Samyaka Acharan (Right Conduct)"},
+{q:"List the Pancha Mahavrata, and identify which one Mahavira added.",a:"Ahimsa, Satya, Asteya, Aparigraha, Brahmacharya — Mahavira added Brahmacharya"},
+{q:"Where and when was the 1st Jain Council held, and what did it produce?",a:"Pataliputra, 3rd century BC, led by Sthulabahu; compiled the 12 Angas"},
+{q:"Where and when was the 2nd Jain Council held, and what did it produce?",a:"Valabhi, 513 AD, led by Devaradhikshamasramana; compiled 12 Angas + 12 Upangas"},
+{q:"What distinguishes Digambara monks, and who led this sect?",a:"They go sky-clad (naked); led by Bhadrabahu, associated with South India"},
+{q:"What distinguishes Shvetambara monks, and who led this sect?",a:"They wear white clothes; led by Sthulabhadra, associated with North India (Magadha)"},
+{q:"What caused the Digambara-Shvetambara split, and during whose reign?",a:"A famine in Magadha, during Chandragupta Maurya's reign"},
+{q:"Compare the languages of Jain and Buddhist canonical texts.",a:"Jain texts: Prakrit | Buddhist texts: Pali"},
+{q:"Compare Jainism's and Buddhism's view of the soul.",a:"Jainism believes in the soul (Jiva); Buddhism does not believe in a permanent soul"},
+{q:"Who wrote the Kalpasutra, and what is it about?",a:"Bhadrabahu; a biography of the Tirthankaras"}
+],
+mcqs:[
+{q:"Which vow was added by Mahavira that Parshvanath did NOT teach?",o:["Ahimsa","Asteya","Aparigraha","Brahmacharya"],a:3,e:"Brahmacharya (celibacy) is the 5th vow — added by Mahavira. Parshvanath taught only 4 vows."},
+{q:"In Tri-Ratna, 'Samyaka Darshan' means?",o:["Right Conduct","Right Knowledge","Right Faith","Right Speech"],a:2,e:"Samyaka Darshan = Right Faith. Samyaka Gyan = Right Knowledge. Samyaka Acharan = Right Conduct."},
+{q:"1st Jain Council was held at?",o:["Vaishali","Valabhi","Pataliputra","Rajgriha"],a:2,e:"1st Jain Council = Pataliputra (3rd century BC). SSC trap: not Vaishali."},
+{q:"2nd Jain Council was held at?",o:["Pataliputra","Vaishali","Valabhi","Rajgriha"],a:2,e:"2nd Jain Council = Valabhi (513 AD), led by Devaradhikshamasramana."},
+{q:"Leader of Digambara sect?",o:["Sthulabhadra","Bhadrabahu","Sthulabahu","Jamali"],a:1,e:"Bhadrabahu led the Digambara sect (sky-clad/naked) to the Deccan."},
+{q:"Shvetambara monks wear?",o:["Nothing (naked)","Red robes","White clothes","Saffron robes"],a:2,e:"Shvetambara = white-clad. Led by Sthulabhadra, they remained in North."},
+{q:"Jain canonical literature was written in which language?",o:["Sanskrit","Pali","Prakrit","Ardha Magadhi only"],a:2,e:"Jain literature was written in Prakrit. Buddhism used Pali."},
+{q:"Kalpasutra (biography of Tirthankaras) was written by?",o:["Sthulabhadra","Mahavira","Bhadrabahu","Sthulabahu"],a:2,e:"Kalpasutra — biography of Tirthankaras — was written by Bhadrabahu."},
+{q:"Which Jain sect migrated to South India after Mahavira?",o:["Shvetambara","Digambara","Ajivika","Sthaviravada"],a:1,e:"Digambara sect, led by Bhadrabahu, migrated to the Deccan during the Magadha famine."},
+{q:"Jainism's view on the soul?",o:["No soul exists","Soul merges with God","Jains believe in the existence of soul","Soul is same as body"],a:2,e:"Jainism firmly believes in soul (Jiva). Buddhism denies a permanent soul."}
+]},
+{id:"j3",title:"Jainism Art — Shravanabelagola",xp:45,type:"regular",seqIdx:2,
+learn:`<h2>Jainism Art — Shravanabelagola &amp; Dilwara</h2>
+<h3>Gomateshwara / Bahubali Statue</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody>
+<tr><td>Location</td><td><strong>Shravanabelagola</strong>, Hassan District, Karnataka</td></tr>
+<tr><td>Height</td><td><strong>58.8 metres</strong> — world's tallest monolithic free-standing statue</td></tr>
+<tr><td>On which hill</td><td><strong>Vindhyagiri hill</strong></td></tr>
+<tr><td>Carved in</td><td><strong>981 AD</strong> by <strong>Chamundaraya</strong> (minister of Ganga king Marasimha II)</td></tr>
+<tr><td>Depicts</td><td><strong>Bahubali</strong> (son of 1st Tirthankara <strong>Rishabhanath</strong>)</td></tr>
+<tr><td>Posture</td><td>Kayotsarga (erect meditation); vines on body = long meditation</td></tr>
+<tr><td>Grand ceremony</td><td><strong>Mahamastakabhisheka</strong> — every <strong>12 years</strong></td></tr>
+</tbody></table></div>
+<h3>Dilwara Temples (Mount Abu, Rajasthan)</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody>
+<tr><td>Location</td><td><strong>Mount Abu, Rajasthan</strong></td></tr>
+<tr><td>Built</td><td><strong>11th–13th century AD</strong> (Solanki/Chaulukya period)</td></tr>
+<tr><td>Famous for</td><td>Intricate <strong>white marble</strong> carvings</td></tr>
+<tr><td>Vimal Vasahi Temple</td><td><strong>1031 AD</strong> — by <strong>Vimalshah</strong></td></tr>
+<tr><td>Luna Vasahi Temple</td><td><strong>1230 AD</strong> — by <strong>Vastupal &amp; Tejpal</strong></td></tr>
+</tbody></table></div>
+<div class="trap-box">⚠ KEY: Bahubali = son of <strong>Rishabhanath</strong> (1st Tirthankara) — NOT Mahavira. Chamundaraya carved statue in <strong>981 AD</strong>. Mahamastakabhisheka = every <strong>12 years</strong>.</div>`,
+revision:[
+"Gomateshwara/Bahubali statue: Shravanabelagola (Hassan, Karnataka), Vindhyagiri hill, 58.8m tall",
+"Carved 981 AD by Chamundaraya (minister of Ganga king Marasimha II)",
+"Bahubali = son of Rishabhanath (1st Tirthankara), NOT Mahavira",
+"Mahamastakabhisheka ceremony every 12 years",
+"Dilwara Temples: Mount Abu, Rajasthan, 11th-13th c. AD, white marble (Solanki dynasty)"
+],
+oneliners:[
+"The Gomateshwara (Bahubali) statue is located at Shravanabelagola, Hassan District, Karnataka",
+"The statue stands 58.8 metres tall — the world's tallest monolithic free-standing statue",
+"The statue is on Vindhyagiri hill",
+"It was carved in 981 AD by Chamundaraya, minister of Ganga king Marasimha II",
+"The statue depicts Bahubali, son of the 1st Tirthankara Rishabhanath",
+"Bahubali is shown in Kayotsarga posture (erect meditation)",
+"Vines on the statue's body symbolize a long period of meditation",
+"Mahamastakabhisheka, the grand anointing ceremony, is held every 12 years",
+"Dilwara Temples are located at Mount Abu, Rajasthan",
+"Dilwara Temples were built in the 11th-13th century AD under the Solanki (Chaulukya) dynasty",
+"Dilwara Temples are famous for intricate white marble carvings",
+"Vimal Vasahi Temple at Dilwara was built in 1031 AD by Vimalshah",
+"Luna Vasahi Temple at Dilwara was built in 1230 AD by Vastupal and Tejpal",
+"Bahubali is NOT the son of Mahavira — a common SSC trap",
+"Chamundaraya's patron was the Ganga dynasty king Marasimha II"
+],
+flashcards:[
+{q:"Where is the Gomateshwara (Bahubali) statue located?",a:"Shravanabelagola, Hassan District, Karnataka, on Vindhyagiri hill"},
+{q:"How tall is the Gomateshwara statue, and what is its claim to fame?",a:"58.8 metres — the world's tallest monolithic free-standing statue"},
+{q:"Who carved the Gomateshwara statue, and when?",a:"Chamundaraya, minister of Ganga king Marasimha II, in 981 AD"},
+{q:"Whose son was Bahubali (Gomateshwara)?",a:"Rishabhanath, the 1st Tirthankara — NOT Mahavira"},
+{q:"How often is the Mahamastakabhisheka ceremony held?",a:"Every 12 years"},
+{q:"Where are the Dilwara Temples located?",a:"Mount Abu, Rajasthan"},
+{q:"What are the Dilwara Temples famous for?",a:"Intricate white marble carvings"},
+{q:"Who built the Vimal Vasahi Temple, and when?",a:"Vimalshah, in 1031 AD"},
+{q:"Who built the Luna Vasahi Temple, and when?",a:"Vastupal and Tejpal, in 1230 AD"},
+{q:"Under which dynasty were the Dilwara Temples built?",a:"The Solanki (Chaulukya) dynasty"}
+],
+mcqs:[
+{q:"Gomateshwara (Bahubali) statue is located at?",o:["Mount Abu","Mathura","Shravanabelagola","Ellora"],a:2,e:"Shravanabelagola in Hassan District, Karnataka is the site of the famous Gomateshwara statue."},
+{q:"Height of the Gomateshwara statue?",o:["100 metres","40 metres","58.8 metres","72 metres"],a:2,e:"The Gomateshwara statue is 58.8 metres tall — world's tallest monolithic free-standing statue."},
+{q:"The Gomateshwara statue was carved in?",o:["681 AD","1031 AD","981 AD","781 AD"],a:2,e:"The statue was carved in 981 AD by Chamundaraya, minister of Ganga dynasty king Marasimha II."},
+{q:"Who carved the Gomateshwara statue?",o:["Vimalshah","Chamundaraya","Vastupal","Tejpal"],a:1,e:"Chamundaraya (minister of Ganga king Marasimha II) commissioned the carving in 981 AD."},
+{q:"Dilwara Temples are located at?",o:["Shravanabelagola","Khajuraho","Mount Abu, Rajasthan","Madurai"],a:2,e:"Dilwara Temples are at Mount Abu in Rajasthan — finest examples of Jain architecture."},
+{q:"Dilwara temples are famous for?",o:["Sandstone carvings","Bronze sculptures","White marble carvings","Granite monoliths"],a:2,e:"Dilwara temples are renowned for intricate white marble carvings on ceilings and pillars."},
+{q:"Vimal Vasahi temple at Dilwara was built in?",o:["1230 AD","1031 AD","981 AD","1100 AD"],a:1,e:"Vimal Vasahi was built in 1031 AD by Vimalshah, a minister under the Solanki dynasty."},
+{q:"Bahubali (Gomateshwara) was the son of which Tirthankara?",o:["Mahavira","Parshvanath","Neminath","Rishabhanath"],a:3,e:"Bahubali was the son of Rishabhanath — the 1st Tirthankara. SSC trap: not Mahavira."},
+{q:"Mahamastakabhisheka is held every?",o:["5 years","25 years","12 years","10 years"],a:2,e:"Mahamastakabhisheka is the grand anointing ceremony held every 12 years at Shravanabelagola."},
+{q:"Dilwara temples were built during which dynasty?",o:["Maurya","Gupta","Rashtrakuta","Solanki (Chaulukya)"],a:3,e:"Dilwara temples were built in the 11th–13th century AD under Solanki (Chaulukya) dynasty ministers."}
+]}
+]},
+{id:"buddhism",title:"Buddhism",icon:"☸️",nodes:[
+{id:"b1",title:"Buddha — Life & Teachings",xp:55,type:"regular",seqIdx:3,
+learn:`<h2>Lord Buddha — Life &amp; Teachings</h2>
+<h3>Complete Profile</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody>
+<tr><td>Birth year</td><td><strong>563 BC</strong></td></tr>
+<tr><td>Birth place</td><td><strong>Lumbini, Nepal</strong></td></tr>
+<tr><td>Birth day</td><td><strong>Vaishakha Purnima</strong></td></tr>
+<tr><td>Childhood name / Clan</td><td><strong>Siddhartha</strong> / <strong>Gautam</strong></td></tr>
+<tr><td>Father / Mother</td><td><strong>Suddhodana</strong> / <strong>Mahamaya Devi</strong> (died 7 days after birth)</td></tr>
+<tr><td>Foster mother</td><td><strong>Pajapati Gotami</strong></td></tr>
+<tr><td>Wife / Son</td><td><strong>Yashodhara</strong> / <strong>Rahul</strong></td></tr>
+<tr><td>Left home at age</td><td><strong>29</strong> — <strong>Mahabhinishkraman</strong> (Great Renunciation)</td></tr>
+<tr><td>Enlightenment at age</td><td><strong>35</strong>; under <strong>Peepal (Bodhi) tree</strong> at <strong>Bodh Gaya</strong></td></tr>
+<tr><td>1st sermon</td><td><strong>Sarnath</strong> (Deer Park) to <strong>5 ascetics</strong> — <strong>Dhammachakrapravartana</strong></td></tr>
+<tr><td>1st disciple</td><td><strong>Kondanna</strong> (after 1st sermon)</td></tr>
+<tr><td>Personal attendant</td><td><strong>Ananda</strong></td></tr>
+<tr><td>Girl who offered milk &amp; rice</td><td><strong>Sujata</strong> (before enlightenment)</td></tr>
+<tr><td>Death (Mahaparinirvana)</td><td><strong>483 BC</strong>, <strong>Kushinara</strong> (Kasia, UP)</td></tr>
+<tr><td>Death cause</td><td>Ate pork offered by <strong>Chunda</strong> (blacksmith)</td></tr>
+</tbody></table></div>
+<h3>Four Noble Truths</h3>
+<ol><li><strong>Dukkha</strong> — Life is full of suffering</li>
+<li><strong>Samudaya</strong> — Suffering has a cause (desire)</li>
+<li><strong>Nirodha</strong> — Suffering can be ended</li>
+<li><strong>Marga</strong> — Eightfold Path ends suffering</li></ol>
+<h3>Three Ratnas of Buddhism</h3>
+<p><strong>Buddha</strong> (teacher) + <strong>Dhamma</strong> (teaching) + <strong>Sangha</strong> (community)</p>
+<div class="trap-box">⚠ TRAPS: Sarnath = 1st sermon (NOT Bodh Gaya). Ananda = attendant; Kondanna = 1st disciple. Sujata = rice &amp; milk before enlightenment; Chunda = last meal before death. All three events = <strong>Vaishakha Purnima</strong>.</div>`,
+revision:[
+"Buddha: born 563 BC Lumbini, left home age 29, enlightened age 35 Bodh Gaya, died 483 BC Kushinara",
+"1st sermon = Sarnath (Dhammachakrapravartana), to 5 ascetics",
+"Ananda = attendant | Kondanna = 1st disciple (after sermon) | Sujata = rice/milk before enlightenment | Chunda = last meal",
+"4 Noble Truths: Dukkha, Samudaya, Nirodha, Marga",
+"3 Ratnas: Buddha+Dhamma+Sangha | All 3 life events on Vaishakha Purnima"
+],
+oneliners:[
+"Buddha was born in 563 BC at Lumbini, Nepal, on Vaishakha Purnima",
+"Buddha's childhood name was Siddhartha, of the Gautam clan",
+"Buddha's father was Suddhodana; his mother Mahamaya Devi died 7 days after his birth",
+"Buddha's foster mother was Pajapati Gotami",
+"Buddha's wife was Yashodhara and his son was Rahul",
+"Buddha left home at age 29 — the Mahabhinishkraman (Great Renunciation)",
+"Buddha attained enlightenment at age 35, under the Peepal (Bodhi) tree at Bodh Gaya",
+"Buddha's first sermon was at Sarnath (Deer Park), to 5 ascetics",
+"Buddha's first sermon is called Dhammachakrapravartana",
+"Kondanna was Buddha's first disciple, after the first sermon",
+"Ananda was Buddha's personal attendant",
+"Sujata offered Buddha rice and milk before his enlightenment",
+"Buddha died (Mahaparinirvana) in 483 BC at Kushinara (Kasia, UP)",
+"Buddha's death was caused by eating pork offered by Chunda, a blacksmith",
+"Buddha's birth, enlightenment, and death all occurred on Vaishakha Purnima",
+"The Four Noble Truths are Dukkha, Samudaya, Nirodha, and Marga",
+"The Three Ratnas of Buddhism are Buddha, Dhamma, and Sangha",
+"Dukkha means life is full of suffering; Samudaya means suffering has a cause (desire)",
+"Nirodha means suffering can be ended; Marga is the Eightfold Path that ends it"
+],
+flashcards:[
+{q:"When and where was Buddha born, and on what day?",a:"563 BC, Lumbini, Nepal, on Vaishakha Purnima"},
+{q:"What was Buddha's childhood name and clan?",a:"Siddhartha, of the Gautam clan"},
+{q:"At what age did Buddha leave home, and what is this event called?",a:"Age 29 — the Mahabhinishkraman (Great Renunciation)"},
+{q:"Where and at what age did Buddha attain enlightenment?",a:"Age 35, under the Peepal/Bodhi tree at Bodh Gaya"},
+{q:"Where was Buddha's first sermon, and what is it called?",a:"Sarnath (Deer Park), called Dhammachakrapravartana"},
+{q:"Differentiate Buddha's attendant from his first disciple.",a:"Ananda = personal attendant; Kondanna = first disciple (after the first sermon)"},
+{q:"Differentiate Sujata's and Chunda's roles in Buddha's life.",a:"Sujata offered rice & milk before enlightenment; Chunda offered the last meal before death"},
+{q:"Where and when did Buddha die, and what caused it?",a:"483 BC, Kushinara; caused by eating pork offered by Chunda"},
+{q:"List the Four Noble Truths.",a:"Dukkha, Samudaya, Nirodha, Marga"},
+{q:"List the Three Ratnas of Buddhism.",a:"Buddha (teacher), Dhamma (teaching), Sangha (community)"}
+],
+mcqs:[
+{q:"Buddha was born at?",o:["Bodh Gaya","Sarnath","Kushinara","Lumbini, Nepal"],a:3,e:"Buddha was born at Lumbini in Nepal (563 BC) on Vaishakha Purnima."},
+{q:"At what age did Buddha leave home (Mahabhinishkraman)?",o:["25","35","29","21"],a:2,e:"Buddha left home at age 29. He attained enlightenment at age 35."},
+{q:"Buddha attained enlightenment at age?",o:["29","45","35","40"],a:2,e:"Buddha attained enlightenment at age 35 under the Peepal (Bodhi) tree at Bodh Gaya."},
+{q:"Buddha gave his 1st sermon at?",o:["Lumbini","Bodh Gaya","Sarnath (Deer Park)","Kushinara"],a:2,e:"1st sermon = Sarnath (Isipatana/Deer Park) to 5 ascetics — called Dhammachakrapravartana."},
+{q:"The 1st sermon of Buddha is known as?",o:["Mahabhinishkraman","Dhammachakrapravartana","Mahaparinirvana","Dharmavijaya"],a:1,e:"Dhammachakrapravartana = Turning of the Wheel of Dharma — Buddha's 1st sermon at Sarnath."},
+{q:"Who offered rice and milk to Buddha before his enlightenment?",o:["Ananda","Yashodhara","Chunda","Sujata"],a:3,e:"Sujata offered rice and milk to Buddha before his enlightenment at Bodh Gaya."},
+{q:"Buddha's personal attendant?",o:["Kondanna","Ananda","Jamali","Nagasena"],a:1,e:"Ananda was Buddha's personal attendant. Kondanna was the first disciple (after 1st sermon)."},
+{q:"Buddha attained Mahaparinirvana (death) at?",o:["Sarnath","Lumbini","Bodh Gaya","Kushinara"],a:3,e:"Buddha died at Kushinara (Kasia, UP) in 483 BC after eating pork offered by Chunda."},
+{q:"Who gave Buddha his last meal before death?",o:["Sujata","Ananda","Chunda","Kondanna"],a:2,e:"Chunda (a blacksmith) offered Buddha his last meal. Sujata gave rice & milk BEFORE enlightenment."},
+{q:"Which three events of Buddha all occurred on Vaishakha Purnima?",o:["Birth only","Birth & Enlightenment only","Enlightenment & Death only","Birth, Enlightenment, and Death"],a:3,e:"All three — birth (563 BC), enlightenment, and death (483 BC) — occurred on Vaishakha Purnima."}
+]},
+{id:"b2",title:"Buddhist Councils, Sects & Tripitaka",xp:55,type:"regular",seqIdx:4,
+learn:`<h2>Buddhist Councils, Sects &amp; Tripitaka</h2>
+<h3>Four Buddhist Councils</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Council</th><th>Year</th><th>Place</th><th>King</th><th>Chairman</th><th>Outcome</th></tr></thead><tbody>
+<tr><td><strong>1st</strong></td><td>483 BC</td><td><strong>Rajgriha</strong></td><td><strong>Ajatashatru</strong></td><td>Mahakassapa</td><td>Vinaya + Sutta Pitaka compiled</td></tr>
+<tr><td><strong>2nd</strong></td><td>383 BC</td><td><strong>Vaishali</strong></td><td><strong>Kalashoka</strong></td><td>Sarvakamini</td><td>Split: Sthavira &amp; Mahasanghika</td></tr>
+<tr><td><strong>3rd</strong></td><td>255 BC</td><td><strong>Pataliputra</strong></td><td><strong>Ashoka</strong></td><td><strong>Moggaliputta Tisya</strong></td><td>Abhidhamma Pitaka compiled</td></tr>
+<tr><td><strong>4th</strong></td><td>72 AD</td><td><strong>Kashmir</strong></td><td><strong>Kanishka</strong></td><td><strong>Vasumitra</strong></td><td>Split: Hinayana &amp; Mahayana</td></tr>
+<tr><td>5th</td><td>1871 AD</td><td>Mandalay, Burma</td><td>Mindon Min</td><td>—</td><td>Tripitaka on 729 marble slabs</td></tr>
+<tr><td>6th</td><td>1954 AD</td><td>Rangoon, Burma</td><td>PM U Nu</td><td>—</td><td>Modern Tripitaka edition</td></tr>
+</tbody></table></div>
+<h3>Sects of Buddhism</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Sect</th><th>Key Belief</th><th>Region</th></tr></thead><tbody>
+<tr><td><strong>Hinayana</strong></td><td>Individual salvation; <strong>no idol worship</strong></td><td>Sri Lanka, SE Asia</td></tr>
+<tr><td><strong>Mahayana</strong></td><td>Salvation for all; <strong>idol worship</strong>; Bodhisattvas</td><td>China, Japan, Korea</td></tr>
+<tr><td><strong>Vajrayana</strong></td><td>Magical power; tantric practices</td><td><strong>Bengal &amp; Bihar</strong></td></tr>
+</tbody></table></div>
+<h3>Tripitaka</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Pitaka</th><th>Language</th><th>Content</th><th>Compiled at</th></tr></thead><tbody>
+<tr><td><strong>Vinaya Pitaka</strong></td><td>Pali</td><td>Rules for monks</td><td>1st Council</td></tr>
+<tr><td><strong>Sutta Pitaka</strong></td><td>Pali</td><td>Buddha's discourses; 5 Nikayas; Jatakas</td><td>1st Council</td></tr>
+<tr><td><strong>Abhidhamma Pitaka</strong></td><td>Pali</td><td>Philosophical analysis</td><td>3rd Council</td></tr>
+</tbody></table></div>
+<p><strong>Jatakas</strong> = part of <strong>Khuddaka Nikaya</strong> of Sutta Pitaka</p>
+<div class="trap-box">⚠ TRAPS: 1st Council = Ajatashatru (NOT Ashoka). 3rd = Ashoka at Pataliputra (NOT Vaishali). 4th = Kanishka at Kashmir (NOT Ashoka). Vasumitra = 4th Council; Sarvakamini = 2nd Council. Jatakas = Sutta Pitaka. Hinayana = NO idol worship.</div>`,
+revision:[
+"1st(483BC,Rajgriha,Ajatashatru,Mahakassapa) 2nd(383BC,Vaishali,Kalashoka,Sarvakamini)",
+"3rd(255BC,Pataliputra,Ashoka,Moggaliputta Tisya) 4th(72AD,Kashmir,Kanishka,Vasumitra)",
+"2nd Council split: Sthavira+Mahasanghika | 4th Council split: Hinayana+Mahayana",
+"Hinayana=no idol worship | Mahayana=idol worship+Bodhisattvas | Vajrayana=tantric(Bengal/Bihar)",
+"Tripitaka(Pali): Vinaya+Sutta(1st Council) + Abhidhamma(3rd Council) | Jatakas=Khuddaka Nikaya"
+],
+oneliners:[
+"The 1st Buddhist Council (483 BC) was held at Rajgriha under King Ajatashatru",
+"Mahakassapa chaired the 1st Buddhist Council",
+"The 1st Council compiled the Vinaya and Sutta Pitakas",
+"The 2nd Buddhist Council (383 BC) was held at Vaishali under King Kalashoka",
+"Sarvakamini chaired the 2nd Buddhist Council",
+"The 2nd Council caused the first split: Sthavira and Mahasanghika",
+"The 3rd Buddhist Council (255 BC) was held at Pataliputra under King Ashoka",
+"Moggaliputta Tisya chaired the 3rd Buddhist Council, which compiled the Abhidhamma Pitaka",
+"The 4th Buddhist Council (72 AD) was held in Kashmir under King Kanishka",
+"Vasumitra chaired the 4th Buddhist Council, which caused the Hinayana-Mahayana split",
+"The 5th Council (1871 AD) was held at Mandalay, Burma, under king Mindon Min",
+"The 6th Council (1954 AD) was held at Rangoon, Burma, under PM U Nu",
+"Hinayana Buddhism emphasizes individual salvation and has no idol worship",
+"Mahayana Buddhism believes in salvation for all and includes idol worship and Bodhisattvas",
+"Vajrayana Buddhism involves tantric practices, centered in Bengal and Bihar",
+"The Tripitaka has three parts: Vinaya, Sutta, and Abhidhamma Pitaka, all in Pali",
+"Jatakas are part of the Khuddaka Nikaya within the Sutta Pitaka",
+"Milindapanha records a dialogue between King Menander (Milinda) and monk Nagasena"
+],
+flashcards:[
+{q:"Where, when, and under which king was the 1st Buddhist Council held? Who chaired it?",a:"Rajgriha, 483 BC, King Ajatashatru; chaired by Mahakassapa"},
+{q:"Where, when, and under which king was the 2nd Buddhist Council held? What was its outcome?",a:"Vaishali, 383 BC, King Kalashoka; caused the Sthavira-Mahasanghika split"},
+{q:"Where, when, and under which king was the 3rd Buddhist Council held? What did it compile?",a:"Pataliputra, 255 BC, King Ashoka; compiled the Abhidhamma Pitaka"},
+{q:"Where, when, and under which king was the 4th Buddhist Council held? What was its outcome?",a:"Kashmir, 72 AD, King Kanishka; caused the Hinayana-Mahayana split"},
+{q:"Who chaired the 2nd and 4th Buddhist Councils respectively?",a:"2nd: Sarvakamini | 4th: Vasumitra"},
+{q:"What are the three sects of Buddhism, and their key features?",a:"Hinayana (no idol worship), Mahayana (idol worship, Bodhisattvas), Vajrayana (tantric practices)"},
+{q:"Name the three parts of the Tripitaka and when each was compiled.",a:"Vinaya & Sutta Pitaka (1st Council); Abhidhamma Pitaka (3rd Council)"},
+{q:"Where are the Jatakas found?",a:"In the Khuddaka Nikaya of the Sutta Pitaka"},
+{q:"What is the Milindapanha?",a:"A dialogue between King Menander (Milinda) and the monk Nagasena"},
+{q:"Where and when were the 5th and 6th Buddhist Councils held?",a:"5th: Mandalay, Burma, 1871 AD | 6th: Rangoon, Burma, 1954 AD"}
+],
+mcqs:[
+{q:"The 1st Buddhist Council was presided over by which king?",o:["Ashoka","Kalashoka","Ajatashatru","Kanishka"],a:2,e:"1st Buddhist Council (483 BC) at Rajgriha was held under king Ajatashatru (Haryanka dynasty)."},
+{q:"The 4th Buddhist Council was held at?",o:["Rajgriha","Vaishali","Pataliputra","Kashmir"],a:3,e:"4th Buddhist Council (72 AD) was held at Kashmir (Kundalvana) under king Kanishka (Kushan dynasty)."},
+{q:"Which Pitaka was compiled at the 3rd Buddhist Council?",o:["Vinaya Pitaka","Sutta Pitaka","Abhidhamma Pitaka","All three"],a:2,e:"Abhidhamma Pitaka was compiled at the 3rd Buddhist Council (255 BC, Pataliputra, under Ashoka)."},
+{q:"Chairman of the 3rd Buddhist Council?",o:["Mahakassapa","Vasumitra","Ashvagosha","Moggaliputta Tisya"],a:3,e:"Moggaliputta Tisya was the chairman of the 3rd Buddhist Council under Ashoka at Pataliputra."},
+{q:"Hinayana Buddhism's key feature?",o:["Idol worship","Salvation for all","No idol worship; individual salvation","Tantric practices"],a:2,e:"Hinayana (Lesser Vehicle) emphasises individual salvation and has NO idol worship."},
+{q:"Tripitaka is written in which language?",o:["Sanskrit","Prakrit","Pali","Ardha Magadhi"],a:2,e:"Tripitaka is written in Pali. Jain literature is in Prakrit."},
+{q:"Jatakas are part of which Nikaya?",o:["Digh Nikaya","Anguttara Nikaya","Samyutta Nikaya","Khuddaka Nikaya"],a:3,e:"Jatakas are in the Khuddaka Nikaya of Sutta Pitaka."},
+{q:"The 4th Buddhist Council was led by which king?",o:["Ashoka","Kalashoka","Ajatashatru","Kanishka"],a:3,e:"Kanishka (Kushan dynasty) presided over the 4th Buddhist Council at Kashmir."},
+{q:"Mahayana vs Hinayana — key difference?",o:["No idol worship","Individual salvation only","Idol worship and salvation for all","Confined to Sri Lanka"],a:2,e:"Mahayana allows idol worship and believes in salvation for all. Bodhisattvas are central figures."},
+{q:"Milindapanha is a dialogue between?",o:["Ashoka and Nagasena","Buddha and Ananda","Menander (Milinda) and Nagasena","Kanishka and Ashvagosha"],a:2,e:"Milindapanha = questions of King Milinda (Menander) answered by Buddhist monk Nagasena."}
+]},
+{id:"b3",title:"Buddhist Architecture & Ajivika Sect",xp:45,type:"regular",seqIdx:5,
+learn:`<h2>Buddhist Architecture &amp; Ajivika Sect</h2>
+<h3>Buddhist Architectural Terms</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody>
+<tr><td><strong>Stupa</strong></td><td>Hemispherical dome over sacred relic; <strong>Sanchi Stupa</strong> most famous (Ashoka)</td></tr>
+<tr><td><strong>Vihara</strong></td><td>Monastery for monks</td></tr>
+<tr><td><strong>Chaitya</strong></td><td>Prayer hall with a stupa inside</td></tr>
+<tr><td><strong>Pillar</strong></td><td>Ashokan pillars; <strong>4-lion capital at Sarnath</strong> = India's National Emblem</td></tr>
+</tbody></table></div>
+<h3>Ajivika Sect</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody>
+<tr><td>Founder</td><td><strong>Makkhali Gosala</strong></td></tr>
+<tr><td>Period</td><td>6th century BC — contemporary of both <strong>Buddha and Mahavira</strong></td></tr>
+<tr><td>Core belief</td><td><strong>Niyati</strong> (Fate/Destiny) = supreme force — <strong>pure determinism</strong></td></tr>
+<tr><td>Salvation timing</td><td>After <strong>8,400,000 mahakalpas</strong> — regardless of actions</td></tr>
+<tr><td>Called</td><td><strong>Fatalists / Determinists</strong></td></tr>
+<tr><td>Royal sympathiser</td><td><strong>Bindusara</strong> (Mauryan king)</td></tr>
+</tbody></table></div>
+<p>Opposed Brahmanical rituals + Buddhist karma + Jain asceticism. Mahavira and Gosala were companions during his 6-year wandering.</p>
+<div class="trap-box">⚠ KEY: Sanchi Stupa = built by <strong>Ashoka</strong>; gateways added by Shunga. Chaitya ≠ Vihara. Ajivika founder = <strong>Makkhali Gosala</strong>. Bindusara = Ajivika sympathiser; Chandragupta = Jainism.</div>`,
+revision:[
+"Stupa=dome over relic(Sanchi,Ashoka) | Vihara=monastery | Chaitya=prayer hall w/stupa inside",
+"Sarnath 4-lion capital = India's National Emblem",
+"Ajivika founder = Makkhali Gosala, contemporary of Buddha+Mahavira",
+"Ajivika core belief = Niyati (fate/determinism), salvation after 8,400,000 mahakalpas",
+"Bindusara = Ajivika sympathiser | Chandragupta Maurya = adopted Jainism"
+],
+oneliners:[
+"A Stupa is a hemispherical dome built over a sacred relic",
+"The Sanchi Stupa, the most famous, was built by Ashoka",
+"Gateways (toranas) were added to the Sanchi Stupa during the Shunga period",
+"A Vihara is a monastery for Buddhist monks",
+"A Chaitya is a prayer hall containing a stupa inside",
+"Ashokan pillars are a key feature of Mauryan Buddhist architecture",
+"The 4-lion capital on the Sarnath pillar is India's National Emblem",
+"The Ajivika sect was founded by Makkhali Gosala",
+"Makkhali Gosala was a contemporary of both Buddha and Mahavira, in the 6th century BC",
+"The Ajivika core belief is Niyati (fate/destiny) — pure determinism",
+"Ajivikas believed salvation comes after 8,400,000 mahakalpas, regardless of actions",
+"Ajivikas are called Fatalists or Determinists",
+"Bindusara, the Mauryan king, was a sympathiser of the Ajivika sect",
+"Chandragupta Maurya, unlike Bindusara, adopted Jainism in his later life",
+"Mahavira and Makkhali Gosala were companions during Mahavira's 6-year wandering",
+"The Ajivika sect opposed Brahmanical rituals, Buddhist karma, and Jain asceticism"
+],
+flashcards:[
+{q:"What is a Stupa, and which is the most famous example?",a:"A hemispherical dome over a sacred relic; the Sanchi Stupa (built by Ashoka) is most famous"},
+{q:"Who added gateways to the Sanchi Stupa, and when?",a:"The Shunga dynasty, after Ashoka built the stupa itself"},
+{q:"Differentiate a Vihara from a Chaitya.",a:"Vihara = monastery for monks; Chaitya = prayer hall with a stupa inside"},
+{q:"What is India's National Emblem derived from?",a:"The 4-lion capital atop Ashoka's pillar at Sarnath"},
+{q:"Who founded the Ajivika sect?",a:"Makkhali Gosala"},
+{q:"What was the Ajivika core belief?",a:"Niyati (fate/destiny) — pure determinism"},
+{q:"According to Ajivikas, when does a soul attain salvation?",a:"After 8,400,000 mahakalpas, regardless of actions"},
+{q:"Which Mauryan king sympathised with the Ajivika sect?",a:"Bindusara (his son Chandragupta Maurya adopted Jainism instead)"},
+{q:"What connection did Mahavira have with Makkhali Gosala?",a:"They were companions during Mahavira's 6-year wandering"},
+{q:"Which three traditions did the Ajivika sect oppose?",a:"Brahmanical rituals, Buddhist karma, and Jain asceticism"}
+],
+mcqs:[
+{q:"Founder of the Ajivika sect?",o:["Mahavira","Makkhali Gosala","Buddha","Vardhamana"],a:1,e:"Makkhali Gosala (Mankhali Putta Gosala) founded the Ajivika sect in the 6th century BC."},
+{q:"Core belief of the Ajivika sect?",o:["Extreme austerity","Middle path","Niyati (fate/determinism)","Worship of Shiva"],a:2,e:"Ajivikas believed in Niyati (fate) — pure determinism. Everything is predetermined."},
+{q:"A Stupa in Buddhist architecture is?",o:["A prayer hall","A monastery for monks","A hemispherical dome over a sacred relic","A carved pillar"],a:2,e:"Stupa = hemispherical dome built over a sacred relic."},
+{q:"Sanchi Stupa was built by?",o:["Kanishka","Pushyamitra Shunga","Ashoka","Chandragupta Maurya"],a:2,e:"Sanchi Stupa (MP) was built by Ashoka. The gateways (toranas) were added during the Shunga period."},
+{q:"A Chaitya in Buddhist architecture is?",o:["A monastery","A prayer hall with stupa inside","A pillar with inscriptions","A hemispherical dome"],a:1,e:"Chaitya = prayer hall that contains a stupa inside. Vihara = monastery for monks."},
+{q:"A Vihara in Buddhist architecture is?",o:["A prayer hall","A reliquary mound","A monastery for monks","A stone gateway"],a:2,e:"Vihara = monastery for monks. Chaitya = prayer hall. Stupa = reliquary dome."},
+{q:"Makkhali Gosala was contemporary of?",o:["Ashoka only","Both Buddha and Mahavira","Chandragupta Maurya only","Kanishka"],a:1,e:"Makkhali Gosala was a contemporary of both Buddha and Mahavira in the 6th century BC."},
+{q:"According to Ajivika belief, how long for a soul to attain salvation?",o:["One lifetime","After 4 rebirths","8,400,000 mahakalpas","Immediately upon death"],a:2,e:"Ajivikas believed every soul attains salvation after 8,400,000 mahakalpas — regardless of actions."},
+{q:"India's National Emblem is taken from which Ashokan pillar?",o:["Sanchi pillar","Allahabad pillar","Sarnath pillar","Vaishali pillar"],a:2,e:"India's National Emblem (4-lion capital) comes from the Sarnath pillar of Ashoka."},
+{q:"Which Mauryan king was an Ajivika sympathiser?",o:["Chandragupta Maurya","Ashoka","Brihadrath","Bindusara"],a:3,e:"Bindusara was reportedly an Ajivika sympathiser. Chandragupta Maurya adopted Jainism. Ashoka adopted Buddhism."}
+]}
+]},
+{id:"mauryan",title:"Mauryan Empire",icon:"👑",nodes:[
+{id:"m1",title:"Chandragupta & Chanakya",xp:55,type:"regular",seqIdx:6,
+learn:`<h2>Chandragupta Maurya &amp; Chanakya</h2>
+<h3>Chandragupta Maurya (321–297 BC)</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody>
+<tr><td>Greek name</td><td><strong>Sandrocottus / Androcottus</strong></td></tr>
+<tr><td>Advisor</td><td><strong>Chanakya / Kautilya / Vishnugupta</strong></td></tr>
+<tr><td>Defeated</td><td><strong>Seleucus Nicator</strong> in <strong>305 BC</strong></td></tr>
+<tr><td>Gave to Seleucus</td><td><strong>500 elephants</strong></td></tr>
+<tr><td>Got from Seleucus</td><td>4 territories (Kabul, Herat, Gandhara, Baluchistan)</td></tr>
+<tr><td>Greek ambassador</td><td><strong>Megasthenes</strong> (wrote <strong>Indica</strong>)</td></tr>
+<tr><td>Capital</td><td><strong>Pataliputra</strong></td></tr>
+<tr><td>Later life religion</td><td><strong>Jainism</strong></td></tr>
+<tr><td>Death</td><td>At <strong>Shravanabelagola</strong> — by fasting (<strong>Sallekhana</strong>)</td></tr>
+</tbody></table></div>
+<h3>Chanakya / Kautilya</h3>
+<ul><li>Also called <strong>Vishnugupta</strong> — taught at <strong>Taxila</strong></li>
+<li>Wrote <strong>Arthashastra</strong> — rediscovered <strong>1905</strong> by <strong>R. Shamasastry</strong></li>
+<li>Called <strong>Indian Machiavelli</strong></li></ul>
+<h3>Bindusara (297–268 BC)</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody>
+<tr><td>Greek name</td><td><strong>Amitrochattes</strong></td></tr>
+<tr><td>Ambassador from Syria</td><td><strong>Deimachus</strong> (from Antiochus I)</td></tr>
+<tr><td>Ambassador from Egypt</td><td><strong>Dionysius</strong> (from Ptolemy Philadelphus)</td></tr>
+</tbody></table></div>
+<div class="trap-box">⚠ TRAPS: Chandragupta gave <strong>500 elephants</strong> (NOT gold). Megasthenes = Chandragupta's ambassador; Deimachus = Bindusara's. Chandragupta adopted <strong>Jainism</strong> (not Buddhism). Arthashastra rediscovered by <strong>R. Shamasastry in 1905</strong>.</div>`,
+revision:[
+"Chandragupta(321-297BC): Greek name Sandrocottus, advisor Chanakya, defeated Seleucus 305BC",
+"Gave 500 elephants, got Kabul/Herat/Gandhara/Baluchistan | Megasthenes wrote Indica",
+"Chanakya=Kautilya=Vishnugupta, taught at Taxila, wrote Arthashastra (rediscovered 1905, Shamasastry)",
+"Bindusara(297-268BC): Greek name Amitrochattes, ambassadors Deimachus(Syria)+Dionysius(Egypt)",
+"Chandragupta died at Shravanabelagola (Sallekhana, Jainism)"
+],
+oneliners:[
+"Chandragupta Maurya ruled from 321-297 BC",
+"Greeks called Chandragupta 'Sandrocottus' or 'Androcottus'",
+"Chanakya, also called Kautilya or Vishnugupta, was Chandragupta's advisor",
+"Chandragupta defeated Seleucus Nicator in 305 BC",
+"Chandragupta gave Seleucus 500 elephants in exchange for 4 territories",
+"The 4 territories gained were Kabul, Herat, Gandhara, and Baluchistan",
+"Megasthenes was the Greek ambassador to Chandragupta's court and wrote Indica",
+"Chandragupta's capital was Pataliputra",
+"Chandragupta adopted Jainism later in life",
+"Chandragupta died at Shravanabelagola by Sallekhana (ritual fasting)",
+"Chanakya taught at Taxila and wrote the Arthashastra",
+"The Arthashastra was rediscovered in 1905 by R. Shamasastry",
+"Chanakya is called the 'Indian Machiavelli'",
+"Bindusara ruled from 297-268 BC and was called 'Amitrochattes' by the Greeks",
+"Deimachus was the ambassador sent by Antiochus I of Syria to Bindusara's court",
+"Dionysius was the ambassador sent by Ptolemy Philadelphus of Egypt to Bindusara's court"
+],
+flashcards:[
+{q:"What was Chandragupta Maurya's Greek name?",a:"Sandrocottus (also Androcottus)"},
+{q:"Who was Chandragupta's chief advisor, and what were his other names?",a:"Chanakya, also known as Kautilya and Vishnugupta"},
+{q:"What happened in 305 BC between Chandragupta and Seleucus Nicator?",a:"Chandragupta defeated him and gained 4 territories in exchange for 500 elephants"},
+{q:"Who was Megasthenes, and what did he write?",a:"Greek ambassador to Chandragupta's court; wrote Indica"},
+{q:"What religion did Chandragupta adopt, and how did he die?",a:"Jainism; died at Shravanabelagola by Sallekhana (ritual fasting)"},
+{q:"Where did Chanakya teach, and what did he write?",a:"Taxila; wrote the Arthashastra"},
+{q:"Who rediscovered the Arthashastra, and when?",a:"R. Shamasastry, in 1905"},
+{q:"What was Bindusara's Greek name?",a:"Amitrochattes"},
+{q:"Who were the ambassadors sent to Bindusara's court by Syria and Egypt?",a:"Deimachus (Syria, from Antiochus I) and Dionysius (Egypt, from Ptolemy Philadelphus)"},
+{q:"What is Chanakya popularly called?",a:"The 'Indian Machiavelli'"}
+],
+mcqs:[
+{q:"What was Chandragupta Maurya's Greek name?",o:["Amitrochattes","Sandrocottus","Devanam Priya","Piyadassi"],a:1,e:"Chandragupta was known as Sandrocottus to Greek historians. Amitrochattes = Bindusara's Greek name."},
+{q:"What did Chandragupta give Seleucus in exchange for 4 territories?",o:["Gold and silver","100 elephants","500 elephants","His daughter in marriage"],a:2,e:"Chandragupta gave Seleucus 500 elephants after defeating him in 305 BC."},
+{q:"Which Greek king did Chandragupta Maurya defeat in 305 BC?",o:["Menander","Alexander","Antiochus","Seleucus Nicator"],a:3,e:"Chandragupta defeated Seleucus Nicator in 305 BC, gaining large NW territories."},
+{q:"Megasthenes wrote which famous text about India?",o:["Arthashastra","Milindapanha","Indica","Nitishastra"],a:2,e:"Megasthenes, the Greek ambassador, wrote Indica — our major source for Mauryan administration."},
+{q:"Arthashastra was written by?",o:["Megasthenes","Ashoka","Chanakya (Kautilya)","Patanjali"],a:2,e:"Arthashastra was written by Chanakya (also Kautilya/Vishnugupta) — a treatise on statecraft."},
+{q:"Chandragupta Maurya adopted which religion in his later life?",o:["Buddhism","Shaivism","Vaishnavism","Jainism"],a:3,e:"Chandragupta Maurya adopted Jainism. He died at Shravanabelagola (Karnataka) by Sallekhana."},
+{q:"Where did Chandragupta Maurya die?",o:["Pataliputra","Shravanabelagola","Taxila","Magadha"],a:1,e:"Chandragupta died at Shravanabelagola in Karnataka by practising Sallekhana (fasting unto death)."},
+{q:"Chanakya is also known as?",o:["Only Kautilya","Only Vishnugupta","Kautilya and Vishnugupta","Indian Plato"],a:2,e:"Chanakya had three names: Chanakya, Kautilya, and Vishnugupta. He is called the Indian Machiavelli."},
+{q:"Arthashastra was rediscovered in 1905 by?",o:["James Prinsep","John Marshall","R. Shamasastry","Max Muller"],a:2,e:"R. Shamasastry discovered the Arthashastra manuscript in the Mysore Oriental Library in 1905."},
+{q:"Which ambassador was sent to Bindusara's court by Syria?",o:["Megasthenes","Dionysius","Deimachus","Heliodorus"],a:2,e:"Deimachus was sent by Antiochus I (Syria) to Bindusara's court. Megasthenes was Chandragupta's ambassador."}
+]},
+{id:"m2",title:"Ashoka — Kalinga, Dhamma & Edicts",xp:60,type:"regular",seqIdx:7,
+learn:`<h2>Ashoka — Kalinga, Dhamma &amp; Edicts</h2>
+<div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody>
+<tr><td>Kalinga War</td><td><strong>261 BC</strong> — 13th Rock Edict</td></tr>
+<tr><td>Converted by</td><td><strong>Nigrodha</strong> (monk)</td></tr>
+<tr><td>Buddhism teacher</td><td><strong>Upagupta</strong></td></tr>
+<tr><td>National Emblem</td><td><strong>4-lion capital, Sarnath pillar</strong></td></tr>
+<tr><td>Sent to Sri Lanka</td><td>Son <strong>Mahendra</strong> + daughter <strong>Sanghamitra</strong></td></tr>
+<tr><td>Dhamma Mahamatras</td><td>Instituted in <strong>14th regnal year</strong></td></tr>
+<tr><td>Edicts deciphered by</td><td><strong>James Prinsep (1837)</strong></td></tr>
+</tbody></table></div>
+<h3>Ashoka's Key Edicts</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Inscription</th><th>Content</th></tr></thead><tbody>
+<tr><td><strong>13th Rock Edict</strong></td><td>Kalinga War + remorse; dhamma vijaya &gt; dig vijaya</td></tr>
+<tr><td><strong>1st Rock Edict</strong></td><td>Ban on animal sacrifice</td></tr>
+<tr><td><strong>12th Rock Edict</strong></td><td>Religious tolerance</td></tr>
+<tr><td><strong>Maski &amp; Gurjara Edict</strong></td><td><strong>First use of name "Ashoka"</strong></td></tr>
+<tr><td><strong>Rummindei Pillar</strong></td><td>Visit to Lumbini; tax reduced</td></tr>
+<tr><td><strong>Kandahar Inscription</strong></td><td><strong>Bilingual: Greek + Aramaic</strong> — westernmost Ashokan</td></tr>
+<tr><td><strong>Delhi-Topra Pillar</strong></td><td>Moved to Delhi by Firuz Shah Tughlaq</td></tr>
+</tbody></table></div>
+<h3>Scripts of Edicts</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Region</th><th>Script</th></tr></thead><tbody>
+<tr><td>Most of India</td><td><strong>Brahmi</strong> (left to right)</td></tr>
+<tr><td>NW India</td><td><strong>Kharoshthi</strong> (right to left)</td></tr>
+<tr><td>Kandahar</td><td><strong>Greek + Aramaic</strong></td></tr>
+</tbody></table></div>
+<div class="trap-box">⚠ TRAPS: Converted by <strong>Nigrodha</strong>; teacher = <strong>Upagupta</strong>. National Emblem from <strong>Sarnath</strong> (NOT Sanchi). Maski edict = 1st use of "Ashoka". Kharoshthi = right to left. Deciphered by <strong>James Prinsep (1837)</strong>.</div>`,
+revision:[
+"Kalinga War 261BC (13th Rock Edict) | Converted by Nigrodha, teacher Upagupta",
+"National Emblem = Sarnath 4-lion capital (NOT Sanchi)",
+"Mahendra+Sanghamitra sent to Sri Lanka | Dhamma Mahamatras in 14th regnal year",
+"Edicts deciphered by James Prinsep, 1837 | Maski edict = 1st use of name 'Ashoka'",
+"Scripts: Brahmi(most of India,L-to-R) | Kharoshthi(NW,R-to-L) | Greek+Aramaic(Kandahar)"
+],
+oneliners:[
+"The Kalinga War occurred in 261 BC, recorded in the 13th Rock Edict",
+"Ashoka was converted to Buddhism by the monk Nigrodha",
+"Upagupta was Ashoka's Buddhism teacher",
+"India's National Emblem (4-lion capital) comes from the Sarnath pillar, NOT Sanchi",
+"Ashoka sent his son Mahendra and daughter Sanghamitra to Sri Lanka",
+"Dhamma Mahamatras were instituted in Ashoka's 14th regnal year",
+"Ashoka's edicts were deciphered by James Prinsep in 1837",
+"The Maski and Gurjara edicts are the first to use the name 'Ashoka'",
+"The 1st Rock Edict bans animal sacrifice",
+"The 12th Rock Edict promotes religious tolerance",
+"The Rummindei Pillar records Ashoka's visit to Lumbini and a tax reduction",
+"The Kandahar Inscription is bilingual (Greek and Aramaic) — the westernmost Ashokan inscription",
+"The Delhi-Topra Pillar was moved to Delhi by Firuz Shah Tughlaq",
+"Most Ashokan edicts in India use the Brahmi script, written left to right",
+"NW India edicts use the Kharoshthi script, written right to left",
+"The Kandahar inscription uses Greek and Aramaic scripts"
+],
+flashcards:[
+{q:"When did the Kalinga War occur, and which edict records it?",a:"261 BC; recorded in the 13th Rock Edict"},
+{q:"Who converted Ashoka to Buddhism, and who was his teacher?",a:"Converted by Nigrodha; taught by Upagupta"},
+{q:"Where does India's National Emblem come from?",a:"The 4-lion capital on Ashoka's Sarnath pillar (NOT Sanchi)"},
+{q:"Who did Ashoka send to Sri Lanka?",a:"His son Mahendra and daughter Sanghamitra"},
+{q:"When were the Dhamma Mahamatras instituted?",a:"In Ashoka's 14th regnal year"},
+{q:"Who deciphered Ashoka's edicts, and when?",a:"James Prinsep, in 1837"},
+{q:"Which edicts first use the name 'Ashoka'?",a:"The Maski and Gurjara Minor Rock Edicts"},
+{q:"What is significant about the Kandahar Inscription?",a:"It is bilingual (Greek and Aramaic) and the westernmost Ashokan inscription"},
+{q:"Compare the scripts used in most of India vs NW India for Ashokan edicts.",a:"Most of India: Brahmi (left to right); NW India: Kharoshthi (right to left)"},
+{q:"What do the 1st and 12th Rock Edicts deal with respectively?",a:"1st: ban on animal sacrifice; 12th: religious tolerance"}
+],
+mcqs:[
+{q:"Ashoka's Kalinga War occurred in?",o:["281 BC","271 BC","261 BC","251 BC"],a:2,e:"The Kalinga War occurred in 261 BC — Ashoka's only and last war. Recorded in 13th Rock Edict."},
+{q:"Kalinga War is recorded in which Rock Edict?",o:["1st Rock Edict","6th Rock Edict","13th Rock Edict","Maski Edict"],a:2,e:"The 13th Rock Edict describes the Kalinga War, Ashoka's remorse, and his conversion to Dhamma."},
+{q:"Ashoka was converted to Buddhism by which monk?",o:["Upagupta","Ananda","Nagasena","Nigrodha"],a:3,e:"Ashoka was initially converted by Nigrodha (a young monk). Upagupta was his spiritual teacher."},
+{q:"India's National Emblem is from which pillar?",o:["Sanchi pillar","Allahabad pillar","Vaishali pillar","Sarnath pillar"],a:3,e:"India's National Emblem (4-lion capital) comes from the Sarnath pillar. NOT Sanchi."},
+{q:"Ashoka sent which two people to Sri Lanka?",o:["Upagupta + Nagasena","Mahendra + Sanghamitra","Ananda + Kondanna","Nigrodha + Mahakassapa"],a:1,e:"Ashoka sent his son Mahendra and daughter Sanghamitra to Sri Lanka. Buddhism thrives there due to this mission."},
+{q:"In which edict was the name 'Ashoka' first used?",o:["13th Rock Edict","Rummindei Pillar","Kandahar inscription","Maski Minor Rock Edict"],a:3,e:"The Maski Minor Rock Edict (and Gurjara edict) are the first inscriptions to mention 'Ashoka' by name."},
+{q:"Dhamma Mahamatras were instituted in Ashoka's?",o:["1st regnal year","5th regnal year","14th regnal year","After Kalinga war"],a:2,e:"Ashoka created Dhamma Mahamatras in his 14th regnal year."},
+{q:"Ashoka's edicts were deciphered by whom and when?",o:["John Marshall (1905)","Max Muller (1820)","R. Shamasastry (1905)","James Prinsep (1837)"],a:3,e:"James Prinsep deciphered Ashoka's Brahmi script edicts in 1837."},
+{q:"Kandahar inscription of Ashoka is written in?",o:["Brahmi and Kharoshthi","Sanskrit and Pali","Greek and Aramaic","Brahmi and Greek"],a:2,e:"The Kandahar (westernmost) inscription is bilingual — Greek and Aramaic."},
+{q:"Which script used in NW India runs right to left?",o:["Brahmi","Devanagari","Kharoshthi","Aramaic"],a:2,e:"Kharoshthi script (NW India) runs right to left, influenced by Persian Aramaic script."}
+]},
+{id:"m3",title:"Arthashastra, Saptanga & Mandala",xp:50,type:"regular",seqIdx:8,
+learn:`<h2>Arthashastra, Saptanga &amp; Mandala Theory</h2>
+<h3>Saptanga Theory (7 Elements of State)</h3>
+<div class="tbl-wrap"><table><thead><tr><th>#</th><th>Sanskrit</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>1</td><td><strong>Swami</strong></td><td>King</td></tr>
+<tr><td>2</td><td><strong>Amatya</strong></td><td>Ministers</td></tr>
+<tr><td>3</td><td><strong>Janapada</strong></td><td>Territory + people</td></tr>
+<tr><td>4</td><td><strong>Durga</strong></td><td>Fort</td></tr>
+<tr><td>5</td><td><strong>Kosha</strong></td><td>Treasury</td></tr>
+<tr><td>6</td><td><strong>Danda</strong></td><td>Army</td></tr>
+<tr><td>7</td><td><strong>Mitra</strong></td><td>Allies</td></tr>
+</tbody></table></div>
+<h3>Mandala Theory (Circle of States)</h3>
+<ul><li><strong>Vijigishu</strong> = conquering king (center)</li>
+<li><strong>Ari</strong> = enemy (immediate neighbour)</li>
+<li><strong>Mitra</strong> = friend (neighbour's neighbour)</li></ul>
+<h3>Shadgunya (6 Foreign Policies)</h3>
+<p>Sandhi (peace), Vigraha (war), Asana (neutrality), Yana (march), Samshraya (alliance), Dvaidhabhava (double policy)</p>
+<h3>Mauryan Spy System</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Type</th><th>Name</th></tr></thead><tbody>
+<tr><td>Stationary spies</td><td><strong>Sanstha Guptas</strong></td></tr>
+<tr><td>Wandering spies</td><td><strong>Sanchara Guptas</strong></td></tr>
+<tr><td>General agents</td><td><strong>Gudhapurusha</strong></td></tr>
+</tbody></table></div>
+<p>Pataliputra administered by <strong>6 Committees × 5 members</strong> each (per Megasthenes).</p>
+<div class="trap-box">⚠ KEY: Saptanga = 7 elements. Mandala = neighbour = enemy. Vijigishu = conquering king. Pataliputra = 6 committees. Shadgunya = 6 foreign policies.</div>`,
+revision:[
+"Saptanga (7 elements): Swami,Amatya,Janapada,Durga,Kosha,Danda,Mitra",
+"Mandala: Vijigishu(center king), Ari(neighbour=enemy), Mitra(neighbour's neighbour=friend)",
+"Shadgunya (6 foreign policies): Sandhi,Vigraha,Asana,Yana,Samshraya,Dvaidhabhava",
+"Spies: Sanstha Guptas(stationary), Sanchara Guptas(wandering), Gudhapurusha(general agents)",
+"Pataliputra = 6 committees x 5 members (per Megasthenes) | Arthashastra rediscovered 1905"
+],
+oneliners:[
+"Saptanga theory lists 7 elements of the state",
+"Swami = King; Amatya = Ministers; Janapada = Territory and people",
+"Durga = Fort; Kosha = Treasury; Danda = Army; Mitra = Allies",
+"Mandala theory describes a circle of states around a conquering king",
+"Vijigishu is the conquering king at the center of the Mandala",
+"Ari is the natural enemy — the immediate neighbouring state",
+"Mitra (in Mandala theory) is the natural friend — the neighbour's neighbour",
+"Shadgunya lists 6 foreign policies available to a king",
+"The 6 foreign policies are Sandhi, Vigraha, Asana, Yana, Samshraya, and Dvaidhabhava",
+"Sandhi means peace; Vigraha means war; Asana means neutrality",
+"Yana means march; Samshraya means alliance; Dvaidhabhava means double policy",
+"Sanstha Guptas were stationary spies in the Mauryan system",
+"Sanchara Guptas were wandering spies in the Mauryan system",
+"Gudhapurusha were general secret agents",
+"Pataliputra was administered by 6 committees of 5 members each, per Megasthenes"
+],
+flashcards:[
+{q:"List the Saptanga (7 elements of the state).",a:"Swami (King), Amatya (Ministers), Janapada (Territory+people), Durga (Fort), Kosha (Treasury), Danda (Army), Mitra (Allies)"},
+{q:"In Mandala theory, who is the Vijigishu?",a:"The conquering king at the center of the circle of states"},
+{q:"In Mandala theory, who is the 'Ari' and who is the 'Mitra'?",a:"Ari = immediate neighbour (natural enemy); Mitra = neighbour's neighbour (natural friend)"},
+{q:"List the 6 foreign policies of Shadgunya.",a:"Sandhi (peace), Vigraha (war), Asana (neutrality), Yana (march), Samshraya (alliance), Dvaidhabhava (double policy)"},
+{q:"Differentiate Sanstha Guptas from Sanchara Guptas.",a:"Sanstha Guptas = stationary spies; Sanchara Guptas = wandering spies"},
+{q:"What were Gudhapurusha?",a:"General secret agents in the Mauryan spy system"},
+{q:"How was Pataliputra administered, per Megasthenes?",a:"By 6 committees, each with 5 members"},
+{q:"What does 'Kosha' mean in Saptanga theory?",a:"Treasury"},
+{q:"What does 'Danda' mean in Saptanga theory?",a:"Army/force"},
+{q:"When and by whom was the Arthashastra rediscovered?",a:"1905, by R. Shamasastry"}
+],
+mcqs:[
+{q:"Arthashastra was rediscovered in which year?",o:["1837","1905","1857","1920"],a:1,e:"R. Shamasastry discovered the Arthashastra manuscript in 1905 in the Mysore Oriental Library."},
+{q:"How many elements are in Chanakya's Saptanga Theory?",o:["5","6","7","8"],a:2,e:"Saptanga = 7 elements: Swami, Amatya, Janapada, Durga, Kosha, Danda, Mitra."},
+{q:"In Saptanga theory, 'Kosha' means?",o:["King","Army","Territory","Treasury"],a:3,e:"Kosha = Treasury. Danda = Army. Swami = King. Janapada = Territory + people."},
+{q:"In Mandala theory, your immediate neighbour is?",o:["Natural friend","Natural ally","Natural enemy","Neutral power"],a:2,e:"Mandala theory: immediate neighbour = natural enemy (Ari). Neighbour's neighbour = natural friend (Mitra)."},
+{q:"'Vijigishu' in Mandala theory refers to?",o:["The natural enemy","The neutral state","The conquering king at center","Ally of the enemy"],a:2,e:"Vijigishu = the aspiring conqueror king at the center of the Mandala."},
+{q:"How many foreign policies does Arthashastra's Shadgunya prescribe?",o:["4","5","6","7"],a:2,e:"Shadgunya = 6 foreign policies: Sandhi, Vigraha, Asana, Yana, Samshraya, Dvaidhabhava."},
+{q:"Stationary spies in Mauryan system are called?",o:["Sanchara Guptas","Gudhapurusha","Sanstha Guptas","Amatyas"],a:2,e:"Sanstha Guptas = stationary/fixed-position spies. Sanchara Guptas = wandering spies."},
+{q:"Wandering spies in Mauryan system are called?",o:["Sanstha Guptas","Sanchara Guptas","Rajukas","Pradeshikas"],a:1,e:"Sanchara Guptas = wandering/roving spies. Sanstha Guptas = stationary spies."},
+{q:"In Saptanga, 'Danda' means?",o:["Treasury","Fort","Allies","Army"],a:3,e:"Danda = Army/force. Kosha = Treasury. Durga = Fort. Mitra = Allies."},
+{q:"Pataliputra was administered by how many committees (per Megasthenes)?",o:["3 committees of 10","5 committees of 6","6 committees of 5","8 committees of 4"],a:2,e:"Megasthenes described Pataliputra as administered by 6 committees, each with 5 members."}
+]}
+]},
+{id:"postmauryan",title:"Post-Mauryan",icon:"🏛️",nodes:[
+{id:"pm1",title:"Shunga & Kanva Dynasties",xp:50,type:"regular",seqIdx:9,
+learn:`<h2>Shunga &amp; Kanva Dynasties (185–28 BC)</h2>
+<h3>Shunga Dynasty (185–73 BC)</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Ruler</th><th>Key Event</th></tr></thead><tbody>
+<tr><td><strong>Pushyamitra Shunga</strong></td><td>Founder; killed last Mauryan <strong>Brihadrath</strong>; 2 Ashvamedha Yagyas</td></tr>
+<tr><td><strong>Agnimitra</strong></td><td>Hero of Kalidasa's <em>Malavikagnimitram</em></td></tr>
+<tr><td><strong>Deva Bhuti</strong></td><td>Last Shunga ruler; killed by Vasudev Kanva</td></tr>
+</tbody></table></div>
+<ul><li>Caste: <strong>Brahmins</strong> — 1st Brahmin rulers of Magadha</li>
+<li>Capital: <strong>Pataliputra</strong></li>
+<li><strong>Patanjali's Mahabhashya</strong> written during Shunga period (NOT Mauryan)</li>
+<li><strong>Manusmriti</strong> compiled during Shunga period</li>
+<li>Built <strong>Bharhut Stupa</strong> (MP); added <strong>gateways to Sanchi Stupa</strong></li></ul>
+<h3>Heliodorus Pillar</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody>
+<tr><td>Location</td><td><strong>Vidisha (Besnagar), MP</strong></td></tr>
+<tr><td>Built by</td><td><strong>Heliodorus</strong> (Greek ambassador)</td></tr>
+<tr><td>Sent by</td><td>King <strong>Antialcidas</strong> to court of <strong>Bhagbhadra</strong> (Shunga king)</td></tr>
+<tr><td>Dedicated to</td><td><strong>Vasudeva (Krishna/Vishnu)</strong></td></tr>
+<tr><td>Significance</td><td>Oldest known Vishnu pillar; Greek adopting Indian religion</td></tr>
+</tbody></table></div>
+<h3>Kanva Dynasty (73–28 BC)</h3>
+<ul><li>Brahmins; Capital: <strong>Pataliputra</strong></li>
+<li>Last ruler: <strong>Susarman</strong>; ended by Satavahanas</li></ul>
+<div class="trap-box">⚠ TRAPS: Mahabhashya = <strong>Shunga</strong> period (NOT Mauryan). Sanchi gateways = Shunga (Ashoka built stupa). Heliodorus = <strong>Shunga court</strong> ambassador. Last Shunga = <strong>Deva Bhuti</strong>; last Kanva = <strong>Susarman</strong>.</div>`,
+revision:[
+"Shunga(185-73BC): Pushyamitra(founder,killed Brihadrath) → Agnimitra → Deva Bhuti(last,killed by Vasudev Kanva)",
+"1st Brahmin rulers of Magadha | Mahabhashya+Manusmriti = Shunga period",
+"Built Bharhut Stupa, added Sanchi gateways",
+"Heliodorus Pillar(Vidisha): Greek ambassador, sent by Antialcidas to Shunga king Bhagbhadra, dedicated to Vasudeva",
+"Kanva(73-28BC): Brahmins, capital Pataliputra, last ruler Susarman, ended by Satavahanas"
+],
+oneliners:[
+"Pushyamitra Shunga founded the Shunga dynasty in 185 BC",
+"Pushyamitra killed the last Mauryan ruler, Brihadrath",
+"Pushyamitra performed 2 Ashvamedha Yagyas",
+"Agnimitra is the hero of Kalidasa's play Malavikagnimitram",
+"Deva Bhuti was the last Shunga ruler, killed by Vasudev Kanva",
+"Shunga kings were Brahmins — the first Brahmin rulers of Magadha",
+"Patanjali's Mahabhashya was written during the Shunga period, not the Mauryan period",
+"The Manusmriti was also compiled during the Shunga period",
+"The Shunga dynasty built the Bharhut Stupa and added gateways to the Sanchi Stupa",
+"The Heliodorus Pillar is located at Vidisha (Besnagar), Madhya Pradesh",
+"Heliodorus, a Greek ambassador, built the pillar and dedicated it to Vasudeva (Krishna/Vishnu)",
+"Heliodorus was sent by King Antialcidas to the court of Shunga king Bhagbhadra",
+"The Heliodorus Pillar is the oldest known Vishnu pillar",
+"The Kanva dynasty (73-28 BC) were also Brahmins, with capital at Pataliputra",
+"Susarman was the last Kanva ruler",
+"The Kanva dynasty was ended by the Satavahanas"
+],
+flashcards:[
+{q:"Who founded the Shunga dynasty, and how?",a:"Pushyamitra Shunga, by killing the last Mauryan ruler Brihadrath in 185 BC"},
+{q:"Who is the hero of Kalidasa's Malavikagnimitram?",a:"Agnimitra, son of Pushyamitra Shunga"},
+{q:"Who killed the last Shunga ruler, and who was he?",a:"Vasudev Kanva killed Deva Bhuti, the last Shunga ruler"},
+{q:"During which period was Patanjali's Mahabhashya written?",a:"The Shunga period, NOT the Mauryan period"},
+{q:"What did the Shunga dynasty contribute to Buddhist architecture?",a:"Built the Bharhut Stupa and added gateways to the Sanchi Stupa"},
+{q:"Where is the Heliodorus Pillar, and who built it?",a:"Vidisha (Besnagar), MP; built by Heliodorus, a Greek ambassador"},
+{q:"Who sent Heliodorus, and to whose court?",a:"Sent by King Antialcidas, to the court of Shunga king Bhagbhadra"},
+{q:"What is the significance of the Heliodorus Pillar?",a:"It is the oldest known Vishnu pillar, showing a Greek adopting Indian religion"},
+{q:"Who was the last Kanva ruler, and who ended the dynasty?",a:"Susarman; the dynasty was ended by the Satavahanas"},
+{q:"What caste did both Shunga and Kanva rulers belong to?",a:"Brahmins"}
+],
+mcqs:[
+{q:"Who founded the Shunga dynasty?",o:["Vasudev Kanva","Agnimitra","Pushyamitra Shunga","Deva Bhuti"],a:2,e:"Pushyamitra Shunga founded the Shunga dynasty by assassinating the last Mauryan ruler Brihadrath in 185 BC."},
+{q:"The last Mauryan ruler Brihadrath was killed by?",o:["Vasudev Kanva","Agnimitra","Deva Bhuti","Pushyamitra Shunga"],a:3,e:"Pushyamitra Shunga killed Brihadrath during a military parade in 185 BC — ending the Mauryan Empire."},
+{q:"Shunga dynasty capital?",o:["Taxila","Vidisha","Ujjain","Pataliputra"],a:3,e:"Pataliputra was the Shunga capital (they also had power at Vidisha in MP)."},
+{q:"Shunga kings belonged to which caste?",o:["Kshatriya","Vaishya","Brahmin","Shudra"],a:2,e:"Shunga kings were Brahmins — the first Brahmin rulers of Magadha."},
+{q:"Which Shunga king is the hero of Kalidasa's Malavikagnimitram?",o:["Pushyamitra","Vasumitra","Agnimitra","Deva Bhuti"],a:2,e:"Agnimitra (son of Pushyamitra) is the hero of Kalidasa's play Malavikagnimitram."},
+{q:"Patanjali's Mahabhashya was written during which period?",o:["Mauryan period","Gupta period","Shunga period","Kanva period"],a:2,e:"Patanjali wrote Mahabhashya during the Shunga period — NOT the Mauryan period."},
+{q:"Heliodorus pillar was built at?",o:["Pataliputra","Sanchi","Vaishali","Vidisha (Besnagar)"],a:3,e:"Heliodorus pillar is at Vidisha (Besnagar) in MP — dedicated to Vasudeva (Vishnu/Krishna)."},
+{q:"Heliodorus was an ambassador of which Greek king?",o:["Menander","Demetrius","Antialcidas","Rudradaman"],a:2,e:"Heliodorus was ambassador of king Antialcidas, sent to the court of Bhagbhadra (Shunga king)."},
+{q:"Last Kanva ruler was?",o:["Vasudev","Narayana","Susarman","Bhumi Mitra"],a:2,e:"Susarman was the last Kanva ruler. The dynasty ended when Satavahanas overthrew them."},
+{q:"Who killed the last Shunga ruler Deva Bhuti?",o:["Pushyamitra Shunga","Satavahanas","Vasudev Kanva","Rudradaman"],a:2,e:"Vasudev Kanva killed Deva Bhuti (last Shunga ruler), establishing the Kanva dynasty in 73 BC."}
+]},
+{id:"pm2",title:"Foreign Rulers — Indo-Greeks, Shakas & Kushans",xp:55,type:"regular",seqIdx:10,
+learn:`<h2>Foreign Rulers — Indo-Greeks, Shakas &amp; Kushans</h2>
+<h3>Comparison Table</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Dynasty</th><th>Period</th><th>Key Ruler</th><th>Key Contribution</th></tr></thead><tbody>
+<tr><td><strong>Indo-Greeks</strong></td><td>~200–30 BC</td><td><strong>Menander (Milinda)</strong></td><td>Bilingual coins; Milindapanha; Gandhara art</td></tr>
+<tr><td><strong>Shakas</strong></td><td>1st BC–4th AD</td><td><strong>Rudradaman I</strong></td><td>1st Sanskrit inscription (Junagarh); Sudarshana Lake</td></tr>
+<tr><td><strong>Pahlavas</strong></td><td>1st BC</td><td><strong>Gondophernes</strong></td><td>Saint Thomas traditionally visited India</td></tr>
+<tr><td><strong>Kushans</strong></td><td>1st–3rd AD</td><td><strong>Kanishka</strong></td><td>Saka Era (78 AD); 4th Buddhist Council; Gandhara art</td></tr>
+</tbody></table></div>
+<h3>Kanishka — Detailed Profile</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody>
+<tr><td>Capital</td><td><strong>Purushapura (Peshawar)</strong></td></tr>
+<tr><td>Era founded</td><td><strong>Saka Era (78 AD)</strong></td></tr>
+<tr><td>4th Buddhist Council</td><td>Kashmir; Chairman: <strong>Vasumitra</strong>; Vice: <strong>Ashvagosha</strong></td></tr>
+<tr><td>Court scholars</td><td>Ashvagosha, Nagarjuna, Charaka, Sushruta, Vasumitra</td></tr>
+<tr><td>Coins</td><td>First to depict <strong>Buddha</strong> on coins</td></tr>
+</tbody></table></div>
+<h3>Ashvagosha</h3>
+<ul><li>Wrote <em>Buddhacharita</em> (life of Buddha)</li>
+<li>Called <strong>Father of Sanskrit Drama</strong></li>
+<li>Vice-chairman of 4th Buddhist Council</li></ul>
+<div class="trap-box">⚠ TRAPS: Menander = Milinda. Saka Era = <strong>78 AD</strong> (Kanishka). Kanishka capital = <strong>Purushapura</strong> (NOT Mathura). 4th Council chairman = <strong>Vasumitra</strong>. Kanishka coins = 1st to depict Buddha. Ashvagosha = <strong>father of Sanskrit drama</strong>.</div>`,
+revision:[
+"Indo-Greeks(~200-30BC,Menander/Milinda): bilingual coins, Milindapanha, Gandhara art",
+"Shakas(1stBC-4thAD,Rudradaman I): 1st Sanskrit inscription(Junagarh), Sudarshana Lake",
+"Pahlavas(1stBC,Gondophernes): St.Thomas visited India | Kushans(1st-3rdAD,Kanishka): Saka Era 78AD",
+"Kanishka: capital Purushapura, 4th Council(Vasumitra chair, Ashvagosha vice), coins 1st to show Buddha",
+"Ashvagosha = Father of Sanskrit Drama, wrote Buddhacharita"
+],
+oneliners:[
+"Indo-Greeks (~200-30 BC) were the first to issue bilingual and gold coins in India",
+"Menander (Milinda) was the most famous Indo-Greek king and converted to Buddhism",
+"The Milindapanha records Menander's dialogue with the monk Nagasena",
+"Shakas ruled from the 1st century BC to 4th century AD",
+"Rudradaman I (Shaka) issued the first long inscription in chaste Sanskrit, at Junagarh",
+"Rudradaman I repaired the Sudarshana Lake",
+"Gondophernes was a Pahlava king during whose reign Saint Thomas traditionally visited India",
+"Kushans ruled from the 1st to 3rd century AD, with Kanishka as the key ruler",
+"Kanishka's capital was Purushapura (modern Peshawar)",
+"Kanishka founded the Saka Era in 78 AD, still used in the Indian National Calendar",
+"The 4th Buddhist Council was held under Kanishka, chaired by Vasumitra",
+"Ashvagosha was vice-chairman of the 4th Buddhist Council",
+"Kanishka's coins were the first in India to depict the Buddha",
+"Ashvagosha wrote the Buddhacharita, a biography of Buddha",
+"Ashvagosha is known as the 'Father of Sanskrit Drama'",
+"Kanishka's court included scholars Ashvagosha, Nagarjuna, Charaka, and Sushruta"
+],
+flashcards:[
+{q:"Who were the first to issue bilingual coins in India?",a:"The Indo-Greeks"},
+{q:"Which Indo-Greek king converted to Buddhism, and what text records his dialogue with a monk?",a:"Menander (Milinda); the Milindapanha records his dialogue with Nagasena"},
+{q:"What is significant about Rudradaman I's Junagarh inscription?",a:"It is the first long inscription written in chaste Sanskrit"},
+{q:"Which lake did Rudradaman I repair?",a:"The Sudarshana Lake"},
+{q:"During which Pahlava king's reign did Saint Thomas traditionally visit India?",a:"Gondophernes"},
+{q:"What was Kanishka's capital?",a:"Purushapura (modern Peshawar)"},
+{q:"What era did Kanishka found, and when?",a:"The Saka Era, in 78 AD"},
+{q:"Who chaired and who was vice-chairman of the 4th Buddhist Council?",a:"Chairman: Vasumitra; Vice-chairman: Ashvagosha"},
+{q:"What was unique about Kanishka's coins?",a:"They were the first in India to depict the Buddha"},
+{q:"What is Ashvagosha known for?",a:"Writing the Buddhacharita and being called the 'Father of Sanskrit Drama'"}
+],
+mcqs:[
+{q:"Who were the first foreigners to issue bilingual coins in India?",o:["Shakas","Kushans","Indo-Greeks","Pahlavas"],a:2,e:"Indo-Greeks were the first to issue bilingual coins (Greek + Indian) and gold coins in India."},
+{q:"Most famous Indo-Greek king who converted to Buddhism?",o:["Demetrius","Antialcidas","Eucratides","Menander (Milinda)"],a:3,e:"Menander (Milinda) converted to Buddhism. Milindapanha records his dialogue with monk Nagasena."},
+{q:"Junagarh Rock Inscription was issued by?",o:["Ashoka","Kanishka","Rudradaman I","Samudragupta"],a:2,e:"Junagarh Rock Inscription by Rudradaman I (Shaka ruler) is the first long inscription in chaste Sanskrit."},
+{q:"Junagarh inscription is significant because?",o:["It mentions Kalinga War","It is the 1st long inscription in chaste Sanskrit","It records 4th Buddhist Council","It is bilingual Greek-Aramaic"],a:1,e:"Junagarh Rock Inscription by Rudradaman I is the first long inscription in chaste Sanskrit."},
+{q:"Kanishka's primary capital was?",o:["Mathura","Taxila","Pataliputra","Purushapura (Peshawar)"],a:3,e:"Kanishka's main capital was Purushapura (Peshawar). Mathura was his 2nd capital."},
+{q:"Saka Era (78 AD) was founded by?",o:["Rudradaman I","Ashoka","Kanishka","Vikramaditya"],a:2,e:"Kanishka (Kushan king) founded the Saka Era in 78 AD — still used in the Indian National Calendar."},
+{q:"Chairman of the 4th Buddhist Council (under Kanishka)?",o:["Ashvagosha","Nagarjuna","Charaka","Vasumitra"],a:3,e:"Vasumitra was chairman of the 4th Buddhist Council. Ashvagosha was vice-chairman."},
+{q:"Ashvagosha is known as?",o:["Father of Ayurveda","Father of Sanskrit drama","Father of Mahayana","Father of Gandhara art"],a:1,e:"Ashvagosha is called the Father of Sanskrit Drama. He wrote Buddhacharita and other works."},
+{q:"Kanishka's coins were the first to depict?",o:["Greek gods only","Shiva","Buddha","Saka calendar"],a:2,e:"Kanishka's coins were the first to depict Buddha — an important SSC fact."},
+{q:"Saint Thomas is traditionally said to have visited India during which ruler?",o:["Kanishka","Menander","Gondophernes","Rudradaman"],a:2,e:"Gondophernes (Pahlava/Parthian king) — Saint Thomas the Apostle traditionally visited India during his reign."}
+]},
+{id:"pm3",title:"Satavahanas",xp:50,type:"regular",seqIdx:11,
+learn:`<h2>Satavahanas (120 BC – 220 AD)</h2>
+<ul><li>Also called <strong>Andhras</strong> in Puranas</li>
+<li>Capital: <strong>Pratishtana (Paithan)</strong> on Godavari, Maharashtra</li>
+<li>Official language: <strong>Prakrit</strong></li>
+<li>Most common coins: <strong>Lead</strong></li>
+<li>First rulers to make <strong>land grants to Brahmanas</strong></li></ul>
+<h3>Key Rulers</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Ruler</th><th>Position</th><th>Key Achievement</th></tr></thead><tbody>
+<tr><td><strong>Simuka</strong></td><td>Founder (1st)</td><td>Founded dynasty</td></tr>
+<tr><td><strong>Satakarni I</strong></td><td>3rd ruler</td><td>Performed Vedic sacrifices</td></tr>
+<tr><td><strong>Hala</strong></td><td>17th ruler</td><td>Wrote <strong>Gathasaptasati (Sattasai)</strong> in Prakrit</td></tr>
+<tr><td><strong>Gautamiputra Satakarni</strong></td><td><strong>23rd ruler</strong> (106–130 AD)</td><td><strong>Greatest ruler</strong>; defeated Saka Nahapana</td></tr>
+<tr><td><strong>Vasishthiputra</strong></td><td>24th ruler</td><td>Defeated twice by Rudradaman I</td></tr>
+</tbody></table></div>
+<h3>Special Features</h3>
+<ul><li>First to practice <strong>matrilineal naming</strong> (Gautamiputra = son of Gautami)</li>
+<li><strong>Nasik inscription</strong> = recorded by his mother <strong>Gautami Balasri</strong></li>
+<li>First to issue coins with <strong>portraits of rulers</strong></li></ul>
+<h3>Amravati Stupa</h3>
+<ul><li>On <strong>Krishna River, Andhra Pradesh</strong></li>
+<li>Also called <strong>Mahachaitya</strong>; white marble</li>
+<li>Parts in <strong>Chennai Government Museum</strong> + <strong>British Museum</strong></li></ul>
+<div class="trap-box">⚠ TRAPS: Satavahanas = <strong>Andhras</strong>. Gautamiputra = <strong>23rd ruler</strong> (NOT founder). Hala wrote <strong>Sattasai</strong> (NOT Arthashastra). Satavahanas issued <strong>lead coins</strong> (NOT gold). Matrilineal naming = mothers' names for sons.</div>`,
+revision:[
+"Satavahanas(120BC-220AD)=Andhras, capital Pratishtana(Paithan), language Prakrit, lead coins",
+"Simuka(founder,1st) → Satakarni I(3rd) → Hala(17th,wrote Sattasai) → Gautamiputra Satakarni(23rd,greatest)",
+"Gautamiputra defeated Saka Nahapana | Vasishthiputra(24th) defeated twice by Rudradaman I",
+"1st matrilineal naming + portrait coins | Nasik inscription by mother Gautami Balasri",
+"Amravati Stupa(Mahachaitya): Krishna River, AP, white marble"
+],
+oneliners:[
+"Satavahanas ruled from 120 BC to 220 AD",
+"Satavahanas are called 'Andhras' in the Puranas",
+"The Satavahana capital was Pratishtana (Paithan), on the Godavari, Maharashtra",
+"Prakrit was the official Satavahana language",
+"Lead coins were the most common Satavahana coinage",
+"Satavahanas were the first dynasty to make land grants to Brahmanas",
+"Simuka founded the Satavahana dynasty as its 1st ruler",
+"Satakarni I, the 3rd ruler, performed Vedic sacrifices",
+"Hala, the 17th ruler, wrote the Gathasaptasati (Sattasai) in Prakrit",
+"Gautamiputra Satakarni, the 23rd ruler (106-130 AD), is considered the greatest Satavahana ruler",
+"Gautamiputra Satakarni defeated the Saka ruler Nahapana",
+"Vasishthiputra, the 24th ruler, was defeated twice by Rudradaman I",
+"Satavahanas were the first to practice matrilineal naming — e.g. Gautamiputra means 'son of Gautami'",
+"The Nasik inscription recording Gautamiputra's achievements was composed by his mother, Gautami Balasri",
+"Satavahanas were the first Indian dynasty to issue coins with rulers' portraits",
+"The Amravati Stupa (Mahachaitya) is on the Krishna River in Andhra Pradesh",
+"Parts of the Amravati Stupa are preserved in the Chennai Government Museum and the British Museum",
+"The Sudarshana Lake, built under Chandragupta Maurya, was later repaired by Rudradaman I and then Skandagupta"
+],
+flashcards:[
+{q:"By what other name are the Satavahanas known?",a:"Andhras (in the Puranas)"},
+{q:"What was the Satavahana capital, and where?",a:"Pratishtana (Paithan), on the Godavari river, Maharashtra"},
+{q:"Who founded the Satavahana dynasty?",a:"Simuka, the 1st ruler"},
+{q:"Who wrote the Gathasaptasati (Sattasai), and what number ruler was he?",a:"Hala, the 17th ruler"},
+{q:"Who is considered the greatest Satavahana ruler, and what number was he?",a:"Gautamiputra Satakarni, the 23rd ruler (106-130 AD)"},
+{q:"Whom did Gautamiputra Satakarni defeat?",a:"The Saka ruler Nahapana"},
+{q:"What is matrilineal naming, and who pioneered it?",a:"Naming sons after their mothers (e.g. Gautamiputra = son of Gautami); pioneered by the Satavahanas"},
+{q:"Who composed the Nasik inscription about Gautamiputra's achievements?",a:"His mother, Gautami Balasri"},
+{q:"What type of coins did the Satavahanas most commonly issue?",a:"Lead coins"},
+{q:"Where is the Amravati Stupa located, and what is it also called?",a:"On the Krishna River, Andhra Pradesh; also called Mahachaitya"}
+],
+mcqs:[
+{q:"Satavahanas are also known as?",o:["Chedis","Vakatakas","Andhras","Kalabhras"],a:2,e:"Satavahanas are called 'Andhras' in the Puranas — same dynasty with two names."},
+{q:"Satavahana capital was?",o:["Vakataka","Amaravati","Nasik","Pratishtana (Paithan)"],a:3,e:"Pratishtana (Paithan) on the Godavari River in Maharashtra was the Satavahana capital."},
+{q:"Greatest Satavahana ruler was?",o:["Simuka","Hala","Satakarni I","Gautamiputra Satakarni"],a:3,e:"Gautamiputra Satakarni (23rd ruler, 106–130 AD) is the greatest Satavahana ruler."},
+{q:"Gautamiputra Satakarni was which numbered ruler?",o:["1st","7th","17th","23rd"],a:3,e:"Gautamiputra Satakarni was the 23rd ruler (NOT the founder — Simuka is 1st)."},
+{q:"Hala (17th Satavahana ruler) wrote?",o:["Arthashastra","Milindapanha","Gathasaptasati (Sattasai)","Mahabhashya"],a:2,e:"Hala wrote Gathasaptasati (Sattasai) — 700 love lyrics in Prakrit."},
+{q:"Which type of coins did Satavahanas issue most commonly?",o:["Gold","Silver","Lead","Bronze"],a:2,e:"Satavahanas primarily issued lead coins (most common)."},
+{q:"Amravati Stupa is located on which river?",o:["Godavari","Mahanadi","Krishna","Tungabhadra"],a:2,e:"Amravati Stupa (Mahachaitya) is on the Krishna River in Andhra Pradesh."},
+{q:"Satavahanas were the first dynasty to practice?",o:["Bilingual inscriptions","Matrilineal naming","Sanskrit inscriptions","Gold coinage"],a:1,e:"Satavahanas practiced matrilineal naming — sons named after mothers. E.g., Gautamiputra = son of Gautami."},
+{q:"Nasik inscription records Gautamiputra's achievements and was composed by?",o:["Hala","Simuka","Gautami Balasri (his mother)","Vasishthiputra"],a:2,e:"The Nasik inscription recording Gautamiputra Satakarni's achievements was composed by his mother Gautami Balasri."},
+{q:"Sudarshana Lake repaired by Rudradaman I was originally built during?",o:["Ashoka's reign","Bindusara's reign","Chandragupta Maurya's reign","Gupta period"],a:2,e:"Sudarshana Lake was built during Chandragupta Maurya's reign, repaired by Rudradaman I (Shaka), and later by Skandagupta (Gupta)."}
+]}
+]},
+{id:"trap",title:"Trap Nodes",icon:"⚠️",nodes:[
+{id:"t1",title:"Councils Trap — Buddhist & Jain",xp:40,type:"trap",seqIdx:12,
+learn:`<h2>Councils Trap — Most Confused Facts</h2>
+<h3>Buddhist Councils — Quick Recall</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Council</th><th>Year</th><th>Place</th><th>King</th><th>Chairman</th><th>Result</th></tr></thead><tbody>
+<tr><td><strong>1st</strong></td><td>483 BC</td><td><strong>Rajgriha</strong></td><td><strong>Ajatashatru</strong></td><td><strong>Mahakassapa</strong></td><td>Vinaya + Sutta Pitaka</td></tr>
+<tr><td><strong>2nd</strong></td><td>383 BC</td><td><strong>Vaishali</strong></td><td><strong>Kalashoka</strong></td><td><strong>Sarvakamini</strong></td><td>Split: Sthavira + Mahasanghika</td></tr>
+<tr><td><strong>3rd</strong></td><td>255 BC</td><td><strong>Pataliputra</strong></td><td><strong>Ashoka</strong></td><td><strong>Moggaliputta Tisya</strong></td><td>Abhidhamma Pitaka</td></tr>
+<tr><td><strong>4th</strong></td><td>72 AD</td><td><strong>Kashmir</strong></td><td><strong>Kanishka</strong></td><td><strong>Vasumitra</strong></td><td>Split: Hinayana + Mahayana</td></tr>
+</tbody></table></div>
+<h3>Jain Councils — Quick Recall</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Council</th><th>Place</th><th>Leader</th><th>Year</th><th>Outcome</th></tr></thead><tbody>
+<tr><td><strong>1st</strong></td><td><strong>Pataliputra</strong></td><td><strong>Sthulabahu</strong></td><td>3rd century BC</td><td>12 Angas compiled</td></tr>
+<tr><td><strong>2nd</strong></td><td><strong>Valabhi</strong></td><td><strong>Devaradhikshamasramana</strong></td><td><strong>513 AD</strong></td><td>12 Angas + 12 Upangas</td></tr>
+</tbody></table></div>
+<h3>Most Common Wrong Answers</h3>
+<div class="tbl-wrap"><table><thead><tr><th>Wrong Answer</th><th>Correct Answer</th></tr></thead><tbody>
+<tr><td>3rd Buddhist Council at Vaishali</td><td><strong>Pataliputra</strong></td></tr>
+<tr><td>4th Buddhist Council by Ashoka</td><td>By <strong>Kanishka</strong></td></tr>
+<tr><td>1st Jain Council at Vaishali</td><td><strong>Pataliputra</strong></td></tr>
+<tr><td>2nd Jain Council at Pataliputra</td><td><strong>Valabhi</strong></td></tr>
+<tr><td>Ashoka = chairman of 3rd Council</td><td><strong>Moggaliputta Tisya</strong> = chairman; Ashoka = king</td></tr>
+<tr><td>Vasumitra = 2nd Council chairman</td><td>Vasumitra = 4th Council; 2nd = <strong>Sarvakamini</strong></td></tr>
+</tbody></table></div>
+<div class="trap-box">⚠ MNEMONIC — Buddhist councils: A-K-A-K (Ajatashatru, Kalashoka, Ashoka, Kanishka). Places: Rajgriha → Vaishali → Pataliputra → Kashmir. Jain: P-V (Pataliputra → Valabhi).</div>`,
+revision:[
+"Buddhist councils A-K-A-K: Ajatashatru(Rajgriha)→Kalashoka(Vaishali)→Ashoka(Pataliputra)→Kanishka(Kashmir)",
+"Jain councils P-V: Pataliputra(Sthulabahu)→Valabhi(Devaradhikshamasramana,513AD)",
+"3rd Buddhist Council = Pataliputra, NOT Vaishali (common wrong answer)",
+"4th Council chairman = Vasumitra (NOT Ashoka, who wasn't even alive then)",
+"2nd Council chairman = Sarvakamini (NOT Vasumitra — frequently swapped)"
+],
+oneliners:[
+"Remember Buddhist councils with A-K-A-K: Ajatashatru, Kalashoka, Ashoka, Kanishka",
+"Buddhist council places in order: Rajgriha, Vaishali, Pataliputra, Kashmir",
+"Remember Jain councils with P-V: Pataliputra, then Valabhi",
+"The most common wrong answer for the 3rd Buddhist Council's location is Vaishali — correct answer is Pataliputra",
+"The most common wrong answer for the 4th Council's king is Ashoka — correct answer is Kanishka",
+"The 1st Jain Council's most common wrong answer is Vaishali — correct answer is Pataliputra",
+"The 2nd Jain Council's most common wrong answer is Pataliputra — correct answer is Valabhi",
+"Moggaliputta Tisya was the chairman of the 3rd Buddhist Council; Ashoka was just the king who supported it",
+"Vasumitra chaired the 4th Council; Sarvakamini chaired the 2nd Council — these are frequently swapped",
+"The 1st Buddhist Council compiled the Vinaya and Sutta Pitakas at Rajgriha",
+"The 2nd Buddhist Council caused the Sthavira-Mahasanghika split at Vaishali",
+"The 3rd Buddhist Council compiled the Abhidhamma Pitaka at Pataliputra",
+"The 4th Buddhist Council caused the Hinayana-Mahayana split in Kashmir",
+"The 1st Jain Council compiled the 12 Angas at Pataliputra in the 3rd century BC",
+"The 2nd Jain Council compiled the 12 Angas plus 12 Upangas at Valabhi in 513 AD"
+],
+flashcards:[
+{q:"What does the mnemonic A-K-A-K stand for in Buddhist councils?",a:"Ajatashatru, Kalashoka, Ashoka, Kanishka — the kings of the 1st-4th Councils in order"},
+{q:"What is the order of places for the 4 Buddhist Councils?",a:"Rajgriha → Vaishali → Pataliputra → Kashmir"},
+{q:"What is the order of places for the 2 Jain Councils?",a:"Pataliputra → Valabhi"},
+{q:"Where was the 3rd Buddhist Council held — and what's the common wrong answer?",a:"Correct: Pataliputra. Common wrong answer: Vaishali"},
+{q:"Who was king during the 4th Buddhist Council — and what's the common wrong answer?",a:"Correct: Kanishka. Common wrong answer: Ashoka"},
+{q:"Who chaired the 3rd Buddhist Council, as distinct from the king?",a:"Moggaliputta Tisya chaired it; Ashoka was the supporting king, not chairman"},
+{q:"Differentiate the chairmen of the 2nd and 4th Buddhist Councils.",a:"2nd: Sarvakamini | 4th: Vasumitra — frequently swapped in MCQs"},
+{q:"Where was the 1st Jain Council held — and what's the common wrong answer?",a:"Correct: Pataliputra. Common wrong answer: Vaishali"},
+{q:"Where was the 2nd Jain Council held — and what's the common wrong answer?",a:"Correct: Valabhi. Common wrong answer: Pataliputra"},
+{q:"What did the 1st and 2nd Buddhist Councils respectively compile/cause?",a:"1st: compiled Vinaya+Sutta Pitaka | 2nd: caused the Sthavira-Mahasanghika split"}
+],
+mcqs:[
+{q:"The 3rd Buddhist Council was held at?",o:["Vaishali","Rajgriha","Kashmir","Pataliputra"],a:3,e:"3rd Buddhist Council (255 BC) was at Pataliputra under Ashoka. SSC trap: Vaishali = 2nd Council."},
+{q:"Chairman of the 1st Buddhist Council?",o:["Vasumitra","Moggaliputta Tisya","Sarvakamini","Mahakassapa"],a:3,e:"Mahakassapa chaired the 1st Buddhist Council at Rajgriha (483 BC) under king Ajatashatru."},
+{q:"King at the 2nd Buddhist Council?",o:["Ashoka","Ajatashatru","Kanishka","Kalashoka"],a:3,e:"Kalashoka (Shishunaga dynasty) was the king at the 2nd Buddhist Council (383 BC) at Vaishali."},
+{q:"1st Jain Council was held at?",o:["Vaishali","Valabhi","Rajgriha","Pataliputra"],a:3,e:"1st Jain Council = Pataliputra (3rd century BC). SSC trap: not Vaishali."},
+{q:"2nd Jain Council was held at?",o:["Pataliputra","Rajgriha","Valabhi","Vaishali"],a:2,e:"2nd Jain Council = Valabhi (513 AD). SSC trap: not Pataliputra."},
+{q:"Which Buddhist Council first divided Buddhism into Sthavira & Mahasanghika?",o:["1st Council","2nd Council","3rd Council","4th Council"],a:1,e:"The 2nd Buddhist Council (383 BC, Vaishali) caused the first split of Buddhism."},
+{q:"Chairman of the 4th Buddhist Council (Kanishka's time)?",o:["Ashvagosha","Moggaliputta Tisya","Mahakassapa","Vasumitra"],a:3,e:"Vasumitra was chairman of the 4th Buddhist Council. Ashvagosha was vice-chairman."},
+{q:"Vinaya and Sutta Pitaka were compiled at which council?",o:["2nd Council","4th Council","3rd Council","1st Council"],a:3,e:"1st Buddhist Council (Rajgriha, 483 BC) compiled Vinaya Pitaka + Sutta Pitaka."},
+{q:"Vasumitra was chairman of which Buddhist Council?",o:["1st (Rajgriha)","2nd (Vaishali)","3rd (Pataliputra)","4th (Kashmir)"],a:3,e:"Vasumitra = 4th Council (Kanishka). SSC trap: Sarvakamini = 2nd Council chairman."},
+{q:"The 2nd Jain Council was held in which year?",o:["3rd century BC","383 BC","72 AD","513 AD"],a:3,e:"2nd Jain Council = 513 AD at Valabhi. SSC trap: much later than Buddhist councils."}
+]}
+]},
+{id:"golden-ch",title:"Golden Revision",icon:"🏹",nodes:[
+{id:"golden",title:"Part 2 — High Yield Revision",xp:0,type:"gold",seqIdx:13,
+learn:`<h2>&#127913; Part 2 — High Probability SSC Points</h2>
+<h3>Jainism — Must Know</h3>
+<ul>
+<li>1st Tirthankara = <strong>Rishabha (Bull)</strong>; 23rd = <strong>Parshvanath (Serpent)</strong>; 24th = <strong>Mahavira (Lion)</strong></li>
+<li>Mahavira born <strong>599 BC</strong> at <strong>Kundagrama / Vaishali</strong>; died <strong>527 BC</strong> at <strong>Pavapuri</strong></li>
+<li>1st disciple = <strong>Jamali</strong>; Brahmacharya = 5th vow added by Mahavira</li>
+<li><strong>Digambara</strong> = naked (Bhadrabahu); <strong>Shvetambara</strong> = white (Sthulabhadra)</li>
+<li>1st Jain Council = <strong>Pataliputra</strong>; 2nd = <strong>Valabhi (513 AD)</strong></li>
+<li>Gomateshwara = <strong>58.8m</strong>; <strong>Chamundaraya (981 AD)</strong>; Shravanabelagola</li>
+</ul>
+<h3>Buddhism — Must Know</h3>
+<ul>
+<li>Buddha born <strong>563 BC</strong> at <strong>Lumbini, Nepal</strong>; died <strong>483 BC</strong> at <strong>Kushinara</strong></li>
+<li>Birth, Enlightenment, Death = all on <strong>Vaishakha Purnima</strong></li>
+<li>Left home at <strong>29</strong>; enlightened at <strong>35</strong> under <strong>Peepal tree</strong> at <strong>Bodh Gaya</strong></li>
+<li>1st sermon = <strong>Sarnath</strong> (Dhammachakrapravartana) to <strong>5 ascetics</strong></li>
+<li><strong>Ananda</strong> = attendant; <strong>Kondanna</strong> = 1st disciple; <strong>Sujata</strong> = rice &amp; milk; <strong>Chunda</strong> = last meal</li>
+<li>Councils: Rajgriha (Ajatashatru) &#8594; Vaishali (Kalashoka) &#8594; Pataliputra (Ashoka) &#8594; Kashmir (Kanishka)</li>
+<li><strong>Hinayana</strong>: no idol worship; <strong>Mahayana</strong>: idol worship; <strong>Vajrayana</strong>: Bengal/Bihar</li>
+<li>Ajivika = <strong>Makkhali Gosala</strong>; Niyati (fate/determinism)</li>
+</ul>
+<h3>Mauryan — Must Know</h3>
+<ul>
+<li>Chandragupta = founder; Greek name = <strong>Sandrocottus</strong>; advisor = <strong>Chanakya</strong></li>
+<li>Defeated <strong>Seleucus (305 BC)</strong>; gave <strong>500 elephants</strong>; Seleucus sent <strong>Megasthenes</strong></li>
+<li>Bindusara: <strong>Amitrochattes</strong>; ambassador = <strong>Deimachus</strong></li>
+<li>Ashoka: Kalinga <strong>(261 BC)</strong> &#8594; <strong>13th Rock Edict</strong>; converted by <strong>Nigrodha</strong>; teacher = <strong>Upagupta</strong></li>
+<li>National Emblem from <strong>Sarnath</strong>; edicts deciphered by <strong>James Prinsep (1837)</strong></li>
+<li>Saptanga = 7 elements; Mandala = neighbour = enemy; Vijigishu = conquering king</li>
+<li>Last Mauryan = <strong>Brihadrath</strong>; killed by <strong>Pushyamitra Shunga (185 BC)</strong></li>
+</ul>
+<h3>Post-Mauryan — Must Know</h3>
+<ul>
+<li>Shunga = <strong>Brahmins</strong>; Mahabhashya written during <strong>Shunga period</strong></li>
+<li>Heliodorus = <strong>Garudadhwaja pillar at Vidisha</strong> for Vasudeva</li>
+<li>Menander = <strong>Milinda</strong>; Rudradaman I = <strong>1st Sanskrit inscription</strong> (Junagarh)</li>
+<li>Kanishka = <strong>Saka Era (78 AD)</strong>; capital = <strong>Purushapura</strong>; 1st coins with Buddha</li>
+<li>Satavahanas = <strong>Andhras</strong>; capital = <strong>Pratishtana</strong>; lead coins; matrilineal naming</li>
+<li>Gautamiputra Satakarni = greatest (<strong>23rd ruler</strong>); Hala (17th) wrote <strong>Sattasai</strong></li>
+<li>Amravati Stupa = Krishna River; Chennai Museum + British Museum</li>
+<li>Ashvagosha = <strong>father of Sanskrit drama</strong></li>
+</ul>`}
+]}
+];
+
+const SK='centumania_anc2_v1';
+let S={xp:0,visited:{},mcq:{},faa:{},curNode:null,chOpen:{}};
+function loadS(){try{const d=localStorage.getItem(SK);if(d)S=Object.assign(S,JSON.parse(d));}catch(e){}}
+function saveS(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
+
+/* ── METRICS ── */
+let _mToken=null,_mSid=null;
+function initMetrics(){
+  // Supabase stores the session under a key like `sb-<ref>-auth-token`
+  // in either localStorage or sessionStorage depending on the user's "keep me
+  // signed in" choice (see centumania-mvp/src/lib/supabase/client.ts).
+  try {
+    const stores=[localStorage,sessionStorage];
+    for(const store of stores){
+      if(_mToken)break;
+      for(let i=0;i<store.length;i++){
+        const k=store.key(i);
+        if(k&&k.startsWith('sb-')&&k.endsWith('-auth-token')){
+          const d=JSON.parse(store.getItem(k)||'{}');
+          _mToken=d?.access_token||null;
+          break;
+        }
+      }
+    }
+  } catch(e){}
+  _mSid='anc2-'+(Date.now().toString(36));
+}
+function track(name,meta={}){
+  if(!_mToken)return;
+  fetch('/api/events',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},
+    body:JSON.stringify({event_name:name,session_id:_mSid,event_timestamp:new Date().toISOString(),metadata:meta})
+  }).catch(()=>{});
+}
+
+function allNodes(){return CHAPTERS.flatMap(ch=>ch.nodes);}
+function seqNodes(){return allNodes().slice().sort((a,b)=>a.seqIdx-b.seqIdx);}
+function findNode(id){return allNodes().find(n=>n.id===id);}
+function totalXP(){return allNodes().reduce((s,n)=>s+(S.mcq[n.id]&&S.mcq[n.id].passed?n.xp:0),0);}
+function overallPct(){
+  const all=allNodes().filter(n=>n.type!=='gold');
+  const p=all.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  return all.length?Math.round(100*p/all.length):0;
+}
+
+function isUnlocked(node){
+  if(node.seqIdx===0)return true;
+  if(node.type==='gold'){
+    const all=seqNodes().filter(n=>n.type!=='gold');
+    const passed=all.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+    return (passed/all.length)>=0.8;
+  }
+  const prev=seqNodes().find(n=>n.seqIdx===node.seqIdx-1);
+  return !!(S.mcq[prev.id]&&S.mcq[prev.id].passed);
+}
+
+/* ── TOAST ── */
+let _tTimer;
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show'+(type==='err'?' err':type==='warn'?' warn':'');
+  clearTimeout(_tTimer);_tTimer=setTimeout(()=>t.className='toast',2800);
+}
+
+/* ── TOPBAR ── */
+function updateTopbar(){
+  const all=allNodes().filter(n=>n.type!=='gold');
+  const traps=allNodes().filter(n=>n.type==='trap');
+  const passed=all.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  const tPassed=traps.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  document.getElementById('h-xp').textContent=totalXP();
+  document.getElementById('h-nd').textContent=passed+'/'+all.length;
+  document.getElementById('h-tp').textContent=tPassed+'/'+traps.length;
+}
+
+/* ── SIDEBAR ── */
+function buildSidebar(){
+  ['sidebar-inner','mob-sidebar-inner'].forEach(sid=>{
+    const sb=document.getElementById(sid);
+    sb.innerHTML='';
+    CHAPTERS.forEach(ch=>{
+      const grp=document.createElement('div');
+      grp.className='ch-group';
+      const passedCount=ch.nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+      const isOpen=S.chOpen[ch.id]!==false;
+      const tog=document.createElement('button');
+      tog.className='ch-toggle';
+      tog.innerHTML='<span class="ch-icon">'+ch.icon+'</span><span class="ch-label">'+ch.title+'</span><span class="ch-prog">'+passedCount+'/'+ch.nodes.length+'</span><span class="ch-arr">'+(isOpen?'▾':'▸')+'</span>';
+      tog.onclick=(()=>{const cid=ch.id;const o=isOpen;return()=>{S.chOpen[cid]=!o;saveS();buildSidebar();}})();
+      grp.appendChild(tog);
+      const items=document.createElement('div');
+      items.className='node-items';
+      items.style.display=isOpen?'block':'none';
+      ch.nodes.forEach(node=>{
+        const unlocked=isUnlocked(node);
+        const m=S.mcq[node.id];
+        const passed=m&&m.passed;
+        const btn=document.createElement('button');
+        btn.className='ni-btn'+(S.curNode===node.id?' active':'')+(passed?' passed':'')+(unlocked?'':' locked');
+        let tag='';
+        if(!unlocked)tag='<span class="ni-tag lock">🔒</span>';
+        else if(passed)tag='<span class="ni-tag done">✓</span>';
+        else if(S.visited[node.id])tag='<span class="ni-tag vis">●</span>';
+        btn.innerHTML=tag+'<span class="ni-title">'+node.title+'</span>'+(node.xp?'<span class="ni-xp">+'+node.xp+'</span>':'');
+        btn.onclick=(()=>{const nid=node.id;return()=>openNode(nid);})();
+        items.appendChild(btn);
+      });
+      grp.appendChild(items);
+      sb.appendChild(grp);
+    });
+  });
+  updateTopbar();
+}
+
+/* ── OPEN NODE ── */
+function openNode(id){
+  const node=findNode(id);
+  if(!node)return;
+  if(!isUnlocked(node)){
+    const prev=seqNodes().find(n=>n.seqIdx===node.seqIdx-1);
+    showToast('🔒 Complete "'+(prev?prev.title:'previous node')+'" with 10/10 first!','warn');
+    return;
+  }
+  S.curNode=id;S.visited[id]=true;saveS();buildSidebar();
+  track('node_opened',{node_id:id,node_title:node.title,node_type:node.type,xp:node.xp});
+  document.getElementById('dash-view').style.display='none';
+  document.getElementById('node-view').style.display='block';
+  renderNode(node);
+  document.getElementById('mob-drawer').classList.remove('open');
+  document.getElementById('mob-overlay').classList.remove('show');
+  document.getElementById('main-area').scrollTop=0;
+}
+
+/* ── RENDER NODE ── */
+function renderNode(node){
+  const m=S.mcq[node.id]||{};
+  const faaStr=m.faa!=null?Math.round(m.faa)+'%':'—';
+  const bestStr=m.best!=null?Math.round(m.best)+'%':'—';
+  let typTag='';
+  if(node.type==='trap')typTag='<span class="node-type-tag trap">⚠ Trap Node</span>';
+  if(node.type==='gold')typTag='<span class="node-type-tag gold">★ Golden Node</span>';
+  const testLabel=m.passed?'🎯 Test (10/10 ✓)':'🎯 Test (10 MCQs)';
+  const retryBtn=(m.attempts&&!m.passed&&node.type!=='gold')?'<button class="retry-btn" style="margin-left:auto" onclick="retryNode(\''+node.id+'\')">↺ Retry</button>':'';
+  document.getElementById('node-content').innerHTML=
+    '<div class="node-hd">'+
+    '<div class="node-hd-top">'+typTag+'<div class="xp-pill">+'+(node.xp||0)+' XP</div></div>'+
+    '<h2 class="node-title">'+node.title+'</h2>'+
+    '<div class="node-stats">'+
+    '<div class="ns-item"><div class="ns-label">FAA</div><div class="ns-val faa-col">'+faaStr+'</div></div>'+
+    '<div class="ns-item"><div class="ns-label">Best</div><div class="ns-val">'+bestStr+'</div></div>'+
+    '<div class="ns-item"><div class="ns-label">Attempts</div><div class="ns-val">'+(m.attempts||0)+'</div></div>'+
+    '<div class="ns-item"><div class="ns-label">Status</div><div class="ns-val '+(m.passed?'pass-col':'pend-col')+'">'+(m.passed?'✓ Passed':'Pending')+'</div></div>'+
+    retryBtn+
+    '</div></div>'+
+    '<div class="tabs">'+
+    '<button class="tab active" onclick="switchTab(this,\'learn\')">📖 Learn</button>'+
+    '<button class="tab" onclick="switchTab(this,\'flash\')">🗂 Flashcards</button>'+
+    '<button class="tab" onclick="switchTab(this,\'test\')">'+testLabel+'</button>'+
+    '</div>'+
+    '<div id="tab-learn" class="tab-pane active">'+buildLearnPane(node)+'</div>'+
+    '<div id="tab-flash" class="tab-pane">'+buildFlashPane(node)+'</div>'+
+    '<div id="tab-test" class="tab-pane">'+buildTestPane(node)+'</div>';
+  bindMCQ(node);
+  buildNodeNav(node);
+}
+
+function switchTab(btn,tab){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+/* ── LEARN PANE ── */
+function buildLearnPane(node){
+  let h=node.learn?node.learn:'<p style="color:var(--ink2)">No content available.</p>';
+  if(node.revision&&node.revision.length){
+    h+='<div class="revision-block"><div class="fb-head">⚡ 30 SECOND REVISION</div><div class="fb-body"><ul class="facts">';
+    node.revision.forEach(r=>h+='<li>'+r+'</li>');
+    h+='</ul></div></div>';
+  }
+  if(node.oneliners&&node.oneliners.length){
+    h+='<div class="oneliner-block"><div class="fb-head">🎯 20 EXAM ONE-LINERS</div><div class="fb-body"><ul class="facts">';
+    node.oneliners.forEach(o=>h+='<li>'+o+'</li>');
+    h+='</ul></div></div>';
+  }
+  return h;
+}
+
+/* ── FLASHCARD PANE ── */
+function buildFlashPane(node){
+  const cards=node.flashcards||[];
+  if(!cards.length)return '<div class="fact-block"><div class="fb-body" style="padding:2rem;text-align:center;color:var(--ink2)">No flashcards for this node yet.</div></div>';
+  let h='<p class="flash-hint">TAP A CARD TO FLIP • '+cards.length+' CARDS</p><div class="flash-grid">';
+  cards.forEach((c,i)=>{
+    h+='<div class="flash-card" id="fc-'+node.id+'-'+i+'" onclick="this.classList.toggle(\'flipped\')">'+
+      '<div class="flash-inner">'+
+      '<div class="flash-front">'+c.q+'</div>'+
+      '<div class="flash-back">'+c.a+'</div>'+
+      '</div></div>';
+  });
+  h+='</div><div class="flash-reset-row"><button class="retry-btn" onclick="resetFlash(\''+node.id+'\')">↺ Reset All Cards</button></div>';
+  return h;
+}
+function resetFlash(nid){
+  document.querySelectorAll('[id^="fc-'+nid+'-"]').forEach(c=>c.classList.remove('flipped'));
+}
+
+/* ── TEST PANE ── */
+let _sess={};
+function buildTestPane(node){
+  if(node.type==='gold'){
+    return '<div class="fact-block"><div class="fb-body" style="padding:2rem;text-align:center"><p style="font-size:1.1rem;color:var(--ink2)">🏹 Golden Revision Node — read the facts in the Learn tab and recall them all!</p></div></div>';
+  }
+  if(!_sess[node.id])_sess[node.id]={};
+  const m=S.mcq[node.id]||{};
+  const mcqs=node.mcqs||[];
+  let h='';
+  if(m.passed){
+    h+='<div class="unlock-banner pass-banner">🎉 Passed! FAA: '+Math.round(m.faa||0)+'% | Best: '+Math.round(m.best||0)+'% | Attempts: '+(m.attempts||1)+'</div>';
+  } else if(m.lastScore!==undefined){
+    h+='<div class="unlock-banner fail-banner">'+m.lastScore+'/10 — Need 10/10 to unlock next node. FAA locked at '+Math.round(m.faa||0)+'%. <button class="retry-btn" onclick="retryNode(\''+node.id+'\')">↺ Retry</button></div>';
+  }
+  mcqs.forEach((q,i)=>{
+    const sessAns=_sess[node.id][i];
+    const answered=sessAns!==undefined||m.passed;
+    const displayAns=sessAns!==undefined?sessAns:(m.passed?q.a:undefined);
+    const faaCorrect=S.faa[node.id]&&S.faa[node.id][i]===true;
+    const faaSet=S.faa[node.id]&&S.faa[node.id][i]!==undefined;
+    h+='<div class="mcq-card'+(answered?' done':'')+'" data-qi="'+i+'" data-nid="'+node.id+'">';
+    h+='<div class="mcq-q"><span class="q-num">'+(i+1)+'.</span> '+q.q+'</div>';
+    h+='<div class="mcq-opts">';
+    q.o.forEach((opt,oi)=>{
+      let cls='mopt';
+      if(answered){
+        if(oi===q.a)cls+=' correct';
+        else if(oi===displayAns&&displayAns!==q.a)cls+=' wrong';
+      }
+      h+='<button class="'+cls+'" data-oi="'+oi+'"'+(answered?' disabled':'')+'>'+String.fromCharCode(65+oi)+'. '+opt+'</button>';
+    });
+    h+='</div>';
+    if(answered){
+      const wasCorrect=displayAns===q.a;
+      h+='<div class="mcq-fb">'+(wasCorrect?'✅':'❌')+' '+q.e+'</div>';
+      if(faaSet){
+        h+='<div class="mcq-faa"><span class="faa-chip '+(faaCorrect?'faa-ok':'faa-err')+'">'+(faaCorrect?'FAA ✓':'FAA ✗')+' (first attempt)</span></div>';
+      }
+    }
+    h+='</div>';
+  });
+  if(!m.passed&&m.attempts){
+    h+='<div style="margin-top:20px;padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;">'+
+      '<span style="font-family:var(--mono);font-size:13px;color:var(--ink2)">Best: <b style="color:var(--gold)">'+Math.round(m.best||0)+'%</b> &nbsp;|&nbsp; FAA: <b style="color:var(--amber)">'+Math.round(m.faa||0)+'%</b> &nbsp;|&nbsp; Need <b style="color:var(--green)">10/10</b></span>'+
+      '<button class="retry-btn" style="font-size:13px;padding:9px 22px" onclick="retryNode(\''+node.id+'\')">↺ Retry</button></div>';
+  }
+  return h;
+}
+
+/* ── BIND MCQ ── */
+function bindMCQ(node){
+  const mcqs=node.mcqs||[];
+  const pane=document.getElementById('tab-test');
+  if(!pane)return;
+  pane.querySelectorAll('.mcq-card:not(.done)').forEach(card=>{
+    const qi=parseInt(card.dataset.qi);
+    card.querySelectorAll('.mopt').forEach(btn=>{
+      btn.addEventListener('click',function(){
+        if(card.classList.contains('done'))return;
+        const chosen=parseInt(btn.dataset.oi);
+        const correct=chosen===mcqs[qi].a;
+        if(!_sess[node.id])_sess[node.id]={};
+        _sess[node.id][qi]=chosen;
+        if(!S.faa[node.id])S.faa[node.id]={};
+        if(S.faa[node.id][qi]===undefined)S.faa[node.id][qi]=correct;
+        card.classList.add('done');
+        card.querySelectorAll('.mopt').forEach((b,oi)=>{
+          b.disabled=true;
+          if(oi===mcqs[qi].a)b.classList.add('correct');
+          else if(oi===chosen&&!correct)b.classList.add('wrong');
+        });
+        const fb=document.createElement('div');
+        fb.className='mcq-fb';
+        fb.innerHTML=(correct?'✅':'❌')+' '+mcqs[qi].e;
+        card.appendChild(fb);
+        const faaEl=document.createElement('div');
+        faaEl.className='mcq-faa';
+        faaEl.innerHTML='<span class="faa-chip '+(S.faa[node.id][qi]?'faa-ok':'faa-err')+'">'+(S.faa[node.id][qi]?'FAA ✓':'FAA ✗')+' (first attempt)</span>';
+        card.appendChild(faaEl);
+        saveS();
+        if(Object.keys(_sess[node.id]).length===mcqs.length)finishAttempt(node);
+      });
+    });
+  });
+}
+
+function retryNode(nid){
+  _sess[nid]={};
+  if(S.mcq[nid])delete S.mcq[nid].lastScore;
+  saveS();
+  const node=findNode(nid);
+  document.getElementById('tab-test').innerHTML=buildTestPane(node);
+  bindMCQ(node);
+  document.getElementById('main-area').scrollTop=0;
+}
+
+function finishAttempt(node){
+  const mcqs=node.mcqs||[];
+  const sess=_sess[node.id]||{};
+  const correct=mcqs.filter((q,i)=>sess[i]===q.a).length;
+  const pct=Math.round(100*correct/mcqs.length);
+  const passed=correct===mcqs.length;
+  const faaCorrect=mcqs.filter((q,i)=>S.faa[node.id]&&S.faa[node.id][i]===true).length;
+  const faaPct=Math.round(100*faaCorrect/mcqs.length);
+  if(!S.mcq[node.id])S.mcq[node.id]={faa:faaPct,best:0,passed:false,attempts:0};
+  S.mcq[node.id].attempts=(S.mcq[node.id].attempts||0)+1;
+  S.mcq[node.id].faa=faaPct;
+  if(pct>(S.mcq[node.id].best||0))S.mcq[node.id].best=pct;
+  if(passed){
+    S.mcq[node.id].passed=true;
+    if(S.mcq[node.id].lastScore!==undefined)delete S.mcq[node.id].lastScore;
+    S.xp=(S.xp||0)+node.xp;
+    saveS();buildSidebar();
+    track('node_completed',{node_id:node.id,node_title:node.title,xp_earned:node.xp,faa_pct:faaPct,attempts:S.mcq[node.id].attempts});
+    showToast('🎉 10/10! +'+(node.xp||0)+' XP earned!');
+    setTimeout(()=>renderNode(node),400);
+  } else {
+    S.mcq[node.id].lastScore=correct;
+    saveS();buildSidebar();
+    track('mcq_completed',{node_id:node.id,node_title:node.title,score:correct,total:mcqs.length,pct,faa_pct:faaPct,passed:false,attempts:S.mcq[node.id].attempts});
+    const pane=document.getElementById('tab-test');
+    if(pane){pane.innerHTML=buildTestPane(node);bindMCQ(node);}
+    showToast(correct+'/10 — Need 10/10. Retry to unlock next node.','warn');
+  }
+}
+
+/* ── NODE NAV ── */
+function buildNodeNav(node){
+  const all=seqNodes();
+  const idx=all.findIndex(n=>n.id===node.id);
+  const prev=idx>0?all[idx-1]:null;
+  const next=idx<all.length-1?all[idx+1]:null;
+  const nextOk=next&&isUnlocked(next);
+  document.getElementById('node-nav').innerHTML=
+    '<button class="nav-btn" '+(prev?'':'disabled')+' onclick="'+(prev?'openNode(\''+prev.id+'\')':'void(0)')+'">&#8592; '+(prev?prev.title:'Start')+'</button>'+
+    '<button class="nav-btn home-btn" onclick="showDash()">&#8862; Dashboard</button>'+
+    '<button class="nav-btn" '+(nextOk?'':'disabled')+' onclick="'+(nextOk?'openNode(\''+next.id+'\')':'void(0)')+'">&#8594; '+(next?next.title:'End')+'</button>';
+}
+
+/* ── DASHBOARD ── */
+function showDash(){
+  S.curNode=null;saveS();buildSidebar();
+  document.getElementById('node-view').style.display='none';
+  document.getElementById('dash-view').style.display='block';
+  document.getElementById('mob-home').classList.add('act');
+  document.getElementById('mob-menu').classList.remove('act');
+  const allN=allNodes().filter(n=>n.type!=='gold');
+  const passedN=allN.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  const pct=overallPct();
+  const xp=totalXP();
+  let chapCards='';
+  CHAPTERS.forEach(ch=>{
+    const nodes=ch.nodes;
+    const p=nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+    const pPct=nodes.length?Math.round(100*p/nodes.length):0;
+    chapCards+='<div class="dc"><div class="dc-icon">'+ch.icon+'</div><div class="dc-label">'+ch.title+'</div><div class="dc-prog-bar"><div class="dc-bar" style="width:'+pPct+'%"></div></div><div class="dc-nums">'+p+'/'+nodes.length+' passed</div></div>';
+  });
+  const goldenOk=pct>=80;
+  document.getElementById('dash-content').innerHTML=
+    '<div class="dash-hero">'+
+    '<div class="dh-title">CentuMania <span style="font-family:var(--mono);font-size:12px;color:var(--ink3);font-style:normal;letter-spacing:1px;display:block;margin-top:4px">ANCIENT HISTORY &middot; PART 2</span></div>'+
+    '<div class="dh-xp">'+xp+' XP</div>'+
+    '<div class="dh-bar-wrap"><div class="dh-bar" style="width:'+pct+'%"></div></div>'+
+    '<div class="dh-label">'+passedN+' of '+allN.length+' nodes passed ('+pct+'%)</div>'+
+    '</div>'+
+    '<div class="dash-chapters">'+chapCards+'</div>'+
+    '<div class="cta-row">'+
+    '<button class="cta-btn" onclick="startNext()">&#9654; Continue Learning</button>'+
+    '<button class="cta-btn sec" '+(goldenOk?'':'disabled')+' onclick="openNode(\'golden\')">&#127913; Golden Node'+(goldenOk?'':' (need 80%)')+'</button>'+
+    '</div>';
+}
+
+function startNext(){
+  const next=seqNodes().find(n=>isUnlocked(n)&&!(S.mcq[n.id]&&S.mcq[n.id].passed));
+  if(next)openNode(next.id);
+  else showToast('All nodes complete! 🏆 Amazing!');
+}
+
+/* ── MOBILE ── */
+function initMobile(){
+  document.getElementById('mob-home').addEventListener('click',()=>{showDash();});
+  document.getElementById('mob-menu').addEventListener('click',()=>{
+    document.getElementById('mob-drawer').classList.toggle('open');
+    document.getElementById('mob-overlay').classList.toggle('show');
+    document.getElementById('mob-menu').classList.toggle('act');
+  });
+  document.getElementById('mob-close').addEventListener('click',closeDrawer);
+  document.getElementById('mob-overlay').addEventListener('click',closeDrawer);
+}
+function closeDrawer(){
+  document.getElementById('mob-drawer').classList.remove('open');
+  document.getElementById('mob-overlay').classList.remove('show');
+  document.getElementById('mob-menu').classList.remove('act');
+}
+
+/* ── INIT ── */
+function init(){
+  loadS();
+  initMetrics();
+  track('material_opened',{material:'ancient_history_part2'});
+  buildSidebar();
+  initMobile();
+  if(S.curNode){const n=findNode(S.curNode);if(n&&isUnlocked(n)){openNode(S.curNode);return;}}
+  showDash();
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
