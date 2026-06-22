@@ -7,12 +7,12 @@ import { AppLayout } from '@/src/components/layout/AppLayout'
 import { Card, CardLabel } from '@/src/components/ui/Card'
 import { Badge } from '@/src/components/ui/Badge'
 import { SkeletonCard } from '@/src/components/ui/Skeleton'
-import type { LeaderboardEntry, PricingTier } from '@/src/types/database'
+import type { StudyLeaderboardEntry, PricingTier } from '@/src/types/database'
 import type { BadgeVariant } from '@/src/components/ui/Badge'
 
 type LeaderboardData = {
-  entries: LeaderboardEntry[]
-  myRank:  LeaderboardEntry | null
+  entries: StudyLeaderboardEntry[]
+  myRank:  StudyLeaderboardEntry | null
   userId:  string
 }
 const TIER_BADGE: Record<PricingTier, { label: string; variant: BadgeVariant }> = {
@@ -58,7 +58,7 @@ export default function LeaderboardPage() {
     getSupabaseBrowserClient().auth.getSession().then(async ({ data: { session } }) => {
       if (!session) { router.replace('/auth/login'); return }
       setUserName(session.user.user_metadata?.name ?? session.user.email?.split('@')[0] ?? '')
-      const res = await fetch('/api/leaderboard', { headers: { Authorization: `Bearer ${session.access_token}` } })
+      const res = await fetch('/api/study/leaderboard', { headers: { Authorization: `Bearer ${session.access_token}` } })
       if (res.status === 402) { router.replace('/dashboard'); return }
       if (!res.ok) { setError('Failed to load leaderboard.'); setLoading(false); return }
       setData(await res.json())
@@ -80,7 +80,8 @@ export default function LeaderboardPage() {
     </AppLayout>
   )
 
-  const { entries = [], myRank, userId } = data ?? {}
+  const { entries = [], myRank } = data ?? {}
+  const isMe = (e: StudyLeaderboardEntry): boolean => !!myRank && e.rank === myRank.rank
   const top3 = entries.slice(0, 3)
   const rest  = entries.slice(3)
   const myPercentile = myRank && entries.length > 0
@@ -137,15 +138,15 @@ export default function LeaderboardPage() {
               const e = top3[i]
               if (!e) return <div key={i} />
               const m = METAL[e.rank]
-              const isMe = e.user_id === userId
+              const isMeEntry = isMe(e)
               const isFirst = e.rank === 1
               return (
-                <div key={e.user_id}
+                <div key={e.rank}
                   className={`relative rounded-2xl overflow-hidden p-4 text-center ${isFirst ? 'pb-5 pt-6' : 'py-4'}`}
                   style={{
                     background: 'rgba(255,255,255,0.02)',
                     border: `1px solid ${m.border}`,
-                    boxShadow: isMe ? `0 0 20px ${m.glow}, 0 0 0 2px rgba(11,61,145,0.3)` : `0 0 12px ${m.glow}`,
+                    boxShadow: isMeEntry ? `0 0 20px ${m.glow}, 0 0 0 2px rgba(11,61,145,0.3)` : `0 0 12px ${m.glow}`,
                   }}
                 >
                   {isFirst && (
@@ -157,7 +158,7 @@ export default function LeaderboardPage() {
                     style={{ background: m.grad, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                     #{e.rank}
                   </div>
-                  <Avatar name={e.name} isMe={isMe} size={isFirst ? 'lg' : 'md'} />
+                  <Avatar name={e.name} isMe={isMeEntry} size={isFirst ? 'lg' : 'md'} />
                   <p className="text-xs font-bold text-text mt-2.5 truncate">{e.name.split(' ')[0]}</p>
                   <p className="text-base font-bold font-mono mt-1 tracking-tight" style={{ color: m.text }}>
                     {e.total_score.toLocaleString()}
@@ -170,7 +171,7 @@ export default function LeaderboardPage() {
                       </Badge>
                     </div>
                   )}
-                  {isMe && <p className="text-[10px] text-primary font-bold mt-1 uppercase tracking-wider font-mono">You</p>}
+                  {isMeEntry && <p className="text-[10px] text-primary font-bold mt-1 uppercase tracking-wider font-mono">You</p>}
                 </div>
               )
             })}
@@ -185,23 +186,23 @@ export default function LeaderboardPage() {
             </div>
             <div>
               {(top3.length < 3 ? entries : rest).map((e, idx) => {
-                const isMe = e.user_id === userId
+                const isMeEntry = isMe(e)
                 return (
-                  <div key={e.user_id}
+                  <div key={e.rank}
                     className="flex items-center gap-3 px-4 py-3 transition-colors"
                     style={{
                       borderBottom: idx < (top3.length < 3 ? entries : rest).length - 1 ? '1px solid rgba(229,231,235,0.5)' : undefined,
-                      background: isMe ? 'rgba(11,61,145,0.05)' : undefined,
+                      background: isMeEntry ? 'rgba(11,61,145,0.05)' : undefined,
                     }}
                   >
                     <span className="text-xs font-mono text-text-muted w-8 text-center shrink-0 font-semibold">
                       #{e.rank}
                     </span>
-                    <Avatar name={e.name} isMe={isMe} size="sm" />
+                    <Avatar name={e.name} isMe={isMeEntry} size="sm" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-text truncate">
                         {e.name}
-                        {isMe && <span className="ml-1.5 text-[10px] text-primary font-bold uppercase tracking-wider font-mono">(you)</span>}
+                        {isMeEntry && <span className="ml-1.5 text-[10px] text-primary font-bold uppercase tracking-wider font-mono">(you)</span>}
                       </p>
                       <p className="text-[10px] text-text-muted mt-0.5 font-mono">
                         {e.days_attended} days · {e.accuracy_percent}% accuracy

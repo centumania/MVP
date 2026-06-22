@@ -77,6 +77,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       entries: (rows ?? []).map(stripUserId),
       myRank:  myRow ? stripUserId(myRow) : null,
+      userId:  user.id,
     })
 
   } catch (err) {
