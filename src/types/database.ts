@@ -148,6 +148,23 @@ export type StudyLeaderboardEntry = {
 }
 
 // ---------------------------------------------------------------------------
+// Student metrics table (migration 022)
+// ---------------------------------------------------------------------------
+
+export type StudentMetrics = {
+  user_id:          string
+  materials_opened: number
+  nodes_opened:     number
+  nodes_completed:  number
+  mcqs_completed:   number
+  mcqs_correct:     number
+  study_sessions:   number
+  engagement_score: number    // weighted: material×10 + node×5 + completed×20 + mcq×15 + session×10
+  last_event_at:    string | null
+  updated_at:       string
+}
+
+// ---------------------------------------------------------------------------
 // Study-quiz tables (migration 020)
 // ---------------------------------------------------------------------------
 
@@ -378,6 +395,12 @@ export type Database = {
         Update:        Partial<Omit<AnalyticsEvent, 'id' | 'created_at'>>
         Relationships: []
       }
+      student_metrics: {
+        Row:           StudentMetrics
+        Insert:        Omit<StudentMetrics, 'updated_at'>
+        Update:        Partial<Omit<StudentMetrics, 'user_id'>>
+        Relationships: []
+      }
     }
     Views: {
       leaderboard: {
@@ -399,6 +422,10 @@ export type Database = {
       calculate_centum_index: {
         Args:    { p_user_id: string }
         Returns: Record<string, unknown>
+      }
+      refresh_student_metrics: {
+        Args:    Record<string, never>
+        Returns: { students_updated: number }[]
       }
     }
     Enums: {
