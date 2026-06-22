@@ -501,26 +501,32 @@ function runMermaid() {
   const nodes = [...document.querySelectorAll('.mermaid:not([data-processed])')];
   if (nodes.length) { try { mermaidLib.run({ nodes }).catch(() => {}); } catch(e) {} }
 }
-import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs').then(m => {
-  mermaidLib = m.default;
-  mermaidLib.initialize({
-    startOnLoad: false,
-    theme: 'base',
-    themeVariables: {
-      darkMode:           true,
-      background:         '#111827',
-      mainBkg:            '#1a2235',
-      primaryColor:       '#1a2235',
-      primaryTextColor:   '#F9FAFB',
-      primaryBorderColor: '#2533FF',
-      lineColor:          '#6B7280',
-      fontFamily:         'Inter, system-ui, sans-serif',
-      fontSize:           '13px',
-    },
-    flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+// Wrap import() via new Function() so old iOS Safari (< 14.5) doesn't get a
+// parse-time SyntaxError that kills the entire script. The try/catch handles
+// browsers that don't support dynamic import at all — diagrams just won't render.
+try {
+  (new Function('cb', 'import("https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs").then(cb).catch(function(){})'))
+  (function(m) {
+    mermaidLib = m.default;
+    mermaidLib.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        darkMode:           true,
+        background:         '#111827',
+        mainBkg:            '#1a2235',
+        primaryColor:       '#1a2235',
+        primaryTextColor:   '#F9FAFB',
+        primaryBorderColor: '#2533FF',
+        lineColor:          '#6B7280',
+        fontFamily:         'Inter, system-ui, sans-serif',
+        fontSize:           '13px',
+      },
+      flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+    });
+    runMermaid();
   });
-  runMermaid();
-}).catch(() => {});
+} catch(e) {}
 
 /* ── Nav ─────────────────────────────────────────────────────────── */
 function buildNav(filter) {

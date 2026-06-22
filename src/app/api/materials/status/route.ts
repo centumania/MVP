@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
   response.cookies.set('cm_access', '1', {
     httpOnly: true,
     maxAge: 60 * 60,
-    sameSite: 'strict',
+    sameSite: 'lax',
     path: '/',
     secure: process.env.NODE_ENV === 'production',
   })
