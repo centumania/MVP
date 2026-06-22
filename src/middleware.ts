@@ -1,20 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 /**
- * Edge Proxy — src/proxy.ts
- *
- * Next.js 16 uses "proxy.ts" as the edge middleware convention.
+ * Edge Middleware — src/middleware.ts
  *
  * Responsibilities:
  *  1. Nonce-based Content Security Policy (strict for all routes)
- *  2. Permissive CSP for /materials/mindmap/* routes — the iframe loads
- *     admin-uploaded interactive HTML which requires 'unsafe-inline',
- *     'unsafe-eval', CDN access, and localStorage (allow-same-origin).
+ *  2. Permissive CSP for /study/, /content/, /pdfs/ and materials viewer routes —
+ *     these serve interactive HTML with inline scripts, eval, and CDN assets.
  *  3. All security response headers (HSTS, X-Frame-Options, etc.)
- *  4. Server identity stripping
+ *  4. Cookie gate: /study/, /content/, /pdfs/ require cm_access session cookie.
  */
 
-// ── Strict CSP — all routes except mindmap viewer ──────────────────
+// ── Strict CSP — all routes except viewer/study routes ─────────────
 function buildStrictCsp(nonce: string): string {
   const isDev = process.env.NODE_ENV === 'development'
 
@@ -25,8 +22,6 @@ function buildStrictCsp(nonce: string): string {
     "font-src 'self' data: https://fonts.gstatic.com",
     "img-src 'self' data: blob: https:",
     "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://fonts.googleapis.com",
-    // *.supabase.co: MindMap iframe loaded directly from Supabase Storage
-    // blob: kept for backward compat, YouTube for video embeds
     "frame-src 'self' blob: https://*.supabase.co https://www.youtube-nocookie.com",
     "media-src 'self' blob:",
     "object-src 'none'",
@@ -38,15 +33,13 @@ function buildStrictCsp(nonce: string): string {
   return directives.join('; ')
 }
 
-// ── Permissive CSP — /materials/mindmap/* only ─────────────────────
-// The MindMap iframe uses allow-same-origin so it inherits this page's
-// CSP. Admin-uploaded HTML files need inline scripts, eval (some graph
-// libs), and external CDN assets. This route is auth-gated (payment
-// verified), so the relaxed policy is acceptable.
-function buildMindmapCsp(nonce: string): string {
+// ── Permissive CSP — study/content/viewer routes ───────────────────
+// These routes serve interactive HTML files with inline scripts, external
+// CDN libraries (Mermaid), and localStorage access. Without unsafe-inline
+// and CDN access the inline JS is blocked by the strict default CSP.
+function buildPermissiveCsp(nonce: string): string {
   const directives: string[] = [
     "default-src 'self' https: data: blob:",
-    // Allow inline + eval for graph/visualization libraries in the MindMap
     `script-src 'self' 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' https: blob:`,
     "style-src 'self' 'unsafe-inline' https:",
     "font-src 'self' data: https:",
@@ -69,13 +62,13 @@ const STATIC_HEADERS: [string, string][] = [
   ['Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload'],
 ]
 
-// ── Proxy entry point ──────────────────────────────────────────────
-export function proxy(request: NextRequest): NextResponse {
+// ── Middleware entry point ─────────────────────────────────────────
+export function middleware(request: NextRequest): NextResponse {
   const nonce    = Buffer.from(crypto.randomUUID()).toString('base64')
   const pathname = request.nextUrl.pathname
 
-  // Protect /study/*, /content/*, /pdfs/* — require the cm_access session cookie
-  // set by /api/materials/status. Unauthenticated requests redirect to login.
+  // Cookie gate: /study/*, /content/*, /pdfs/* require cm_access cookie
+  // (set by /api/materials/status after auth + payment check).
   if (
     pathname.startsWith('/study/') ||
     pathname.startsWith('/content/') ||
@@ -87,20 +80,16 @@ export function proxy(request: NextRequest): NextResponse {
     }
   }
 
-  // Use permissive CSP for the materials viewer so the sandboxed iframe
-  // (which inherits this page's CSP via allow-same-origin) can run
-  // interactive HTML including inline scripts and localStorage, and so
-  // the client-side fetch() to the external html_url is allowed by connect-src.
-  // Student viewer /materials/[studentId]/[day] also iframes study HTML with inline scripts.
-  // /study/, /content/, /pdfs/ serve the HTML files themselves — they load CDN scripts
-  // (e.g. Mermaid) and must have the permissive CSP or their inline JS is blocked.
-  const isViewer = pathname.startsWith('/materials/viewer/') ||
-                   pathname.startsWith('/materials/mindmap/') ||
-                   (pathname.startsWith('/materials/') && pathname.split('/').filter(Boolean).length >= 3) ||
-                   pathname.startsWith('/study/') ||
-                   pathname.startsWith('/content/') ||
-                   pathname.startsWith('/pdfs/')
-  const csp      = isViewer ? buildMindmapCsp(nonce) : buildStrictCsp(nonce)
+  // Permissive CSP for routes that iframe interactive HTML with inline scripts.
+  const isPermissive =
+    pathname.startsWith('/materials/viewer/') ||
+    pathname.startsWith('/materials/mindmap/') ||
+    (pathname.startsWith('/materials/') && pathname.split('/').filter(Boolean).length >= 3) ||
+    pathname.startsWith('/study/') ||
+    pathname.startsWith('/content/') ||
+    pathname.startsWith('/pdfs/')
+
+  const csp = isPermissive ? buildPermissiveCsp(nonce) : buildStrictCsp(nonce)
 
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-nonce', nonce)
@@ -110,11 +99,12 @@ export function proxy(request: NextRequest): NextResponse {
 
   response.headers.set('Content-Security-Policy', csp)
 
-  // Study/content files are iframed by the viewer — allow same-origin framing.
-  // All other routes keep DENY.
-  const isFrameable = pathname.startsWith('/study/') ||
-                      pathname.startsWith('/content/') ||
-                      pathname.startsWith('/pdfs/')
+  // /study/, /content/, /pdfs/ are iframed by the viewer — allow same-origin framing.
+  // All other routes deny framing.
+  const isFrameable =
+    pathname.startsWith('/study/') ||
+    pathname.startsWith('/content/') ||
+    pathname.startsWith('/pdfs/')
 
   for (const [key, value] of STATIC_HEADERS) {
     if (key === 'X-Frame-Options') {
