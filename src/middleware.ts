@@ -35,12 +35,16 @@ function buildStrictCsp(nonce: string): string {
 
 // ── Permissive CSP — study/content/viewer routes ───────────────────
 // These routes serve interactive HTML files with inline scripts, external
-// CDN libraries (Mermaid), and localStorage access. Without unsafe-inline
-// and CDN access the inline JS is blocked by the strict default CSP.
-function buildPermissiveCsp(nonce: string): string {
+// CDN libraries (Mermaid), and localStorage access.
+// IMPORTANT: do NOT include a nonce here. Per CSP3 spec, when a nonce is
+// present in script-src, 'unsafe-inline' is silently ignored and only
+// scripts with a matching nonce attribute execute. The static HTML files
+// (bio-map.html, etc.) have no nonce attribute on their inline <script>
+// blocks, so including a nonce would block all inline JS despite 'unsafe-inline'.
+function buildPermissiveCsp(): string {
   const directives: string[] = [
     "default-src 'self' https: data: blob:",
-    `script-src 'self' 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' https: blob:`,
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:",
     "style-src 'self' 'unsafe-inline' https:",
     "font-src 'self' data: https:",
     "img-src 'self' data: blob: https:",
@@ -89,7 +93,7 @@ export function middleware(request: NextRequest): NextResponse {
     pathname.startsWith('/content/') ||
     pathname.startsWith('/pdfs/')
 
-  const csp = isPermissive ? buildPermissiveCsp(nonce) : buildStrictCsp(nonce)
+  const csp = isPermissive ? buildPermissiveCsp() : buildStrictCsp(nonce)
 
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-nonce', nonce)
