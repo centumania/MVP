@@ -1,0 +1,2774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CentuMania · Ancient History Part 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#13100a;--bg2:#1c170f;--bg3:#252015;--ink:#f5f0e8;--ink2:#b8a98a;--gold:#f0bc45;--gold2:#c8960e;--amber:#e67e22;--green:#3dd68c;--red:#f06b6b;--border:#2e2510;--radius:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--gold);text-decoration:none}
+/* HEADER */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;height:56px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.hdr-logo{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.3rem;color:var(--gold)}
+.hdr-sub{font-size:.75rem;color:var(--ink2);margin-left:4px}
+.hdr-stats{margin-left:auto;display:flex;gap:16px;align-items:center}
+.stat{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--ink2)}
+.stat span{color:var(--gold);font-weight:600}
+.mob-menu-btn{display:none;background:none;border:none;color:var(--ink);cursor:pointer;font-size:1.4rem;margin-right:8px}
+/* LAYOUT */
+.layout{display:flex;flex:1;overflow:hidden;height:calc(100vh - 56px)}
+/* SIDEBAR */
+.sidebar{width:260px;min-width:260px;background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:12px 0}
+.sidebar-inner{padding:0 8px}
+.ch-label{font-size:.65rem;color:var(--ink2);text-transform:uppercase;letter-spacing:.08em;padding:8px 10px 4px;margin-top:8px}
+.node-btn{width:100%;text-align:left;background:none;border:none;border-radius:var(--radius);padding:8px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s}
+.node-btn:hover{background:var(--bg3)}
+.node-btn.active{background:linear-gradient(90deg,rgba(240,188,69,.15),transparent);border-left:2px solid var(--gold)}
+.node-btn.locked{opacity:.4;cursor:not-allowed}
+.node-btn.passed .nb-title{color:var(--green)}
+.nb-icon{font-size:.9rem;min-width:20px}
+.nb-title{font-size:.78rem;color:var(--ink);line-height:1.3;flex:1}
+.nb-badge{font-size:.6rem;background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1px 5px;color:var(--ink2);white-space:nowrap}
+.nb-badge.gold-badge{background:rgba(240,188,69,.15);border-color:var(--gold);color:var(--gold)}
+/* MAIN */
+.main-area{flex:1;overflow-y:auto;padding:24px}
+/* DASHBOARD */
+.dash-hero{text-align:center;padding:40px 20px 20px}
+.dash-hero h1{font-family:'Instrument Serif',serif;font-style:italic;font-size:2rem;color:var(--gold)}
+.dash-hero p{color:var(--ink2);margin-top:8px}
+.dash-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:24px 0}
+.ds-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center}
+.ds-val{font-family:'JetBrains Mono',monospace;font-size:1.8rem;color:var(--gold);font-weight:600}
+.ds-lbl{font-size:.7rem;color:var(--ink2);margin-top:4px}
+.dash-chs{margin-top:8px}
+.ch-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.ch-card h3{font-size:.9rem;margin-bottom:10px}
+.ch-nodes{display:flex;flex-wrap:wrap;gap:8px}
+.cn-pill{font-size:.72rem;padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:.15s}
+.cn-pill:hover{border-color:var(--gold)}
+.cn-pill.passed{background:rgba(61,214,140,.12);border-color:var(--green);color:var(--green)}
+.cn-pill.locked{opacity:.4;cursor:not-allowed}
+/* NODE VIEW */
+.node-view{display:none}
+.nv-head{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.nv-title{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.6rem;color:var(--gold)}
+.nv-xp{font-family:'JetBrains Mono',monospace;font-size:.78rem;background:rgba(240,188,69,.12);border:1px solid rgba(240,188,69,.3);border-radius:20px;padding:3px 10px;color:var(--gold)}
+.tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:0}
+.tab-btn{background:none;border:none;border-bottom:2px solid transparent;padding:8px 18px;font-size:.82rem;color:var(--ink2);cursor:pointer;transition:.15s;margin-bottom:-1px}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+/* LEARN PANE */
+.learn-pane{line-height:1.7}
+.learn-pane .sec-head{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.25rem;color:var(--gold);margin:20px 0 10px;border-bottom:1px solid var(--border);padding-bottom:6px}
+.learn-pane .sub-head{font-size:.9rem;color:var(--amber);margin:16px 0 8px;font-weight:600}
+.learn-pane p{color:var(--ink2);font-size:.88rem;margin-bottom:10px}
+.learn-pane table{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:.8rem}
+.learn-pane th{background:var(--bg3);color:var(--gold);padding:7px 10px;text-align:left;border:1px solid var(--border)}
+.learn-pane td{padding:6px 10px;border:1px solid var(--border);color:var(--ink2);vertical-align:top}
+.learn-pane tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+.learn-pane b{color:var(--ink);font-weight:600}
+.fact-box{background:rgba(240,188,69,.07);border:1px solid rgba(240,188,69,.2);border-radius:var(--radius);padding:12px 16px;margin:12px 0}
+.fact-box strong{color:var(--gold);font-size:.8rem;display:block;margin-bottom:6px}
+.fact-box ul{padding-left:16px}
+.fact-box li{font-size:.78rem;color:var(--ink2);margin-bottom:3px}
+.trap-box{background:rgba(240,107,107,.08);border:1px solid rgba(240,107,107,.25);border-radius:var(--radius);padding:12px 16px;margin:12px 0;font-size:.8rem;color:#f9a8a8}
+.revision-box{background:rgba(79,142,247,.06);border:1px solid rgba(79,142,247,.22);border-radius:var(--radius);padding:12px 16px;margin:12px 0}
+.revision-box strong{color:#4f8ef7;font-size:.8rem;display:block;margin-bottom:6px}
+.revision-box ul{padding-left:16px}
+.revision-box li{font-size:.78rem;color:var(--ink2);margin-bottom:3px}
+.oneliner-box{background:rgba(61,214,140,.05);border:1px solid rgba(61,214,140,.18);border-radius:var(--radius);padding:12px 16px;margin:12px 0}
+.oneliner-box strong{color:var(--green);font-size:.8rem;display:block;margin-bottom:6px}
+.oneliner-box ul{padding-left:16px}
+.oneliner-box li{font-size:.78rem;color:var(--ink2);margin-bottom:3px}
+.flash-hint{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink2);text-align:center;margin-bottom:12px;letter-spacing:.5px}
+.flash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:14px}
+.flash-card{perspective:900px;cursor:pointer;height:140px}
+.flash-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+.flash-front,.flash-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);padding:12px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.78rem;line-height:1.4;border:1px solid var(--border)}
+.flash-front{background:var(--bg3);color:var(--ink)}
+.flash-back{background:rgba(240,188,69,.1);border-color:rgba(240,188,69,.3);color:var(--gold);transform:rotateY(180deg)}
+.flash-reset-row{text-align:center;margin-top:4px}
+/* TEST PANE */
+.test-info{background:var(--bg3);border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;font-size:.8rem;color:var(--ink2)}
+.q-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:12px}
+.q-num{font-size:.7rem;color:var(--ink2);margin-bottom:6px}
+.q-text{font-size:.88rem;color:var(--ink);margin-bottom:14px;line-height:1.5}
+.opt-btn{width:100%;text-align:left;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:9px 14px;font-size:.82rem;color:var(--ink);cursor:pointer;margin-bottom:7px;transition:.15s}
+.opt-btn:hover:not(:disabled){border-color:var(--gold);background:rgba(240,188,69,.08)}
+.opt-btn.correct{background:rgba(61,214,140,.15);border-color:var(--green);color:var(--green)}
+.opt-btn.wrong{background:rgba(240,107,107,.12);border-color:var(--red);color:var(--red)}
+.opt-btn:disabled{cursor:default}
+.exp-box{background:var(--bg3);border-left:3px solid var(--gold);padding:10px 14px;font-size:.78rem;color:var(--ink2);margin-top:8px;border-radius:0 6px 6px 0;display:none}
+.faa-tag{font-size:.65rem;background:rgba(230,126,34,.15);border:1px solid rgba(230,126,34,.3);color:var(--amber);border-radius:4px;padding:1px 6px;margin-left:6px}
+.score-bar{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px;text-align:center}
+.score-big{font-family:'JetBrains Mono',monospace;font-size:2rem;color:var(--gold)}
+.score-sub{font-size:.78rem;color:var(--ink2);margin-top:4px}
+.btn{border:none;border-radius:8px;padding:10px 22px;font-size:.82rem;cursor:pointer;font-family:inherit;transition:.15s}
+.btn-gold{background:var(--gold);color:#13100a;font-weight:600}
+.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--ink2)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.node-nav{display:flex;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;font-size:.82rem;color:var(--ink);opacity:0;transform:translateY(10px);transition:.3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1;transform:translateY(0)}
+/* MOBILE */
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200}
+.mob-drawer{display:none;position:fixed;top:0;left:0;width:280px;height:100%;background:var(--bg2);z-index:201;overflow-y:auto;transform:translateX(-100%);transition:.25s}
+.mob-drawer.open{transform:translateX(0)}
+.mob-close-btn{float:right;background:none;border:none;color:var(--ink);font-size:1.2rem;cursor:pointer;padding:12px}
+.mob-home-btn{float:left;background:none;border:none;color:var(--ink2);font-size:.8rem;cursor:pointer;padding:12px}
+@media(max-width:700px){
+  .sidebar{display:none}.mob-menu-btn{display:block}
+  .mob-overlay,.mob-drawer{display:block}
+  .main-area{padding:16px}
+  .hdr-stats .stat:not(:last-child){display:none}
+  .layout{height:calc(100dvh - 56px)}
+}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <button class="mob-menu-btn" id="mob-menu" onclick="openDrawer()">☰</button>
+  <div class="hdr-logo">CentuMania</div>
+  <div class="hdr-sub">Ancient History · Part 3</div>
+  <div class="hdr-stats">
+    <div class="stat">XP <span id="h-xp">0</span></div>
+    <div class="stat">Nodes <span id="h-nd">0</span></div>
+    <div class="stat">Traps <span id="h-tp">0</span></div>
+  </div>
+</header>
+<div class="layout">
+  <nav class="sidebar"><div class="sidebar-inner" id="sidebar-inner"></div></nav>
+  <div class="mob-overlay" id="mob-overlay" onclick="closeDrawer()"></div>
+  <div class="mob-drawer" id="mob-drawer">
+    <button class="mob-home-btn" id="mob-home" onclick="showDash();closeDrawer()">⌂ Home</button>
+    <button class="mob-close-btn" id="mob-close" onclick="closeDrawer()">✕</button>
+    <div id="mob-sidebar-inner" style="clear:both;padding:8px"></div>
+  </div>
+  <main class="main-area" id="main-area">
+    <div id="dash-view">
+      <div class="dash-hero">
+        <h1>Ancient History · Part 3</h1>
+        <p>Golden Age &amp; Culture · Gupta → Post-Gupta → South India → Art · 23 Nodes · 230 MCQs</p>
+      </div>
+      <div class="dash-stats">
+        <div class="ds-card"><div class="ds-val" id="dash-xp">0</div><div class="ds-lbl">Total XP</div></div>
+        <div class="ds-card"><div class="ds-val" id="dash-nd">0/23</div><div class="ds-lbl">Nodes Passed</div></div>
+        <div class="ds-card"><div class="ds-val" id="dash-tp">0</div><div class="ds-lbl">Traps Cleared</div></div>
+        <div class="ds-card"><div class="ds-val" id="dash-faa">0%</div><div class="ds-lbl">FAA Accuracy</div></div>
+      </div>
+      <div class="dash-chs" id="dash-content"></div>
+    </div>
+    <div id="node-view" class="node-view">
+      <div class="nv-head">
+        <div>
+          <div class="nv-title" id="nv-title"></div>
+          <div style="margin-top:4px"><span class="nv-xp" id="nv-xp"></span></div>
+        </div>
+      </div>
+      <div class="tabs">
+        <button class="tab-btn active" id="tab-learn" onclick="switchTab('learn')">📖 Learn</button>
+        <button class="tab-btn" id="tab-flash" onclick="switchTab('flash')">🗂 Flashcards</button>
+        <button class="tab-btn" id="tab-test" onclick="switchTab('test')">📝 Test</button>
+      </div>
+      <div id="node-content"></div>
+      <div class="node-nav" id="node-nav"></div>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const CHAPTERS=[{
+id:'ch1',
+title:'🌟 Chapter 1: Gupta Dynasty',
+nodes:[{
+id:'g1',
+title:'Gupta Dynasty — Golden Age',
+xp:150,
+type:'regular',
+seqIdx:0,
+learn:'<h2 class="sec-head">🌟 Gupta Dynasty — Golden Age (250–550 AD)</h2><p>Called <b>Golden Age of India</b> — peak of art, science, literature, philosophy. Founders were <b>Vaishya</b> clan (NOT Kshatriya). Capital: <b>Pataliputra</b>; 2nd capital Ujjain under Chandragupta II. Religion: <b>Vaishnavism</b> (tolerant of all).</p><h3 class="sub-head">All Gupta Rulers</h3><table class=""><thead><tr><th>Ruler</th><th>Period</th><th>Title</th><th>Key Achievement</th></tr></thead><tbody><tr><td>Sri Gupta</td><td>240–280 AD</td><td>Maharaja</td><td>Founder; Vaishya clan</td></tr><tr><td>Ghatotakacha</td><td>281–319 AD</td><td>Maharaja</td><td>Son of Sri Gupta</td></tr><tr><td>Chandragupta I</td><td>319–335 AD</td><td>Maharajadhiraj</td><td>Real founder; married Lichchavi princess; Gupta Era begins</td></tr><tr><td>Samudragupta</td><td>335–375 AD</td><td>Kaviraj, Vikramanka</td><td>Napoleon of India; Prayag Prasasti by Harisena</td></tr><tr><td>Chandragupta II</td><td>376–415 AD</td><td>Vikramaditya</td><td>Defeated Shakas; Navaratnas; Fa-Hien visited; 1st silver coins</td></tr><tr><td>Kumaragupta I</td><td>415–455 AD</td><td>Shakraditya</td><td>Founded Nalanda University; fought Hunas</td></tr><tr><td>Skandagupta</td><td>455–467 AD</td><td>—</td><td>Defeated Hunas twice; repaired Sudarshana Lake</td></tr><tr><td>Vishnugupta</td><td>540–550 AD</td><td>—</td><td>Last known Gupta ruler</td></tr></tbody></table><div class="trap-box">⚠️ EXAM TRAP: Gupta rulers were VAISHYA — NOT Kshatriya. Chandragupta I = real founder; Sri Gupta = nominal founder. Hiuen Tsang visited HARSHA — not Chandragupta II. Fa-Hien visited Chandragupta II.</div><div class="fact-box"><strong>SSC One-Liners</strong><ul><li>Chinese pilgrim during CG II = Fa-Hien (Fo-Kyo-Ki)</li><li>Chinese pilgrim during Harsha = Hiuen Tsang (Si-Yu-Ki)</li><li>Last Gupta ruler = Vishnugupta (540–550 AD)</li><li>Gupta Era begins = 319 AD (Chandragupta I)</li></ul></div>',
+revision:['Gupta=Golden Age(250-550AD), Vaishya clan, capital Pataliputra(2nd Ujjain)','Order: Sri Gupta(founder)->Ghatotakacha->Chandragupta I(real founder,319AD)->Samudragupta->Chandragupta II->Kumaragupta I->Skandagupta->Vishnugupta(last)','Fa-Hien visited Chandragupta II | Hiuen Tsang visited Harsha (NOT Chandragupta II)','Gupta Era begins 319 AD (Chandragupta I)','Religion: Vaishnavism, but tolerant of all faiths'],
+oneliners:['Gupta period (250-550 AD) is called the \'Golden Age of India\'','Gupta rulers belonged to the Vaishya clan, NOT Kshatriya','Pataliputra was the primary Gupta capital; Ujjain became the 2nd capital','Sri Gupta (240-280 AD) was the nominal founder of the dynasty','Chandragupta I (319-335 AD) is considered the real founder','The Gupta Era begins in 319 AD, the year of Chandragupta I\'s accession','Samudragupta is called the \'Napoleon of India\'','Chandragupta II defeated the Shakas and gained the title Vikramaditya','Kumaragupta I founded Nalanda University','Skandagupta defeated the Hunas twice and repaired the Sudarshana Lake','Vishnugupta (540-550 AD) was the last known Gupta ruler','Fa-Hien, a Chinese pilgrim, visited during Chandragupta II\'s reign'],
+flashcards:[{q:'Who was the nominal founder vs the real founder?',a:'Sri Gupta = nominal founder; Chandragupta I = real founder'},{q:'When does the Gupta Era begin?',a:'319 AD, with Chandragupta I\'s accession'},{q:'What varna were the Gupta rulers?',a:'Vaishya, NOT Kshatriya'},{q:'Who is called the \'Napoleon of India\'?',a:'Samudragupta'},{q:'Which pilgrim visited Chandragupta II vs Harsha?',a:'Fa-Hien (Chandragupta II); Hiuen Tsang (Harsha)'},{q:'Who founded Nalanda University?',a:'Kumaragupta I'},{q:'Who was the last known Gupta ruler?',a:'Vishnugupta (540-550 AD)'},{q:'What was the Gupta 2nd capital, and under whom?',a:'Ujjain, under Chandragupta II'}],
+mcqs:[{
+q:'Who was the founder of the Gupta dynasty?',
+o:['Chandragupta I',
+'Sri Gupta',
+'Samudragupta',
+'Ghatotakacha'],
+a:1,
+e:'Sri Gupta (~240–280 AD) was the founder. Chandragupta I is the \'real founder\' who consolidated power.'}
+,
+{
+q:'The Gupta rulers belonged to which varna (social class)?',
+o:['Kshatriya',
+'Brahmin',
+'Vaishya',
+'Shudra'],
+a:2,
+e:'Gupta rulers were Vaishya — NOT Kshatriya. This is a very common SSC exam trap.'}
+,
+{
+q:'What was the primary capital of the Gupta Empire?',
+o:['Ujjain',
+'Taxila',
+'Pataliputra',
+'Kannauj'],
+a:2,
+e:'Pataliputra was the primary capital. Ujjain became the 2nd capital under Chandragupta II after defeating the Shakas.'}
+,
+{
+q:'Which religion did Gupta rulers primarily follow?',
+o:['Buddhism',
+'Jainism',
+'Vaishnavism',
+'Shaivism'],
+a:2,
+e:'Guptas were Vaishnavas (Vishnu worshippers), though they were tolerant of all religions.'}
+,
+{
+q:'Which Chinese pilgrim visited India during Chandragupta II\'s reign?',
+o:['Hiuen Tsang',
+'I-tsing',
+'Fa-Hien',
+'Marco Polo'],
+a:2,
+e:'Fa-Hien visited during Chandragupta II\'s reign (405–411 AD). Hiuen Tsang visited during Harsha\'s reign.'}
+,
+{
+q:'Chandragupta I married Kumaradevi who belonged to which clan?',
+o:['Naga',
+'Maukhari',
+'Lichchavi',
+'Vakataka'],
+a:2,
+e:'Chandragupta I married Kumaradevi of the Lichchavi clan of Nepal, which strengthened Gupta power considerably.'}
+,
+{
+q:'The title \'Maharajadhiraj\' (King of Kings) was first used by which Gupta ruler?',
+o:['Sri Gupta',
+'Ghatotakacha',
+'Chandragupta I',
+'Samudragupta'],
+a:2,
+e:'Chandragupta I was the first Gupta ruler to use the title Maharajadhiraj.'}
+,
+{
+q:'Which Gupta king founded Nalanda University?',
+o:['Chandragupta II',
+'Samudragupta',
+'Skandagupta',
+'Kumaragupta I'],
+a:3,
+e:'Kumaragupta I (415–455 AD), with the title Shakraditya, founded Nalanda University in Bihar.'}
+,
+{
+q:'Who was the last known ruler of the Gupta dynasty?',
+o:['Skandagupta',
+'Kumaragupta II',
+'Vishnugupta',
+'Buddhagupta'],
+a:2,
+e:'Vishnugupta (540–550 AD) was the last known Gupta ruler, by which time the empire had collapsed to only Bihar.'}
+,
+{
+q:'The Gupta period is called \'Golden Age\' primarily because of:',
+o:['Military conquests across Asia',
+'Trade surplus with Rome',
+'Peak of art, science, literature and philosophy',
+'Religious unity under one faith'],
+a:2,
+e:'The Gupta period is the Golden Age due to remarkable achievements in art (Ajanta), science (Aryabhata), and literature (Kalidasa).'}
+]}
+,
+{
+id:'g2',
+title:'Chandragupta I & Samudragupta',
+xp:160,
+type:'regular',
+seqIdx:1,
+learn:'<h2 class="sec-head">⚔️ Chandragupta I & Samudragupta</h2><h3 class="sub-head">Chandragupta I (319–335 AD)</h3><p>Real founder of Gupta Empire. Son of Ghatotakacha. Enhanced power by marrying <b>Kumaradevi</b> (Lichchavi clan, Nepal). First to use title <b>Maharajadhiraj</b>. Ruled Bihar+UP+Bengal. <b>Gupta Era (319 AD)</b> begins.</p><h3 class="sub-head">Samudragupta — Napoleon of India</h3><table class=""><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody><tr><td>Title</td><td>Napoleon of India — given by historian V.A. Smith</td></tr><tr><td>Other titles</td><td>Kaviraj (king of poets), Vikramanka</td></tr><tr><td>Interest</td><td>Music — coins show him PLAYING VEENA</td></tr><tr><td>Campaigns</td><td>Allahabad Pillar (Prayag Prasasti by Harisena)</td></tr><tr><td>Also in</td><td>Eran Inscription (MP)</td></tr><tr><td>South India policy</td><td>Capture and RELEASE (political gesture)</td></tr><tr><td>North India policy</td><td>Capture and ANNEX</td></tr><tr><td>Yajna</td><td>Ashvamedha Yajna; gold coins of Yupa type</td></tr><tr><td>Granted</td><td>Buddhist king Meghavarman of Ceylon built monastery at Bodh Gaya</td></tr><tr><td>Court scholars</td><td>Harisena (poet) + Vasubandhu (philosopher)</td></tr></tbody></table><p>Succession: Samudragupta → <b>Ramgupta</b> (killed by CG II) → <b>Chandragupta II</b> (married Ramgupta\'s queen Dhruvadevi)</p><div class="trap-box">⚠️ EXAM TRAP: Napoleon of India = SAMUDRAGUPTA (not Chandragupta II). Prayag Prasasti written by HARISENA (not Samudragupta). South India rulers = released not annexed.</div>',
+revision:['Chandragupta I(319-335AD): real founder, married Kumaradevi(Lichchavi), 1st Maharajadhiraj','Samudragupta=\'Napoleon of India\'(V.A.Smith), titles Kaviraj+Vikramanka, played Veena on coins','Allahabad/Prayag Prasasti by Harisena records Samudragupta\'s conquests','Chandragupta I ruled Bihar+UP+Bengal','Gupta Era (319 AD) begins with Chandragupta I'],
+oneliners:['Chandragupta I was the real founder of the Gupta Empire, 319-335 AD','Chandragupta I married Kumaradevi of the Lichchavi clan','Chandragupta I was the first to use the title Maharajadhiraj','Chandragupta I\'s kingdom covered Bihar, UP, and Bengal','Samudragupta is called the \'Napoleon of India\' by V.A. Smith','Samudragupta\'s other titles were Kaviraj and Vikramanka','Samudragupta\'s coins show him playing the Veena','The Allahabad Pillar (Prayag Prasasti), by Harisena, records Samudragupta\'s campaigns','Harisena\'s inscription is a key source for Samudragupta\'s reign','The Gupta Era (319 AD) begins with Chandragupta I','Samudragupta greatly expanded the Gupta Empire militarily','Kumaradevi\'s Lichchavi lineage gave the Guptas added legitimacy'],
+flashcards:[{q:'Who did Chandragupta I marry, and why was it significant?',a:'Kumaradevi of the Lichchavi clan — enhanced his power and legitimacy'},{q:'What title did Chandragupta I first use?',a:'Maharajadhiraj'},{q:'Who called Samudragupta the \'Napoleon of India\'?',a:'V.A. Smith'},{q:'What musical interest did Samudragupta have, shown on coins?',a:'Playing the Veena'},{q:'What is the Prayag Prasasti, and who wrote it?',a:'The Allahabad Pillar inscription, by Harisena'},{q:'What were Samudragupta\'s other two titles?',a:'Kaviraj and Vikramanka'},{q:'When does the Gupta Era begin?',a:'319 AD, with Chandragupta I'},{q:'Which regions did Chandragupta I rule?',a:'Bihar, UP, and Bengal'}],
+mcqs:[{
+q:'Who gave Samudragupta the title \'Napoleon of India\'?',
+o:['R.K. Mukherjee',
+'A.L. Basham',
+'V.A. Smith',
+'H.G. Wells'],
+a:2,
+e:'Historian V.A. Smith gave Samudragupta the title \'Napoleon of India\' for his extensive military conquests.'}
+,
+{
+q:'Samudragupta\'s military campaigns are recorded in which inscription?',
+o:['Junagarh Rock Edict',
+'Aihole inscription',
+'Prayag Prasasti (Allahabad Pillar)',
+'Hathigumpha inscription'],
+a:2,
+e:'The Prayag Prasasti (Allahabad Pillar) was written by court poet Harisena and records all of Samudragupta\'s campaigns.'}
+,
+{
+q:'Samudragupta\'s policy toward South Indian (Dakshinapatha) rulers was:',
+o:['Annex and rule',
+'Kill and destroy',
+'Capture and release',
+'Pay tribute only'],
+a:2,
+e:'Samudragupta captured and then released South Indian rulers — a political gesture of supremacy (unlike his North Indian annexation policy).'}
+,
+{
+q:'Which Gupta ruler performed the Ashvamedha Yajna?',
+o:['Chandragupta I',
+'Samudragupta',
+'Chandragupta II',
+'Kumaragupta I'],
+a:1,
+e:'Samudragupta performed the Ashvamedha Yajna and issued gold coins of Yupa type to celebrate his conquests.'}
+,
+{
+q:'Samudragupta\'s coins famously show him:',
+o:['On horseback',
+'Playing the veena',
+'Slaying a tiger',
+'Seated on throne with consort'],
+a:1,
+e:'Samudragupta\'s coins show him playing the veena, reflecting his title \'Kaviraj\' (king of poets) and love for music.'}
+,
+{
+q:'Who wrote the Prayag Prasasti eulogizing Samudragupta?',
+o:['Vatsyayana',
+'Banabhatta',
+'Harisena',
+'Ravikirti'],
+a:2,
+e:'Harisena, Samudragupta\'s court poet, wrote the Prayag Prasasti inscribed on the Allahabad Pillar.'}
+,
+{
+q:'Which Sri Lankan Buddhist king got permission from Samudragupta to build a monastery at Bodh Gaya?',
+o:['Ashoka',
+'Meghavarman',
+'Dutugamunu',
+'Tissa'],
+a:1,
+e:'Buddhist king Meghavarman of Ceylon (Sri Lanka) received permission from Samudragupta to build a monastery at Bodh Gaya.'}
+,
+{
+q:'The Gupta Era (319 AD) traditionally begins with:',
+o:['Samudragupta\'s coronation',
+'Chandragupta I\'s reign',
+'Sri Gupta\'s founding',
+'Victory over Shakas'],
+a:1,
+e:'The Gupta Era (319 AD) begins with Chandragupta I\'s reign — the first true consolidation of Gupta power.'}
+,
+{
+q:'Who succeeded Samudragupta before Chandragupta II became king?',
+o:['Kumaragupta I',
+'Skandagupta',
+'Ramgupta',
+'Vishnugupta'],
+a:2,
+e:'Ramgupta (Samudragupta\'s son) briefly ruled but was killed by his brother Chandragupta II, who then became king.'}
+,
+{
+q:'Samudragupta\'s North India policy (Aryavarta rulers) was:',
+o:['Capture and release',
+'Submit and pay tribute',
+'Capture and annex — no mercy',
+'Matrimonial alliances'],
+a:2,
+e:'Samudragupta captured and directly annexed North Indian rulers, unlike his South India policy of capturing and releasing.'}
+]}
+,
+{
+id:'g3',
+title:'Chandragupta II — Vikramaditya',
+xp:170,
+type:'regular',
+seqIdx:2,
+learn:'<h2 class="sec-head">👑 Chandragupta II — Vikramaditya</h2><table class=""><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody><tr><td>Title</td><td>Vikramaditya — gained by defeating Rudrasimha III (Shaka Kshatrapa of Ujjain)</td></tr><tr><td>1st Gupta to</td><td>Issue SILVER coins (predecessors = gold only; gold coins = Dinara)</td></tr><tr><td>2nd Capital</td><td>UJJAIN (after defeating Shakas)</td></tr><tr><td>Iron Pillar</td><td>Near Qutub Minar, Delhi — inscription mentions king Chandra = CG II</td></tr><tr><td>Famous court</td><td>NAVARATNAS (Nine Gems)</td></tr><tr><td>Chinese pilgrim</td><td>FA-HIEN (405–411 AD) — wrote Fo-Kyo-Ki</td></tr><tr><td>Daughter</td><td>Prabhavati Gupta — married Vakataka king Rudrasena II</td></tr></tbody></table><h3 class="sub-head">Navaratnas of Chandragupta II</h3><table class=""><thead><tr><th>#</th><th>Scholar</th><th>Field</th></tr></thead><tbody><tr><td>1</td><td>Kalidasa</td><td>Poetry & Drama (greatest)</td></tr><tr><td>2</td><td>Aryabhata</td><td>Astronomy & Mathematics</td></tr><tr><td>3</td><td>Varahamihira</td><td>Astronomy; Brihatsamhita</td></tr><tr><td>4</td><td>Amarasimha</td><td>Sanskrit lexicon (Amarakosha)</td></tr><tr><td>5</td><td>Dhanvantari</td><td>Medicine (Ayurveda)</td></tr><tr><td>6</td><td>Vararuchi</td><td>Grammar</td></tr><tr><td>7</td><td>Ghatakarpara</td><td>Poetry</td></tr><tr><td>8</td><td>Kshapanaka</td><td>Astrology</td></tr><tr><td>9</td><td>Shanku</td><td>Architecture</td></tr></tbody></table><h3 class="sub-head">Fa-Hien\'s Observations (405–411 AD)</h3><p>Visited during CG II reign. Wrote <b>Fo-Kyo-Ki</b> (Records of Buddhist Kingdoms). Observed: well-off people, NO capital punishment, no killing of animals. Visited Lumbini.</p><div class="trap-box">⚠️ EXAM TRAP: Kalidasa was in CG II\'s court — NOT Chandragupta I. Fa-Hien wrote Fo-Kyo-Ki — NOT Si-Yu-Ki. 1st silver coins = CG II. 1st gold coins = Indo-Greeks (not Guptas).</div>',
+revision:['Chandragupta II=\'Vikramaditya\', defeated Rudrasimha III(Shaka), 2nd capital Ujjain','1st Gupta to issue silver coins (gold coins=Dinara) | Navaratnas=9 gems in his court','Iron Pillar(Delhi) mentions king Chandra=Chandragupta II','Fa-Hien(405-411AD) visited, wrote Fo-Kyo-Ki','Daughter Prabhavati Gupta married Vakataka king Rudrasena II'],
+oneliners:['Chandragupta II gained the title Vikramaditya by defeating Rudrasimha III of Ujjain','Chandragupta II was the first Gupta ruler to issue silver coins','Gold coins of the Gupta period were called Dinara','Ujjain became the 2nd Gupta capital after the Shaka defeat','The Iron Pillar near Qutub Minar, Delhi, mentions king Chandra, identified with Chandragupta II','Chandragupta II\'s court was famous for the Navaratnas (Nine Gems)','Kalidasa was one of the Navaratnas','Fa-Hien visited India 405-411 AD under Chandragupta II','Fa-Hien wrote the travel account Fo-Kyo-Ki','Chandragupta II\'s daughter Prabhavati Gupta married Vakataka king Rudrasena II','This marriage alliance extended Gupta influence into the Deccan','Chandragupta II is considered one of the greatest Gupta emperors'],
+flashcards:[{q:'How did Chandragupta II earn the title Vikramaditya?',a:'By defeating Rudrasimha III, Shaka Kshatrapa of Ujjain'},{q:'What coinage first did Chandragupta II achieve?',a:'First Gupta ruler to issue silver coins'},{q:'What were Gupta gold coins called?',a:'Dinara'},{q:'What does the Delhi Iron Pillar record?',a:'An inscription mentioning king Chandra, identified with Chandragupta II'},{q:'What were the Navaratnas?',a:'Nine famous scholars in Chandragupta II\'s court'},{q:'Which pilgrim visited under Chandragupta II, and his book?',a:'Fa-Hien; wrote Fo-Kyo-Ki'},{q:'Whom did Prabhavati Gupta marry?',a:'Vakataka king Rudrasena II'},{q:'What became the 2nd Gupta capital?',a:'Ujjain'}],
+mcqs:[{
+q:'Chandragupta II earned the title \'Vikramaditya\' by defeating:',
+o:['Rudradaman I',
+'Rudrasimha III (Shaka Kshatrapa of Ujjain)',
+'Pushyamitra Shunga',
+'Mihirakula'],
+a:1,
+e:'Chandragupta II defeated Rudrasimha III, the last Shaka Kshatrapa of Ujjain, and took the title Vikramaditya.'}
+,
+{
+q:'Chandragupta II was the FIRST Gupta ruler to issue:',
+o:['Gold coins',
+'Silver coins',
+'Copper coins',
+'Lead coins'],
+a:1,
+e:'Chandragupta II was the first Gupta ruler to issue silver coins. Earlier Guptas issued only gold coins (called Dinara).'}
+,
+{
+q:'The Iron Pillar near Qutub Minar, Delhi, is associated with:',
+o:['Ashoka',
+'Samudragupta',
+'Chandragupta II',
+'Chandragupta I'],
+a:2,
+e:'The Mehrauli Iron Pillar mentions king \'Chandra\' — believed to be Chandragupta II (Vikramaditya).'}
+,
+{
+q:'How many gems (Navaratnas) were in Chandragupta II\'s court?',
+o:['Seven',
+'Eight',
+'Nine',
+'Twelve'],
+a:2,
+e:'Navaratna means \'nine gems\' — nine scholars/ministers including Kalidasa and Aryabhata.'}
+,
+{
+q:'Kalidasa, the greatest Gupta poet, was in the court of:',
+o:['Chandragupta I',
+'Samudragupta',
+'Chandragupta II',
+'Kumaragupta I'],
+a:2,
+e:'Kalidasa was a court poet of Chandragupta II (Vikramaditya), NOT Chandragupta I — a very common name-confusion trap.'}
+,
+{
+q:'Fa-Hien wrote his account of India in which book?',
+o:['Si-Yu-Ki',
+'Indica',
+'Fo-Kyo-Ki',
+'Kitab-ul-Hind'],
+a:2,
+e:'Fa-Hien wrote \'Fo-Kyo-Ki\' (Records of Buddhist Kingdoms). Si-Yu-Ki was written by Hiuen Tsang.'}
+,
+{
+q:'Which city became the 2nd capital under Chandragupta II?',
+o:['Ujjain',
+'Taxila',
+'Kannauj',
+'Mathura'],
+a:0,
+e:'Ujjain became the 2nd capital after Chandragupta II defeated the Shakas who controlled western India.'}
+,
+{
+q:'Which Navaratna scholar wrote the Sanskrit lexicon \'Amarakosha\'?',
+o:['Varahamihira',
+'Aryabhata',
+'Amarasimha',
+'Dhanvantari'],
+a:2,
+e:'Amarasimha wrote the Amarakosha, a famous Sanskrit lexicon (dictionary).'}
+,
+{
+q:'Fa-Hien observed that during Chandragupta II\'s reign:',
+o:['Heavy taxation and military rule',
+'No capital punishment and no killing of animals',
+'Widespread poverty',
+'Rigid caste enforcement'],
+a:1,
+e:'Fa-Hien observed general prosperity, no capital punishment, no killing of animals — signs of a well-governed empire.'}
+,
+{
+q:'Chandragupta II gave his daughter Prabhavati Gupta in marriage to which Vakataka king?',
+o:['Pravarasena II',
+'Narendrasena',
+'Rudrasena II',
+'Vindhyashakti'],
+a:2,
+e:'Prabhavati Gupta married Vakataka king Rudrasena II. After Rudrasena\'s death she ruled as regent, extending Gupta influence to Deccan.'}
+]}
+,
+{
+id:'g4',
+title:'Kumaragupta I & Skandagupta',
+xp:150,
+type:'regular',
+seqIdx:3,
+learn:'<h2 class="sec-head">🏹 Kumaragupta I & Skandagupta</h2><h3 class="sub-head">Kumaragupta I (415–455 AD)</h3><p>Title: <b>Shakraditya</b>. Founded <b>Nalanda University</b> (Bihar, near Rajgriha). Fought Hunas in final years. Issued large variety of gold coins.</p><h3 class="sub-head">Nalanda University Key Facts</h3><table class=""><thead><tr><th>Fact</th><th>Detail</th></tr></thead><tbody><tr><td>Founded by</td><td>Kumaragupta I (Gupta Dynasty)</td></tr><tr><td>Location</td><td>Bihar, near Rajgriha (Rajgir)</td></tr><tr><td>Speciality</td><td>Greatest Buddhist learning centre; 10,000+ students</td></tr><tr><td>Library</td><td>Dharmaganja (3 buildings: Ratnasagara, Ratnodadhi, Ratnaranjaka)</td></tr><tr><td>Famous visitors</td><td>Hiuen Tsang, I-tsing</td></tr><tr><td>Destroyed by</td><td>Bakhtiyar Khilji (~1193 AD)</td></tr></tbody></table><h3 class="sub-head">Skandagupta (455–467 AD)</h3><p>Defeated <b>Hunas twice</b> — saved India. Repaired <b>Sudarshana Lake</b> (Junagarh inscription by Parnadatta). Was a <b>Vaishnavite</b>. Last strong Gupta ruler. After death: local governors became hereditary feudal lords.</p><h3 class="sub-head">Sudarshana Lake Timeline</h3><table class=""><thead><tr><th>Repair</th><th>By Who</th><th>Dynasty</th></tr></thead><tbody><tr><td>1st built/repaired</td><td>Pushyagupta (governor)</td><td>Chandragupta Maurya</td></tr><tr><td>2nd repair</td><td>Rudradaman I</td><td>Kshatrapa/Saka</td></tr><tr><td>3rd repair</td><td>Skandagupta</td><td>Gupta</td></tr></tbody></table><div class="trap-box">⚠️ EXAM TRAP: Nalanda founded by KUMARAGUPTA I — not Ashoka. Sudarshana Lake 3rd repair = Skandagupta (many say Ashoka). Last known Gupta = VISHNUGUPTA.</div>',
+revision:['Kumaragupta I(415-455AD)=Shakraditya, founded Nalanda University(Bihar,near Rajgriha)','Nalanda: 10,000+ students, library Dharmaganja(3 buildings), visitors Hiuen Tsang+I-tsing','Skandagupta(455-467AD): defeated Hunas twice, repaired Sudarshana Lake','Nalanda destroyed later by Bakhtiyar Khilji (~1193 AD)','Both fought Hunas — Kumaragupta in final years, Skandagupta decisively'],
+oneliners:['Kumaragupta I ruled 415-455 AD with the title Shakraditya','Kumaragupta I founded Nalanda University in Bihar, near Rajgriha','Nalanda was the greatest Buddhist learning centre with 10,000+ students','Nalanda\'s library was called Dharmaganja, with 3 buildings: Ratnasagara, Ratnodadhi, Ratnaranjaka','Hiuen Tsang and I-tsing were famous visitors to Nalanda','Kumaragupta I fought the Hunas in his final years','Skandagupta (455-467 AD) defeated the Hunas twice','Skandagupta repaired the Sudarshana Lake, originally built under Chandragupta Maurya','Nalanda University was eventually destroyed by Bakhtiyar Khilji around 1193 AD','Kumaragupta I issued a large variety of gold coins','Skandagupta is remembered for successfully defending the empire against Huna invasions'],
+flashcards:[{q:'Who founded Nalanda University, and where is it located?',a:'Kumaragupta I; Bihar, near Rajgriha'},{q:'What was Kumaragupta I\'s title?',a:'Shakraditya'},{q:'How many students did Nalanda host, and what was its library called?',a:'10,000+ students; library called Dharmaganja'},{q:'Which two famous Chinese visitors came to Nalanda?',a:'Hiuen Tsang and I-tsing'},{q:'Who defeated the Hunas twice, and what else did he repair?',a:'Skandagupta; also repaired the Sudarshana Lake'},{q:'Who originally built the Sudarshana Lake?',a:'Chandragupta Maurya'},{q:'Who eventually destroyed Nalanda University, and when?',a:'Bakhtiyar Khilji, around 1193 AD'}],
+mcqs:[{
+q:'Which invading tribe did Skandagupta defeat twice, saving India?',
+o:['Shakas',
+'Parthians',
+'Hunas',
+'Kushans'],
+a:2,
+e:'Skandagupta defeated the Hunas (Turko-Mongol tribe) twice, preventing their invasion of India.'}
+,
+{
+q:'The repair of Sudarshana Lake by Skandagupta is recorded in:',
+o:['Allahabad Pillar',
+'Aihole inscription',
+'Junagarh inscription',
+'Hathigumpha inscription'],
+a:2,
+e:'The Junagarh inscription by governor Parnadatta records Skandagupta\'s repair of Sudarshana Lake.'}
+,
+{
+q:'Nalanda University is located in:',
+o:['UP (near Varanasi)',
+'Bihar (near Rajgriha)',
+'MP (near Ujjain)',
+'Bengal (near Kolkata)'],
+a:1,
+e:'Nalanda is in Bihar, near Rajgriha (Rajgir). It was the greatest Buddhist learning centre in ancient India.'}
+,
+{
+q:'Who destroyed Nalanda University?',
+o:['Mahmud Ghazni',
+'Timur',
+'Bakhtiyar Khilji',
+'Muhammad Ghori'],
+a:2,
+e:'Bakhtiyar Khilji destroyed Nalanda (~1193 AD), burning its great library Dharmaganja.'}
+,
+{
+q:'Nalanda University\'s library was called:',
+o:['Saraswati Vihar',
+'Dharmaganja',
+'Vidyashram',
+'Ratnaprabha'],
+a:1,
+e:'Nalanda\'s library was called Dharmaganja, consisting of 3 buildings: Ratnasagara, Ratnodadhi, and Ratnaranjaka.'}
+,
+{
+q:'Kumaragupta I\'s title was:',
+o:['Vikramaditya',
+'Maharajadhiraj',
+'Shakraditya',
+'Kaviraj'],
+a:2,
+e:'Kumaragupta I\'s title was Shakraditya, under which he founded Nalanda University.'}
+,
+{
+q:'Skandagupta was a worshipper of:',
+o:['Buddha',
+'Mahavira',
+'Vishnu (Vaishnavite)',
+'Shiva (Shaivite)'],
+a:2,
+e:'Skandagupta was a Vaishnavite, a worshipper of Vishnu.'}
+,
+{
+q:'After Skandagupta\'s death, local Gupta governors:',
+o:['Remained loyal to central power',
+'Became hereditary feudal lords',
+'Converted to Buddhism',
+'Joined the Huna forces'],
+a:1,
+e:'After Skandagupta, local governors (uparika) became hereditary — a key sign of Gupta administrative collapse.'}
+,
+{
+q:'Sudarshana Lake was ORIGINALLY built during:',
+o:['Chandragupta Maurya\'s reign',
+'Ashoka\'s reign',
+'Bimbisara\'s reign',
+'Chandragupta I\'s reign'],
+a:0,
+e:'Sudarshana Lake was originally built under Chandragupta Maurya (by his governor Pushyagupta). It was repaired by Rudradaman I (2nd) and Skandagupta (3rd).'}
+,
+{
+q:'Which Gupta ruler admitted students from China, Tibet, Korea, Japan, and Sri Lanka?',
+o:['Chandragupta II',
+'Samudragupta',
+'Kumaragupta I (via Nalanda)',
+'Skandagupta'],
+a:2,
+e:'Nalanda University (founded by Kumaragupta I) admitted students from across Asia including China, Tibet, Korea, Japan, and Sri Lanka.'}
+]}
+,
+{
+id:'g5',
+title:'Gupta Administration & Culture',
+xp:140,
+type:'regular',
+seqIdx:4,
+learn:'<h2 class="sec-head">🏛️ Gupta Administration & Culture</h2><h3 class="sub-head">Administrative Officials</h3><table class=""><thead><tr><th>Official</th><th>Role</th></tr></thead><tbody><tr><td>Mantri Parishad</td><td>Council of Ministers</td></tr><tr><td>Kumaramatya</td><td>Important administrative official</td></tr><tr><td>Vishayapati</td><td>Head of district (vishaya)</td></tr><tr><td>Gramika/Gramapati</td><td>Village head</td></tr><tr><td>Dandanayaka</td><td>Chief justice / military commander</td></tr><tr><td>Mahapratihara</td><td>Chief of palace guard</td></tr><tr><td>Sandhivigrahika</td><td>Foreign minister</td></tr></tbody></table><p>Provinces (Deshas) → Vishayas (districts) → Vithi (sub-districts) → Grama (village). Land revenue = <b>1/4 to 1/6</b> of produce (less than Mauryan 1/4–1/3).</p><h3 class="sub-head">Key Taxes</h3><table class=""><thead><tr><th>Tax</th><th>Meaning</th></tr></thead><tbody><tr><td>Bhaga</td><td>Share of produce — land revenue</td></tr><tr><td>Bhoga</td><td>Periodic supply of goods (flowers/fruits/firewood)</td></tr><tr><td>Kara</td><td>Additional household taxes</td></tr><tr><td>Hiranya</td><td>Cash tax by peasants</td></tr><tr><td>Sulka</td><td>Customs duty</td></tr></tbody></table><h3 class="sub-head">Temple Architecture — 5 Types</h3><table class=""><thead><tr><th>Type</th><th>Feature</th></tr></thead><tbody><tr><td>Flat-roofed</td><td>Earliest; Sanchi style</td></tr><tr><td>Shikhara (curvilinear)</td><td>Nagara style; later development</td></tr><tr><td>Apsidal</td><td>Semi-circular back; Buddhist influence</td></tr><tr><td>Circular plan</td><td>Rare type</td></tr><tr><td>Panchayatana</td><td>Star-shaped; 5 shrines (main + 4 corners)</td></tr></tbody></table><p><b>Dashavatara Temple</b> (Deogarh, UP) = classic Gupta temple. <b>Ajanta Caves 1,2,16,17</b> = finest Gupta paintings. Mathura school = red sandstone. Sarnath school = smooth finish + spiritual serenity.</p>',
+revision:['Mantri Parishad=Council of Ministers | Kumaramatya=admin official | Vishayapati=district head','Gramika/Gramapati=village head | Dandanayaka=chief justice/military | Mahapratihara=palace guard chief','Sandhivigrahika=foreign minister','Hierarchy: Desha(province)->Vishaya(district)->Vithi(sub-district)->Grama(village)','Land revenue = 1/4 to 1/6 of produce (LESS than Mauryan rate)'],
+oneliners:['The Mantri Parishad was the Gupta Council of Ministers','Kumaramatya was an important administrative official under the Guptas','Vishayapati was the head of a district (vishaya)','Gramika or Gramapati was the village headman','Dandanayaka served as chief justice and/or military commander','Mahapratihara was the chief of palace guards','Sandhivigrahika was the foreign minister, handling peace and war','Gupta administrative hierarchy: Desha (province) to Vishaya (district) to Vithi (sub-district) to Grama (village)','Gupta land revenue was 1/4 to 1/6 of produce','This Gupta land revenue rate was LOWER than the Mauryan rate','Gupta administration was more decentralized than the Mauryan system'],
+flashcards:[{q:'What was the Mantri Parishad?',a:'The Council of Ministers'},{q:'What did a Vishayapati head?',a:'A district (vishaya)'},{q:'Who was the Gramika/Gramapati?',a:'The village head'},{q:'What did the Dandanayaka do?',a:'Served as chief justice and/or military commander'},{q:'What was a Sandhivigrahika?',a:'The foreign minister'},{q:'What was the administrative hierarchy from province to village?',a:'Desha -> Vishaya -> Vithi -> Grama'},{q:'What was the Gupta land revenue rate, and how did it compare to Mauryan times?',a:'1/4 to 1/6 of produce — lower than under the Mauryas'}],
+mcqs:[{
+q:'In Gupta administration, the head of a district (vishaya) was called:',
+o:['Gramika',
+'Dandanayaka',
+'Vishayapati',
+'Uparika'],
+a:2,
+e:'Vishayapati was the head of a district (vishaya) in Gupta administration.'}
+,
+{
+q:'The Gupta term for village head was:',
+o:['Gramika / Gramapati',
+'Vishayapati',
+'Kumaramatya',
+'Sandhivigrahika'],
+a:0,
+e:'Gramika or Gramapati was the village head in Gupta administration.'}
+,
+{
+q:'Gupta land revenue was approximately:',
+o:['1/10 of produce',
+'1/4 to 1/6 of produce',
+'1/2 of produce',
+'Fixed annual rate'],
+a:1,
+e:'Gupta land revenue was 1/4 to 1/6 of produce — less than the Mauryan rate of 1/4 to 1/3.'}
+,
+{
+q:'\'Bhaga\' in the Gupta tax system means:',
+o:['Customs duty',
+'Cash tax on peasants',
+'Share of produce (land revenue)',
+'Tax on merchants'],
+a:2,
+e:'Bhaga was the main land revenue — the king\'s share of agricultural produce.'}
+,
+{
+q:'The Gupta term \'Sulka\' refers to:',
+o:['Additional household tax',
+'Periodic supply of goods',
+'Land revenue share',
+'Customs duty'],
+a:3,
+e:'Sulka was the customs duty in the Gupta tax system. Hiranya was cash tax by peasants.'}
+,
+{
+q:'Which is the EARLIEST form of Gupta temple architecture?',
+o:['Shikhara style',
+'Panchayatana (star-shaped)',
+'Flat-roofed temples',
+'Apsidal temples'],
+a:2,
+e:'Flat-roofed temples (like Sanchi temple style) are the earliest form of Gupta temple architecture.'}
+,
+{
+q:'The classic Gupta-period temple example in UP is:',
+o:['Brihadeeswara Temple',
+'Kailash Temple',
+'Dashavatara Temple (Deogarh)',
+'Kandariya Mahadeva'],
+a:2,
+e:'The Dashavatara Temple at Deogarh (UP) is a classic example of Gupta temple architecture (Panchayatana style).'}
+,
+{
+q:'The finest Ajanta Cave paintings (Gupta period) are in Caves:',
+o:['3, 4, 5, 6',
+'9, 10, 12, 13',
+'1, 2, 16, 17',
+'20, 21, 22, 23'],
+a:2,
+e:'Caves 1, 2, 16, 17 contain the finest Ajanta paintings from the Gupta period (Phase 2 — Mahayana Buddhist).'}
+,
+{
+q:'The Sarnath sculpture school is associated with:',
+o:['Grey schist; Greco-Roman influence',
+'Red sandstone; bold modelling',
+'Smooth finish; spiritual serenity',
+'White marble; narrative panels'],
+a:2,
+e:'The Sarnath school used smooth finish and conveyed spiritual serenity — emerged during the Gupta period.'}
+,
+{
+q:'Samudragupta\'s veena-playing coins belong to the era of:',
+o:['Punchmarked coins (pre-Mauryan)',
+'Bilingual Indo-Greek coins',
+'Highly artistic Gupta gold coins',
+'Satavahana lead coins'],
+a:2,
+e:'Gupta period coins are the most artistic in Indian history — Samudragupta\'s veena-playing coins are the most iconic.'}
+]}
+,
+{
+id:'g6',
+title:'Gupta Literature & Science',
+xp:160,
+type:'regular',
+seqIdx:5,
+learn:'<h2 class="sec-head">📚 Gupta Literature & Science</h2><h3 class="sub-head">Kalidasa — Greatest Gupta Poet (CG II\'s court)</h3><table class=""><thead><tr><th>Work</th><th>Type</th><th>Content</th></tr></thead><tbody><tr><td>Abhijnanashakuntalam</td><td>Drama</td><td>Love story Dushyanta & Shakuntala — MOST FAMOUS</td></tr><tr><td>Meghadutam</td><td>Poem</td><td>Yaksha\'s message to wife through a cloud</td></tr><tr><td>Kumarasambhava</td><td>Epic poem</td><td>Birth of Kartikeya</td></tr><tr><td>Raghuvamsha</td><td>Epic poem</td><td>Genealogy of Raghu dynasty (Ram\'s lineage)</td></tr><tr><td>Malavikagnimitram</td><td>Drama</td><td>Story of Agnimitra (Shunga king)</td></tr><tr><td>Ritusamhara</td><td>Poem</td><td>Six seasons</td></tr><tr><td>Vikramorvashiyam</td><td>Drama</td><td>Love of Pururavas & Urvashi</td></tr></tbody></table><h3 class="sub-head">Aryabhata — Mathematician & Astronomer</h3><table class=""><thead><tr><th>Achievement</th><th>Detail</th></tr></thead><tbody><tr><td>Wrote</td><td>Aryabhatiya (499 AD) — at age 23</td></tr><tr><td>Pi (π)</td><td>= 3.1416</td></tr><tr><td>Heliocentric theory</td><td>Earth revolves around Sun — 1000 yrs before Copernicus</td></tr><tr><td>Eclipses</td><td>Correctly explained solar & lunar eclipses</td></tr><tr><td>Zero</td><td>Used concept (Brahmagupta formalized it)</td></tr></tbody></table><h3 class="sub-head">Other Key Scholars</h3><table class=""><thead><tr><th>Scholar</th><th>Work</th><th>Field</th></tr></thead><tbody><tr><td>Varahamihira</td><td>Brihatsamhita, Panchasiddhantika</td><td>Astronomy, astrology, geography</td></tr><tr><td>Brahmagupta</td><td>Brahmasphutasiddhanta</td><td>Formalized zero; mathematics</td></tr><tr><td>Vishnu Sharma</td><td>Panchatantra</td><td>Animal fables; 50+ languages</td></tr><tr><td>Vatsyayana</td><td>Kamasutra</td><td>Social customs + relationships</td></tr><tr><td>Amarasimha</td><td>Amarakosha</td><td>Sanskrit dictionary</td></tr></tbody></table><div class="fact-box"><strong>Gupta Innovations (SSC)</strong><ul><li>Pi = Aryabhata (3.1416)</li><li>Heliocentric theory = Aryabhata</li><li>Zero formalized = Brahmagupta</li><li>Chess precursor (Chaturanga) = Gupta period</li><li>Panchatantra = Vishnu Sharma</li></ul></div>',
+revision:['Kalidasa(CG II\'s court): Abhijnanashakuntalam(drama,most famous), Meghadutam, Kumarasambhava, Raghuvamsha','Malavikagnimitram(drama,about Shunga king Agnimitra), Ritusamhara(6 seasons), Vikramorvashiyam','Aryabhata: Aryabhatiya, calculated pi, explained eclipses, said Earth rotates','Varahamihira: Panchasiddhantika, Brihatsamhita | Brahmagupta: rules for zero','Sushruta=Father of Surgery(plastic surgery) | Vagbhata=Ashtanga Hridaya'],
+oneliners:['Kalidasa was the greatest poet of Chandragupta II\'s court','Kalidasa\'s most famous work is Abhijnanashakuntalam, about Dushyanta and Shakuntala','Meghadutam describes a Yaksha sending a message to his wife via a cloud','Kumarasambhava describes the birth of Kartikeya','Raghuvamsha traces the genealogy of the Raghu dynasty (Lord Ram\'s lineage)','Malavikagnimitram is about the Shunga king Agnimitra','Ritusamhara describes the six seasons','Aryabhata wrote the Aryabhatiya and calculated the value of pi','Aryabhata explained that the Earth rotates on its axis and discussed eclipses scientifically','Varahamihira wrote the Panchasiddhantika and the Brihatsamhita','Brahmagupta gave mathematical rules for using zero','Sushruta is called the \'Father of Surgery\', known for early plastic surgery techniques','Vagbhata wrote the Ashtanga Hridaya, a key Ayurvedic text'],
+flashcards:[{q:'Who was the greatest poet of Chandragupta II\'s court?',a:'Kalidasa'},{q:'What is Kalidasa\'s most famous work, and its story?',a:'Abhijnanashakuntalam — the love story of Dushyanta and Shakuntala'},{q:'What is Meghadutam about?',a:'A Yaksha sending a message to his wife through a cloud'},{q:'Which Gupta scientist calculated pi and wrote the Aryabhatiya?',a:'Aryabhata'},{q:'What mathematical contribution did Brahmagupta make?',a:'Rules for the use of zero'},{q:'Who wrote the Panchasiddhantika and Brihatsamhita?',a:'Varahamihira'},{q:'Who is called the \'Father of Surgery\'?',a:'Sushruta'},{q:'Who wrote the Ashtanga Hridaya?',a:'Vagbhata'}],
+mcqs:[{
+q:'Kalidasa\'s MOST FAMOUS work is:',
+o:['Meghadutam',
+'Kumarasambhava',
+'Abhijnanashakuntalam',
+'Raghuvamsha'],
+a:2,
+e:'Abhijnanashakuntalam (love story of Dushyanta and Shakuntala) is Kalidasa\'s most famous and celebrated work.'}
+,
+{
+q:'Kalidasa\'s \'Meghadutam\' (Cloud Messenger) is about:',
+o:['Birth of Kartikeya',
+'A Yaksha sending a message to his wife through a cloud',
+'Genealogy of Raghu dynasty',
+'Description of six seasons'],
+a:1,
+e:'Meghadutam tells the story of a Yaksha (semi-divine being) sending a message to his wife through a passing cloud.'}
+,
+{
+q:'Aryabhata wrote \'Aryabhatiya\' at what age?',
+o:['Age 12',
+'Age 23',
+'Age 30',
+'Age 40'],
+a:1,
+e:'Aryabhata wrote Aryabhatiya in 499 AD at the age of 23 — one of the most remarkable scientific works of ancient India.'}
+,
+{
+q:'Aryabhata\'s value for pi (π) was:',
+o:['3.14',
+'3.1416',
+'22/7',
+'3.1415'],
+a:1,
+e:'Aryabhata calculated pi (π) = 3.1416 — remarkably accurate for the 5th century AD.'}
+,
+{
+q:'Aryabhata proposed which revolutionary astronomical theory?',
+o:['Geocentric theory (sun revolves around Earth)',
+'Heliocentric theory (Earth revolves around Sun)',
+'Moon is fixed at center',
+'Stars are closer than the Sun'],
+a:1,
+e:'Aryabhata proposed the heliocentric theory — Earth revolves around the Sun — about 1000 years before Copernicus in Europe.'}
+,
+{
+q:'Who wrote \'Panchatantra\', the animal fable collection translated into 50+ languages?',
+o:['Vatsyayana',
+'Brahmagupta',
+'Vishnu Sharma',
+'Amarasimha'],
+a:2,
+e:'Vishnu Sharma wrote the Panchatantra during the Gupta period — it was later translated into 50+ languages.'}
+,
+{
+q:'Varahamihira\'s most famous work is:',
+o:['Brahmasphutasiddhanta',
+'Aryabhatiya',
+'Brihatsamhita',
+'Panchatantra'],
+a:2,
+e:'Varahamihira wrote Brihatsamhita (astronomy, astrology, geography) and Panchasiddhantika. Brahmasphutasiddhanta was Brahmagupta\'s work.'}
+,
+{
+q:'Who FORMALIZED the use of zero in their mathematical work?',
+o:['Aryabhata',
+'Varahamihira',
+'Vatsyayana',
+'Brahmagupta'],
+a:3,
+e:'Brahmagupta formalized zero in Brahmasphutasiddhanta. Aryabhata used the concept but Brahmagupta gave it mathematical rules.'}
+,
+{
+q:'\'Chaturanga\', the precursor to chess, was developed in which period?',
+o:['Mauryan',
+'Gupta',
+'Kushan',
+'Harsha'],
+a:1,
+e:'Chaturanga (chess precursor with pieces representing army divisions) was developed during the Gupta period.'}
+,
+{
+q:'Vatsyayana\'s Kamasutra primarily covers:',
+o:['Astronomy and mathematics',
+'Military strategy',
+'Social customs and relationships',
+'Ayurveda medicine'],
+a:2,
+e:'Vatsyayana\'s Kamasutra covers social customs and relationships — it is a social text, not merely about physical relationships.'}
+]}
+]}
+,
+{
+id:'ch2',
+title:'⚔️ Chapter 2: Post-Gupta & Medieval',
+nodes:[{
+id:'h1',
+title:'Harsha Vardhana',
+xp:150,
+type:'regular',
+seqIdx:6,
+learn:'<h2 class="sec-head">⚔️ Harsha Vardhana (606–647 AD)</h2><table class=""><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody><tr><td>Dynasty</td><td>Pushyabhuti (Vardhana)</td></tr><tr><td>Father</td><td>Prabhakar Vardhan</td></tr><tr><td>Capital</td><td>Thaneshwar → shifted to KANNAUJ</td></tr><tr><td>Also known as</td><td>Siladitya</td></tr><tr><td>Defeated by</td><td>Pulakeshin II (Chalukya) at Narmada (620 AD)</td></tr><tr><td>Chinese pilgrim</td><td>Hiuen Tsang — "Prince of Travellers"</td></tr><tr><td>Court scholar</td><td>Banabhatta — wrote Harshacharita + Kadambari</td></tr><tr><td>Own works</td><td>3 plays: Priyadarshika, Ratnavali, Nagananda</td></tr><tr><td>Religion</td><td>Shaivism → Buddhism (personally shifted)</td></tr><tr><td>Quinquennial festival</td><td>Every 5 years at PRAYAG</td></tr><tr><td>Death</td><td>647 AD</td></tr></tbody></table><h3 class="sub-head">Harsha Admin Officials</h3><table class=""><thead><tr><th>Official</th><th>Role</th></tr></thead><tbody><tr><td>Singhnada</td><td>Chief of Armed Forces</td></tr><tr><td>Amatya</td><td>Revenue & Finance Minister</td></tr><tr><td>Uparika</td><td>Provincial Head</td></tr><tr><td>Dandapashik</td><td>Police Officer</td></tr></tbody></table><h3 class="sub-head">Hiuen Tsang\'s Observations</h3><p>Visited 630–645 AD. India divided into many kingdoms. Kannauj = great city. Nalanda = thousands of monks. People well-off. Book: <b>Si-Yu-Ki</b> (Records of Western World).</p><div class="trap-box">⚠️ EXAM TRAP: Harsha wrote 3 plays (NOT 2 or 4). Banabhatta wrote Harshacharita — NOT Harsha. Hiuen Tsang visited HARSHA — not Chandragupta II. Si-Yu-Ki = Hiuen Tsang; Fo-Kyo-Ki = Fa-Hien.</div>',
+revision:['Harsha(606-647AD), Pushyabhuti dynasty, capital Thaneshwar->Kannauj, title Siladitya','Defeated by Pulakeshin II(Chalukya) at Narmada,620AD | Hiuen Tsang=\'Prince of Travellers\' visited','Banabhatta(court scholar): Harshacharita+Kadambari | Harsha\'s own plays: Priyadarshika,Ratnavali,Nagananda','Religion: Shaivism->personally shifted to Buddhism | Quinquennial festival every 5 yrs at Prayag','Admin: Singhnada(army chief), Amatya(revenue/finance minister)'],
+oneliners:['Harsha Vardhana ruled 606-647 AD, of the Pushyabhuti (Vardhana) dynasty','Harsha\'s father was Prabhakar Vardhan','Harsha\'s capital shifted from Thaneshwar to Kannauj','Harsha was also known as Siladitya','Harsha was defeated by Pulakeshin II of the Chalukyas at the Narmada river in 620 AD','Hiuen Tsang, called the \'Prince of Travellers\', visited Harsha\'s court','Banabhatta, Harsha\'s court scholar, wrote Harshacharita and Kadambari','Harsha himself wrote three plays: Priyadarshika, Ratnavali, and Nagananda','Harsha personally shifted his religion from Shaivism to Buddhism','Harsha held a quinquennial (every 5 years) charity festival at Prayag','Harsha died in 647 AD','Singhnada was Harsha\'s chief of armed forces; Amatya managed revenue and finance'],
+flashcards:[{q:'When did Harsha rule, and what dynasty did he belong to?',a:'606-647 AD; Pushyabhuti (Vardhana) dynasty'},{q:'Who defeated Harsha, where, and when?',a:'Pulakeshin II (Chalukya), at the Narmada river, in 620 AD'},{q:'Which Chinese pilgrim visited Harsha, and what title is he known by?',a:'Hiuen Tsang, \'Prince of Travellers\''},{q:'What did Harsha\'s court scholar Banabhatta write?',a:'Harshacharita and Kadambari'},{q:'Name the three plays written by Harsha himself.',a:'Priyadarshika, Ratnavali, Nagananda'},{q:'How did Harsha\'s personal religion change?',a:'He shifted from Shaivism to Buddhism'},{q:'What festival did Harsha hold every 5 years, and where?',a:'A quinquennial charity festival at Prayag'},{q:'What was Harsha also known as?',a:'Siladitya'}],
+mcqs:[{
+q:'Harshavardhana belonged to which dynasty?',
+o:['Gupta',
+'Pallava',
+'Pushyabhuti (Vardhana)',
+'Chalukya'],
+a:2,
+e:'Harshavardhana belonged to the Pushyabhuti (Vardhana) dynasty, originally based at Thaneshwar.'}
+,
+{
+q:'Harsha shifted his capital from Thaneshwar to:',
+o:['Pataliputra',
+'Ujjain',
+'Kannauj',
+'Taxila'],
+a:2,
+e:'Harsha shifted his capital from Thaneshwar to Kannauj, which became one of the most important cities in North India.'}
+,
+{
+q:'Which Chalukya king defeated Harshavardhana at the Narmada?',
+o:['Kirtivarman I',
+'Pulakeshin I',
+'Pulakeshin II',
+'Vikramaditya VI'],
+a:2,
+e:'Pulakeshin II (Chalukya) defeated Harsha at the banks of Narmada (620 AD), stopping his southward expansion.'}
+,
+{
+q:'Harsha\'s court scholar who wrote both \'Harshacharita\' and \'Kadambari\' was:',
+o:['Harisena',
+'Ravikirti',
+'Banabhatta',
+'Kalidasa'],
+a:2,
+e:'Banabhatta was Harsha\'s court scholar who wrote Harshacharita (Harsha\'s biography) and Kadambari (a Sanskrit novel).'}
+,
+{
+q:'How many plays did Harshavardhana personally write?',
+o:['One',
+'Two',
+'Three',
+'Five'],
+a:2,
+e:'Harsha wrote 3 plays: Priyadarshika, Ratnavali, and Nagananda.'}
+,
+{
+q:'Hiuen Tsang visited India during the reign of:',
+o:['Chandragupta II',
+'Kumaragupta I',
+'Harshavardhana',
+'Pulakeshin II'],
+a:2,
+e:'Hiuen Tsang visited India during Harshavardhana\'s reign (630–645 AD). Fa-Hien visited during Chandragupta II\'s reign.'}
+,
+{
+q:'Hiuen Tsang\'s book recording his India visit is called:',
+o:['Fo-Kyo-Ki',
+'Indica',
+'Si-Yu-Ki',
+'Rehla'],
+a:2,
+e:'Hiuen Tsang wrote Si-Yu-Ki (Records of Western World). Fo-Kyo-Ki was written by Fa-Hien — these two are the most confused in exams.'}
+,
+{
+q:'Harsha celebrated a religious festival every 5 years at:',
+o:['Bodh Gaya',
+'Nalanda',
+'Prayag',
+'Varanasi'],
+a:2,
+e:'Harsha celebrated a quinquennial festival every 5 years at Prayag (Allahabad), distributing all his wealth to the poor.'}
+,
+{
+q:'Hiuen Tsang is called the:',
+o:['Father of Indian history',
+'Prince of Travellers',
+'First Buddhist pilgrim to India',
+'Founder of Indology'],
+a:1,
+e:'Hiuen Tsang is called the \'Prince of Travellers.\' He also held a grand assembly (Kannauj Assembly) in honor of Harsha.'}
+,
+{
+q:'Harsha\'s empire stretched from:',
+o:['Punjab to eastern Bengal; Himalayas to Vindhyas',
+'Punjab to N. Orissa; Himalayas to Narmada',
+'Gujarat to Bengal; Deccan to Himalayas',
+'Kashmir to Madurai'],
+a:1,
+e:'Harsha\'s empire covered Punjab to northern Orissa, and from the Himalayas to the Narmada river.'}
+]}
+,
+{
+id:'s1',
+title:'South Indian Dynasties',
+xp:170,
+type:'regular',
+seqIdx:7,
+learn:'<h2 class="sec-head">🏛️ South Indian Dynasties</h2><h3 class="sub-head">Chalukyas of Vatapi/Badami (543–757 AD)</h3><table class=""><thead><tr><th>Ruler</th><th>Key Achievement</th></tr></thead><tbody><tr><td>Pulakeshin I</td><td>Founder; capital = Badami (Vatapi)</td></tr><tr><td>Pulakeshin II</td><td>Most famous; defeated Harsha at Narmada; Aihole inscription by Ravikirti; killed by Pallava Narsimhavarman I</td></tr><tr><td>Vishnuvardhan</td><td>Founded Eastern Chalukyas; capital Vengi</td></tr></tbody></table><h3 class="sub-head">Pallavas (560–803 AD)</h3><table class=""><thead><tr><th>Ruler</th><th>Achievement</th></tr></thead><tbody><tr><td>Simhavishnu</td><td>Founder; capital = Kanchi</td></tr><tr><td>Mahendravarman I</td><td>Jain → converted to Shaivism by saint Appar</td></tr><tr><td>Narsimhavarman I (Mamalla)</td><td>Greatest Pallava; defeated Pulakeshin II; built Mahabalipuram; Seven Pagodas (Rathas)</td></tr><tr><td>Narsimhavarman II (Rajasimha)</td><td>Built Shore Temple — 1st structural stone temple in south</td></tr></tbody></table><h3 class="sub-head">Rashtrakutas (753–982 AD)</h3><p>Founder: <b>Dantidurga</b>. Capital: Manyakheta (Malkhed). <b>Krishna I</b> built Kailash Temple at Ellora (Cave 16 — single rock). <b>Amoghavarsha I</b> wrote Kavirajamarga (oldest Kannada literary work).</p><h3 class="sub-head">Cholas (9th–13th century)</h3><table class=""><thead><tr><th>Ruler</th><th>Achievement</th></tr></thead><tbody><tr><td>Vijayalaya (850 AD)</td><td>Founder of imperial Chola dynasty</td></tr><tr><td>Rajaraja Chola I (985–1014)</td><td>Built Brihadeeswara Temple, Thanjavur</td></tr><tr><td>Rajendra Chola I (1014–1044)</td><td>Gangaikonda Chola; naval power; defeated Srivijaya</td></tr></tbody></table><h3 class="sub-head">Vijayanagara Empire (1336–1565 AD)</h3><table class=""><thead><tr><th>Dynasty</th><th>Famous Ruler</th></tr></thead><tbody><tr><td>Sangama (1336–1485)</td><td>Harihara & Bukka I (founders) — on Tungabhadra river at Hampi</td></tr><tr><td>Tuluva (1505–1570)</td><td>Krishnadeva Raya (greatest) — wrote Amuktamalyada (Telugu)</td></tr><tr><td>Aravidu (1570–1650)</td><td>—</td></tr></tbody></table><p><b>Battle of Talikota (1565)</b>: Vijayanagara defeated by combined Deccan Sultanates; Hampi destroyed.</p><div class="trap-box">⚠️ EXAM TRAP: Kailash Temple, Ellora = KRISHNA I (Rashtrakuta) — not Dantidurga. Shore Temple = NARSIMHAVARMAN II (Pallava). Seven Pagodas = NARSIMHAVARMAN I (Mamalla). Brihadeeswara = RAJARAJA CHOLA I (not Rajendra).</div>',
+revision:['Chalukyas of Vatapi/Badami(543-757AD): Pulakeshin I(founder), Pulakeshin II(defeated Harsha at Narmada, killed by Pallava Narsimhavarman I)','Vishnuvardhan founded Eastern Chalukyas, capital Vengi','Pallavas(560-803AD): Simhavishnu(founder,capital Kanchi), Mahendravarman I(Jain->Shaivism via Appar)','Narsimhavarman I(Mamalla) defeated Pulakeshin II, built Mahabalipuram monuments','Aihole inscription by Ravikirti praises Pulakeshin II'],
+oneliners:['The Chalukyas of Vatapi (Badami) ruled 543-757 AD','Pulakeshin I founded the dynasty with capital at Badami (Vatapi)','Pulakeshin II was the most famous Chalukya ruler','Pulakeshin II defeated Harsha at the Narmada river','The Aihole inscription, by court poet Ravikirti, praises Pulakeshin II\'s achievements','Pulakeshin II was killed by the Pallava king Narsimhavarman I','Vishnuvardhan founded the Eastern Chalukya branch, with capital at Vengi','The Pallava dynasty ruled 560-803 AD with capital at Kanchi','Simhavishnu founded the Pallava dynasty','Mahendravarman I was originally a Jain, converted to Shaivism by the saint Appar','Narsimhavarman I, also called Mamalla, defeated Pulakeshin II','Narsimhavarman I (Mamalla) is associated with the monuments at Mahabalipuram'],
+flashcards:[{q:'Who founded the Chalukyas of Badami, and their capital?',a:'Pulakeshin I; capital at Badami (Vatapi)'},{q:'What major battle is Pulakeshin II famous for?',a:'Defeating Harsha at the Narmada river'},{q:'Who killed Pulakeshin II?',a:'Pallava king Narsimhavarman I'},{q:'What does the Aihole inscription record, and who wrote it?',a:'Pulakeshin II\'s achievements; written by Ravikirti'},{q:'Who founded the Eastern Chalukyas, and their capital?',a:'Vishnuvardhan; capital at Vengi'},{q:'Who founded the Pallava dynasty, and their capital?',a:'Simhavishnu; capital at Kanchi'},{q:'Who converted Mahendravarman I from Jainism to Shaivism?',a:'The saint Appar'},{q:'What is Narsimhavarman I (Mamalla) associated with?',a:'Defeating Pulakeshin II and the Mahabalipuram monuments'}],
+mcqs:[{
+q:'Pulakeshin II (Chalukya) is famous for defeating which North Indian emperor?',
+o:['Samudragupta',
+'Harshavardhana',
+'Chandragupta II',
+'Skandagupta'],
+a:1,
+e:'Pulakeshin II defeated Harshavardhana at the battle of Narmada (620 AD), checking his Deccan ambitions.'}
+,
+{
+q:'The Aihole inscription eulogizing Pulakeshin II was written by:',
+o:['Banabhatta',
+'Harisena',
+'Ravikirti',
+'Bilhana'],
+a:2,
+e:'Ravikirti, court poet of Pulakeshin II, wrote the Aihole inscription celebrating Pulakeshin\'s achievements.'}
+,
+{
+q:'Which Pallava ruler built the rock-cut Rathas (Seven Pagodas) at Mahabalipuram?',
+o:['Simhavishnu',
+'Mahendravarman I',
+'Narsimhavarman I (Mamalla)',
+'Narsimhavarman II'],
+a:2,
+e:'Narsimhavarman I (Mamalla) built the Seven Pagodas and founded Mahabalipuram. He also defeated and killed Pulakeshin II.'}
+,
+{
+q:'The Shore Temple at Mahabalipuram (first structural stone temple in south) was built by:',
+o:['Rashtrakuta Krishna I',
+'Chola Rajaraja I',
+'Pallava Narsimhavarman II',
+'Chalukya Pulakeshin II'],
+a:2,
+e:'The Shore Temple was built by Narsimhavarman II (Rajasimha) of the Pallava dynasty.'}
+,
+{
+q:'Which Rashtrakuta king built the Kailash Temple at Ellora?',
+o:['Dantidurga',
+'Amoghavarsha I',
+'Krishna I',
+'Indra III'],
+a:2,
+e:'Krishna I of the Rashtrakuta dynasty built the Kailash Temple (Cave 16) at Ellora, carved entirely from a single rock.'}
+,
+{
+q:'Rajaraja Chola I built the famous Brihadeeswara Temple at:',
+o:['Madurai',
+'Mahabalipuram',
+'Thanjavur (Tanjore)',
+'Kanchipuram'],
+a:2,
+e:'Rajaraja Chola I (985–1014 AD) built the Brihadeeswara Temple at Thanjavur — a UNESCO World Heritage Site.'}
+,
+{
+q:'Rajendra Chola I earned the title \'Gangaikonda Chola\' by:',
+o:['Defeating the Ganga dynasty',
+'Leading a campaign to the Gangetic plains',
+'Building a temple on the Ganga',
+'Ruling from Varanasi'],
+a:1,
+e:'Rajendra Chola I led a successful expedition to the Gangetic plains and earned the title Gangaikonda Chola (Chola who conquered the Ganga).'}
+,
+{
+q:'The Vijayanagara Empire was founded on the banks of which river?',
+o:['Godavari',
+'Krishna',
+'Kaveri',
+'Tungabhadra'],
+a:3,
+e:'Harihara and Bukka Raya I founded the Vijayanagara Empire (1336 AD) on the banks of the Tungabhadra river at Hampi.'}
+,
+{
+q:'Krishnadeva Raya of Vijayanagara belonged to which dynasty?',
+o:['Sangama',
+'Saluva',
+'Tuluva',
+'Aravidu'],
+a:2,
+e:'Krishnadeva Raya (1509–1529 AD) belonged to the Tuluva dynasty of the Vijayanagara Empire.'}
+,
+{
+q:'The Battle of Talikota (1565 AD) resulted in:',
+o:['Vijayanagara defeating the Deccan Sultanates',
+'End of Vijayanagara power; Hampi destroyed',
+'Mughal conquest of south India',
+'Portuguese dominance in Deccan'],
+a:1,
+e:'The Battle of Talikota (1565 AD) — Vijayanagara defeated by combined Deccan Sultanates — ended Vijayanagara\'s dominance. Hampi was looted and destroyed.'}
+]}
+]}
+,
+{
+id:'ch3',
+title:'🏛️ Chapter 3: Art & Architecture',
+nodes:[{
+id:'a1',
+title:'Temple Architecture Styles',
+xp:160,
+type:'regular',
+seqIdx:8,
+learn:'<h2 class="sec-head">🕌 Temple Architecture Styles</h2><table class=""><thead><tr><th>Style</th><th>Region</th><th>Features</th><th>Examples</th></tr></thead><tbody><tr><td>Nagara (North Indian)</td><td>North India</td><td>Curvilinear Shikhara; Amalaka disc on top; entrance from east only</td><td>Khajuraho (MP), Lingaraja (Bhubaneswar), Kandariya Mahadeva</td></tr><tr><td>Dravidian (South Indian)</td><td>South India</td><td>Stepped pyramidal Vimana; Gopuram (ornate gateway); Mandapa; water tank</td><td>Brihadeeswara (Tanjore), Meenakshi (Madurai), Kailasanatha (Kanchi)</td></tr><tr><td>Vesara (Deccan/Karnataka)</td><td>Deccan</td><td>Hybrid Nagara+Dravidian; no covered ambulatory</td><td>Lad Khan (Aihole), Virupaksha (Pattadakal)</td></tr></tbody></table><h3 class="sub-head">Key Temples — SSC Reference</h3><table class=""><thead><tr><th>Temple</th><th>Location</th><th>Builder</th><th>Style</th></tr></thead><tbody><tr><td>Brihadeeswara (Big Temple)</td><td>Thanjavur, TN</td><td>Rajaraja Chola I</td><td>Dravidian</td></tr><tr><td>Kailash Temple, Ellora</td><td>Aurangabad, MH</td><td>Krishna I (Rashtrakuta)</td><td>Dravidian (single rock)</td></tr><tr><td>Shore Temple</td><td>Mahabalipuram, TN</td><td>Narsimhavarman II (Pallava)</td><td>Dravidian (1st structural)</td></tr><tr><td>Kailasanatha Temple</td><td>Kanchi, TN</td><td>Rajasimha (Pallava)</td><td>Dravidian</td></tr><tr><td>Meenakshi Temple</td><td>Madurai, TN</td><td>Nayaks</td><td>Dravidian</td></tr><tr><td>Kandariya Mahadeva</td><td>Khajuraho, MP</td><td>Chandela</td><td>Nagara (tallest)</td></tr><tr><td>Lingaraja Temple</td><td>Bhubaneswar, Odisha</td><td>Somavamshi</td><td>Nagara</td></tr><tr><td>Virupaksha Temple</td><td>Pattadakal, Karnataka</td><td>Chalukya</td><td>Vesara/Dravidian</td></tr><tr><td>Sun Temple (Konark)</td><td>Odisha</td><td>Narasimha Deva I (Ganga)</td><td>Nagara modified (Black Pagoda)</td></tr></tbody></table><div class="fact-box"><strong>Dravidian Terms</strong><ul><li>Vimana = main tower over sanctum (pyramidal)</li><li>Gopuram = gateway tower (often bigger in later period)</li><li>Mandapa = pillared assembly hall</li><li>Garbhagriha = innermost sanctum (womb chamber)</li><li>Pradakshina = circumambulatory path</li></ul></div>',
+revision:['3 temple styles: Nagara(North,curvilinear Shikhara), Dravidian(South,Vimana+Gopuram), Vesara(Deccan,hybrid)','Nagara examples: Khajuraho, Lingaraja(Bhubaneswar), Kandariya Mahadeva','Dravidian examples: Brihadeeswara(Tanjore), Meenakshi(Madurai), Kailasanatha(Kanchi)','Vesara examples: Lad Khan(Aihole), Virupaksha(Pattadakal)','Brihadeeswara(Big Temple,Thanjavur) built by Rajaraja Chola I, Dravidian style'],
+oneliners:['There are 3 main Indian temple architecture styles: Nagara, Dravidian, and Vesara','Nagara style is found in North India, with a curvilinear Shikhara tower','Nagara temples have an Amalaka disc on top and entrance only from the east','Khajuraho and Lingaraja (Bhubaneswar) are famous Nagara style temples','Dravidian style is found in South India, with a stepped pyramidal Vimana','Dravidian temples feature an ornate Gopuram gateway, Mandapa, and a water tank','Brihadeeswara Temple (Tanjore) and Meenakshi Temple (Madurai) are Dravidian style','Vesara style is a hybrid of Nagara and Dravidian, found in the Deccan/Karnataka','Vesara temples lack a covered ambulatory','Lad Khan Temple (Aihole) and Virupaksha Temple (Pattadakal) are Vesara style','The Brihadeeswara Temple (Big Temple) at Thanjavur was built by Rajaraja Chola I'],
+flashcards:[{q:'Name the 3 main temple architecture styles of India.',a:'Nagara, Dravidian, Vesara'},{q:'What defines Nagara style architecture?',a:'Curvilinear Shikhara, Amalaka disc on top, east-facing entrance only'},{q:'What defines Dravidian style architecture?',a:'Stepped pyramidal Vimana, ornate Gopuram, Mandapa, water tank'},{q:'What defines Vesara style architecture?',a:'A hybrid of Nagara and Dravidian, no covered ambulatory; found in the Deccan'},{q:'Give two examples of Nagara temples.',a:'Khajuraho and Lingaraja (Bhubaneswar)'},{q:'Give two examples of Dravidian temples.',a:'Brihadeeswara (Tanjore) and Meenakshi (Madurai)'},{q:'Who built the Brihadeeswara Temple at Thanjavur?',a:'Rajaraja Chola I'},{q:'Give an example of Vesara style temples.',a:'Lad Khan Temple at Aihole, or Virupaksha Temple at Pattadakal'}],
+mcqs:[{
+q:'The Nagara style of temple architecture features:',
+o:['Pyramidal Vimana + Gopuram gateway',
+'Curvilinear Shikhara + Amalaka disc on top',
+'Hybrid of Nagara + Dravidian',
+'Flat roof + open courtyard'],
+a:1,
+e:'Nagara style features a curvilinear Shikhara (tower) with an Amalaka (disc) on top — North Indian temple style.'}
+,
+{
+q:'The Dravidian temple style is the predominant architecture of:',
+o:['North India',
+'Central India',
+'South India',
+'Northeast India'],
+a:2,
+e:'Dravidian style (South Indian) features stepped pyramidal Vimana, Gopuram (ornate gateway), and Mandapa (hall).'}
+,
+{
+q:'\'Vesara\' style in temple architecture is:',
+o:['Pure Nagara from South India',
+'Pure Dravidian from North India',
+'Hybrid of Nagara + Dravidian from Deccan',
+'A Buddhist stupa style'],
+a:2,
+e:'Vesara is a hybrid of Nagara and Dravidian styles, found in the Deccan region (Karnataka, Chalukya area).'}
+,
+{
+q:'\'Gopuram\' is a distinctive feature of which temple style?',
+o:['Nagara',
+'Vesara',
+'Dravidian',
+'Latina sub-type'],
+a:2,
+e:'Gopuram (ornate gateway tower) is the defining feature of the Dravidian (South Indian) temple style.'}
+,
+{
+q:'The Kandariya Mahadeva Temple at Khajuraho belongs to:',
+o:['Dravidian style',
+'Vesara style',
+'Nagara (Latina sub-type)',
+'Buddhist Chaitya'],
+a:2,
+e:'The Kandariya Mahadeva Temple at Khajuraho (MP) is the tallest example of Nagara style architecture (Latina sub-type), built by the Chandela dynasty.'}
+,
+{
+q:'The Lingaraja Temple at Bhubaneswar is associated with:',
+o:['Dravidian style',
+'Vesara style',
+'Nagara style (Sekhari sub-type)',
+'Latina sub-type'],
+a:2,
+e:'The Lingaraja Temple (Bhubaneswar, Odisha) belongs to the Nagara style (Sekhari sub-type).'}
+,
+{
+q:'The Virupaksha Temple at Pattadakal represents:',
+o:['Pure Nagara style',
+'Vesara/Dravidian hybrid (Chalukya)',
+'Pure Dravidian only',
+'Islamic-Hindu fusion'],
+a:1,
+e:'The Virupaksha Temple at Pattadakal (Karnataka) represents the Vesara/Dravidian style by the Chalukyas. It is a UNESCO World Heritage Site.'}
+,
+{
+q:'The Sun Temple at Konark (Odisha) is known as:',
+o:['Golden Pagoda',
+'Black Pagoda',
+'White Pagoda',
+'Silver Pagoda'],
+a:1,
+e:'The Sun Temple at Konark is the \'Black Pagoda\' (while the Jagannath Temple at Puri is the \'White Pagoda\'). Built by Narasimha Deva I (Ganga dynasty).'}
+,
+{
+q:'In Dravidian temple architecture, the innermost sanctum is called:',
+o:['Gopuram',
+'Mandapa',
+'Garbhagriha',
+'Vimana'],
+a:2,
+e:'Garbhagriha (womb chamber) is the innermost sanctum where the deity is installed in Dravidian temples.'}
+,
+{
+q:'The Kailasanatha Temple at Kanchipuram is the most complete temple of which dynasty?',
+o:['Chola',
+'Rashtrakuta',
+'Pallava',
+'Chalukya'],
+a:2,
+e:'The Kailasanatha Temple at Kanchi (Kanchipuram) is the most complete Pallava temple, built by Rajasimha (Narsimhavarman II).'}
+]}
+,
+{
+id:'a2',
+title:'Sculpture Schools',
+xp:150,
+type:'regular',
+seqIdx:9,
+learn:'<h2 class="sec-head">🗿 Three Classical Sculpture Schools</h2><table class=""><thead><tr><th>School</th><th>Period</th><th>Location</th><th>Patron</th><th>Material</th><th>Influence</th></tr></thead><tbody><tr><td>Gandhara</td><td>1st–5th c AD</td><td>NW India (Pakistan/Afghanistan)</td><td>Kushans</td><td>Grey schist</td><td>Greco-Roman (1st human Buddha)</td></tr><tr><td>Mathura</td><td>1st–5th c AD</td><td>Mathura (UP)</td><td>Kushans + Guptas</td><td>Red sandstone</td><td>Indigenous (no Greek influence)</td></tr><tr><td>Amravati</td><td>2nd–3rd c AD</td><td>Amravati (AP)</td><td>Satavahanas</td><td>White marble</td><td>Narrative panels; movement</td></tr></tbody></table><h3 class="sub-head">Gandhara School — Key Points</h3><p>Center: Purushapura (Peshawar) + Taxila. <b>FIRST to depict Buddha in human form</b>. Greek drapery, Roman curly hair on Buddha. Sites: Taxila, Hadda, Bamiyan (Afghanistan).</p><h3 class="sub-head">Mathura School — Key Points</h3><p>No Greek influence. Buddha with <b>ushnisha</b> (hair bun), transparent robes, bare-chested. Red sandstone. Also produced FIRST Jain Tirthankara images. Later influenced all Indian sculpture.</p><h3 class="sub-head">Amravati School — Key Points</h3><p>White marble medallion panels narrating Buddhist stories. Focus on movement and energy. Amravati Stupa = masterpiece (parts in Chennai Museum + British Museum). Influenced SE Asia & Sri Lanka Buddhist art.</p><div class="trap-box">⚠️ EXAM TRAP: Gandhara = grey schist (not marble or sandstone). Amravati = white marble (not sandstone). Mathura = red sandstone. Amravati patron = SATAVAHANAS (not Guptas or Kushans).</div>',
+revision:['Gandhara(1st-5thAD,NW India,Kushans,grey schist,Greco-Roman,1st human Buddha)','Mathura(1st-5thAD,UP,Kushans+Guptas,red sandstone,indigenous,no Greek influence)','Amravati(2nd-3rdAD,AP,Satavahanas,white marble,narrative panels+movement)','Gandhara centers: Purushapura(Peshawar)+Taxila | Gandhara FIRST to depict Buddha in human form','3 schools differ in material, patron, and Greek-influence level'],
+oneliners:['There are 3 classical ancient Indian sculpture schools: Gandhara, Mathura, Amravati','Gandhara school flourished 1st-5th century AD in NW India (Pakistan/Afghanistan)','Gandhara school was patronized by the Kushans, using grey schist stone','Gandhara art shows Greco-Roman influence and was the FIRST to depict Buddha in human form','Gandhara\'s main centers were Purushapura (Peshawar) and Taxila','Mathura school flourished 1st-5th century AD in Mathura, UP','Mathura school was patronized by both Kushans and Guptas, using red sandstone','Mathura art was indigenous, with no Greek influence','Amravati school flourished 2nd-3rd century AD in Amravati, Andhra Pradesh','Amravati school was patronized by the Satavahanas, using white marble','Amravati art is known for narrative panels and a sense of movement'],
+flashcards:[{q:'Name the 3 classical sculpture schools of ancient India.',a:'Gandhara, Mathura, Amravati'},{q:'Which school was the first to depict Buddha in human form?',a:'Gandhara school'},{q:'Which dynasty patronized the Gandhara school, and what material did it use?',a:'Kushans; grey schist'},{q:'Which dynasties patronized the Mathura school, and its material?',a:'Kushans and Guptas; red sandstone'},{q:'What influence is seen in Gandhara art that\'s absent in Mathura art?',a:'Greco-Roman influence — Mathura is purely indigenous'},{q:'Which dynasty patronized the Amravati school, and its material?',a:'Satavahanas; white marble'},{q:'What is Amravati art known for stylistically?',a:'Narrative panels and a sense of movement'},{q:'What were the two main centers of the Gandhara school?',a:'Purushapura (Peshawar) and Taxila'}],
+mcqs:[{
+q:'The Gandhara school of sculpture is primarily associated with:',
+o:['Chinese art influence',
+'Persian art influence',
+'Greco-Roman art influence',
+'Egyptian art influence'],
+a:2,
+e:'The Gandhara school (NW India) shows strong Greco-Roman influence — Greek drapery and Roman facial features on Buddha images.'}
+,
+{
+q:'What material was primarily used in Gandhara sculptures?',
+o:['Red sandstone',
+'White marble',
+'Grey schist',
+'Black granite'],
+a:2,
+e:'Grey schist stone is the primary material of Gandhara school. Red sandstone = Mathura; White marble = Amravati.'}
+,
+{
+q:'Which sculpture school was the FIRST to depict Buddha in human form?',
+o:['Mathura',
+'Amravati',
+'Gandhara',
+'Sarnath'],
+a:2,
+e:'The Gandhara school was the first to depict Buddha in human form. Previously, Buddha was represented symbolically.'}
+,
+{
+q:'The Mathura school of sculpture was patronized by:',
+o:['Satavahanas and Pallavas',
+'Kushans and Guptas',
+'Indo-Greeks and Mauryans',
+'Chalukyas and Rashtrakutas'],
+a:1,
+e:'The Mathura school was patronized by Kushans and later Guptas. It used red sandstone and was purely indigenous in style.'}
+,
+{
+q:'The Amravati school of sculpture used which material?',
+o:['Grey schist',
+'Red sandstone',
+'White marble',
+'Black basalt'],
+a:2,
+e:'The Amravati school (Andhra Pradesh) used white marble and featured narrative medallion panels depicting Buddhist stories.'}
+,
+{
+q:'The Amravati school was patronized by which dynasty?',
+o:['Guptas',
+'Kushans',
+'Satavahanas',
+'Pallavas'],
+a:2,
+e:'The Amravati school was patronized by the Satavahanas. The Amravati Stupa is its greatest masterpiece.'}
+,
+{
+q:'The geographic center of the Gandhara school was:',
+o:['Mathura (UP)',
+'Amravati (Andhra Pradesh)',
+'Purushapura (Peshawar) + Taxila',
+'Sarnath (Varanasi)'],
+a:2,
+e:'The Gandhara school was centered at Purushapura (modern Peshawar) and Taxila in NW India (modern Pakistan/Afghanistan).'}
+,
+{
+q:'Mathura school Buddha images are distinguished by:',
+o:['Greek drapery and curly hair',
+'Transparent robes, ushnisha (hair bun), bare-chested',
+'Elaborate throne with parasol',
+'Abstract geometric form'],
+a:1,
+e:'Mathura school Buddhas have ushnisha (hair knot), thin transparent robes, bare-chested — purely indigenous Indian style.'}
+,
+{
+q:'Parts of the Amravati Stupa are now housed in:',
+o:['National Museum Delhi + Louvre',
+'Chennai Museum + British Museum',
+'Kolkata Museum + Metropolitan Museum',
+'Mumbai Museum + Smithsonian'],
+a:1,
+e:'Parts of the Amravati Stupa are in the Chennai Museum and the British Museum.'}
+,
+{
+q:'Kanishka\'s coins are notable for being the FIRST to depict:',
+o:['Buddha in symbolic form (wheel)',
+'Buddha in human form on coins',
+'A Jain Tirthankara',
+'A Hindu deity only'],
+a:1,
+e:'Kanishka\'s coins were the first to depict Buddha in human form (on coins). The Gandhara school first depicted Buddha in sculpture.'}
+]}
+]}
+,
+{
+id:'ch4',
+title:'🌍 Chapter 4: Foreign Travellers',
+nodes:[{
+id:'f1',
+title:'Foreign Travellers',
+xp:160,
+type:'regular',
+seqIdx:10,
+learn:'<h2 class="sec-head">🌍 Foreign Travellers — Master Table</h2><table class=""><thead><tr><th>Traveller</th><th>Nationality</th><th>Visited</th><th>Book</th><th>Key Fact</th></tr></thead><tbody><tr><td>Megasthenes</td><td>Greek</td><td>Chandragupta Maurya (302–298 BC)</td><td>Indica</td><td>7 classes; no slavery; prosperity; sent by Seleucus Nicator</td></tr><tr><td>Deimachus</td><td>Greek</td><td>Bindusara (sent by Antiochus of Syria)</td><td>—</td><td>Often confused with Megasthenes</td></tr><tr><td>Fa-Hien</td><td>Chinese</td><td>Chandragupta II (405–411 AD)</td><td>Fo-Kyo-Ki</td><td>No capital punishment; visited Lumbini</td></tr><tr><td>Hiuen Tsang</td><td>Chinese</td><td>Harshavardhana (630–645 AD)</td><td>Si-Yu-Ki</td><td>Prince of Travellers; came via Tashkent & Swat Valley</td></tr><tr><td>I-tsing</td><td>Chinese</td><td>—</td><td>Biographies of Eminent Monks</td><td>Social & religious life</td></tr><tr><td>Al-Beruni (Abu Rehan)</td><td>Muslim Scholar</td><td>Came with Mahmud Ghazni (1024–1030 AD)</td><td>Kitab-ul-Hind</td><td>1st Muslim to study India; founder of Indology</td></tr><tr><td>Marco Polo</td><td>Venetian</td><td>Pandyan ruler (1292–1294)</td><td>Book of Marco Polo</td><td>Invaluable for economic history</td></tr><tr><td>Ibn Batuta</td><td>Moroccan</td><td>Muhammad bin Tughlaq (1333–1347)</td><td>Rehla</td><td>—</td></tr><tr><td>Abdur Razzaq</td><td>Persian</td><td>Devraya II (1443–1444) — Vijayanagara</td><td>Matla us Saddin</td><td>Came to Calicut first</td></tr><tr><td>Nicolo Conti</td><td>Venetian</td><td>Devraya I (1420–1421) — Vijayanagara</td><td>—</td><td>Graphic account of Vijayanagara capital</td></tr><tr><td>Duarte Barbosa</td><td>Portuguese</td><td>Vijayanagara Empire (1500–1516)</td><td>—</td><td>Description of Krishnadeva Raya\'s empire</td></tr></tbody></table><div class="fact-box"><strong>Quick Recall</strong><ul><li>Megasthenes → Chandragupta Maurya → Indica</li><li>Fa-Hien → Chandragupta II → Fo-Kyo-Ki</li><li>Hiuen Tsang → Harshavardhana → Si-Yu-Ki</li><li>Al-Beruni → Mahmud Ghazni → Kitab-ul-Hind</li><li>Ibn Batuta → Muhammad bin Tughlaq → Rehla</li><li>Marco Polo → Pandyan ruler → Book of Marco Polo</li><li>Abdur Razzaq → DEVRAYA II (NOT Devraya I)</li><li>Nicolo Conti → DEVRAYA I (NOT Devraya II)</li></ul></div>',
+revision:['Megasthenes(Greek,Chandragupta Maurya,Indica) | Deimachus(Greek,Bindusara,often confused w/Megasthenes)','Fa-Hien(Chinese,Chandragupta II,405-411AD,Fo-Kyo-Ki) | Hiuen Tsang(Chinese,Harsha,630-645AD,Si-Yu-Ki,\'Prince of Travellers\')','I-tsing(Chinese,Biographies of Eminent Monks) | Al-Beruni(Muslim,came w/Mahmud Ghazni 1024-1030AD,Kitab-ul-Hind,1st Muslim scholar on India)','Megasthenes describes 7 classes, no slavery, prosperity under Mauryas','Hiuen Tsang travelled via Tashkent & Swat Valley'],
+oneliners:['Megasthenes, a Greek, visited Chandragupta Maurya\'s court (302-298 BC) and wrote Indica','Megasthenes was sent by Seleucus Nicator','Megasthenes described 7 social classes, no slavery, and general prosperity under Mauryan rule','Deimachus visited Bindusara, sent by Antiochus of Syria, and is often confused with Megasthenes','Fa-Hien, a Chinese pilgrim, visited Chandragupta II (405-411 AD) and wrote Fo-Kyo-Ki','Fa-Hien noted there was no capital punishment, and he visited Lumbini','Hiuen Tsang, called the \'Prince of Travellers\', visited Harshavardhana (630-645 AD) and wrote Si-Yu-Ki','Hiuen Tsang travelled to India via Tashkent and the Swat Valley','I-tsing, a Chinese traveller, wrote Biographies of Eminent Monks','Al-Beruni (Abu Rehan), a Muslim scholar, came with Mahmud Ghazni (1024-1030 AD)','Al-Beruni wrote Kitab-ul-Hind and was the first Muslim scholar to study India systematically'],
+flashcards:[{q:'Who visited Chandragupta Maurya, and what did he write?',a:'Megasthenes; wrote Indica'},{q:'Who sent Megasthenes to India?',a:'Seleucus Nicator'},{q:'Who is often confused with Megasthenes, and whom did he visit?',a:'Deimachus; visited Bindusara'},{q:'Who visited Chandragupta II, and what book did he write?',a:'Fa-Hien; Fo-Kyo-Ki'},{q:'Who is called the \'Prince of Travellers\', and whom did he visit?',a:'Hiuen Tsang; visited Harshavardhana'},{q:'What book did Hiuen Tsang write?',a:'Si-Yu-Ki'},{q:'What did I-tsing write?',a:'Biographies of Eminent Monks'},{q:'Who was Al-Beruni, and what did he write?',a:'A Muslim scholar who came with Mahmud Ghazni; wrote Kitab-ul-Hind'}],
+mcqs:[{
+q:'Megasthenes visited India during the reign of:',
+o:['Ashoka',
+'Bindusara',
+'Chandragupta Maurya',
+'Chandragupta I'],
+a:2,
+e:'Megasthenes was sent by Seleucus Nicator as ambassador to Chandragupta Maurya\'s court (302–298 BC).'}
+,
+{
+q:'Megasthenes\' account of India is found in:',
+o:['Indica',
+'Si-Yu-Ki',
+'Rehla',
+'Kitab-ul-Hind'],
+a:0,
+e:'Megasthenes wrote \'Indica\', describing Mauryan society, seven social classes, and general prosperity of India.'}
+,
+{
+q:'Al-Beruni came to India with:',
+o:['Timur',
+'Muhammad Ghori',
+'Mahmud Ghazni',
+'Muhammad bin Tughlaq'],
+a:2,
+e:'Al-Beruni came with Mahmud Ghazni. He studied Indian society, science, and religion — founder of Indology.'}
+,
+{
+q:'Al-Beruni\'s famous work on India is:',
+o:['Muruj-ul-Zahab',
+'Rehla',
+'Tahqiq-i-Hind (Kitab-ul-Hind)',
+'Matla us Saddin'],
+a:2,
+e:'Al-Beruni wrote Tahqiq-i-Hind (also called Kitab-ul-Hind) — the first systematic Muslim study of India.'}
+,
+{
+q:'Ibn Batuta visited India during the reign of:',
+o:['Alauddin Khilji',
+'Feroz Shah Tughlaq',
+'Muhammad bin Tughlaq',
+'Balban'],
+a:2,
+e:'Ibn Batuta (Moroccan traveller) visited India during Muhammad bin Tughlaq\'s reign (1333–1347 AD) and wrote \'Rehla\'.'}
+,
+{
+q:'Marco Polo visited which Indian ruler?',
+o:['Krishnadeva Raya (Vijayanagara)',
+'Devraya II (Vijayanagara)',
+'Pandyan ruler (Madverman Kulshekhara)',
+'Harsha Vardhana'],
+a:2,
+e:'Marco Polo (1292–1294 AD) visited during the Pandyan ruler\'s reign. His account is invaluable for India\'s economic history.'}
+,
+{
+q:'Abdur Razzaq visited Vijayanagara during the reign of:',
+o:['Harihara I',
+'Krishnadeva Raya',
+'Devraya I',
+'Devraya II'],
+a:3,
+e:'Abdur Razzaq (1443–1444 AD) visited during Devraya II\'s reign. Nicolo Conti visited during Devraya I\'s reign — these are the most confused in exams.'}
+,
+{
+q:'Which traveller is called the \'Prince of Travellers\'?',
+o:['Fa-Hien',
+'Megasthenes',
+'Hiuen Tsang',
+'Al-Beruni'],
+a:2,
+e:'Hiuen Tsang is called the \'Prince of Travellers\' for his extensive journeys and detailed records of 7th-century India.'}
+,
+{
+q:'Nicolo Conti visited Vijayanagara during the reign of:',
+o:['Krishnadeva Raya',
+'Devraya II',
+'Devraya I',
+'Harihara II'],
+a:2,
+e:'Nicolo Conti (1420–1421 AD) visited during Devraya I\'s reign — often confused with Abdur Razzaq who visited Devraya II.'}
+,
+{
+q:'Athanasius Nikitin described which kingdom in \'Journey Beyond Three Seas\'?',
+o:['Vijayanagara Empire',
+'Pandya Kingdom',
+'Bahmani Kingdom',
+'Chola Kingdom'],
+a:2,
+e:'Athanasius Nikitin (Russian merchant, 1470–1474 AD) described the Bahmani Kingdom under Muhammad III in his travelogue.'}
+]}
+,
+{
+id:'t1',
+title:'⚠️ Trap Node — Confused Facts',
+xp:200,
+type:'trap',
+seqIdx:11,
+learn:'<h2 class="sec-head">⚠️ TRAP NODE — Gupta & Travellers Confused Facts</h2><h3 class="sub-head">Gupta Confusion Table</h3><table class=""><thead><tr><th>WRONG</th><th>CORRECT</th></tr></thead><tbody><tr><td>Sri Gupta = real founder</td><td>Chandragupta I = real founder</td></tr><tr><td>Napoleon of India = Chandragupta II</td><td>SAMUDRAGUPTA = Napoleon of India (V.A. Smith)</td></tr><tr><td>Fa-Hien visited during Ashoka\'s time</td><td>Fa-Hien visited during CHANDRAGUPTA II</td></tr><tr><td>Hiuen Tsang visited during CG II</td><td>Hiuen Tsang visited during HARSHAVARDHANA</td></tr><tr><td>Nalanda founded by Ashoka</td><td>Founded by KUMARAGUPTA I</td></tr><tr><td>Vikramaditya = Chandragupta I</td><td>CHANDRAGUPTA II = Vikramaditya</td></tr><tr><td>Kalidasa was in Chandragupta I\'s court</td><td>Kalidasa in CHANDRAGUPTA II\'s court</td></tr><tr><td>Aryabhata = Gupta court astronomer</td><td>Aryabhata worked at Pataliputra/Nalanda independently</td></tr><tr><td>Sudarshana Lake 3rd repair = Ashoka</td><td>3rd repair = SKANDAGUPTA; Ashoka never repaired it</td></tr></tbody></table><h3 class="sub-head">Traveller Confusion Table</h3><table class=""><thead><tr><th>WRONG</th><th>CORRECT</th></tr></thead><tbody><tr><td>Megasthenes visited Ashoka</td><td>Megasthenes visited CHANDRAGUPTA MAURYA</td></tr><tr><td>Fa-Hien wrote Si-Yu-Ki</td><td>HIUEN TSANG wrote Si-Yu-Ki; Fa-Hien wrote Fo-Kyo-Ki</td></tr><tr><td>Al-Beruni came alone</td><td>Al-Beruni came with MAHMUD GHAZNI</td></tr><tr><td>Marco Polo visited Harsha</td><td>Marco Polo visited PANDYAN ruler (south India)</td></tr><tr><td>Ibn Batuta = Mauryan period</td><td>Ibn Batuta visited MUHAMMAD BIN TUGHLAQ</td></tr><tr><td>Abdur Razzaq visited Devraya I</td><td>Abdur Razzaq → DEVRAYA II; Nicolo Conti → DEVRAYA I</td></tr></tbody></table><h3 class="sub-head">Correct Builders</h3><table class=""><thead><tr><th>Monument</th><th>Builder</th><th>Dynasty</th></tr></thead><tbody><tr><td>Brihadeeswara Temple</td><td>Rajaraja Chola I</td><td>Chola</td></tr><tr><td>Kailash Temple, Ellora</td><td>Krishna I</td><td>Rashtrakuta</td></tr><tr><td>Shore Temple, Mahabalipuram</td><td>Narsimhavarman II (Pallava)</td><td>Pallava</td></tr><tr><td>Seven Pagodas, Mahabalipuram</td><td>Narsimhavarman I (Mamalla)</td><td>Pallava</td></tr><tr><td>Nalanda University</td><td>Kumaragupta I</td><td>Gupta</td></tr><tr><td>Aihole inscription</td><td>Ravikirti (poet of Pulakeshin II)</td><td>Chalukya</td></tr></tbody></table>',
+revision:['Sri Gupta=nominal founder; Chandragupta I=REAL founder','Samudragupta=Napoleon of India(NOT Chandragupta II)','Fa-Hien visited Chandragupta II(NOT Ashoka) | Hiuen Tsang visited Harsha(NOT Chandragupta II)','Nalanda founded by Kumaragupta I(NOT Ashoka)','Chandragupta II=Vikramaditya(NOT Chandragupta I)'],
+oneliners:['Trap: Sri Gupta is the nominal founder; Chandragupta I is the REAL founder','Trap: Samudragupta, not Chandragupta II, is the \'Napoleon of India\'','Trap: Fa-Hien visited during Chandragupta II\'s reign, not Ashoka\'s','Trap: Hiuen Tsang visited during Harshavardhana\'s reign, not Chandragupta II\'s','Trap: Nalanda University was founded by Kumaragupta I, not Ashoka','Trap: Chandragupta II, not Chandragupta I, held the title Vikramaditya','These confusions are exactly the kind tested heavily in SSC exams','Always pair the right traveller with the right king: Megasthenes-Chandragupta Maurya, Fa-Hien-Chandragupta II, Hiuen Tsang-Harsha','Always pair the right founder term: \'nominal\' vs \'real\' founder applies differently across dynasties — check each one','When in doubt, cross-check the century: Gupta era (4th-6th c AD) vs Mauryan era (4th-2nd c BC) confusions are common'],
+flashcards:[{q:'Who is the nominal founder of the Gupta dynasty vs the real founder?',a:'Nominal: Sri Gupta | Real: Chandragupta I'},{q:'Who is correctly called the \'Napoleon of India\'?',a:'Samudragupta, NOT Chandragupta II'},{q:'Fa-Hien visited during which king\'s reign?',a:'Chandragupta II — NOT Ashoka'},{q:'Hiuen Tsang visited during which king\'s reign?',a:'Harshavardhana — NOT Chandragupta II'},{q:'Who founded Nalanda University?',a:'Kumaragupta I — NOT Ashoka'},{q:'Which Chandragupta held the title Vikramaditya?',a:'Chandragupta II — NOT Chandragupta I'}],
+mcqs:[{
+q:'TRAP: Which ruler ACTUALLY earned the title \'Napoleon of India\'?',
+o:['Chandragupta I',
+'Chandragupta II',
+'Samudragupta',
+'Skandagupta'],
+a:2,
+e:'TRAP — Samudragupta is called \'Napoleon of India\' by V.A. Smith. NOT Chandragupta II (Vikramaditya) as many confuse.'}
+,
+{
+q:'TRAP: During which ruler\'s reign did Fa-Hien visit India?',
+o:['Ashoka',
+'Chandragupta I',
+'Chandragupta II (Vikramaditya)',
+'Harshavardhana'],
+a:2,
+e:'TRAP — Fa-Hien (405–411 AD) visited during Chandragupta II\'s reign. Many confuse with Ashoka or Chandragupta I.'}
+,
+{
+q:'TRAP: Who ACTUALLY founded Nalanda University?',
+o:['Ashoka',
+'Samudragupta',
+'Chandragupta II',
+'Kumaragupta I'],
+a:3,
+e:'TRAP — Nalanda was founded by Kumaragupta I. Ashoka never founded Nalanda — he founded other Buddhist sites.'}
+,
+{
+q:'TRAP: Hiuen Tsang wrote which book?',
+o:['Fo-Kyo-Ki',
+'Indica',
+'Rehla',
+'Si-Yu-Ki'],
+a:3,
+e:'TRAP — Hiuen Tsang wrote Si-Yu-Ki. Fo-Kyo-Ki was written by Fa-Hien. These two are the most frequently swapped in exams.'}
+,
+{
+q:'TRAP: Kalidasa was a court poet of which Gupta ruler?',
+o:['Chandragupta I',
+'Sri Gupta',
+'Chandragupta II (Vikramaditya)',
+'Samudragupta'],
+a:2,
+e:'TRAP — Kalidasa was in Chandragupta II\'s court, NOT Chandragupta I. The name similarity causes widespread confusion.'}
+,
+{
+q:'TRAP: Sudarshana Lake was repaired for the THIRD time by:',
+o:['Chandragupta Maurya (via Pushyagupta)',
+'Ashoka',
+'Rudradaman I',
+'Skandagupta'],
+a:3,
+e:'TRAP — 1st: Pushyagupta (under Chandragupta Maurya); 2nd: Rudradaman I; 3rd: SKANDAGUPTA. Ashoka never repaired Sudarshana Lake.'}
+,
+{
+q:'TRAP: Who sent Deimachus as ambassador to India?',
+o:['Seleucus Nicator to Chandragupta Maurya',
+'Antiochus I of Syria to Bindusara',
+'Ptolemy of Egypt to Ashoka',
+'Alexander to Porus'],
+a:1,
+e:'TRAP — Deimachus was sent by Antiochus I of Syria to Bindusara. Megasthenes (not Deimachus) visited Chandragupta Maurya.'}
+,
+{
+q:'TRAP: Abdur Razzaq visited Vijayanagara during WHICH king\'s reign?',
+o:['Devraya I',
+'Krishnadeva Raya',
+'Devraya II',
+'Harihara II'],
+a:2,
+e:'TRAP — Abdur Razzaq → Devraya II. Nicolo Conti → Devraya I. This pairing is one of the most common exam traps.'}
+,
+{
+q:'TRAP: The Brihadeeswara Temple at Thanjavur was built by:',
+o:['Rajendra Chola I',
+'Rajaraja Chola I',
+'Vijayalaya',
+'Narsimhavarman I'],
+a:1,
+e:'TRAP — Brihadeeswara was built by RAJARAJA CHOLA I (985–1014 AD). His son Rajendra Chola I built Gangaikondacholapuram.'}
+,
+{
+q:'TRAP: The Kailash Temple at Ellora was built by:',
+o:['Dantidurga',
+'Amoghavarsha I',
+'Vikramaditya VI',
+'Krishna I'],
+a:3,
+e:'TRAP — Kailash Temple = KRISHNA I (Rashtrakuta). Dantidurga founded the Rashtrakuta dynasty; Amoghavarsha I was the literary king.'}
+]}
+]}
+,
+{
+id:'ch5',
+title:'⚡ Chapter 5: Enhanced Nodes',
+nodes:[{
+id:'sa1',
+title:'Sangam Age',
+xp:160,
+type:'regular',
+seqIdx:12,
+learn:'<h2 class="sec-head">📜 Sangam Age (300 BC – 300 AD)</h2><p>Sangam = literary academies in South India. Period: approx 300 BC – 300 AD. Three legendary Sangams:</p><table class=""><thead><tr><th>Sangam</th><th>Place</th><th>Presiding Sage</th><th>Status</th></tr></thead><tbody><tr><td>1st Sangam</td><td>Madurai (ancient)</td><td>Agastya</td><td>Mythical; works lost</td></tr><tr><td>2nd Sangam</td><td>Kapadapuram</td><td>Agastya + Tolkappiyar</td><td>Mostly lost</td></tr><tr><td>3rd Sangam</td><td>Madurai</td><td>Nakkirar</td><td>Works SURVIVED → Sangam literature</td></tr></tbody></table><h3 class="sub-head">Three Crowned Kings</h3><table class=""><thead><tr><th>Kingdom</th><th>Capital</th><th>Emblem</th><th>Key King</th></tr></thead><tbody><tr><td>Chera</td><td>Vanji/Karur (Kerala/TN)</td><td>Bow</td><td>Nedunjeral Adan; Udiyan Cheralatan</td></tr><tr><td>Chola</td><td>Uraiyur → Puhar/Kaveripattinam</td><td>Tiger</td><td>KARIKALA CHOLA (greatest)</td></tr><tr><td>Pandya</td><td>Madurai</td><td>Fish/Carp</td><td>Nedunj Cheliyan</td></tr></tbody></table><h3 class="sub-head">Key Sangam Literature</h3><table class=""><thead><tr><th>Text</th><th>Author</th><th>Key Fact</th></tr></thead><tbody><tr><td>Tolkappiyam</td><td>Tolkappiyar</td><td>OLDEST surviving Tamil literary work; grammar + social customs</td></tr><tr><td>Tirukkural</td><td>TIRUVALLUVAR</td><td>"Bible of Tamil Land"; 1330 couplets in 3 sections ← HIGH FREQ</td></tr><tr><td>Silappadikaram</td><td>Ilango Adigal (Chera prince)</td><td>1ST Tamil epic; story of Kovalan & Kannagi</td></tr><tr><td>Manimegalai</td><td>Sattanar</td><td>2nd Tamil epic; sequel to Silappadikaram; Buddhist</td></tr></tbody></table><p><b>Akam</b> = love/internal poetry. <b>Puram</b> = war/heroism. <b>Karikala Chola</b> = built embankment on Kaveri river; built city of Puhar (Kaveripattinam).</p><div class="trap-box">⚠️ EXAM TRAP: Tirukkural = Tiruvalluvar (NOT Tolkappiyar). Silappadikaram = Ilango Adigal (NOT Tiruvalluvar). 1st Tamil epic = Silappadikaram. Sangam Chola capital = Uraiyur (NOT Madurai — that is Pandya).</div>',
+revision:['Sangam Age = ancient Tamil literary assemblies/period, ~3rd BC-3rd AD','3 Tamil dynasties: Cholas, Pandyas, Cheras','Sangam literature compiled in 3 Sangams, patronized by Pandya kings at Madurai','Roman trade flourished — gold coins found at Arikamedu (Puducherry)','Megaliths and Iron Age culture overlap with early Sangam period'],
+oneliners:['The Sangam Age refers to ancient Tamil literary assemblies and the period they represent','The Sangam Age spans roughly 3rd century BC to 3rd century AD','The three classical Tamil dynasties were the Cholas, Pandyas, and Cheras','Sangam literature was compiled across 3 successive Sangams (assemblies)','The Sangams were patronized by Pandya kings, held at Madurai','Roman trade flourished with South India during the Sangam Age','Roman gold coins have been found at Arikamedu, near Puducherry','Arikamedu served as a major Indo-Roman trading port','The Sangam Age overlaps with the Megalithic Iron Age culture of South India'],
+flashcards:[{q:'What were the 3 classical Tamil dynasties of the Sangam Age?',a:'Cholas, Pandyas, Cheras'},{q:'How many Sangams (assemblies) compiled Sangam literature?',a:'3 Sangams'},{q:'Who patronized the Sangams, and where were they held?',a:'Pandya kings, at Madurai'},{q:'What evidence shows Roman trade with South India?',a:'Roman gold coins found at Arikamedu'},{q:'Roughly what period does the Sangam Age cover?',a:'3rd century BC to 3rd century AD'},{q:'What was Arikamedu\'s significance?',a:'A major Indo-Roman trading port'}],
+mcqs:[{
+q:'The Sangam period in South India spans approximately:',
+o:['800 BC – 200 BC',
+'300 BC – 300 AD',
+'100 AD – 500 AD',
+'500 BC – 100 BC'],
+a:1,
+e:'The Sangam period spans approximately 300 BC to 300 AD (3rd century BC to 3rd century AD).'}
+,
+{
+q:'\'Tirukkural\' was authored by:',
+o:['Tolkappiyar',
+'Ilango Adigal',
+'Tiruvalluvar',
+'Sattanar'],
+a:2,
+e:'Tirukkural (1330 ethical couplets, the \'Bible of Tamil Land\') was written by Tiruvalluvar — very high SSC/TNPSC frequency.'}
+,
+{
+q:'The first Tamil epic \'Silappadikaram\' was written by:',
+o:['Tiruvalluvar',
+'Tolkappiyar',
+'Sattanar',
+'Ilango Adigal'],
+a:3,
+e:'Silappadikaram (story of Kovalan and Kannagi) was written by Ilango Adigal, a Chera prince.'}
+,
+{
+q:'\'Tolkappiyam\' (oldest surviving Tamil literary work) is primarily:',
+o:['An epic poem',
+'A Tamil grammar text',
+'A collection of love songs',
+'A history of Sangam kings'],
+a:1,
+e:'Tolkappiyam by Tolkappiyar is the oldest surviving Tamil literary work — a grammar text that also covers social customs.'}
+,
+{
+q:'The Pandya kingdom\'s capital during the Sangam age was:',
+o:['Uraiyur',
+'Vanji/Karur',
+'Puhar',
+'Madurai'],
+a:3,
+e:'Madurai was the Pandya capital (unchanged). Uraiyur = Chola capital; Vanji/Karur = Chera capital.'}
+,
+{
+q:'The greatest Sangam Chola king who built a Kaveri embankment was:',
+o:['Nedunj Cheliyan',
+'Udiyan Cheralatan',
+'Nedunjeral Adan',
+'Karikala Chola'],
+a:3,
+e:'Karikala Chola (greatest Sangam Chola) built an embankment on the Kaveri river and founded the port city Puhar (Kaveripattinam).'}
+,
+{
+q:'In Sangam literature, \'Akam\' poetry deals with:',
+o:['War and heroism',
+'Love and inner emotions',
+'Praise of kings',
+'Religious hymns to Shiva'],
+a:1,
+e:'Akam poetry (internal/love poetry) deals with private emotions and nature. Puram poetry deals with war and heroism.'}
+,
+{
+q:'The famous port city of the Sangam Cholas was:',
+o:['Korkai',
+'Musiri',
+'Puhar (Kaveripattinam)',
+'Tondi'],
+a:2,
+e:'Puhar (Kaveripattinam) was the great port city of the Sangam Cholas, built by Karikala Chola.'}
+,
+{
+q:'\'Manimegalai\' (2nd Tamil epic) is associated with which philosophy?',
+o:['Shaivism',
+'Vaishnavism',
+'Buddhism',
+'Jainism'],
+a:2,
+e:'Manimegalai (sequel to Silappadikaram) by Sattanar is associated with Buddhist philosophy.'}
+,
+{
+q:'The 3rd legendary Sangam assembly, whose works survived, was presided over by:',
+o:['Agastya',
+'Tolkappiyar',
+'Nakkirar',
+'Tiruvalluvar'],
+a:2,
+e:'The 3rd Sangam (held at Madurai) was presided over by Nakkirar. The 3rd Sangam\'s works are what we call Sangam literature.'}
+]}
+,
+{
+id:'na1',
+title:'Nayanmars & Alvars',
+xp:150,
+type:'regular',
+seqIdx:13,
+learn:'<h2 class="sec-head">🙏 Nayanmars & Alvars — South Indian Bhakti</h2><h3 class="sub-head">Nayanmars (Shaiva Bhakti Saints)</h3><table class=""><thead><tr><th>Detail</th><th>Info</th></tr></thead><tbody><tr><td>Total</td><td>63 Nayanmars</td></tr><tr><td>Period</td><td>6th–9th century AD</td></tr><tr><td>Language</td><td>Tamil</td></tr><tr><td>Hymns to Shiva</td><td>Devaram (part of Panniru Thirumurai — 12 volumes)</td></tr></tbody></table><table class=""><thead><tr><th>Saint</th><th>Key Fact</th></tr></thead><tbody><tr><td>Appar (Thirunavukkarasar)</td><td>Converted MAHENDRAVARMAN I (Pallava) from Jainism to Shaivism ← SSC FREQUENT</td></tr><tr><td>Thirugnana Sambandar</td><td>Child saint; 4000+ hymns</td></tr><tr><td>Sundarar</td><td>Intimate devotion to Shiva</td></tr><tr><td>Manikkavachakar</td><td>Composed THIRUVASAGAM (most moving Shaiva text)</td></tr></tbody></table><h3 class="sub-head">Alvars (Vaishnava Bhakti Saints)</h3><table class=""><thead><tr><th>Detail</th><th>Info</th></tr></thead><tbody><tr><td>Total</td><td>12 Alvars</td></tr><tr><td>Period</td><td>6th–9th century AD</td></tr><tr><td>Language</td><td>Tamil</td></tr><tr><td>Hymns to Vishnu</td><td>Divya Prabandham (Nalayira = 4000 divine compositions)</td></tr></tbody></table><table class=""><thead><tr><th>Alvar</th><th>Key Fact</th></tr></thead><tbody><tr><td>Nammalvar</td><td>Greatest Alvar; composed THIRUVAIMOZHI</td></tr><tr><td>Andal</td><td>ONLY WOMAN Alvar ← HIGH FREQ; composed TIRUPPAVAI (30 hymns); said to marry Vishnu at Srirangam</td></tr><tr><td>Periyalvar</td><td>Andal\'s father; composed Thiruppallandu</td></tr><tr><td>Kulashekhara Alvar</td><td>Chera king who became Alvar; composed Mukundamala</td></tr></tbody></table><div class="trap-box">⚠️ EXAM TRAP: 63 Nayanmars (Shaiva) vs 12 Alvars (Vaishnava) — never confuse. Andal = ONLY WOMAN Alvar (NOT Nayanmar). Appar converted Mahendravarman I — Pallava king (Shaivism). Devaram = Nayanmars. Divya Prabandham = Alvars.</div>',
+revision:['Nayanmars=63 Shaiva Bhakti saints(6th-9th c AD,Tamil), hymns=Devaram(part of Panniru Thirumurai)','Appar converted Mahendravarman I(Pallava) from Jainism to Shaivism — SSC FREQUENT','Manikkavachakar composed Thiruvasagam | Thirugnana Sambandar=child saint,4000+ hymns','Alvars=Vaishnava Bhakti saints (parallel to Nayanmars)','Bhakti movement in South India predates North Indian Bhakti by centuries'],
+oneliners:['Nayanmars were Shaiva Bhakti saints from South India, numbering 63','Nayanmars composed hymns in Tamil during the 6th-9th centuries AD','Nayanmar hymns to Shiva are called the Devaram','The Devaram is part of the larger Panniru Thirumurai (12 volumes)','Appar (Thirunavukkarasar) converted Pallava king Mahendravarman I from Jainism to Shaivism','Thirugnana Sambandar was a child saint who composed over 4000 hymns','Sundarar was known for his intimate devotion to Shiva','Manikkavachakar composed the Thiruvasagam, one of the most revered Shaiva works','Alvars were the Vaishnava counterparts to the Shaiva Nayanmars','The South Indian Bhakti movement significantly predates the North Indian Bhakti movement'],
+flashcards:[{q:'How many Nayanmars were there, and what tradition did they follow?',a:'63; Shaiva Bhakti tradition'},{q:'What are the Nayanmar hymns to Shiva called?',a:'The Devaram'},{q:'Which Nayanmar converted Mahendravarman I from Jainism to Shaivism?',a:'Appar (Thirunavukkarasar)'},{q:'Which Nayanmar was a child saint with 4000+ hymns?',a:'Thirugnana Sambandar'},{q:'Who composed the Thiruvasagam?',a:'Manikkavachakar'},{q:'Who were the Vaishnava equivalent of the Nayanmars?',a:'The Alvars'}],
+mcqs:[{
+q:'How many Nayanmars (Shaiva Bhakti saints) were there?',
+o:['12',
+'18',
+'63',
+'108'],
+a:2,
+e:'There were 63 Nayanmars — Tamil Shaiva Bhakti saints who composed hymns to Shiva (6th–9th century AD).'}
+,
+{
+q:'The hymn-collection of the Nayanmars is called:',
+o:['Divya Prabandham',
+'Devaram',
+'Tiruppavai',
+'Panniru Thirumurai'],
+a:1,
+e:'The Nayanmars\' hymns to Shiva are collected as Devaram, part of the Panniru Thirumurai (12 volumes).'}
+,
+{
+q:'Which Nayanmar converted Mahendravarman I (Pallava) from Jainism to Shaivism?',
+o:['Sundarar',
+'Manikkavachakar',
+'Appar (Thirunavukkarasar)',
+'Thirugnana Sambandar'],
+a:2,
+e:'Appar (Thirunavukkarasar) converted Mahendravarman I from Jainism to Shaivism — very high SSC/TNPSC frequency fact.'}
+,
+{
+q:'How many Alvars (Vaishnava Bhakti saints) were there?',
+o:['12',
+'18',
+'63',
+'108'],
+a:0,
+e:'There were 12 Alvars — Tamil Vaishnava Bhakti saints. 63 is the number of Nayanmars (Shaiva saints).'}
+,
+{
+q:'The collection of Alvars\' hymns to Vishnu is called:',
+o:['Devaram',
+'Panniru Thirumurai',
+'Divya Prabandham (Nalayira)',
+'Thiruvasagam'],
+a:2,
+e:'The 12 Alvars composed 4000 Tamil hymns collected as Divya Prabandham (also called Nalayira Divya Prabandham).'}
+,
+{
+q:'Who is the ONLY woman Alvar?',
+o:['Nammalvar',
+'Periyalvar',
+'Kulashekhara Alvar',
+'Andal'],
+a:3,
+e:'Andal is the only woman Alvar. She composed Tiruppavai (30 hymns) and is said to have married Vishnu at Srirangam.'}
+,
+{
+q:'Andal composed which famous work?',
+o:['Thiruvaimozhi',
+'Thiruppallandu',
+'Tiruppavai',
+'Mukundamala'],
+a:2,
+e:'Andal composed Tiruppavai (30 hymns to Vishnu). Her father Periyalvar composed Thiruppallandu.'}
+,
+{
+q:'The greatest Alvar who composed \'Thiruvaimozhi\' was:',
+o:['Andal',
+'Nammalvar',
+'Periyalvar',
+'Kulashekhara Alvar'],
+a:1,
+e:'Nammalvar is considered the greatest Alvar, famous for composing Thiruvaimozhi.'}
+,
+{
+q:'\'Thiruvasagam\' (most moving Shaiva devotional text) was composed by:',
+o:['Appar',
+'Sundarar',
+'Thirugnana Sambandar',
+'Manikkavachakar'],
+a:3,
+e:'Manikkavachakar composed Thiruvasagam — considered the most moving Shaiva devotional text in Tamil.'}
+,
+{
+q:'The South Indian Bhakti movement (Nayanmars and Alvars) is considered:',
+o:['Contemporary to North Indian Bhakti',
+'A precursor/source of the North Indian Bhakti movement',
+'A response to North Indian Bhakti',
+'Completely separate from North Indian Bhakti'],
+a:1,
+e:'The South Indian Nayanmars and Alvars (6th–9th century) are considered precursors to the North Indian Bhakti movement (Kabir, Mirabai, etc.).'}
+]}
+,
+{
+id:'c1',
+title:'Coins of Ancient India',
+xp:150,
+type:'regular',
+seqIdx:14,
+learn:'<h2 class="sec-head">💰 Coins of Ancient India</h2><table class=""><thead><tr><th>Period</th><th>Coin Type</th><th>Metal</th><th>Key Feature</th></tr></thead><tbody><tr><td>Pre-Mauryan (7th–4th BC)</td><td>Punch-marked (Ahata) coins</td><td>Silver mainly</td><td>EARLIEST coins; 5 symbols punched; no king\'s name</td></tr><tr><td>Indo-Greek</td><td>Bilingual + bimetallic</td><td>Gold + silver</td><td>1ST TO ISSUE GOLD COINS in India ← SSC TRAP</td></tr><tr><td>Kushan (Kanishka)</td><td>Gold Dinars</td><td>Gold</td><td>1st coins depicting BUDDHA in human form; multi-religious icons</td></tr><tr><td>Satavahana</td><td>Lead coins (most common)</td><td>Lead</td><td>MOST COMMON = LEAD ← SSC TRAP; 1ST to depict RULER\'S PORTRAIT</td></tr><tr><td>Gupta</td><td>Gold Dinars</td><td>Gold</td><td>MOST ARTISTIC period; Samudragupta veena; CG II tiger-slaying</td></tr></tbody></table><h3 class="sub-head">SSC Key Facts</h3><table class=""><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>1st coins in India</td><td>Punch-marked (Ahata) coins — 7th century BC</td></tr><tr><td>1st gold coins</td><td>INDO-GREEKS (NOT Guptas) ← TRAP</td></tr><tr><td>Most artistic coins</td><td>GUPTA period</td></tr><tr><td>Lead coins</td><td>SATAVAHANAS ← TRAP</td></tr><tr><td>1st to depict ruler portrait</td><td>SATAVAHANAS ← HIGH FREQ</td></tr><tr><td>1st to depict Buddha on coins</td><td>KANISHKA (Kushan)</td></tr><tr><td>Gold = Dinar</td><td>Kushan + Gupta term</td></tr><tr><td>Saka Era on coins</td><td>78 AD; Kanishka</td></tr></tbody></table><div class="trap-box">⚠️ EXAM TRAP: 1st gold coins = INDO-GREEKS (not Guptas). Satavahana coins = primarily LEAD (not gold). Satavahanas = 1st to show ruler portrait on coins. Most artistic = Gupta (gold Dinara).</div>',
+revision:['Pre-Mauryan(7th-4thBC): Punch-marked/Ahata coins, silver, EARLIEST, no king\'s name','Indo-Greek: bilingual+bimetallic, 1ST to issue GOLD coins in India - SSC TRAP','Kushan(Kanishka): gold Dinars, 1st coins depicting Buddha in human form','Satavahana: lead coins MOST COMMON - SSC TRAP, 1st to depict ruler\'s portrait','Gupta: gold coins (most varied), Chandragupta II 1st to issue silver'],
+oneliners:['Punch-marked (Ahata) coins were the earliest Indian coins, mainly silver, Pre-Mauryan period','Punch-marked coins had 5 symbols punched but no king\'s name','Indo-Greeks were the first to issue gold coins in India','Indo-Greek coins were bilingual and bimetallic','Kushan king Kanishka issued gold Dinars','Kushan coins were the first to depict Buddha in human form','Satavahana coins were most commonly made of lead','Satavahanas were the first to depict a ruler\'s portrait on coins','Gupta coins, mostly gold, came in the largest variety of types','Chandragupta II was the first Gupta ruler to issue silver coins'],
+flashcards:[{q:'What were the earliest Indian coins called, and their metal?',a:'Punch-marked (Ahata) coins; mainly silver'},{q:'Who was first to issue gold coins in India?',a:'The Indo-Greeks'},{q:'What were Kushan gold coins called?',a:'Dinars'},{q:'Which coins first depicted Buddha in human form?',a:'Kushan (Kanishka\'s) coins'},{q:'What metal did Satavahanas most commonly use for coins?',a:'Lead'},{q:'Who first depicted a ruler\'s portrait on Indian coins?',a:'The Satavahanas'},{q:'Which Gupta ruler first issued silver coins?',a:'Chandragupta II'}],
+mcqs:[{
+q:'The earliest coins in India are called:',
+o:['Gold Dinara',
+'Bilingual coins',
+'Punch-marked coins (Ahata coins)',
+'Potin coins'],
+a:2,
+e:'Punch-marked coins (Ahata coins), dating to the 7th century BC, are the earliest coins in India — 5 symbols punched, no king\'s name.'}
+,
+{
+q:'The FIRST dynasty to issue gold coins in India was:',
+o:['Mauryas',
+'Guptas',
+'Indo-Greeks',
+'Kushans'],
+a:2,
+e:'TRAP — The Indo-Greeks were the FIRST to issue gold coins in India. Guptas issued highly artistic gold coins later.'}
+,
+{
+q:'The MOST ARTISTIC coins in Indian history belong to which period?',
+o:['Mauryan',
+'Kushan',
+'Gupta',
+'Satavahana'],
+a:2,
+e:'Gupta period coins are the most artistic — Samudragupta\'s veena-playing coins and Chandragupta II\'s tiger-slaying coins are famous.'}
+,
+{
+q:'Satavahanas were known primarily for issuing which type of coins?',
+o:['Gold Dinara',
+'Silver punch-marked coins',
+'Lead coins',
+'Bimetallic coins'],
+a:2,
+e:'Satavahanas primarily issued LEAD coins — a common SSC trap. They also used copper and potin.'}
+,
+{
+q:'Which dynasty was the FIRST to depict the ruler\'s portrait on coins?',
+o:['Kushans',
+'Guptas',
+'Satavahanas',
+'Indo-Greeks'],
+a:2,
+e:'Satavahanas were the FIRST to depict the ruler\'s portrait on coins in India — a high-frequency SSC fact.'}
+,
+{
+q:'The gold coins of the Gupta and Kushan period were called:',
+o:['Karshapana',
+'Nishka',
+'Dinara',
+'Tanka'],
+a:2,
+e:'Gupta and Kushan gold coins were called Dinara (borrowed from Roman Denarius).'}
+,
+{
+q:'Kanishka\'s coins were the first to depict:',
+o:['A Hindu deity',
+'A Jain Tirthankara',
+'Buddha in human form',
+'A map of the empire'],
+a:2,
+e:'Kanishka\'s (Kushan) coins were the first to depict Buddha in human form on coins. They also showed Greek, Iranian, and Indian deities.'}
+,
+{
+q:'Punch-marked coins used which primary metal?',
+o:['Gold',
+'Silver',
+'Lead',
+'Bronze'],
+a:1,
+e:'Pre-Mauryan punch-marked coins were primarily made of silver. Copper was also used. Gold was not common.'}
+,
+{
+q:'The Indo-Greek coins were distinctive for being:',
+o:['Monolingual with Indian script only',
+'Bilingual and bimetallic (gold+silver)',
+'Made of lead',
+'Without any images'],
+a:1,
+e:'Indo-Greek coins were bilingual (Greek on one side, Indian/Kharoshthi on other) and bimetallic — a distinctive feature.'}
+,
+{
+q:'Samudragupta\'s coins show him:',
+o:['On horseback',
+'Slaying a tiger',
+'Playing the veena',
+'Seated with consort'],
+a:2,
+e:'Samudragupta\'s most famous coins show him playing the veena, reflecting his love of music and his title Kaviraj. (CG II\'s coins show tiger-slaying.)'}
+]}
+,
+{
+id:'ae1',
+title:'Ajanta & Ellora Caves',
+xp:160,
+type:'regular',
+seqIdx:15,
+learn:'<h2 class="sec-head">🖼️ Ajanta & Ellora Caves</h2><h3 class="sub-head">Ajanta Caves</h3><table class=""><thead><tr><th>Detail</th><th>Info</th></tr></thead><tbody><tr><td>Location</td><td>Aurangabad dist., Maharashtra (Waghora river gorge)</td></tr><tr><td>Total caves</td><td>30 caves (Chaityas + Viharas)</td></tr><tr><td>Rediscovered</td><td>1819 by British officer JOHN SMITH (tiger-hunting) ← TRAP</td></tr><tr><td>UNESCO</td><td>1983</td></tr></tbody></table><table class=""><thead><tr><th>Phase</th><th>Period</th><th>Type</th><th>Caves</th></tr></thead><tbody><tr><td>Phase 1</td><td>2nd BC – 1st AD</td><td>Hinayana Buddhist</td><td>9, 10, 12, 13, 15A (Satavahana period)</td></tr><tr><td>Phase 2</td><td>5th–7th AD</td><td>Mahayana Buddhist</td><td>1, 2, 16, 17 (Gupta + Vakataka period)</td></tr></tbody></table><p>Famous Paintings: <b>Cave 1</b> = Bodhisattva Padmapani (most famous) + Mother & Child. <b>Cave 17</b> = Flying Apsara. <b>Cave 16</b> = Dying Princess (Sundari).</p><h3 class="sub-head">Ellora Caves</h3><table class=""><thead><tr><th>Detail</th><th>Info</th></tr></thead><tbody><tr><td>Location</td><td>Aurangabad dist., Maharashtra (34 km from city)</td></tr><tr><td>Total caves</td><td>34 caves</td></tr><tr><td>UNESCO</td><td>1983</td></tr></tbody></table><table class=""><thead><tr><th>Caves</th><th>Religion</th><th>Period</th></tr></thead><tbody><tr><td>1–12</td><td>Buddhist</td><td>5th–7th century AD</td></tr><tr><td>13–29</td><td>Hindu</td><td>6th–9th century AD</td></tr><tr><td>30–34</td><td>Jain</td><td>8th–11th century AD (Rashtrakutas)</td></tr></tbody></table><table class=""><thead><tr><th>Cave</th><th>Name</th><th>Key Feature</th></tr></thead><tbody><tr><td>Cave 10</td><td>Vishvakarma (Buddhist)</td><td>Chaitya hall; Buddha teaching</td></tr><tr><td>Cave 16</td><td>Kailash Temple (Hindu)</td><td>KRISHNA I (Rashtrakuta); carved from SINGLE ROCK; dedicated to Shiva; ~150 years</td></tr><tr><td>Cave 32</td><td>Indra Sabha (Jain)</td><td>Most beautiful Jain cave; like Indra\'s palace</td></tr></tbody></table><div class="trap-box">⚠️ EXAM TRAP: Ajanta rediscovered by JOHN SMITH (1819) — not a modern discovery. Phase 2 (finest paintings) = Mahayana. Kailash Temple = KRISHNA I Rashtrakuta (not Dantidurga). Ellora Buddhist = 1–12; Hindu = 13–29; Jain = 30–34.</div>',
+revision:['Ajanta: Aurangabad(MH),Waghora river gorge,30 caves,rediscovered 1819 by John Smith,UNESCO 1983','Ajanta Phase1(2ndBC-1stAD,Hinayana,Satavahana) | Phase2(5th-7thAD,Mahayana,Gupta+Vakataka)','Ellora: 34 caves, 3 religions(Buddhist+Hindu+Jain) in one site, Kailash Temple(Hindu,rock-cut,Rashtrakuta)','Ajanta=paintings famous | Ellora=Kailash Temple(monolithic rock-cut) famous','Both in Maharashtra, both UNESCO sites'],
+oneliners:['Ajanta Caves are located in Aurangabad district, Maharashtra, in the Waghora river gorge','Ajanta has 30 caves total, comprising Chaityas and Viharas','Ajanta Caves were rediscovered in 1819 by British officer John Smith during a tiger hunt','Ajanta received UNESCO World Heritage status in 1983','Ajanta Phase 1 (2nd BC-1st AD) is Hinayana Buddhist, from the Satavahana period','Ajanta Phase 2 (5th-7th AD) is Mahayana Buddhist, from the Gupta-Vakataka period','Ellora Caves have 34 caves representing three religions: Buddhism, Hinduism, and Jainism','The Kailash Temple at Ellora is a massive monolithic rock-cut Hindu temple','The Kailash Temple was built under the Rashtrakuta dynasty','Ajanta is most famous for its paintings; Ellora is most famous for the Kailash Temple'],
+flashcards:[{q:'Where are the Ajanta Caves located?',a:'Aurangabad district, Maharashtra, in the Waghora river gorge'},{q:'Who rediscovered the Ajanta Caves, and how?',a:'British officer John Smith, in 1819, while tiger hunting'},{q:'What are the two phases of Ajanta caves?',a:'Phase 1: Hinayana (Satavahana period); Phase 2: Mahayana (Gupta-Vakataka period)'},{q:'How many caves does Ellora have, and how many religions do they represent?',a:'34 caves; 3 religions (Buddhism, Hinduism, Jainism)'},{q:'What is the Kailash Temple at Ellora, and who built it?',a:'A monolithic rock-cut Hindu temple, built by the Rashtrakutas'},{q:'What is Ajanta most famous for vs Ellora?',a:'Ajanta: paintings | Ellora: the Kailash Temple'}],
+mcqs:[{
+q:'Ajanta Caves are located in:',
+o:['Rajasthan',
+'Karnataka',
+'Aurangabad district, Maharashtra',
+'Bhopal, MP'],
+a:2,
+e:'Ajanta Caves are in Aurangabad district, Maharashtra, carved into a horseshoe-shaped gorge on the Waghora river.'}
+,
+{
+q:'Ajanta Caves were rediscovered in 1819 by:',
+o:['An Indian archaeologist named Cunningham',
+'British officer John Smith (while tiger-hunting)',
+'French explorer in the Deccan',
+'Mughal emperor Akbar'],
+a:1,
+e:'British officer John Smith rediscovered Ajanta while tiger-hunting in 1819 — many assume it was a deliberate modern discovery (exam trap).'}
+,
+{
+q:'Which Ajanta phase is associated with Mahayana Buddhism (finest paintings)?',
+o:['Phase 1 (Caves 9, 10)',
+'Phase 2 (Caves 1, 2, 16, 17)',
+'All caves equally',
+'Caves 30-34 (Buddhist)'],
+a:1,
+e:'Phase 2 of Ajanta (5th–7th century AD, Gupta + Vakataka period) features Mahayana Buddhist art — finest paintings.'}
+,
+{
+q:'The most famous Ajanta painting \'Bodhisattva Padmapani\' is in:',
+o:['Cave 2',
+'Cave 10',
+'Cave 1',
+'Cave 17'],
+a:2,
+e:'Bodhisattva Padmapani is in Cave 1 of Ajanta — the most famous Ajanta painting. Cave 17 has the \'Flying Apsara\'.'}
+,
+{
+q:'Total number of caves at Ajanta:',
+o:['25',
+'30',
+'34',
+'16'],
+a:1,
+e:'Ajanta has 30 caves total (Chaityas and Viharas). Ellora has 34 caves — don\'t confuse.'}
+,
+{
+q:'Ellora Caves represent which THREE religions?',
+o:['Buddhist, Jain, Hindu',
+'Buddhist, Hindu, Islamic',
+'Hindu, Jain, Sikh',
+'Islamic, Buddhist, Christian'],
+a:0,
+e:'Ellora has 34 caves: Buddhist (1–12), Hindu (13–29), Jain (30–34).'}
+,
+{
+q:'The Kailash Temple at Ellora (Cave 16) is remarkable because:',
+o:['It was built brick by brick from quarried stone',
+'It was carved from a SINGLE ROCK',
+'It is the oldest cave in Ellora',
+'It was built using only wood then encased in stone'],
+a:1,
+e:'The Kailash Temple (Cave 16) at Ellora was carved from a SINGLE ROCK — dedicated to Shiva; built by Krishna I (Rashtrakuta); took ~150 years.'}
+,
+{
+q:'Ellora Caves received UNESCO World Heritage status in:',
+o:['1972',
+'1978',
+'1983',
+'1990'],
+a:2,
+e:'Ellora Caves (and Ajanta) received UNESCO World Heritage status in 1983.'}
+,
+{
+q:'The Buddhist caves at Ellora are numbered:',
+o:['1-12',
+'13-29',
+'30-34',
+'15-25'],
+a:0,
+e:'Buddhist caves at Ellora are Caves 1–12. Hindu = 13–29. Jain = 30–34.'}
+,
+{
+q:'The most beautiful Jain cave at Ellora \'Indra Sabha\' is:',
+o:['Cave 10',
+'Cave 16',
+'Cave 29',
+'Cave 32'],
+a:3,
+e:'Cave 32 (Indra Sabha) is the most beautiful Jain cave at Ellora, built during the Rashtrakuta period.'}
+]}
+,
+{
+id:'ck1',
+title:'Chalukyas of Kalyani',
+xp:140,
+type:'regular',
+seqIdx:16,
+learn:'<h2 class="sec-head">⚜️ Chalukyas of Kalyani (Later Western Chalukyas)</h2><table class=""><thead><tr><th>Detail</th><th>Info</th></tr></thead><tbody><tr><td>Period</td><td>~973–1189 AD</td></tr><tr><td>Capital</td><td>Kalyani (modern Basavakalyan, Karnataka)</td></tr><tr><td>Founded by</td><td>Tailapa II (overthrew Rashtrakuta king Karka II in 973 AD)</td></tr><tr><td>Overthrown by</td><td>Hoysalas + Kalachuris</td></tr></tbody></table><h3 class="sub-head">Key Rulers</h3><table class=""><thead><tr><th>Ruler</th><th>Achievement</th></tr></thead><tbody><tr><td>Tailapa II</td><td>Founder; dethroned Rashtrakutas</td></tr><tr><td>Vikramaditya VI (1076–1126)</td><td>Greatest; great arts patron; Chalukya-Vikrama Era (1076 AD)</td></tr></tbody></table><h3 class="sub-head">Vikramaditya VI\'s Famous Court</h3><table class=""><thead><tr><th>Scholar</th><th>Work</th><th>Significance</th></tr></thead><tbody><tr><td>Bilhana</td><td>Vikramankadevacharita</td><td>Sanskrit biography of Vikramaditya VI in 18 cantos</td></tr><tr><td>Vijnaneshvara</td><td>Mitakshara</td><td>Most important Hindu law commentary; influenced inheritance law across India (except Bengal); basis of Hindu Succession Act</td></tr></tbody></table><div class="trap-box">⚠️ EXAM TRAP: Mitakshara = VIJNANESHVARA (not Bilhana). Kavirajamarga (oldest Kannada work) = AMOGHAVARSHA I (Rashtrakuta) — not Chalukya of Kalyani. Chalukya-Vikrama Era starts 1076 AD.</div>',
+revision:['Chalukyas of Kalyani(~973-1189AD), capital Kalyani(Basavakalyan,Karnataka)','Founded by Tailapa II(overthrew Rashtrakuta king Karka II,973AD)','Overthrown by Hoysalas+Kalachuris','Greatest ruler: Vikramaditya VI(1076-1126), patron of arts, started Chalukya-Vikrama Era(1076AD)','Distinct from earlier Chalukyas of Badami/Vatapi (different era, same family name)'],
+oneliners:['The Chalukyas of Kalyani ruled approximately 973-1189 AD','Their capital was Kalyani, modern Basavakalyan in Karnataka','Tailapa II founded this dynasty by overthrowing the Rashtrakuta king Karka II in 973 AD','The Chalukyas of Kalyani were eventually overthrown by the Hoysalas and Kalachuris','Vikramaditya VI (1076-1126) was the greatest ruler of this dynasty','Vikramaditya VI was a great patron of arts and literature','Vikramaditya VI started the Chalukya-Vikrama Era in 1076 AD','This dynasty is also called the Later Western Chalukyas','They are distinct from the earlier Chalukyas of Badami (Vatapi)'],
+flashcards:[{q:'Who founded the Chalukyas of Kalyani, and how?',a:'Tailapa II, by overthrowing Rashtrakuta king Karka II in 973 AD'},{q:'What was the capital of the Chalukyas of Kalyani?',a:'Kalyani (modern Basavakalyan, Karnataka)'},{q:'Who was the greatest ruler of this dynasty?',a:'Vikramaditya VI (1076-1126)'},{q:'What era did Vikramaditya VI start, and when?',a:'The Chalukya-Vikrama Era, in 1076 AD'},{q:'Who overthrew the Chalukyas of Kalyani?',a:'The Hoysalas and Kalachuris'},{q:'What is another name for this dynasty?',a:'Later Western Chalukyas'}],
+mcqs:[{
+q:'The Chalukyas of Kalyani are also known as:',
+o:['Eastern Chalukyas',
+'Early Chalukyas of Badami',
+'Later Chalukyas of Kalyani (Western Chalukyas)',
+'Northern Chalukyas'],
+a:2,
+e:'Chalukyas of Kalyani = Later Chalukyas of Kalyani or Western Chalukyas. Different from Eastern Chalukyas of Vengi.'}
+,
+{
+q:'The Chalukyas of Kalyani were founded by:',
+o:['Pulakeshin I',
+'Vikramaditya VI',
+'Tailapa II',
+'Kirtivarman I'],
+a:2,
+e:'Tailapa II founded the Chalukyas of Kalyani in 973 AD by overthrowing Rashtrakuta king Karka II.'}
+,
+{
+q:'Capital of the Chalukyas of Kalyani was:',
+o:['Badami (Vatapi)',
+'Vengi',
+'Manyakheta',
+'Kalyani (modern Basavakalyan, Karnataka)'],
+a:3,
+e:'Kalyani (modern Basavakalyan, Karnataka) was the capital of the Later Chalukyas (Chalukyas of Kalyani).'}
+,
+{
+q:'The greatest ruler of the Chalukyas of Kalyani was:',
+o:['Tailapa II',
+'Vikramaditya VI',
+'Kirtivarman III',
+'Somesvara I'],
+a:1,
+e:'Vikramaditya VI (1076–1126 AD) was the greatest — great patron of arts; started the Chalukya-Vikrama Era (1076 AD).'}
+,
+{
+q:'Vikramaditya VI\'s court scholar Bilhana wrote:',
+o:['Mitakshara',
+'Kavirajamarga',
+'Vikramankadevacharita',
+'Amarakosha'],
+a:2,
+e:'Bilhana wrote Vikramankadevacharita — an 18-canto Sanskrit biography of Vikramaditya VI.'}
+,
+{
+q:'\'Mitakshara\', the most important Hindu law commentary, was written by:',
+o:['Bilhana',
+'Vijnaneshvara',
+'Varahamihira',
+'Kautilya'],
+a:1,
+e:'Vijnaneshvara, a jurist in Vikramaditya VI\'s court, wrote Mitakshara — influenced Hindu inheritance law across India (except Bengal).'}
+,
+{
+q:'Mitakshara became the basis of which modern Indian law?',
+o:['Indian Penal Code',
+'Hindu Succession Act',
+'Muslim Personal Law',
+'Indian Contract Act'],
+a:1,
+e:'Mitakshara by Vijnaneshvara became the basis of the Hindu Succession Act governing inheritance laws.'}
+,
+{
+q:'The Chalukya-Vikrama Era was started in:',
+o:['319 AD',
+'78 AD',
+'1076 AD',
+'973 AD'],
+a:2,
+e:'The Chalukya-Vikrama Era started in 1076 AD, named after Vikramaditya VI of the Chalukyas of Kalyani.'}
+,
+{
+q:'The Chalukyas of Kalyani were overthrown by:',
+o:['Cholas and Pallavas',
+'Hoysalas and Kalachuris',
+'Vijayanagara and Bahmani',
+'Rashtrakutas and Mughals'],
+a:1,
+e:'The Chalukyas of Kalyani were overthrown by the Hoysalas and Kalachuris around 1189 AD.'}
+,
+{
+q:'\'Kavirajamarga\' (oldest Kannada literary work) was written by:',
+o:['Bilhana',
+'Vijnaneshvara',
+'Amoghavarsha I (Rashtrakuta)',
+'Vikramaditya VI'],
+a:2,
+e:'Kavirajamarga was written by Amoghavarsha I of the Rashtrakuta dynasty — NOT by any Chalukya of Kalyani scholar.'}
+]}
+,
+{
+id:'v1',
+title:'Vakatakas',
+xp:130,
+type:'regular',
+seqIdx:17,
+learn:'<h2 class="sec-head">🏰 Vakataka Dynasty (~250–500 AD)</h2><table class=""><thead><tr><th>Detail</th><th>Info</th></tr></thead><tbody><tr><td>Region</td><td>Vidarbha (Maharashtra + MP) — Central India</td></tr><tr><td>Contemporary of</td><td>GUPTAS (matrimonial alliance)</td></tr><tr><td>Key alliance</td><td>Chandragupta II\'s daughter PRABHAVATI GUPTA married Vakataka king RUDRASENA II</td></tr><tr><td>After Rudrasena\'s death</td><td>Prabhavati ruled as regent → Gupta influence extended to Deccan</td></tr><tr><td>Key patron</td><td>PRAVARASENA II — patronized Ajanta Phase 2 caves</td></tr><tr><td>Religion</td><td>Brahmanical + Buddhist art</td></tr></tbody></table><p>Vakataka territory = buffer between Guptas (north) and Deccan powers (south). This matrimonial alliance was key to Gupta cultural expansion.</p><div class="trap-box">⚠️ EXAM TRAP: Ajanta Phase 2 was patronized by BOTH Guptas AND Vakatakas (Pravarasena II). Prabhavati Gupta was CHANDRAGUPTA II\'s daughter — married into Vakatakas.</div>',
+revision:['Vakatakas(~250-500AD), region Vidarbha(Maharashtra+MP), Central India','Contemporary of Guptas via matrimonial alliance','Chandragupta II\'s daughter Prabhavati Gupta married Vakataka king Rudrasena II','After Rudrasena\'s death, Prabhavati ruled as regent — extended Gupta influence to Deccan','Key patron Pravarasena II patronized Ajanta Phase 2 caves'],
+oneliners:['The Vakataka dynasty ruled approximately 250-500 AD','Vakatakas were based in Vidarbha, in Maharashtra and Madhya Pradesh, Central India','Vakatakas were contemporaries of the Guptas, linked by marriage','Chandragupta II\'s daughter, Prabhavati Gupta, married Vakataka king Rudrasena II','After Rudrasena II\'s death, Prabhavati Gupta ruled as regent','Prabhavati Gupta\'s regency extended Gupta influence into the Deccan','Vakataka king Pravarasena II patronized the Ajanta Phase 2 caves','Vakatakas followed both Brahmanical religion and patronized Buddhist art','The Vakataka territory acted as a buffer between the Guptas (north) and Deccan powers (south)'],
+flashcards:[{q:'Where were the Vakatakas based?',a:'Vidarbha, in Maharashtra and Madhya Pradesh'},{q:'How were the Vakatakas connected to the Guptas?',a:'By marriage — Chandragupta II\'s daughter Prabhavati Gupta married Vakataka king Rudrasena II'},{q:'What did Prabhavati Gupta do after Rudrasena II\'s death?',a:'Ruled as regent, extending Gupta influence into the Deccan'},{q:'Which Vakataka king patronized Ajanta Phase 2 caves?',a:'Pravarasena II'},{q:'What geopolitical role did Vakataka territory play?',a:'A buffer between the Guptas (north) and Deccan powers (south)'}],
+mcqs:[{
+q:'The Vakataka dynasty was based in:',
+o:['Punjab and Rajasthan',
+'Bengal and Assam',
+'Vidarbha (Maharashtra + MP)',
+'Tamil Nadu and Andhra Pradesh'],
+a:2,
+e:'The Vakataka dynasty ruled Vidarbha (Central India — modern Maharashtra + MP) from approximately 250–500 AD.'}
+,
+{
+q:'The Vakatakas were contemporaries of which major dynasty?',
+o:['Mauryas',
+'Guptas',
+'Cholas',
+'Chalukyas of Badami'],
+a:1,
+e:'The Vakatakas were contemporaries of the Guptas and had an important matrimonial alliance with them.'}
+,
+{
+q:'Chandragupta II gave his daughter Prabhavati Gupta in marriage to:',
+o:['Pravarasena II',
+'Narendrasena',
+'Rudrasena II',
+'Vindhyashakti'],
+a:2,
+e:'Prabhavati Gupta married Vakataka king Rudrasena II. After his death she ruled as regent, extending Gupta influence to the Deccan.'}
+,
+{
+q:'The finest Ajanta Cave paintings (Phase 2) were patronized by:',
+o:['Mauryas only',
+'Kushans only',
+'Guptas and Vakatakas',
+'Cholas and Pallavas'],
+a:2,
+e:'Ajanta Phase 2 paintings were patronized by both the Guptas and Vakatakas (particularly Pravarasena II).'}
+,
+{
+q:'After Rudrasena II\'s death, Prabhavati Gupta:',
+o:['Became a Buddhist nun',
+'Ruled as regent, extending Gupta influence to Deccan',
+'Married a Pallava king',
+'Returned to Pataliputra permanently'],
+a:1,
+e:'After Rudrasena II\'s death, Prabhavati Gupta ruled as regent — extending Gupta cultural and political influence into the Deccan.'}
+,
+{
+q:'Vakataka territory served as:',
+o:['Eastern gateway for trade',
+'Buffer between Guptas (north) and Deccan powers',
+'Northern frontier against Hunas',
+'Naval base for coastal trade'],
+a:1,
+e:'Vakataka territory served as a buffer zone between the Guptas (north) and the Deccan powers (south).'}
+,
+{
+q:'Which Vakataka king was the primary patron of Ajanta Phase 2?',
+o:['Rudrasena II',
+'Vindhyashakti',
+'Pravarasena II',
+'Narendrasena'],
+a:2,
+e:'Pravarasena II was the great Vakataka king who patronized Ajanta caves (Phase 2).'}
+,
+{
+q:'The Vakatakas promoted which combination of religions?',
+o:['Buddhism only',
+'Jainism only',
+'Brahmanical religion + Buddhist art',
+'Islam and Hinduism'],
+a:2,
+e:'The Vakatakas promoted Brahmanical Hinduism while also patronizing Buddhist art (particularly Ajanta cave paintings).'}
+,
+{
+q:'The Gupta-Vakataka matrimonial alliance was strategically important because:',
+o:['It united North and South India permanently',
+'Extended Gupta influence via Prabhavati\'s regency in Deccan',
+'Created a joint military against Hunas',
+'Led to Vakatakas converting to Buddhism'],
+a:1,
+e:'The alliance extended Gupta influence into Deccan when Prabhavati Gupta became regent after Rudrasena II\'s death.'}
+,
+{
+q:'Vakatakas ruled from approximately:',
+o:['100–300 AD',
+'250–500 AD',
+'500–750 AD',
+'600–800 AD'],
+a:1,
+e:'The Vakataka dynasty ruled from approximately 250–500 AD, overlapping significantly with the Gupta period.'}
+]}
+,
+{
+id:'k1',
+title:'Kharavela of Kalinga',
+xp:150,
+type:'regular',
+seqIdx:18,
+learn:'<h2 class="sec-head">📜 Kharavela of Kalinga</h2><table class=""><thead><tr><th>Detail</th><th>Info</th></tr></thead><tbody><tr><td>Period</td><td>~1st century BC</td></tr><tr><td>Dynasty</td><td>Mahameghavahana</td></tr><tr><td>Kingdom</td><td>Kalinga (modern Odisha)</td></tr><tr><td>Famous inscription</td><td>HATHIGUMPHA inscription ← HIGH SSC FREQ</td></tr><tr><td>Location of inscription</td><td>Elephant-headed cave on Udayagiri hills, near Bhubaneswar, Odisha</td></tr><tr><td>Content</td><td>Kharavela\'s conquests YEAR BY YEAR for 15 years of reign</td></tr><tr><td>Religion patron</td><td>JAINISM — gave land grants; organized Jain Council</td></tr><tr><td>Defeated</td><td>Magadha + Anga kingdoms</td></tr><tr><td>Repaired</td><td>Irrigation canal originally built during NANDA period</td></tr><tr><td>Contemporary of</td><td>Kanva dynasty (28–73 BC) + Satavahanas</td></tr></tbody></table><div class="trap-box">⚠️ EXAM TRAP: Hathigumpha inscription = KHARAVELA (NOT Ashoka, NOT Samudragupta). "Hathigumpha" = elephant cave. Kharavela patron of JAINISM (not Buddhism). Canal he repaired was from NANDA period (not Mauryan).</div>',
+revision:['Kharavela of Kalinga(~1st c BC), Mahameghavahana dynasty, kingdom=Kalinga(Odisha)','Famous inscription: HATHIGUMPHA - HIGH SSC FREQ, on Udayagiri hills near Bhubaneswar','Inscription records his conquests year-by-year for 15 years of reign','Patronized JAINISM - gave land grants, organized a Jain Council','Defeated Magadha + Anga kingdoms; repaired an irrigation canal originally built by Nanda king'],
+oneliners:['Kharavela ruled Kalinga (modern Odisha) around the 1st century BC','Kharavela belonged to the Mahameghavahana dynasty','Kharavela\'s famous Hathigumpha inscription is a high-frequency SSC topic','The Hathigumpha inscription is in an elephant-headed cave on Udayagiri hills, near Bhubaneswar','The Hathigumpha inscription records Kharavela\'s conquests year-by-year over 15 years','Kharavela was a patron of Jainism, giving land grants and organizing a Jain Council','Kharavela defeated the Magadha and Anga kingdoms','Kharavela repaired an irrigation canal originally built by a Nanda king'],
+flashcards:[{q:'Who was Kharavela, and which dynasty did he belong to?',a:'King of Kalinga; Mahameghavahana dynasty'},{q:'What is Kharavela\'s most famous inscription, and where is it?',a:'The Hathigumpha inscription, on Udayagiri hills near Bhubaneswar'},{q:'What does the Hathigumpha inscription record?',a:'Kharavela\'s conquests, year-by-year, over 15 years of his reign'},{q:'Which religion did Kharavela patronize?',a:'Jainism'},{q:'Which kingdoms did Kharavela defeat?',a:'Magadha and Anga'},{q:'What infrastructure did Kharavela repair?',a:'An irrigation canal originally built by a Nanda king'}],
+mcqs:[{
+q:'The Hathigumpha inscription is associated with:',
+o:['Ashoka',
+'Samudragupta',
+'Kharavela of Kalinga',
+'Pulakeshin II'],
+a:2,
+e:'The Hathigumpha inscription (near Bhubaneswar, Odisha) is associated with Kharavela — NOT Ashoka. Very high SSC frequency.'}
+,
+{
+q:'\'Hathigumpha\' literally means:',
+o:['Cave of the lion',
+'Cave of the elephant',
+'Mountain of victory',
+'Temple of Kalinga'],
+a:1,
+e:'Hathigumpha means \'Elephant Cave\' — it is carved on the elephant-headed cave on Udayagiri hills near Bhubaneswar.'}
+,
+{
+q:'Kharavela belonged to which dynasty?',
+o:['Maurya',
+'Shunga',
+'Mahameghavahana',
+'Satavahana'],
+a:2,
+e:'Kharavela belonged to the Mahameghavahana dynasty of Kalinga (modern Odisha) in the 1st century BC.'}
+,
+{
+q:'The Hathigumpha inscription records:',
+o:['Samudragupta\'s military campaigns',
+'Ashoka\'s dharmic edicts',
+'Kharavela\'s conquests year by year (15 years)',
+'Harsha\'s religious reforms'],
+a:2,
+e:'The Hathigumpha inscription records Kharavela\'s military campaigns and achievements year by year over 15 years.'}
+,
+{
+q:'Kharavela was a patron of which religion?',
+o:['Buddhism',
+'Vaishnavism',
+'Jainism',
+'Shaivism'],
+a:2,
+e:'Kharavela was a great patron of Jainism — he gave Jain monks land grants and organized a Jain Council.'}
+,
+{
+q:'Kharavela repaired an irrigation canal originally built during:',
+o:['Mauryan period',
+'Nanda period',
+'Gupta period',
+'Satavahana period'],
+a:1,
+e:'Kharavela repaired an irrigation canal originally built during the Nanda period — extending its reach to Kalinga.'}
+,
+{
+q:'The Hathigumpha inscription is located on:',
+o:['Vindhya hills',
+'Udayagiri hills near Bhubaneswar',
+'Satpura hills',
+'Aravalli hills'],
+a:1,
+e:'The Hathigumpha inscription is carved on Udayagiri hills near Bhubaneswar, Odisha.'}
+,
+{
+q:'Kharavela was contemporary with which dynasty (approximately)?',
+o:['Maurya',
+'Gupta',
+'Kanva dynasty and Satavahanas',
+'Kushan'],
+a:2,
+e:'Kharavela (~1st century BC) was contemporary with the Kanva dynasty (28–73 BC) and the Satavahanas.'}
+,
+{
+q:'Which kingdoms did Kharavela defeat?',
+o:['Magadha and Anga',
+'Chola and Pandya',
+'Gupta and Maurya',
+'Chalukya and Pallava'],
+a:0,
+e:'Kharavela defeated the kingdoms of Magadha and Anga, as recorded in his Hathigumpha inscription.'}
+,
+{
+q:'The Hathigumpha inscription is the PRIMARY source for:',
+o:['Ashoka\'s dharma policies',
+'Kharavela\'s reign and conquests year by year',
+'The 1st Buddhist Council',
+'Mauryan administrative system'],
+a:1,
+e:'The Hathigumpha inscription is the only major source for Kharavela\'s reign — recording his year-by-year conquests.'}
+]}
+,
+{
+id:'u1',
+title:'Ancient Universities',
+xp:160,
+type:'regular',
+seqIdx:19,
+learn:'<h2 class="sec-head">🎓 Ancient Universities of India</h2><table class=""><thead><tr><th>University</th><th>Location</th><th>Founded By</th><th>Known For</th><th>Destroyed By</th></tr></thead><tbody><tr><td>Takshashila (Taxila)</td><td>NW Pakistan (Rawalpindi)</td><td>Ancient (6th BC)</td><td>WORLD\'S 1ST UNIVERSITY; Chanakya + Panini + Chandragupta studied here</td><td>Huna invasions (5th c)</td></tr><tr><td>Nalanda</td><td>Bihar (near Rajgir)</td><td>Kumaragupta I</td><td>Greatest Buddhist learning centre; 10,000+ students; Hiuen Tsang</td><td>BAKHTIYAR KHILJI (~1193 AD)</td></tr><tr><td>Vikramashila</td><td>Bhagalpur, Bihar</td><td>DHARMAPALA (Pala king)</td><td>Buddhist + Tantric; 6 colleges; 108 temples</td><td>BAKHTIYAR KHILJI (~1193 AD)</td></tr><tr><td>Valabhi</td><td>Gujarat (Saurashtra)</td><td>Maitraka dynasty</td><td>Hinayana Buddhism; 2ND JAIN COUNCIL held here</td><td>Arab raids (12th c)</td></tr><tr><td>Odantapuri</td><td>Bihar (near Nalanda)</td><td>GOPALA (Pala king)</td><td>Buddhist learning</td><td>BAKHTIYAR KHILJI (~1193 AD)</td></tr><tr><td>Jagaddala</td><td>Bengal (Rajshahi)</td><td>Ramapala (Pala king)</td><td>Tantric Buddhism</td><td>BAKHTIYAR KHILJI</td></tr></tbody></table><div class="trap-box">⚠️ EXAM TRAP: World\'s 1st university = TAKSHASHILA (not Nalanda). Nalanda = founded by KUMARAGUPTA I (not Ashoka or Harsha). Vikramashila = founded by DHARMAPALA (Pala) — not Gopala. Bakhtiyar Khilji destroyed Nalanda + Vikramashila + Odantapuri. Valabhi = 2nd JAIN Council (1st = Pataliputra).</div>',
+revision:['Takshashila(Taxila,NW Pakistan): WORLD\'S 1ST UNIVERSITY(6thBC), Chanakya+Panini+Chandragupta studied here, destroyed by Huna invasions','Nalanda(Bihar): founded Kumaragupta I, greatest Buddhist centre,10,000+students,destroyed by Bakhtiyar Khilji(~1193AD)','Vikramashila(Bhagalpur,Bihar): founded by Dharmapala(Pala king), Buddhist+Tantric,6 colleges,108 temples, destroyed by Bakhtiyar Khilji','Both Nalanda and Vikramashila destroyed by the same invader: Bakhtiyar Khilji','Taxila destroyed earlier (Huna invasions, 5th c) — different invader than Nalanda/Vikramashila'],
+oneliners:['Takshashila (Taxila) is considered the world\'s first university, founded around the 6th century BC','Takshashila is located in NW Pakistan, near Rawalpindi','Chanakya, Panini, and Chandragupta Maurya all studied at Takshashila','Takshashila was destroyed by Huna invasions in the 5th century','Nalanda University, in Bihar near Rajgir, was founded by Kumaragupta I','Nalanda was the greatest Buddhist learning centre, with over 10,000 students','Nalanda was visited by the Chinese pilgrim Hiuen Tsang','Nalanda was destroyed by Bakhtiyar Khilji around 1193 AD','Vikramashila University, in Bhagalpur, Bihar, was founded by the Pala king Dharmapala','Vikramashila focused on Buddhist and Tantric studies, with 6 colleges and 108 temples','Vikramashila was also destroyed by Bakhtiyar Khilji'],
+flashcards:[{q:'Which is considered the world\'s first university?',a:'Takshashila (Taxila)'},{q:'Name three famous people who studied at Takshashila.',a:'Chanakya, Panini, Chandragupta Maurya'},{q:'Who destroyed Takshashila, and when roughly?',a:'Huna invasions, around the 5th century'},{q:'Who founded Nalanda University?',a:'Kumaragupta I'},{q:'Who destroyed both Nalanda and Vikramashila?',a:'Bakhtiyar Khilji, around 1193 AD'},{q:'Who founded Vikramashila University?',a:'Dharmapala, a Pala king'},{q:'How many colleges and temples did Vikramashila have?',a:'6 colleges and 108 temples'}],
+mcqs:[{
+q:'The world\'s FIRST university (informal) is considered to be:',
+o:['Nalanda (Bihar)',
+'Vikramashila (Bihar)',
+'Valabhi (Gujarat)',
+'Takshashila (NW Pakistan)'],
+a:3,
+e:'Takshashila (modern NW Pakistan, Rawalpindi area) was the world\'s first university (~6th century BC). Chanakya, Panini, Chandragupta studied here.'}
+,
+{
+q:'Nalanda University was founded by:',
+o:['Ashoka',
+'Chandragupta II',
+'Kumaragupta I',
+'Harshavardhana'],
+a:2,
+e:'Nalanda was founded by Kumaragupta I (Gupta dynasty, 5th century AD). It was destroyed by Bakhtiyar Khilji (~1193 AD).'}
+,
+{
+q:'Vikramashila University was founded by:',
+o:['Gopala (Pala king)',
+'Dharmapala (Pala king)',
+'Kumaragupta I',
+'Ashoka'],
+a:1,
+e:'Vikramashila University was founded by Dharmapala (Pala dynasty king) in the 8th century AD.'}
+,
+{
+q:'Which ancient university was located in Gujarat?',
+o:['Nalanda',
+'Vikramashila',
+'Valabhi',
+'Odantapuri'],
+a:2,
+e:'Valabhi University was in Gujarat (Saurashtra region), founded by the Maitraka dynasty. The 2nd Jain Council was held here.'}
+,
+{
+q:'Bakhtiyar Khilji destroyed which universities (~1193 AD)?',
+o:['Takshashila only',
+'Valabhi only',
+'Nalanda, Vikramashila, and Odantapuri',
+'Nalanda and Takshashila'],
+a:2,
+e:'Bakhtiyar Khilji destroyed Nalanda, Vikramashila, and Odantapuri (~1193 AD) — burning their libraries.'}
+,
+{
+q:'Odantapuri University was founded by:',
+o:['Dharmapala (Pala)',
+'Gopala (Pala)',
+'Kumaragupta I (Gupta)',
+'Ramapala (Pala)'],
+a:1,
+e:'Odantapuri University was founded by Gopala (the Pala dynasty founder) in the 8th century AD.'}
+,
+{
+q:'Jagaddala University (Bengal) is associated with which Buddhist tradition?',
+o:['Hinayana Buddhism',
+'Theravada Buddhism',
+'Tantric Buddhism',
+'Zen Buddhism'],
+a:2,
+e:'Jagaddala University (Bengal) was associated with Tantric Buddhism, founded by Ramapala of the Pala dynasty.'}
+,
+{
+q:'Which famous Chinese pilgrim studied at Nalanda University?',
+o:['Fa-Hien',
+'Marco Polo',
+'Hiuen Tsang',
+'Al-Beruni'],
+a:2,
+e:'Hiuen Tsang studied at Nalanda and provides one of the most detailed accounts of this great university.'}
+,
+{
+q:'The 2nd Jain Council was held at:',
+o:['Nalanda',
+'Pataliputra',
+'Valabhi (Gujarat)',
+'Mathura'],
+a:2,
+e:'The 2nd Jain Council was held at Valabhi (Gujarat). The 1st Jain Council was at Pataliputra.'}
+,
+{
+q:'Pushpagiri University (Odisha) was mentioned by:',
+o:['Fa-Hien',
+'Hiuen Tsang',
+'Al-Beruni',
+'Ibn Batuta'],
+a:1,
+e:'Pushpagiri University (Odisha) was mentioned by Hiuen Tsang in his travel records (Si-Yu-Ki).'}
+]}
+,
+{
+id:'e1',
+title:'Chronological Eras',
+xp:150,
+type:'regular',
+seqIdx:20,
+learn:'<h2 class="sec-head">📅 Chronological Eras of Ancient India</h2><table class=""><thead><tr><th>Era</th><th>Starts</th><th>Founded By</th><th>Usage</th></tr></thead><tbody><tr><td>Vikram Samvat</td><td>57 BC</td><td>Vikramaditya (legendary)</td><td>Hindu calendar; North India; still used</td></tr><tr><td>Saka Era</td><td>78 AD</td><td>KANISHKA (Kushan)</td><td>INDIA\'S OFFICIAL NATIONAL CALENDAR ← HIGH FREQ</td></tr><tr><td>Gupta Era</td><td>319 AD</td><td>Chandragupta I</td><td>Gupta administrative records</td></tr><tr><td>Harsha Era</td><td>606 AD</td><td>Harshavardhana</td><td>Used in his empire</td></tr><tr><td>Kali Era</td><td>3102 BC (traditional)</td><td>Hindu astronomical calc</td><td>—</td></tr></tbody></table><h3 class="sub-head">SSC Key Conversion</h3><div class="fact-box"><strong>Must Know</strong><ul><li>Saka Era starts = 78 AD</li><li>To convert Saka to AD: ADD 78 (e.g., Saka 1945 = 1945+78 = 2023 AD)</li><li>Vikram Samvat starts = 57 BC</li><li>India\'s National Calendar = SAKA ERA (Shalivahana Shaka)</li><li>Gupta Era = 319 AD = real founding of Gupta empire</li></ul></div><div class="trap-box">⚠️ EXAM TRAP: Saka Era (78 AD) is in INDIA\'S NATIONAL CALENDAR — not Vikram Samvat. Saka Era founded by KANISHKA — not Vikramaditya. To convert Saka to AD = add 78 (not 57). Vikram Samvat starts 57 BC (before Christ).</div>',
+revision:['Vikram Samvat(57BC,Vikramaditya,Hindu calendar,North India,still used)','Saka Era(78AD,Kanishka,INDIA\'S OFFICIAL NATIONAL CALENDAR - HIGH FREQ)','Gupta Era(319AD,Chandragupta I) | Harsha Era(606AD,Harshavardhana)','Kali Era(3102BC traditional,Hindu astronomical calc)','Key conversion: Saka Era + 78 = AD year (approx)'],
+oneliners:['Vikram Samvat starts in 57 BC, traditionally founded by Vikramaditya','Vikram Samvat is part of the Hindu calendar, used mainly in North India, still in use today','The Saka Era starts in 78 AD, founded by Kushan king Kanishka','The Saka Era is India\'s official national calendar','The Gupta Era starts in 319 AD, founded by Chandragupta I','The Gupta Era was used in Gupta administrative records','The Harsha Era starts in 606 AD, founded by Harshavardhana','The Harsha Era was used within Harsha\'s empire','The Kali Era traditionally starts in 3102 BC, based on Hindu astronomical calculations'],
+flashcards:[{q:'Who founded the Saka Era, and when?',a:'Kanishka, in 78 AD'},{q:'Which era is India\'s official national calendar?',a:'The Saka Era'},{q:'Who founded the Gupta Era, and when?',a:'Chandragupta I, in 319 AD'},{q:'Who founded the Vikram Samvat, and when?',a:'Vikramaditya (traditional), 57 BC'},{q:'Who founded the Harsha Era, and when?',a:'Harshavardhana, in 606 AD'},{q:'When does the Kali Era traditionally begin?',a:'3102 BC'}],
+mcqs:[{
+q:'The Saka Era starts from:',
+o:['57 BC',
+'78 AD',
+'319 AD',
+'606 AD'],
+a:1,
+e:'The Saka Era starts from 78 AD and is used in India\'s official National Calendar (Shalivahana Shaka).'}
+,
+{
+q:'The Saka Era is used in:',
+o:['Hindu religious almanacs only',
+'Pakistan only',
+'India\'s official National Calendar',
+'Jain religious texts only'],
+a:2,
+e:'The Saka Era (Shalivahana Shaka) is used in India\'s official National Calendar — very high SSC frequency fact.'}
+,
+{
+q:'The Saka Era was founded by:',
+o:['Vikramaditya',
+'Chandragupta I',
+'Kanishka (Kushan)',
+'Harshavardhana'],
+a:2,
+e:'Kanishka (Kushan king) started the Saka Era (78 AD). This is the SSC-standard answer.'}
+,
+{
+q:'The Vikram Samvat starts from:',
+o:['78 AD',
+'57 BC',
+'319 AD',
+'3102 BC'],
+a:1,
+e:'Vikram Samvat starts from 57 BC, traditionally attributed to the legendary king Vikramaditya.'}
+,
+{
+q:'To convert Saka Era to AD, you must:',
+o:['Add 57',
+'Subtract 78',
+'Add 78',
+'Add 319'],
+a:2,
+e:'To convert Saka to AD, add 78. Example: Saka 1945 + 78 = 2023 AD. This formula appears frequently in SSC exams.'}
+,
+{
+q:'The Gupta Era (319 AD) marks:',
+o:['Samudragupta\'s coronation',
+'Chandragupta I\'s founding of the Gupta Empire',
+'Sri Gupta\'s birth',
+'Chandragupta II\'s defeat of Shakas'],
+a:1,
+e:'The Gupta Era (319 AD) marks Chandragupta I\'s reign — the real consolidation of Gupta power.'}
+,
+{
+q:'The Harsha Era starts from:',
+o:['606 AD',
+'647 AD',
+'320 AD',
+'78 AD'],
+a:0,
+e:'The Harsha Era starts from 606 AD, the year Harshavardhana came to power.'}
+,
+{
+q:'The Kali Era (Kali Yuga) traditionally starts from:',
+o:['57 BC',
+'78 AD',
+'3102 BC',
+'600 BC'],
+a:2,
+e:'The Kali Era (Kali Yuga) is traditionally calculated as 3102 BC based on Hindu astronomical calculations.'}
+,
+{
+q:'Which era is still used in everyday Hindu calendar activities in North India?',
+o:['Saka Era',
+'Gupta Era',
+'Vikram Samvat',
+'Harsha Era'],
+a:2,
+e:'Vikram Samvat (starting 57 BC) is still used in everyday Hindu religious and calendar activities in North India.'}
+,
+{
+q:'India\'s National Calendar is based on which era?',
+o:['Vikram Samvat',
+'Gupta Era',
+'Saka Era (Shalivahana Shaka)',
+'Harsha Era'],
+a:2,
+e:'India\'s official National Calendar is based on the Saka Era (Shalivahana Shaka). The year starts on Chaitra 1 (~March 22).'}
+]}
+,
+{
+id:'bs1',
+title:'Buddhist Symbols',
+xp:140,
+type:'regular',
+seqIdx:21,
+learn:'<h2 class="sec-head">🔱 Buddhist Symbols — Aniconic Period</h2><p>Before Gandhara school (before ~1st–2nd century AD), Buddha was NOT shown in human form. Represented symbolically:</p><table class=""><thead><tr><th>Symbol</th><th>Meaning</th></tr></thead><tbody><tr><td>Footprints (Buddhapada)</td><td>Buddha\'s presence/walking/path</td></tr><tr><td>Empty throne (Simhasana)</td><td>Enlightenment</td></tr><tr><td>Wheel (Dharmachakra)</td><td>1st sermon at Sarnath</td></tr><tr><td>Bodhi tree (Peepal)</td><td>Enlightenment at Bodh Gaya</td></tr><tr><td>Stupa</td><td>Mahaparinirvana (death/final nirvana)</td></tr><tr><td>Lotus flower</td><td>Purity; birth</td></tr><tr><td>Horse (Kanthaka)</td><td>Great Renunciation (leaving home)</td></tr><tr><td>Parasol/Umbrella (Chhatra)</td><td>Royalty; divine status</td></tr></tbody></table><p>Sites using only symbolic forms: <b>Sanchi (early), Bharhut, Bodh Gaya early railings</b>.</p><p><b>First human depiction of Buddha = GANDHARA school</b> (Kushan period, ~1st–2nd century AD) ← SSC KEY FACT</p><div class="trap-box">⚠️ EXAM TRAP: Wheel (Dharmachakra) = 1st sermon at SARNATH (not enlightenment). Bodhi tree = enlightenment at BODH GAYA. Stupa = DEATH/MAHAPARINIRVANA (not birth). Gandhara school = 1st human form of Buddha.</div>',
+revision:['Pre-Gandhara(before ~1st-2ndAD): Buddha NOT shown in human form, represented symbolically','Footprints(Buddhapada)=presence/path | Empty throne=enlightenment | Wheel(Dharmachakra)=1st sermon','Bodhi tree(Peepal)=enlightenment at Bodh Gaya | Stupa=Mahaparinirvana(death)','Lotus=purity/birth | Horse(Kanthaka)=Great Renunciation(leaving home)','Gandhara school later broke this aniconic tradition, depicting Buddha in human form'],
+oneliners:['Before the Gandhara school (~1st-2nd century AD), Buddha was never shown in human form','Early Buddhist art represented Buddha symbolically — this is called the aniconic period','Footprints (Buddhapada) symbolize Buddha\'s presence or his path/walking','An empty throne (Simhasana) symbolizes Buddha\'s enlightenment','The Wheel (Dharmachakra) symbolizes Buddha\'s first sermon at Sarnath','The Bodhi tree (Peepal) symbolizes Buddha\'s enlightenment at Bodh Gaya','A Stupa symbolizes Buddha\'s Mahaparinirvana (death/final nirvana)','A lotus flower symbolizes purity and Buddha\'s birth','A horse, named Kanthaka, symbolizes the Great Renunciation when Buddha left home','The Gandhara school later broke this tradition and depicted Buddha in human form'],
+flashcards:[{q:'What is the \'aniconic period\' in Buddhist art?',a:'The period before Gandhara art when Buddha was never shown in human form'},{q:'What does the Wheel (Dharmachakra) symbolize?',a:'Buddha\'s first sermon at Sarnath'},{q:'What does the Bodhi tree symbolize?',a:'Buddha\'s enlightenment at Bodh Gaya'},{q:'What does a Stupa symbolize in this context?',a:'Buddha\'s Mahaparinirvana (death)'},{q:'What does footprints (Buddhapada) symbolize?',a:'Buddha\'s presence or his path/walking'},{q:'What does the horse Kanthaka symbolize?',a:'The Great Renunciation — Buddha leaving home'},{q:'Which school first depicted Buddha in human form, ending the aniconic tradition?',a:'The Gandhara school'}],
+mcqs:[{
+q:'Before the Gandhara school, how was Buddha represented in art?',
+o:['Always in human form',
+'Symbolically (footprints, wheel, empty throne, etc.)',
+'As a king on horseback',
+'As a Brahmin with sacred thread'],
+a:1,
+e:'Before the Gandhara school, Buddha was NOT depicted in human form — only symbolically (aniconic period).'}
+,
+{
+q:'The wheel (Dharmachakra) in Buddhist art represents:',
+o:['Buddha\'s birth',
+'Ashoka\'s empire',
+'Buddha\'s first sermon at Sarnath',
+'Enlightenment at Bodh Gaya'],
+a:2,
+e:'The wheel (Dharmachakra) represents Buddha\'s first sermon at Sarnath — setting the wheel of dharma in motion.'}
+,
+{
+q:'The Bodhi tree in Buddhist art represents:',
+o:['Buddha\'s birth',
+'The Great Renunciation',
+'Enlightenment at Bodh Gaya',
+'Buddha\'s first sermon'],
+a:2,
+e:'The Bodhi tree (peepal) represents Buddha\'s enlightenment at Bodh Gaya, where he attained nirvana.'}
+,
+{
+q:'The empty throne (Simhasana) in early Buddhist art represents:',
+o:['Mahaparinirvana (death)',
+'Enlightenment',
+'The Great Renunciation',
+'Royal authority of Buddha'],
+a:1,
+e:'The empty throne represents enlightenment — the seat where Buddha sat when he attained enlightenment.'}
+,
+{
+q:'A horse (Kanthaka) in Buddhist art symbolizes:',
+o:['Battle victories of Ashoka',
+'The Great Renunciation (Siddhartha leaving home)',
+'Buddha\'s first journey to Bodh Gaya',
+'The death of the Buddha'],
+a:1,
+e:'Kanthaka (the white horse) in Buddhist art represents the Great Renunciation — Siddhartha riding away from the palace.'}
+,
+{
+q:'The Stupa in Buddhist art represents:',
+o:['Buddha\'s birth',
+'The first sermon',
+'Mahaparinirvana (death/final nirvana)',
+'Enlightenment'],
+a:2,
+e:'The Stupa represents the Mahaparinirvana (death/final nirvana) of Buddha. His relics are often enshrined in stupas.'}
+,
+{
+q:'Which sites used ONLY symbolic (aniconic) representation of Buddha?',
+o:['Gandhara and Taxila',
+'Sanchi (early), Bharhut, Bodh Gaya early railings',
+'Ajanta and Ellora',
+'Mathura and Amravati'],
+a:1,
+e:'Sanchi (early), Bharhut, and the early Bodh Gaya railings used only symbolic representations of Buddha.'}
+,
+{
+q:'The Lotus flower in Buddhist art represents:',
+o:['Nirvana',
+'Buddha\'s death',
+'Purity and birth',
+'The Sangha (community)'],
+a:2,
+e:'The Lotus flower represents purity and birth — Buddha is said to have walked on lotus flowers at his birth.'}
+,
+{
+q:'Which school first depicted the Buddha in human form?',
+o:['Mathura school',
+'Amravati school',
+'Sarnath school',
+'Gandhara school'],
+a:3,
+e:'The Gandhara school (Kushan period, 1st–2nd century AD) was the FIRST to depict Buddha in human form.'}
+,
+{
+q:'The Footprints (Buddhapada) in Buddhist art symbolize:',
+o:['Buddha\'s victory in battle',
+'Buddha\'s presence/walking/path',
+'The site of Buddha\'s birth',
+'The site of Mahaparinirvana'],
+a:1,
+e:'Buddhapada (footprints) represents Buddha\'s presence, his path, and his walking — one of the earliest symbolic representations.'}
+]}
+,
+{
+id:'gd1',
+title:'Gupta Decline',
+xp:150,
+type:'regular',
+seqIdx:22,
+learn:'<h2 class="sec-head">📉 Gupta Decline — Eight Causes</h2><table class=""><thead><tr><th>Cause</th><th>Detail</th></tr></thead><tbody><tr><td>1. Huna invasions</td><td>Toramana + Mihirakula devastated north; Skandagupta repelled twice but empire drained</td></tr><tr><td>2. Weak successors</td><td>After Skandagupta: civil wars; ineffective kings</td></tr><tr><td>3. Rise of feudalism</td><td>Land grants (devadaya, brahmadeya, agrahara) → local lords autonomous; central control lost</td></tr><tr><td>4. Yashodharman of Malwa</td><td>Carved out independent kingdom; defeated Mihirakula Huna but weakened Gupta suzerainty</td></tr><tr><td>5. Maukhari dynasty</td><td>Rose in UP (Kannauj); replaced Guptas in Ganges valley</td></tr><tr><td>6. Economic decline</td><td>Roman Empire\'s decline reduced Indian gold imports; trade contraction</td></tr><tr><td>7. Religious/social change</td><td>Rise of Tantric Buddhism disrupted social order</td></tr><tr><td>8. Feudal governors</td><td>Gupta uparika (governors) became hereditary; stopped being transferable</td></tr></tbody></table><h3 class="sub-head">Post-Gupta Power Vacuum</h3><p>Filled by: Maukharis (Kannauj), <b>Pushyabhutis/Harshavardhana</b> (Thaneshwar→Kannauj), Gurjara-Pratiharas, Palas, Rashtrakutas. <b>Harshavardhana = last great empire builder in N. India before Turkish invasions.</b></p><div class="trap-box">⚠️ EXAM TRAP: Last STRONG Gupta = Skandagupta. Last KNOWN Gupta = Vishnugupta (540–550 AD). Feudalism = land grants made governors hereditary. Maukhari dynasty = rose at Kannauj in UP.</div>',
+revision:['8 causes: 1)Huna invasions 2)Weak successors 3)Rise of feudalism 4)Yashodharman of Malwa 5)Maukhari dynasty + more','Huna invaders Toramana+Mihirakula devastated north; Skandagupta repelled but empire drained','Feudalism: land grants(devadaya,brahmadeya,agrahara) made local lords autonomous','Yashodharman of Malwa defeated Mihirakula Huna but weakened Gupta suzerainty','Maukhari dynasty rose in UP(Kannauj), replaced Guptas in Ganges valley'],
+oneliners:['Gupta decline is attributed to multiple causes, often listed as 8 factors','Huna invasions under Toramana and Mihirakula devastated North India','Skandagupta repelled the Hunas twice, but the effort drained the empire','Weak successors after Skandagupta led to civil wars and ineffective rule','Rise of feudalism — through land grants like devadaya, brahmadeya, agrahara — made local lords autonomous','This feudalism eroded central Gupta control','Yashodharman of Malwa carved out an independent kingdom','Yashodharman defeated the Huna king Mihirakula but further weakened Gupta authority','The Maukhari dynasty rose in the Kannauj region of UP','The Maukharis eventually replaced the Guptas in the Ganges valley'],
+flashcards:[{q:'Name two Huna invaders who devastated North India during Gupta decline.',a:'Toramana and Mihirakula'},{q:'Who repelled the Hunas twice, at great cost to the empire?',a:'Skandagupta'},{q:'What administrative trend weakened central Gupta control?',a:'Rise of feudalism through land grants (devadaya, brahmadeya, agrahara)'},{q:'Who defeated Mihirakula but also weakened Gupta suzerainty?',a:'Yashodharman of Malwa'},{q:'Which dynasty eventually replaced the Guptas in the Ganges valley?',a:'The Maukhari dynasty'},{q:'List two broad categories of causes for Gupta decline.',a:'Huna invasions and weak successors (or: rise of feudalism)'}],
+mcqs:[{
+q:'Which external invasion was the PRIMARY factor weakening the Gupta Empire?',
+o:['Scythian (Saka) invasions',
+'Huna invasions',
+'Parthian invasions',
+'Arab invasions'],
+a:1,
+e:'Huna invasions (Toramana and Mihirakula) were the primary external factor. Though Skandagupta repelled them twice, the empire was drained.'}
+,
+{
+q:'The Maukhari dynasty rose where, replacing the Guptas?',
+o:['Punjab and Rajasthan',
+'Bengal and Bihar',
+'UP (Kannauj/Ganges valley)',
+'Deccan plateau'],
+a:2,
+e:'The Maukhari dynasty rose in UP (Kannauj area) and replaced the Guptas as the main power in the Gangetic valley.'}
+,
+{
+q:'What types of land grants created feudalism in the Gupta period?',
+o:['Military land grants only',
+'Devadaya, brahmadeya, agrahara grants to local lords',
+'Trade monopoly grants',
+'Merchant guild charters'],
+a:1,
+e:'Land grants (devadaya, brahmadeya, agrahara) created autonomous local lords — feudalism — and decentralized Gupta power.'}
+,
+{
+q:'Which king of Malwa defeated Huna king Mihirakula but also weakened Gupta authority?',
+o:['Pushyagupta',
+'Parnadatta',
+'Yashodharman',
+'Dantidurga'],
+a:2,
+e:'Yashodharman of Malwa carved out an independent kingdom and defeated Mihirakula (Huna king) but also reduced Gupta suzerainty.'}
+,
+{
+q:'Economic decline of the Guptas was partly caused by:',
+o:['Loss of agricultural land',
+'Decline of Roman Empire reducing Indian gold imports',
+'Chinese trade blockade',
+'Arab trade domination'],
+a:1,
+e:'Decline of the Roman Empire reduced India\'s gold imports, causing economic contraction and emptying the Gupta treasury.'}
+,
+{
+q:'Which Gupta ruler is called the LAST STRONG Gupta ruler?',
+o:['Kumaragupta I',
+'Vishnugupta',
+'Buddhagupta',
+'Skandagupta'],
+a:3,
+e:'Skandagupta is the last strong Gupta ruler. After his death, local governors became hereditary and central control collapsed.'}
+,
+{
+q:'The post-Gupta power vacuum in North India was mainly filled by:',
+o:['The Pallavas of Kanchi',
+'Harshavardhana (Pushyabhuti)',
+'The Rashtrakutas',
+'The Cholas'],
+a:1,
+e:'Harshavardhana of the Pushyabhuti dynasty filled the North Indian power vacuum. He is the last great empire builder before the Turkish invasions.'}
+,
+{
+q:'Rise of feudalism in the Gupta period meant:',
+o:['King appointed all officials directly',
+'Local governors (uparika) became hereditary autonomous lords',
+'Village councils took over all power',
+'Merchant guilds ruled the regions'],
+a:1,
+e:'Feudalism meant local Gupta governors (uparika) stopped being transferable and became hereditary — a sign of administrative collapse.'}
+,
+{
+q:'Which religion\'s rise contributed to social disruption in late Gupta period?',
+o:['Jainism',
+'Zoroastrianism',
+'Tantric Buddhism',
+'Vaishnavism'],
+a:2,
+e:'Rise of Tantric Buddhism disrupted established social order in the late Gupta period.'}
+,
+{
+q:'After Skandagupta, the immediate Gupta successors included:',
+o:['Samudragupta, Chandragupta II',
+'Buddhagupta, Vainyagupta, Bhanugupta, Vishnugupta',
+'Bimbisara, Ajatashatru',
+'Pushyamitra, Agnimitra, Vasumitra'],
+a:1,
+e:'After Skandagupta: Buddhagupta, Vainyagupta, Bhanugupta, Narsimhagupta, Kumaragupta II, and finally Vishnugupta (the last).'}
+]}
+]}
+,
+{
+id:'chG',
+title:'🏹 Golden Chapter',
+nodes:[{
+id:'golden',
+title:'🏹 Master Revision — Golden Node',
+xp:500,
+type:'gold',
+seqIdx:23,
+learn:'<h2 class="sec-head">🏹 GOLDEN NODE — Part 3 Master Revision</h2><h3 class="sub-head">Gupta Dynasty</h3><div class="fact-box"><strong>Must Know</strong><ul><li>Founder = Sri Gupta (Vaishya); Real founder = Chandragupta I (Maharajadhiraj)</li><li>Samudragupta = Napoleon of India (V.A. Smith); Harisena wrote Prayag Prasasti</li><li>CG II = Vikramaditya; defeated Shakas; Navaratnas; FA-HIEN visited; 1st silver coins</li><li>Fa-Hien: CG II | Hiuen Tsang: Harshavardhana</li><li>Kumaragupta I = founded Nalanda University</li><li>Skandagupta = defeated Hunas twice; repaired Sudarshana Lake</li><li>Last Gupta = Vishnugupta (540–550 AD)</li><li>Aryabhata: π=3.1416; heliocentric; Aryabhatiya at age 23</li><li>Kalidasa = CG II\'s court; Abhijnanashakuntalam = most famous work</li></ul></div><h3 class="sub-head">Foreign Travellers Quick Ref</h3><table class=""><thead><tr><th>Traveller</th><th>Visited</th><th>Book</th></tr></thead><tbody><tr><td>Megasthenes</td><td>Chandragupta Maurya</td><td>Indica</td></tr><tr><td>Fa-Hien</td><td>Chandragupta II</td><td>Fo-Kyo-Ki</td></tr><tr><td>Hiuen Tsang</td><td>Harshavardhana</td><td>Si-Yu-Ki</td></tr><tr><td>Al-Beruni</td><td>Mahmud Ghazni</td><td>Kitab-ul-Hind</td></tr><tr><td>Ibn Batuta</td><td>Muhammad bin Tughlaq</td><td>Rehla</td></tr><tr><td>Marco Polo</td><td>Pandyan ruler</td><td>Book of Marco Polo</td></tr><tr><td>Abdur Razzaq</td><td>Devraya II (Vijayanagara)</td><td>Matla us Saddin</td></tr><tr><td>Nicolo Conti</td><td>Devraya I (Vijayanagara)</td><td>—</td></tr></tbody></table><h3 class="sub-head">Architecture</h3><div class="fact-box"><strong>Must Know</strong><ul><li>Nagara = Shikhara + Amalaka; North India (Khajuraho, Lingaraja)</li><li>Dravidian = Vimana + Gopuram; South India (Brihadeeswara, Meenakshi)</li><li>Vesara = hybrid; Deccan (Pattadakal, Aihole)</li><li>Kailash Temple Ellora = KRISHNA I (Rashtrakuta); single rock</li><li>Brihadeeswara Temple = RAJARAJA CHOLA I; UNESCO; Thanjavur</li><li>Shore Temple = NARSIMHAVARMAN II (Pallava)</li></ul></div><h3 class="sub-head">Enhanced Facts</h3><div class="fact-box"><strong>Must Know</strong><ul><li>Tirukkural = Tiruvalluvar ← EXTREMELY HIGH FREQ</li><li>Silappadikaram = 1st Tamil epic; Ilango Adigal (Chera prince)</li><li>63 Nayanmars (Shaiva) | 12 Alvars (Vaishnava)</li><li>Andal = only woman Alvar; composed Tiruppavai</li><li>Appar converted Mahendravarman I (Pallava) from Jainism to Shaivism</li><li>1st coins in India = Punch-marked (Ahata) coins = 7th BC</li><li>1st gold coins = INDO-GREEKS (NOT Guptas)</li><li>Lead coins = Satavahanas</li><li>Ajanta rediscovered = John Smith (1819)</li><li>Hathigumpha = Kharavela of Kalinga</li><li>Nalanda destroyed by Bakhtiyar Khilji (~1193 AD)</li><li>Vikramashila = founded by DHARMAPALA (Pala)</li><li>Saka Era (78 AD) = India\'s National Calendar</li><li>Mitakshara = Vijnaneshvara (Chalukya of Kalyani court)</li></ul></div>',
+mcqs:[]}
+]}
+];
+const STATE_KEY='centumania_anc3_v1';
+let S={xp:0,mcq:{},faa:{}};
+function loadState(){try{const d=JSON.parse(localStorage.getItem(STATE_KEY)||'{}');S=Object.assign({xp:0,mcq:{},faa:{}},d);}catch(e){}}
+function saveState(){localStorage.setItem(STATE_KEY,JSON.stringify(S));}
+function seqNodes(){const a=[];CHAPTERS.forEach(c=>c.nodes.forEach(n=>a.push(n)));return a.sort((a,b)=>a.seqIdx-b.seqIdx);}
+function isUnlocked(node){
+  if(node.seqIdx===0)return true;
+  if(node.type==='gold'){
+    const all=seqNodes().filter(n=>n.type!=='gold');
+    const passed=all.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+    return(passed/all.length)>=0.8;
+  }
+  const prev=seqNodes().find(n=>n.seqIdx===node.seqIdx-1);
+  return!!(prev&&S.mcq[prev.id]&&S.mcq[prev.id].passed);
+}
+let curNode=null,curTab='learn',_sess={};
+function buildSidebar(containerId){
+  const el=document.getElementById(containerId);
+  el.innerHTML='';
+  CHAPTERS.forEach(ch=>{
+    const lbl=document.createElement('div');lbl.className='ch-label';lbl.textContent=ch.title;el.appendChild(lbl);
+    ch.nodes.forEach(node=>{
+      const unlocked=isUnlocked(node);
+      const passed=S.mcq[node.id]&&S.mcq[node.id].passed;
+      const btn=document.createElement('button');
+      btn.className='node-btn'+(unlocked?' ':' locked')+(passed?' passed':'')+(curNode&&curNode.id===node.id?' active':'');
+      btn.innerHTML=`<span class="nb-icon">${node.type==='gold'?'🏹':node.type==='trap'?'⚠️':'📍'}</span><span class="nb-title">${node.title}</span><span class="nb-badge${node.type==='gold'?' gold-badge':''}">${node.xp}xp</span>`;
+      if(unlocked)btn.onclick=()=>openNode(node);
+      el.appendChild(btn);
+    });
+  });
+}
+function updateHeader(){
+  const all=seqNodes().filter(n=>n.type!=='gold');
+  const passed=all.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  const traps=seqNodes().filter(n=>n.type==='trap'&&S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  document.getElementById('h-xp').textContent=S.xp;
+  document.getElementById('h-nd').textContent=passed;
+  document.getElementById('h-tp').textContent=traps;
+}
+function updateDash(){
+  const all=seqNodes().filter(n=>n.type!=='gold');
+  const passed=all.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  const traps=seqNodes().filter(n=>n.type==='trap'&&S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  document.getElementById('dash-xp').textContent=S.xp;
+  document.getElementById('dash-nd').textContent=passed+'/23';
+  document.getElementById('dash-tp').textContent=traps;
+  let faaQ=0,faaC=0;
+  Object.values(S.faa).forEach(nf=>Object.values(nf).forEach(v=>{faaQ++;if(v)faaC++;}));
+  document.getElementById('dash-faa').textContent=faaQ?Math.round(faaC/faaQ*100)+'%':'—';
+  const dc=document.getElementById('dash-content');
+  dc.innerHTML='';
+  CHAPTERS.forEach(ch=>{
+    const div=document.createElement('div');div.className='ch-card';
+    div.innerHTML=`<h3>${ch.title}</h3><div class="ch-nodes">${ch.nodes.map(n=>{const u=isUnlocked(n);const p=S.mcq[n.id]&&S.mcq[n.id].passed;return`<span class="cn-pill${p?' passed':u?'':' locked'}" onclick="${u?'openNode(CHAPTERS.flatMap(c=>c.nodes).find(x=>x.id===\''+n.id+'\')); showNode()':''}"">${n.title}</span>`;}).join('')}</div>`;
+    dc.appendChild(div);
+  });
+}
+function showDash(){
+  curNode=null;
+  document.getElementById('dash-view').style.display='block';
+  document.getElementById('node-view').style.display='none';
+  buildSidebar('sidebar-inner');buildSidebar('mob-sidebar-inner');
+  updateDash();updateHeader();
+}
+function openNode(node){
+  if(!isUnlocked(node)){showToast('🔒 Complete the previous node first!');return;}
+  curNode=node;curTab='learn';_sess={};
+  track('node_opened',{node_id:node.id,node_title:node.title,node_type:node.type,xp:node.xp});
+  document.getElementById('dash-view').style.display='none';
+  document.getElementById('node-view').style.display='block';
+  document.getElementById('nv-title').textContent=node.title;
+  document.getElementById('nv-xp').textContent='+'+node.xp+' XP';
+  buildSidebar('sidebar-inner');buildSidebar('mob-sidebar-inner');
+  switchTab('learn');
+}
+function showNode(){
+  document.getElementById('dash-view').style.display='none';
+  document.getElementById('node-view').style.display='block';
+}
+function switchTab(tab){
+  curTab=tab;
+  document.getElementById('tab-learn').className='tab-btn'+(tab==='learn'?' active':'');
+  document.getElementById('tab-flash').className='tab-btn'+(tab==='flash'?' active':'');
+  document.getElementById('tab-test').className='tab-btn'+(tab==='test'?' active':'');
+  document.getElementById('node-content').innerHTML=tab==='learn'?buildLearnPane(curNode):(tab==='flash'?buildFlashPane(curNode):buildTestPane(curNode));
+  buildNodeNav();
+}
+function buildLearnPane(node){
+  let h=node.learn?'<div class="learn-pane">'+node.learn+'</div>':'<p style="color:var(--ink2)">No content available.</p>';
+  if(node.revision&&node.revision.length){
+    h+='<div class="revision-box"><strong>⚡ 30 SECOND REVISION</strong><ul>';
+    node.revision.forEach(r=>h+='<li>'+r+'</li>');
+    h+='</ul></div>';
+  }
+  if(node.oneliners&&node.oneliners.length){
+    h+='<div class="oneliner-box"><strong>🎯 20 EXAM ONE-LINERS</strong><ul>';
+    node.oneliners.forEach(o=>h+='<li>'+o+'</li>');
+    h+='</ul></div>';
+  }
+  return h;
+}
+function buildFlashPane(node){
+  const cards=node.flashcards||[];
+  if(!cards.length)return '<p style="color:var(--ink2);text-align:center;padding:2rem">No flashcards for this node yet.</p>';
+  let h='<p class="flash-hint">TAP A CARD TO FLIP • '+cards.length+' CARDS</p><div class="flash-grid">';
+  cards.forEach((c,i)=>{
+    h+='<div class="flash-card" id="fc-'+node.id+'-'+i+'" onclick="this.classList.toggle(\'flipped\')">'+
+      '<div class="flash-inner">'+
+      '<div class="flash-front">'+c.q+'</div>'+
+      '<div class="flash-back">'+c.a+'</div>'+
+      '</div></div>';
+  });
+  h+='</div><div class="flash-reset-row"><button class="btn btn-gold" onclick="resetFlash(\''+node.id+'\')">↺ Reset All Cards</button></div>';
+  return h;
+}
+function resetFlash(nid){
+  document.querySelectorAll('[id^="fc-'+nid+'-"]').forEach(c=>c.classList.remove('flipped'));
+}
+function buildTestPane(node){
+  if(node.type==='gold')return'<div class="learn-pane">'+node.learn+'<br><div style="text-align:center;padding:24px"><div style="font-size:2rem">🏹</div><p style="color:var(--gold);font-size:1rem;margin-top:8px">Revision Complete. Keep revising!</p></div></div>';
+  const m=S.mcq[node.id]||{};
+  let html='';
+  if(m.passed){html+='<div class="score-bar"><div style="font-size:1.5rem">✅</div><div class="score-big">10/10</div><div class="score-sub">Node Passed! +'+node.xp+' XP earned</div></div>';}
+  else if(m.lastScore!==undefined){html+='<div class="score-bar"><div style="font-size:1.5rem">📊</div><div class="score-big">'+m.lastScore+'/10</div><div class="score-sub">Last attempt — score locked. Try again!</div><button class="btn btn-gold" style="margin-top:12px" onclick="startFresh()">🔄 Retry</button></div>';}
+  else{html+='<div class="test-info">Answer all 10 questions. Score 10/10 to unlock the next node. Your FIRST attempt accuracy (FAA) is permanently recorded.</div>';}
+  node.mcqs.forEach((mcq,qi)=>{
+    const sess=_sess[qi];const faa=S.faa[node.id]&&S.faa[node.id][qi]!==undefined;
+    html+=`<div class="q-card" id="qc${qi}"><div class="q-num">Q${qi+1} of 10${faa?'<span class="faa-tag">FAA '+(S.faa[node.id][qi]?'✓':'✗')+'</span>':''}</div><div class="q-text">${mcq.q}</div>`;
+    mcq.o.forEach((opt,oi)=>{
+      let cls='opt-btn';let disabled='';let onclick=`onclick="answer(${qi},${oi})"`;
+      if(sess!==undefined){disabled='disabled';if(oi===mcq.a)cls+=' correct';else if(oi===sess&&sess!==mcq.a)cls+=' wrong';}
+      else if(m.passed||m.lastScore!==undefined){disabled='disabled';}
+      html+=`<button class="${cls}" ${disabled} ${(m.passed||m.lastScore!==undefined)?'':onclick}>${String.fromCharCode(65+oi)}. ${opt}</button>`;
+    });
+    html+=`<div class="exp-box" id="exp${qi}" style="display:${sess!==undefined?'block':'none'}">${mcq.e}</div>`;
+    html+='</div>';
+  });
+  if(!m.passed&&m.lastScore===undefined&&Object.keys(_sess).length===0){
+    html+=`<div style="text-align:center;padding:12px"><button class="btn btn-gold" onclick="submitAll()">Submit All Answers</button></div>`;
+  }
+  return html;
+}
+function startFresh(){_sess={};const node=curNode;const m=S.mcq[node.id]||{};m.lastScore=undefined;S.mcq[node.id]=m;saveState();switchTab('test');}
+function answer(qi,oi){
+  if(_sess[qi]!==undefined)return;
+  const node=curNode;const mcq=node.mcqs[qi];
+  _sess[qi]=oi;
+  if(!S.faa[node.id])S.faa[node.id]={};
+  if(S.faa[node.id][qi]===undefined)S.faa[node.id][qi]=(oi===mcq.a);
+  saveState();
+  const qcard=document.getElementById('qc'+qi);
+  qcard.querySelectorAll('.opt-btn').forEach((btn,idx)=>{
+    btn.disabled=true;
+    if(idx===mcq.a)btn.classList.add('correct');
+    else if(idx===oi&&oi!==mcq.a)btn.classList.add('wrong');
+  });
+  const exp=document.getElementById('exp'+qi);if(exp)exp.style.display='block';
+  if(Object.keys(_sess).length===node.mcqs.length)setTimeout(()=>finishAttempt(node),400);
+}
+function submitAll(){
+  const node=curNode;
+  node.mcqs.forEach((_,qi)=>{if(_sess[qi]===undefined)answer(qi,-1);});
+}
+function finishAttempt(node){
+  const correct=node.mcqs.filter((_,qi)=>_sess[qi]===node.mcqs[qi].a).length;
+  const passed=correct===node.mcqs.length;
+  if(!S.mcq[node.id])S.mcq[node.id]={};
+  const m=S.mcq[node.id];
+  if(!m.best||correct>m.best)m.best=correct;
+  m.attempts=(m.attempts||0)+1;
+  if(m.attempts===1)m.faaPct=Math.round(correct/node.mcqs.length*100);
+  const faaPct=m.faaPct||0;
+  if(passed){
+    if(!m.passed){S.xp+=node.xp;m.passed=true;track('node_completed',{node_id:node.id,node_title:node.title,xp_earned:node.xp,score:correct,total:node.mcqs.length,faa_pct:faaPct,attempts:m.attempts});}
+    delete m.lastScore;
+    showToast('🎉 Perfect! +'+node.xp+' XP!');
+  }else{
+    m.lastScore=correct;
+    track('mcq_completed',{node_id:node.id,node_title:node.title,score:correct,total:node.mcqs.length,pct:Math.round(correct/node.mcqs.length*100),faa_pct:faaPct,passed:false,attempts:m.attempts});
+    showToast('Score: '+correct+'/10. Need 10/10 to unlock next node.');
+  }
+  saveState();updateHeader();
+  _sess={};
+  switchTab('test');
+}
+function buildNodeNav(){
+  const nav=document.getElementById('node-nav');
+  const all=seqNodes();const idx=all.findIndex(n=>n.id===curNode.id);
+  let html='<button class="btn btn-outline" onclick="showDash()">⌂ Dashboard</button>';
+  if(idx>0){const prev=all[idx-1];html+=`<button class="btn btn-outline" onclick="openNode(seqNodes()[${idx-1}])">← ${prev.title.substring(0,20)}</button>`;}
+  if(curTab==='learn'){html+=`<button class="btn btn-gold" onclick="switchTab('test')">📝 Take Test</button>`;}
+  if(idx<all.length-1){const next=all[idx+1];if(isUnlocked(next)){html+=`<button class="btn btn-gold" onclick="openNode(seqNodes()[${idx+1}])">Next: ${next.title.substring(0,18)} →</button>`;}}
+  nav.innerHTML=html;
+}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function openDrawer(){document.getElementById('mob-drawer').classList.add('open');document.getElementById('mob-overlay').style.display='block';}
+function closeDrawer(){document.getElementById('mob-drawer').classList.remove('open');document.getElementById('mob-overlay').style.display='none';}
+
+/* ── METRICS ── */
+let _mToken=null,_mSid=null;
+function initMetrics(){
+  // Supabase stores the session under a key like `sb-<ref>-auth-token`
+  // in either localStorage or sessionStorage depending on the user's "keep me
+  // signed in" choice (see centumania-mvp/src/lib/supabase/client.ts).
+  try {
+    const stores=[localStorage,sessionStorage];
+    for(const store of stores){
+      if(_mToken)break;
+      for(let i=0;i<store.length;i++){
+        const k=store.key(i);
+        if(k&&k.startsWith('sb-')&&k.endsWith('-auth-token')){
+          const d=JSON.parse(store.getItem(k)||'{}');
+          _mToken=d?.access_token||null;
+          break;
+        }
+      }
+    }
+  } catch(e){}
+  _mSid='anc3-'+(Date.now().toString(36));
+}
+function track(name,meta={}){
+  if(!_mToken)return;
+  fetch('/api/events',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},
+    body:JSON.stringify({event_name:name,session_id:_mSid,event_timestamp:new Date().toISOString(),metadata:meta})
+  }).catch(()=>{});
+}
+initMetrics();track('material_opened',{material:'ancient_history_part3'});loadState();showDash();
+</script>
+</body>
+</html>
