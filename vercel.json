@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/admin/metrics/recalculate",
-      "schedule": "0 * * * *"
+      "schedule": "0 0 * * *"
     }
   ]
 }
