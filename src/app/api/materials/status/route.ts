@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
 
   const { data: batch } = await supabase
     .from('batches')
-    .select('id')
+    .select('id, starts_on')
     .eq('is_active', true)
     .limit(1)
     .maybeSingle()
@@ -34,16 +34,24 @@ export async function GET(request: NextRequest) {
   let testLinks: Record<number, string> = {}
 
   if (batch) {
-    const now = new Date().toISOString()
+    // Auto-compute today's batch day in IST (UTC+5:30)
+    const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000
+    const todayIST   = new Date(Date.now() + IST_OFFSET_MS).toISOString().slice(0, 10)
+    const startMs    = new Date(batch.starts_on + 'T00:00:00Z').getTime()
+    const todayMs    = new Date(todayIST        + 'T00:00:00Z').getTime()
+    const daysSince  = Math.floor((todayMs - startMs) / 86_400_000)
+
+    if (daysSince >= 0) {
+      activeDays = [daysSince + 1] // only today's day is open
+    }
+
+    // Fetch test links for all days (no expiry filter needed)
     const { data: rows } = await supabase
       .from('materials')
       .select('day_number, test_link')
       .eq('batch_id', batch.id)
-      .lte('published_at', now)
-      .gt('expires_at', now)
 
     for (const row of rows ?? []) {
-      activeDays.push(row.day_number)
       if (row.test_link) testLinks[row.day_number] = row.test_link
     }
   }
