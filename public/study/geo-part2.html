@@ -133,11 +133,11 @@ tr:hover td{background:rgba(255,255,255,.03)}
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel2);border:1px solid var(--gold);color:var(--ink);padding:10px 20px;border-radius:30px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:all .3s;pointer-events:none}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 /* ── MOBILE OVERRIDES (must stay at end of <style> to win the cascade) ── */
-@media(max-width:700px){
+@media(max-width:900px){
   body{height:100dvh}
-  #sidebar{display:none}
-  #main{width:100%;max-width:100%}
-  #body-wrap{width:100%}
+  #sidebar{display:none !important}
+  #main{width:100% !important;max-width:100% !important}
+  #body-wrap{width:100% !important}
 }
 </style>
 </head>
@@ -509,6 +509,10 @@ function track(event,data={}){
 function init(){
   buildSidebar();refreshTopbar();showDash();
   document.getElementById('tb-title').textContent='🌍 Geography Part 2';
+  if(window.innerWidth<=900){
+    const sb=document.getElementById('sidebar');
+    if(sb)sb.style.setProperty('display','none','important');
+  }
   initMetrics();
   track('material_opened',{material:'geography_part2'});
   track('session_start');
