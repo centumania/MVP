@@ -132,18 +132,24 @@ tr:hover td{background:rgba(255,255,255,.03)}
 /* TOAST */
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel2);border:1px solid var(--gold);color:var(--ink);padding:10px 20px;border-radius:30px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:all .3s;pointer-events:none}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-/* ── MOBILE OVERRIDES (must stay at end of <style> to win the cascade) ── */
+/* ── MOB DRAWER (left-side, mirrors anc-history pattern) ── */
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200}
+.mob-drawer{display:none;position:fixed;top:0;left:0;width:280px;height:100%;background:var(--bg2);border-right:1px solid var(--line);z-index:201;overflow-y:auto;transform:translateX(-100%);transition:transform .25s}
+.mob-drawer.open{transform:translateX(0)}
+.mob-close-btn{float:right;background:none;border:none;color:var(--ink);font-size:1.3rem;cursor:pointer;padding:12px 14px}
+.mob-home-btn{float:left;background:none;border:none;color:var(--ink2);font-size:.8rem;cursor:pointer;padding:14px}
+/* ── MOBILE OVERRIDES ── */
 @media(max-width:900px){
   body{height:100dvh}
-  #sidebar{display:none !important}
-  #main{width:100% !important;max-width:100% !important}
-  #body-wrap{width:100% !important}
+  #sidebar{display:none}
+  .mob-overlay,.mob-drawer{display:block}
+  #main{width:100%}
 }
 </style>
 </head>
 <body>
 <div id="topbar">
-  <button id="tb-menu" onclick="toggleDrawer()">☰</button>
+  <button id="tb-menu" onclick="openDrawer()">☰</button>
   <span id="tb-title">Geography Part 2</span>
   <span class="tb-badge" id="tb-xp">⚡ 0 XP</span>
   <span class="tb-badge" id="tb-pct">📊 0%</span>
@@ -155,12 +161,12 @@ tr:hover td{background:rgba(255,255,255,.03)}
     <div id="node-content"></div>
   </main>
 </div>
-<aside id="aside">
-  <h3 style="color:var(--gold);margin-bottom:12px">📋 Study Guide</h3>
-  <p style="color:var(--ink2);font-size:13px;line-height:1.6">12 Nodes · Rivers → Soils → Forests → Climate · Unlock nodes by scoring 60%+ · Complete all for Golden Node</p>
-  <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px" id="drawer-nodes"></div>
-</aside>
-<div id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="mob-overlay" id="mob-overlay" onclick="closeDrawer()"></div>
+<div class="mob-drawer" id="mob-drawer">
+  <button class="mob-home-btn" onclick="showDash();closeDrawer()">⌂ Home</button>
+  <button class="mob-close-btn" onclick="closeDrawer()">✕</button>
+  <div id="mob-sidebar-inner" style="clear:both;padding:8px"></div>
+</div>
 <div id="toast"></div>
 <script>
 const SK='centumania_geo2_v1';
@@ -206,8 +212,9 @@ function refreshTopbar(){
   document.getElementById('tb-pct').textContent='📊 '+avg+'%';
 }
 
-function buildSidebar(){
-  const si=document.getElementById('sidebar-inner');
+function buildSidebar(containerId='sidebar-inner'){
+  const si=document.getElementById(containerId);
+  if(!si)return;
   si.innerHTML='';
   let lastCh='';
   CHAPTERS.forEach(n=>{
@@ -236,6 +243,7 @@ let currentNodeId=null;
 function openNode(id){
   const n=CHAPTERS.find(x=>x.id===id);
   if(!n||!isUnlocked(n))return;
+  closeDrawer();
   currentNodeId=id;
   document.querySelectorAll('.node-btn').forEach(b=>b.classList.remove('active'));
   const ab=document.getElementById('btn-geo2-'+id);
@@ -403,10 +411,10 @@ function finishAttempt(container){
   if(!isGold){
     if(pct>=(state.scores[n.id]||0)){state.scores[n.id]=pct;}
     if(pct>=60){state.xp+=n.xp;showToast('🎉 +'+n.xp+' XP earned!');}
-    save();refreshTopbar();buildSidebar();
+    save();refreshTopbar();buildSidebar('sidebar-inner');buildSidebar('mob-sidebar-inner');
   } else {
     state.xp+=200;showToast('🏆 Golden Node Complete! +200 XP');
-    save();refreshTopbar();buildSidebar();
+    save();refreshTopbar();buildSidebar('sidebar-inner');buildSidebar('mob-sidebar-inner');
   }
   container.innerHTML=`<div class="result-wrap">
     <div class="result-score">${pct}%</div>
@@ -458,23 +466,14 @@ function showToast(msg,dur=2500){
   const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),dur);
 }
-function toggleDrawer(){
-  const a=document.getElementById('aside');
-  const o=document.getElementById('drawer-overlay');
-  a.classList.toggle('open');o.classList.toggle('show');
-  if(a.classList.contains('open')){
-    const dn=document.getElementById('drawer-nodes');
-    dn.innerHTML=CHAPTERS.map(n=>{
-      const unlocked=isUnlocked(n);
-      const sc=(state.scores[n.id]||0);
-      return `<div onclick="${unlocked?`closeDrawer();openNode('${n.id}')`:''}" style="padding:8px 10px;background:var(--panel2);border-radius:6px;font-size:13px;cursor:${unlocked?'pointer':'not-allowed'};opacity:${unlocked?1:.45};color:${unlocked?'var(--ink)':'var(--ink3)'};display:flex;align-items:center;gap:8px">
-        <span>${n.icon}</span><span style="flex:1">${n.title}</span>${sc>0?`<span style="color:var(--green);font-size:11px">${sc}%</span>`:''}${unlocked?'':'<span style="font-size:11px">🔒</span>'}</div>`;
-    }).join('');
-  }
+function openDrawer(){
+  buildSidebar('mob-sidebar-inner');
+  document.getElementById('mob-drawer').classList.add('open');
+  document.getElementById('mob-overlay').style.display='block';
 }
 function closeDrawer(){
-  document.getElementById('aside').classList.remove('open');
-  document.getElementById('drawer-overlay').classList.remove('show');
+  document.getElementById('mob-drawer').classList.remove('open');
+  document.getElementById('mob-overlay').style.display='none';
 }
 
 let _mToken=null,_mSid=null;
@@ -507,12 +506,8 @@ function track(event,data={}){
 }
 
 function init(){
-  buildSidebar();refreshTopbar();showDash();
+  buildSidebar('sidebar-inner');refreshTopbar();showDash();
   document.getElementById('tb-title').textContent='🌍 Geography Part 2';
-  if(window.innerWidth<=900){
-    const sb=document.getElementById('sidebar');
-    if(sb)sb.style.setProperty('display','none','important');
-  }
   initMetrics();
   track('material_opened',{material:'geography_part2'});
   track('session_start');
