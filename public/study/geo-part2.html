@@ -15,8 +15,6 @@
   --blue:#93C5FD;--green:#4ade80;
 }
 body{background:var(--bg);color:var(--ink);font-family:'Segoe UI',sans-serif;display:flex;flex-direction:column;height:100vh;overflow:hidden}
-@media(max-width:900px){body{height:100dvh}}
-@media(max-width:700px){#sidebar{display:none !important}}
 /* TOPBAR */
 #topbar{display:flex;align-items:center;gap:10px;padding:0 16px;height:52px;background:var(--panel);border-bottom:1px solid var(--line);flex-shrink:0;z-index:50}
 #tb-menu{background:none;border:none;color:var(--ink2);font-size:20px;cursor:pointer;padding:4px 8px;border-radius:6px}
@@ -134,6 +132,13 @@ tr:hover td{background:rgba(255,255,255,.03)}
 /* TOAST */
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel2);border:1px solid var(--gold);color:var(--ink);padding:10px 20px;border-radius:30px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:all .3s;pointer-events:none}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ── MOBILE OVERRIDES (must stay at end of <style> to win the cascade) ── */
+@media(max-width:700px){
+  body{height:100dvh}
+  #sidebar{display:none}
+  #main{width:100%;max-width:100%}
+  #body-wrap{width:100%}
+}
 </style>
 </head>
 <body>
