@@ -27,6 +27,23 @@ export default function StudentMaterialViewer() {
   const [metrics,   setMetrics]  = useState<Metrics | null>(null)
 
   const openedAtRef = useRef<number>(0)
+  const iframeRef   = useRef<HTMLIFrameElement>(null)
+
+  function injectMobileCSS() {
+    if (window.innerWidth >= 901) return
+    try {
+      const doc = iframeRef.current?.contentDocument
+      if (!doc) return
+      const s = doc.createElement('style')
+      s.id = 'cm-mobile-override'
+      s.textContent = [
+        '#sidebar{display:none!important;width:0!important}',
+        '#body-wrap{display:block!important}',
+        '#main{width:100%!important;margin-left:0!important;max-width:100%!important}',
+      ].join('')
+      doc.head.appendChild(s)
+    } catch {}
+  }
 
   useEffect(() => {
     let cancelled = false
@@ -240,11 +257,13 @@ export default function StudentMaterialViewer() {
 
         {state === 'ready' && iframeSrc && (
           <iframe
+            ref={iframeRef}
             src={iframeSrc}
             title={title}
             className="flex-1 w-full border-0"
             style={{ minHeight: metrics ? 'calc(100vh - 84px)' : 'calc(100vh - 48px)' }}
             allow="fullscreen"
+            onLoad={injectMobileCSS}
           />
         )}
       </main>
