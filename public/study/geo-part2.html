@@ -25,7 +25,8 @@ body{background:var(--bg);color:var(--ink);font-family:'Segoe UI',sans-serif;dis
 /* BODY LAYOUT */
 #body-wrap{display:flex;flex:1;overflow:hidden;position:relative}
 /* SIDEBAR */
-#sidebar{width:260px;background:var(--bg2);border-right:1px solid var(--line);display:flex;flex-direction:column;flex-shrink:0;transition:width .25s;overflow:hidden}
+#sidebar{width:260px;background:var(--bg2);border-right:1px solid var(--line);display:none;flex-direction:column;flex-shrink:0;overflow:hidden}
+@media(min-width:901px){#sidebar{display:flex}}
 #sidebar.collapsed{width:0}
 #sidebar-inner{overflow-y:auto;flex:1;padding:8px 0}
 #sidebar-inner::-webkit-scrollbar{width:4px}
@@ -141,7 +142,6 @@ tr:hover td{background:rgba(255,255,255,.03)}
 /* ── MOBILE OVERRIDES ── */
 @media(max-width:900px){
   body{height:100dvh}
-  #sidebar{display:none}
   .mob-overlay,.mob-drawer{display:block}
   #main{width:100%}
 }
