@@ -124,7 +124,7 @@ export default function StudentMaterialViewer() {
         setTitle(material.title)
         setMetrics(metricsData)
         const unlockParam = metricsData?.mode_unlock ?? 'study'
-        setIframeSrc(material.htmlPath + '?unlock=' + unlockParam)
+        setIframeSrc(material.htmlPath + '?unlock=' + unlockParam + '&_v=20260624')
         setState('ready')
       }
     }
