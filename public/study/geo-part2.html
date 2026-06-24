@@ -24,10 +24,11 @@ body{background:var(--bg);color:var(--ink);font-family:'Segoe UI',sans-serif;dis
 #tb-xp{color:var(--gold)}
 /* BODY LAYOUT */
 #body-wrap{display:flex;flex:1;overflow:hidden;position:relative}
-/* SIDEBAR */
-#sidebar{width:260px;background:var(--bg2);border-right:1px solid var(--line);display:none;flex-direction:column;flex-shrink:0;overflow:hidden}
+/* SIDEBAR — position:fixed so it NEVER takes space in the flex row */
+#sidebar{position:fixed;left:0;top:52px;bottom:0;width:260px;background:var(--bg2);border-right:1px solid var(--line);flex-direction:column;overflow:hidden;z-index:100;display:none}
 @media(min-width:901px){#sidebar{display:flex}}
-#sidebar.collapsed{width:0}
+/* MAIN — full width always; shift right only on wide screens */
+@media(min-width:901px){#main{margin-left:260px}}
 #sidebar-inner{overflow-y:auto;flex:1;padding:8px 0}
 #sidebar-inner::-webkit-scrollbar{width:4px}
 #sidebar-inner::-webkit-scrollbar-thumb{background:var(--line);border-radius:2px}
