@@ -137,10 +137,18 @@ export default function StudentMaterialViewer() {
         if (mRes.ok) metricsData = await mRes.json()
       } catch {}
 
+      const unlockParam = metricsData?.mode_unlock ?? 'study'
+
+      // On mobile, go directly to the HTML file — iframe viewport issues prevent
+      // CSS media queries from hiding the sidebar reliably on narrow screens.
+      if (typeof window !== 'undefined' && window.innerWidth <= 900) {
+        window.location.href = material.htmlPath + '?unlock=' + unlockParam + '&_v=20260624'
+        return
+      }
+
       if (!cancelled) {
         setTitle(material.title)
         setMetrics(metricsData)
-        const unlockParam = metricsData?.mode_unlock ?? 'study'
         setIframeSrc(material.htmlPath + '?unlock=' + unlockParam + '&_v=20260624')
         setState('ready')
       }
