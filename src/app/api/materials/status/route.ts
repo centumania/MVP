@@ -42,7 +42,9 @@ export async function GET(request: NextRequest) {
     const daysSince  = Math.floor((todayMs - startMs) / 86_400_000)
 
     if (daysSince >= 0) {
-      activeDays = [daysSince + 1] // only today's day is open
+      const today = daysSince + 1
+      // All days from Day 1 up to today are accessible
+      activeDays = Array.from({ length: today }, (_, i) => i + 1)
     }
 
     // Fetch test links for all days (no expiry filter needed)

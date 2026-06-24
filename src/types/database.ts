@@ -401,6 +401,12 @@ export type Database = {
         Update:        Partial<Omit<StudentMetrics, 'user_id'>>
         Relationships: []
       }
+      student_topic_accuracy: {
+        Row:           { user_id: string; topic: string; total_attempted: number; total_correct: number; last_updated: string }
+        Insert:        Record<string, never>
+        Update:        Record<string, never>
+        Relationships: []
+      }
     }
     Views: {
       leaderboard: {

@@ -16,6 +16,7 @@
 }
 body{background:var(--bg);color:var(--ink);font-family:'Segoe UI',sans-serif;display:flex;flex-direction:column;height:100vh;overflow:hidden}
 @media(max-width:900px){body{height:100dvh}}
+@media(max-width:700px){#sidebar{display:none}}
 /* TOPBAR */
 #topbar{display:flex;align-items:center;gap:10px;padding:0 16px;height:52px;background:var(--panel);border-bottom:1px solid var(--line);flex-shrink:0;z-index:50}
 #tb-menu{background:none;border:none;color:var(--ink2);font-size:20px;cursor:pointer;padding:4px 8px;border-radius:6px}
@@ -458,8 +459,12 @@ function toggleDrawer(){
   a.classList.toggle('open');o.classList.toggle('show');
   if(a.classList.contains('open')){
     const dn=document.getElementById('drawer-nodes');
-    dn.innerHTML=CHAPTERS.map(n=>`<div style="padding:6px 10px;background:var(--panel2);border-radius:6px;font-size:12px;color:${isUnlocked(n)?'var(--ink)':'var(--ink3)'}">
-      ${n.icon} ${n.title} ${(state.scores[n.id]||0)>0?'· '+state.scores[n.id]+'%':''}</div>`).join('');
+    dn.innerHTML=CHAPTERS.map(n=>{
+      const unlocked=isUnlocked(n);
+      const sc=(state.scores[n.id]||0);
+      return `<div onclick="${unlocked?`closeDrawer();openNode('${n.id}')`:''}" style="padding:8px 10px;background:var(--panel2);border-radius:6px;font-size:13px;cursor:${unlocked?'pointer':'not-allowed'};opacity:${unlocked?1:.45};color:${unlocked?'var(--ink)':'var(--ink3)'};display:flex;align-items:center;gap:8px">
+        <span>${n.icon}</span><span style="flex:1">${n.title}</span>${sc>0?`<span style="color:var(--green);font-size:11px">${sc}%</span>`:''}${unlocked?'':'<span style="font-size:11px">🔒</span>'}</div>`;
+    }).join('');
   }
 }
 function closeDrawer(){

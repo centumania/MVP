@@ -26,11 +26,8 @@ export const materials: Material[] = [
   { id: 'day-2-geo2', day: 2, title: 'Geography — Part 2',       htmlPath: '/study/geo-part2.html',     totalNodes: 8  },
 
   // ── Day 3 ──────────────────────────────────────────────────────────────────
-  { id: 'day-3-bio',  day: 3, title: 'Biology — Part 3',       htmlPath: '/content/day-3/biology.html' },
-  { id: 'day-3-chem', day: 3, title: 'Chemistry — Part C',     htmlPath: '/content/day-3/chemistry.html' },
-  { id: 'day-3-math', day: 3, title: 'Maths — Simplification', htmlPath: '/content/day-3/math.html' },
-  { id: 'day-3-eng',  day: 3, title: 'English — Grammar 2',    htmlPath: '/content/day-3/english.html' },
-  { id: 'day-3-ca',   day: 3, title: 'Current Affairs',        htmlPath: '/content/day-3/current-affairs.html' },
+  { id: 'day-3-geo1', day: 3, title: 'Geography — Part 1 (Revision)', htmlPath: '/study/geo-part1.html', totalNodes: 8 },
+  { id: 'day-3-geo2', day: 3, title: 'Geography — Part 2 (Revision)', htmlPath: '/study/geo-part2.html', totalNodes: 8 },
 
   // ── Day 4 ──────────────────────────────────────────────────────────────────
   { id: 'day-4-bio',  day: 4, title: 'Biology — Part 4',       htmlPath: '/content/day-4/biology.html' },
