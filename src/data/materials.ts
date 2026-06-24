@@ -27,7 +27,7 @@ export const materials: Material[] = [
 
   // ── Day 3 ──────────────────────────────────────────────────────────────────
   { id: 'day-3-geo1', day: 3, title: 'Geography — Part 1 (Revision)', htmlPath: '/study/geo-part1.html', totalNodes: 8 },
-  { id: 'day-3-geo3', day: 3, title: 'Geography — Part 3',            htmlPath: '/study/geo-part3.html', totalNodes: 13 },
+  { id: 'day-3-med1', day: 3, title: 'Medieval History — Part 1',     htmlPath: '/study/med-part1.html', totalNodes: 13 },
 
   // ── Day 4 ──────────────────────────────────────────────────────────────────
   { id: 'day-4-bio',  day: 4, title: 'Biology — Part 4',       htmlPath: '/content/day-4/biology.html' },

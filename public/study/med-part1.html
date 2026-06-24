@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>CentuMania · Medieval History Part 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0a12;--bg2:#0a0810;--panel:#1a1523;--panel2:#201b2c;--line:#2d2640;
+  --ink:#f0e8ff;--ink2:#b89fd4;--ink3:#6b5a8a;
+  --gold:#c084fc;--gold2:#9333ea;--gold-glow:rgba(192,132,252,.13);
+  --amber:#f59e0b;--gold-bg:rgba(192,132,252,.12);
+  --red:#f87171;--red-bg:rgba(248,113,113,.10);
+  --blue:#60a5fa;--green:#34d399;
+  --mono:"JetBrains Mono",monospace;--serif:"Instrument Serif",serif;--sans:"DM Sans",sans-serif;
+  --nav:56px;--aside:268px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px}
+.shell{display:grid;grid-template-rows:var(--nav) 1fr;height:100vh;overflow:hidden}
+.topbar{display:flex;align-items:center;padding:0 18px;gap:12px;border-bottom:1px solid var(--line);background:rgba(10,8,16,.97);backdrop-filter:blur(14px);z-index:60}
+.logo{font-family:var(--serif);font-size:19px;font-style:italic;color:var(--gold);display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);flex-shrink:0}
+.nav-stats{display:flex;gap:16px;margin-left:auto;align-items:center}
+.stat{font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.stat b{font-size:13px}.stat.xp b{color:var(--gold)}.stat.nd b{color:var(--amber)}.stat.tp b{color:var(--red)}
+.body-wrap{display:grid;grid-template-columns:var(--aside) 1fr;overflow:hidden;height:calc(100vh - var(--nav))}
+aside{background:var(--bg2);border-right:1px solid var(--line);overflow-y:auto}
+aside::-webkit-scrollbar{width:3px}aside::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+main{overflow-y:auto;background:var(--bg)}
+main::-webkit-scrollbar{width:4px}main::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+#sidebar-inner{padding:10px 8px 60px}
+.ch-group{margin-bottom:3px}
+.ch-toggle{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink2);padding:9px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:.13s;font-family:var(--sans)}
+.ch-toggle:hover{background:var(--panel);color:var(--ink)}
+.ch-icon{font-size:15px}.ch-label{flex:1}.ch-prog{font-family:var(--mono);font-size:10px;color:var(--ink3)}.ch-arr{font-size:11px;color:var(--ink3);flex-shrink:0}
+.node-items{padding:3px 4px 3px 10px}
+.ni-btn{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink3);padding:7px 9px;border-radius:8px;cursor:pointer;font-size:13px;transition:.12s;font-family:var(--sans);margin-bottom:1px;min-height:44px}
+.ni-btn:hover:not(.locked){background:var(--panel);color:var(--ink)}
+.ni-btn.active{background:var(--gold-glow);border-color:var(--gold2);color:var(--gold)}
+.ni-btn.passed:not(.active){color:var(--ink)}
+.ni-btn.locked{cursor:default;opacity:.4}
+.ni-title{flex:1;line-height:1.3}.ni-xp{font-family:var(--mono);font-size:10px;color:var(--ink3);flex-shrink:0}
+.ni-tag{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:4px;flex-shrink:0}
+.ni-tag.lock{color:var(--ink3)}.ni-tag.done{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.25)}.ni-tag.vis{color:var(--amber)}
+.view{padding:28px clamp(16px,3.5vw,52px) 80px;max-width:900px;margin:0 auto}
+.tabs{display:flex;gap:3px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:22px;width:fit-content}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:8px;cursor:pointer;border:0;background:none;color:var(--ink2);transition:.14s}
+.tab:hover:not(.active){color:var(--ink)}.tab.active{background:var(--gold2);color:#fff;font-weight:700}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.node-hd-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.node-type-tag{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px}
+.node-type-tag.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.node-type-tag.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(192,132,252,.3)}
+.xp-pill{font-family:var(--mono);font-size:11px;color:var(--gold);background:var(--gold-bg);border:1px solid rgba(192,132,252,.2);border-radius:6px;padding:3px 8px;margin-left:auto}
+.node-title{font-family:var(--serif);font-size:clamp(24px,4vw,36px);font-style:italic;line-height:1.1;margin-bottom:12px}
+.node-stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.ns-item{display:flex;flex-direction:column;gap:3px}
+.ns-label{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:1px}
+.ns-val{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink)}
+.ns-val.faa-col{color:var(--amber)}.ns-val.pass-col{color:var(--green)}.ns-val.pend-col{color:var(--ink2)}
+.fact-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
+.fact-block.gold-block{background:linear-gradient(135deg,rgba(192,132,252,.07),rgba(147,51,234,.04));border-color:rgba(192,132,252,.3)}
+.fb-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink2);border-bottom:1px solid var(--line);background:var(--panel2)}
+.fb-body{padding:14px 16px}
+ul.facts{list-style:none;padding:0}
+ul.facts li{padding:7px 0 7px 22px;border-bottom:1px dashed var(--line);font-size:14px;position:relative;line-height:1.55}
+ul.facts li:last-child{border-bottom:0}
+ul.facts li::before{content:"▸";position:absolute;left:3px;top:9px;color:var(--amber);font-size:11px}
+ul.facts b{color:var(--gold)}
+.trap-block{background:var(--red-bg);border:1px solid rgba(248,113,113,.35);border-radius:12px;overflow:hidden;margin:12px 0}
+.trap-block .fb-head{background:rgba(248,113,113,.08);color:var(--red);border-color:rgba(248,113,113,.35)}
+.trap-block ul.facts li::before{content:"⚠";color:var(--red)}
+.mnemonic-block{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.3);border-radius:12px;overflow:hidden;margin:12px 0}
+.mnemonic-block .fb-head{background:rgba(96,165,250,.07);color:var(--blue);border-color:rgba(96,165,250,.3)}
+.revision-block{background:rgba(96,165,250,.05);border:1px solid rgba(96,165,250,.2);border-radius:12px;overflow:hidden;margin:12px 0}
+.revision-block .fb-head{background:rgba(96,165,250,.06);color:var(--blue);border-color:rgba(96,165,250,.2)}
+.revision-block ul.facts li::before{content:"⚡";color:var(--blue);font-size:10px}
+.oneliner-block{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.18);border-radius:12px;overflow:hidden;margin:12px 0}
+.oneliner-block .fb-head{background:rgba(52,211,153,.06);color:var(--green);border-color:rgba(52,211,153,.18)}
+.oneliner-block ul.facts li::before{content:"🎯";color:var(--green);font-size:10px}
+.flash-hint{font-family:var(--mono);font-size:11px;color:var(--ink3);text-align:center;margin-bottom:12px;letter-spacing:.5px}
+.flash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:14px}
+.flash-card{perspective:900px;cursor:pointer;height:140px}
+.flash-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+.flash-front,.flash-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;line-height:1.45;border:1px solid var(--line)}
+.flash-front{background:var(--panel);color:var(--ink)}
+.flash-back{background:rgba(240,188,69,.1);border-color:rgba(240,188,69,.3);color:var(--gold);transform:rotateY(180deg)}
+.flash-reset-row{text-align:center;margin-top:4px}
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--line);margin:12px 0}
+table.dt{width:100%;border-collapse:collapse;font-size:13px}
+table.dt th{padding:9px 13px;text-align:left;background:var(--gold2);color:#fff;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+table.dt td{padding:9px 13px;border-bottom:1px solid var(--line);color:var(--ink)}
+table.dt tr:last-child td{border-bottom:0}
+table.dt td:first-child{color:var(--amber);font-weight:600;font-family:var(--mono);font-size:12px}
+table.dt b{color:var(--gold)}
+.mcq-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.mcq-q{font-size:15px;font-weight:600;margin-bottom:12px;line-height:1.45}
+.q-num{font-family:var(--mono);font-size:12px;color:var(--amber);margin-right:4px}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0}
+.mopt{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);font-size:13px;cursor:pointer;text-align:left;font-family:var(--sans);transition:.13s;width:100%}
+.mopt:hover:not([disabled]){border-color:var(--gold2);background:var(--gold-glow)}
+.mopt.correct{background:rgba(52,211,153,.12);border-color:var(--green);color:var(--green)}
+.mopt.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.mcq-fb{margin-top:10px;font-size:13px;padding:9px 12px;border-radius:8px;background:var(--panel2);color:var(--ink2);line-height:1.5;border:1px solid var(--line)}
+.mcq-faa{margin-top:7px}
+.faa-chip{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:6px}
+.faa-chip.faa-ok{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.25)}
+.faa-chip.faa-err{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,113,113,.25)}
+.retry-btn{margin-top:4px;padding:6px 16px;background:var(--panel2);border:1px solid var(--gold2);color:var(--gold);border-radius:8px;cursor:pointer;font-family:var(--mono);font-size:11px}
+.retry-btn:hover{background:var(--gold-glow)}
+.unlock-banner{border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:14px;line-height:1.5}
+.pass-banner{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.35);color:var(--green)}
+.fail-banner{background:var(--red-bg);border:1px solid rgba(248,113,113,.35);color:var(--ink)}
+.node-nav{display:flex;gap:10px;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+.nav-btn{font-family:var(--sans);font-weight:600;font-size:13px;border-radius:9px;padding:9px 15px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:.14s;flex:1;text-align:center}
+.nav-btn:hover:not([disabled]){border-color:var(--gold2)}.nav-btn[disabled]{opacity:.35;cursor:default}
+.nav-btn.home-btn{flex:0 0 auto;background:var(--panel2)}
+.dash-hero{background:linear-gradient(135deg,rgba(192,132,252,.08),rgba(147,51,234,.05));border:1px solid rgba(192,132,252,.2);border-radius:16px;padding:28px;margin-bottom:22px;text-align:center}
+.dh-title{font-family:var(--serif);font-size:clamp(28px,5vw,44px);font-style:italic;margin-bottom:4px}
+.dh-sub{font-family:var(--mono);font-size:12px;color:var(--ink3);letter-spacing:1px}
+.dh-xp{font-family:var(--mono);font-size:32px;font-weight:700;color:var(--gold);margin:12px 0 4px}
+.dh-bar-wrap{height:8px;background:var(--line);border-radius:4px;overflow:hidden;max-width:400px;margin:0 auto 8px}
+.dh-bar{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:4px;transition:.6s}
+.dh-label{font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.dash-chapters{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:22px}
+.dc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.dc-icon{font-size:22px;margin-bottom:6px}
+.dc-label{font-size:13px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.dc-prog-bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.dc-bar{height:100%;background:var(--gold);border-radius:3px;transition:.5s}
+.dc-nums{font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.cta-btn{padding:12px 24px;border-radius:12px;font-size:14px;font-weight:700;font-family:var(--sans);cursor:pointer;border:0;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#fff;transition:.15s}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(192,132,252,.3)}
+.cta-btn.sec{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+.cta-btn[disabled]{opacity:.4;cursor:default;transform:none;box-shadow:none}
+.toast{position:fixed;top:64px;right:18px;background:var(--panel2);border:1px solid var(--gold);border-radius:12px;padding:10px 16px;z-index:500;opacity:0;transform:translateY(-8px);transition:.3s;pointer-events:none;font-size:13px;max-width:340px;line-height:1.4}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.err{border-color:var(--red)}.toast.warn{border-color:var(--amber);color:var(--ink)}
+.mob-bar{display:none}
+@media(max-width:720px){
+  .shell{grid-template-rows:var(--nav) 1fr 56px;height:100dvh}
+  .body-wrap{grid-template-columns:1fr;height:calc(100dvh - var(--nav) - 56px)}
+  aside{display:none}
+  .mob-bar{display:flex;background:rgba(10,8,16,.98);backdrop-filter:blur(16px);border-top:1px solid var(--line);align-items:stretch}
+  .mob-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;color:var(--ink3);cursor:pointer;padding:8px 4px;font-family:var(--mono);font-size:9px;transition:.13s}
+  .mob-tab .mt-ico{font-size:20px}.mob-tab.act{color:var(--gold)}
+  .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;opacity:0;pointer-events:none;transition:.2s}
+  .mob-overlay.show{opacity:1;pointer-events:all}
+  .mob-drawer{position:fixed;left:-100%;top:0;bottom:0;width:min(300px,88vw);background:var(--bg2);border-right:1px solid var(--line);z-index:200;transition:.28s;overflow-y:auto}
+  .mob-drawer.open{left:0}
+  .mob-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px;border-bottom:1px solid var(--line)}
+  .mob-close{background:none;border:1px solid var(--line);color:var(--ink2);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px}
+  .nav-stats{display:none}
+  .view{padding:16px 14px 100px}
+  .node-title{font-size:24px}
+  .mcq-opts{grid-template-columns:1fr}
+  .tabs{overflow-x:auto;width:100%;scrollbar-width:none}
+  .toast{top:auto;bottom:68px;left:14px;right:14px}
+}
+@media(min-width:721px){.mob-drawer,.mob-overlay{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar">
+    <div class="logo"><span class="logo-dot"></span>CentuMania</div>
+    <div class="nav-stats">
+      <div class="stat xp">XP <b id="h-xp">0</b></div>
+      <div class="stat nd">Nodes <b id="h-nd">0/0</b></div>
+      <div class="stat tp">Traps <b id="h-tp">0/0</b></div>
+    </div>
+  </nav>
+  <div class="body-wrap">
+    <aside><div id="sidebar-inner"></div></aside>
+    <main id="main-area">
+      <div class="dash-view view" id="dash-view"><div id="dash-content"></div></div>
+      <div class="node-view view" id="node-view" style="display:none">
+        <div id="node-content"></div>
+        <div class="node-nav" id="node-nav"></div>
+      </div>
+    </main>
+  </div>
+  <nav class="mob-bar">
+    <button class="mob-tab act" id="mob-home"><span class="mt-ico">◈</span>Home</button>
+    <button class="mob-tab" id="mob-menu"><span class="mt-ico">☰</span>Topics</button>
+  </nav>
+</div>
+<div class="mob-overlay" id="mob-overlay"></div>
+<div class="mob-drawer" id="mob-drawer">
+  <div class="mob-drawer-head">
+    <div class="logo"><span class="logo-dot"></span>Topics</div>
+    <button class="mob-close" id="mob-close">✕</button>
+  </div>
+  <div id="mob-sidebar-inner"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CHAPTERS=[
+{id:"early_north",title:"Early Medieval — North India",icon:"🏯",nodes:[
+
+{id:"en1",title:"Rajputs & Tripartite Struggle",xp:50,type:"regular",seqIdx:0,
+facts:[
+"<b>Post-Harsha vacuum:</b> After Harsha's death (647 AD) → no political unity in North India for ~500 years | Rajputs emerged as dominant force",
+"<b>4 Agnikul Rajput Clans:</b> Pratiharas (Western India) | Chahamanas/Chauhans (Ajmer) | Chandellas (Bundelkhand) | Paramaras (Malwa, capital: Dhara)",
+"<b>Tripartite Struggle (750–1000 CE)</b> = three empires fought for control of <b>Kannauj</b> (Ganga trade route + Silk Route; Harsha's former capital)",
+"Three powers: <b>Gurjara-Pratihara</b> (West) | <b>Palas</b> (East) | <b>Rashtrakutas</b> (Deccan) — Rashtrakutas = most powerful, lasted longest",
+"<b>Vatsaraja (Pratihara)</b> = FIRST to initiate tripartite conflict by defeating Dharmapala (Pala) & Indrayudha (Kannauj ruler)",
+"<b>Dharmapala (Pala)</b> convened grand Darbar at Kannauj — symbolic assertion of supremacy; placed his nominee on the throne",
+"<b>Dhruva (Rashtrakuta)</b> defeated BOTH Vatsaraja & Dharmapala but did <b>NOT occupy Kannauj</b> — returned to Deccan",
+"<b>Devapala (Pala)</b> = son of Dharmapala; defeated Pratiharas + Rashtrakutas; extended empire to Assam, Orissa, parts of Nepal",
+"Struggle called 'struggle for Kannauj' — fought not just for territory but for <b>prestige of Harshavardhana's legacy</b>",
+"<b>Chandellas:</b> Capitals = Mahoba & Khajuraho | Yashovarman made them independent | built Khajuraho temples (UNESCO)",
+"<b>Paramaras:</b> Bhoja = patron of arts; wrote 24 Sanskrit Kavyas; title = Kaviraja; built Bhojashala Sanskrit college; wrote Samarangana Sutradhara (architecture)"
+],
+table:{h:["Power","Region","Key Ruler","Key Fact"],r:[
+["Gurjara-Pratihara","Western India","Nagabhata-I, Mihira Bhoja","Contained Arab armies; Vatsaraja began tripartite struggle"],
+["Palas","Eastern India/Bengal","Dharmapala, Devapala","Buddhist rulers; Vikramashila University"],
+["Rashtrakutas","Deccan","Dhruva, Govinda-III","MOST powerful; defeated both others but didn't occupy Kannauj"],
+["Chauhans","Ajmer","Prithviraj III","Battle of Tarain 1191 (won), 1192 (lost)"],
+["Chandellas","Bundelkhand","Yashovarman","Built Khajuraho temples (UNESCO)"],
+["Paramaras","Malwa","Bhoja","Kaviraja; Samarangana Sutradhara (architecture book)"]
+]},
+mn:{h:"🧠 MNEMONIC — Tripartite Struggle",b:"<b>P-P-R</b> = Pratihara (West) · Pala (East) · Rashtrakuta (Deccan)<br>'<b>Pratihara Pushed, Pala Prayed, Rashtrakuta Ruled</b>'<br>Dhruva = D for Deccan = <b>D</b>id NOT occupy Kannauj<br>Kannauj = <b>K</b>ey prize of tripartite struggle"},
+traps:[
+"Rashtrakutas = MOST POWERFUL in tripartite struggle (not Pratiharas, not Palas)",
+"Dhruva defeated BOTH rivals but did NOT occupy Kannauj — he returned to Deccan",
+"Vatsaraja (Pratihara) BEGAN the struggle — NOT Dharmapala, NOT Dhruva",
+"Kannauj was fought over for prestige (Harsha's legacy) — NOT just for territory",
+"Khajuraho = Chandellas (NOT Pratiharas, NOT Paramaras)"
+],
+revision:["Post-Harsha(647AD) vacuum, Rajputs emerged, 4 Agnikul clans: Pratiharas,Chahamanas,Chandellas,Paramaras","Tripartite Struggle(750-1000CE) for Kannauj between Gurjara-Pratihara(West),Palas(East),Rashtrakutas(Deccan)","Rashtrakutas = most powerful, lasted longest","Vatsaraja(Pratihara) FIRST initiated the struggle","Kannauj fought over for prestige(Harsha's legacy) not just territory"],
+oneliners:["After Harsha's death (647 AD), North India lacked political unity for ~500 years","Rajputs emerged as the dominant force in this post-Harsha vacuum","The 4 Agnikul Rajput clans are Pratiharas, Chahamanas (Chauhans), Chandellas, and Paramaras","Pratiharas were based in Western India; Chahamanas in Ajmer; Chandellas in Bundelkhand; Paramaras in Malwa","The Tripartite Struggle (750-1000 CE) was fought over control of Kannauj","Kannauj was valuable for the Ganga trade route, Silk Route access, and as Harsha's former capital","The three powers in the Tripartite Struggle were Gurjara-Pratihara, Palas, and Rashtrakutas","The Rashtrakutas were the most powerful and longest-lasting of the three","Vatsaraja of the Pratiharas was the first to initiate the tripartite conflict"],
+flashcards:[{q:"What vacuum followed Harsha's death in 647 AD?",a:"No political unity in North India for ~500 years"},{q:"Name the 4 Agnikul Rajput clans.",a:"Pratiharas, Chahamanas (Chauhans), Chandellas, Paramaras"},{q:"What was the Tripartite Struggle fought over?",a:"Control of Kannauj"},{q:"Name the 3 powers in the Tripartite Struggle.",a:"Gurjara-Pratihara, Palas, Rashtrakutas"},{q:"Which power was most powerful and longest-lasting in the struggle?",a:"The Rashtrakutas"},{q:"Who first initiated the Tripartite Struggle?",a:"Vatsaraja of the Pratiharas"},{q:"Why was Kannauj so valuable?",a:"Ganga trade route, Silk Route access, and prestige as Harsha's former capital"}],
+mcqs:[
+{q:"Which power was the MOST POWERFUL in the Tripartite Struggle?",o:["Gurjara-Pratihara","Palas","Rashtrakutas","Chauhans"],a:2,e:"Rashtrakutas of the Deccan were the most powerful in the Tripartite Struggle and lasted longest. They defeated both the Pratiharas and the Palas but did not permanently occupy Kannauj."},
+{q:"The Tripartite Struggle was fought for control of:",o:["Pataliputra","Kannauj","Taxila","Rajgriha"],a:1,e:"Kannauj (on the Ganga trade route and Silk Route, Harsha's former capital) was the prize of the Tripartite Struggle. Controlling Kannauj symbolised supremacy over North India."},
+{q:"Who FIRST initiated the Tripartite Struggle?",o:["Dharmapala (Pala)","Dhruva (Rashtrakuta)","Vatsaraja (Pratihara)","Devapala (Pala)"],a:2,e:"Vatsaraja of the Pratihara dynasty was the FIRST to initiate the Tripartite Struggle by defeating both Dharmapala (Pala) and Indrayudha of Kannauj."},
+{q:"Rashtrakuta king Dhruva defeated both rivals in the Tripartite Struggle. What did he do NEXT?",o:["Occupied Kannauj and made it his capital","Built Kannauj fort","Returned to Deccan WITHOUT occupying Kannauj","Gave Kannauj to Pala king"],a:2,e:"Dhruva defeated both Vatsaraja (Pratihara) and Dharmapala (Pala) but returned to Deccan WITHOUT occupying Kannauj. This is a frequently asked SSC trap — he won battles but did not stay."},
+{q:"Khajuraho temples (UNESCO World Heritage Site) were built by:",o:["Gurjara-Pratiharas","Rashtrakutas","Chauhans","Chandellas"],a:3,e:"Khajuraho temples were built by the Chandella rulers of Bundelkhand. Their capitals were Mahoba and Khajuraho."},
+{q:"The 'Darbar at Kannauj' to symbolically assert supremacy was convened by:",o:["Vatsaraja","Devapala","Dharmapala","Gopala"],a:2,e:"Dharmapala (Pala) convened the grand Darbar at Kannauj and placed his own nominee on the throne — the most dramatic assertion of Pala supremacy in the Tripartite Struggle."},
+{q:"Which Paramara ruler is called 'Kaviraja' for his literary contributions?",o:["Siyaka","Yashovarman","Bhoja","Munja"],a:2,e:"Paramara Bhoja (capital: Dhara, Malwa) is called Kaviraja for writing 24 Sanskrit works. He also wrote Samarangana Sutradhara (on architecture) and built the Bhojashala Sanskrit college."},
+{q:"The Rani ki Vav (UNESCO) was built by Queen Udayamathi, wife of which king?",o:["Prithviraj Chauhan","Bhima-I of Solanki dynasty","Yashovarman Chandella","Mihira Bhoja"],a:1,e:"Rani ki Vav (the Queen's stepwell) at Patan, Gujarat, is a UNESCO World Heritage Site built by Queen Udayamathi, wife of Bhima-I of the Solanki/Chalukya dynasty of Gujarat."},
+{q:"Devapala (Pala) extended the Pala empire to which of these regions?",o:["Kashmir and Punjab","Assam, Orissa, and parts of Nepal","Gujarat and Sindh","Deccan and Karnataka"],a:1,e:"Devapala, son of Dharmapala, was the greatest military Pala king. He defeated both Pratiharas and Rashtrakutas and extended the empire to Assam, Orissa, and parts of Nepal."},
+{q:"The 4 Agnikul Rajput clans did NOT include:",o:["Pratiharas","Chandellas","Paramaras","Rashtrakutas"],a:3,e:"The 4 Agnikul Rajput clans are: Pratiharas, Chahamanas/Chauhans, Chandellas, and Paramaras. Rashtrakutas were a Deccan power — NOT an Agnikul Rajput clan."}
+]},
+
+{id:"en2",title:"Gurjara-Pratihara & Palas",xp:60,type:"regular",seqIdx:1,
+facts:[
+"<b>Gurjara-Pratihara (730–1036 AD):</b> Founder = Harichandra (Jodhpur, SW Rajasthan) | Originated from Gurjaras (pastoralists + fighters)",
+"<b>Greatest achievement:</b> Contained Arab armies east of Indus River (most important contribution to Indian history)",
+"Foreign visitor: <b>Al-Masudi</b> (Arab) visited Pratihara empire (957 AD)",
+"<b>Mihira Bhoja / Bhoja-I (836–885)</b> = Greatest Pratihara ruler | Capital: Kannauj (also called Mahodaya) | Title: 'Adivaraha' | Called 'King Baura' by Al-Masudi",
+"<b>Nagabhata-II</b> = conquered Kannauj + Indo-Gangetic Plain; <b>rebuilt Shiva temple at Somnath</b> (after Arab demolition)",
+"<b>Mahendrapala-I</b> = empire at peak prosperity; Sanskrit poet <b>Rajasekhara</b> lived in his court",
+"Rajasekhara's works: Karpuramanjari, Kavya Mimansa, Bala Ramayana, Balabharathi",
+"<b>Rajyapala</b> = fled when Mahmud Ghazni raided Kannauj → killed by neighboring Rajputs for cowardice",
+"<b>Palas (750–1150 AD):</b> Founder = Gopala (8th cent) | Name 'Pala' = 'protector' in Prakrit | All kings' names ended in 'Pala'",
+"<b>Pala Capital:</b> Muddagiri/Munger (Bihar) | Religion: Mahayana Buddhism + Tantric schools",
+"<b>Dharmapala</b> = Greatest Pala ruler | Founded <b>Vikramashila University</b> (Bihar) — 2nd most important Buddhist university after Nalanda",
+"<b>Gopala elected by nobles</b> to end anarchy — early form of ELECTIVE MONARCHY in Indian history",
+"<b>Atisha Dipankara</b> = Buddhist monk patronised by Mahipala-I; went to Tibet and spread Buddhism there",
+"Islam first appeared in Bengal during Pala rule (increased trade with Middle East)"
+],
+table:{h:["Ruler","Dynasty","Key Fact"],r:[
+["Harichandra","Pratihara","Founder; Gurjara origin"],
+["Nagabhata-I","Pratihara","Contained Arab armies; defeated by Dhruva (Rashtrakuta)"],
+["Mihira Bhoja (836–885)","Pratihara","GREATEST Pratihara; title Adivaraha; 'King Baura' by Al-Masudi"],
+["Mahendrapala-I","Pratihara","Peak prosperity; Rajasekhara in court"],
+["Gopala","Pala","FOUNDER; elected by nobles — early elective monarchy"],
+["Dharmapala","Pala","GREATEST Pala; Vikramashila University; Darbar at Kannauj"],
+["Devapala","Pala","Greatest military; extended to Assam, Orissa, Nepal"],
+["Mahipala-I","Pala","Revived dynasty; patronised Atisha Dipankara"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"Mihira Bhoja = <b>M</b>ahodaya capital + <b>A</b>divaraha title + <b>B</b>aura (Al-Masudi)<br>→ '<b>MAB</b>' (Mahodaya-Adivaraha-Baura)<br>Palas: <b>G-D-D-M</b> = Gopala, Dharmapala, Devapala, Mahipala<br>'<b>Good Dharma Deserves Merit</b>'"},
+traps:[
+"Vikramashila University = founded by DHARMAPALA (NOT Gopala, NOT Devapala)",
+"Nalanda was NOT founded by Palas — Nalanda predates them (5th century Gupta period)",
+"Gopala was ELECTED by nobles — earliest example of elective monarchy in India",
+"Nagabhata-II REBUILT Somnath temple (after Arab demolition) — Mahmud Ghazni later destroyed it again in 1025",
+"Al-Masudi visited Pratihara empire (957 AD) — NOT Pala, NOT Rashtrakuta"
+],
+revision:["Gurjara-Pratihara(730-1036AD): founder Harichandra(Jodhpur)","Greatest achievement: contained Arab armies east of Indus River","Mihira Bhoja/Bhoja-I(836-885)=greatest ruler, capital Kannauj/Mahodaya, title Adivaraha","Al-Masudi(Arab) visited 957AD, called Bhoja 'King Baura'","Nagabhata-II conquered Kannauj, rebuilt Shiva temple at Somnath after Arab demolition"],
+oneliners:["The Gurjara-Pratihara dynasty ruled 730-1036 AD, founded by Harichandra of Jodhpur","The Pratiharas originated from the Gurjaras, pastoralists and fighters","The Pratiharas' greatest achievement was containing Arab armies east of the Indus River","Al-Masudi, an Arab traveller, visited the Pratihara empire in 957 AD","Mihira Bhoja (Bhoja-I), 836-885, was the greatest Pratihara ruler","Bhoja-I's capital was Kannauj, also called Mahodaya","Bhoja-I held the title 'Adivaraha' and was called 'King Baura' by Al-Masudi","Nagabhata-II conquered Kannauj and the Indo-Gangetic Plain","Nagabhata-II rebuilt the Shiva temple at Somnath after its Arab demolition","Mahendrapala-I's reign saw the empire at its peak prosperity"],
+flashcards:[{q:"Who founded the Gurjara-Pratihara dynasty, and where?",a:"Harichandra, at Jodhpur"},{q:"What was the Pratiharas' greatest achievement?",a:"Containing Arab armies east of the Indus River"},{q:"Who was the greatest Pratihara ruler?",a:"Mihira Bhoja (Bhoja-I), 836-885"},{q:"What was Bhoja-I's capital, and his title?",a:"Kannauj (Mahodaya); titled Adivaraha"},{q:"Which Arab traveller visited the Pratihara empire, and when?",a:"Al-Masudi, in 957 AD"},{q:"What did Nagabhata-II rebuild, and why?",a:"The Shiva temple at Somnath, after Arab demolition"},{q:"Which ruler saw the empire at peak prosperity?",a:"Mahendrapala-I"}],
+mcqs:[
+{q:"Who founded the Vikramashila University?",o:["Gopala","Devapala","Dharmapala","Mahipala-I"],a:2,e:"Vikramashila University was founded by Dharmapala (the greatest Pala ruler) in Bihar. It was the 2nd most important Buddhist university after Nalanda. This is a very common SSC trap."},
+{q:"The GREATEST ruler of the Gurjara-Pratihara dynasty was:",o:["Nagabhata-I","Vatsaraja","Nagabhata-II","Mihira Bhoja"],a:3,e:"Mihira Bhoja (Bhoja-I, 836–885) was the greatest Pratihara ruler. His capital was Kannauj (also called Mahodaya). His title was 'Adivaraha' and Arab traveller Al-Masudi called him 'King Baura.'"},
+{q:"The Gurjara-Pratiharas are most remembered for:",o:["Building Khajuraho","Founding Pataliputra","Containing Arab armies east of the Indus","Founding Delhi Sultanate"],a:2,e:"The Gurjara-Pratiharas' most important historical contribution was containing the Arab armies east of the Indus River for nearly two centuries — preventing Arab expansion into the Indian heartland."},
+{q:"Arab traveller Al-Masudi visited which empire in 957 AD?",o:["Pala empire","Rashtrakuta empire","Gurjara-Pratihara empire","Chola empire"],a:2,e:"Al-Masudi, the Arab traveller, visited the Gurjara-Pratihara empire in 957 AD. He called Mihira Bhoja 'King Baura.' He described the Pratihara empire as one of the great powers of his time."},
+{q:"The Pala dynasty founder Gopala was UNIQUE because he was:",o:["The first Buddhist ruler in India","Elected by nobles to end anarchy — early elective monarchy","The first ruler to build Buddhist universities","A feudatory of the Rashtrakutas"],a:1,e:"Gopala (8th century CE) was elected by nobles to end anarchy in Bengal — making him an early example of elective monarchy in Indian history. All Pala rulers' names ended with 'Pala' (meaning 'protector')."},
+{q:"Sanskrit poet Rajasekhara was associated with which Pratihara ruler's court?",o:["Mihira Bhoja","Nagabhata-II","Rajyapala","Mahendrapala-I"],a:3,e:"Sanskrit poet Rajasekhara (who wrote Karpuramanjari, Kavya Mimansa, Bala Ramayana, Balabharathi, Bhusan Kosh) lived in the court of Mahendrapala-I — when the Pratihara empire was at its peak of prosperity."},
+{q:"Atisha Dipankara, who spread Buddhism in Tibet, was patronised by which Pala ruler?",o:["Dharmapala","Gopala","Devapala","Mahipala-I"],a:3,e:"Atisha Dipankara was patronised by Mahipala-I (the most important later Pala ruler who revived the dynasty). Atisha went to Tibet and spread Buddhism there. He is an important Buddhist figure in Tibetan history."},
+{q:"The Pratihara king who REBUILT the Somnath temple (after it was demolished in an Arab raid from Sindh) was:",o:["Vatsaraja","Nagabhata-II","Mihira Bhoja","Yashpal"],a:1,e:"Nagabhata-II (805–833) rebuilt the Shiva temple at Somnath after it was demolished in an Arab raid from Sindh. (Note: Mahmud Ghazni later destroyed it again in 1025 CE — a different event!)"},
+{q:"'Pala' in Prakrit means:",o:["Warrior","Protector","King","Devotee"],a:1,e:"'Pala' means 'protector' in Prakrit. This is why all Pala rulers had names ending in 'Pala' — Gopala, Dharmapala, Devapala, Mahipala, etc. The Pala dynasty was the last great Buddhist imperial dynasty in India."},
+{q:"Pala dynasty was the last great WHAT type of dynasty in Indian history?",o:["Hindu imperial dynasty","Buddhist imperial dynasty","Jain ruling dynasty","Shaivite dynasty"],a:1,e:"The Pala dynasty was the last great Buddhist imperial dynasty in Indian history. They patronised Mahayana Buddhism and Tantric schools. Nalanda and Vikramashila universities flourished under their patronage."},
+{q:"The capital of the Pala dynasty was:",o:["Varanasi","Pataliputra","Muddagiri/Munger (Bihar)","Vikramashila"],a:2,e:"The Pala capital was Muddagiri (also called Munger) in Bihar. Important cities under Pala rule included Pataliputra, Vikrampura, Ramvati, Monghyr, Tamralipti, and Jaggadala."}
+]},
+
+{id:"en3",title:"Rashtrakutas — Deccan Power",xp:55,type:"regular",seqIdx:2,
+facts:[
+"<b>Rashtrakutas (712–973 AD):</b> Capital = Manyakheta/Malkhed (near Solapur) | Feudatories of Chalukyas originally",
+"<b>Founder:</b> Dantidurga (753 CE) — name means 'he whose elephant is his fortress'",
+"<b>Most powerful in Tripartite Struggle</b> | Bridge between North & South India (economic + cultural)",
+"<b>Krishna-I</b> built <b>Kailasanath temple at Ellora</b> (monolithic, rock-cut) — <b>LARGEST monolithic rock-cut structure in the world</b>",
+"<b>Amoghavarsha-I (814–878)</b> = 'Ashoka of the South' | Title: Veeranarayana + Kaviraja | Jain follower | Wrote <b>Kavirajamarga</b> — OLDEST surviving literary work in Kannada",
+"<b>Govinda-III</b> = greatest military Rashtrakuta ruler | defeated Ganga, Pallava, Pandya | described in Sanjan copper-plate",
+"Arab merchant Suleiman visited Rashtrakuta kingdom; called it one of the <b>FOUR GREAT EMPIRES of the world</b>",
+"Patronised: Shaivism, Vaishnavism, Jainism — remarkably tolerant",
+"<b>Kailasanath temple (Ellora, Cave 16):</b> Built by Krishna-I | No scaffolding — carved from TOP to BOTTOM | 200,000 tons of rock removed",
+"<b>Pattadakal temples (UNESCO):</b> Kashi Vishvanatha temple + Jain Narayana temple — both built during Rashtrakuta/Chalukya period",
+"Rashtrakutas maintained friendly relations with Arab merchants → key for trade | End: capital burnt in 972 CE by united opponents"
+],
+table:{h:["Ruler","Period","Key Fact"],r:[
+["Dantidurga","753–756","FOUNDER; feudatory of Chalukyas"],
+["Krishna-I","756–774","Kailasanath temple Ellora — LARGEST monolithic rock-cut structure"],
+["Dhruva","780–793","Defeated Pratihara + Pala; reached Kannauj but didn't occupy"],
+["Govinda-III","793–814","Greatest military; Sanjan copper-plate describes him"],
+["Amoghavarsha-I","814–878","'Ashoka of the South'; Kavirajamarga (oldest Kannada literature); Jain"],
+["Indra-III","915–927","Sacked Kannauj; defeated Mahipala-I (Pala)"],
+["Krishna-III","Last ruler","Capital burnt 972 CE → end of Rashtrakutas"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"<b>Amoghavarsha = A for Ashoka of South + A for Oldest Kannada</b><br>Kailasanath = <b>K</b>rishna-I built it | <b>K</b>arved from top to bottom<br>'<b>Dantidurga's Elephant started the Rashtrakutas</b>'"},
+traps:[
+"Kailasanath at Ellora = built by KRISHNA-I (NOT Amoghavarsha, NOT Dantidurga)",
+"Kavirajamarga = written by AMOGHAVARSHA-I = OLDEST KANNADA literature (not Sanskrit)",
+"Suleiman (Arab merchant) called Rashtrakutas one of 4 great empires — NOT Palas, NOT Pratiharas",
+"Amoghavarsha = follower of JAINISM (not Buddhism, not Shaivism)",
+"'Ashoka of the South' = Amoghavarsha-I (Rashtrakuta) — NOT any Chola king"
+],
+revision:["Rashtrakutas(712-973AD): capital Manyakheta/Malkhed, founder Dantidurga(753CE)","Most powerful in Tripartite Struggle, bridge between North & South India","Krishna-I built Kailasanath temple at Ellora — LARGEST monolithic rock-cut structure in world","Amoghavarsha-I(814-878)='Ashoka of the South', wrote Kavirajamarga(oldest Kannada literary work)","Govinda-III = greatest military Rashtrakuta ruler"],
+oneliners:["The Rashtrakuta dynasty ruled 712-973 AD, with capital at Manyakheta (Malkhed)","Dantidurga founded the Rashtrakuta dynasty in 753 CE","Rashtrakutas were originally feudatories of the Chalukyas","The Rashtrakutas were the most powerful party in the Tripartite Struggle","Rashtrakutas served as a bridge between North and South India economically and culturally","Krishna-I built the Kailasanath temple at Ellora","The Kailasanath temple is the largest monolithic rock-cut structure in the world","Amoghavarsha-I (814-878) was called the 'Ashoka of the South'","Amoghavarsha-I wrote the Kavirajamarga, the oldest surviving literary work in Kannada","Govinda-III is considered the greatest military ruler among the Rashtrakutas"],
+flashcards:[{q:"Who founded the Rashtrakuta dynasty, and when?",a:"Dantidurga, in 753 CE"},{q:"What was the Rashtrakuta capital?",a:"Manyakheta (Malkhed)"},{q:"Who built the Kailasanath temple at Ellora?",a:"Krishna-I"},{q:"What is special about the Kailasanath temple?",a:"It is the largest monolithic rock-cut structure in the world"},{q:"Who was called the 'Ashoka of the South'?",a:"Amoghavarsha-I"},{q:"What did Amoghavarsha-I write, and its significance?",a:"Kavirajamarga — the oldest surviving Kannada literary work"},{q:"Who was the greatest military Rashtrakuta ruler?",a:"Govinda-III"}],
+mcqs:[
+{q:"The Kailasanath temple at Ellora — the largest monolithic rock-cut structure in the world — was built by:",o:["Dantidurga","Amoghavarsha-I","Govinda-III","Krishna-I"],a:3,e:"Krishna-I of the Rashtrakuta dynasty built the magnificent Kailasanath (Shiva) temple at Ellora (Cave 16). It is the LARGEST monolithic rock-cut structure in the world, carved from top to bottom without scaffolding."},
+{q:"'Ashoka of the South' refers to which Rashtrakuta ruler?",o:["Dantidurga","Krishna-I","Govinda-III","Amoghavarsha-I"],a:3,e:"Amoghavarsha-I (814–878) is called 'Ashoka of the South.' He was a follower of Jainism, wrote Kavirajamarga (the oldest surviving Kannada literary work), and had titles Veeranarayana and Kaviraja."},
+{q:"The OLDEST surviving literary work in the Kannada language is:",o:["Vikramasenavijaya","Adipurana","Kavirajamarga","Nalachampu"],a:2,e:"Kavirajamarga, written by Amoghavarsha-I of the Rashtrakuta dynasty, is the oldest surviving literary work in Kannada. It is a work on grammar and poetics."},
+{q:"Who founded the Rashtrakuta dynasty?",o:["Krishna-I","Dhruva","Govinda-III","Dantidurga"],a:3,e:"Dantidurga (753 CE) founded the Rashtrakuta dynasty. He was a feudatory of the Chalukyan king Kirtivarman II. His name means 'he whose elephant is his fortress.'"},
+{q:"Arab merchant Suleiman described the Rashtrakuta kingdom as one of the FOUR GREAT EMPIRES of the world. What was his description significant for?",o:["It proved Rashtrakutas traded with China","It showed Islamic world recognised Rashtrakutas as a global power","It proved Arabs invaded Rashtrakuta","It showed Rashtrakutas were Buddhist"],a:1,e:"Suleiman's description as one of the four great empires shows that the Islamic world recognised the Rashtrakutas as a global power alongside the Abbasid Caliphate, Tang China, and the Byzantine Empire."},
+{q:"The religious affiliation of Amoghavarsha-I was:",o:["Shaivism","Buddhism","Jainism","Vaishnavism"],a:2,e:"Amoghavarsha-I was a devoted follower of Jainism. He is said to have even offered his finger to appease Goddess Mahalakshmi. The Rashtrakutas in general were tolerant of all religions."},
+{q:"Pattadakal temples (UNESCO World Heritage Site, Karnataka) are associated with:",o:["Gurjara-Pratiharas","Palas","Chalukyas and Rashtrakutas","Cholas"],a:2,e:"Pattadakal temples in Karnataka — including Kashi Vishvanatha temple and Jain Narayana temple — are UNESCO World Heritage Sites associated with the Chalukya and Rashtrakuta period."},
+{q:"The Rashtrakuta capital was:",o:["Varanasi","Kannauj","Manyakheta/Malkhed (near Solapur)","Ujjain"],a:2,e:"Manyakheta (also called Malkhed, near modern Solapur, Karnataka) was the Rashtrakuta capital. Amoghavarsha-I built a new capital there. The capital was burnt in 972 CE marking the end of the dynasty."},
+{q:"Which mathematician's work 'Ganita Sara Sangraba' was produced in the Rashtrakuta court?",o:["Aryabhata","Brahmagupta","Mahaviracharya","Bhaskara"],a:2,e:"Mahaviracharya wrote Ganita Sara Sangraba (a mathematics text) in the Rashtrakuta court. This is a significant ancient Indian mathematics work from the 9th century CE."},
+{q:"The Rashtrakutas maintained friendly relations with Arab merchants primarily for:",o:["Military alliance against Cholas","Trade purposes — Arab maritime trade was vital","Spreading Islam in Deccan","Getting Arab technology"],a:1,e:"The Rashtrakutas maintained friendly diplomatic relations with Arab merchants for trade purposes. Arab maritime traders controlled the Indian Ocean trade routes, and Rashtrakuta ports on the west coast were important trading centres."}
+]},
+
+{id:"en4",title:"Imperial Cholas — Empire & Administration",xp:70,type:"regular",seqIdx:3,
+facts:[
+"<b>Imperial Cholas (850–1279 AD)</b> = also called Cholas of Tanjore | Founder: Vijayalaya (feudatory of Pallavas; captured Tanjore 850 AD)",
+"<b>Rajaraja-I (985–1014)</b> = Greatest Chola ruler | Titles: Mummidi Chola, Jayankonda, Shivpadshekhara | Defeated Chera + Pandya; conquered Maldives | Naval expedition vs Sailendra Empire (Malaya) | Built <b>Brihadeshwara/Rajarajeshwara temple (1010 CE) at Thanjavur (UNESCO 1987)</b>",
+"<b>Rajendra-I (1014–1044)</b> = Son of Rajaraja-I | conquered whole Sri Lanka | Title: 'Gangaikondachola' | Bay of Bengal = '<b>Chola Lake</b>' | built city Gangaikondacholapuram | <b>1025 CE naval expedition against Srivijaya Empire</b> (Southeast Asia) — greatest naval expedition in medieval Indian history | sent two diplomatic missions to China",
+"<b>Kulottunga-I (1070–1120)</b> = unified Chola + Chalukya kingdoms | abolished tolls ('sungam thavirtta') | also known as Sundara Chola",
+"<b>Village Administration:</b> Ur (general assembly) | Mahasabha (adult men in Brahmana villages) | Nagaram (merchant assembly — OFTEN MISSED)",
+"<b>Kudavolai System</b> = unique ballot system using palm-leaf slips to elect village committee members — EARLIEST form of democratic election in India",
+"<b>Variyams</b> = executive committees under Mahasabha: Erivariyam (tank), Totta variyam (garden), Panchavara variyam (5-member)",
+"<b>Uttaramerur Inscriptions</b> (Paranthaka's period) = most detailed record of village self-governance | qualifications for Variyam membership are listed",
+"Empire divided: Mandalams (provinces) → Valanadu (districts)",
+"Chola navy = STRONGEST maritime force in Asia in 11th century | extended control to Malaya + Sumatra (Srivijaya Empire)",
+"Agrahatta (Persian wheel) used for irrigation | Peruvazhis = trunk roads"
+],
+table:{h:["Ruler","Period","Key Fact"],r:[
+["Vijayalaya","850 AD","FOUNDER; feudatory of Pallavas; captured Tanjore"],
+["Rajaraja-I","985–1014","GREATEST; Brihadeshwara temple 1010 CE (UNESCO); naval vs Sailendra"],
+["Rajendra-I","1014–1044","Gangaikondachola; Chola Lake; 1025 naval vs Srivijaya; 2 missions to China"],
+["Rajadhi Raja-I","1044–1052","Jayamkonda chola; captured Kalyani (W.Chalukya capital)"],
+["Kulottunga-I","1070–1120","Unified Chola+Chalukya; abolished tolls (sungam thavirtta)"],
+["Rajendra-III","Last","LAST Chola king; Pandyas conquered"]
+]},
+mn:{h:"🧠 MNEMONIC — Chola Assembly System",b:"<b>3 Assemblies: U-M-N</b> = Ur · Mahasabha · Nagaram<br>'<b>Urban Men Navigate</b>'<br>Kudavolai = <b>K</b>ey ballot by palm-leaf = <b>K</b>arnataka-style democracy<br>Rajendra-I: '<b>G</b>angaikondachola' → '<b>G</b>anges conquered'"},
+traps:[
+"Brihadeshwara temple = RAJARAJA-I built it (NOT Rajendra-I who built Gangaikondacholapuram)",
+"Kudavolai system = BALLOT system using palm-leaf slips (NOT a tax system)",
+"Nagaram = MERCHANT assembly (NOT the general village assembly — that is Ur)",
+"Chola Lake = Bay of Bengal (called so by RAJENDRA-I, not Rajaraja-I)",
+"Rajendra-I sent two diplomatic missions to China — NOT Rajaraja-I",
+"1025 naval expedition = against SRIVIJAYA Empire (Southeast Asia) — by Rajendra-I"
+],
+revision:["Imperial Cholas(850-1279AD), founder Vijayalaya(captured Tanjore 850AD)","Rajaraja-I(985-1014)=greatest ruler, built Brihadeshwara temple(1010CE,UNESCO 1987)","Rajendra-I(1014-44): conquered Sri Lanka, title Gangaikondachola, naval expedition vs Srivijaya(1025CE)","Bay of Bengal called 'Chola Lake' under Rajendra-I","Cholas known for excellent local self-government(Uttiramerur inscriptions)"],
+oneliners:["The Imperial Chola dynasty ruled 850-1279 AD, also called the Cholas of Tanjore","Vijayalaya founded the Imperial Cholas by capturing Tanjore in 850 AD","Rajaraja-I (985-1014) was the greatest Chola ruler","Rajaraja-I built the Brihadeshwara (Rajarajeshwara) temple at Thanjavur in 1010 CE","The Brihadeshwara temple received UNESCO World Heritage status in 1987","Rajendra-I (1014-1044), son of Rajaraja-I, conquered the whole of Sri Lanka","Rajendra-I held the title 'Gangaikondachola'","Under Rajendra-I, the Bay of Bengal was called the 'Chola Lake'","Rajendra-I led a naval expedition against the Srivijaya Empire (Southeast Asia) in 1025 CE","Rajendra-I built the city of Gangaikondacholapuram"],
+flashcards:[{q:"Who founded the Imperial Chola dynasty, and how?",a:"Vijayalaya, by capturing Tanjore in 850 AD"},{q:"Who was the greatest Chola ruler?",a:"Rajaraja-I (985-1014)"},{q:"What temple did Rajaraja-I build, and when?",a:"The Brihadeshwara temple at Thanjavur, in 1010 CE"},{q:"When did the Brihadeshwara temple receive UNESCO status?",a:"1987"},{q:"What did Rajendra-I achieve regarding Sri Lanka?",a:"He conquered the whole of Sri Lanka"},{q:"What title did Rajendra-I hold?",a:"Gangaikondachola"},{q:"What naval expedition did Rajendra-I lead, and when?",a:"Against the Srivijaya Empire (Southeast Asia), in 1025 CE"}],
+mcqs:[
+{q:"The Brihadeshwara temple at Thanjavur (UNESCO 1987) was built by:",o:["Vijayalaya","Rajendra-I","Kulottunga-I","Rajaraja-I"],a:3,e:"Rajaraja-I (985–1014), the greatest Chola ruler, built the Brihadeshwara/Rajarajeshwara temple at Thanjavur in 1010 CE. It is a UNESCO World Heritage Site. Its Vimana (tower) is 66 metres tall."},
+{q:"Which Chola ruler called the Bay of Bengal the 'Chola Lake'?",o:["Rajaraja-I","Kulottunga-I","Vijayalaya","Rajendra-I"],a:3,e:"Rajendra-I (son of Rajaraja-I) called the Bay of Bengal the 'Chola Lake' after his naval supremacy over it. His title was 'Gangaikondachola' (he who brought the Ganges). He also led the great 1025 naval expedition against Srivijaya."},
+{q:"The 'Kudavolai system' of the Cholas refers to:",o:["A tax system on trade","A ballot system using palm-leaf slips to elect village committees","A military conscription system","An irrigation management system"],a:1,e:"Kudavolai system is the unique ballot system used in Chola village administration. Palm-leaf slips with candidates' names were put in a pot and drawn by a boy — the earliest form of democratic election in India."},
+{q:"The THIRD type of Chola assembly (often missed) that dealt with MERCHANTS in towns was:",o:["Ur","Mahasabha","Variyam","Nagaram"],a:3,e:"Nagaram was the merchant assembly in Chola towns — the third type of assembly alongside Ur (general village assembly) and Mahasabha (assembly of adult men in Brahmana villages/agraharas)."},
+{q:"Which Chola ruler launched the famous 1025 CE naval expedition against the Srivijaya Empire in Southeast Asia?",o:["Rajaraja-I","Kulottunga-I","Vijayalaya","Rajendra-I"],a:3,e:"Rajendra-I launched the powerful 1025 CE naval expedition against the Srivijaya Empire (in modern Sumatra/Southeast Asia) — one of the greatest naval expeditions in medieval Indian history."},
+{q:"The Uttaramerur Inscriptions (Paranthaka's period) are important for:",o:["Recording Chola naval victories","Listing qualifications for village self-governance elections","Describing Chola trade with China","Recording Chola temple construction"],a:1,e:"The Uttaramerur Inscriptions (Paranthaka's period) are the most detailed record of Chola village self-governance. They list the qualifications required to serve on Variyams (village executive committees) — invaluable for understanding ancient Indian democracy."},
+{q:"Kulottunga-I's epithet 'sungam thavirtta' means:",o:["Conqueror of Sri Lanka","He who abolished taxes/tolls","He who built temples","He who brought Ganges water"],a:1,e:"'Sungam thavirtta' means 'he who abolished taxes/tolls.' Kulottunga-I (1070–1120) was known for abolishing tolls, unifying the Chola and Eastern Chalukya kingdoms, and for being praised in the poem Kalingattupparani."},
+{q:"The Chola administrative unit above the district (Valanadu) was:",o:["Ur","Nagaram","Mandalam","Variyam"],a:2,e:"The Chola Empire was divided into Mandalams (provinces) → Valanadu (districts). This is the Chola provincial hierarchy. The Mandalam was the largest unit headed by a viceroy."},
+{q:"Erivariyam was a Chola village committee responsible for:",o:["Garden maintenance","Military defence","Tank/water body management","Revenue collection"],a:2,e:"Erivariyam was the tank/water body committee under the Mahasabha. Other Variyams: Totta variyam (garden committee), Panchavara variyam (five-member general committee). These Variyams were elected via the Kudavolai system."},
+{q:"The FOUNDER of the Imperial Chola dynasty was:",o:["Rajaraja-I","Vijayalaya","Rajendra-I","Paranthaka-I"],a:1,e:"Vijayalaya (850 AD) was the founder of the Imperial Chola dynasty. He was a feudatory of the Pallavas who captured Tanjore in 850 AD, starting the Imperial Chola line. The greatest kings were his successors Rajaraja-I and Rajendra-I."}
+]},
+
+{id:"en5",title:"Chola Art, Architecture & Culture — Traps",xp:45,type:"trap",seqIdx:4,
+facts:[
+"<b>3 Architecture Styles:</b> Nagara (North) → Shikhara (curvilinear) | Dravida (South) → Vimana (pyramidal) | Vesara (Hybrid) → Mixed",
+"<b>Chola contribution:</b> Dravidian architecture reached its CLIMAX | Garbhagriha with 5–7 stories = Vimana | Mandapa = pillared hall | Gopurams = lofty gateways",
+"<b>Brihadeshwara Vimana = 66 metres tall</b> — tallest in the world at time of construction",
+"<b>Chola Bronze sculptures</b> used Panchaloha (5-metal alloy) + lost-wax (cire-perdue) technique | Best example: <b>Dancing Nataraja</b>",
+"Nataraja = represents cosmic cycle of creation and destruction | Dances: Bharatanatyam & Kathakali",
+"<b>Indo-Islamic architecture</b> = arch (mehrab), dome (gumbad), minaret (minar) | vs Indian = trabeate (post-and-lintel)",
+"<b>Trabeate</b> = post-and-lintel (indigenous Indian) | <b>Arcuate</b> = arch-and-dome (Islamic) — both in Delhi Sultanate period",
+"<b>Chola Literature:</b> Kamban's Ramayana | Periyapuranam (Sekkilar) | Telugu Mahabharata started by Nanniah completed by Tikkana | <b>Pampa, Ponna, Ranna</b> = 3 gems of Kannada literature",
+"<b>Western Gangas (Orissa):</b> Anantavannan Chodaganga built Jagannath temple at Puri | Narsimhadeva (1238–1264) built <b>Sun temple at Konark</b>",
+"<b>Dilwara Jain temples (Mt. Abu)</b> = Vimla Vasahi & Luna Vasahi → built by SOLANKIS of Gujarat (NOT Rajputs generally)"
+],
+table:{h:["Style","Region","Tower Name","Example"],r:[
+["Nagara","North India","Shikhara (curvilinear)","Khajuraho temples"],
+["Dravida","South India","Vimana (pyramidal)","Brihadeshwara, Thanjavur"],
+["Vesara","Hybrid","Mixed","Chalukyan temples at Pattadakal"]
+]},
+traps:[
+"Shikhara = Nagara (North) | Vimana = Dravida (South) — do NOT mix these up",
+"Lost-wax technique = Chola bronzes (NOT stone temples)",
+"Dilwara temples (Mt. Abu) = built by SOLANKIS — NOT by all Rajputs",
+"Sun temple at Konark = built by NARSIMHADEVA (Western Ganga) — NOT Cholas, NOT Chandellas",
+"Jagannath temple Puri = ANANTAVANNAN CHODAGANGA (NOT the Cholas)",
+"Pampa, Ponna, Ranna = 3 gems of KANNADA (not Tamil) literature"
+],
+revision:["3 architecture styles: Nagara(North,Shikhara),Dravida(South,Vimana),Vesara(Hybrid)","Brihadeshwara Vimana = 66 metres tall, tallest in world at time of construction","Chola bronze: Panchaloha(5-metal alloy)+lost-wax technique, best example=Dancing Nataraja","Nataraja represents cosmic cycle of creation and destruction","Indo-Islamic architecture features arch(mehrab) — different tradition, post-Chola"],
+oneliners:["Indian temple architecture has 3 main styles: Nagara, Dravida, Vesara","Nagara style (North India) uses a curvilinear Shikhara tower","Dravida style (South India) uses a pyramidal Vimana","Vesara style is a hybrid of Nagara and Dravida","Dravidian architecture reached its climax under the Cholas","The Brihadeshwara temple's Vimana is 66 metres tall — the tallest in the world at the time","Chola bronze sculptures used Panchaloha (a 5-metal alloy)","Chola bronzes used the lost-wax (cire-perdue) casting technique","The Dancing Nataraja is the best example of Chola bronze sculpture","Nataraja's dance represents the cosmic cycle of creation and destruction"],
+flashcards:[{q:"Name the 3 main Indian temple architecture styles.",a:"Nagara, Dravida, Vesara"},{q:"What defines Nagara style?",a:"A curvilinear Shikhara tower (North India)"},{q:"What defines Dravida style?",a:"A pyramidal Vimana (South India)"},{q:"How tall is the Brihadeshwara Vimana, and its historic significance?",a:"66 metres — tallest in the world at the time of construction"},{q:"What alloy and technique did Chola bronzes use?",a:"Panchaloha (5-metal alloy) and lost-wax (cire-perdue) casting"},{q:"What is the best example of Chola bronze sculpture?",a:"The Dancing Nataraja"},{q:"What does the Nataraja's dance represent?",a:"The cosmic cycle of creation and destruction"}],
+mcqs:[
+{q:"In Dravida (South Indian) temple architecture, the main tower over the garbhagriha is called:",o:["Shikhara","Gopuram","Vimana","Mandapa"],a:2,e:"In Dravida (South Indian) architecture, the tower over the garbhagriha is the VIMANA (pyramidal). The Shikhara is the curvilinear tower in Nagara (North Indian) architecture. Gopurams are the lofty gateway towers at the temple entrance."},
+{q:"The Dancing Nataraja bronze sculpture is associated with which dynasty?",o:["Pallavas","Cholas","Rashtrakutas","Chalukyas"],a:1,e:"The Dancing Nataraja is the most iconic Chola bronze sculpture. Chola bronzes used Panchaloha (5-metal alloy: gold, silver, copper, zinc, iron) and the lost-wax (cire-perdue) technique. Nataraja represents the cosmic cycle of creation and destruction."},
+{q:"The Sun Temple at Konark was built by:",o:["Rajaraja-I (Chola)","Narsimhadeva (Western Ganga)","Yashovarman (Chandella)","Krishna-I (Rashtrakuta)"],a:1,e:"The Sun Temple at Konark was built by Narsimhadeva (1238–1264 AD) of the Western Ganga dynasty of Orissa. It is known for its chariot shape and erotic sculptures and is a UNESCO World Heritage Site."},
+{q:"'Arcuate' style of architecture refers to:",o:["Post-and-lintel (indigenous Indian)","Arch-and-dome (Islamic style)","Rock-cut cave temples","Brick architecture"],a:1,e:"Arcuate style uses arches and domes — introduced by Islamic architecture. Trabeate style uses post-and-lintel construction — the indigenous Indian method. Both coexisted during the Delhi Sultanate period."},
+{q:"The Dilwara Jain temples at Mount Abu were built by:",o:["Chandellas","Chauhans","Paramaras","Solankis of Gujarat"],a:3,e:"The Dilwara Jain temples (Vimla Vasahi and Luna Vasahi) at Mount Abu in Rajasthan were built by the Solankis/Chalukyas of Gujarat — NOT by Rajput clans in general, as is commonly assumed."},
+{q:"'3 gems of Kannada literature' — Pampa, Ponna, and Ranna — belong to which century?",o:["7th century","8th century","10th century","13th century"],a:2,e:"Pampa, Ponna, and Ranna are called the three gems (ratnatrayi) of 10th century Kannada literature. They flourished during the Rashtrakuta and Western Chalukya periods. Pampa wrote Vikramasenavijaya; Ponna wrote Santipurana."},
+{q:"The Jagannath Temple at Puri was built by:",o:["Narsimhadeva","Rajaraja-I","Anantavannan Chodaganga","Rajendra-I"],a:2,e:"The Jagannath Temple at Puri was built by Anantavannan Chodaganga (1076–1150 AD), founder of the Western Ganga dynasty of Orissa, who held the title Trikalingadhipati."},
+{q:"The Chola bronze technique of 'cire-perdue' means:",o:["5-metal alloy","Lost-wax casting technique","Stone-cutting method","Clay-moulding process"],a:1,e:"Cire-perdue (French: 'lost wax') is the lost-wax casting technique used for Chola bronzes. A wax model is made, covered in clay, heated (wax 'lost'), then liquid metal poured in. This produces the finest detail."},
+{q:"Telugu Mahabharata was started by Nanniah and completed by:",o:["Pampa","Tikkana","Ranna","Kamban"],a:1,e:"The Telugu Mahabharata was started by Nanniah in the 11th century (Chalukya period) and completed by Tikkana in the 13th century. Kamban wrote the Tamil Ramayana (Kamban's Ramayana) — a different work."},
+{q:"Vesara style of temple architecture is:",o:["Purely North Indian","Purely South Indian","A hybrid of Nagara and Dravida","An Islamic fusion style"],a:2,e:"Vesara is the hybrid architectural style combining Nagara (North Indian) and Dravida (South Indian) elements. The finest examples are the Chalukyan temples at Pattadakal (Karnataka), which is a UNESCO World Heritage Site."}
+]}
+]},
+
+{id:"invasions",title:"Afghan & Turkish Invasions",icon:"⚔️",nodes:[
+
+{id:"inv1",title:"Mahmud of Ghazni & Arab Invasions",xp:60,type:"regular",seqIdx:5,
+facts:[
+"<b>FIRST Muslim invader in India = Muhammad bin Qasim (712 AD)</b> | Attacked Sindh | Khalifa of Iran = Al-Hajaj | Book on Sindh attack: Chachnama (translated by Ali Babar Qufi)",
+"<b>Mahmud of Ghazni (998–1030):</b> Reign: 998–1030 | Indian invasions: 1001–1027 AD | <b>Attacked 17 times</b>",
+"Famous raids: 1001 (Punjab), 1005 (Bhatia), 1006 (Multan), 1018 (Mathura temples), <b>1025 (Somnath temple)</b>, 1027 (against Jaat community)",
+"<b>Somnath temple raid (1025)</b> = most famous | Looted enormous wealth | Slaughtered defenders",
+"Mahmud was <b>NOT interested in establishing permanent kingdom in India</b> — only interested in loot",
+"<b>Al-Beruni (Albaruni)</b> = greatest scholar who came with Mahmud | Real name: Abu Rehan Mahmud | Book: <b>Kitab al Hind / Tahgiq-i-Hind</b> | Translated Euclid into Sanskrit | Transmitted Aryabattiyam to the West | Described Arabic numerals, concept of zero, decimal system",
+"<b>Firdausi</b> = Persian poet in Mahmud's court | Called '<b>Homer of the East</b>' | Wrote <b>Shahnama</b>",
+"Other scholars: Farubi, Utvi, Sisteni",
+"<b>Nagabhata-II</b> had REBUILT Somnath temple (after Arab demolition) — Mahmud then destroyed it again in 1025",
+"Ghazni's invasions exposed India's military weakness and opened the route for future Turkish rule"
+],
+table:{h:["Year","Mahmud's Target","Significance"],r:[
+["712 AD","(Muhammad bin Qasim → Sindh)","FIRST Muslim invasion of India"],
+["1001","Punjab","First Mahmud raid"],
+["1006","Multan","Second raid"],
+["1018","Mathura temples","Destroyed famous Hindu temples"],
+["1025","Somnath temple","Most famous; enormous loot"],
+["1027","Jaat community","Last major raid"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"Mahmud attacked <b>17 times</b> — remember '17' as M for Mahmud = 13th letter, +4 = 17<br>Al-Beruni's book = <b>Kitab-al-Hind</b> = 'Book of India' (easy to remember)<br>Firdausi = <b>F</b> for '<b>F</b>irst poet/Homer of East'"},
+traps:[
+"First Muslim invader = Muhammad bin QASIM (712 AD) — NOT Mahmud of Ghazni",
+"Mahmud attacked 17 times — NOT 7, NOT 12, NOT 15",
+"Al-Beruni came with Mahmud (NOT with Ghori, NOT independently) — book = Kitab al Hind",
+"Firdausi = 'Homer of the East' (NOT Al-Beruni, NOT Utvi)",
+"Mahmud's goal = LOOT only — NOT to establish a permanent Islamic empire"
+],
+revision:["First Muslim invader = Muhammad bin Qasim(712AD), attacked Sindh, book=Chachnama","Mahmud of Ghazni(998-1030): Indian invasions 1001-1027AD, attacked 17 times","Most famous raid: Somnath temple(1025) — looted wealth, not interested in permanent kingdom","Al-Beruni(Albaruni)=greatest scholar in Mahmud's court, wrote Kitab-ul-Hind/Tahqiq-i-Hind","Mahmud's invasions = purely for LOOT, NOT to establish permanent Islamic empire"],
+oneliners:["Muhammad bin Qasim was the first Muslim invader of India, attacking Sindh in 712 AD","Qasim's attack is recorded in the Chachnama, translated by Ali Babar Qufi","Mahmud of Ghazni reigned 998-1030 and invaded India 1001-1027 AD","Mahmud of Ghazni attacked India 17 times","Mahmud's most famous raid was on the Somnath temple in 1025","Mahmud was NOT interested in establishing a permanent kingdom in India — only loot","Al-Beruni (Albaruni) was the greatest scholar at Mahmud's court","Al-Beruni wrote Kitab-ul-Hind (also called Tahqiq-i-Hind)","Mahmud's raids included Punjab (1001), Bhatia (1005), Multan (1006), and Mathura temples (1018)"],
+flashcards:[{q:"Who was the first Muslim invader of India, and when?",a:"Muhammad bin Qasim, in 712 AD, attacking Sindh"},{q:"What text records Qasim's invasion?",a:"The Chachnama"},{q:"How many times did Mahmud of Ghazni invade India?",a:"17 times, between 1001-1027 AD"},{q:"What was Mahmud's most famous raid?",a:"The Somnath temple raid (1025)"},{q:"What was Mahmud's primary motive for invading India?",a:"Loot — NOT establishing a permanent kingdom"},{q:"Who was the greatest scholar at Mahmud's court, and what did he write?",a:"Al-Beruni; wrote Kitab-ul-Hind (Tahqiq-i-Hind)"}],
+mcqs:[
+{q:"Who was the FIRST Muslim invader of India?",o:["Mahmud of Ghazni","Muhammad Ghori","Muhammad bin Qasim","Timur Lang"],a:2,e:"Muhammad bin Qasim was the first Muslim invader of India in 712 AD. He attacked Sindh under orders of Al-Hajaj (Khalifa of Iran). The book on this Sindh attack is 'Chachnama' (translated by Ali Babar Qufi)."},
+{q:"How many times did Mahmud of Ghazni attack India?",o:["7","12","17","25"],a:2,e:"Mahmud of Ghazni attacked India 17 times between 1001–1027 AD. His most famous raid was in 1025 CE when he attacked the Somnath temple in Gujarat and looted enormous wealth."},
+{q:"Al-Beruni came to India with Mahmud of Ghazni. His famous book on India is:",o:["Shahnama","Chachnama","Kitab al Hind (Tahgiq-i-Hind)","Tughlaq Nama"],a:2,e:"Al-Beruni (Abu Rehan Mahmud) came to India with Mahmud of Ghazni and wrote Kitab al Hind (also called Tahgiq-i-Hind) — the most important account of India from that period. He translated Euclid into Sanskrit and transmitted the concept of zero to the West."},
+{q:"Firdausi is called 'Homer of the East.' His famous work is:",o:["Kitab al Hind","Chachnama","Rehla","Shahnama"],a:3,e:"Firdausi is the Persian poet called 'Homer of the East.' His famous epic Shahnama (Book of Kings) is a masterpiece of Persian literature. He was in Mahmud of Ghazni's court."},
+{q:"The book 'Chachnama' was written about:",o:["Mahmud's invasion of Somnath","Ghori's invasion of Delhi","Muhammad bin Qasim's invasion of Sindh (712 AD)","Timur's invasion of Delhi"],a:2,e:"Chachnama (translated by Ali Babar Qufi from Arabic) is the account of Muhammad bin Qasim's invasion of Sindh in 712 AD — the first Muslim invasion of India. The Khalifa of Iran at the time was Al-Hajaj."},
+{q:"The Somnath temple in Gujarat was raided by Mahmud of Ghazni in:",o:["1001 AD","1018 AD","1025 AD","1030 AD"],a:2,e:"Mahmud of Ghazni raided the Somnath temple in 1025 AD — his most famous raid. He looted enormous wealth. The temple had been rebuilt by Nagabhata-II (Pratihara) after an earlier Arab demolition."},
+{q:"What was Mahmud of Ghazni's PRIMARY motive for attacking India?",o:["To spread Islam","To establish a permanent kingdom in India","To loot wealth to fund his Central Asian campaigns","To avenge Arab defeats"],a:2,e:"Mahmud's primary motive was LOOTING — he used the wealth to fund his Central Asian military campaigns and build magnificent monuments in Ghazni. He was NOT interested in establishing a permanent Islamic empire in India."},
+{q:"Which scholar in Mahmud's court transmitted Aryabhatiya (Indian mathematics) to the Western world?",o:["Firdausi","Utvi","Al-Beruni","Sisteni"],a:2,e:"Al-Beruni transmitted the Aryabattiyam (Aryabhata's mathematical work) to the Islamic world and West. He also described Arabic numerals, the decimal system, and the concept of zero in his writings, acting as a bridge between Indian and Islamic scholarship."},
+{q:"The Khalifa (Caliph) of Iran who ordered the Sindh invasion (Muhammad bin Qasim, 712 AD) was:",o:["Harun-al-Rashid","Al-Hajaj","Abu Bakr","Umar"],a:1,e:"Al-Hajaj was the Khalifa (Caliph/Governor) of Iran who ordered Muhammad bin Qasim to attack Sindh in 712 AD — the first Muslim invasion of India. The attack was partly to avenge piracy on Arab ships."},
+{q:"Which statement about Mahmud of Ghazni is CORRECT?",o:["He attacked India only once","He established a permanent empire in Delhi","He never reached South India or Gujarat","He attacked 17 times between 1001–1027 AD"],a:3,e:"Mahmud of Ghazni attacked India 17 times between 1001–1027 AD. He DID reach Gujarat (Somnath, 1025 AD). He did NOT establish a permanent empire in India — Delhi Sultanate was founded by Qutbuddin Aibak (1206 AD), long after Mahmud."}
+]},
+
+{id:"inv2",title:"Muhammad Ghori & Foundation of Sultanate",xp:55,type:"regular",seqIdx:6,
+facts:[
+"<b>Muhammad Ghori's Indian campaign timeline:</b> 1175 (Multan — defeated Moolraj-II) | 1178 (Mt. Abu — <b>LOST to Bhim Dev-II</b>) | 1191 (Tarain-I — <b>LOST to Prithviraj Chauhan</b>) | 1192 (Tarain-II — <b>WON; Prithviraj defeated</b>) | 1194 (Chandawar — defeated Jaichandra of Kanauj)",
+"<b>Battle of Tarain-I (1191):</b> Prithviraj Chauhan WON | Ghori was wounded and fled",
+"<b>Battle of Tarain-II (1192):</b> Ghori WON using mobile cavalry tactics (Turko-Afghan style) | Prithviraj captured & executed | Qutbuddin Aibak appointed governor",
+"<b>Battle of Chandawar (1194):</b> Ghori defeated Jaichandra (Gahadavala ruler of Kanauj) | Tarain + Chandawar = laid foundation of Turkish rule in North India",
+"<b>Qutbuddin Aibak</b> = slave of Ghori | Made Viceroy after Tarain | Conquered Kalinjar, Mahoba, Khajuraho from Chandella rulers",
+"<b>Muhammad Bakhtiyar Khilji</b> = another Ghori general | Attacked Bihar (1197) & Bengal (1202) | <b>DESTROYED Nalanda & Vikramashila universities</b> | appointed governor of Bengal & Bihar",
+"Nalanda and Vikramashila burning = one of the greatest cultural losses in Indian history",
+"<b>Ghori's death:</b> 1205 → Revolt of Khokhars (defeated them) | <b>1206 → killed by Khokhars</b> in Dhamyak district near Jhelum river (Pakistan)",
+"<b>Prithviraj Chauhan (Prithviraj III / Rai Pithora)</b>: Capital = Ajmer | Poet friend = Chandbardai (wrote PrithvirajRaso)",
+"After Ghori's death → power vacuum → Qutbuddin Aibak established Delhi Sultanate (1206)",
+"Solanki king Bhima-I's queen built Rani ki Vav | Bhima-II faced Muhammad Ghori in Gujarat (1178)"
+],
+table:{h:["Battle","Year","Result"],r:[
+["Battle of Multan","1175","Ghori defeated Moolraj-II"],
+["Battle of Mt. Abu","1178","Bhim Dev-II (Solanki) WON — Ghori LOST"],
+["Battle of Tarain-I","1191","Prithviraj Chauhan WON; Ghori fled wounded"],
+["Battle of Tarain-II","1192","Ghori WON; Prithviraj captured & executed"],
+["Battle of Chandawar","1194","Ghori defeated Jaichandra of Kanauj"]
+]},
+mn:{h:"🧠 MNEMONIC — Tarain Battles",b:"<b>1191 → P won | 1192 → G won</b><br>'<b>P</b>rithviraj won in 1191 (1+1+9+1=12 → P is 16th letter → P came 1st)'<br>Chandawar 1194 = <b>C</b>ut Kanauj | <b>C</b>hancellor Jaichandra fell<br>Bakhtiyar Khilji: '<b>B</b>urned Bihar's Books'"},
+traps:[
+"Tarain-I (1191) = Prithviraj WON | Tarain-II (1192) = Ghori WON — never mix these",
+"Ghori LOST to Bhim Dev-II at Mt. Abu (1178) — Ghori did NOT win every battle",
+"Muhammad BAKHTIYAR Khilji destroyed Nalanda — NOT Ghori himself",
+"Ghori was killed by KHOKHARS (NOT by Prithviraj, NOT by Hindus)",
+"Chandbardai wrote PrithvirajRaso — NOT a court historian of Ghori"
+],
+revision:["Ghori's campaign: 1175 Multan(won) | 1178 Mt.Abu(LOST to Bhim Dev-II) | 1191 Tarain-I(LOST to Prithviraj)","1192 Tarain-II(WON,Prithviraj captured&executed) | 1194 Chandawar(defeated Jaichandra)","Tarain-II won using mobile cavalry tactics(Turko-Afghan style)","Qutbuddin Aibak appointed governor after Tarain-II","Tarain+Chandawar laid foundation of Turkish rule in India"],
+oneliners:["Muhammad Ghori's first Indian campaign was Multan (1175), which he won","Ghori LOST at Mount Abu (1178) to Bhim Dev-II","Ghori LOST the First Battle of Tarain (1191) to Prithviraj Chauhan","Ghori WON the Second Battle of Tarain (1192), using mobile cavalry tactics","Prithviraj Chauhan was captured and executed after Tarain-II","Qutbuddin Aibak was appointed governor after the Second Battle of Tarain","Ghori defeated Jaichandra of Kanauj at the Battle of Chandawar (1194)","The battles of Tarain and Chandawar together laid the foundation of Turkish rule in India"],
+flashcards:[{q:"What was the result of Ghori's first campaign at Multan (1175)?",a:"Ghori won"},{q:"Who defeated Ghori at Mount Abu (1178)?",a:"Bhim Dev-II"},{q:"Who won the First Battle of Tarain (1191)?",a:"Prithviraj Chauhan"},{q:"Who won the Second Battle of Tarain (1192), and how?",a:"Ghori, using mobile cavalry tactics"},{q:"What happened to Prithviraj Chauhan after Tarain-II?",a:"He was captured and executed"},{q:"Who was appointed governor after Tarain-II?",a:"Qutbuddin Aibak"},{q:"Whom did Ghori defeat at Chandawar (1194)?",a:"Jaichandra of Kanauj"}],
+mcqs:[
+{q:"In the Battle of Tarain-I (1191), who WON?",o:["Muhammad Ghori","Qutbuddin Aibak","Prithviraj Chauhan","Jaichandra"],a:2,e:"In the First Battle of Tarain (1191), Prithviraj Chauhan WON. Ghori was wounded and fled the battlefield. This is the most commonly confused pair in SSC — remember: 1191 = Prithviraj wins; 1192 = Ghori wins."},
+{q:"Who destroyed the Nalanda and Vikramashila universities?",o:["Mahmud of Ghazni","Muhammad Ghori himself","Qutbuddin Aibak","Muhammad Bakhtiyar Khilji"],a:3,e:"Muhammad Bakhtiyar Khilji (a general of Ghori) attacked Bihar in 1197 and Bengal in 1202 and destroyed both Nalanda and Vikramashila universities — one of the greatest cultural losses in Indian history."},
+{q:"Muhammad Ghori was killed in 1206 by:",o:["Prithviraj Chauhan's descendants","Rajput confederacy","Khokhars","Mongols"],a:2,e:"Muhammad Ghori was killed in 1206 by the Khokhars in Dhamyak district near the Jhelum river (Pakistan). He had earlier suppressed their revolt in 1205 but they killed him on his return."},
+{q:"The Battle of Chandawar (1194) was fought between Muhammad Ghori and:",o:["Prithviraj Chauhan","Bhim Dev-II of Gujarat","Jaichandra of Kanauj (Gahadavala)","Aram Shah"],a:2,e:"The Battle of Chandawar (1194) was fought between Muhammad Ghori and Jaichandra (Gahadavala ruler of Kanauj). Ghori won. Along with Tarain (1192), Chandawar laid the foundation of Turkish rule in North India."},
+{q:"Poet Chandbardai wrote 'PrithvirajRaso' which depicts the life of:",o:["Muhammad Ghori","Qutbuddin Aibak","Prithviraj Chauhan","Jaichandra"],a:2,e:"Chandbardai was the court poet and friend of Prithviraj Chauhan. He wrote PrithvirajRaso, a Hindi epic depicting Prithviraj's life, victories, and the defeat at Tarain. Prithviraj III is also called Rai Pithora."},
+{q:"In 1178 AD, Muhammad Ghori attacked Mt. Abu and was DEFEATED by:",o:["Prithviraj Chauhan","Bhim Dev-II (Solanki king of Gujarat)","Moolraj-II","Jaichandra"],a:1,e:"In 1178 AD at Mt. Abu, Bhim Dev-II (Solanki/Chalukya king of Gujarat) defeated Muhammad Ghori — one of Ghori's few defeats. This is rarely asked but important as a trap question."},
+{q:"Qutbuddin Aibak conquered which of the following from Chandella rulers?",o:["Ujjain and Malwa","Kalinjar, Mahoba, and Khajuraho","Varanasi and Kanauj","Mathura and Vrindavan"],a:1,e:"After Tarain-II (1192), Qutbuddin Aibak (as Ghori's viceroy) conquered Kalinjar, Mahoba, and Khajuraho from the Chandella rulers of Bundelkhand."},
+{q:"Which CORRECT sequence represents the key battles of Muhammad Ghori in India?",o:["Chandawar → Tarain-I → Tarain-II","Tarain-I → Tarain-II → Chandawar","Tarain-II → Chandawar → Tarain-I","Mt. Abu → Chandawar → Tarain-I"],a:1,e:"Correct chronological sequence: Tarain-I (1191, Ghori lost) → Tarain-II (1192, Ghori won) → Chandawar (1194, Ghori won). This sequence is tested frequently."},
+{q:"The destruction of Nalanda university happened in approximately:",o:["1025 AD by Mahmud Ghazni","1192 AD during Tarain-II","1197–1200 AD by Muhammad Bakhtiyar Khilji","1206 AD by Qutbuddin Aibak"],a:2,e:"Nalanda was destroyed by Muhammad Bakhtiyar Khilji during his attack on Bihar around 1197–1200 AD. The burning of the library (reportedly burning for months) was a catastrophic loss for Buddhist scholarship."},
+{q:"Which Jain scholar associated with Solanki king Kumarapala wrote Kumarapalacharita?",o:["Mallinatha","Hemachandra","Rajasekhara","Yashodhara"],a:1,e:"Hemachandra (title: Kalikala Sarvagna) was the Jain scholar in the court of Solanki king Kumarapala. He wrote Kumarapalacharita, Naminatha, Parisistha Parvan, and Abhidhamma Chintamani."}
+]}
+]},
+
+{id:"sultanate",title:"Delhi Sultanate",icon:"🕌",nodes:[
+
+{id:"ds1",title:"Slave Dynasty — Aibak & Iltutmish",xp:65,type:"regular",seqIdx:7,
+facts:[
+"<b>Delhi Sultanate (1206–1526):</b> 5 dynasties | Official language = Turkish",
+"Ghori's slave → <b>Qutub-ud-din Aibak (Turkish)</b> | Came to Delhi with 2 Sufi saints: Qutub-ud-din-Kaki (stayed Delhi) + Moin-ud-din Chishti (stayed Ajmer)",
+"<b>Quwwat-ul-Islam mosque</b> built by Aibak = <b>INDIA'S FIRST MOSQUE</b> | Built using materials from 27 demolished Hindu & Jain temples | (Cheramanjuma = earlier structure but no regular worship, so not counted)",
+"Aibak's titles: <b>Malik / SipahSalar / Lakh Baksh</b> (Lakh Baksh = giver of lakhs, for his generosity) | Capital: Lahore | Never accepted 'Sultan' title",
+"Buildings by Aibak: <b>Qutub Minar</b>, Quwwat-ul-Islam mosque, <b>Adhai Din Ka Jhopra</b>",
+"<b>Qutub Minar</b> = built in memory of Qutub-ud-din-Kaki | Aibak built only 1 storey | Iltutmish completed 3 more | Firoz Shah Tughlaq added last storey",
+"Aibak died 1210 playing <b>Chaugan (polo)</b>",
+"<b>Iltutmish (1211–1236)</b> = REAL FOUNDER of Delhi Sultanate | Capital: Delhi | Son-in-law of Aibak",
+"Iltutmish's key achievements: Chehalgani/Chalisa (group of 40 nobles) | Completed Qutub Minar | Iqta System | Defeated Mongols | Introduced <b>2 coins: Tanka (silver) + Jital (copper)</b>",
+"<b>Iqta System</b> = assignment of land/revenue rights to military officers in lieu of salary | Iqta holder = Muqti or Wali",
+"Iltutmish nominated daughter <b>Razia Sultan</b> as successor → hereditary succession in Delhi Sultanate",
+"<b>Razia Sultan (1236–1240)</b> = FIRST and LAST woman Muslim ruler in India | Husband: Alturia (Ruler of Bathinda) | Commander: Jamal-ud-din Yakoot | Did not accept Parda; wore Quba (blazer) + Qula (cap)"
+],
+table:{h:["Ruler","Period","Key Fact"],r:[
+["Qutbuddin Aibak","1206–1210","Founder; Lakh Baksh; Quwwat-ul-Islam; died playing polo"],
+["Aram Shah","1210","Most incapable; deposed by Iltutmish"],
+["Iltutmish","1211–1236","REAL FOUNDER; Tanka+Jital coins; Iqta system; Chalisa; nominated Razia"],
+["Razia Sultan","1236–1240","FIRST & LAST woman Muslim ruler; no parda; rode elephants"],
+["Nasiruddin Mahmood","1246–1265","Weak sultan; Balban actual power behind throne"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"<b>Aibak = L for Lakh Baksh = died playing polo (L-shaped polo stick!)</b><br>Iltutmish's coins: <b>T+J</b> = '<b>T</b>anka silver + <b>J</b>ital copper' = '<b>TJ</b> = The Jingle of silver-copper'<br>Qutub Minar floors: <b>A-I-F</b> = Aibak(1) → Iltutmish(+3) → Firoz(+1 last)"},
+traps:[
+"REAL founder of Delhi Sultanate = ILTUTMISH (NOT Aibak — Aibak only founded the dynasty)",
+"Tanka + Jital = ILTUTMISH (NOT Aibak — common SSC confusion)",
+"Qutub Minar: Aibak built 1 floor | Iltutmish built 3 more | Firoz Shah Tughlaq added last = 5 stories total",
+"Quwwat-ul-Islam = INDIA's FIRST MOSQUE (not Adhai Din Ka Jhopra which is in Ajmer)",
+"Lakh Baksh = Aibak's title for generosity (NOT meaning he gave 1 lakh coins)"
+],
+revision:["Delhi Sultanate(1206-1526): 5 dynasties, official language=Turkish","Qutub-ud-din Aibak: came with Sufi saints Qutub-ud-din-Kaki(Delhi)+Moin-ud-din Chishti(Ajmer)","Quwwat-ul-Islam mosque(Aibak)=INDIA'S FIRST MOSQUE, built from materials of 27 demolished temples","Aibak's titles: Malik/SipahSalar/Lakh Baksh, never accepted 'Sultan' title","Iltutmish=real consolidator of Sultanate, introduced Iqta system+silver Tanka+copper Jital"],
+oneliners:["The Delhi Sultanate (1206-1526) had 5 dynasties, with Turkish as the official language","Qutub-ud-din Aibak, Ghori's slave, founded the Slave Dynasty","Aibak brought Sufi saints Qutub-ud-din-Kaki (stayed in Delhi) and Moin-ud-din Chishti (stayed in Ajmer)","The Quwwat-ul-Islam mosque, built by Aibak, is India's first mosque","The Quwwat-ul-Islam mosque was built using materials from 27 demolished Hindu and Jain temples","Aibak's titles included Malik, SipahSalar, and Lakh Baksh (giver of lakhs)","Aibak never accepted the title 'Sultan'","Aibak built the Qutub Minar and Adhai Din ka Jhonpra","Iltutmish is considered the real consolidator of the Delhi Sultanate","Iltutmish introduced the Iqta system, and the silver Tanka and copper Jital coins"],
+flashcards:[{q:"What was the official language of the Delhi Sultanate?",a:"Turkish"},{q:"Who founded the Slave Dynasty?",a:"Qutub-ud-din Aibak"},{q:"What is India's first mosque, and who built it?",a:"Quwwat-ul-Islam mosque, by Aibak"},{q:"What materials was the Quwwat-ul-Islam mosque built from?",a:"Materials from 27 demolished Hindu and Jain temples"},{q:"What title did Aibak never accept?",a:"Sultan"},{q:"Who is considered the real consolidator of the Delhi Sultanate?",a:"Iltutmish"},{q:"What administrative system and coins did Iltutmish introduce?",a:"The Iqta system; silver Tanka and copper Jital coins"}],
+mcqs:[
+{q:"Who is called the REAL FOUNDER of the Delhi Sultanate?",o:["Qutbuddin Aibak","Ghori","Iltutmish","Razia Sultan"],a:2,e:"Iltutmish (1211–1236) is called the REAL FOUNDER of the Delhi Sultanate because he: shifted capital to Delhi, established the Iqta system, introduced coins (Tanka + Jital), built Sultan Garhi, and consolidated the empire. Aibak founded the dynasty but Iltutmish gave it structure."},
+{q:"India's FIRST mosque built in Delhi was:",o:["Adhai Din Ka Jhopra","Jama Masjid","Quwwat-ul-Islam","Moth ki Masjid"],a:2,e:"Quwwat-ul-Islam ('Might of Islam') was built by Qutbuddin Aibak — the FIRST mosque in India built by Muslim rulers. It was constructed using materials from 27 demolished Hindu and Jain temples. Adhai Din Ka Jhopra is in Ajmer."},
+{q:"Iltutmish introduced which TWO coins?",o:["Gold coin + Silver coin","Tanka (silver) + Jital (copper)","Bahloli + Dinari","Nishka + Shatamana"],a:1,e:"Iltutmish introduced the Tanka (silver coin) and Jital (copper coin) — establishing a sound monetary system for the Delhi Sultanate. This is one of the most frequently asked SSC facts about the Slave dynasty."},
+{q:"The Iqta System, introduced by Iltutmish, meant:",o:["A tax on agricultural land","Assignment of land/revenue rights to military officers in lieu of salary","A system of temple grants","A market control system"],a:1,e:"The Iqta System was Iltutmish's key administrative innovation — military officers (Muqtis or Walis) were assigned land (Iqta) whose revenue they collected as their salary, instead of cash payment. This was the foundation of Delhi Sultanate administration."},
+{q:"Qutbuddin Aibak died in 1210 while:",o:["Fighting the Mongols","Playing Chaugan (polo)","Attacked by Khokhars","During prayer"],a:1,e:"Qutbuddin Aibak died in 1210 playing Chaugan (polo) when he fell from his horse. He was known as 'Lakh Baksh' (giver of lakhs) for his generosity. His capital was Lahore, not Delhi."},
+{q:"Razia Sultan was the first and last woman Muslim ruler in India. She refused parda and wore:",o:["Sari and crown","Quba (blazer) and Qula (cap)","Burqa and jewels","Armour only"],a:1,e:"Razia Sultan refused parda (veil) and wore Quba (a blazer/coat) and Qula (a cap) — masculine dress. She addressed public without a veil, rode elephants, and participated in military campaigns — unprecedented for a woman ruler of that era."},
+{q:"Chehalgani/Chalisa established by Iltutmish was:",o:["A group of 40 soldiers","A group of 40 nobles who held immense power","A 40-day festival","A currency system"],a:1,e:"Chehalgani (also called Chalisa) was the group of 40 powerful Turkish nobles established by Iltutmish. They became so powerful that they eventually controlled sultanate politics. Balban later destroyed this group."},
+{q:"The Qutub Minar was built in memory of which Sufi saint?",o:["Moin-ud-din Chishti","Nizamuddin Auliya","Qutub-ud-din-Kaki","Fariduddin Ganjshakar"],a:2,e:"The Qutub Minar was built in memory of Qutub-ud-din-Kaki (the Sufi saint who stayed in Delhi). Moin-ud-din Chishti stayed in Ajmer — the Adhai Din Ka Jhopra was built near his dargah."},
+{q:"Who completed the Qutub Minar that Aibak had started?",o:["Ghori himself","Razia Sultan","Iltutmish (3 more storeys) — Firoz Tughlaq added the last","Balban"],a:2,e:"Aibak built 1 storey of Qutub Minar. Iltutmish completed 3 more storeys. Firoz Shah Tughlaq added the last (5th) storey — giving the Qutub Minar its final height of 72.5 metres."},
+{q:"Razia Sultan's husband (ruler of Bathinda) was:",o:["Alturia","Jamal-ud-din Yakoot","Balban","Nasiruddin Mahmood"],a:0,e:"Razia Sultan's husband was Alturia (the ruler of Bathinda). Jamal-ud-din Yakoot was her Abyssinian commander/confidant. Both Razia and Alturia were killed in 1240 during a revolt."}
+]},
+
+{id:"ds2",title:"Balban & Khilji Dynasty — Alauddin",xp:75,type:"regular",seqIdx:8,
+facts:[
+"<b>Balban (1265–1287)</b> = also known as <b>Ulugh Khan</b> | Policy: <b>Blood and Iron</b>",
+"<b>Killed Chehalgani</b> (40 nobles — the most important act of his reign)",
+"Introduced <b>Nauroz Culture</b> (Persian Festival) + Persian culture | Introduced <b>Sazda and Paibos</b> (prostration + foot-kissing) — made these mandatory at court",
+"Sultan = <b>Zil-i-ilahi</b> (Shadow of God on earth) + <b>Nibyabat-i-Khudai</b> (recipient of divine grace)",
+"Set up <b>Barids system</b> = network of spies placed even in households of nobles",
+"Separated <b>Diwan-i-wizarat</b> (Finance) from <b>Diwan-i-Arz</b> (Military) — administrative separation",
+"<b>Khilji Dynasty (1290–1320)</b> | Founder: Jalaluddin Firoz Khilji (called himself 'darwesh king')",
+"<b>Alauddin Khilji (1296–1316)</b> = MOST IMPORTANT Sultan | Real name: Ali Gurushasp | Title: Alexander Second / Sikander-i-Sani | Won 8 battles",
+"<b>Market Control System:</b> 4 separate markets | 2 officers: Diwan-i-Riyasat + Shahana-i-Mandi | Daily reports from Barids + Munhiyans (secret spies)",
+"<b>Alauddin's Army Reforms:</b> Daag (branding horses) + Huliya (descriptive roll of soldiers) | Paid army in CASH | Biswa system (land measurement)",
+"<b>Alauddin = FIRST</b> to fix land revenue in cash | FIRST to order land measurement before fixing revenue | Fixed taxes at 50%",
+"<b>Malik Kafur (HazaarDinari)</b> = purchased for 1000 Dinars; led South India campaigns under Alauddin",
+"<b>Siri Fort</b> = Alauddin's capital = India's 2nd city of Delhi | First purpose-built capital of Delhi Sultanate",
+"Alauddin: First Sultan to separate religion from politics | First NOT to ask for Manshur (approval) from Caliph"
+],
+table:{h:["Ruler","Key Fact","Significance"],r:[
+["Balban","Blood & Iron policy; killed Chehalgani; Sazda/Paibos; Barids","Centralised power; destroyed 40 nobles"],
+["Jalaluddin Firoz Khilji","Founder of Khilji dynasty; 'darwesh king'","Conciliatory policy"],
+["Alauddin Khilji","Sikander-i-Sani; Market control; Daag+Huliya; 8 battles","Most effective sultan; first to measure land"]
+]},
+mn:{h:"🧠 MNEMONIC — Alauddin's Firsts",b:"<b>L-M-S</b> = Land revenue in cash + Measure land first + Separated religion from politics<br>'<b>Alauddin Led Massive Separation</b>'<br>Market Control: 4 markets, 2 officers = '<b>4M-2O</b>'<br>Daag = <b>D</b>ogs branded — actually <b>D</b>estriers (horses) branded"},
+traps:[
+"Daag = branding of HORSES (NOT soldiers) | Huliya = descriptive roll of SOLDIERS (not horses)",
+"Malik Kafur = HazaarDinari (bought for 1000 Dinars — NOT 1000 rupees)",
+"Siri Fort = India's 2nd city of Delhi (not 1st — Indraprastha/Mehrauli was 1st)",
+"Alauddin fixed taxes at 50% of produce — very high",
+"Balban killed Chehalgani (40 nobles) — these were Iltutmish's group, not Balban's own"
+],
+revision:["Balban(1265-87)=Ulugh Khan, policy=Blood and Iron, killed Chehalgani(40 nobles)","Balban introduced Nauroz+Sazda&Paibos(prostration+foot-kissing) at court","Sultan titled Zil-i-ilahi(Shadow of God) | Set up Barids(spy network)","Khilji Dynasty(1290-1320): Alauddin Khilji=greatest, introduced market control reforms","Alauddin's market reforms: fixed prices, Shahna-i-Mandi(market inspector), Diwan-i-Riyasat"],
+oneliners:["Balban (1265-1287) was also known as Ulugh Khan","Balban followed the 'Blood and Iron' policy","Balban's killing of the Chehalgani (40 nobles) was the most important act of his reign","Balban introduced the Persian Nauroz festival and made Sazda and Paibos mandatory at court","Balban took the title Zil-i-ilahi (Shadow of God on earth)","Balban set up the Barids, a network of spies even within nobles' households","Balban separated Diwan-i-wizarat (Finance) from Diwan-i-Arz (Military)","The Khilji Dynasty ruled 1290-1320","Alauddin Khilji was the greatest Khilji ruler","Alauddin Khilji introduced market control reforms, fixing prices via Shahna-i-Mandi"],
+flashcards:[{q:"What was Balban's policy called?",a:"Blood and Iron"},{q:"What was the most important act of Balban's reign?",a:"Killing the Chehalgani (40 nobles)"},{q:"What court rituals did Balban make mandatory?",a:"Sazda (prostration) and Paibos (foot-kissing)"},{q:"What title did Balban take?",a:"Zil-i-ilahi (Shadow of God on earth)"},{q:"What spy network did Balban establish?",a:"The Barids"},{q:"Who was the greatest Khilji ruler?",a:"Alauddin Khilji"},{q:"What economic reform is Alauddin Khilji known for?",a:"Market control reforms — fixed prices via Shahna-i-Mandi"}],
+mcqs:[
+{q:"Balban's famous policy was known as:",o:["Blood and Iron","Divine Right","Market Control","Iqta System"],a:0,e:"Balban's 'Blood and Iron' policy involved ruthless suppression of rebellions, killing the 40 powerful nobles (Chehalgani), and establishing an absolute monarchy based on fear. He also introduced Sazda (prostration) and Paibos (foot-kissing) at court."},
+{q:"Alauddin Khilji's title 'Sikander-i-Sani' means:",o:["Sword of Islam","Alexander the Second","Shadow of God","Destroyer of Enemies"],a:1,e:"'Sikander-i-Sani' means 'Alexander the Second' — Alauddin Khilji compared himself to Alexander the Great (called Sikander in Persian/Urdu). His real name was Ali Gurushasp."},
+{q:"The 'Daag' and 'Huliya' systems introduced by Alauddin Khilji refer to:",o:["Tax collection systems","Branding horses (Daag) + Descriptive roll of soldiers (Huliya)","Market price fixing","Spy network systems"],a:1,e:"Daag = branding of horses with a royal mark to prevent fraud in cavalry | Huliya = descriptive roll of soldiers to prevent impostors. Together they reformed the army and prevented corruption in military supply."},
+{q:"Alauddin Khilji was the FIRST Delhi Sultan to:",o:["Use spies","Fix land revenue in cash and measure land before fixing revenue","Build a mosque","Use war elephants"],a:1,e:"Alauddin Khilji was the FIRST to fix land revenue in cash (not kind) AND the first to order land measurement (by the biswa unit) before fixing revenue. He fixed revenue at 50% — very high. These were major administrative reforms."},
+{q:"'HazaarDinari' is the nickname of Malik Kafur. 'HazaarDinari' means he was:",o:["Given a gift of 1000 gold coins","Purchased for 1000 Dinars","Worth 1000 soldiers","Given 1000 horses"],a:1,e:"Malik Kafur is called HazaarDinari because he was purchased by Nusrat Khan for 1000 Dinars in Gujarat and then gifted to Alauddin Khilji. He became Alauddin's most trusted general and led the famous South India campaigns."},
+{q:"Alauddin's market control system had how many separate markets?",o:["2","3","4","6"],a:2,e:"Alauddin established 4 separate markets: (1) Grain market (Shahana-i-Mandi), (2) Cloth market, (3) Cattle and horse market, (4) Miscellaneous goods market. Each was separately controlled by Barids (intelligence) and Munhiyans (secret spies)."},
+{q:"Balban introduced the concept of Sultan as 'Zil-i-ilahi' which means:",o:["Greatest warrior","Shadow of God on earth","Conqueror of worlds","Protector of Islam"],a:1,e:"'Zil-i-ilahi' means 'Shadow of God on earth.' Balban used this concept to elevate the Sultan's position above all nobles and justify absolute monarchy. He also called himself 'Nibyabat-i-Khudai' (recipient of divine grace)."},
+{q:"Siri Fort (built by Alauddin Khilji) is historically significant as:",o:["The first fort in Delhi","India's 2nd city of Delhi and first purpose-built capital","The largest Sultanate-era fort","Built to resist Mongol attacks only"],a:1,e:"Siri Fort is India's 2nd city of Delhi (after Indraprastha/Mehrauli) and the FIRST purpose-built capital of the Delhi Sultanate. Aibak's capital was Lahore; Iltutmish used Old Delhi. Alauddin built Siri as a planned capital."},
+{q:"Which famous poet was given the title 'Tuti-i-Hind (Parrot of India)' by Alauddin Khilji?",o:["Firdausi","Ziauddin Barani","Amir Khusrau","Rajasekhara"],a:2,e:"Amir Khusrau was given the title 'Tuti-i-Hind' (Parrot of India) by Alauddin Khilji. Khusrau was a disciple of Nizamuddin Auliya, invented Sitar and Tabla, and wrote Khazain-ul-Futuh (about Alauddin's conquests)."},
+{q:"Balban's spy network, placing agents even in households of nobles, was called:",o:["Munhiyans","Barids","Shahana-i-Mandi","Chalisa"],a:1,e:"Balban set up the Barids system — a network of spies placed throughout the empire, even in nobles' households. Alauddin later used both Barids (intelligence agents) and Munhiyans (secret spies) for his market control system."}
+]},
+
+{id:"ds3",title:"Tughlaq Dynasty — Muhammad bin Tughlaq & Firoz Shah",xp:70,type:"regular",seqIdx:9,
+facts:[
+"<b>Tughlaq Dynasty (1320–1414)</b> = also known as Quaraunah Turks | Founder: Ghiyas-ud-din Tughlaq (title: Ghazi Malik)",
+"Ghiyas-ud-din: introduced Postal Services + Irrigation System | built fort Tuglaqabad | killed by own son Jauna Khan (Muhammad bin Tughlaq) | Amir Khusrau's Tughlaq Nama → his rise",
+"<b>Muhammad bin Tughlaq (1325–1351)</b> = MOST LITERATE Sultan | Also called 'Pagal Raja' for his failed policies",
+"<b>5 Controversial Experiments (ALL FAILED):</b> 1) Increased Doab taxation | 2) Transfer of capital to Devgiri/Daultabad | 3) Token currency | 4) Khorasan expedition | 5) Quarachill expedition",
+"Changed Devgiri's name to <b>Daultabad</b> | First Sultan to introduce <b>token/paper currency</b> in India (FAILED)",
+"<b>Ibn Battuta</b> = came from Morocco | book: <b>Rehla</b> | served as Qazi (judge) of Delhi for <b>8 years</b> — not merely a visitor",
+"<b>Firoz Shah Tughlaq (1351–1388)</b> = Liberal Sultan",
+"Firoz Shah: <b>1st Sultan to impose Jaziya on Brahmins</b> | Autobiography: <b>Futuhat-e-Firozshahi</b>",
+"Firoz Shah: brought <b>Ashoka pillar from Lumbini to India</b> | Renovated Qutub Minar + Sultan Garhi + Suraj Kund",
+"<b>Cities built by Firoz Shah:</b> Firozabad, <b>Jaunpur (Siraz-e-Hind)</b>, Fatehabad, Hissar, Firozpur",
+"<b>4 legal taxes under Firoz:</b> Kharaj (land) | Khams (1/5 loot) | Jizya (religious tax on Hindus) | Zakat (2.5% Muslim income)",
+"Firoz: First Sultan to BAN TORTURE as state punishment | Developed Karkhanas (royal factories with thousands of slaves)",
+"<b>Timur Lang attacked Delhi Sultanate in 1398 AD</b> | Nasiruddin Mahmood Shah = last Tughlaq ruler | Delhi depopulated for months after Timur's massacre"
+],
+table:{h:["Sultan","Key Act","Significance"],r:[
+["Ghiyas-ud-din","Postal system + irrigation; Tuglaqabad fort","Founder; killed by own son"],
+["Muhammad bin Tughlaq","5 failed experiments; Token currency; capital to Daultabad","Most literate + most failed sultan"],
+["Firoz Shah Tughlaq","Jaziya on Brahmins; autobiography; Ashoka pillar; 5 cities","Liberal; welfare state; banned torture"]
+]},
+mn:{h:"🧠 MNEMONIC — Muhammad Tughlaq's 5 Failures",b:"<b>D-T-K-K-Q</b> = Doab tax + Transfer to Daultabad + Token currency + Khorasan + Quarachill<br>'<b>Dumb Tughlaq Kept Killing Quickly (his own empire)</b>'<br>Firoz Shah = '<b>F</b>irst to impose Jaziya on <b>F</b>rahmins (Brahmins)' — F for Firoz+First"},
+traps:[
+"MOST LITERATE Sultan = Muhammad bin Tughlaq (NOT Firoz Shah)",
+"FIRST to impose Jaziya on BRAHMINS = Firoz Shah Tughlaq (NOT Alauddin, NOT Muhammad bin Tughlaq)",
+"Ibn Battuta = Qazi of Delhi for 8 years — NOT just a traveller passing through",
+"Token currency = Muhammad bin Tughlaq (NOT Firoz Shah Tughlaq)",
+"Timur attacked in 1398 — during Nasiruddin Mahmood Shah's reign (last Tughlaq), NOT Muhammad bin Tughlaq"
+],
+revision:["Tughlaq Dynasty(1320-1414), founder Ghiyas-ud-din Tughlaq(title Ghazi Malik)","Muhammad bin Tughlaq(1325-51)=MOST LITERATE Sultan, called 'Pagal Raja' for failed policies","5 failed experiments: Doab tax increase,capital transfer to Daultabad,token currency,Khorasan+Quarachill expeditions","Firoz Shah Tughlaq=last effective Tughlaq, introduced Iqta system revival+canal building","Devgiri renamed Daultabad by Muhammad bin Tughlaq"],
+oneliners:["The Tughlaq Dynasty ruled 1320-1414, founded by Ghiyas-ud-din Tughlaq (title Ghazi Malik)","Ghiyas-ud-din introduced postal services and an irrigation system, and built Tughlaqabad fort","Ghiyas-ud-din was killed by his own son, Muhammad bin Tughlaq","Muhammad bin Tughlaq (1325-1351) was the most literate Sultan","Muhammad bin Tughlaq was called 'Pagal Raja' (Mad King) for his failed policies","Muhammad bin Tughlaq's 5 failed experiments included increased Doab taxation and token currency","Muhammad bin Tughlaq transferred the capital to Devgiri, renamed Daultabad","Muhammad bin Tughlaq's Khorasan and Quarachill expeditions both failed","Firoz Shah Tughlaq was the last effective Tughlaq ruler"],
+flashcards:[{q:"Who founded the Tughlaq Dynasty?",a:"Ghiyas-ud-din Tughlaq (Ghazi Malik)"},{q:"Who killed Ghiyas-ud-din Tughlaq?",a:"His own son, Muhammad bin Tughlaq"},{q:"What was Muhammad bin Tughlaq called, and why?",a:"'Pagal Raja' (Mad King), for his failed policies"},{q:"Name 2 of Muhammad bin Tughlaq's 5 failed experiments.",a:"Increased Doab taxation; transfer of capital to Daultabad (also: token currency, Khorasan/Quarachill expeditions)"},{q:"What did Muhammad bin Tughlaq rename Devgiri to?",a:"Daultabad"},{q:"Who was the last effective Tughlaq ruler?",a:"Firoz Shah Tughlaq"}],
+mcqs:[
+{q:"Muhammad bin Tughlaq's five controversial experiments ALL FAILED. Which is NOT one of them?",o:["Transfer of capital to Daultabad","Token currency","Market control system (4 markets)","Khorasan expedition"],a:2,e:"Market control system with 4 markets was Alauddin Khilji's innovation — NOT Muhammad bin Tughlaq. Muhammad bin Tughlaq's five failed experiments were: Doab tax increase, Capital transfer to Daultabad, Token currency, Khorasan expedition, and Quarachill expedition."},
+{q:"Ibn Battuta (from Morocco) came to India and served as:",o:["Court poet of Muhammad bin Tughlaq","Qazi (judge) of Delhi for 8 years","Ambassador to China","Military general"],a:1,e:"Ibn Battuta served as Qazi (chief judge) of Delhi for 8 years under Muhammad bin Tughlaq — he was not merely a traveller. His book 'Rehla' (The Journey) is a key source for Muhammad bin Tughlaq's reign."},
+{q:"The FIRST Sultan to impose Jaziya on Brahmins was:",o:["Muhammad bin Qasim","Alauddin Khilji","Muhammad bin Tughlaq","Firoz Shah Tughlaq"],a:3,e:"Firoz Shah Tughlaq was the FIRST Delhi Sultan to impose Jaziya specifically on Brahmins (who had previously been exempt). Earlier, Jaziya applied only to non-Muslim commoners. SSC frequently tests 'first to impose Jaziya on Brahmins.'"},
+{q:"Firoz Shah Tughlaq's autobiography is called:",o:["Tarikh-i-Firuz Shahi","Rehla","Futuhat-e-Firozshahi","Tughlaq Nama"],a:2,e:"Futuhat-e-Firozshahi is Firoz Shah Tughlaq's own autobiography. Tarikh-i-Firuz Shahi was written by Ziauddin Barani (about earlier sultans up to Firoz's 6th year). Tughlaq Nama was by Amir Khusrau."},
+{q:"Muhammad bin Tughlaq transferred the capital from Delhi to:",o:["Agra","Lahore","Devgiri (renamed Daultabad)","Jaunpur"],a:2,e:"Muhammad bin Tughlaq transferred his capital to Devgiri (in Deccan) and renamed it Daultabad. This was one of his most disastrous decisions — the entire Delhi population was forced to march 1500 km. He later reversed the decision."},
+{q:"Timur Lang attacked Delhi Sultanate in which year?",o:["1380 AD","1398 AD","1414 AD","1451 AD"],a:1,e:"Timur Lang (Tamerlane) attacked Delhi in 1398 AD during the reign of Nasiruddin Mahmood Shah (last Tughlaq). Timur massacred the population and took skilled artisans to build mosques in Samarkand. Delhi remained depopulated for months."},
+{q:"Which city built by Firoz Shah Tughlaq was called 'Siraz-e-Hind'?",o:["Firozabad","Hissar","Jaunpur","Fatehabad"],a:2,e:"Jaunpur (built by Firoz Shah Tughlaq) was called 'Siraz-e-Hind' (Shiraz of India) for its cultural eminence. Later, the Sharqi dynasty made it a great centre of learning and Sufi culture."},
+{q:"Firoz Shah Tughlaq's welfare achievements included (choose the MOST SIGNIFICANT):",o:["He built the largest army","He was first Sultan to BAN TORTURE as state punishment","He introduced token currency","He built the tallest minaret"],a:1,e:"Firoz Shah Tughlaq was the FIRST Sultan to ban torture as a state punishment — a remarkable welfare measure. He also developed Karkhanas (royal factories for slaves), built hospitals, set up charity departments, and abolished many harsh taxes."},
+{q:"The 'Diwan-e-Amir Kohi' (Agriculture Department) was established by:",o:["Alauddin Khilji","Iltutmish","Firoz Shah Tughlaq","Muhammad bin Tughlaq"],a:3,e:"The Diwan-e-Amir Kohi (Agriculture Department) was established by Muhammad bin Tughlaq — one of his genuine reform attempts. He wanted to bring waste land under cultivation. However, this experiment also failed due to poor implementation."},
+{q:"The Tughlaq dynasty is also known as:",o:["Ghulam Turks","Quaraunah Turks","Afghan Turks","Khalji Turks"],a:1,e:"The Tughlaq dynasty is also known as the Quaraunah Turks. Ghiyas-ud-din Tughlaq, the founder (title: Ghazi Malik), introduced postal services and an irrigation system and built the Tuglaqabad fort near Delhi."}
+]},
+
+{id:"ds4",title:"Sayyid & Lodhi Dynasties — Master Traps",xp:50,type:"trap",seqIdx:10,
+facts:[
+"<b>Sayyid Dynasty (1414–1450)</b> | 4 rulers | Theoretically governors under Timur's successors",
+"<b>Khizr Khan</b> = founder | Called himself only <b>Rayat-i-Ala / Masnad-i-Aali</b> (lieutenant) — did NOT accept Sultan title (fear of Timur's successors)",
+"Muizuddin Mubarak Shah established Mubarakbad | Muhammad Shah gave 'Khan-e-Khanam' title to Bahlol Lodhi",
+"<b>Lodhi Dynasty (1451–1526)</b> | <b>FIRST AFGHANI Sultan dynasty in Delhi</b> — previous were all Turkish",
+"<b>Bahlol Lodhi (1451–1489)</b> = 1st Afghani Sultan | Abolished prostration before sultan | Nobles sat on equal chairs (Masnad policy) | launched Bahloli Coin (demonetisation of old coins)",
+"<b>Sikander Lodhi (1489–1517)</b> = title 'Shahi' | Poetry name: 'Gulrukhi' | Fond of Shehnayi | <b>Established Agra City (1504 AD)</b> | Made Agra capital (1506 AD) | introduced land unit 'Gaz-e-Sikandari' | abolished Octroi Duty on Grains | reimposed Jaziya on Hindus",
+"<b>Ibrahim Lodhi (1517–1526)</b> = LAST ruler of Lodhi + LAST ruler of Delhi Sultanate",
+"<b>1st Battle of Panipat (1526):</b> Babur vs Ibrahim Lodhi → <b>BABUR WON</b> → End of Delhi Sultanate → Mughal Empire began",
+"<b>2nd Battle of Panipat (1556):</b> Akbar vs Hemu → Akbar won",
+"<b>3rd Battle of Panipat (1761):</b> Ahmed Shah Durrani (Abdali) vs Maratha Empire → Abdali won",
+"<b>Amir Khusrau:</b> Disciple of Nizamuddin Auliya | Title: Tuti-i-Hind | Father of Qawwali | Invented Sitar + Tabla | Introduced ragas Ghora + Sanam | Books: Khazain-ul-Futuh, Tughlaq Nama"
+],
+table:{h:["Battle of Panipat","Year","Parties","Winner"],r:[
+["1st","1526","Babur vs Ibrahim Lodhi","Babur"],
+["2nd","1556","Akbar vs Hemu","Akbar (Hemu lost)"],
+["3rd","1761","Ahmed Shah Abdali vs Marathas","Abdali"]
+]},
+traps:[
+"Lodhi = FIRST AFGHANI dynasty (all previous Delhi Sultanate dynasties were Turkish)",
+"Khizr Khan did NOT accept Sultan title (only lieutenant titles) — fear of Timur's successors",
+"Agra city = established by SIKANDER LODHI in 1504 (NOT Babur, NOT Akbar)",
+"3 Battles of Panipat: 1526, 1556, 1761 — all different parties, all Panipat",
+"Amir Khusrau invented BOTH Sitar AND Tabla — not just one"
+],
+revision:["Sayyid Dynasty(1414-50), 4 rulers, founder Khizr Khan(title Rayat-i-Ala,did NOT accept Sultan title)","Lodhi Dynasty(1451-1526)=FIRST AFGHANI Sultan dynasty(previous all Turkish)","Bahlol Lodhi(1451-89)=1st Afghani Sultan, abolished prostration, Masnad policy(equal chairs)","Sikander Lodhi=able administrator, Ibrahim Lodhi=last Sultan(defeated at Panipat-I,1526)","Amir Khusrau invented BOTH Sitar AND Tabla"],
+oneliners:["The Sayyid Dynasty ruled 1414-1450, with 4 rulers","Khizr Khan founded the Sayyid Dynasty but took only the title Rayat-i-Ala, not Sultan","The Lodhi Dynasty (1451-1526) was the first Afghani Sultan dynasty in Delhi","All previous Delhi Sultanate dynasties had been Turkish","Bahlol Lodhi (1451-1489) was the first Afghani Sultan","Bahlol Lodhi abolished prostration before the Sultan and introduced the Masnad policy of equal chairs","Sikander Lodhi was known as an able administrator","Ibrahim Lodhi was the last Delhi Sultan, defeated at the First Battle of Panipat (1526)","Amir Khusrau is credited with inventing both the Sitar and the Tabla"],
+flashcards:[{q:"Who founded the Sayyid Dynasty, and what title did he take?",a:"Khizr Khan; took the title Rayat-i-Ala, not Sultan"},{q:"What is significant about the Lodhi Dynasty's ethnicity?",a:"It was the first Afghani Sultan dynasty (previous dynasties were Turkish)"},{q:"Who was the first Afghani Sultan?",a:"Bahlol Lodhi"},{q:"What policy did Bahlol Lodhi introduce regarding court seating?",a:"The Masnad policy — nobles sat on equal chairs"},{q:"Who was the last Delhi Sultan, and how did his reign end?",a:"Ibrahim Lodhi, defeated at the First Battle of Panipat (1526)"},{q:"What two instruments did Amir Khusrau invent?",a:"The Sitar and the Tabla"}],
+mcqs:[
+{q:"The Lodhi dynasty was the FIRST in Delhi Sultanate history to be from which ethnic group?",o:["Turkish","Persian","Afghan","Arab"],a:2,e:"The Lodhi dynasty (1451–1526) was the FIRST Afghan dynasty to rule Delhi. All previous four dynasties (Slave, Khilji, Tughlaq, Sayyid) were Turkish in origin. This is a frequently asked SSC distinction."},
+{q:"Agra city was established by which ruler?",o:["Babur","Akbar","Sikander Lodhi","Ibrahim Lodhi"],a:2,e:"Agra city was established by Sikander Lodhi in 1504 AD. He made it his capital in 1506 AD. This is a common SSC trap — students often assume Babur or Akbar founded Agra, but it was Sikander Lodhi."},
+{q:"The 1st Battle of Panipat (1526) was fought between:",o:["Akbar and Hemu","Babur and Ibrahim Lodhi","Ahmed Shah Abdali and Marathas","Humayun and Sher Shah"],a:1,e:"The 1st Battle of Panipat (April 21, 1526) was between Babur and Ibrahim Lodhi. Babur won using gunpowder artillery for the first time in Indian warfare. This ended the Delhi Sultanate and began the Mughal Empire."},
+{q:"Khizr Khan, founder of the Sayyid dynasty, is notable for:",o:["Being the most powerful Sultan","Conquering South India","NOT accepting the title of Sultan — only called himself Rayat-i-Ala","Introducing copper coins"],a:2,e:"Khizr Khan did NOT accept the title of Sultan — he called himself Rayat-i-Ala (lieutenant) and Masnad-i-Aali because he considered himself a subordinate of Timur's successors. This humbling of the sultanate shows how much power Timur's invasion had diminished Delhi."},
+{q:"Bahlol Lodhi's 'Masnad policy' meant that:",o:["He sat alone on a raised throne","He abolished prostration; nobles sat on equal chairs with him","He introduced a new taxation system","He required nobles to prostrate"],a:1,e:"Bahlol Lodhi's Masnad policy meant he sat on equal chairs with his Afghan nobles — abolishing the tradition of prostration (sijda) before the sultan. This was to maintain tribal equality among Afghans, in contrast to Turkish sultans' divine-right claims."},
+{q:"Sikander Lodhi's poetry pen name was:",o:["Gulbadan","Gulrukhi","Gulbarg","Gulzar"],a:1,e:"Sikander Lodhi's poetry pen name was 'Gulrukhi' (Rose-faced). He was also fond of the Shehnayi (an Indian wind instrument) and is remembered for establishing Agra and introducing the Gaz-e-Sikandari (a new unit of land measurement)."},
+{q:"Amir Khusrau is called 'Father of Qawwali' and also invented:",o:["Tabla only","Sitar only","Both Sitar AND Tabla","Neither — he only sang"],a:2,e:"Amir Khusrau is credited with inventing BOTH the Sitar (string instrument) and the Tabla (percussion instrument) in Indian musical tradition. He was also the Father of Qawwali, a disciple of Nizamuddin Auliya, and introduced ragas Ghora and Sanam."},
+{q:"The 3rd Battle of Panipat (1761) was fought between:",o:["Babur and Ibrahim Lodhi","Akbar and Hemu","Ahmed Shah Abdali and the Maratha Empire","British and Marathas"],a:2,e:"The 3rd Battle of Panipat (January 14, 1761) was between Ahmed Shah Durrani (Abdali, Afghan king) and the Maratha Empire. Abdali won, dealing a devastating blow to the Maratha Empire's expansionist ambitions."},
+{q:"Which foreign traveller served as QAZI of Delhi for 8 years under Muhammad bin Tughlaq?",o:["Al-Beruni","Al-Masudi","Abdur Razzaq","Ibn Battuta"],a:3,e:"Ibn Battuta (from Morocco) served as Qazi (chief judge) of Delhi for 8 years under Muhammad bin Tughlaq. His travel account 'Rehla' is a key primary source. Al-Beruni came with Mahmud Ghazni (1024–1030 AD)."},
+{q:"The 'Gaz-e-Sikandari' introduced by Sikander Lodhi was:",o:["A type of coin","A land measurement unit","A new tax","A type of cannon"],a:1,e:"Gaz-e-Sikandari was a standardised unit of land measurement introduced by Sikander Lodhi. He also abolished Octroi Duty on grains, used the poetry name 'Gulrukhi,' and was fond of the Shehnayi instrument."}
+]}
+]},
+
+{id:"golden_med",title:"Golden Revision",icon:"🏹",nodes:[
+{id:"golden_med1",title:"🏹 Golden Node — High-Yield Revision",xp:100,type:"gold",seqIdx:11,requires_pct:80,
+golden:[
+"<b>Tripartite Struggle: Rashtrakutas = MOST POWERFUL</b> — Vatsaraja (Pratihara) started it",
+"<b>Dhruva (Rashtrakuta) defeated both rivals but did NOT occupy Kannauj</b> — returned to Deccan",
+"<b>Vikramashila University = founded by DHARMAPALA (Pala)</b> — NOT Nalanda which is Gupta-era",
+"<b>Gopala (Pala) = ELECTED by nobles</b> — earliest form of elective monarchy in India",
+"<b>Kailasanath temple Ellora = KRISHNA-I (Rashtrakuta)</b> — largest monolithic rock-cut structure",
+"<b>Amoghavarsha-I = 'Ashoka of the South'</b> | Wrote Kavirajamarga = OLDEST Kannada literature | Jain",
+"<b>Rajaraja-I built Brihadeshwara temple (1010 CE)</b> | Rajendra-I built Gangaikondacholapuram",
+"<b>Kudavolai system = ballot using palm-leaf slips</b> — earliest democratic election in India (Chola)",
+"<b>Nagaram = MERCHANT assembly</b> (Chola) — 3rd type, often missed | Ur = general | Mahasabha = Brahmin village",
+"<b>Rajendra-I: Chola Lake (Bay of Bengal) + 1025 naval expedition vs Srivijaya</b>",
+"<b>FIRST Muslim invader = Muhammad bin QASIM (712 AD)</b> — NOT Mahmud Ghazni",
+"<b>Mahmud Ghazni attacked 17 times</b> | Al-Beruni wrote Kitab al Hind | Firdausi = Homer of East",
+"<b>Nalanda + Vikramashila destroyed by Muhammad BAKHTIYAR KHILJI</b> (Ghori's general)",
+"<b>Muhammad Ghori killed by KHOKHARS</b> in 1206 near Jhelum (NOT by Hindus, NOT by Mongols)",
+"<b>Tarain-I (1191) = Prithviraj WON | Tarain-II (1192) = Ghori WON</b>",
+"<b>REAL founder of Delhi Sultanate = ILTUTMISH</b> (not Aibak)",
+"<b>Tanka (silver) + Jital (copper) = introduced by ILTUTMISH</b> (NOT Aibak)",
+"<b>Qutub Minar: Aibak built 1 floor → Iltutmish +3 → Firoz Shah Tughlaq +1 (last)</b>",
+"<b>Lakh Baksh = Aibak</b> | Blood & Iron = Balban | Sikander-i-Sani = Alauddin Khilji",
+"<b>Daag = brand horses | Huliya = describe soldiers</b> (Alauddin Khilji's army reforms)",
+"<b>FIRST to impose Jaziya on BRAHMINS = Firoz Shah Tughlaq</b>",
+"<b>Muhammad bin Tughlaq = most literate sultan</b> | 5 experiments ALL failed | Ibn Battuta = Qazi 8 years",
+"<b>Agra city = founded by SIKANDER LODHI in 1504</b> (NOT Babur, NOT Akbar)",
+"<b>Lodhi = FIRST AFGHANI dynasty</b> (all previous were Turkish)",
+"<b>1526: 1st Panipat = Babur won | 1556: 2nd Panipat = Akbar won | 1761: 3rd = Abdali won</b>",
+"<b>Amir Khusrau = Tuti-i-Hind + Father of Qawwali + invented Sitar + Tabla</b>"
+]}
+]}
+];
+
+/* ── STATE ── */
+const SK='centumania_med1_v1';
+let S={xp:0,visited:{},mcq:{},faa:{},curNode:null,chOpen:{}};
+function loadS(){try{const r=localStorage.getItem(SK);if(r)S=Object.assign({xp:0,visited:{},mcq:{},faa:{},curNode:null,chOpen:{}},JSON.parse(r));}catch(e){}}
+function saveS(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
+/* ── METRICS ── */
+let _mToken=null, _mSid=null;
+
+function initMetrics(){
+  // Supabase stores the session under a key like `sb-<ref>-auth-token`
+  // in either localStorage or sessionStorage depending on the user's "keep me
+  // signed in" choice (see centumania-mvp/src/lib/supabase/client.ts).
+  try {
+    const stores=[localStorage,sessionStorage];
+    for(const store of stores){
+      if(_mToken)break;
+      for(let i=0;i<store.length;i++){
+        const k=store.key(i);
+        if(k&&k.startsWith('sb-')&&k.endsWith('-auth-token')){
+          const d=JSON.parse(store.getItem(k)||'{}');
+          _mToken=d?.access_token||null;
+          break;
+        }
+      }
+    }
+  } catch(e){}
+  _mSid='med1-'+(Date.now().toString(36));
+}
+
+function track(name,meta={}){
+  if(!_mToken)return;
+  fetch('/api/events',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},
+    body:JSON.stringify({event_name:name,session_id:_mSid,event_timestamp:new Date().toISOString(),metadata:meta})
+  }).catch(()=>{});
+}
+
+
+function allNodes(){return CHAPTERS.flatMap(c=>c.nodes);}
+function findNode(id){return allNodes().find(n=>n.id===id);}
+function seqNodes(){return allNodes().slice().sort((a,b)=>a.seqIdx-b.seqIdx);}
+
+function isUnlocked(node){
+  if(node.seqIdx===0)return true;
+  if(node.type==='gold'){
+    const all=seqNodes().filter(n=>n.type!=='gold');
+    const passed=all.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+    return (passed/all.length)>=0.8;
+  }
+  const prev=seqNodes().find(n=>n.seqIdx===node.seqIdx-1);
+  if(!prev)return true;
+  return !!(S.mcq[prev.id]&&S.mcq[prev.id].passed);
+}
+
+function totalXP(){return allNodes().reduce((s,n)=>s+((S.mcq[n.id]&&S.mcq[n.id].passed)?n.xp:0),0);}
+function overallPct(){
+  const nodes=allNodes().filter(n=>n.type!=='gold');
+  const passed=nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  return nodes.length?Math.round(100*passed/nodes.length):0;
+}
+
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show'+(type==='err'?' err':type==='warn'?' warn':'');
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+function updateTopbar(){
+  const nodes=allNodes().filter(n=>n.type!=='gold');
+  const passed=nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  const traps=allNodes().filter(n=>n.type==='trap');
+  const trapsPassed=traps.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  document.getElementById('h-xp').textContent=totalXP();
+  document.getElementById('h-nd').textContent=passed+'/'+nodes.length;
+  document.getElementById('h-tp').textContent=trapsPassed+'/'+traps.length;
+}
+
+function buildSidebar(){
+  ['sidebar-inner','mob-sidebar-inner'].forEach(sid=>{
+    const sb=document.getElementById(sid);
+    if(!sb)return;
+    sb.innerHTML='';
+    sb.style.padding='10px 8px 60px';
+    CHAPTERS.forEach(ch=>{
+      const grp=document.createElement('div');
+      grp.className='ch-group';
+      const passedCount=ch.nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+      const isOpen=S.chOpen[ch.id]!==false;
+      const tog=document.createElement('button');
+      tog.className='ch-toggle';
+      tog.innerHTML=`<span class="ch-icon">${ch.icon}</span><span class="ch-label">${ch.title}</span><span class="ch-prog">${passedCount}/${ch.nodes.length}</span><span class="ch-arr">${isOpen?'▾':'▸'}</span>`;
+      tog.onclick=()=>{S.chOpen[ch.id]=!isOpen;saveS();buildSidebar();};
+      grp.appendChild(tog);
+      const items=document.createElement('div');
+      items.className='node-items';
+      items.style.display=isOpen?'block':'none';
+      ch.nodes.forEach(node=>{
+        const unlocked=isUnlocked(node);
+        const m=S.mcq[node.id];
+        const passed=m&&m.passed;
+        const btn=document.createElement('button');
+        btn.className='ni-btn'+(S.curNode===node.id?' active':'')+(passed?' passed':'')+(unlocked?'':' locked');
+        let tag='';
+        if(!unlocked)tag='<span class="ni-tag lock">🔒</span>';
+        else if(passed)tag='<span class="ni-tag done">✓</span>';
+        else if(S.visited[node.id])tag='<span class="ni-tag vis">●</span>';
+        btn.innerHTML=`${tag}<span class="ni-title">${node.title}</span><span class="ni-xp">+${node.xp}</span>`;
+        btn.onclick=()=>openNode(node.id);
+        items.appendChild(btn);
+      });
+      grp.appendChild(items);
+      sb.appendChild(grp);
+    });
+  });
+  updateTopbar();
+}
+
+function openNode(id){
+  const node=findNode(id);
+  if(!node)return;
+  if(!isUnlocked(node)){
+    const prev=seqNodes().find(n=>n.seqIdx===node.seqIdx-1);
+    showToast(`🔒 Complete "${prev?prev.title:'previous node'}" with 10/10 first!`,'warn');
+    return;
+  }
+  S.curNode=id;S.visited[id]=true;saveS();buildSidebar();
+  track('node_opened',{node_id:id,node_title:node.title,node_type:node.type,xp:node.xp});
+  document.getElementById('dash-view').style.display='none';
+  document.getElementById('node-view').style.display='block';
+  renderNode(node);
+  document.getElementById('mob-drawer').classList.remove('open');
+  document.getElementById('mob-overlay').classList.remove('show');
+  window.scrollTo(0,0);
+  document.getElementById('main-area').scrollTop=0;
+}
+
+function renderNode(node){
+  const m=S.mcq[node.id]||{};
+  const faaStr=m.faa!=null?Math.round(m.faa)+'%':'—';
+  const bestStr=m.best!=null?Math.round(m.best)+'%':'—';
+  let typTag='';
+  if(node.type==='trap')typTag='<span class="node-type-tag trap">⚠ Trap Node</span>';
+  if(node.type==='gold')typTag='<span class="node-type-tag gold">★ Golden Node</span>';
+  const testLabel=m.passed?`🎯 Test (10/10 ✓)`:`🎯 Test (10 MCQs)`;
+  const retryBtn=(m.attempts&&!m.passed&&node.type!=='gold')?`<button class="retry-btn" style="margin-left:auto" onclick="retryNode('${node.id}')">↺ Retry</button>`:'';
+  document.getElementById('node-content').innerHTML=`
+<div class="node-hd">
+  <div class="node-hd-top">${typTag}<div class="xp-pill">+${node.xp} XP</div></div>
+  <h2 class="node-title">${node.title}</h2>
+  <div class="node-stats">
+    <div class="ns-item"><div class="ns-label">FAA</div><div class="ns-val faa-col">${faaStr}</div></div>
+    <div class="ns-item"><div class="ns-label">Best</div><div class="ns-val">${bestStr}</div></div>
+    <div class="ns-item"><div class="ns-label">Attempts</div><div class="ns-val">${m.attempts||0}</div></div>
+    <div class="ns-item"><div class="ns-label">Status</div><div class="ns-val ${m.passed?'pass-col':'pend-col'}">${m.passed?'✓ Passed':'Pending'}</div></div>
+    ${retryBtn}
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="switchTab(this,'learn')">📖 Learn</button>
+  <button class="tab" onclick="switchTab(this,'flash')">🗂 Flashcards</button>
+  <button class="tab" onclick="switchTab(this,'test')">${testLabel}</button>
+</div>
+<div id="tab-learn" class="tab-pane active">${buildLearnPane(node)}</div>
+<div id="tab-flash" class="tab-pane">${buildFlashPane(node)}</div>
+<div id="tab-test" class="tab-pane">${buildTestPane(node)}</div>
+`;
+  bindMCQ(node);
+  buildNodeNav(node);
+}
+
+function switchTab(btn,tab){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+function buildLearnPane(node){
+  let h='';
+  if(node.type==='gold'&&node.golden){
+    h+='<div class="fact-block gold-block"><div class="fb-head">★ HIGH-YIELD REVISION FACTS</div><div class="fb-body"><ul class="facts">';
+    node.golden.forEach(f=>h+=`<li>${f}</li>`);
+    h+='</ul></div></div>';
+    return h;
+  }
+  if(node.facts&&node.facts.length){
+    h+='<div class="fact-block"><div class="fb-head">📌 KEY FACTS</div><div class="fb-body"><ul class="facts">';
+    node.facts.forEach(f=>h+=`<li>${f}</li>`);
+    h+='</ul></div></div>';
+  }
+  if(node.table){
+    h+='<div class="tbl-wrap"><table class="dt"><thead><tr>';
+    node.table.h.forEach(c=>h+=`<th>${c}</th>`);
+    h+='</tr></thead><tbody>';
+    node.table.r.forEach(row=>{h+='<tr>';row.forEach(c=>h+=`<td>${c}</td>`);h+='</tr>';});
+    h+='</tbody></table></div>';
+  }
+  if(node.mn){
+    h+=`<div class="mnemonic-block"><div class="fb-head">${node.mn.h}</div><div class="fb-body">${node.mn.b}</div></div>`;
+  }
+  if(node.traps&&node.traps.length){
+    h+='<div class="trap-block"><div class="fb-head">⚠ EXAM TRAPS — HIGH FREQUENCY</div><div class="fb-body"><ul class="facts">';
+    node.traps.forEach(t=>h+=`<li>${t}</li>`);
+    h+='</ul></div></div>';
+  }
+  if(node.revision&&node.revision.length){
+    h+='<div class="revision-block"><div class="fb-head">⚡ 30 SECOND REVISION</div><div class="fb-body"><ul class="facts">';
+    node.revision.forEach(r=>h+=`<li>${r}</li>`);
+    h+='</ul></div></div>';
+  }
+  if(node.oneliners&&node.oneliners.length){
+    h+='<div class="oneliner-block"><div class="fb-head">🎯 20 EXAM ONE-LINERS</div><div class="fb-body"><ul class="facts">';
+    node.oneliners.forEach(o=>h+=`<li>${o}</li>`);
+    h+='</ul></div></div>';
+  }
+  return h;
+}
+
+function buildFlashPane(node){
+  const cards=node.flashcards||[];
+  if(!cards.length)return '<div class="fact-block"><div class="fb-body" style="padding:2rem;text-align:center;color:var(--ink2)">No flashcards for this node yet.</div></div>';
+  let h=`<p class="flash-hint">TAP A CARD TO FLIP • ${cards.length} CARDS</p><div class="flash-grid">`;
+  cards.forEach((c,i)=>{
+    h+=`<div class="flash-card" id="fc-${node.id}-${i}" onclick="this.classList.toggle('flipped')">
+      <div class="flash-inner">
+        <div class="flash-front">${c.q}</div>
+        <div class="flash-back">${c.a}</div>
+      </div>
+    </div>`;
+  });
+  h+=`</div><div class="flash-reset-row"><button class="retry-btn" onclick="resetFlash('${node.id}')">↺ Reset All Cards</button></div>`;
+  return h;
+}
+function resetFlash(nid){
+  document.querySelectorAll(`[id^="fc-${nid}-"]`).forEach(c=>c.classList.remove('flipped'));
+}
+
+let _sess={};
+function buildTestPane(node){
+  if(node.type==='gold'){
+    return '<div class="fact-block"><div class="fb-body" style="padding:2rem;text-align:center"><p style="font-size:1.1rem;color:var(--ink2)">🏹 Golden Revision Node — read all 26 high-yield facts until you can recall them from memory!</p></div></div>';
+  }
+  if(!_sess[node.id])_sess[node.id]={};
+  const m=S.mcq[node.id]||{};
+  const mcqs=node.mcqs||[];
+  let h='';
+  if(m.passed){
+    h+=`<div class="unlock-banner pass-banner">🎉 Passed! FAA: ${Math.round(m.faa||0)}% | Best: ${Math.round(m.best||0)}% | Attempts: ${m.attempts||1}</div>`;
+  } else if(m.lastScore!==undefined){
+    h+=`<div class="unlock-banner fail-banner">${m.lastScore}/10 — Need 10/10 to unlock next node. FAA: ${Math.round(m.faa||0)}%. <button class="retry-btn" onclick="retryNode('${node.id}')">↺ Retry</button></div>`;
+  }
+  mcqs.forEach((q,i)=>{
+    const sessAns=_sess[node.id][i];
+    const answered=sessAns!==undefined||m.passed;
+    const displayAns=sessAns!==undefined?sessAns:(m.passed?q.a:undefined);
+    const faaCorrect=S.faa[node.id]&&S.faa[node.id][i]===true;
+    const faaSet=S.faa[node.id]&&S.faa[node.id][i]!==undefined;
+    h+=`<div class="mcq-card${answered?' done':''}" data-qi="${i}" data-nid="${node.id}">`;
+    h+=`<div class="mcq-q"><span class="q-num">${i+1}.</span> ${q.q}</div>`;
+    h+='<div class="mcq-opts">';
+    q.o.forEach((opt,oi)=>{
+      let cls='mopt';
+      if(answered){
+        if(oi===q.a)cls+=' correct';
+        else if(oi===displayAns&&displayAns!==q.a)cls+=' wrong';
+      }
+      h+=`<button class="${cls}" data-oi="${oi}"${answered?' disabled':''}>${String.fromCharCode(65+oi)}. ${opt}</button>`;
+    });
+    h+='</div>';
+    if(answered){
+      const wasCorrect=displayAns===q.a;
+      h+=`<div class="mcq-fb">${wasCorrect?'✅':'❌'} ${q.e}</div>`;
+      if(faaSet){h+=`<div class="mcq-faa"><span class="faa-chip ${faaCorrect?'faa-ok':'faa-err'}">${faaCorrect?'FAA ✓':'FAA ✗'} (first attempt)</span></div>`;}
+    }
+    h+='</div>';
+  });
+  if(!m.passed&&m.attempts){
+    h+=`<div style="margin-top:20px;padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <span style="font-family:var(--mono);font-size:13px;color:var(--ink2)">Best: <b style="color:var(--gold)">${Math.round(m.best||0)}%</b> &nbsp;|&nbsp; FAA: <b style="color:var(--amber)">${Math.round(m.faa||0)}%</b> &nbsp;|&nbsp; Need <b style="color:var(--green)">10/10</b> to unlock next</span>
+      <button class="retry-btn" style="font-size:13px;padding:9px 22px" onclick="retryNode('${node.id}')">↺ Retry</button>
+    </div>`;
+  }
+  return h;
+}
+
+function bindMCQ(node){
+  const mcqs=node.mcqs||[];
+  const pane=document.getElementById('tab-test');
+  if(!pane)return;
+  pane.querySelectorAll('.mcq-card:not(.done)').forEach(card=>{
+    const qi=parseInt(card.dataset.qi);
+    card.querySelectorAll('.mopt').forEach(btn=>{
+      btn.addEventListener('click',function(){
+        if(card.classList.contains('done'))return;
+        const chosen=parseInt(btn.dataset.oi);
+        const correct=chosen===mcqs[qi].a;
+        if(!_sess[node.id])_sess[node.id]={};
+        _sess[node.id][qi]=chosen;
+        if(!S.faa[node.id])S.faa[node.id]={};
+        if(S.faa[node.id][qi]===undefined)S.faa[node.id][qi]=correct;
+        card.classList.add('done');
+        card.querySelectorAll('.mopt').forEach((b,oi)=>{
+          b.disabled=true;
+          if(oi===mcqs[qi].a)b.classList.add('correct');
+          else if(oi===chosen&&!correct)b.classList.add('wrong');
+        });
+        const fb=document.createElement('div');
+        fb.className='mcq-fb';
+        fb.innerHTML=`${correct?'✅':'❌'} ${mcqs[qi].e}`;
+        card.appendChild(fb);
+        const faaEl=document.createElement('div');
+        faaEl.className='mcq-faa';
+        faaEl.innerHTML=`<span class="faa-chip ${S.faa[node.id][qi]?'faa-ok':'faa-err'}">${S.faa[node.id][qi]?'FAA ✓':'FAA ✗'} (first attempt)</span>`;
+        card.appendChild(faaEl);
+        saveS();
+        if(Object.keys(_sess[node.id]).length===mcqs.length)finishAttempt(node);
+      });
+    });
+  });
+}
+
+function retryNode(nid){
+  _sess[nid]={};
+  if(S.mcq[nid])delete S.mcq[nid].lastScore;
+  saveS();
+  const node=findNode(nid);
+  document.getElementById('tab-test').innerHTML=buildTestPane(node);
+  bindMCQ(node);
+  document.getElementById('main-area').scrollTop=0;
+}
+
+function finishAttempt(node){
+  const mcqs=node.mcqs||[];
+  const sess=_sess[node.id]||{};
+  const correct=mcqs.filter((q,i)=>sess[i]===q.a).length;
+  const pct=Math.round(100*correct/mcqs.length);
+  const passed=correct===mcqs.length;
+  const faaCorrect=mcqs.filter((q,i)=>S.faa[node.id]&&S.faa[node.id][i]===true).length;
+  const faaPct=Math.round(100*faaCorrect/mcqs.length);
+  if(!S.mcq[node.id])S.mcq[node.id]={faa:faaPct,best:0,passed:false,attempts:0};
+  S.mcq[node.id].attempts=(S.mcq[node.id].attempts||0)+1;
+  S.mcq[node.id].faa=faaPct;
+  if(pct>(S.mcq[node.id].best||0))S.mcq[node.id].best=pct;
+  if(passed){
+    S.mcq[node.id].passed=true;
+    if(S.mcq[node.id].lastScore!==undefined)delete S.mcq[node.id].lastScore;
+    S.xp=(S.xp||0)+node.xp;
+    saveS();buildSidebar();
+    track('node_completed',{node_id:node.id,node_title:node.title,xp_earned:node.xp,faa_pct:faaPct,attempts:S.mcq[node.id].attempts});
+    showToast(`🎉 10/10! +${node.xp} XP earned!`,'ok');
+    setTimeout(()=>renderNode(node),400);
+  } else {
+    S.mcq[node.id].lastScore=correct;
+    saveS();buildSidebar();
+    track('mcq_completed',{node_id:node.id,node_title:node.title,score:correct,total:mcqs.length,pct,faa_pct:faaPct,passed:false,attempts:S.mcq[node.id].attempts});
+    const pane=document.getElementById('tab-test');
+    if(pane){pane.innerHTML=buildTestPane(node);bindMCQ(node);}
+    showToast(`${correct}/10 — Need 10/10. Retry to unlock next node.`,'warn');
+  }
+}
+
+function buildNodeNav(node){
+  const all=seqNodes();
+  const idx=all.findIndex(n=>n.id===node.id);
+  const prev=idx>0?all[idx-1]:null;
+  const next=idx<all.length-1?all[idx+1]:null;
+  const nextOk=next&&isUnlocked(next);
+  document.getElementById('node-nav').innerHTML=`
+    <button class="nav-btn" ${prev?'':"disabled"} onclick="${prev?`openNode('${prev.id}')`:'void(0)'}">← ${prev?prev.title:'Start'}</button>
+    <button class="nav-btn home-btn" onclick="showDash()">⊞ Dashboard</button>
+    <button class="nav-btn" ${nextOk?'':"disabled"} onclick="${nextOk?`openNode('${next.id}')`:'void(0)'}">→ ${next?next.title:'End'}</button>`;
+}
+
+function showDash(){
+  S.curNode=null;saveS();buildSidebar();
+  document.getElementById('node-view').style.display='none';
+  document.getElementById('dash-view').style.display='block';
+  document.getElementById('mob-home').classList.add('act');
+  document.getElementById('mob-menu').classList.remove('act');
+  const allN=allNodes().filter(n=>n.type!=='gold');
+  const passedN=allN.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  const pct=overallPct();
+  const xp=totalXP();
+  let chapCards='';
+  CHAPTERS.forEach(ch=>{
+    const nodes=ch.nodes;
+    const p=nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+    const pPct=nodes.length?Math.round(100*p/nodes.length):0;
+    chapCards+=`<div class="dc"><div class="dc-icon">${ch.icon}</div><div class="dc-label">${ch.title}</div><div class="dc-prog-bar"><div class="dc-bar" style="width:${pPct}%"></div></div><div class="dc-nums">${p}/${nodes.length} passed</div></div>`;
+  });
+  const goldenOk=pct>=80;
+  document.getElementById('dash-content').innerHTML=`
+<div class="dash-hero">
+  <div class="dh-title">CentuMania <span style="font-family:var(--mono);font-size:12px;color:var(--ink3);font-style:normal;letter-spacing:1px;display:block;margin-top:4px">MEDIEVAL HISTORY · PART 1</span></div>
+  <div class="dh-xp">${xp} XP</div>
+  <div class="dh-bar-wrap"><div class="dh-bar" style="width:${pct}%"></div></div>
+  <div class="dh-label">${passedN} of ${allN.length} nodes passed (${pct}%)</div>
+</div>
+<div class="dash-chapters">${chapCards}</div>
+<div class="cta-row">
+  <button class="cta-btn" onclick="startNext()">▶ Continue Learning</button>
+  <button class="cta-btn sec" ${goldenOk?'':"disabled"} onclick="openNode('golden_med1')">🏹 Golden Node ${goldenOk?'':' (need 80%)'}</button>
+</div>`;
+}
+
+function startNext(){
+  const next=seqNodes().find(n=>isUnlocked(n)&&!(S.mcq[n.id]&&S.mcq[n.id].passed));
+  if(next)openNode(next.id);
+  else showToast('All nodes complete! 🏆 Medieval History Part 1 mastered!');
+}
+
+function initMobile(){
+  document.getElementById('mob-home').addEventListener('click',()=>{showDash();});
+  document.getElementById("mob-menu").addEventListener("click",()=>{
+    document.getElementById("mob-drawer").classList.toggle("open");
+    document.getElementById("mob-overlay").classList.toggle("show");
+    document.getElementById("mob-menu").classList.toggle("act");
+  });
+  document.getElementById("mob-close").addEventListener("click",closeDrawer);
+  document.getElementById("mob-overlay").addEventListener("click",closeDrawer);
+}
+function closeDrawer(){
+  document.getElementById("mob-drawer").classList.remove("open");
+  document.getElementById("mob-overlay").classList.remove("show");
+  document.getElementById("mob-menu").classList.remove("act");
+}
+
+function init(){
+  loadS();
+  initMetrics();
+  track('material_opened',{material:'medieval_history_part1'});
+  buildSidebar();
+  initMobile();
+  if(S.curNode){const n=findNode(S.curNode);if(n&&isUnlocked(n)){openNode(S.curNode);return;}}
+  showDash();
+}
+document.addEventListener("DOMContentLoaded",init);
+</script>
+</body>
+</html>
