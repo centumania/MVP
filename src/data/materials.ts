@@ -35,11 +35,8 @@ export const materials: Material[] = [
   { id: 'day-4-med2', day: 4, title: 'Medieval History — Part 2',            htmlPath: '/study/med-part2.html', totalNodes: 13 },
 
   // ── Day 5 ──────────────────────────────────────────────────────────────────
-  { id: 'day-5-bio',  day: 5, title: 'Biology — Part 5',       htmlPath: '/content/day-5/biology.html' },
-  { id: 'day-5-chem', day: 5, title: 'Chemistry — Part E',     htmlPath: '/content/day-5/chemistry.html' },
-  { id: 'day-5-math', day: 5, title: 'Maths — Ratio',          htmlPath: '/content/day-5/math.html' },
-  { id: 'day-5-eng',  day: 5, title: 'English — Synonyms',     htmlPath: '/content/day-5/english.html' },
-  { id: 'day-5-ca',   day: 5, title: 'Current Affairs',        htmlPath: '/content/day-5/current-affairs.html' },
+  { id: 'day-5-mod1', day: 5, title: 'Modern History — Part 1', htmlPath: '/study/mod-hist1.html', totalNodes: 14 },
+  { id: 'day-5-mod2', day: 5, title: 'Modern History — Part 2', htmlPath: '/study/mod-hist2.html', totalNodes: 14 },
 
   // ── Day 6 ──────────────────────────────────────────────────────────────────
   { id: 'day-6-bio',  day: 6, title: 'Biology — Part 6',       htmlPath: '/content/day-6/biology.html' },
