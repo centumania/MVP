@@ -1,0 +1,2397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CentuMania · World History</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04100d;--bg2:#081a13;--bg3:#0d2219;
+  --gold:#2ec4a0;--gold2:#1a8870;--amber:#25b090;
+  --green:#3dd68c;--red:#f06b6b;--blue:#60b0f0;
+  --text:#faf8e8;--text2:#c8c4a0;--text3:#7a7860;
+  --border:#163028;--radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+h2.node-h2{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.6rem;color:var(--gold);margin:1.2rem 0 .7rem;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+h3.node-h3{font-size:1rem;font-weight:700;color:var(--amber);margin:1rem 0 .4rem;text-transform:uppercase;letter-spacing:.06em}
+p.node-p{color:var(--text2);line-height:1.7;margin-bottom:.8rem}
+.tbl-wrap{overflow-x:auto;margin:.6rem 0 1rem}
+table{width:100%;border-collapse:collapse;font-size:.87rem}
+th{background:var(--bg3);color:var(--gold);padding:.5rem .7rem;text-align:left;border:1px solid var(--border);font-weight:600}
+td{padding:.45rem .7rem;border:1px solid var(--border);color:var(--text2);vertical-align:top}
+tr:nth-child(even) td{background:rgba(255,255,255,.025)}
+td b,td strong{color:var(--gold)}
+.fact-box{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:var(--radius);padding:.8rem 1rem;margin:.6rem 0 1rem}
+.fact-box-title{font-weight:700;color:var(--gold);font-size:.9rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em}
+.fact-box ul{list-style:none;padding:0}
+.fact-box li{color:var(--text2);font-size:.87rem;padding:.25rem 0 .25rem .9rem;border-bottom:1px solid rgba(255,255,255,.05);position:relative}
+.fact-box li::before{content:"›";position:absolute;left:0;color:var(--gold2)}
+.trap-box{background:rgba(46,196,160,.1);border:1px solid rgba(46,196,160,.35);border-radius:var(--radius);padding:.75rem 1rem;margin:.8rem 0;font-size:.87rem;color:var(--text2);line-height:1.6}
+.trap-box b{color:var(--amber)}
+.revision-box{background:rgba(96,176,240,.07);border:1px solid rgba(96,176,240,.25);border-radius:var(--radius);padding:.8rem 1rem;margin:.6rem 0 1rem}
+.revision-box-title{font-weight:700;color:var(--blue);font-size:.9rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em}
+.revision-box ul{list-style:none;padding:0}
+.revision-box li{color:var(--text2);font-size:.87rem;padding:.25rem 0 .25rem .9rem;border-bottom:1px solid rgba(255,255,255,.05);position:relative}
+.revision-box li::before{content:"⚡";position:absolute;left:0;color:var(--blue);font-size:.75rem}
+.oneliner-box{background:rgba(61,214,140,.06);border:1px solid rgba(61,214,140,.2);border-radius:var(--radius);padding:.8rem 1rem;margin:.6rem 0 1rem}
+.oneliner-box-title{font-weight:700;color:var(--green);font-size:.9rem;margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.05em}
+.oneliner-box ul{list-style:none;padding:0}
+.oneliner-box li{color:var(--text2);font-size:.87rem;padding:.25rem 0 .25rem .9rem;border-bottom:1px solid rgba(255,255,255,.05);position:relative}
+.oneliner-box li::before{content:"🎯";position:absolute;left:0;font-size:.7rem}
+.flash-hint{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text3);text-align:center;margin-bottom:.8rem;letter-spacing:.05em}
+.flash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.7rem;margin-bottom:.9rem}
+.flash-card{perspective:900px;cursor:pointer;height:140px}
+.flash-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+.flash-front,.flash-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--radius);padding:.75rem;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.82rem;line-height:1.4;border:1px solid var(--border)}
+.flash-front{background:var(--bg3);color:var(--text)}
+.flash-back{background:rgba(46,196,160,.12);border-color:rgba(46,196,160,.35);color:var(--gold);transform:rotateY(180deg)}
+.flash-reset-row{text-align:center;margin-top:.3rem}
+#app{display:flex;flex:1;min-height:0}
+#sidebar{display:none;width:280px;background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0}
+#main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+#header{background:var(--bg2);border-bottom:1px solid var(--border);padding:.7rem 1.2rem;display:flex;align-items:center;gap:.8rem;flex-shrink:0}
+#header h1{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-size:1.3rem}
+#header .stats{margin-left:auto;display:flex;gap:1rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text3)}
+#header .stats span{color:var(--gold2)}
+#content{flex:1;overflow-y:auto;padding:0}
+.dash{padding:2rem;max-width:800px;margin:0 auto}
+.dash-title{font-family:'Instrument Serif',serif;font-style:italic;font-size:2rem;color:var(--gold);margin-bottom:.3rem}
+.dash-sub{color:var(--text3);font-size:.9rem;margin-bottom:1.5rem}
+.progress-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:1.5rem}
+.progress-label{font-size:.8rem;color:var(--text3);margin-bottom:.4rem;font-family:'JetBrains Mono',monospace}
+.progress-bar{background:rgba(255,255,255,.08);border-radius:4px;height:10px}
+.progress-fill{background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:4px;height:10px;transition:width .4s}
+.xp-display{font-family:'JetBrains Mono',monospace;font-size:1.5rem;color:var(--gold);margin-top:.5rem}
+.start-btn{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#05111e;border:none;border-radius:var(--radius);padding:.75rem 2rem;font-size:1rem;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:1rem}
+.start-btn:hover{opacity:.9}
+.ch-header{padding:.6rem 1rem;font-size:.75rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border);margin-top:.3rem}
+.node-item{display:flex;align-items:center;gap:.6rem;padding:.6rem 1rem;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s;position:relative}
+.node-item:hover{background:rgba(255,255,255,.05)}
+.node-item.active{background:rgba(46,196,160,.08);border-right:3px solid var(--gold)}
+.node-item.locked{opacity:.45;cursor:not-allowed}
+.node-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;border:2px solid var(--border)}
+.node-icon.regular{background:var(--bg3);border-color:var(--border)}
+.node-icon.trap{background:rgba(46,196,160,.15);border-color:var(--amber)}
+.node-icon.gold{background:rgba(46,196,160,.15);border-color:var(--gold)}
+.node-icon.done{background:rgba(61,214,140,.1);border-color:var(--green)}
+.node-info{flex:1;min-width:0}
+.node-name{font-size:.82rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.node-xp{font-size:.72rem;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.node-badge{font-size:.7rem;padding:.15rem .4rem;border-radius:4px;font-weight:700}
+.badge-done{background:rgba(61,214,140,.15);color:var(--green)}
+.badge-locked{background:rgba(255,255,255,.05);color:var(--text3)}
+.badge-open{background:rgba(46,196,160,.15);color:var(--gold)}
+.node-view{display:flex;flex-direction:column;height:100%}
+.node-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0}
+.tab-btn{padding:.7rem 1.5rem;font-size:.87rem;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text3);border-bottom:3px solid transparent;transition:all .15s;font-family:'DM Sans',sans-serif}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-btn:hover{color:var(--text)}
+.tab-content{flex:1;overflow-y:auto;padding:1.5rem;max-width:880px;width:100%}
+.mcq-wrap{margin-bottom:1rem}
+.mcq-q{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:.7rem;line-height:1.5}
+.mcq-num{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--gold2);margin-bottom:.3rem}
+.mcq-opts{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.opt-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.6rem .9rem;text-align:left;cursor:pointer;font-size:.87rem;color:var(--text2);transition:all .15s;font-family:'DM Sans',sans-serif}
+.opt-btn:hover:not(:disabled){border-color:var(--gold2);color:var(--text)}
+.opt-btn.correct{background:rgba(61,214,140,.12);border-color:var(--green);color:var(--green)}
+.opt-btn.wrong{background:rgba(240,107,107,.1);border-color:var(--red);color:var(--red)}
+.opt-btn.reveal{background:rgba(61,214,140,.07);border-color:rgba(61,214,140,.3);color:var(--green)}
+.opt-btn:disabled{cursor:default}
+.exp-box{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.7rem .9rem;font-size:.84rem;color:var(--text3);margin-bottom:1rem;line-height:1.5}
+.score-banner{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;margin-bottom:1.2rem;text-align:center}
+.score-big{font-family:'JetBrains Mono',monospace;font-size:2.5rem;font-weight:700;color:var(--gold)}
+.score-label{color:var(--text3);font-size:.87rem;margin-top:.2rem}
+.action-btn{border:none;border-radius:8px;padding:.6rem 1.3rem;font-size:.87rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin:.3rem}
+.btn-gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#05111e}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2)}
+.btn-outline:hover{border-color:var(--gold2);color:var(--text)}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--bg3);border:1px solid var(--gold);border-radius:var(--radius);padding:.8rem 1.2rem;font-size:.87rem;color:var(--gold);z-index:999;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.drawer-btn{display:none;background:var(--bg2);border:none;border-right:1px solid var(--border);padding:.8rem;cursor:pointer;color:var(--gold);font-size:1.2rem;flex-shrink:0}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100}
+.golden-banner{background:linear-gradient(135deg,rgba(26,136,112,.15),rgba(46,196,160,.08));border:1px solid var(--gold);border-radius:var(--radius);padding:1rem;margin-bottom:1rem;text-align:center;color:var(--gold);font-weight:700}
+@media(min-width:769px){
+  #sidebar{display:flex;flex-direction:column}
+}
+@media(max-width:768px){
+  #sidebar.open{display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;width:280px;z-index:200}
+  .drawer-btn{display:flex;align-items:center;justify-content:center}
+  .overlay.show{display:block}
+}
+
+.node-nav{display:flex;gap:8px;padding:16px;border-top:1px solid var(--border);background:var(--bg2);flex-shrink:0}
+.nav-btn{font-family:inherit;font-weight:600;font-size:13px;border-radius:8px;padding:9px 14px;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text);transition:.15s;flex:1;text-align:center}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed}
+.nav-btn.home-btn{flex:0 0 auto;background:var(--bg2);color:var(--gold)}
+</style>
+</head>
+<body>
+<div id="overlay" class="overlay" onclick="closeDrawer()"></div>
+<div id="app">
+  <aside id="sidebar">
+    <div id="sidebar-content"></div>
+  </aside>
+  <div id="main">
+    <div id="header">
+      <button class="drawer-btn" onclick="openDrawer()">☰</button>
+      <h1>CentuMania · World History</h1>
+      <div class="stats">XP <span id="hdr-xp">0</span> | Nodes <span id="hdr-done">0</span>/<span id="hdr-total">0</span></div>
+    </div>
+    <div id="content">
+      <div class="dash" id="dash-view">
+        <div class="dash-title">World History</div>
+        <div class="dash-sub">Empires → Revolutions → World Wars → Cold War → International Organisations</div>
+        <div class="progress-wrap">
+          <div class="progress-label">Overall Progress</div>
+          <div class="progress-bar"><div class="progress-fill" id="dash-bar" style="width:0%"></div></div>
+          <div class="xp-display"><span id="dash-xp">0</span> XP</div>
+        </div>
+        <button class="start-btn" onclick="startJourney()">▶ Start Learning</button>
+      </div>
+      <div id="node-view" style="display:none;height:100%;flex-direction:column"></div>
+    </div>
+  </div>
+</div>
+<script>
+const SK='centumania_wh1_v1';
+const CHAPTERS=[{
+id:'ch1',
+title:'🗺️ Chapter 1: World Empires I — Mongol & Ottoman',
+nodes:[{
+id:'mg1',
+title:'Mongol & Ottoman Empires',
+xp:160,
+type:'regular',
+seqIdx:0,
+learn:'<h2 class="node-h2">🗺️ Mongol & Ottoman Empires</h2><h3 class="node-h3">A1 — Mongol Empire (1206–1368)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Founded by</td><td>Genghis Khan (Temujin) — 1206 AD</td></tr><tr><td>Largest contiguous land empire</td><td>Mongol Empire (ever in history)</td></tr><tr><td>Peak extent</td><td>~24 million sq km</td></tr><tr><td>Genghis Khan died</td><td>1227 AD</td></tr><tr><td>Successor to Genghis</td><td>Ögedei Khan (3rd son)</td></tr><tr><td>Divided into</td><td>4 Khanates after death of Möngke Khan</td></tr><tr><td>Destroyed</td><td>Baghdad (1258) — Hulagu Khan killed last Abbasid Caliph</td></tr><tr><td>Defeated by</td><td>Mamluks of Egypt at Battle of Ain Jalut (1260) — halted Mongol advance</td></tr><tr><td>Final collapse</td><td>1368 — Ming Dynasty expelled Mongols from China</td></tr></tbody></table></div><h3 class="node-h3">4 Khanates After Division</h3><div class="tbl-wrap"><table><thead><tr><th>Khanate</th><th>Region</th><th>Ruler Line</th></tr></thead><tbody><tr><td>Yuan Dynasty</td><td>China</td><td>Kublai Khan</td></tr><tr><td>Ilkhanate</td><td>Persia/Middle East</td><td>Hulagu Khan</td></tr><tr><td>Chagatai Khanate</td><td>Central Asia</td><td>Chagatai</td></tr><tr><td>Golden Horde</td><td>Russia/Eastern Europe</td><td>Batu Khan</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🏹 Mongol SSC One-Liners</div><ul><li>Genghis Khan = "Universal Ruler" (meaning of Genghis)</li><li>Battle of Ain Jalut (1260) = 1st major Mongol defeat</li><li>Kublai Khan = founder of Yuan Dynasty in China</li><li>Marco Polo served Kublai Khan for 17 years</li><li>Mongol Empire = largest contiguous land empire in history</li></ul></div><h3 class="node-h3">A2 — Ottoman Empire (1299–1922)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Founded by</td><td>Osman I — 1299 AD</td></tr><tr><td>Greatest ruler</td><td>Suleiman the Magnificent (1520–1566)</td></tr><tr><td>Captured Constantinople</td><td>1453 — Sultan Mehmed II (Mehmed the Conqueror)</td></tr><tr><td>End of Byzantine Empire</td><td>1453 (fell to Ottomans)</td></tr><tr><td>Capital</td><td>Constantinople (renamed Istanbul)</td></tr><tr><td>Declined after</td><td>Battle of Vienna (1683) — failed siege</td></tr><tr><td>Called</td><td>Sick Man of Europe (19th century)</td></tr><tr><td>WWI side</td><td>Central Powers (Germany, Austria-Hungary)</td></tr><tr><td>Dissolved</td><td>1922 — Mustafa Kemal Ataturk abolished Sultanate</td></tr><tr><td>Republic of Turkey</td><td>Founded 1923 by Mustafa Kemal Ataturk</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🕌 Ottoman SSC One-Liners</div><ul><li>Constantinople fall (1453) = end of Middle Ages (conventionally)</li><li>Suleiman the Magnificent = also called "Lawgiver"</li><li>Ottoman = allied with Germany in WWI</li><li>Ataturk = "Father of Turks" — founded modern Turkey</li><li>Battle of Lepanto (1571) = Ottoman naval defeat by Holy League</li><li>Osman I founded Ottoman Empire; Mehmed II conquered Constantinople</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Genghis Khan died in <b>1227</b> (not 1206 — that\'s when he founded the empire). The Mongol defeat at Ain Jalut (1260) was by <b>Mamluks</b>, not Crusaders. Suleiman = "Lawgiver" + "Magnificent" — same person, two titles.</div>',
+revision:['Mongol Empire(1206-1368): founded Genghis Khan(1206), largest CONTIGUOUS land empire ever(~24M sq km)','Genghis died 1227 | successor Ogedei Khan | divided into 4 Khanates after Mongke Khan\'s death','Hulagu Khan destroyed Baghdad(1258),killed last Abbasid Caliph | Mamluks defeated Mongols at Ain Jalut(1260)','4 Khanates: Yuan(China,Kublai),Ilkhanate(Persia,Hulagu),Chagatai(C.Asia),Golden Horde(Russia)','Final collapse 1368 — Ming Dynasty expelled Mongols from China'],
+oneliners:['The Mongol Empire was founded by Genghis Khan (Temujin) in 1206 AD','The Mongol Empire is the largest CONTIGUOUS land empire in history, at ~24 million sq km','Genghis Khan died in 1227 AD','Ogedei Khan, the 3rd son, succeeded Genghis Khan','The Mongol Empire divided into 4 Khanates after Mongke Khan\'s death','Hulagu Khan destroyed Baghdad in 1258, killing the last Abbasid Caliph','The Mamluks of Egypt defeated the Mongols at the Battle of Ain Jalut (1260), halting their advance','The Yuan Dynasty (China) was ruled by Kublai Khan','The Ilkhanate (Persia/Middle East) was ruled by Hulagu Khan\'s line','The Mongol Empire\'s final collapse came in 1368 when the Ming Dynasty expelled them from China'],
+flashcards:[{q:'Who founded the Mongol Empire, and when?',a:'Genghis Khan (Temujin), in 1206 AD'},{q:'What makes the Mongol Empire historically unique in terms of size?',a:'It is the largest CONTIGUOUS land empire ever'},{q:'When did Genghis Khan die, and who succeeded him?',a:'1227 AD; succeeded by Ogedei Khan'},{q:'What happened to Baghdad in 1258, and who did it?',a:'Hulagu Khan destroyed it, killing the last Abbasid Caliph'},{q:'Who halted the Mongol advance, and where?',a:'The Mamluks of Egypt, at the Battle of Ain Jalut (1260)'},{q:'Name the 4 Khanates the Mongol Empire split into.',a:'Yuan Dynasty (China), Ilkhanate (Persia), Chagatai Khanate (Central Asia), Golden Horde (Russia)'},{q:'How and when did the Mongol Empire finally collapse?',a:'1368, when the Ming Dynasty expelled the Mongols from China'}],
+mcqs:[{
+q:'Who founded the Mongol Empire and in what year?',
+o:['Kublai Khan in 1227',
+'Genghis Khan in 1206',
+'Ögedei Khan in 1200',
+'Hulagu Khan in 1206'],
+a:1,
+e:'Genghis Khan (Temujin) founded the Mongol Empire in 1206 AD.'}
+,
+{
+q:'Which battle of 1260 is considered the first major defeat of the Mongol Empire?',
+o:['Battle of Vienna',
+'Battle of Ain Jalut',
+'Battle of Lepanto',
+'Battle of Kunigunde'],
+a:1,
+e:'The Battle of Ain Jalut (1260) — Mamluks of Egypt defeated the Mongols, halting their advance.'}
+,
+{
+q:'Who captured Baghdad in 1258 and killed the last Abbasid Caliph?',
+o:['Genghis Khan',
+'Kublai Khan',
+'Hulagu Khan',
+'Batu Khan'],
+a:2,
+e:'Hulagu Khan (grandson of Genghis) captured and destroyed Baghdad in 1258.'}
+,
+{
+q:'Which Khanate was established by Kublai Khan in China?',
+o:['Ilkhanate',
+'Chagatai Khanate',
+'Yuan Dynasty',
+'Golden Horde'],
+a:2,
+e:'Kublai Khan established the Yuan Dynasty in China.'}
+,
+{
+q:'Constantinople was captured by the Ottomans in which year?',
+o:['1299',
+'1389',
+'1453',
+'1571'],
+a:2,
+e:'Sultan Mehmed II captured Constantinople in 1453, ending the Byzantine Empire.'}
+,
+{
+q:'The Ottoman Empire was founded by whom in 1299?',
+o:['Suleiman',
+'Mehmed I',
+'Selim I',
+'Osman I'],
+a:3,
+e:'Osman I founded the Ottoman Empire in 1299.'}
+,
+{
+q:'Who is called the \'greatest ruler\' of the Ottoman Empire?',
+o:['Osman I',
+'Suleiman the Magnificent',
+'Mehmed II',
+'Selim I'],
+a:1,
+e:'Suleiman the Magnificent (1520–1566) is considered the greatest Ottoman ruler.'}
+,
+{
+q:'In which battle (1260) were the Mongols defeated by the Mamluks of Egypt?',
+o:['Battle of Ain Jalut',
+'Battle of Baghdad',
+'Battle of Mohi',
+'Battle of Legnica'],
+a:0,
+e:'Battle of Ain Jalut (1260) — first major Mongol defeat, by the Mamluks.'}
+,
+{
+q:'What name was given to the Ottoman-controlled Constantinople after the conquest?',
+o:['Ankara',
+'Istanbul',
+'Izmir',
+'Bursa'],
+a:1,
+e:'Constantinople was renamed Istanbul after Ottoman conquest in 1453.'}
+,
+{
+q:'Mustafa Kemal Ataturk founded modern Turkey in which year?',
+o:['1918',
+'1920',
+'1922',
+'1923'],
+a:3,
+e:'Republic of Turkey was founded in 1923 by Mustafa Kemal Ataturk.'}
+]}
+]}
+,
+{
+id:'ch2',
+title:'🌊 Chapter 2: Age of Exploration',
+nodes:[{
+id:'sp1',
+title:'Spanish, Portuguese & Exploration',
+xp:160,
+type:'regular',
+seqIdx:1,
+learn:'<h2 class="node-h2">🌊 Spanish, Portuguese & Age of Exploration</h2><h3 class="node-h3">A3 — Spanish Empire (1492–1976)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Beginning</td><td>1492 — Columbus reached Americas</td></tr><tr><td>Columbus sailed for</td><td>Spain (funded by King Ferdinand & Queen Isabella)</td></tr><tr><td>Columbus reached</td><td>Bahamas (San Salvador) — October 12, 1492</td></tr><tr><td>Columbus thought he reached</td><td>India (hence "Indians")</td></tr><tr><td>Conquistador of Mexico</td><td>Hernán Cortés (defeated Aztecs, 1521)</td></tr><tr><td>Conquistador of Peru</td><td>Francisco Pizarro (defeated Incas, 1532)</td></tr><tr><td>Treaty of Tordesillas (1494)</td><td>Divided New World between Spain & Portugal</td></tr><tr><td>Decline</td><td>Spanish Armada defeated by England (1588)</td></tr><tr><td>Latin American independence</td><td>Early 19th century (1810–1825)</td></tr></tbody></table></div><h3 class="node-h3">A4 — Portuguese Empire (1415–1999)</h3><div class="tbl-wrap"><table><thead><tr><th>Explorer</th><th>Achievement</th><th>Year</th></tr></thead><tbody><tr><td>Bartholomeu Dias</td><td>First to round Cape of Good Hope</td><td>1488</td></tr><tr><td>Christopher Columbus</td><td>Reached Americas (for Spain)</td><td>1492</td></tr><tr><td>Vasco da Gama</td><td>Reached Calicut, India; Cape route</td><td>1498</td></tr><tr><td>Pedro Álvares Cabral</td><td>Discovered Brazil</td><td>1500</td></tr><tr><td>Ferdinand Magellan</td><td>First circumnavigation of Earth (started)</td><td>1519–1522</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Colony</th><th>Country</th></tr></thead><tbody><tr><td>Brazil</td><td>Portugal</td></tr><tr><td>Angola, Mozambique</td><td>Portugal</td></tr><tr><td>Goa (India)</td><td>Portugal (returned 1961)</td></tr><tr><td>Macau (China)</td><td>Portugal (returned 1999)</td></tr><tr><td>Mexico, South America</td><td>Spain</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">⚓ Exploration SSC One-Liners</div><ul><li>Columbus = 1492; Vasco da Gama reached India = 1498</li><li>Aztec Empire = Mexico (conquered by Cortés)</li><li>Inca Empire = Peru (conquered by Pizarro)</li><li>Treaty of Tordesillas = divided world; Spain (west) + Portugal (east)</li><li>Magellan\'s circumnavigation completed by Elcano (Magellan died in Philippines)</li><li>First European empire = Portuguese Empire (global reach)</li><li>Last Portuguese colony = Macau (returned to China 1999)</li><li>Portuguese Empire first; Spanish next — both from Iberian Peninsula</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Columbus sailed for <b>Spain</b>, not Portugal. Vasco da Gama sailed for <b>Portugal</b>. Magellan\'s voyage <b>started</b> 1519; completed 1522 — Magellan himself died 1521 in Philippines. First to round Cape of Good Hope = <b>Bartholomeu Dias (1488)</b>, not Vasco da Gama.</div>',
+revision:['Columbus(1492) sailed for SPAIN(funded by Ferdinand+Isabella), reached Bahamas,thought it was India','Cortes defeated Aztecs(Mexico,1521) | Pizarro defeated Incas(Peru,1532)','Treaty of Tordesillas(1494) divided New World between Spain & Portugal','Spanish Armada defeated by England(1588) | Latin American independence early 19th c(1810-1825)','Portuguese: Bartholomeu Dias rounded Cape of Good Hope(1488)'],
+oneliners:['Christopher Columbus sailed for Spain, funded by King Ferdinand and Queen Isabella','Columbus reached the Bahamas (San Salvador) on October 12, 1492','Columbus mistakenly thought he had reached India, hence the term \'Indians\'','Hernan Cortes defeated the Aztecs in Mexico in 1521','Francisco Pizarro defeated the Incas in Peru in 1532','The Treaty of Tordesillas (1494) divided the New World between Spain and Portugal','The Spanish Armada was defeated by England in 1588','Most Latin American countries gained independence in the early 19th century (1810-1825)','Bartholomeu Dias was the first explorer to round the Cape of Good Hope, in 1488'],
+flashcards:[{q:'Who funded Columbus\'s voyage, and which country did he sail for?',a:'King Ferdinand and Queen Isabella; Spain'},{q:'Where did Columbus land in 1492, and what did he mistakenly think?',a:'The Bahamas (San Salvador); thought he had reached India'},{q:'Who conquered the Aztecs, and when?',a:'Hernan Cortes, in 1521'},{q:'Who conquered the Incas, and when?',a:'Francisco Pizarro, in 1532'},{q:'What did the Treaty of Tordesillas (1494) do?',a:'Divided the New World between Spain and Portugal'},{q:'When was the Spanish Armada defeated, and by whom?',a:'1588, by England'},{q:'Who was first to round the Cape of Good Hope, and when?',a:'Bartholomeu Dias, in 1488'}],
+mcqs:[{
+q:'Christopher Columbus reached the Americas in 1492 sailing for which country?',
+o:['Portugal',
+'France',
+'Spain',
+'England'],
+a:2,
+e:'Columbus was funded by King Ferdinand & Queen Isabella of Spain.'}
+,
+{
+q:'Hernán Cortés conquered which empire in Mexico in 1521?',
+o:['Inca Empire',
+'Maya Empire',
+'Aztec Empire',
+'Toltec Empire'],
+a:2,
+e:'Cortés defeated the Aztec Empire in Mexico in 1521.'}
+,
+{
+q:'Who was the first European to round the Cape of Good Hope (1488)?',
+o:['Vasco da Gama',
+'Christopher Columbus',
+'Bartholomeu Dias',
+'Ferdinand Magellan'],
+a:2,
+e:'Bartholomeu Dias was first to round the Cape of Good Hope in 1488.'}
+,
+{
+q:'Vasco da Gama reached Calicut, India in which year?',
+o:['1492',
+'1495',
+'1498',
+'1500'],
+a:2,
+e:'Vasco da Gama reached Calicut, India in 1498 via the Cape of Good Hope route.'}
+,
+{
+q:'The Treaty of Tordesillas (1494) divided the New World between which two countries?',
+o:['Britain & France',
+'Spain & Portugal',
+'Spain & Holland',
+'Portugal & France'],
+a:1,
+e:'The Treaty of Tordesillas divided the New World between Spain (west) and Portugal (east).'}
+,
+{
+q:'Pedro Álvares Cabral is credited with discovering which country in 1500?',
+o:['USA',
+'Australia',
+'Brazil',
+'South Africa'],
+a:2,
+e:'Pedro Álvares Cabral discovered Brazil in 1500 for Portugal.'}
+,
+{
+q:'Francisco Pizarro conquered which empire in Peru?',
+o:['Aztec Empire',
+'Maya Empire',
+'Toltec Empire',
+'Inca Empire'],
+a:3,
+e:'Pizarro defeated the Inca Empire in Peru in 1532.'}
+,
+{
+q:'Ferdinand Magellan\'s circumnavigation (1519–1522) was completed by whom after Magellan died?',
+o:['Vasco da Gama',
+'Francis Drake',
+'Juan Sebastián Elcano',
+'Bartolomeu Dias'],
+a:2,
+e:'Elcano completed the circumnavigation after Magellan died in the Philippines in 1521.'}
+,
+{
+q:'The Spanish Armada was defeated by which country in 1588?',
+o:['France',
+'Portugal',
+'Netherlands',
+'England'],
+a:3,
+e:'The Spanish Armada was defeated by England (under Queen Elizabeth I) in 1588.'}
+,
+{
+q:'What was the last Portuguese colony, returned to China in 1999?',
+o:['Hong Kong',
+'Goa',
+'Timor-Leste',
+'Macau'],
+a:3,
+e:'Macau was the last Portuguese colony, returned to China in 1999.'}
+]}
+,
+{
+id:'br1',
+title:'British & French Empires',
+xp:150,
+type:'regular',
+seqIdx:2,
+learn:'<h2 class="node-h2">🇬🇧 British & French Empires</h2><h3 class="node-h3">A5 — British Empire (1583–1997)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Largest empire in history</td><td>British Empire — ~35.5 million sq km at peak</td></tr><tr><td>At peak</td><td>Controlled 1/4 of world\'s land and population</td></tr><tr><td>Peak period</td><td>Late 19th–early 20th century</td></tr><tr><td>Called</td><td>"Empire on which the sun never sets"</td></tr><tr><td>East India Company</td><td>Founded 1600; traded in Asia</td></tr><tr><td>Decolonisation wave</td><td>Post WWII (1945 onwards)</td></tr><tr><td>Last major handover</td><td>Hong Kong to China (1997)</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Year</th><th>Event</th></tr></thead><tbody><tr><td>1600</td><td>East India Company founded</td></tr><tr><td>1770</td><td>Captain Cook claims Australia</td></tr><tr><td>1807</td><td>Slave Trade abolished in British Empire</td></tr><tr><td>1867</td><td>Canada becomes dominion</td></tr><tr><td>1901</td><td>Australia becomes commonwealth</td></tr><tr><td>1931</td><td>Statute of Westminster — dominions become self-governing</td></tr><tr><td>1947</td><td>India & Pakistan independence</td></tr><tr><td>1997</td><td>Hong Kong returned to China</td></tr></tbody></table></div><h3 class="node-h3">A6 — French Empire (1534–1980)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Size</td><td>2nd largest colonial empire</td></tr><tr><td>Key colonies</td><td>Algeria, Morocco, Tunisia, Vietnam, Cambodia, Laos, Madagascar, Senegal</td></tr><tr><td>Indochina</td><td>Vietnam + Cambodia + Laos (French Indochina, 1887–1954)</td></tr><tr><td>Lost Vietnam</td><td>1954 — Battle of Dien Bien Phu (French defeated by Viet Minh)</td></tr><tr><td>Algerian independence</td><td>1962 — after 8-year war of independence</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Colony</th><th>From Which Empire</th></tr></thead><tbody><tr><td>India, Australia, Canada, South Africa, Hong Kong</td><td>British</td></tr><tr><td>Algeria, Vietnam, Cambodia, Laos, Senegal</td><td>French</td></tr><tr><td>Brazil, Angola, Mozambique, Goa, Macau</td><td>Portuguese</td></tr><tr><td>Mexico, Peru, most of S. America</td><td>Spanish</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🌍 Empire SSC One-Liners</div><ul><li>Largest empire = British (~35.5 million sq km)</li><li>Largest contiguous land empire = Mongol Empire</li><li>Battle of Dien Bien Phu (1954) = France lost Vietnam</li><li>Algeria got independence 1962 (after 8-year war from France)</li><li>Statute of Westminster 1931 = dominions became self-governing</li><li>"Empire on which the sun never sets" = British Empire</li><li>Hong Kong returned to China = 1997</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Largest empire by area = <b>British Empire</b>. Largest <b>contiguous</b> land empire = <b>Mongol</b>. Do NOT confuse. French lost Vietnam at <b>Dien Bien Phu (1954)</b> — USA then took over and lost in 1975.</div>',
+revision:['British Empire(1583-1997): LARGEST empire in history by area(~35.5M sq km),1/4 of world\'s land+population','\'Empire on which the sun never sets\' | East India Company founded 1600','Decolonisation wave post-WWII(1945 onwards) | Last major handover: Hong Kong to China(1997)','Key dates: 1807 slave trade abolished,1867 Canada dominion,1901 Australia commonwealth,1947 India/Pakistan independence','British=largest empire by AREA; Mongol=largest CONTIGUOUS land empire — don\'t confuse'],
+oneliners:['The British Empire is the largest empire in history by area, at its peak ~35.5 million sq km','At its peak, the British Empire controlled 1/4 of the world\'s land and population','The British Empire was called \'the empire on which the sun never sets\'','The East India Company was founded in 1600','The British decolonisation wave occurred mainly after WWII, from 1945 onwards','Hong Kong\'s handover to China in 1997 was Britain\'s last major colonial handover','The Slave Trade was abolished in the British Empire in 1807','Canada became a dominion in 1867','Australia became a commonwealth in 1901','India and Pakistan gained independence from Britain in 1947','The Statute of Westminster (1931) made dominions self-governing'],
+flashcards:[{q:'Which is the largest empire in history by area?',a:'The British Empire (~35.5 million sq km at peak)'},{q:'What fraction of the world did the British Empire control at its peak?',a:'1/4 of the world\'s land and population'},{q:'What was the British Empire famously called?',a:'\'The empire on which the sun never sets\''},{q:'When was the East India Company founded?',a:'1600'},{q:'What was Britain\'s last major colonial handover, and when?',a:'Hong Kong, handed to China in 1997'},{q:'When did India and Pakistan gain independence?',a:'1947'},{q:'Compare: largest empire by area vs largest contiguous land empire.',a:'British Empire (area) vs Mongol Empire (contiguous land)'}],
+mcqs:[{
+q:'The British Empire at its peak controlled approximately what fraction of the world\'s land?',
+o:['1/8',
+'1/5',
+'1/4',
+'1/3'],
+a:2,
+e:'At its peak, the British Empire controlled about 1/4 of the world\'s land and population.'}
+,
+{
+q:'What was the East India Company and when was it founded?',
+o:['A French trading company; 1605',
+'A British trading company; 1600',
+'A Dutch trading company; 1602',
+'A British colonising army; 1620'],
+a:1,
+e:'The East India Company was a British trading company, founded in 1600 to trade in Asia.'}
+,
+{
+q:'The Statute of Westminster (1931) gave what status to British dominions?',
+o:['Full independence',
+'Self-governing status',
+'Federated nation status',
+'Commonwealth membership'],
+a:1,
+e:'The Statute of Westminster (1931) made British dominions self-governing.'}
+,
+{
+q:'Hong Kong was returned to China in which year?',
+o:['1984',
+'1995',
+'1997',
+'1999'],
+a:2,
+e:'Hong Kong was returned to China in 1997 (last major British handover).'}
+,
+{
+q:'\'Empire on which the sun never sets\' refers to which empire?',
+o:['Spanish Empire',
+'French Empire',
+'Ottoman Empire',
+'British Empire'],
+a:3,
+e:'The British Empire was called \'Empire on which the sun never sets\' due to its global reach.'}
+,
+{
+q:'French Indochina comprised which three countries?',
+o:['Vietnam, Thailand, Cambodia',
+'Vietnam, Cambodia, Laos',
+'Myanmar, Vietnam, Laos',
+'Cambodia, Laos, Indonesia'],
+a:1,
+e:'French Indochina (1887–1954) comprised Vietnam, Cambodia, and Laos.'}
+,
+{
+q:'France lost Vietnam in 1954 due to which battle?',
+o:['Battle of Dien Bien Phu',
+'Battle of Hue',
+'Battle of Saigon',
+'Battle of Hanoi'],
+a:0,
+e:'France was defeated by the Viet Minh at the Battle of Dien Bien Phu in 1954.'}
+,
+{
+q:'Algeria gained independence from France in which year after an 8-year war?',
+o:['1958',
+'1960',
+'1962',
+'1965'],
+a:2,
+e:'Algeria gained independence from France in 1962, after an 8-year war.'}
+,
+{
+q:'Captain Cook claimed Australia for Britain in which year?',
+o:['1760',
+'1770',
+'1780',
+'1790'],
+a:1,
+e:'Captain Cook claimed Australia for Britain in 1770.'}
+,
+{
+q:'What is the second largest colonial empire in history?',
+o:['Spanish Empire',
+'Portuguese Empire',
+'French Empire',
+'Dutch Empire'],
+a:2,
+e:'The French Empire is considered the second largest colonial empire.'}
+]}
+]}
+,
+{
+id:'ch3',
+title:'🗽 Chapter 3: American & French Revolutions',
+nodes:[{
+id:'ar1',
+title:'American Revolution',
+xp:160,
+type:'regular',
+seqIdx:3,
+learn:'<h2 class="node-h2">🗽 American Revolution (1775–1783)</h2><h3 class="node-h3">Background</h3><p class="node-p">13 British colonies on eastern coast of North America. Slogan: <b>"No taxation without representation"</b>. Main grievances: Stamp Act (1765), Townshend Acts (1767), Tea Act (1773).</p><div class="tbl-wrap"><table><thead><tr><th>Year</th><th>Event</th></tr></thead><tbody><tr><td>1770</td><td>Boston Massacre — British soldiers kill 5 colonists</td></tr><tr><td>1773</td><td>Boston Tea Party — colonists dump 342 chests of British tea into Boston Harbour</td></tr><tr><td>1774</td><td>First Continental Congress — 12 colonies meet in Philadelphia</td></tr><tr><td>1775</td><td>Battles of Lexington & Concord — first battles of Revolution</td></tr><tr><td>July 4, 1776</td><td>Declaration of Independence</td></tr><tr><td>1778</td><td>France joins war on American side</td></tr><tr><td>1781</td><td>Battle of Yorktown — British surrender</td></tr><tr><td>1783</td><td>Treaty of Paris — Britain recognises USA independence</td></tr><tr><td>1787</td><td>US Constitution drafted</td></tr><tr><td>1789</td><td>George Washington = 1st President of USA</td></tr></tbody></table></div><h3 class="node-h3">Declaration of Independence</h3><div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody><tr><td>Signed</td><td>July 4, 1776 ← USA\'s national day</td></tr><tr><td>Drafted by</td><td>Thomas Jefferson</td></tr><tr><td>Key phrase</td><td>"All men are created equal"</td></tr><tr><td>Approved by</td><td>Second Continental Congress</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Person</th><th>Role</th></tr></thead><tbody><tr><td>George Washington</td><td>Commander of Continental Army; 1st US President</td></tr><tr><td>Thomas Jefferson</td><td>Drafted Declaration of Independence; 3rd President</td></tr><tr><td>Benjamin Franklin</td><td>Diplomat; secured French alliance</td></tr><tr><td>John Adams</td><td>2nd US President</td></tr><tr><td>Alexander Hamilton</td><td>1st Secretary of Treasury</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🦅 American Revolution SSC One-Liners</div><ul><li>Boston Tea Party = 1773 (not 1776)</li><li>Declaration of Independence = July 4, 1776</li><li>Treaty of Paris (1783) = ended American Revolution</li><li>Thomas Jefferson wrote Declaration of Independence (not Washington)</li><li>American Revolution inspired French Revolution</li><li>George Washington = Commander of Continental Army AND 1st President</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Boston Tea Party = <b>1773</b>; Declaration of Independence = <b>1776</b> — these two dates are frequently swapped. <b>Thomas Jefferson</b> drafted the Declaration, not Washington. There are TWO Treaty of Paris: 1763 (Seven Years\' War) and 1783 (American Revolution).</div>',
+revision:['American Revolution(1775-1783): slogan \'No taxation without representation\'','Boston Tea Party(1773,NOT 1776) | Declaration of Independence July 4,1776(drafted by Thomas Jefferson,NOT Washington)','Battle of Yorktown(1781)=British surrender | Treaty of Paris(1783)=Britain recognizes US independence','France joined war on American side(1778) | George Washington=1st US President(1789)','US Constitution drafted 1787'],
+oneliners:['The American Revolution lasted 1775-1783','The slogan \'No taxation without representation\' captured colonial grievances','The Boston Tea Party occurred in 1773, NOT 1776 — a common trap','The Declaration of Independence was adopted on July 4, 1776','Thomas Jefferson drafted the Declaration of Independence, NOT George Washington','France joined the war on the American side in 1778','The Battle of Yorktown (1781) resulted in British surrender','The Treaty of Paris (1783) saw Britain recognise US independence','The US Constitution was drafted in 1787','George Washington became the 1st President of the USA in 1789'],
+flashcards:[{q:'What was the colonial slogan during the American Revolution?',a:'\'No taxation without representation\''},{q:'In what year was the Boston Tea Party, and what\'s the common error?',a:'1773 — often wrongly stated as 1776'},{q:'Who drafted the Declaration of Independence?',a:'Thomas Jefferson, NOT George Washington'},{q:'When was the Declaration of Independence adopted?',a:'July 4, 1776'},{q:'Which European power joined the American side, and when?',a:'France, in 1778'},{q:'What battle led to British surrender, and when?',a:'Battle of Yorktown, 1781'},{q:'Who became the first US President, and when?',a:'George Washington, in 1789'}],
+mcqs:[{
+q:'The American Declaration of Independence was signed on which date?',
+o:['July 4, 1775',
+'July 4, 1776',
+'September 3, 1783',
+'July 4, 1777'],
+a:1,
+e:'The Declaration of Independence was signed on July 4, 1776 — USA\'s national day.'}
+,
+{
+q:'Who drafted the American Declaration of Independence?',
+o:['George Washington',
+'Benjamin Franklin',
+'John Adams',
+'Thomas Jefferson'],
+a:3,
+e:'Thomas Jefferson drafted the Declaration of Independence.'}
+,
+{
+q:'The Boston Tea Party occurred in which year?',
+o:['1770',
+'1773',
+'1775',
+'1776'],
+a:1,
+e:'The Boston Tea Party occurred in 1773 — colonists dumped 342 chests of British tea into Boston Harbour.'}
+,
+{
+q:'The Treaty of Paris (1783) achieved what?',
+o:['Ended the Seven Years\' War',
+'Started the American Revolution',
+'Britain recognised USA\'s independence',
+'France joined the American side'],
+a:2,
+e:'The Treaty of Paris (1783) ended the American Revolution; Britain recognised USA\'s independence.'}
+,
+{
+q:'George Washington was the commander of the Continental Army and also became what?',
+o:['2nd President',
+'3rd President',
+'1st President',
+'1st Secretary of State'],
+a:2,
+e:'George Washington was Commander of the Continental Army and became the 1st US President.'}
+,
+{
+q:'Which event in 1770 saw British soldiers kill 5 colonists in America?',
+o:['Battle of Lexington',
+'Boston Tea Party',
+'Boston Massacre',
+'Yorktown Surrender'],
+a:2,
+e:'The Boston Massacre (1770) — British soldiers killed 5 colonists.'}
+,
+{
+q:'Which battle in 1781 effectively ended the American Revolution?',
+o:['Battle of Lexington',
+'Battle of Bunker Hill',
+'Battle of Saratoga',
+'Battle of Yorktown'],
+a:3,
+e:'The Battle of Yorktown (1781) — British surrender — effectively ended the Revolution.'}
+,
+{
+q:'What was the key slogan of the American Revolution?',
+o:['No kings without consent',
+'Liberty or Death',
+'No taxation without representation',
+'Give me liberty or give me death'],
+a:2,
+e:'The key slogan was \'No taxation without representation.\''}
+,
+{
+q:'Benjamin Franklin\'s key role in the American Revolution was?',
+o:['He drafted the Constitution',
+'He commanded the Army',
+'He wrote the Declaration',
+'He secured the French alliance'],
+a:3,
+e:'Benjamin Franklin served as a diplomat and secured France\'s alliance with the American colonists.'}
+,
+{
+q:'The American Declaration of Independence begins with which phrase?',
+o:['We the People',
+'All men are created equal',
+'We hold these truths',
+'Four score and seven years'],
+a:2,
+e:'The Declaration begins \'We hold these truths to be self-evident, that all men are created equal.\''}
+]}
+,
+{
+id:'fr1',
+title:'French Revolution',
+xp:160,
+type:'regular',
+seqIdx:4,
+learn:'<h2 class="node-h2">🥖 French Revolution (1789–1799)</h2><h3 class="node-h3">Background — Three Estates</h3><div class="tbl-wrap"><table><thead><tr><th>Estate</th><th>Who</th><th>Status</th></tr></thead><tbody><tr><td>1st Estate</td><td>Clergy</td><td>Privileged — no taxes</td></tr><tr><td>2nd Estate</td><td>Nobility</td><td>Privileged — no taxes</td></tr><tr><td>3rd Estate</td><td>Common people (97% of France)</td><td>Taxed heavily; no political power</td></tr></tbody></table></div><p class="node-p">France bankrupt after helping American Revolution. <b>Enlightenment ideas</b> (Voltaire, Rousseau, Montesquieu) spread ideas of liberty and equality.</p><div class="tbl-wrap"><table><thead><tr><th>Year</th><th>Event</th></tr></thead><tbody><tr><td>1789 May</td><td>Estates-General convened by Louis XVI</td></tr><tr><td>June 1789</td><td>National Assembly formed by 3rd Estate</td></tr><tr><td>July 14, 1789</td><td>Storming of the Bastille ← France\'s national day</td></tr><tr><td>Aug 1789</td><td>Declaration of Rights of Man adopted</td></tr><tr><td>1791</td><td>Constitutional Monarchy established</td></tr><tr><td>1793–1794</td><td>Reign of Terror — Robespierre\'s radical phase; ~40,000 executed</td></tr><tr><td>July 1794</td><td>Thermidorian Reaction — Robespierre guillotined</td></tr><tr><td>1795</td><td>Directory takes power (5-man committee)</td></tr><tr><td>1799</td><td>Napoleon\'s coup (18 Brumaire) — ends Revolution</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Person</th><th>Role</th></tr></thead><tbody><tr><td>King Louis XVI</td><td>Absolute monarch; executed 1793</td></tr><tr><td>Marie Antoinette</td><td>Queen; executed 1793; called "Madame Deficit"</td></tr><tr><td>Maximilien Robespierre</td><td>Leader of Reign of Terror; executed 1794</td></tr><tr><td>Jean-Paul Marat</td><td>Radical journalist; assassinated in bath by Charlotte Corday</td></tr><tr><td>Napoleon Bonaparte</td><td>Rose from Revolution; ended it in 1799</td></tr><tr><td>Marquis de Lafayette</td><td>Hero of both American & French Revolutions</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🗼 French Revolution SSC One-Liners</div><ul><li>Storming of Bastille = July 14, 1789 = France\'s national day</li><li>Reign of Terror = Robespierre (1793–1794)</li><li>French Revolution slogan = Liberté, Égalité, Fraternité</li><li>Marie Antoinette called "Madame Deficit"</li><li>Declaration of Rights of Man = August 1789</li><li>Napoleon ended French Revolution = 1799</li><li>5 Causes: Financial bankruptcy, Social inequality, Enlightenment ideas, American Revolution inspiration, Food scarcity</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Storming of Bastille = <b>July 14</b> (French national day). Bastille was a <b>prison</b>, not a palace. Reign of Terror = <b>Robespierre</b> (who was then guillotined in Thermidorian Reaction 1794). Slogan = Liberté, Égalité, <b>Fraternité</b> (not Liberté, Fraternité, Égalité).</div>',
+revision:['French Revolution(1789-1799): 3 Estates — Clergy(1st),Nobility(2nd),Commoners 97%(3rd,taxed heavily)','Storming of Bastille=July 14,1789=France\'s national day','Reign of Terror(1793-94)=Robespierre\'s radical phase,~40,000 executed(NOT Napoleon)','Slogan order: Liberte,EGALITE,Fraternite (NOT Liberte,Fraternite,Egalite — common trap)','Enlightenment thinkers: Voltaire,Rousseau,Montesquieu spread liberty/equality ideas'],
+oneliners:['The French Revolution lasted 1789-1799','France was divided into 3 Estates: Clergy (1st), Nobility (2nd), Commoners (3rd, 97% of population)','The 1st and 2nd Estates were privileged and paid no taxes; the 3rd Estate bore the tax burden','France went bankrupt partly from helping fund the American Revolution','Enlightenment thinkers Voltaire, Rousseau, and Montesquieu inspired revolutionary ideas','The Storming of the Bastille occurred on July 14, 1789 — France\'s national day','The Declaration of Rights of Man was adopted in August 1789','The Reign of Terror (1793-1794) was led by Robespierre, NOT Napoleon','About 40,000 people were executed during the Reign of Terror','The correct French Revolution slogan order is Liberte, Egalite, Fraternite'],
+flashcards:[{q:'Name the 3 Estates of pre-revolutionary France.',a:'Clergy (1st), Nobility (2nd), Commoners (3rd)'},{q:'Which Estate paid taxes, and which were privileged?',a:'3rd Estate (commoners) paid taxes; 1st and 2nd were privileged'},{q:'What event is celebrated as France\'s national day, and when?',a:'Storming of the Bastille, July 14, 1789'},{q:'Who led the Reign of Terror?',a:'Robespierre, NOT Napoleon'},{q:'Approximately how many were executed during the Reign of Terror?',a:'About 40,000'},{q:'What is the correct order of the French Revolution slogan?',a:'Liberte, Egalite, Fraternite'},{q:'Name 3 Enlightenment thinkers who inspired the Revolution.',a:'Voltaire, Rousseau, Montesquieu'}],
+mcqs:[{
+q:'The storming of the Bastille occurred on which date?',
+o:['July 4, 1789',
+'July 14, 1789',
+'August 4, 1789',
+'September 14, 1789'],
+a:1,
+e:'The Bastille was stormed on July 14, 1789 — France\'s national day (Bastille Day).'}
+,
+{
+q:'Who led the Reign of Terror during the French Revolution?',
+o:['Napoleon Bonaparte',
+'King Louis XVI',
+'Jean-Paul Marat',
+'Maximilien Robespierre'],
+a:3,
+e:'Robespierre led the Reign of Terror (1793–1794), during which ~40,000 people were executed.'}
+,
+{
+q:'What is the slogan of the French Revolution?',
+o:['Vive la France',
+'Vive le Roi',
+'Liberté, Égalité, Fraternité',
+'Justice, Liberté, Fraternité'],
+a:2,
+e:'The slogan is Liberté, Égalité, Fraternité (Liberty, Equality, Fraternity).'}
+,
+{
+q:'Marie Antoinette was nicknamed what?',
+o:['Madame Royale',
+'Madame Déficit',
+'Madame Terror',
+'Madame Revolution'],
+a:1,
+e:'Marie Antoinette was called \'Madame Déficit\' (Madame Deficit) due to her lavish spending.'}
+,
+{
+q:'Napoleon ended the French Revolution by seizing power in which year?',
+o:['1795',
+'1797',
+'1799',
+'1801'],
+a:2,
+e:'Napoleon\'s coup (18 Brumaire) in 1799 ended the French Revolution.'}
+,
+{
+q:'What was the First Estate in France before the Revolution?',
+o:['Nobility',
+'Common people',
+'Clergy',
+'Bourgeoisie'],
+a:2,
+e:'The First Estate was the Clergy (privileged, tax-exempt).'}
+,
+{
+q:'The Declaration of the Rights of Man was adopted in which year?',
+o:['1789',
+'1791',
+'1793',
+'1795'],
+a:0,
+e:'The Declaration of Rights of Man was adopted in August 1789, early in the Revolution.'}
+,
+{
+q:'Who was the radical journalist assassinated in his bath during the French Revolution?',
+o:['Robespierre',
+'Lafayette',
+'Marat',
+'Mirabeau'],
+a:2,
+e:'Jean-Paul Marat was assassinated in his bath by Charlotte Corday.'}
+,
+{
+q:'The Thermidorian Reaction in July 1794 resulted in?',
+o:['Napoleon seizing power',
+'Robespierre being guillotined',
+'Louis XVI\'s execution',
+'Directory established immediately'],
+a:1,
+e:'The Thermidorian Reaction (July 1794) ended the Terror — Robespierre was guillotined.'}
+,
+{
+q:'The Marquis de Lafayette was a hero of which TWO revolutions?',
+o:['French and Russian',
+'American and French',
+'English and French',
+'American and Cuban'],
+a:1,
+e:'Lafayette was a hero of both the American Revolution and the French Revolution.'}
+]}
+]}
+,
+{
+id:'ch4',
+title:'👑 Chapter 4: Napoleon & Industrial Revolution',
+nodes:[{
+id:'np1',
+title:'Napoleon & Industrial Revolution',
+xp:160,
+type:'regular',
+seqIdx:5,
+learn:'<h2 class="node-h2">👑 Napoleon & Industrial Revolution</h2><h3 class="node-h3">B3 — Napoleon Bonaparte (1769–1821)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Born</td><td>1769, Corsica (French territory)</td></tr><tr><td>Rose to power</td><td>After Coup of 18 Brumaire (1799)</td></tr><tr><td>Became Emperor</td><td>1804 — crowned by Pope Pius VII (but crowned himself)</td></tr><tr><td>Napoleonic Code</td><td>1804 — civil law code; influenced modern law worldwide</td></tr><tr><td>Moscow Campaign</td><td>1812 — catastrophic failure (Russian winter)</td></tr><tr><td>Abdicated 1st time</td><td>1814 — exiled to Elba</td></tr><tr><td>100 Days</td><td>1815 — escaped Elba; reclaimed power</td></tr><tr><td>Final defeat</td><td>Battle of Waterloo — June 18, 1815</td></tr><tr><td>Defeated by</td><td>Duke of Wellington (Britain) + Blücher (Prussia)</td></tr><tr><td>Final exile</td><td>St. Helena island (South Atlantic)</td></tr><tr><td>Died</td><td>1821, St. Helena</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Battle</th><th>Year</th><th>Outcome</th></tr></thead><tbody><tr><td>Battle of Austerlitz</td><td>1805</td><td>Napoleon\'s greatest victory; defeated Austria + Russia</td></tr><tr><td>Battle of Trafalgar</td><td>1805</td><td>Napoleon\'s fleet defeated by Admiral Nelson (Britain)</td></tr><tr><td>Battle of Leipzig</td><td>1813</td><td>"Battle of Nations" — Napoleon defeated by coalition</td></tr><tr><td>Battle of Waterloo</td><td>1815</td><td>Napoleon\'s FINAL defeat</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">👑 Napoleon SSC One-Liners</div><ul><li>Napoleonic Code = 1804 (most influential law code in history)</li><li>Battle of Waterloo = June 18, 1815 — final defeat</li><li>Napoleon exiled to: 1st = Elba; 2nd = St. Helena</li><li>"Hundred Days" = Napoleon\'s brief return to power (1815)</li><li>Nelson defeated Napoleon\'s fleet at Battle of Trafalgar (1805)</li><li>Napoleonic Code = equality before law, freedom of religion, property rights</li></ul></div><h3 class="node-h3">B4 — Industrial Revolution (1760–1840)</h3><div class="tbl-wrap"><table><thead><tr><th>Invention</th><th>Inventor</th><th>Year</th></tr></thead><tbody><tr><td>Steam Engine (improved)</td><td>James Watt</td><td>1769</td></tr><tr><td>Spinning Jenny</td><td>James Hargreaves</td><td>1764</td></tr><tr><td>Water Frame</td><td>Richard Arkwright</td><td>1769</td></tr><tr><td>Power Loom</td><td>Edmund Cartwright</td><td>1785</td></tr><tr><td>Steam Locomotive</td><td>George Stephenson</td><td>1814</td></tr><tr><td>Electric Telegraph</td><td>Samuel Morse</td><td>1837</td></tr><tr><td>Telephone</td><td>Alexander Graham Bell</td><td>1876</td></tr><tr><td>Light Bulb</td><td>Thomas Edison</td><td>1879</td></tr><tr><td>Dynamite</td><td>Alfred Nobel</td><td>1867</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">⚙️ Industrial Revolution SSC One-Liners</div><ul><li>Industrial Revolution began: Britain, ~1760</li><li>Steam Engine improved by: James Watt (not invented — improved)</li><li>George Stephenson = steam locomotive (railways)</li><li>Luddites = workers who destroyed machines (protesting job loss)</li><li>Industrial Revolution led to: rise of Marxism + capitalism + urbanisation</li><li>Child labour became widespread problem during Industrial Revolution</li><li>Trade unions rose as result of Industrial Revolution</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Napoleon exiled twice: 1st to <b>Elba</b>; 2nd to <b>St. Helena</b>. James Watt <b>improved</b> the steam engine (original = Thomas Newcomen, 1712). "Hundred Days" = Napoleon\'s return March–June 1815, ending at Waterloo. Waterloo is in <b>Belgium</b> (not France).</div>',
+revision:['Napoleon(1769-1821): born Corsica, rose to power via Coup of 18 Brumaire(1799), became Emperor 1804','Napoleonic Code(1804)=civil law,influenced modern law worldwide','Moscow Campaign(1812)=catastrophic failure(Russian winter) | Abdicated 1814->exiled Elba->100 Days(1815)','Final defeat: Battle of Waterloo,June 18,1815,by Wellington(Britain)+Blucher(Prussia)','Final exile St.Helena island,died 1821'],
+oneliners:['Napoleon Bonaparte was born in 1769, in Corsica','Napoleon rose to power after the Coup of 18 Brumaire in 1799','Napoleon became Emperor of France in 1804','The Napoleonic Code (1804) was a civil law code that influenced modern law worldwide','Napoleon\'s Moscow Campaign (1812) was a catastrophic failure due to the Russian winter','Napoleon abdicated for the first time in 1814 and was exiled to Elba','Napoleon\'s \'100 Days\' in 1815 saw him escape Elba and briefly reclaim power','Napoleon was finally defeated at the Battle of Waterloo on June 18, 1815','Napoleon was defeated by the Duke of Wellington (Britain) and Blucher (Prussia)','Napoleon was exiled to St. Helena island, where he died in 1821'],
+flashcards:[{q:'When and where was Napoleon born?',a:'1769, in Corsica'},{q:'How did Napoleon rise to power?',a:'Through the Coup of 18 Brumaire, in 1799'},{q:'What was the Napoleonic Code, and its significance?',a:'A 1804 civil law code that influenced modern law worldwide'},{q:'Why did Napoleon\'s Moscow Campaign (1812) fail?',a:'The catastrophic Russian winter'},{q:'What were the \'100 Days\'?',a:'Napoleon\'s escape from Elba and brief return to power in 1815'},{q:'Where and when was Napoleon finally defeated?',a:'Battle of Waterloo, June 18, 1815'},{q:'Who defeated Napoleon at Waterloo?',a:'The Duke of Wellington (Britain) and Blucher (Prussia)'},{q:'Where was Napoleon exiled and where did he die?',a:'St. Helena island; died there in 1821'}],
+mcqs:[{
+q:'Napoleon became Emperor of France in which year?',
+o:['1799',
+'1802',
+'1804',
+'1806'],
+a:2,
+e:'Napoleon became Emperor in 1804, crowned by Pope Pius VII (though he placed the crown on himself).'}
+,
+{
+q:'The Napoleonic Code (1804) is significant because?',
+o:['It was Europe\'s first constitution',
+'It was the first written legal code',
+'It influenced modern civil law worldwide',
+'It created democracy in France'],
+a:2,
+e:'The Napoleonic Code (1804) became the foundation of civil law in France, Europe, and Latin America.'}
+,
+{
+q:'In which battle (1815) was Napoleon finally defeated?',
+o:['Battle of Austerlitz',
+'Battle of Trafalgar',
+'Battle of Leipzig',
+'Battle of Waterloo'],
+a:3,
+e:'Napoleon was finally defeated at the Battle of Waterloo on June 18, 1815.'}
+,
+{
+q:'After his final defeat, Napoleon was exiled to which island?',
+o:['Elba',
+'Corsica',
+'Malta',
+'St. Helena'],
+a:3,
+e:'After Waterloo, Napoleon was exiled to St. Helena island in the South Atlantic, where he died in 1821.'}
+,
+{
+q:'At the Battle of Trafalgar (1805), Napoleon\'s fleet was defeated by?',
+o:['Duke of Wellington',
+'Admiral Nelson',
+'General Blücher',
+'General Moore'],
+a:1,
+e:'Admiral Nelson (Britain) defeated Napoleon\'s fleet at Trafalgar, destroying his sea power.'}
+,
+{
+q:'Napoleon\'s \'Hundred Days\' refers to?',
+o:['His first 100 days as Emperor',
+'His escape from Elba and brief return to power',
+'The 100-day siege of Paris',
+'His first 100 military campaigns'],
+a:1,
+e:'The \'Hundred Days\' refers to Napoleon\'s escape from Elba and brief return to power in 1815, ending at Waterloo.'}
+,
+{
+q:'James Watt is best known for?',
+o:['Inventing the steam engine',
+'Improving the steam engine',
+'Inventing the locomotive',
+'Inventing the spinning jenny'],
+a:1,
+e:'James Watt improved the steam engine (1769); Thomas Newcomen invented the original in 1712.'}
+,
+{
+q:'George Stephenson invented which revolutionary device in 1814?',
+o:['The steam engine',
+'The power loom',
+'The steam locomotive',
+'The electric telegraph'],
+a:2,
+e:'George Stephenson invented the steam locomotive in 1814, transforming transportation.'}
+,
+{
+q:'The \'Luddites\' were?',
+o:['Factory owners who used machines',
+'Political reformers',
+'Workers who destroyed machines in protest',
+'Inventors of industrial machinery'],
+a:2,
+e:'Luddites were workers who destroyed machines, protesting against job losses during the Industrial Revolution.'}
+,
+{
+q:'The Industrial Revolution began in which country around 1760?',
+o:['France',
+'USA',
+'Germany',
+'Britain'],
+a:3,
+e:'The Industrial Revolution began in Britain around 1760, due to coal, iron, colonies, and capital.'}
+]}
+]}
+,
+{
+id:'ch5',
+title:'☭ Chapter 5: Russian, Chinese & American Revolutions',
+nodes:[{
+id:'rr1',
+title:'Russian Revolution (1917)',
+xp:170,
+type:'regular',
+seqIdx:6,
+learn:'<h2 class="node-h2">☭ Russian Revolution (1917)</h2><h3 class="node-h3">Background</h3><p class="node-p">Russia under <b>Tsar Nicholas II</b> (Romanov dynasty). Russo-Japanese War (1904–05) — Russia humiliatingly defeated. <b>Bloody Sunday (1905)</b> — massacre of peaceful protesters. WWI catastrophic for Russia — huge casualties; economic collapse.</p><h3 class="node-h3">TWO Revolutions of 1917</h3><div class="tbl-wrap"><table><thead><tr><th></th><th>February Revolution</th><th>October Revolution</th></tr></thead><tbody><tr><td>When</td><td>February 1917 (Julian calendar)</td><td>October 25, 1917 (= Nov 7 new)</td></tr><tr><td>Cause</td><td>Food shortages; war; strikes</td><td>Provisional Govt continued WWI</td></tr><tr><td>Result</td><td>Tsar Nicholas II abdicated</td><td>Bolsheviks seized power</td></tr><tr><td>Power to</td><td>Provisional Government (Kerensky)</td><td>Bolshevik Party (Lenin)</td></tr><tr><td>World significance</td><td>Monarchy ended</td><td>World\'s 1st communist govt</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Person</th><th>Role</th></tr></thead><tbody><tr><td>Tsar Nicholas II</td><td>Last Russian Tsar; abdicated 1917; executed 1918</td></tr><tr><td>Vladimir Lenin</td><td>Bolshevik leader; architect of revolution; 1st Soviet leader</td></tr><tr><td>Leon Trotsky</td><td>Military leader; Red Army organiser</td></tr><tr><td>Joseph Stalin</td><td>Succeeded Lenin; ruled USSR 1924–1953</td></tr><tr><td>Karl Marx</td><td>Philosopher; Communist Manifesto + Das Kapital</td></tr><tr><td>Rasputin</td><td>Mystic; influence over Tsarina; killed 1916</td></tr><tr><td>Alexander Kerensky</td><td>Leader of Provisional Government</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Year</th><th>Post-Revolution Event</th></tr></thead><tbody><tr><td>1918</td><td>Treaty of Brest-Litovsk — Russia exits WWI</td></tr><tr><td>1918–1921</td><td>Russian Civil War — Red Army vs White Army</td></tr><tr><td>1922</td><td>USSR officially formed</td></tr><tr><td>1924</td><td>Lenin died; Stalin rose to power</td></tr><tr><td>1936–38</td><td>Great Purge — Stalin eliminated rivals</td></tr><tr><td>1953</td><td>Stalin died</td></tr><tr><td>1991</td><td>USSR dissolved</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Marx Work</th><th>Detail</th></tr></thead><tbody><tr><td>Communist Manifesto (1848)</td><td>With Engels; "Workers of the world, unite!"</td></tr><tr><td>Das Kapital (1867)</td><td>Analysis of capitalism</td></tr><tr><td>Core idea</td><td>Class struggle; proletariat should overthrow bourgeoisie</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">☭ Russian Revolution SSC One-Liners</div><ul><li>February Revolution = Tsar abdicated</li><li>October Revolution = Bolsheviks seized power</li><li>Bolshevik slogan = "Peace, Land, Bread"</li><li>Lenin\'s party = Bolsheviks (Mensheviks = opponents)</li><li>Trotsky organised Red Army</li><li>USSR formed = 1922</li><li>"Bloody Sunday" = 1905 (not 1917)</li><li>Communist Manifesto = 1848 by Marx + Engels</li><li>Marx published Das Kapital = 1867</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> "Bloody Sunday" = <b>1905</b>, not 1917. There are TWO 1917 revolutions: February (Tsar abdicates) and October (Bolsheviks take over). <b>Bolsheviks</b> = Lenin\'s majority faction; <b>Mensheviks</b> = minority faction. USSR formed = <b>1922</b> (not 1917).</div>',
+revision:['Russia under Tsar Nicholas II(Romanov) | Bloody Sunday(1905)=massacre of protesters,NOT 1917','TWO 1917 revolutions: February(Tsar abdicated,power to Provisional Govt/Kerensky) & October(Bolsheviks/Lenin seized power)','October Revolution = Oct 25 Julian = Nov 7 Gregorian calendar','Result: monarchy ended, world\'s 1st communist government','Russo-Japanese War(1904-05): Russia humiliatingly defeated — contributed to unrest'],
+oneliners:['Russia was ruled by Tsar Nicholas II of the Romanov dynasty before the revolution','The Russo-Japanese War (1904-05) ended in humiliating defeat for Russia','Bloody Sunday (1905) was a massacre of peaceful protesters — NOT 1917','There were TWO revolutions in 1917: the February Revolution and the October Revolution','The February Revolution led to Tsar Nicholas II\'s abdication','Power after February 1917 went to the Provisional Government, led by Kerensky','The October Revolution (October 25 Julian / November 7 Gregorian) saw the Bolsheviks seize power','Vladimir Lenin led the Bolshevik Party to power in October 1917','The Russian Revolution ended the monarchy and created the world\'s first communist government'],
+flashcards:[{q:'Which Tsar and dynasty ruled Russia before the revolution?',a:'Tsar Nicholas II, of the Romanov dynasty'},{q:'What was Bloody Sunday, and when did it occur?',a:'A 1905 massacre of peaceful protesters — not 1917'},{q:'How many revolutions occurred in 1917, and name them.',a:'Two: the February Revolution and the October Revolution'},{q:'What was the outcome of the February Revolution?',a:'Tsar Nicholas II abdicated; power went to the Provisional Government (Kerensky)'},{q:'What was the outcome of the October Revolution?',a:'The Bolsheviks, led by Lenin, seized power'},{q:'What world-historic first did the October Revolution achieve?',a:'The world\'s first communist government'},{q:'What war contributed to pre-revolutionary unrest in Russia?',a:'The Russo-Japanese War (1904-05), which Russia lost humiliatingly'}],
+mcqs:[{
+q:'The Bolshevik slogan during the Russian Revolution of 1917 was?',
+o:['Land, Bread, Freedom',
+'Peace, Land, Bread',
+'Workers, Unite, Conquer',
+'Freedom, Equality, Land'],
+a:1,
+e:'The Bolshevik slogan was \'Peace, Land, Bread\' — addressing the three main demands of the people.'}
+,
+{
+q:'\'Bloody Sunday\' (1905) refers to?',
+o:['The date Tsar Nicholas was executed',
+'The start of the October Revolution',
+'The massacre of peaceful protesters in St. Petersburg',
+'The date Lenin returned to Russia'],
+a:2,
+e:'Bloody Sunday (1905) was a massacre of peaceful protesters by Tsarist troops in St. Petersburg.'}
+,
+{
+q:'The October Revolution (1917) was led by which party?',
+o:['Mensheviks',
+'Social Revolutionaries',
+'Bolsheviks',
+'Constitutional Democrats'],
+a:2,
+e:'The Bolsheviks, led by Lenin and Trotsky, carried out the October Revolution.'}
+,
+{
+q:'The USSR (Soviet Union) was officially formed in which year?',
+o:['1917',
+'1920',
+'1922',
+'1924'],
+a:2,
+e:'The USSR was officially formed in 1922, after the Bolshevik victory in the Civil War.'}
+,
+{
+q:'What was the Treaty of Brest-Litovsk (1918)?',
+o:['Russia\'s alliance with Germany',
+'Russia exited WWI by ceding territory to Germany',
+'Russia\'s peace deal with Austro-Hungary',
+'Russia\'s trade treaty with Germany'],
+a:1,
+e:'The Treaty of Brest-Litovsk (1918) took Russia out of WWI; Russia gave large territories to Germany.'}
+,
+{
+q:'Who organised the Red Army during the Russian Civil War?',
+o:['Stalin',
+'Lenin',
+'Kerensky',
+'Trotsky'],
+a:3,
+e:'Leon Trotsky organised and led the Red Army against the White Army in the Civil War (1918–21).'}
+,
+{
+q:'Karl Marx\'s major work analysing capitalism was?',
+o:['The Communist Manifesto',
+'Das Kapital',
+'The Wealth of Nations',
+'State and Revolution'],
+a:1,
+e:'Das Kapital (1867) was Marx\'s major analysis of capitalism. The Communist Manifesto was written in 1848.'}
+,
+{
+q:'The Communist Manifesto was published in which year?',
+o:['1848',
+'1867',
+'1871',
+'1889'],
+a:0,
+e:'The Communist Manifesto by Marx and Engels was published in 1848.'}
+,
+{
+q:'Who was the leader of Russia\'s Provisional Government after the February Revolution?',
+o:['Lenin',
+'Trotsky',
+'Kerensky',
+'Stalin'],
+a:2,
+e:'Alexander Kerensky led the Provisional Government after the February Revolution, until the Bolsheviks overthrew it.'}
+,
+{
+q:'Joseph Stalin succeeded Lenin as leader of the USSR after Lenin died in?',
+o:['1922',
+'1923',
+'1924',
+'1926'],
+a:2,
+e:'Lenin died in 1924; Stalin consolidated power and ruled the USSR until 1953.'}
+]}
+,
+{
+id:'cr1',
+title:'Chinese Revolution & American Civil War',
+xp:160,
+type:'regular',
+seqIdx:7,
+learn:'<h2 class="node-h2">🐉 Chinese Revolution (1949) & Mao\'s China</h2><h3 class="node-h3">Background</h3><p class="node-p">China weakened by <b>Opium Wars</b> (1839–42, 1856–60) with Britain. <b>Treaty of Nanking (1842)</b> — China ceded Hong Kong to Britain. <b>Republic of China</b> established 1912 — <b>Sun Yat-sen</b> (3 principles: nationalism, democracy, livelihood). Civil war: KMT (Chiang Kai-shek) vs CCP (Mao Zedong).</p><div class="tbl-wrap"><table><thead><tr><th>Year</th><th>Event</th></tr></thead><tbody><tr><td>1921</td><td>Chinese Communist Party (CCP) founded</td></tr><tr><td>1927</td><td>KMT massacres Communists; Civil War begins</td></tr><tr><td>1934–1935</td><td>Long March — Mao leads ~90,000 soldiers on 6,000-mile retreat; only ~7,000 survive</td></tr><tr><td>1937–1945</td><td>Japan invades China — KMT & CCP temporarily unite</td></tr><tr><td>1945</td><td>Japan defeated; Civil War resumes</td></tr><tr><td>October 1, 1949</td><td>People\'s Republic of China proclaimed by Mao Zedong</td></tr><tr><td>1949</td><td>Chiang Kai-shek flees to Taiwan</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Mao\'s Policy</th><th>Year</th><th>Consequence</th></tr></thead><tbody><tr><td>Great Leap Forward</td><td>1958–1962</td><td>Rapid industrialisation; caused famine killing millions</td></tr><tr><td>Cultural Revolution</td><td>1966–1976</td><td>Political purge; destroyed cultural heritage; millions persecuted</td></tr><tr><td>Mao died</td><td>1976</td><td>Succeeded eventually by Deng Xiaoping</td></tr></tbody></table></div><h3 class="node-h3">B7 — American Civil War (1861–1865)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Between</td><td>Union (North) vs Confederacy (South)</td></tr><tr><td>Main issue</td><td>Slavery (South wanted to keep; North opposed expansion)</td></tr><tr><td>Trigger</td><td>Election of Abraham Lincoln as president (1860)</td></tr><tr><td>Confederate President</td><td>Jefferson Davis</td></tr><tr><td>Union President</td><td>Abraham Lincoln</td></tr><tr><td>Emancipation Proclamation</td><td>1863 — Lincoln freed slaves in Confederate states</td></tr><tr><td>Bloodiest battle</td><td>Battle of Gettysburg (1863)</td></tr><tr><td>Ended</td><td>April 9, 1865 — Lee surrendered to Grant at Appomattox</td></tr><tr><td>Lincoln assassinated</td><td>April 14, 1865 by John Wilkes Booth</td></tr><tr><td>13th Amendment</td><td>1865 — abolished slavery throughout USA</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🐉 Chinese Rev + Civil War SSC One-Liners</div><ul><li>Long March = 1934–1935; ~6,000 miles</li><li>PRC = October 1, 1949 (China\'s national day)</li><li>Mao Zedong = "Great Helmsman"</li><li>Sun Yat-sen = "Father of the Nation" (China)</li><li>Chiang Kai-shek fled to = Taiwan</li><li>Deng Xiaoping = opened China\'s economy (post-1978)</li><li>Emancipation Proclamation = 1863 (freed slaves in Confederate states)</li><li>13th Amendment = 1865 (abolished slavery entirely)</li><li>Lincoln assassinated = April 14, 1865 by John Wilkes Booth</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> PRC founded = <b>October 1, 1949</b> (China\'s national day). Long March = <b>1934–1935</b> (before WWII). Emancipation Proclamation = <b>1863</b> (freed slaves only in Confederate states); 13th Amendment = <b>1865</b> (freed ALL slaves). Lincoln was assassinated AFTER the war ended (April 14, after April 9 surrender).</div>',
+revision:['China weakened by Opium Wars(1839-42,1856-60) with Britain | Treaty of Nanking(1842)=ceded Hong Kong','Republic of China(1912) by Sun Yat-sen(3 principles: nationalism,democracy,livelihood)','Civil War: KMT(Chiang Kai-shek) vs CCP(Mao Zedong) | CCP founded 1921','Long March(1934-35): Mao led ~90,000 on 6,000-mile retreat, only ~7,000 survived','People\'s Republic of China proclaimed Oct 1,1949 by Mao | Chiang Kai-shek fled to Taiwan'],
+oneliners:['China was weakened by the Opium Wars (1839-42, 1856-60) with Britain','The Treaty of Nanking (1842) forced China to cede Hong Kong to Britain','The Republic of China was established in 1912 by Sun Yat-sen','Sun Yat-sen\'s 3 principles were nationalism, democracy, and livelihood','The Chinese Civil War was fought between the KMT (Chiang Kai-shek) and CCP (Mao Zedong)','The Chinese Communist Party (CCP) was founded in 1921','The Long March (1934-35) saw Mao lead about 90,000 soldiers on a 6,000-mile retreat','Only about 7,000 of the original Long March soldiers survived','The People\'s Republic of China was proclaimed on October 1, 1949, by Mao Zedong','Chiang Kai-shek fled to Taiwan after the Communist victory in 1949'],
+flashcards:[{q:'What treaty forced China to cede Hong Kong, and when?',a:'Treaty of Nanking, 1842'},{q:'Who established the Republic of China in 1912?',a:'Sun Yat-sen'},{q:'What were Sun Yat-sen\'s 3 principles?',a:'Nationalism, democracy, livelihood'},{q:'Who fought in the Chinese Civil War?',a:'KMT (Chiang Kai-shek) vs CCP (Mao Zedong)'},{q:'What was the Long March, and what were its casualties?',a:'Mao\'s 6,000-mile retreat (1934-35) with ~90,000 starting, only ~7,000 survivors'},{q:'When was the People\'s Republic of China proclaimed, and by whom?',a:'October 1, 1949, by Mao Zedong'},{q:'Where did Chiang Kai-shek flee after 1949?',a:'Taiwan'}],
+mcqs:[{
+q:'The People\'s Republic of China was proclaimed by Mao Zedong on?',
+o:['October 1, 1949',
+'January 1, 1949',
+'October 1, 1948',
+'July 1, 1949'],
+a:0,
+e:'Mao Zedong proclaimed the People\'s Republic of China on October 1, 1949 — China\'s national day.'}
+,
+{
+q:'The Long March (1934–1935) covered approximately how many miles?',
+o:['600',
+'3,000',
+'6,000',
+'10,000'],
+a:2,
+e:'The Long March covered approximately 6,000 miles — a strategic retreat that cemented Mao\'s leadership.'}
+,
+{
+q:'Where did Chiang Kai-shek flee after losing the Chinese Civil War?',
+o:['Hong Kong',
+'Macau',
+'Tibet',
+'Taiwan'],
+a:3,
+e:'Chiang Kai-shek fled to Taiwan after the CCP won the Civil War in 1949.'}
+,
+{
+q:'Sun Yat-sen is known as the \'Father of the Nation\' of which country?',
+o:['Taiwan',
+'Korea',
+'China',
+'Vietnam'],
+a:2,
+e:'Sun Yat-sen is the \'Father of the Nation\' of China, having established the Republic of China in 1912.'}
+,
+{
+q:'Mao Zedong\'s Great Leap Forward (1958–1962) primarily resulted in?',
+o:['Rapid industrialisation success',
+'A famine that killed millions',
+'Major military victories',
+'Successful agricultural reform'],
+a:1,
+e:'The Great Leap Forward caused a catastrophic famine that killed millions due to forced collectivisation.'}
+,
+{
+q:'The Emancipation Proclamation (1863) was issued by which US President?',
+o:['Ulysses S. Grant',
+'Abraham Lincoln',
+'Jefferson Davis',
+'Andrew Johnson'],
+a:1,
+e:'President Abraham Lincoln issued the Emancipation Proclamation in 1863, freeing slaves in Confederate states.'}
+,
+{
+q:'The 13th Amendment to the US Constitution (1865) achieved what?',
+o:['Freed slaves in Confederate states',
+'Abolished slavery throughout the USA',
+'Gave Black Americans voting rights',
+'Ended the Civil War'],
+a:1,
+e:'The 13th Amendment (1865) abolished slavery throughout the entire United States.'}
+,
+{
+q:'Who led the Confederate forces during the American Civil War?',
+o:['Ulysses S. Grant',
+'Jefferson Davis',
+'Robert E. Lee',
+'Andrew Jackson'],
+a:2,
+e:'General Robert E. Lee commanded Confederate forces; Jefferson Davis was the Confederate President.'}
+,
+{
+q:'Abraham Lincoln was assassinated on April 14, 1865 by whom?',
+o:['Jefferson Davis',
+'John Wilkes Booth',
+'Robert E. Lee',
+'Charles Guiteau'],
+a:1,
+e:'Lincoln was assassinated by John Wilkes Booth at Ford\'s Theatre on April 14, 1865.'}
+,
+{
+q:'Mao Zedong is nicknamed?',
+o:['Great Helmsman',
+'Great Leap Leader',
+'Red Chairman',
+'Long March Hero'],
+a:0,
+e:'Mao Zedong is nicknamed the \'Great Helmsman\' (毛主席).'}
+]}
+,
+{
+id:'cw1',
+title:'Cuban Revolution & Cold War Overview',
+xp:160,
+type:'regular',
+seqIdx:8,
+learn:'<h2 class="node-h2">🚀 Cuban Revolution & Cold War</h2><h3 class="node-h3">B8 — Cuban Revolution (1959)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Led by</td><td>Fidel Castro + Che Guevara</td></tr><tr><td>Overthrew</td><td>Fulgencio Batista (US-backed dictator)</td></tr><tr><td>Victory</td><td>January 1, 1959</td></tr><tr><td>Cuba became</td><td>Communist state</td></tr><tr><td>US response</td><td>Bay of Pigs invasion (1961) — failed CIA attempt</td></tr><tr><td>Major crisis</td><td>Cuban Missile Crisis (October 1962)</td></tr><tr><td>Fidel Castro died</td><td>2016</td></tr><tr><td>Che Guevara killed</td><td>1967, Bolivia</td></tr></tbody></table></div><h3 class="node-h3">Cuban Missile Crisis (1962) — 13 Days</h3><div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody><tr><td>When</td><td>October 1962 (13 days: Oct 16–28)</td></tr><tr><td>Cause</td><td>USSR placed nuclear missiles in Cuba</td></tr><tr><td>US President</td><td>John F. Kennedy</td></tr><tr><td>Soviet leader</td><td>Nikita Khrushchev</td></tr><tr><td>Resolution</td><td>USSR removed missiles; USA pledged not to invade Cuba + removed missiles from Turkey</td></tr><tr><td>Significance</td><td>Closest world came to nuclear war during Cold War</td></tr></tbody></table></div><h3 class="node-h3">E1 — Cold War Overview (1947–1991)</h3><p class="node-p"><b>Cold War</b> = Not a direct military conflict between USA & USSR. Ideological, political, economic & proxy war. Term coined by journalist <b>Walter Lippmann</b>; used by <b>Bernard Baruch</b> in 1947 speech.</p><div class="tbl-wrap"><table><thead><tr><th>Bloc</th><th>Leader</th><th>Alliance</th><th>Ideology</th></tr></thead><tbody><tr><td>Western Bloc</td><td>USA</td><td>NATO (1949)</td><td>Capitalism, Democracy</td></tr><tr><td>Eastern Bloc</td><td>USSR</td><td>Warsaw Pact (1955)</td><td>Communism</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Year</th><th>Cold War Event</th></tr></thead><tbody><tr><td>1947</td><td>Truman Doctrine — US pledged to contain communism</td></tr><tr><td>1947</td><td>Marshall Plan — $13 billion to rebuild Western Europe</td></tr><tr><td>1948–49</td><td>Berlin Blockade & Airlift (USA supplied West Berlin by air)</td></tr><tr><td>1950–53</td><td>Korean War — 38th Parallel border; UN backed South Korea</td></tr><tr><td>1961</td><td>Berlin Wall built (Aug 13); fell Nov 9, 1989</td></tr><tr><td>1962</td><td>Cuban Missile Crisis — closest to nuclear war</td></tr><tr><td>1964–73</td><td>Vietnam War — USA backed South; withdrew 1973</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🚀 Cuban Rev & Cold War SSC One-Liners</div><ul><li>Cuban Revolution = January 1, 1959 (Fidel Castro)</li><li>Bay of Pigs = 1961 (US failed invasion of Cuba)</li><li>Cuban Missile Crisis = October 1962 (13 days)</li><li>Cold War: 1947–1991</li><li>NATO = 1949; Warsaw Pact = 1955</li><li>Berlin Wall built = August 13, 1961; fell = November 9, 1989</li><li>Korean War = 1950–1953; border = 38th Parallel</li><li>Vietnam War ended = April 30, 1975; US withdrew = 1973</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Cuban Missile Crisis = <b>October 1962</b> (13 days). Bay of Pigs = <b>1961</b> (separate earlier event). Berlin Wall <b>built 1961</b>; <b>fell 1989</b> — these are often confused. Korean War ended with <b>armistice</b> (1953) — no formal peace treaty to this day.</div>',
+revision:['Cuban Revolution(1959): led by Fidel Castro+Che Guevara, overthrew Batista(US-backed),victory Jan 1,1959','Bay of Pigs invasion(1961)=failed CIA attempt | Cuban Missile Crisis(Oct 1962,13 days)','Missile Crisis: USSR placed missiles in Cuba, US President Kennedy, Soviet leader Khrushchev','Resolution: USSR removed missiles, USA pledged not to invade Cuba','Castro died 2016 | Che Guevara killed 1967 in Bolivia'],
+oneliners:['The Cuban Revolution (1959) was led by Fidel Castro and Che Guevara','The Cuban Revolution overthrew US-backed dictator Fulgencio Batista','Cuban Revolution victory came on January 1, 1959','Cuba became a communist state after the revolution','The Bay of Pigs invasion (1961) was a failed CIA attempt to overthrow Castro','The Cuban Missile Crisis occurred in October 1962, lasting 13 days','The Cuban Missile Crisis was caused by USSR placing nuclear missiles in Cuba','US President John F. Kennedy and Soviet leader Nikita Khrushchev managed the crisis','The crisis resolved with USSR removing missiles and USA pledging not to invade Cuba','Fidel Castro died in 2016; Che Guevara was killed in Bolivia in 1967'],
+flashcards:[{q:'Who led the Cuban Revolution, and whom did they overthrow?',a:'Fidel Castro and Che Guevara; overthrew Fulgencio Batista'},{q:'When was the Cuban Revolution\'s victory?',a:'January 1, 1959'},{q:'What was the Bay of Pigs invasion?',a:'A failed 1961 CIA attempt to overthrow Castro'},{q:'When did the Cuban Missile Crisis occur, and how long did it last?',a:'October 1962, 13 days'},{q:'Who were the key leaders during the Cuban Missile Crisis?',a:'US President John F. Kennedy and Soviet leader Nikita Khrushchev'},{q:'How was the Cuban Missile Crisis resolved?',a:'USSR removed missiles; USA pledged not to invade Cuba'},{q:'When did Castro die, and when was Che Guevara killed?',a:'Castro died 2016; Guevara killed 1967 in Bolivia'}],
+mcqs:[{
+q:'The Cuban Revolution under Fidel Castro succeeded on which date?',
+o:['December 1, 1958',
+'January 1, 1959',
+'July 4, 1959',
+'October 1, 1959'],
+a:1,
+e:'The Cuban Revolution succeeded on January 1, 1959, when Castro\'s forces overthrew Batista.'}
+,
+{
+q:'The Cuban Missile Crisis (1962) lasted how many days?',
+o:['7 days',
+'10 days',
+'13 days',
+'21 days'],
+a:2,
+e:'The Cuban Missile Crisis lasted 13 days — October 16–28, 1962.'}
+,
+{
+q:'The Bay of Pigs invasion (1961) was?',
+o:['A Soviet attack on Cuba',
+'A US-backed failed attempt to topple Castro',
+'A Cuban attack on the USA',
+'A United Nations peacekeeping operation'],
+a:1,
+e:'The Bay of Pigs (1961) was a failed CIA-backed invasion of Cuba, attempting to overthrow Castro.'}
+,
+{
+q:'During the Cuban Missile Crisis, who were the two key leaders negotiating?',
+o:['Kennedy and Khrushchev',
+'Kennedy and Castro',
+'Nixon and Khrushchev',
+'Eisenhower and Khrushchev'],
+a:0,
+e:'US President John F. Kennedy and Soviet leader Nikita Khrushchev were the key leaders.'}
+,
+{
+q:'The \'Cold War\' term was popularised by journalist Walter Lippmann and first used in a speech by?',
+o:['Harry Truman',
+'Winston Churchill',
+'Bernard Baruch',
+'George Marshall'],
+a:2,
+e:'Bernard Baruch used the term \'Cold War\' in a 1947 speech; Walter Lippmann popularised it.'}
+,
+{
+q:'NATO was formed in which year?',
+o:['1945',
+'1947',
+'1949',
+'1955'],
+a:2,
+e:'NATO (North Atlantic Treaty Organisation) was formed on April 4, 1949.'}
+,
+{
+q:'The Warsaw Pact was the Soviet equivalent of NATO, formed in which year?',
+o:['1947',
+'1950',
+'1953',
+'1955'],
+a:3,
+e:'The Warsaw Pact was formed on May 14, 1955, as the Soviet military alliance.'}
+,
+{
+q:'The Truman Doctrine (1947) was first applied to which two countries?',
+o:['Turkey and Iran',
+'Greece and Turkey',
+'Poland and Czechoslovakia',
+'France and Italy'],
+a:1,
+e:'The Truman Doctrine was first applied to Greece and Turkey, providing US support against communism.'}
+,
+{
+q:'The Berlin Wall was built in which year to stop emigration from East to West?',
+o:['1958',
+'1959',
+'1961',
+'1963'],
+a:2,
+e:'The Berlin Wall was built on August 13, 1961 by East Germany.'}
+,
+{
+q:'The Korean War (1950–1953) ended with?',
+o:['A peace treaty',
+'North Korea defeated',
+'An armistice (no formal peace treaty)',
+'South Korea absorbed North'],
+a:2,
+e:'The Korean War ended with an armistice in July 1953 — no formal peace treaty; technically still at war.'}
+]}
+]}
+,
+{
+id:'ch6',
+title:'⚔️ Chapter 6: World War I',
+nodes:[{
+id:'w1a',
+title:'WWI — Background, Causes & Spark',
+xp:170,
+type:'regular',
+seqIdx:9,
+learn:'<h2 class="node-h2">⚔️ World War I — Background & Causes</h2><h3 class="node-h3">Long-Term Causes: MAIN</h3><div class="tbl-wrap"><table><thead><tr><th>Letter</th><th>Cause</th><th>Detail</th></tr></thead><tbody><tr><td>M</td><td>Militarism</td><td>European powers building massive armies/navies; arms race</td></tr><tr><td>A</td><td>Alliances</td><td>Triple Alliance vs Triple Entente — any conflict drags everyone in</td></tr><tr><td>I</td><td>Imperialism</td><td>Competition for colonies in Africa & Asia creating tensions</td></tr><tr><td>N</td><td>Nationalism</td><td>Ethnic groups wanting independence; pan-Slavism vs pan-Germanism</td></tr></tbody></table></div><h3 class="node-h3">Alliance System</h3><div class="tbl-wrap"><table><thead><tr><th>Alliance</th><th>Year</th><th>Members</th></tr></thead><tbody><tr><td>Triple Alliance</td><td>1882</td><td>Germany, Austria-Hungary, Italy</td></tr><tr><td>Triple Entente</td><td>1907</td><td>France, Russia, Britain</td></tr></tbody></table></div><p class="node-p"><em>Italy switched to Entente side in 1915</em></p><h3 class="node-h3">The Spark — Assassination of Archduke Franz Ferdinand</h3><div class="tbl-wrap"><table><thead><tr><th>Detail</th><th>Answer</th></tr></thead><tbody><tr><td>Who was killed</td><td>Archduke Franz Ferdinand — heir to Austro-Hungarian throne</td></tr><tr><td>Date</td><td>June 28, 1914</td></tr><tr><td>Location</td><td>Sarajevo, Bosnia</td></tr><tr><td>Assassin</td><td>Gavrilo Princip (member of "Black Hand" — Serbian nationalist group)</td></tr><tr><td>Chain reaction</td><td>Austria-Hungary blamed Serbia → ultimatum → Serbia partly accepted → Austria declared war</td></tr></tbody></table></div><h3 class="node-h3">War Sides</h3><div class="tbl-wrap"><table><thead><tr><th>Side</th><th>Key Members</th></tr></thead><tbody><tr><td>Allied Powers (Entente)</td><td>France, Britain, Russia, Italy (1915), USA (1917), Japan, Serbia</td></tr><tr><td>Central Powers</td><td>Germany, Austria-Hungary, Ottoman Empire, Bulgaria</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Year</th><th>Event</th></tr></thead><tbody><tr><td>July 28, 1914</td><td>Austria-Hungary declares war on Serbia — WWI begins</td></tr><tr><td>Aug 1914</td><td>Germany invades Belgium → Britain declares war</td></tr><tr><td>1915</td><td>Gallipoli Campaign (failed Allied attempt vs Ottomans)</td></tr><tr><td>1915</td><td>Sinking of Lusitania (1,198 killed including 128 Americans)</td></tr><tr><td>1916</td><td>Battle of Verdun — bloodiest; ~700,000 casualties</td></tr><tr><td>1916</td><td>Battle of Somme — 60,000 British casualties on Day 1</td></tr><tr><td>1916</td><td>Battle of Jutland — only major naval battle</td></tr><tr><td>April 1917</td><td>USA enters war (Zimmermann Telegram + Lusitania)</td></tr><tr><td>Nov 11, 1918</td><td>ARMISTICE — WWI ends (11th hour, 11th day, 11th month)</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">⚔️ WWI Causes SSC One-Liners</div><ul><li>MAIN = Militarism, Alliances, Imperialism, Nationalism</li><li>Assassin = Gavrilo Princip; Location = Sarajevo; Victim = Franz Ferdinand</li><li>Date of assassination = June 28, 1914</li><li>WWI began (war declared) = July 28, 1914</li><li>Black Hand = Serbian nationalist secret society</li><li>Triple Alliance = Germany + Austria-Hungary + Italy (Italy switched sides 1915)</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Assassination = <b>June 28, 1914</b>; WWI started (war declared) = <b>July 28, 1914</b> — one month gap. Assassin = <b>Gavrilo Princip</b> (not the Black Hand directly; he was a member). Italy was in Triple Alliance but switched to <b>Entente side in 1915</b>.</div>',
+revision:['WWI long-term causes (MAIN): Militarism,Alliances,Imperialism,Nationalism','Triple Alliance(1882): Germany,Austria-Hungary,Italy | Triple Entente(1907): France,Russia,Britain','Italy switched to Entente side in 1915','Spark: Assassination of Archduke Franz Ferdinand(Austria-Hungary heir) at Sarajevo,June 28,1914','Assassin: Gavrilo Princip(Serbian nationalist,Black Hand group)'],
+oneliners:['WWI\'s long-term causes are remembered by MAIN: Militarism, Alliances, Imperialism, Nationalism','Militarism refers to the European arms race before WWI','The Alliance system meant any conflict could drag all major powers in','The Triple Alliance (1882) consisted of Germany, Austria-Hungary, and Italy','The Triple Entente (1907) consisted of France, Russia, and Britain','Italy switched sides to join the Entente in 1915','Imperialism created tension through competition for colonies in Africa and Asia','Nationalism included pan-Slavism vs pan-Germanism tensions','The spark for WWI was the assassination of Archduke Franz Ferdinand','Franz Ferdinand was assassinated at Sarajevo on June 28, 1914','The assassin was Gavrilo Princip, a Serbian nationalist from the Black Hand group'],
+flashcards:[{q:'What does the acronym MAIN stand for in WWI causes?',a:'Militarism, Alliances, Imperialism, Nationalism'},{q:'Name the members of the Triple Alliance.',a:'Germany, Austria-Hungary, Italy'},{q:'Name the members of the Triple Entente.',a:'France, Russia, Britain'},{q:'Which Triple Alliance member switched sides, and when?',a:'Italy, in 1915, joining the Entente'},{q:'What event sparked WWI?',a:'The assassination of Archduke Franz Ferdinand'},{q:'Where and when was Franz Ferdinand assassinated?',a:'Sarajevo, June 28, 1914'},{q:'Who assassinated Franz Ferdinand?',a:'Gavrilo Princip, a Serbian nationalist (Black Hand group)'}],
+mcqs:[{
+q:'The MAIN acronym for WWI causes stands for?',
+o:['Militarism, Alliances, Industrialism, Nationalism',
+'Militarism, Alliances, Imperialism, Nationalism',
+'Money, Alliances, Imperialism, Nationalism',
+'Military, Alliances, Industry, Nationalism'],
+a:1,
+e:'MAIN = Militarism, Alliances, Imperialism, Nationalism — the four long-term causes of WWI.'}
+,
+{
+q:'Archduke Franz Ferdinand was assassinated on which date?',
+o:['July 28, 1914',
+'June 28, 1914',
+'August 4, 1914',
+'August 1, 1914'],
+a:1,
+e:'Franz Ferdinand was assassinated on June 28, 1914, in Sarajevo, Bosnia.'}
+,
+{
+q:'Who assassinated Archduke Franz Ferdinand?',
+o:['A Black Hand member named Gavrilo Princip',
+'A Serbian army officer',
+'An Austrian nationalist',
+'An Austro-Hungarian dissident'],
+a:0,
+e:'Gavrilo Princip, a member of the \'Black Hand\' Serbian nationalist group, assassinated Franz Ferdinand.'}
+,
+{
+q:'The Triple Alliance (1882) consisted of which three powers?',
+o:['Germany, Austria-Hungary, Russia',
+'Germany, Austria-Hungary, Italy',
+'France, Britain, Russia',
+'Germany, Ottoman Empire, Bulgaria'],
+a:1,
+e:'The Triple Alliance was Germany, Austria-Hungary, and Italy (Italy later switched sides in 1915).'}
+,
+{
+q:'When did WWI officially begin (first declaration of war)?',
+o:['June 28, 1914',
+'July 28, 1914',
+'August 1, 1914',
+'August 4, 1914'],
+a:1,
+e:'Austria-Hungary declared war on Serbia on July 28, 1914 — one month after the assassination.'}
+,
+{
+q:'The \'Black Hand\' was a?',
+o:['German spy network',
+'British secret service',
+'Serbian nationalist secret society',
+'Austro-Hungarian terrorist group'],
+a:2,
+e:'The Black Hand was a Serbian nationalist secret society; Gavrilo Princip was a member.'}
+,
+{
+q:'Italy was initially in the Triple Alliance but switched to which side in 1915?',
+o:['Central Powers (joined Germany)',
+'Allied Powers (Entente)',
+'Remained neutral',
+'Joined Ottoman Empire'],
+a:1,
+e:'Italy switched to the Allied Powers (Entente) in 1915, citing Germany\'s violation of treaty terms.'}
+,
+{
+q:'The Triple Entente (1907) consisted of?',
+o:['France, Russia, Italy',
+'Britain, France, Russia',
+'Britain, Germany, France',
+'USA, France, Russia'],
+a:1,
+e:'The Triple Entente was France, Britain, and Russia.'}
+,
+{
+q:'The Zimmermann Telegram (1917) was a secret German proposal to?',
+o:['Form an alliance with Mexico against USA',
+'Offer peace to Britain',
+'Recruit Japan against Russia',
+'Propose a naval truce with Britain'],
+a:0,
+e:'Germany proposed a military alliance with Mexico against USA in the Zimmermann Telegram (1917).'}
+,
+{
+q:'The assassination of Franz Ferdinand took place in which city?',
+o:['Vienna',
+'Prague',
+'Sarajevo',
+'Belgrade'],
+a:2,
+e:'The assassination took place in Sarajevo, Bosnia.'}
+]}
+,
+{
+id:'w1b',
+title:'WWI — Weapons, Treaties & Results',
+xp:160,
+type:'regular',
+seqIdx:10,
+learn:'<h2 class="node-h2">📜 WWI — Events, Weapons & Results</h2><h3 class="node-h3">New Weapons in WWI</h3><div class="tbl-wrap"><table><thead><tr><th>Weapon</th><th>Detail</th></tr></thead><tbody><tr><td>Poison Gas</td><td>First used by Germany (chlorine gas, 1915 at Ypres)</td></tr><tr><td>Tanks</td><td>First used by Britain (Battle of Somme, 1916)</td></tr><tr><td>Submarines (U-boats)</td><td>Germany\'s naval weapon</td></tr><tr><td>Airplanes</td><td>First used in warfare</td></tr><tr><td>Machine guns</td><td>Made frontal attacks deadly</td></tr></tbody></table></div><h3 class="node-h3">Zimmermann Telegram (1917)</h3><p class="node-p">Germany secretly proposed <b>military alliance with Mexico</b> against USA. Intercepted by Britain; shown to USA → USA entered war. Sent by German Foreign Secretary <b>Arthur Zimmermann</b>.</p><h3 class="node-h3">Treaty of Versailles (1919) — Germany</h3><div class="tbl-wrap"><table><thead><tr><th>Clause</th><th>Detail</th></tr></thead><tbody><tr><td>War Guilt Clause (Article 231)</td><td>Germany accepted full blame for war</td></tr><tr><td>Reparations</td><td>Germany paid £6.6 billion (33 billion USD)</td></tr><tr><td>Territory</td><td>Lost Alsace-Lorraine (to France), West Prussia, colonies</td></tr><tr><td>Military</td><td>Army limited to 100,000; no air force; no submarines</td></tr><tr><td>Rhineland</td><td>Demilitarised zone</td></tr><tr><td>League of Nations</td><td>Created (but USA did NOT join)</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Treaty</th><th>Country</th><th>Key Provision</th></tr></thead><tbody><tr><td>Treaty of Versailles (1919)</td><td>Germany</td><td>War guilt; reparations; military limits</td></tr><tr><td>Treaty of St. Germain (1919)</td><td>Austria</td><td>Breakup of Austria-Hungary; new nations</td></tr><tr><td>Treaty of Trianon (1920)</td><td>Hungary</td><td>Hungary lost 2/3 of territory</td></tr><tr><td>Treaty of Sèvres (1920)</td><td>Ottoman Empire</td><td>Partitioned; replaced by Treaty of Lausanne (1923)</td></tr></tbody></table></div><h3 class="node-h3">Woodrow Wilson\'s 14 Points (1918)</h3><div class="fact-box"><div class="fact-box-title">📜 Wilson\'s Key Points</div><ul><li>1. No secret treaties</li><li>2. Freedom of the seas</li><li>3. Self-determination for all nations</li><li>14. League of Nations (most important)</li></ul></div><div class="tbl-wrap"><table><thead><tr><th>WWI Result</th><th>Detail</th></tr></thead><tbody><tr><td>Deaths</td><td>~20 million (10M military + 10M civilian)</td></tr><tr><td>Empires collapsed</td><td>4: German, Austro-Hungarian, Ottoman, Russian</td></tr><tr><td>New nations</td><td>Poland, Czechoslovakia, Yugoslavia, Finland, Estonia, Latvia, Lithuania</td></tr><tr><td>League of Nations</td><td>Formed 1920 — first international peacekeeping body</td></tr><tr><td>Seeds planted</td><td>Humiliation of Germany → WWII</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">📜 WWI Results SSC One-Liners</div><ul><li>WWI ended = November 11, 1918 (11:00 AM — "11th hour of 11th day of 11th month")</li><li>Armistice Day = November 11 (now Remembrance Day)</li><li>Treaty of Versailles = 1919 (signed June 28 — exactly 5 years after assassination)</li><li>USA didn\'t join League of Nations despite Wilson proposing it</li><li>Lusitania sunk = 1915 by German U-boat</li><li>First use of tanks = Britain (1916, Somme)</li><li>First use of poison gas = Germany (1915, Ypres)</li><li>4 empires fell: German, Austro-Hungarian, Ottoman, Russian</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> First tanks = <b>Britain (1916)</b>; first poison gas = <b>Germany (1915)</b>. USA did NOT join League of Nations (<b>US Senate rejected</b> it — despite Wilson proposing it). Treaty of Versailles signed <b>June 28, 1919</b> = exactly 5 years after Franz Ferdinand\'s assassination on June 28, 1914.</div>',
+revision:['New weapons: Poison gas(Germany,chlorine,1915 Ypres),Tanks(Britain,Somme 1916),U-boats(Germany),airplanes,machine guns','Zimmermann Telegram(1917): Germany proposed alliance with Mexico against USA — intercepted, led to US entering war','Treaty of Versailles(1919): War Guilt Clause(Art.231)=Germany blamed fully','Germany paid reparations of £6.6 billion(33 billion USD), lost Alsace-Lorraine','WWI ended Nov 11,1918(Armistice)'],
+oneliners:['Poison gas was first used by Germany (chlorine gas, 1915, at Ypres)','Tanks were first used by Britain, at the Battle of the Somme (1916)','Germany\'s key naval weapon in WWI was the U-boat (submarine)','The Zimmermann Telegram (1917) was Germany\'s secret proposal of alliance with Mexico against the USA','The Zimmermann Telegram was intercepted by Britain and shown to the USA, prompting US entry into WWI','Arthur Zimmermann was the German Foreign Secretary who sent the telegram','The Treaty of Versailles (1919) included the War Guilt Clause (Article 231)','The War Guilt Clause forced Germany to accept full blame for WWI','Germany was required to pay reparations of about £6.6 billion (33 billion USD)','Germany lost the territory of Alsace-Lorraine under the Treaty of Versailles','WWI ended with the Armistice on November 11, 1918'],
+flashcards:[{q:'Which country first used poison gas, and where/when?',a:'Germany, chlorine gas, 1915, at Ypres'},{q:'Which country first used tanks, and in which battle?',a:'Britain, at the Battle of the Somme (1916)'},{q:'What was the Zimmermann Telegram, and what was its effect?',a:'Germany\'s secret proposal of alliance with Mexico against the USA; led to US entry into WWI'},{q:'Who sent the Zimmermann Telegram?',a:'Arthur Zimmermann, German Foreign Secretary'},{q:'What does the War Guilt Clause (Article 231) of Versailles say?',a:'Germany must accept full blame for the war'},{q:'How much in reparations did Germany have to pay?',a:'About £6.6 billion (33 billion USD)'},{q:'What territory did Germany lose under Versailles?',a:'Alsace-Lorraine'},{q:'When did WWI end?',a:'November 11, 1918 (Armistice)'}],
+mcqs:[{
+q:'Which country first used poison gas in WWI, and where?',
+o:['Britain at the Battle of Somme',
+'Germany at Ypres (1915)',
+'France at Verdun',
+'Germany at Battle of Jutland'],
+a:1,
+e:'Germany first used chlorine gas at Ypres in 1915.'}
+,
+{
+q:'Tanks were first used in battle by which country?',
+o:['Germany',
+'France',
+'USA',
+'Britain'],
+a:3,
+e:'Britain first used tanks at the Battle of the Somme in 1916.'}
+,
+{
+q:'The Treaty of Versailles (1919) imposed which \'War Guilt Clause\'?',
+o:['Article 111',
+'Article 231',
+'Article 14',
+'Article 200'],
+a:1,
+e:'Article 231 (the War Guilt Clause) made Germany accept full responsibility for WWI.'}
+,
+{
+q:'WWI ended on which date (the Armistice)?',
+o:['November 7, 1918',
+'November 9, 1918',
+'November 11, 1918',
+'November 14, 1918'],
+a:2,
+e:'WWI ended on November 11, 1918 at 11 AM — the 11th hour of the 11th day of the 11th month.'}
+,
+{
+q:'Woodrow Wilson\'s \'14 Points\' (1918) included as its most important point?',
+o:['Freedom of the seas',
+'No secret treaties',
+'Self-determination',
+'Creation of the League of Nations'],
+a:3,
+e:'Point 14 — the League of Nations — was considered the most important of Wilson\'s 14 Points.'}
+,
+{
+q:'Which battle of 1916 had approximately 700,000 casualties?',
+o:['Battle of Somme',
+'Battle of Gallipoli',
+'Battle of Verdun',
+'Battle of Jutland'],
+a:2,
+e:'The Battle of Verdun (1916) was the longest battle of WWI with ~700,000 casualties.'}
+,
+{
+q:'Why did USA enter WWI in April 1917?',
+o:['Germany invaded France',
+'Germany sank the Lusitania and sent the Zimmermann Telegram',
+'Russia left the war',
+'Italy switched sides'],
+a:1,
+e:'USA entered WWI after the Zimmermann Telegram was revealed and the Lusitania sinking (1915).'}
+,
+{
+q:'The Battle of Jutland (1916) was significant as?',
+o:['The deadliest land battle of WWI',
+'The only major naval battle of WWI',
+'The battle where tanks were first used',
+'The battle that ended the war'],
+a:1,
+e:'The Battle of Jutland (1916) was the only major naval battle of WWI, between British and German fleets.'}
+,
+{
+q:'How many empires collapsed as a result of WWI?',
+o:['2',
+'3',
+'4',
+'5'],
+a:2,
+e:'Four empires collapsed: German, Austro-Hungarian, Ottoman, and Russian.'}
+,
+{
+q:'The Treaty of Versailles was signed on which date, exactly 5 years after the assassination?',
+o:['June 20, 1919',
+'June 28, 1919',
+'July 28, 1919',
+'August 11, 1919'],
+a:1,
+e:'The Treaty of Versailles was signed on June 28, 1919 — exactly 5 years after Franz Ferdinand\'s assassination.'}
+]}
+]}
+,
+{
+id:'ch7',
+title:'🔥 Chapter 7: World War II',
+nodes:[{
+id:'w2a',
+title:'WWII — Rise of Fascism & Key Events',
+xp:170,
+type:'regular',
+seqIdx:11,
+learn:'<h2 class="node-h2">🔥 WWII — Rise of Fascism & Key Events</h2><h3 class="node-h3">Rise of Fascism & Nazism</h3><div class="tbl-wrap"><table><thead><tr><th>Country</th><th>Leader</th><th>Party</th><th>Came to Power</th></tr></thead><tbody><tr><td>Italy</td><td>Benito Mussolini</td><td>National Fascist Party</td><td>1922 — "March on Rome"</td></tr><tr><td>Germany</td><td>Adolf Hitler</td><td>Nazi Party (NSDAP)</td><td>1933 — Chancellor</td></tr><tr><td>Japan</td><td>Military leaders (Tojo)</td><td>Militarist government</td><td>1930s</td></tr><tr><td>Spain</td><td>Francisco Franco</td><td>Falange</td><td>1939 (after Civil War)</td></tr></tbody></table></div><h3 class="node-h3">Why Hitler Rose</h3><div class="fact-box"><div class="fact-box-title">📢 5 Reasons Hitler Rose to Power</div><ul><li>1. Humiliation of Versailles Treaty — Germans felt betrayed</li><li>2. Great Depression (1929) — mass unemployment</li><li>3. Weimar Republic\'s weakness</li><li>4. Hitler\'s propaganda — blamed Jews, communists</li><li>5. Antisemitism as scapegoat</li></ul></div><div class="tbl-wrap"><table><thead><tr><th>Year</th><th>Key Pre-WWII Event</th></tr></thead><tbody><tr><td>1933</td><td>Hitler becomes Chancellor of Germany</td></tr><tr><td>1935</td><td>Nuremberg Laws — stripped Jews of citizenship</td></tr><tr><td>1936</td><td>Rome-Berlin Axis formed</td></tr><tr><td>1938</td><td>Anschluss — Germany annexes Austria</td></tr><tr><td>1938</td><td>Munich Agreement — Britain & France appease Hitler; Czechoslovakia given away</td></tr><tr><td>Sept 1, 1939</td><td>Germany invades Poland → WWII begins</td></tr></tbody></table></div><h3 class="node-h3">WWII War Sides</h3><div class="tbl-wrap"><table><thead><tr><th>Side</th><th>Members</th></tr></thead><tbody><tr><td>Allied Powers</td><td>USA, Britain, France, USSR (from 1941), China, Poland, others</td></tr><tr><td>Axis Powers</td><td>Germany, Italy, Japan</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Key WWII Event</th></tr></thead><tbody><tr><td>Sept 1, 1939</td><td>Germany invades Poland → WWII begins</td></tr><tr><td>Sept 3, 1939</td><td>Britain & France declare war on Germany</td></tr><tr><td>May 1940</td><td>Dunkirk evacuation — 338,000 Allied troops rescued from France</td></tr><tr><td>June 1940</td><td>France falls to Germany; Vichy France established</td></tr><tr><td>July–Oct 1940</td><td>Battle of Britain — German Luftwaffe vs British RAF (Britain wins)</td></tr><tr><td>June 22, 1941</td><td>Operation Barbarossa — Germany invades USSR</td></tr><tr><td>Dec 7, 1941</td><td>Japan attacks Pearl Harbor, Hawaii — USA enters war</td></tr><tr><td>1942</td><td>Battle of Midway — USA defeats Japan\'s navy (turning point in Pacific)</td></tr><tr><td>Feb 1943</td><td>Battle of Stalingrad — Germany defeated; turning point in Europe</td></tr><tr><td>June 6, 1944</td><td>D-Day / Operation Overlord — Allied landing in Normandy, France</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🔥 WWII Key SSC One-Liners</div><ul><li>WWII started: September 1, 1939 (Germany invades Poland)</li><li>Battle of Britain = 1940 (RAF vs Luftwaffe) — Britain won</li><li>Operation Barbarossa = June 22, 1941 (Germany invades USSR)</li><li>Pearl Harbor = December 7, 1941 (USA enters war)</li><li>Battle of Stalingrad = turning point in Europe (Feb 1943)</li><li>Battle of Midway = turning point in Pacific (1942)</li><li>D-Day = June 6, 1944, Normandy France</li><li>Mussolini\'s "March on Rome" = 1922</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Mussolini came to power <b>1922</b>; Hitler came to power <b>1933</b>. Stalingrad = turning point in <b>Europe</b>; Midway = turning point in <b>Pacific</b>. Pearl Harbor = <b>December 7, 1941</b> (not December 8). Dunkirk = <b>evacuation</b> (rescue), not a victory.</div>',
+revision:['Fascism rise: Mussolini(Italy,1922,March on Rome),Hitler(Germany,1933,Chancellor),Tojo/militarists(Japan,1930s),Franco(Spain,1939)','5 reasons Hitler rose: Versailles humiliation,Great Depression(1929),Weimar weakness,propaganda,antisemitism scapegoat','Hitler became Chancellor of Germany 1933','WWII began Sept 1,1939(Germany invades Poland)','Key pre-WWII events building tension through 1930s'],
+oneliners:['Benito Mussolini came to power in Italy in 1922 via the \'March on Rome\'','Adolf Hitler became Chancellor of Germany in 1933','Hitler\'s Nazi Party was called the NSDAP','Japan\'s militarist government rose to power in the 1930s, with leaders like Tojo','Francisco Franco came to power in Spain in 1939, after the Spanish Civil War','5 reasons for Hitler\'s rise: Versailles Treaty humiliation, the Great Depression (1929), Weimar Republic\'s weakness, Nazi propaganda, and antisemitism as scapegoat','The Great Depression of 1929 caused mass unemployment that fueled Hitler\'s rise','WWII began on September 1, 1939, when Germany invaded Poland'],
+flashcards:[{q:'Who led Italy\'s fascists, and how did he come to power?',a:'Benito Mussolini, via the \'March on Rome\' (1922)'},{q:'When did Hitler become Chancellor of Germany?',a:'1933'},{q:'What was Hitler\'s party called?',a:'The Nazi Party (NSDAP)'},{q:'When did Franco come to power in Spain?',a:'1939, after the Spanish Civil War'},{q:'List the 5 reasons for Hitler\'s rise to power.',a:'Versailles humiliation, Great Depression, Weimar weakness, propaganda, antisemitism scapegoat'},{q:'What economic event in 1929 fueled Hitler\'s rise?',a:'The Great Depression'},{q:'When did WWII begin, and what triggered it?',a:'September 1, 1939, when Germany invaded Poland'}],
+mcqs:[{
+q:'Benito Mussolini came to power in Italy in which year via the \'March on Rome\'?',
+o:['1919',
+'1921',
+'1922',
+'1924'],
+a:2,
+e:'Mussolini and the Fascists marched on Rome in 1922, leading to his appointment as Prime Minister.'}
+,
+{
+q:'Adolf Hitler became Chancellor of Germany in?',
+o:['1930',
+'1931',
+'1933',
+'1934'],
+a:2,
+e:'Hitler became Chancellor of Germany on January 30, 1933.'}
+,
+{
+q:'Germany\'s invasion of Poland on September 1, 1939 triggered which event?',
+o:['Cold War',
+'WWII beginning',
+'WWI beginning',
+'League of Nations dissolution'],
+a:1,
+e:'Germany\'s invasion of Poland on September 1, 1939 officially started World War II.'}
+,
+{
+q:'The Munich Agreement (1938) was a policy of?',
+o:['Appeasement — Britain & France gave Czechoslovakia to Hitler',
+'Collective security — Britain & France declared war on Germany',
+'Alliance — Britain joined Germany against Czechoslovakia',
+'Containment — surrounding Germany with allied states'],
+a:0,
+e:'The Munich Agreement (1938) allowed Hitler to take the Sudetenland of Czechoslovakia — a policy of appeasement.'}
+,
+{
+q:'What was \'Operation Barbarossa\' (June 22, 1941)?',
+o:['Allied landing in Normandy',
+'Germany\'s invasion of the USSR',
+'Japan\'s attack on Pearl Harbor',
+'Germany\'s bombing of Britain'],
+a:1,
+e:'Operation Barbarossa was Germany\'s invasion of the Soviet Union on June 22, 1941.'}
+,
+{
+q:'Japan attacked Pearl Harbor, Hawaii on?',
+o:['December 7, 1941',
+'December 8, 1941',
+'November 7, 1941',
+'October 7, 1941'],
+a:0,
+e:'Japan attacked Pearl Harbor on December 7, 1941 — bringing the USA into WWII.'}
+,
+{
+q:'Which battle (1942) was the turning point of WWII in the Pacific?',
+o:['Battle of Midway',
+'Battle of Iwo Jima',
+'Battle of Coral Sea',
+'Battle of Guadalcanal'],
+a:0,
+e:'The Battle of Midway (1942) destroyed Japan\'s naval power and was the Pacific turning point.'}
+,
+{
+q:'The Dunkirk evacuation (May 1940) rescued approximately how many Allied troops?',
+o:['100,000',
+'200,000',
+'338,000',
+'500,000'],
+a:2,
+e:'About 338,000 Allied troops were evacuated from Dunkirk in Operation Dynamo (May 1940).'}
+,
+{
+q:'The Battle of Britain (July–October 1940) was between which two forces?',
+o:['British Army vs German Army',
+'Royal Navy vs German U-boats',
+'British RAF vs German Luftwaffe',
+'Allied bombers vs German cities'],
+a:2,
+e:'The Battle of Britain was an air battle: Britain\'s Royal Air Force (RAF) vs Germany\'s Luftwaffe.'}
+,
+{
+q:'The Nuremberg Laws (1935) stripped which group of their German citizenship?',
+o:['Communists',
+'Roma people',
+'Jews',
+'Political opponents'],
+a:2,
+e:'The Nuremberg Laws (1935) stripped Jews of German citizenship and other civil rights.'}
+]}
+,
+{
+id:'w2b',
+title:'WWII — Holocaust, Atomic Bombs & Results',
+xp:170,
+type:'regular',
+seqIdx:12,
+learn:'<h2 class="node-h2">💀 WWII — Holocaust, Atomic Bombs & Results</h2><h3 class="node-h3">The Holocaust</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>What</td><td>Systematic genocide of Jews by Nazi Germany</td></tr><tr><td>Killed</td><td>~6 million Jews + 5–6 million others (Roma, disabled, homosexuals, communists)</td></tr><tr><td>Method</td><td>Concentration camps / Extermination camps</td></tr><tr><td>Key camp</td><td>Auschwitz (Poland) — largest; ~1.1 million killed</td></tr><tr><td>Nazi ideology</td><td>Jews blamed for Germany\'s problems</td></tr><tr><td>Term</td><td>"Final Solution" = Nazi\'s plan to exterminate all Jews</td></tr><tr><td>Post-war</td><td>Nuremberg Trials (1945–46) — Nazi leaders tried for war crimes</td></tr></tbody></table></div><h3 class="node-h3">Atomic Bombs (1945)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Hiroshima</th><th>Nagasaki</th></tr></thead><tbody><tr><td>Date</td><td>August 6, 1945</td><td>August 9, 1945</td></tr><tr><td>Bomb name</td><td>"Little Boy"</td><td>"Fat Man"</td></tr><tr><td>Aircraft</td><td>Enola Gay</td><td>Bockscar</td></tr><tr><td>Casualties</td><td>~140,000</td><td>~70,000</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Key Atomic Bomb Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Ordered by</td><td>US President Harry S. Truman</td></tr><tr><td>Japan surrendered</td><td>September 2, 1945 (VJ Day)</td></tr><tr><td>Total WWII deaths</td><td>~70–85 million (deadliest conflict in history)</td></tr></tbody></table></div><h3 class="node-h3">Key WWII Dates</h3><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Date</th></tr></thead><tbody><tr><td>Hitler\'s suicide</td><td>April 30, 1945 (Berlin bunker)</td></tr><tr><td>Mussolini killed</td><td>April 28, 1945</td></tr><tr><td>VE Day (Victory in Europe)</td><td>May 8, 1945</td></tr><tr><td>Hiroshima bombed</td><td>August 6, 1945</td></tr><tr><td>Nagasaki bombed</td><td>August 9, 1945</td></tr><tr><td>Japan surrenders (WWII ends)</td><td>September 2, 1945</td></tr></tbody></table></div><h3 class="node-h3">Nuremberg Trials (1945–1946)</h3><p class="node-p"><b>International Military Tribunal</b> at Nuremberg, Germany. Nazi leaders tried for war crimes, crimes against humanity, crimes against peace. <b>12 sentenced to death</b> (including Göring — committed suicide before execution). Established principle: individuals responsible for war crimes even under government orders.</p><div class="tbl-wrap"><table><thead><tr><th>WWII Result</th><th>Detail</th></tr></thead><tbody><tr><td>Dead</td><td>~70–85 million — deadliest conflict in history</td></tr><tr><td>Two superpowers</td><td>USA & USSR</td></tr><tr><td>United Nations</td><td>Founded 1945</td></tr><tr><td>Cold War</td><td>Began</td></tr><tr><td>Marshall Plan</td><td>USA helped rebuild Western Europe (~$13 billion)</td></tr><tr><td>NATO</td><td>Formed 1949</td></tr><tr><td>Germany</td><td>Divided into West Germany & East Germany</td></tr><tr><td>Israel</td><td>State of Israel created (1948)</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">💀 WWII Results SSC One-Liners</div><ul><li>VE Day = May 8, 1945 (Victory in Europe)</li><li>Hiroshima = August 6, 1945 (Little Boy; Enola Gay)</li><li>Nagasaki = August 9, 1945 (Fat Man; Bockscar)</li><li>Atomic bomb ordered by: Truman; Japan surrendered September 2, 1945</li><li>Hitler died: April 30, 1945 (suicide)</li><li>Nuremberg Trials = first international war crimes tribunal</li><li>Auschwitz = largest Nazi extermination camp (Poland)</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Hiroshima bomb name = <b>"Little Boy"</b>; Nagasaki = <b>"Fat Man"</b>. Aircraft for Hiroshima = <b>Enola Gay</b>; Nagasaki = Bockscar. VE Day = <b>May 8</b> (Europe); Japan surrendered = <b>September 2</b>. "Final Solution" = Holocaust (extermination of Jews) — not the same as the Holocaust itself (term for the broader genocide).</div>',
+revision:['Holocaust: systematic genocide of Jews by Nazi Germany, ~6 million Jews + 5-6 million others killed','Auschwitz(Poland)=largest camp,~1.1 million killed | \'Final Solution\'=Nazi extermination plan','Nuremberg Trials(1945-46): Nazi leaders tried for war crimes','Atomic bombs: Hiroshima(Aug 6,1945,\'Little Boy\') & Nagasaki(Aug 9,1945,\'Fat Man\')','Hiroshima aircraft=Enola Gay | Nagasaki aircraft=Bockscar'],
+oneliners:['The Holocaust was the systematic genocide of Jews by Nazi Germany','About 6 million Jews were killed in the Holocaust, plus 5-6 million others (Roma, disabled, etc.)','Auschwitz, in Poland, was the largest concentration/extermination camp, with ~1.1 million killed','\'Final Solution\' was the Nazi term for their plan to exterminate all Jews','The Nuremberg Trials (1945-46) tried Nazi leaders for war crimes','The atomic bomb on Hiroshima was dropped on August 6, 1945, named \'Little Boy\'','The atomic bomb on Nagasaki was dropped on August 9, 1945, named \'Fat Man\'','The aircraft that dropped the Hiroshima bomb was named Enola Gay','The aircraft that dropped the Nagasaki bomb was named Bockscar','Hiroshima casualties were about 140,000; Nagasaki about 70,000'],
+flashcards:[{q:'What was the Holocaust, and approximately how many Jews were killed?',a:'Nazi Germany\'s genocide of Jews; about 6 million killed'},{q:'Which was the largest Nazi concentration camp?',a:'Auschwitz, in Poland (~1.1 million killed)'},{q:'What was the \'Final Solution\'?',a:'The Nazi plan to exterminate all Jews'},{q:'What were the Nuremberg Trials?',a:'1945-46 trials of Nazi leaders for war crimes'},{q:'When and where was the first atomic bomb dropped, and what was it named?',a:'Hiroshima, August 6, 1945; named \'Little Boy\''},{q:'When and where was the second atomic bomb dropped, and what was it named?',a:'Nagasaki, August 9, 1945; named \'Fat Man\''},{q:'Name the aircraft that dropped the Hiroshima and Nagasaki bombs.',a:'Hiroshima: Enola Gay | Nagasaki: Bockscar'}],
+mcqs:[{
+q:'The D-Day landing (Operation Overlord) took place on which date and location?',
+o:['June 6, 1944; Normandy, France',
+'May 8, 1945; Berlin, Germany',
+'June 6, 1943; Sicily, Italy',
+'July 4, 1944; Calais, France'],
+a:0,
+e:'D-Day (Operation Overlord) took place on June 6, 1944 at Normandy, France.'}
+,
+{
+q:'The atomic bomb dropped on Hiroshima on August 6, 1945 was called?',
+o:['Fat Man',
+'Big Boy',
+'Little Boy',
+'Thin Man'],
+a:2,
+e:'The Hiroshima bomb was called \'Little Boy\' and was dropped by the aircraft Enola Gay.'}
+,
+{
+q:'The atomic bomb on Nagasaki (August 9, 1945) was named?',
+o:['Little Boy',
+'Big Man',
+'Fat Man',
+'Iron Mike'],
+a:2,
+e:'The Nagasaki bomb was called \'Fat Man\' and was dropped by the aircraft Bockscar.'}
+,
+{
+q:'The atomic bombs were ordered by which US President?',
+o:['Franklin D. Roosevelt',
+'Dwight Eisenhower',
+'Harry S. Truman',
+'Richard Nixon'],
+a:2,
+e:'US President Harry S. Truman ordered the atomic bombs to be dropped on Japan.'}
+,
+{
+q:'The turning point of WWII in Europe was which battle?',
+o:['D-Day (Normandy)',
+'Battle of Stalingrad',
+'Battle of Britain',
+'Battle of El Alamein'],
+a:1,
+e:'The Battle of Stalingrad (February 1943) — Germany\'s defeat — was the turning point in Europe.'}
+,
+{
+q:'VE Day (Victory in Europe) was on which date?',
+o:['April 30, 1945',
+'May 8, 1945',
+'June 6, 1945',
+'September 2, 1945'],
+a:1,
+e:'VE Day was May 8, 1945, when Germany officially surrendered.'}
+,
+{
+q:'Japan\'s formal surrender, ending WWII, was on?',
+o:['August 6, 1945',
+'August 15, 1945',
+'September 2, 1945',
+'October 2, 1945'],
+a:2,
+e:'Japan formally surrendered on September 2, 1945 (VJ Day), officially ending WWII.'}
+,
+{
+q:'The largest Nazi extermination camp was?',
+o:['Dachau',
+'Treblinka',
+'Auschwitz',
+'Sobibor'],
+a:2,
+e:'Auschwitz in Poland was the largest Nazi extermination camp, where ~1.1 million were killed.'}
+,
+{
+q:'The Nuremberg Trials (1945–46) were significant because they?',
+o:['First put defeated leaders in prison',
+'Established that individuals could be held responsible for war crimes',
+'Created the UN',
+'Led to the Marshall Plan'],
+a:1,
+e:'The Nuremberg Trials established the principle that individuals are responsible for war crimes even under government orders.'}
+,
+{
+q:'How many people died in WWII (approximate total)?',
+o:['20–30 million',
+'40–50 million',
+'70–85 million',
+'100 million'],
+a:2,
+e:'WWII killed approximately 70–85 million people, making it the deadliest conflict in history.'}
+]}
+]}
+,
+{
+id:'ch8',
+title:'❄️ Chapter 8: Cold War & Decolonisation',
+nodes:[{
+id:'cld',
+title:'Cold War — Key Events & Space Race',
+xp:170,
+type:'regular',
+seqIdx:13,
+learn:'<h2 class="node-h2">❄️ Cold War — Key Events & Space Race</h2><h3 class="node-h3">E2 — Cold War Key Events</h3><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Year</th><th>Detail</th></tr></thead><tbody><tr><td>Truman Doctrine</td><td>1947</td><td>US pledged to support countries threatened by communism; applied to Greece & Turkey</td></tr><tr><td>Marshall Plan</td><td>1947</td><td>USA provided ~$13 billion to rebuild Western Europe</td></tr><tr><td>Berlin Blockade & Airlift</td><td>1948–49</td><td>USSR blockaded West Berlin; USA airlifted supplies for 11 months</td></tr><tr><td>Korean War</td><td>1950–53</td><td>N. Korea invaded S. Korea; UN backed South; border = 38th Parallel; armistice only</td></tr><tr><td>Berlin Wall</td><td>1961–89</td><td>Built Aug 13, 1961 to stop emigration; fell Nov 9, 1989</td></tr><tr><td>Vietnam War</td><td>1955–75</td><td>USA backed South Vietnam; withdrew 1973; North Vietnam won 1975</td></tr></tbody></table></div><h3 class="node-h3">Space Race</h3><div class="tbl-wrap"><table><thead><tr><th>Event</th><th>Date</th><th>Country</th></tr></thead><tbody><tr><td>Sputnik 1 (1st satellite)</td><td>October 4, 1957</td><td>USSR</td></tr><tr><td>Laika (1st animal in space)</td><td>November 1957</td><td>USSR</td></tr><tr><td>Yuri Gagarin (1st human in space)</td><td>April 12, 1961</td><td>USSR</td></tr><tr><td>Alan Shepard (1st American in space)</td><td>May 5, 1961</td><td>USA</td></tr><tr><td>Valentina Tereshkova (1st woman in space)</td><td>June 1963</td><td>USSR</td></tr><tr><td>Neil Armstrong (1st human on Moon)</td><td>July 20, 1969</td><td>USA</td></tr><tr><td>Moon mission name</td><td>Apollo 11</td><td>USA</td></tr></tbody></table></div><p class="node-p">Neil Armstrong\'s words: <b>"One small step for man, one giant leap for mankind"</b></p><h3 class="node-h3">Arms Race Key Terms</h3><div class="tbl-wrap"><table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody><tr><td>MAD</td><td>Mutually Assured Destruction — both sides have enough nukes → deterrence</td></tr><tr><td>SALT I & II</td><td>Strategic Arms Limitation Talks (1972, 1979)</td></tr><tr><td>START</td><td>Strategic Arms Reduction Treaty</td></tr><tr><td>NPT (1968)</td><td>Non-Proliferation Treaty — prevent spread of nuclear weapons</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">❄️ Cold War SSC One-Liners</div><ul><li>Cold War: 1947–1991</li><li>NATO: North Atlantic Treaty Organisation (1949)</li><li>Warsaw Pact: Soviet military alliance (1955); dissolved 1991</li><li>Sputnik 1: 1957 (USSR) — first satellite</li><li>Yuri Gagarin: April 12, 1961 — first human in space</li><li>Valentina Tereshkova: 1963 — first woman in space (USSR)</li><li>Neil Armstrong on Moon: July 20, 1969 — Apollo 11</li><li>MAD = Mutually Assured Destruction (nuclear deterrence)</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Sputnik 1 = <b>1957</b> (USSR). Yuri Gagarin = <b>April 12, 1961</b> (first human in space; USSR). Neil Armstrong = <b>July 20, 1969</b> (Moon; USA). USSR won the space race initially (satellites, first human) but USA won the <b>Moon race</b>. Korean War ended with <b>armistice only</b> — technically still at war today.</div>',
+revision:['Truman Doctrine(1947): US support vs communism(Greece,Turkey) | Marshall Plan(1947): $13bn rebuild W.Europe','Berlin Blockade/Airlift(1948-49,11 months) | Korean War(1950-53,38th Parallel,armistice only)','Berlin Wall: built Aug 13,1961, fell Nov 9,1989 | Vietnam War(1955-75): US withdrew 1973,North won 1975','Space Race: Sputnik 1(USSR,Oct 4,1957)=1st satellite','Cold War = ideological conflict USA(capitalism) vs USSR(communism), no direct war'],
+oneliners:['The Truman Doctrine (1947) pledged US support to countries threatened by communism, like Greece and Turkey','The Marshall Plan (1947) provided about $13 billion to rebuild Western Europe','The Berlin Blockade and Airlift (1948-49) saw USA airlift supplies to West Berlin for 11 months','The Korean War (1950-53) was fought along the 38th Parallel, ending only in armistice','The Berlin Wall was built on August 13, 1961, to stop emigration','The Berlin Wall fell on November 9, 1989','The Vietnam War (1955-75) saw the USA withdraw in 1973; North Vietnam won in 1975','Sputnik 1, launched by USSR on October 4, 1957, was the first artificial satellite','The Space Race was a key arena of US-USSR Cold War competition'],
+flashcards:[{q:'What did the Truman Doctrine (1947) pledge?',a:'US support to countries threatened by communism, like Greece and Turkey'},{q:'What was the Marshall Plan?',a:'A 1947 US plan providing ~$13 billion to rebuild Western Europe'},{q:'How long did the Berlin Airlift last, and why?',a:'11 months (1948-49), to supply West Berlin during the Soviet blockade'},{q:'Where was the Korean War\'s dividing line?',a:'The 38th Parallel'},{q:'When was the Berlin Wall built, and when did it fall?',a:'Built August 13, 1961; fell November 9, 1989'},{q:'How did the Vietnam War end for the US and for Vietnam?',a:'US withdrew 1973; North Vietnam won in 1975'},{q:'What was Sputnik 1, and when was it launched?',a:'The first artificial satellite, launched by USSR on October 4, 1957'}],
+mcqs:[{
+q:'The first artificial satellite, Sputnik 1, was launched by which country in which year?',
+o:['USA in 1957',
+'USSR in 1957',
+'Germany in 1960',
+'USA in 1960'],
+a:1,
+e:'Sputnik 1 was launched by the USSR on October 4, 1957 — the first artificial satellite.'}
+,
+{
+q:'Yuri Gagarin became the first human in space on?',
+o:['April 12, 1961',
+'May 5, 1961',
+'June 16, 1963',
+'July 20, 1969'],
+a:0,
+e:'Yuri Gagarin (USSR) became the first human in space on April 12, 1961.'}
+,
+{
+q:'Neil Armstrong landed on the Moon on which date?',
+o:['July 4, 1969',
+'July 20, 1969',
+'August 20, 1969',
+'September 12, 1969'],
+a:1,
+e:'Neil Armstrong (Apollo 11) became the first human on the Moon on July 20, 1969.'}
+,
+{
+q:'The first woman in space was?',
+o:['Sally Ride (USA)',
+'Valentina Tereshkova (USSR)',
+'Svetlana Savitskaya (USSR)',
+'Kalpana Chawla (USA)'],
+a:1,
+e:'Valentina Tereshkova (USSR) became the first woman in space in June 1963.'}
+,
+{
+q:'The Marshall Plan (1947) provided how much US aid to rebuild Western Europe?',
+o:['~$5 billion',
+'~$13 billion',
+'~$20 billion',
+'~$50 billion'],
+a:1,
+e:'The Marshall Plan provided approximately $13 billion to rebuild Western Europe after WWII.'}
+,
+{
+q:'The Berlin Blockade (1948–49) was ended when?',
+o:['Allied troops broke through',
+'USSR agreed to end it in May 1949',
+'USA threatened nuclear war',
+'West Berlin surrendered'],
+a:1,
+e:'The USSR lifted the Berlin Blockade in May 1949 after the success of the Berlin Airlift.'}
+,
+{
+q:'MAD (Mutually Assured Destruction) refers to?',
+o:['A military strategy where both sides lose',
+'Nuclear deterrence — both sides have enough nukes to destroy each other',
+'A US first-strike policy',
+'A Soviet nuclear targeting system'],
+a:1,
+e:'MAD = Mutually Assured Destruction — both superpowers had enough nuclear weapons to ensure mutual destruction, creating deterrence.'}
+,
+{
+q:'The Non-Proliferation Treaty (NPT, 1968) aimed to?',
+o:['Ban all nuclear weapons',
+'Prevent spread of nuclear weapons to new countries',
+'Reduce existing nuclear arsenals',
+'Allow controlled nuclear testing'],
+a:1,
+e:'The NPT (1968) aimed to prevent the spread of nuclear weapons to additional countries.'}
+,
+{
+q:'What Neil Armstrong said upon landing on the Moon was?',
+o:['One giant leap for man, one small step for mankind',
+'That\'s one small step for man, one giant leap for mankind',
+'We came in peace for all mankind',
+'The Eagle has landed'],
+a:1,
+e:'Neil Armstrong said: \'That\'s one small step for man, one giant leap for mankind.\''}
+,
+{
+q:'The Korean War (1950–53) border between North and South Korea is?',
+o:['35th Parallel',
+'37th Parallel',
+'38th Parallel',
+'39th Parallel'],
+a:2,
+e:'The 38th Parallel is the border (Demilitarized Zone/DMZ) between North and South Korea.'}
+]}
+,
+{
+id:'cle',
+title:'End of Cold War & Decolonisation',
+xp:160,
+type:'regular',
+seqIdx:14,
+learn:'<h2 class="node-h2">🌍 End of Cold War & Decolonisation</h2><h3 class="node-h3">E3 — End of Cold War</h3><div class="tbl-wrap"><table><thead><tr><th>Year</th><th>Event</th></tr></thead><tbody><tr><td>1979</td><td>USSR invades Afghanistan (stayed till 1989)</td></tr><tr><td>1980</td><td>Solidarity movement in Poland — led by Lech Walesa</td></tr><tr><td>1985</td><td>Mikhail Gorbachev becomes USSR leader</td></tr><tr><td>1986</td><td>Glasnost (openness) + Perestroika (restructuring) policies</td></tr><tr><td>November 9, 1989</td><td>Berlin Wall falls</td></tr><tr><td>1989</td><td>Tiananmen Square protests in China (crushed)</td></tr><tr><td>October 3, 1990</td><td>German reunification</td></tr><tr><td>December 25, 1991</td><td>USSR dissolved — Gorbachev resigned; 15 republics became independent</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Gorbachev\'s Policy</th><th>Meaning</th></tr></thead><tbody><tr><td>Glasnost</td><td>Openness — freedom of speech, press</td></tr><tr><td>Perestroika</td><td>Restructuring — economic reforms</td></tr><tr><td>Democratisation</td><td>Political reforms</td></tr></tbody></table></div><h3 class="node-h3">F1 — Decolonisation Wave</h3><div class="tbl-wrap"><table><thead><tr><th>Country</th><th>Independence Year</th><th>From</th></tr></thead><tbody><tr><td>Ghana</td><td>1957</td><td>Britain — 1st African country south of Sahara to get independence</td></tr><tr><td>Nigeria</td><td>1960</td><td>Britain</td></tr><tr><td>Algeria</td><td>1962</td><td>France (after 8-year war)</td></tr><tr><td>Kenya</td><td>1963</td><td>Britain</td></tr><tr><td>Zimbabwe</td><td>1980</td><td>Britain</td></tr><tr><td>South Africa</td><td>Apartheid ended 1994</td><td>Independence was 1910; apartheid = 1948–1994</td></tr><tr><td>Namibia</td><td>1990</td><td>South Africa</td></tr><tr><td>Vietnam</td><td>1954 (N); 1975 (unified)</td><td>France then USA</td></tr><tr><td>Indonesia</td><td>1945/1949</td><td>Netherlands</td></tr><tr><td>Malaya (Malaysia)</td><td>1957</td><td>Britain</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Key Decolonisation Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Ghana 1957 leader</td><td>Kwame Nkrumah — "Father of pan-Africanism"</td></tr><tr><td>Apartheid</td><td>Racial segregation in South Africa (1948–1994)</td></tr><tr><td>Nelson Mandela</td><td>Anti-apartheid leader; imprisoned 27 years; 1st Black President of SA (1994)</td></tr><tr><td>ANC</td><td>African National Congress (Mandela\'s party)</td></tr><tr><td>F.W. de Klerk</td><td>South African President who ended apartheid; shared Nobel with Mandela</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🌍 End of Cold War SSC One-Liners</div><ul><li>Gorbachev = Glasnost + Perestroika</li><li>Berlin Wall fell = November 9, 1989</li><li>German reunification = October 3, 1990</li><li>USSR dissolved = December 25, 1991</li><li>Lech Walesa = Solidarity movement in Poland; Nobel Peace 1983</li><li>Ghana = 1st sub-Saharan African independent nation (1957)</li><li>Nelson Mandela = Nobel Peace Prize 1993; 1st Black SA President 1994</li><li>Apartheid ended = 1994 in South Africa</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> Berlin Wall <b>built = 1961</b>; <b>fell = November 9, 1989</b>. German reunification = <b>October 3, 1990</b> (the year AFTER the Wall fell). USSR dissolved = <b>December 25, 1991</b> (Christmas Day). Ghana = 1st sub-Saharan independent nation = <b>1957</b> (not 1960 which is "Year of Africa").</div>',
+revision:['1979 USSR invades Afghanistan(till 1989) | 1985 Gorbachev becomes USSR leader','Gorbachev policies: Glasnost(openness)+Perestroika(restructuring)+Democratisation','Berlin Wall falls Nov 9,1989 | German reunification Oct 3,1990','USSR dissolved Dec 25,1991 — 15 republics became independent','Decolonisation wave: African/Asian nations gained independence mostly 1945-1970s'],
+oneliners:['USSR invaded Afghanistan in 1979 and stayed until 1989','Mikhail Gorbachev became USSR leader in 1985','Gorbachev\'s Glasnost policy meant openness — freedom of speech and press','Gorbachev\'s Perestroika policy meant economic restructuring','The Berlin Wall fell on November 9, 1989','Tiananmen Square protests occurred in China in 1989 and were crushed','Germany was reunified on October 3, 1990','The USSR was dissolved on December 25, 1991','15 Soviet republics became independent when the USSR dissolved','Gorbachev resigned when the USSR dissolved in 1991'],
+flashcards:[{q:'When did USSR invade Afghanistan, and how long did it stay?',a:'1979, staying until 1989'},{q:'Who became USSR leader in 1985?',a:'Mikhail Gorbachev'},{q:'What do Glasnost and Perestroika mean?',a:'Glasnost = openness; Perestroika = economic restructuring'},{q:'When did the Berlin Wall fall?',a:'November 9, 1989'},{q:'When was Germany reunified?',a:'October 3, 1990'},{q:'When was the USSR dissolved, and into how many republics?',a:'December 25, 1991; 15 independent republics'},{q:'What happened in Tiananmen Square in 1989?',a:'Pro-democracy protests were crushed by the Chinese government'}],
+mcqs:[{
+q:'Mikhail Gorbachev\'s policy of \'Glasnost\' meant?',
+o:['Economic restructuring',
+'Political reform',
+'Openness — freedom of speech and press',
+'Military reduction'],
+a:2,
+e:'Glasnost = Openness — freedom of speech, press, and transparency.'}
+,
+{
+q:'\'Perestroika\' was Gorbachev\'s policy of?',
+o:['Political openness',
+'Economic restructuring',
+'Military reduction',
+'Democratic elections'],
+a:1,
+e:'Perestroika = Restructuring — economic reforms in the Soviet system.'}
+,
+{
+q:'The Berlin Wall fell on which date?',
+o:['October 3, 1989',
+'November 9, 1989',
+'November 9, 1990',
+'December 25, 1991'],
+a:1,
+e:'The Berlin Wall fell on November 9, 1989 — one of the defining moments of the Cold War\'s end.'}
+,
+{
+q:'German reunification was completed on which date?',
+o:['November 9, 1989',
+'January 1, 1990',
+'October 3, 1990',
+'December 25, 1990'],
+a:2,
+e:'German reunification was completed on October 3, 1990 — a year after the Wall fell.'}
+,
+{
+q:'The USSR was officially dissolved on?',
+o:['November 9, 1989',
+'January 1, 1991',
+'December 25, 1991',
+'October 3, 1991'],
+a:2,
+e:'The USSR was dissolved on December 25, 1991 — Gorbachev resigned; 15 republics became independent.'}
+,
+{
+q:'Ghana was the first sub-Saharan African country to gain independence, in which year?',
+o:['1955',
+'1957',
+'1960',
+'1963'],
+a:1,
+e:'Ghana gained independence from Britain in 1957; its leader was Kwame Nkrumah.'}
+,
+{
+q:'Nelson Mandela was the first Black President of South Africa. He was imprisoned for how many years?',
+o:['17 years',
+'20 years',
+'27 years',
+'31 years'],
+a:2,
+e:'Nelson Mandela was imprisoned for 27 years (1964–1990) on Robben Island.'}
+,
+{
+q:'Apartheid in South Africa officially ended in?',
+o:['1990',
+'1991',
+'1993',
+'1994'],
+a:3,
+e:'Apartheid officially ended in 1994 with South Africa\'s first democratic elections.'}
+,
+{
+q:'Lech Walesa led which movement in Poland?',
+o:['Solidarity movement',
+'Perestroika movement',
+'Velvet Revolution',
+'Warsaw Uprising'],
+a:0,
+e:'Lech Walesa led the Solidarity trade union movement in Poland, winning the Nobel Peace Prize in 1983.'}
+,
+{
+q:'Algeria gained independence from France after an 8-year war in?',
+o:['1958',
+'1960',
+'1962',
+'1965'],
+a:2,
+e:'Algeria gained independence from France in 1962 after the Algerian War of Independence.'}
+]}
+]}
+,
+{
+id:'ch9',
+title:'🏛️ Chapter 9: International Organisations & Events',
+nodes:[{
+id:'org',
+title:'UN, NATO & International Organisations',
+xp:170,
+type:'regular',
+seqIdx:15,
+learn:'<h2 class="node-h2">🏛️ UN, NATO & International Organisations</h2><h3 class="node-h3">H1 — League of Nations (1920–1946)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Founded</td><td>1920</td></tr><tr><td>Proposed by</td><td>US President Woodrow Wilson (14 Points)</td></tr><tr><td>HQ</td><td>Geneva, Switzerland</td></tr><tr><td>USA joined?</td><td>NO — US Senate rejected membership</td></tr><tr><td>Failed to prevent</td><td>WWII</td></tr><tr><td>Dissolved</td><td>1946 — replaced by United Nations</td></tr></tbody></table></div><h3 class="node-h3">H2 — United Nations (1945)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Founded</td><td>October 24, 1945 (UN Day = October 24)</td></tr><tr><td>Founded at</td><td>San Francisco Conference</td></tr><tr><td>HQ</td><td>New York, USA</td></tr><tr><td>1st Secretary-General</td><td>Trygve Lie (Norway)</td></tr><tr><td>Current Secretary-General</td><td>António Guterres (Portugal) — since 2017</td></tr><tr><td>Original members</td><td>51 nations</td></tr><tr><td>Current members</td><td>193 member states</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>UN Body</th><th>Detail</th></tr></thead><tbody><tr><td>General Assembly</td><td>All 193 members; 1 country = 1 vote</td></tr><tr><td>Security Council</td><td>15 members (5 permanent + 10 rotating)</td></tr><tr><td>P5 (Permanent 5)</td><td>USA, UK, France, Russia, China — each has VETO power</td></tr><tr><td>ICJ</td><td>International Court of Justice; HQ = The Hague, Netherlands</td></tr><tr><td>ECOSOC</td><td>Economic & Social Council</td></tr><tr><td>Secretariat</td><td>Administrative body; headed by Secretary-General</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Agency</th><th>Full Name</th><th>HQ</th></tr></thead><tbody><tr><td>WHO</td><td>World Health Organisation</td><td>Geneva</td></tr><tr><td>UNESCO</td><td>UN Educational, Scientific & Cultural Organisation</td><td>Paris</td></tr><tr><td>UNICEF</td><td>UN Children\'s Fund</td><td>New York</td></tr><tr><td>FAO</td><td>Food & Agriculture Organisation</td><td>Rome</td></tr><tr><td>ILO</td><td>International Labour Organisation</td><td>Geneva</td></tr><tr><td>IMF</td><td>International Monetary Fund</td><td>Washington D.C.</td></tr><tr><td>World Bank</td><td>International Bank for Reconstruction & Development</td><td>Washington D.C.</td></tr><tr><td>WTO</td><td>World Trade Organisation (NOT a UN agency)</td><td>Geneva</td></tr><tr><td>IAEA</td><td>International Atomic Energy Agency</td><td>Vienna</td></tr><tr><td>UNHCR</td><td>UN High Commissioner for Refugees</td><td>Geneva</td></tr></tbody></table></div><h3 class="node-h3">H3 — NATO & H4 — G7/G20/BRICS</h3><div class="tbl-wrap"><table><thead><tr><th>Organisation</th><th>Founded</th><th>Key Fact</th></tr></thead><tbody><tr><td>NATO</td><td>April 4, 1949</td><td>HQ Brussels; Article 5 = "attack on one = attack on all"; 32 members</td></tr><tr><td>Warsaw Pact</td><td>May 14, 1955</td><td>Soviet military alliance; dissolved 1991</td></tr><tr><td>G7</td><td>1975</td><td>USA, UK, France, Germany, Italy, Japan, Canada</td></tr><tr><td>G20</td><td>1999</td><td>G7 + China, India, Brazil, Russia, etc.; India hosted 2023</td></tr><tr><td>BRICS</td><td>2009</td><td>Brazil, Russia, India, China, South Africa; expanded 2024</td></tr></tbody></table></div><div class="tbl-wrap"><table><thead><tr><th>Organisation</th><th>HQ</th><th>Purpose</th></tr></thead><tbody><tr><td>OPEC</td><td>Vienna</td><td>Coordinate oil production policies</td></tr><tr><td>ASEAN</td><td>Jakarta</td><td>SE Asian economic + political cooperation</td></tr><tr><td>African Union (AU)</td><td>Addis Ababa, Ethiopia</td><td>African unity; replaced OAU (2002)</td></tr><tr><td>OIC</td><td>Jeddah</td><td>Organisation of Islamic Cooperation</td></tr><tr><td>SAARC</td><td>Kathmandu</td><td>South Asian cooperation</td></tr><tr><td>SCO</td><td>Beijing</td><td>Security/economic in Eurasia</td></tr><tr><td>ICC</td><td>The Hague</td><td>Try individuals for war crimes/genocide</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🏛️ Organisations SSC One-Liners</div><ul><li>UN founded = October 24, 1945 (UN Day)</li><li>1st UN Secretary-General = Trygve Lie (Norway)</li><li>Current UN SG = António Guterres (Portugal, since 2017)</li><li>UN original members = 51; current = 193</li><li>P5 veto members = USA, UK, France, Russia, China</li><li>NATO HQ = Brussels; Article 5 = collective defense</li><li>ICJ HQ = The Hague (Netherlands)</li><li>BRICS expanded 2024 to include Iran, Egypt, Ethiopia, UAE</li><li>India hosted G20 Summit 2023 (New Delhi)</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> WTO is <b>NOT</b> a UN agency (though related). IMF and World Bank are both in <b>Washington D.C.</b> WHO, ILO, WTO = <b>Geneva</b>. UNESCO = <b>Paris</b>. FAO = <b>Rome</b>. IAEA = <b>Vienna</b>. UNICEF = <b>New York</b>. ICJ = <b>The Hague</b>.</div>',
+revision:['League of Nations(1920-1946): proposed by Wilson(14 Points),HQ Geneva,USA NEVER joined,failed to prevent WWII,replaced by UN','United Nations(1945): founded Oct 24(UN Day),San Francisco Conference,HQ New York','1st Secretary-General=Trygve Lie(Norway) | Current=Antonio Guterres(Portugal,since 2017)','Original UN members=51 nations | Current=193 member states','NATO(1949): military alliance, founding members incl. USA,UK,France,Canada'],
+oneliners:['The League of Nations was founded in 1920, proposed by US President Woodrow Wilson','The League of Nations had its HQ in Geneva, Switzerland','The USA never joined the League of Nations — the Senate rejected membership','The League of Nations failed to prevent WWII and was dissolved in 1946','The United Nations was founded on October 24, 1945 — celebrated as UN Day','The UN was founded at the San Francisco Conference','The UN\'s headquarters is in New York, USA','Trygve Lie of Norway was the UN\'s first Secretary-General','Antonio Guterres of Portugal has been UN Secretary-General since 2017','The UN originally had 51 member nations; it now has 193 member states','NATO, a military alliance, was founded in 1949'],
+flashcards:[{q:'Who proposed the League of Nations, and based on what?',a:'Woodrow Wilson, based on his 14 Points'},{q:'Where was the League of Nations headquartered?',a:'Geneva, Switzerland'},{q:'Did the USA join the League of Nations?',a:'No — the US Senate rejected membership'},{q:'When was the UN founded, and where?',a:'October 24, 1945, at the San Francisco Conference'},{q:'Who was the UN\'s first Secretary-General?',a:'Trygve Lie, of Norway'},{q:'Who is the current UN Secretary-General, and since when?',a:'Antonio Guterres, of Portugal, since 2017'},{q:'How many original vs current UN member states?',a:'51 original; 193 current'},{q:'When was NATO founded?',a:'1949'}],
+mcqs:[{
+q:'The United Nations was founded on which date?',
+o:['June 26, 1945',
+'August 15, 1945',
+'October 24, 1945',
+'January 1, 1946'],
+a:2,
+e:'The UN was founded on October 24, 1945 — UN Day is celebrated on this date.'}
+,
+{
+q:'The original number of UN member states was?',
+o:['36',
+'41',
+'51',
+'63'],
+a:2,
+e:'The UN had 51 original member states when it was founded in 1945.'}
+,
+{
+q:'Which five countries are permanent members of the UN Security Council with veto power?',
+o:['USA, UK, France, Germany, China',
+'USA, UK, France, Russia, China',
+'USA, Russia, China, Japan, Germany',
+'USA, UK, France, Russia, India'],
+a:1,
+e:'The P5 (Permanent 5) with veto power: USA, UK, France, Russia, China.'}
+,
+{
+q:'Where is the International Court of Justice (ICJ) headquartered?',
+o:['Brussels',
+'Geneva',
+'New York',
+'The Hague'],
+a:3,
+e:'The ICJ is headquartered in The Hague, Netherlands.'}
+,
+{
+q:'The League of Nations was proposed by which US President in his \'14 Points\'?',
+o:['Franklin Roosevelt',
+'Harry Truman',
+'Woodrow Wilson',
+'Theodore Roosevelt'],
+a:2,
+e:'Woodrow Wilson proposed the League of Nations in his 14 Points (1918).'}
+,
+{
+q:'The USA was NOT a member of the League of Nations because?',
+o:['Wilson refused to propose it',
+'The US Senate rejected membership',
+'USA was not invited',
+'Wilson changed his mind'],
+a:1,
+e:'The US Senate rejected joining the League of Nations, despite Wilson proposing it.'}
+,
+{
+q:'Which UN agency is headquartered in Paris?',
+o:['WHO',
+'FAO',
+'UNESCO',
+'UNICEF'],
+a:2,
+e:'UNESCO (UN Educational, Scientific and Cultural Organisation) is headquartered in Paris.'}
+,
+{
+q:'NATO\'s founding was on which date?',
+o:['April 4, 1949',
+'May 14, 1955',
+'October 24, 1945',
+'January 1, 1950'],
+a:0,
+e:'NATO was founded on April 4, 1949.'}
+,
+{
+q:'NATO\'s Article 5 states?',
+o:['Member nations must spend 2% of GDP on defence',
+'An attack on one member is an attack on all',
+'Nuclear weapons sharing among members',
+'Members must not have bilateral defence treaties'],
+a:1,
+e:'NATO\'s Article 5 is the collective defense clause: an attack on one is an attack on all.'}
+,
+{
+q:'The G20 represents approximately what share of world GDP?',
+o:['50%',
+'70%',
+'85%',
+'95%'],
+a:2,
+e:'The G20 represents approximately 85% of world GDP and 80% of world trade.'}
+]}
+,
+{
+id:'int',
+title:'International Events — Suez, Arab Wars, Gulf & 9/11',
+xp:160,
+type:'regular',
+seqIdx:16,
+learn:'<h2 class="node-h2">🌐 International Events & Crises</h2><h3 class="node-h3">G1 — Suez Crisis (1956)</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Egyptian President</td><td>Gamal Abdel Nasser</td></tr><tr><td>What happened</td><td>Nasser nationalised Suez Canal (July 1956)</td></tr><tr><td>Attackers</td><td>Britain + France + Israel attacked Egypt</td></tr><tr><td>USA & USSR</td><td>Both pressured attackers to withdraw (unusual US-USSR agreement)</td></tr><tr><td>Outcome</td><td>Attackers withdrew; Egypt kept Suez Canal</td></tr><tr><td>Significance</td><td>Showed decline of British/French power; rise of USA & USSR</td></tr></tbody></table></div><h3 class="node-h3">G2 — Israel-Arab Conflicts</h3><div class="tbl-wrap"><table><thead><tr><th>War</th><th>Year</th><th>Detail</th></tr></thead><tbody><tr><td>Arab-Israeli War</td><td>1948</td><td>After Israel created; Arab states attacked; Israel won</td></tr><tr><td>Suez Crisis</td><td>1956</td><td>Egypt vs Israel + UK + France</td></tr><tr><td>Six Day War</td><td>1967</td><td>Israel defeated Egypt, Jordan, Syria in 6 days; captured West Bank, Gaza, Sinai, Golan Heights</td></tr><tr><td>Yom Kippur War</td><td>1973</td><td>Egypt & Syria surprise attack on Israel; Israel won with US help</td></tr><tr><td>Camp David Accords</td><td>1978</td><td>Egypt-Israel peace deal; brokered by Jimmy Carter</td></tr></tbody></table></div><p class="node-p">State of Israel created: <b>May 14, 1948</b>. Six Day War = Israel\'s greatest military victory. Camp David = first Arab country (Egypt) to recognise Israel; Sadat + Begin + Carter.</p><h3 class="node-h3">G3 — Gulf Wars</h3><div class="tbl-wrap"><table><thead><tr><th></th><th>First Gulf War</th><th>Second Gulf War (Iraq War)</th></tr></thead><tbody><tr><td>Year</td><td>1990–1991</td><td>2003</td></tr><tr><td>Cause</td><td>Iraq (Saddam Hussein) invaded Kuwait</td><td>USA claimed Iraq had WMD (false)</td></tr><tr><td>Coalition</td><td>35 nations led by USA (UN authorised)</td><td>USA + UK (no UN authorisation)</td></tr><tr><td>Operation</td><td>Operation Desert Storm</td><td>Operation Iraqi Freedom</td></tr><tr><td>US President</td><td>George H.W. Bush</td><td>George W. Bush</td></tr><tr><td>Outcome</td><td>Iraq expelled from Kuwait</td><td>Saddam captured; executed Dec 2006; no WMDs found</td></tr></tbody></table></div><h3 class="node-h3">G4 — 9/11 & War on Terror</h3><div class="tbl-wrap"><table><thead><tr><th>Fact</th><th>Answer</th></tr></thead><tbody><tr><td>Date</td><td>September 11, 2001</td></tr><tr><td>Attacks</td><td>4 hijacked planes; Twin Towers (WTC) + Pentagon</td></tr><tr><td>Perpetrator</td><td>Al-Qaeda (Osama bin Laden)</td></tr><tr><td>US response</td><td>War on Terror declared by George W. Bush</td></tr><tr><td>Afghanistan invaded</td><td>October 2001 (Taliban harboured Al-Qaeda)</td></tr><tr><td>Osama bin Laden killed</td><td>May 2, 2011 — Abbottabad, Pakistan (US Navy SEALs, under Obama)</td></tr><tr><td>Deaths on 9/11</td><td>~2,977 people</td></tr><tr><td>Taliban in Afghanistan</td><td>Returned to power August 2021 (US withdrawal)</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">🌐 International Events SSC One-Liners</div><ul><li>Suez Crisis 1956 = Nasser nationalised Suez; Egypt kept it</li><li>Six Day War = 1967 (Israel defeated Egypt, Jordan, Syria in 6 days)</li><li>Israel created = May 14, 1948</li><li>Camp David Accords = 1978 (Jimmy Carter brokered; Egypt-Israel peace)</li><li>First Gulf War = Operation Desert Storm; Second = Operation Iraqi Freedom</li><li>9/11 = September 11, 2001; Al-Qaeda; Osama bin Laden</li><li>Osama bin Laden killed = May 2, 2011 (Abbottabad, Pakistan)</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> First Gulf War (1990–91) = <b>UN authorised</b>; Second Gulf War (2003) = <b>NO UN authorisation</b>. Six Day War = <b>1967</b>; Yom Kippur War = <b>1973</b> (different wars!). Camp David Accords = <b>1978</b> (signed 1979). 9/11 was organised by <b>Al-Qaeda</b>, not Taliban (Taliban only harboured them in Afghanistan).</div>',
+revision:['Suez Crisis(1956): Nasser nationalised Suez Canal,Britain+France+Israel attacked,US+USSR pressured withdrawal','Suez showed decline of British/French power, rise of USA & USSR','Arab-Israeli War(1948) | Six Day War(1967): Israel defeated Egypt,Jordan,Syria,captured West Bank/Gaza/Sinai/Golan','Gulf War(1990-91) | 9/11 attacks(Sept 11,2001,USA)','Multiple Israel-Arab conflicts spanning 1948-1973'],
+oneliners:['The Suez Crisis (1956) began when Egyptian President Nasser nationalised the Suez Canal','Britain, France, and Israel attacked Egypt during the Suez Crisis','Both the USA and USSR pressured the attackers to withdraw during Suez — a rare alliance','The Suez Crisis showed the decline of British/French power and the rise of USA/USSR','The Arab-Israeli War (1948) followed the creation of Israel','The Six Day War (1967) saw Israel defeat Egypt, Jordan, and Syria in just 6 days','Israel captured the West Bank, Gaza, Sinai, and Golan Heights in the Six Day War','The Gulf War occurred in 1990-91','The September 11, 2001 attacks targeted the USA'],
+flashcards:[{q:'What triggered the Suez Crisis (1956)?',a:'Egyptian President Nasser nationalising the Suez Canal'},{q:'Who attacked Egypt during the Suez Crisis?',a:'Britain, France, and Israel'},{q:'What was unusual about the US-USSR role in the Suez Crisis?',a:'Both pressured the attackers to withdraw — a rare moment of agreement'},{q:'What did the Suez Crisis reveal about global power?',a:'The decline of British/French power and the rise of USA/USSR'},{q:'What happened in the Six Day War (1967)?',a:'Israel defeated Egypt, Jordan, and Syria, capturing West Bank, Gaza, Sinai, Golan Heights'},{q:'When was the Gulf War?',a:'1990-91'},{q:'When did the 9/11 attacks occur?',a:'September 11, 2001'}],
+mcqs:[{
+q:'The Suez Crisis (1956) was triggered when Egypt\'s President Nasser did what?',
+o:['Attacked Israel',
+'Nationalised the Suez Canal',
+'Declared war on Britain',
+'Joined the Soviet bloc'],
+a:1,
+e:'Nasser nationalised the Suez Canal in July 1956, triggering the crisis.'}
+,
+{
+q:'During the Suez Crisis, which two superpowers both pressured Britain and France to withdraw?',
+o:['USA and China',
+'USSR and China',
+'USA and USSR',
+'USA and UN'],
+a:2,
+e:'Unusually, both USA and USSR pressured Britain, France, and Israel to withdraw from Egypt.'}
+,
+{
+q:'The Six Day War (1967) saw Israel defeat which three countries in six days?',
+o:['Syria, Jordan, Iraq',
+'Egypt, Jordan, Syria',
+'Egypt, Saudi Arabia, Jordan',
+'Libya, Egypt, Syria'],
+a:1,
+e:'Israel defeated Egypt, Jordan, and Syria in the Six Day War (June 1967).'}
+,
+{
+q:'The Camp David Accords (1978) were brokered by which US President?',
+o:['Richard Nixon',
+'Gerald Ford',
+'Jimmy Carter',
+'Ronald Reagan'],
+a:2,
+e:'US President Jimmy Carter brokered the Camp David Accords (1978) between Egypt and Israel.'}
+,
+{
+q:'The first Gulf War (1990–91) was codenamed?',
+o:['Operation Iraqi Freedom',
+'Operation Desert Storm',
+'Operation Enduring Freedom',
+'Operation Shock and Awe'],
+a:1,
+e:'The First Gulf War coalition operation was codenamed Operation Desert Storm.'}
+,
+{
+q:'The 9/11 attacks were carried out by which organisation?',
+o:['Taliban',
+'Hamas',
+'ISIS',
+'Al-Qaeda'],
+a:3,
+e:'Al-Qaeda, led by Osama bin Laden, carried out the September 11, 2001 attacks.'}
+,
+{
+q:'Osama bin Laden was killed in which Pakistani city on May 2, 2011?',
+o:['Karachi',
+'Lahore',
+'Islamabad',
+'Abbottabad'],
+a:3,
+e:'Osama bin Laden was killed by US Navy SEALs in Abbottabad, Pakistan on May 2, 2011.'}
+,
+{
+q:'The State of Israel was created on which date?',
+o:['November 29, 1947',
+'May 14, 1948',
+'June 5, 1948',
+'July 4, 1948'],
+a:1,
+e:'The State of Israel was officially declared on May 14, 1948.'}
+,
+{
+q:'The Second Gulf War / Iraq War (2003) did NOT have?',
+o:['US participation',
+'UK participation',
+'UN authorisation',
+'Coalition involvement'],
+a:2,
+e:'The Iraq War (2003) had NO UN Security Council authorisation — unlike the First Gulf War.'}
+,
+{
+q:'The Yom Kippur War (1973) began with a surprise attack by which two countries on Israel?',
+o:['Jordan and Syria',
+'Egypt and Jordan',
+'Egypt and Syria',
+'Iraq and Syria'],
+a:2,
+e:'Egypt and Syria launched a surprise attack on Israel on Yom Kippur (October 6, 1973).'}
+]}
+,
+{
+id:'fd1',
+title:'Key Dates, Firsts & Famous Speeches',
+xp:150,
+type:'regular',
+seqIdx:17,
+learn:'<h2 class="node-h2">📊 Key Dates, Firsts & Famous Documents</h2><h3 class="node-h3">J2 — "First" Facts in World History</h3><div class="tbl-wrap"><table><thead><tr><th>First</th><th>Answer</th></tr></thead><tbody><tr><td>1st circumnavigation of Earth</td><td>Magellan (1519–1522; completed by Elcano after Magellan died)</td></tr><tr><td>1st country to give women voting rights</td><td>New Zealand (1893)</td></tr><tr><td>1st satellite</td><td>Sputnik 1 — USSR (October 4, 1957)</td></tr><tr><td>1st human in space</td><td>Yuri Gagarin — USSR (April 12, 1961)</td></tr><tr><td>1st woman in space</td><td>Valentina Tereshkova — USSR (June 16, 1963)</td></tr><tr><td>1st human on Moon</td><td>Neil Armstrong — USA (July 20, 1969)</td></tr><tr><td>1st atomic bomb used</td><td>Hiroshima, Japan (August 6, 1945)</td></tr><tr><td>1st country to use gunpowder</td><td>China</td></tr><tr><td>1st printing press</td><td>Johannes Gutenberg (Germany, ~1440)</td></tr><tr><td>1st nuclear power station</td><td>USSR, Obninsk (1954)</td></tr><tr><td>1st internet</td><td>ARPANET (USA, 1969)</td></tr><tr><td>1st Black US President</td><td>Barack Obama (2009)</td></tr><tr><td>1st female PM of UK</td><td>Margaret Thatcher (1979)</td></tr><tr><td>1st sub-Saharan African independent nation</td><td>Ghana (1957)</td></tr></tbody></table></div><h3 class="node-h3">J3 — Famous Speeches & Documents</h3><div class="tbl-wrap"><table><thead><tr><th>Document/Speech</th><th>Author</th><th>Year</th><th>Key Line</th></tr></thead><tbody><tr><td>Declaration of Independence</td><td>Thomas Jefferson</td><td>1776</td><td>"All men are created equal"</td></tr><tr><td>Communist Manifesto</td><td>Marx & Engels</td><td>1848</td><td>"Workers of the world, unite!"</td></tr><tr><td>Gettysburg Address</td><td>Abraham Lincoln</td><td>1863</td><td>"Government of the people, by the people, for the people"</td></tr><tr><td>14 Points</td><td>Woodrow Wilson</td><td>1918</td><td>Self-determination; League of Nations</td></tr><tr><td>Iron Curtain Speech</td><td>Winston Churchill</td><td>1946</td><td>"Iron curtain has descended across Europe"</td></tr><tr><td>"I Have a Dream"</td><td>Martin Luther King Jr.</td><td>1963</td><td>Civil rights movement; racial equality</td></tr><tr><td>"We shall fight on the beaches"</td><td>Winston Churchill</td><td>1940</td><td>WWII resolve</td></tr><tr><td>"Ich bin ein Berliner"</td><td>JFK</td><td>1963</td><td>Support for West Berlin</td></tr><tr><td>"Tear down this wall"</td><td>Ronald Reagan</td><td>1987</td><td>Berlin Wall; Cold War</td></tr><tr><td>Universal Declaration of Human Rights</td><td>UN</td><td>1948</td><td>30 fundamental human rights</td></tr></tbody></table></div><h3 class="node-h3">Key World Leaders at a Glance</h3><div class="tbl-wrap"><table><thead><tr><th>Person</th><th>Country</th><th>Known For</th></tr></thead><tbody><tr><td>Nelson Mandela</td><td>South Africa</td><td>Anti-apartheid; 1st Black President; Nobel Peace 1993</td></tr><tr><td>Winston Churchill</td><td>Britain</td><td>WWII leader; "Iron Curtain" speech (1946)</td></tr><tr><td>Mikhail Gorbachev</td><td>USSR</td><td>Glasnost + Perestroika; ended Cold War; Nobel Peace 1990</td></tr><tr><td>Ho Chi Minh</td><td>Vietnam</td><td>Vietnamese independence; North Vietnam leader</td></tr><tr><td>Fidel Castro</td><td>Cuba</td><td>Communist Cuba; ruled 1959–2008</td></tr><tr><td>Lech Walesa</td><td>Poland</td><td>Solidarity movement; Nobel Peace 1983; Polish President</td></tr></tbody></table></div><div class="fact-box"><div class="fact-box-title">📊 Firsts & Speeches SSC One-Liners</div><ul><li>1st female PM of UK = Margaret Thatcher (1979)</li><li>1st Black US President = Barack Obama (2009)</li><li>"Iron Curtain" speech = Winston Churchill (1946)</li><li>"I Have a Dream" = Martin Luther King Jr. (1963)</li><li>"Ich bin ein Berliner" = JFK (1963, West Berlin)</li><li>"Tear down this wall" = Ronald Reagan (1987)</li><li>Gettysburg Address = Lincoln (1863)</li><li>UDHR = UN (1948) — 30 fundamental human rights</li></ul></div><div class="trap-box"><b>⚠️ Exam Trap:</b> "Iron Curtain" speech = <b>Churchill (1946)</b>; "Tear down this wall" = <b>Reagan (1987)</b>. "Ich bin ein Berliner" = <b>JFK (1963)</b>. Magellan\'s circumnavigation <b>completed by Elcano</b> (Magellan died 1521 in Philippines). 1st woman to vote = New Zealand women in <b>1893</b>.</div>',
+revision:['1st circumnavigation: Magellan(1519-22,completed by Elcano) | 1st women\'s voting rights: New Zealand(1893)','1st satellite: Sputnik 1,USSR(1957) | 1st human in space: Yuri Gagarin,USSR(1961)','1st woman in space: Valentina Tereshkova,USSR(1963) | 1st human on Moon: Neil Armstrong,USA(1969)','1st printing press: Gutenberg,Germany(~1440) | 1st nuclear power station: USSR,Obninsk(1954)','1st internet: ARPANET,USA(1969)'],
+oneliners:['Magellan\'s expedition (1519-22) achieved the first circumnavigation of Earth, completed by Elcano','New Zealand was the first country to give women voting rights, in 1893','Sputnik 1 (USSR, 1957) was the first artificial satellite','Yuri Gagarin (USSR, 1961) was the first human in space','Valentina Tereshkova (USSR, 1963) was the first woman in space','Neil Armstrong (USA, 1969) was the first human on the Moon','Hiroshima (1945) was the site of the first atomic bomb used in war','China was the first country to use gunpowder','Johannes Gutenberg (Germany, ~1440) invented the first printing press','USSR\'s Obninsk plant (1954) was the first nuclear power station','ARPANET (USA, 1969) was the first internet'],
+flashcards:[{q:'Who completed the first circumnavigation of Earth, and how?',a:'Magellan\'s expedition (1519-22), completed by Elcano after Magellan died'},{q:'Which country first gave women voting rights, and when?',a:'New Zealand, in 1893'},{q:'Who was the first human in space, and from which country?',a:'Yuri Gagarin, USSR, 1961'},{q:'Who was the first woman in space?',a:'Valentina Tereshkova, USSR, 1963'},{q:'Who was the first human on the Moon, and when?',a:'Neil Armstrong, USA, July 20, 1969'},{q:'Who invented the first printing press, and roughly when?',a:'Johannes Gutenberg, Germany, ~1440'},{q:'What was ARPANET, and where/when did it originate?',a:'The first internet, USA, 1969'}],
+mcqs:[{
+q:'The first country to give women the right to vote was?',
+o:['USA (1920)',
+'Australia (1902)',
+'Finland (1906)',
+'New Zealand (1893)'],
+a:3,
+e:'New Zealand was the first country to give women the right to vote, in 1893.'}
+,
+{
+q:'The \'Iron Curtain\' speech was delivered by which leader in 1946?',
+o:['Franklin Roosevelt',
+'Harry Truman',
+'Winston Churchill',
+'Charles de Gaulle'],
+a:2,
+e:'Winston Churchill delivered the \'Iron Curtain\' speech in Fulton, Missouri in 1946.'}
+,
+{
+q:'Martin Luther King Jr.\'s famous \'I Have a Dream\' speech was delivered in which year?',
+o:['1955',
+'1960',
+'1963',
+'1965'],
+a:2,
+e:'Martin Luther King Jr. delivered \'I Have a Dream\' on August 28, 1963, during the March on Washington.'}
+,
+{
+q:'\'Ich bin ein Berliner\' was said by which US President in 1963?',
+o:['Dwight Eisenhower',
+'John F. Kennedy',
+'Lyndon Johnson',
+'Richard Nixon'],
+a:1,
+e:'JFK said \'Ich bin ein Berliner\' during his visit to West Berlin in 1963.'}
+,
+{
+q:'\'Tear down this wall\' was said by which US President in 1987?',
+o:['Jimmy Carter',
+'Ronald Reagan',
+'George H.W. Bush',
+'Bill Clinton'],
+a:1,
+e:'Ronald Reagan said \'Tear down this wall\' at the Berlin Wall on June 12, 1987.'}
+,
+{
+q:'The Universal Declaration of Human Rights was adopted by the UN in which year?',
+o:['1945',
+'1946',
+'1948',
+'1950'],
+a:2,
+e:'The Universal Declaration of Human Rights (UDHR) was adopted by the UN General Assembly in 1948.'}
+,
+{
+q:'The first satellite (Sputnik 1) was launched in?',
+o:['October 1955',
+'October 1957',
+'October 1959',
+'March 1961'],
+a:1,
+e:'Sputnik 1 was launched by the USSR on October 4, 1957.'}
+,
+{
+q:'The first printing press was invented by?',
+o:['Leonardo da Vinci (Italy)',
+'Johannes Gutenberg (Germany)',
+'William Caxton (England)',
+'Bi Sheng (China)'],
+a:1,
+e:'Johannes Gutenberg invented the movable type printing press in Germany around 1440.'}
+,
+{
+q:'The Gettysburg Address (1863) by Lincoln is best known for the phrase?',
+o:['I have a dream',
+'All men are created equal',
+'Government of the people, by the people, for the people',
+'We shall fight on the beaches'],
+a:2,
+e:'The Gettysburg Address concludes \'...government of the people, by the people, for the people, shall not perish from the earth.\''}
+,
+{
+q:'Margaret Thatcher became the first female Prime Minister of the UK in which year?',
+o:['1975',
+'1977',
+'1979',
+'1981'],
+a:2,
+e:'Margaret Thatcher became the UK\'s first female Prime Minister in 1979.'}
+]}
+,
+{
+id:'t1',
+title:'⚠️ Trap Node — World History Confused Facts',
+xp:200,
+type:'trap',
+seqIdx:18,
+learn:'<h2 class="node-h2">⚠️ Trap Node — World History Confused Facts</h2><p class="node-p">These are the most frequently confused facts in World History for SSC exams. Study each trap carefully.</p><div class="tbl-wrap"><table><thead><tr><th>TRAP</th><th>Wrong Think</th><th>Correct Answer</th></tr></thead><tbody><tr><td>Columbus sailed for?</td><td>Portugal</td><td>SPAIN (funded by Ferdinand & Isabella)</td></tr><tr><td>Vasco da Gama\'s employer</td><td>Spain</td><td>PORTUGAL</td></tr><tr><td>Largest empire in history</td><td>Mongol Empire</td><td>BRITISH EMPIRE (by area)</td></tr><tr><td>Largest CONTIGUOUS land empire</td><td>British</td><td>MONGOL EMPIRE</td></tr><tr><td>Boston Tea Party year</td><td>1776</td><td>1773</td></tr><tr><td>Declaration of Independence drafter</td><td>George Washington</td><td>Thomas Jefferson</td></tr><tr><td>Reign of Terror leader</td><td>Napoleon</td><td>Robespierre</td></tr><tr><td>French Revolution slogan</td><td>Liberté, Fraternité, Égalité (order)</td><td>Liberté, ÉGALITÉ, Fraternité</td></tr><tr><td>Bloody Sunday year</td><td>1917</td><td>1905 (massacre of protesters in St. Petersburg)</td></tr><tr><td>USSR formed</td><td>1917</td><td>1922</td></tr><tr><td>Hiroshima bomb name</td><td>Fat Man</td><td>Little Boy (Nagasaki = Fat Man)</td></tr><tr><td>Battle of Trafalgar winner</td><td>Napoleon</td><td>Admiral Nelson (Britain) — Napoleon LOST sea power</td></tr><tr><td>Pearl Harbor date</td><td>December 8, 1941</td><td>December 7, 1941</td></tr><tr><td>First tank used by</td><td>Germany</td><td>BRITAIN (Battle of Somme, 1916)</td></tr><tr><td>First poison gas used by</td><td>Britain</td><td>GERMANY (Ypres, 1915)</td></tr><tr><td>USA joined League of Nations?</td><td>Yes</td><td>NO — US Senate rejected</td></tr><tr><td>Stalingrad turning point of</td><td>Pacific</td><td>Europe (Midway = Pacific turning point)</td></tr><tr><td>Berlin Wall fell</td><td>1990 (reunification)</td><td>1989 (November 9)</td></tr><tr><td>Camp David Accords year</td><td>1979</td><td>1978 (signed 1979)</td></tr><tr><td>Mao\'s Long March</td><td>1949</td><td>1934–1935</td></tr></tbody></table></div><h3 class="node-h3">Date Confusion Pairs</h3><div class="tbl-wrap"><table><thead><tr><th>Event 1</th><th>Date 1</th><th>Event 2</th><th>Date 2</th></tr></thead><tbody><tr><td>Sputnik 1</td><td>1957</td><td>Yuri Gagarin in space</td><td>1961</td></tr><tr><td>WWI assassination</td><td>June 28, 1914</td><td>WWI began</td><td>July 28, 1914</td></tr><tr><td>VE Day (Europe)</td><td>May 8, 1945</td><td>WWII ends (Pacific)</td><td>September 2, 1945</td></tr><tr><td>Cuban Revolution</td><td>1959</td><td>Bay of Pigs</td><td>1961</td></tr><tr><td>Cuban Missile Crisis</td><td>1962</td><td>Vietnam War ended (US)</td><td>1973</td></tr><tr><td>Berlin Wall built</td><td>1961</td><td>Berlin Wall fell</td><td>1989</td></tr></tbody></table></div><div class="trap-box"><b>⚠️ MASTER TRAP:</b> In WWII — Hiroshima = <b>Aug 6 / Little Boy / Enola Gay</b>; Nagasaki = <b>Aug 9 / Fat Man / Bockscar</b>. Stalingrad = Europe; Midway = Pacific. VE Day = <b>May 8</b>; WWII ends (Japan) = <b>Sept 2</b>. Always check: Who used it FIRST? (Gas = Germany; Tanks = Britain).</div>',
+revision:['Columbus sailed for SPAIN(NOT Portugal) | Vasco da Gama\'s employer=PORTUGAL(NOT Spain)','Largest empire by AREA=BRITISH | Largest CONTIGUOUS land empire=MONGOL — don\'t confuse','Boston Tea Party=1773(NOT 1776) | Declaration of Independence drafted by Jefferson(NOT Washington)','Reign of Terror led by Robespierre(NOT Napoleon) | French slogan order=Liberte,EGALITE,Fraternite','Bloody Sunday=1905(NOT 1917)'],
+oneliners:['Trap: Columbus sailed for Spain, NOT Portugal','Trap: Vasco da Gama\'s employer was Portugal, NOT Spain','Trap: The British Empire was largest by AREA; the Mongol Empire was largest CONTIGUOUS land empire — different categories','Trap: The Boston Tea Party was in 1773, NOT 1776','Trap: Thomas Jefferson drafted the Declaration of Independence, NOT George Washington','Trap: Robespierre led the Reign of Terror, NOT Napoleon','Trap: The French Revolution slogan order is Liberte, Egalite, Fraternite','Trap: Bloody Sunday was in 1905, NOT 1917 — a different event from the 1917 Revolution','Always double-check year pairs and role pairs that sound similar — these are the most heavily tested confusions'],
+flashcards:[{q:'Columbus sailed for which country?',a:'Spain, NOT Portugal'},{q:'Vasco da Gama sailed for which country?',a:'Portugal, NOT Spain'},{q:'Which empire was largest by area vs largest contiguous land empire?',a:'British (area) vs Mongol (contiguous land)'},{q:'What year was the Boston Tea Party?',a:'1773, NOT 1776'},{q:'Who drafted the Declaration of Independence?',a:'Thomas Jefferson, NOT George Washington'},{q:'Who led the Reign of Terror?',a:'Robespierre, NOT Napoleon'},{q:'What year was Bloody Sunday?',a:'1905, NOT 1917'}],
+mcqs:[{
+q:'Columbus sailed for which country (TRAP — most confuse this)?',
+o:['Portugal',
+'France',
+'Spain',
+'Netherlands'],
+a:2,
+e:'Columbus sailed for SPAIN (funded by Ferdinand & Isabella), NOT Portugal. Vasco da Gama sailed for Portugal.'}
+,
+{
+q:'Who actually drafted the US Declaration of Independence — NOT Washington?',
+o:['Benjamin Franklin',
+'John Adams',
+'Thomas Jefferson',
+'Alexander Hamilton'],
+a:2,
+e:'Thomas Jefferson drafted the Declaration of Independence. George Washington was the military commander, not the drafter.'}
+,
+{
+q:'The Hiroshima bomb was named (TRAP)?',
+o:['Fat Man',
+'Big Boy',
+'Little Boy',
+'Iron Mike'],
+a:2,
+e:'Hiroshima = \'Little Boy\' (Enola Gay). Nagasaki = \'Fat Man\' (Bockscar). These are very commonly swapped.'}
+,
+{
+q:'\'Bloody Sunday\' refers to which year — TRAP?',
+o:['1917',
+'1919',
+'1905',
+'1907'],
+a:2,
+e:'Bloody Sunday = 1905 (massacre of protesters in St. Petersburg). The Revolutions = 1917. Completely different events.'}
+,
+{
+q:'The LARGEST contiguous land empire vs LARGEST total empire — which is which? (Select the Mongol description)',
+o:['British Empire = largest contiguous land empire',
+'Mongol Empire = largest contiguous land empire',
+'Mongol Empire = largest empire by total area',
+'Portuguese Empire = largest contiguous land empire'],
+a:1,
+e:'Mongol Empire = largest CONTIGUOUS land empire. British Empire = largest by total area (including overseas colonies).'}
+,
+{
+q:'First use of TANKS in WWI was by which country? (TRAP — many say Germany)',
+o:['Germany',
+'France',
+'USA',
+'Britain'],
+a:3,
+e:'Britain FIRST used tanks at the Battle of the Somme in 1916. Germany first used POISON GAS (1915).'}
+,
+{
+q:'First use of POISON GAS in WWI was by which country? (TRAP — many say Britain)',
+o:['Britain',
+'France',
+'Russia',
+'Germany'],
+a:3,
+e:'Germany first used poison gas (chlorine) at Ypres in 1915. Britain first used tanks.'}
+,
+{
+q:'The Battle of Stalingrad was the turning point of WWII in which theatre? (TRAP)',
+o:['Pacific',
+'Mediterranean',
+'Europe',
+'North Africa'],
+a:2,
+e:'Stalingrad = turning point in EUROPE. Battle of Midway (1942) = turning point in the PACIFIC.'}
+,
+{
+q:'The Boston Tea Party happened in which year — TRAP, not 1776?',
+o:['1770',
+'1773',
+'1775',
+'1776'],
+a:1,
+e:'Boston Tea Party = 1773. Declaration of Independence = 1776. These years are very commonly confused.'}
+,
+{
+q:'The USSR was formed in which year — TRAP, not 1917?',
+o:['1916',
+'1917',
+'1920',
+'1922'],
+a:3,
+e:'USSR formed = 1922. The Bolshevik Revolution = 1917. The Civil War and consolidation happened between 1917–1922.'}
+]}
+]}
+,
+{
+id:'chG',
+title:'🏹 Golden Chapter',
+nodes:[{
+id:'golden',
+title:'🏹 SSC Bullet Blast + Master Revision',
+xp:500,
+type:'gold',
+seqIdx:19,
+learn:'<h2 class="node-h2">🏹 SSC Bullet Blast — World History Master Revision</h2><h3 class="node-h3">⚡ Empire Quick Fire</h3><div class="fact-box"><div class="fact-box-title">🗺️ Empire Bullet Points</div><ul><li>Genghis Khan founded Mongol Empire = 1206; died = 1227</li><li>Mongol defeat = Ain Jalut (1260) by Mamluks</li><li>Ottoman Empire founded = 1299 (Osman I); Constantinople fell = 1453 (Mehmed II)</li><li>Ottoman dissolved = 1922; Turkey founded = 1923 (Ataturk)</li><li>Columbus = 1492 (Spain); Vasco da Gama = 1498 (Portugal/India)</li><li>Magellan circumnavigation = 1519–1522; died 1521 (Philippines)</li><li>British Empire = largest by area; Mongol = largest contiguous</li><li>French lost Vietnam = 1954 (Dien Bien Phu); Algeria = 1962</li></ul></div><h3 class="node-h3">⚡ Revolution Quick Fire</h3><div class="fact-box"><div class="fact-box-title">🔥 Revolution Bullet Points</div><ul><li>American Rev: Boston Tea Party 1773; Independence July 4, 1776; Treaty of Paris 1783</li><li>French Rev: Bastille July 14, 1789; Reign of Terror 1793–94; Napoleon\'s coup 1799</li><li>Napoleon: Emperor 1804; Elba 1814; Waterloo June 18, 1815; St. Helena → died 1821</li><li>Industrial Rev: Britain 1760; James Watt (steam engine); George Stephenson (locomotive)</li><li>Russian Rev: Feb 1917 (Tsar abdicated); Oct 1917 (Bolsheviks); "Peace, Land, Bread"</li><li>Chinese Rev: Long March 1934–35; PRC = October 1, 1949; Mao = "Great Helmsman"</li><li>American Civil War: 1861–65; Emancipation Proclamation 1863; Lincoln assassinated April 1865</li><li>Cuban Rev: January 1, 1959 (Castro); Bay of Pigs 1961; Missile Crisis October 1962</li></ul></div><h3 class="node-h3">⚡ WWI Quick Fire</h3><div class="fact-box"><div class="fact-box-title">⚔️ WWI Bullet Points</div><ul><li>Assassination = June 28, 1914 (Gavrilo Princip; Franz Ferdinand; Sarajevo)</li><li>WWI began = July 28, 1914; ended = November 11, 1918</li><li>MAIN = Militarism, Alliances, Imperialism, Nationalism</li><li>Allied Powers = France, Britain, Russia, USA (1917); Central = Germany, Austria-Hungary, Ottoman, Bulgaria</li><li>Battle of Verdun = bloodiest (1916); Battle of Somme = 60,000 British casualties Day 1</li><li>First poison gas = Germany 1915; First tanks = Britain 1916</li><li>Treaty of Versailles 1919 = War Guilt + reparations + military limits</li><li>4 empires fell: German, Austro-Hungarian, Ottoman, Russian</li></ul></div><h3 class="node-h3">⚡ WWII Quick Fire</h3><div class="fact-box"><div class="fact-box-title">💥 WWII Bullet Points</div><ul><li>WWII began = September 1, 1939 (Germany invades Poland)</li><li>Turning points: Stalingrad (Europe, 1943); Midway (Pacific, 1942)</li><li>D-Day = June 6, 1944; Normandy, France; Operation Overlord</li><li>Pearl Harbor = December 7, 1941; USA entered war</li><li>Hitler died April 30, 1945; VE Day = May 8, 1945</li><li>Hiroshima = August 6, 1945 (Little Boy; Enola Gay); Nagasaki = Aug 9 (Fat Man; Bockscar)</li><li>Japan surrendered = September 2, 1945</li><li>Holocaust: ~6 million Jews killed; Auschwitz = largest camp; Nuremberg Trials 1945–46</li></ul></div><h3 class="node-h3">⚡ Cold War Quick Fire</h3><div class="fact-box"><div class="fact-box-title">❄️ Cold War Bullet Points</div><ul><li>Cold War 1947–1991; USA (NATO) vs USSR (Warsaw Pact)</li><li>Sputnik 1 = Oct 4, 1957 (USSR); Yuri Gagarin = April 12, 1961 (USSR)</li><li>Neil Armstrong on Moon = July 20, 1969 (Apollo 11; USA)</li><li>Berlin Wall: built August 13, 1961; fell November 9, 1989</li><li>Cuban Missile Crisis = October 1962 (13 days; Kennedy vs Khrushchev)</li><li>Gorbachev = Glasnost + Perestroika (1986); USSR dissolved December 25, 1991</li><li>Korean War 1950–53 = armistice only (38th Parallel)</li><li>Vietnam War ended = April 30, 1975; US withdrew 1973</li></ul></div><h3 class="node-h3">⚡ Organisations Quick Fire</h3><div class="fact-box"><div class="fact-box-title">🏛️ Organisations Bullet Points</div><ul><li>League of Nations: 1920; proposed by Wilson; HQ Geneva; USA did NOT join; dissolved 1946</li><li>UN: October 24, 1945; 51 original members; 193 current; HQ New York</li><li>P5 veto: USA, UK, France, Russia, China</li><li>NATO = April 4, 1949; HQ Brussels; Article 5 = collective defense</li><li>ICJ HQ = The Hague; WHO/WTO/ILO/UNHCR = Geneva; UNESCO = Paris; FAO = Rome</li><li>Israel created = May 14, 1948; Six Day War = 1967; Camp David = 1978</li><li>Apartheid ended = 1994; Nelson Mandela = 1st Black SA President</li><li>Ghana = 1st sub-Saharan African independent nation (1957; Kwame Nkrumah)</li></ul></div><div class="trap-box"><b>🏹 Golden Master Trap:</b> Columbus = <b>Spain (1492)</b>; Vasco da Gama = <b>Portugal (1498)</b>. Boston Tea Party = <b>1773</b>; Independence = <b>1776</b>. Hiroshima bomb = <b>Little Boy</b>; Nagasaki = <b>Fat Man</b>. Bloody Sunday = <b>1905</b>; Russian Revolution = <b>1917</b>. Berlin Wall built = <b>1961</b>; fell = <b>1989</b>; reunification = <b>1990</b>.</div>',
+mcqs:[]}
+]}
+];
+
+let S={xp:0,done:{},mcq:{}};
+function loadState(){try{const d=localStorage.getItem(SK);if(d)S=JSON.parse(d);}catch(e){}}
+function saveState(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
+
+function seqNodes(){const a=[];CHAPTERS.forEach(c=>c.nodes.forEach(n=>a.push(n)));return a.sort((a,b)=>a.seqIdx-b.seqIdx);}
+function regularNodes(){return seqNodes().filter(n=>n.type!=='gold');}
+function isUnlocked(nid){
+  const sn=seqNodes();const idx=sn.findIndex(n=>n.id===nid);if(idx===0)return true;
+  const rn=regularNodes();const rPassed=rn.filter(n=>S.done[n.id]).length;
+  const nd=sn[idx];if(nd.type==='gold'){return rPassed>=Math.ceil(rn.length*0.8);}
+  const prev=sn[idx-1];return !!S.done[prev.id];
+}
+
+function buildSidebar(){
+  let h='';
+  CHAPTERS.forEach(ch=>{
+    h+=`<div class="ch-header">${ch.title}</div>`;
+    ch.nodes.forEach(nd=>{
+      const locked=!isUnlocked(nd.id);
+      const done=S.done[nd.id];
+      const icon=done?'✓':(nd.type==='gold'?'🏹':nd.type==='trap'?'⚠':'○');
+      const iClass=done?'done':nd.type;
+      const badge=done?`<span class="node-badge badge-done">DONE</span>`:
+        locked?`<span class="node-badge badge-locked">🔒</span>`:
+        `<span class="node-badge badge-open">OPEN</span>`;
+      const act=nd.id===window._curNode?' active':'';
+      h+=`<div class="node-item${locked?' locked':''}${act}" onclick="${locked?'showToast(\'Complete previous node first!\')':'openNode(\''+nd.id+'\')'}">
+        <div class="node-icon ${iClass}">${icon}</div>
+        <div class="node-info">
+          <div class="node-name">${nd.title}</div>
+          <div class="node-xp">${nd.xp} XP</div>
+        </div>${badge}</div>`;
+    });
+  });
+  document.getElementById('sidebar-content').innerHTML=h;
+}
+
+function updateHeader(){
+  const rn=regularNodes();const done=rn.filter(n=>S.done[n.id]).length;
+  document.getElementById('hdr-xp').textContent=S.xp;
+  document.getElementById('hdr-done').textContent=done;
+  document.getElementById('hdr-total').textContent=seqNodes().length;
+}
+function updateDash(){
+  const rn=regularNodes();const done=rn.filter(n=>S.done[n.id]).length;
+  const pct=Math.round(done/rn.length*100);
+  document.getElementById('dash-bar').style.width=pct+'%';
+  document.getElementById('dash-xp').textContent=S.xp;
+}
+function showDash(){
+  window._curNode=null;
+  document.getElementById('dash-view').style.display='';
+  document.getElementById('node-view').style.display='none';
+  updateDash();buildSidebar();updateHeader();
+}
+function startJourney(){
+  const first=seqNodes()[0];openNode(first.id);
+}
+
+let _curTab='learn';
+function openNode(nid){
+  if(!isUnlocked(nid)){showToast('Complete previous node first!');return;}
+  window._curNode=nid;
+  const nd=seqNodes().find(n=>n.id===nid);
+  track('node_opened',{node_id:nd.id,node_title:nd.title,node_type:nd.type,xp:nd.xp});
+  document.getElementById('dash-view').style.display='none';
+  const nv=document.getElementById('node-view');
+  nv.style.display='flex';nv.style.flexDirection='column';nv.style.height='100%';
+  _curTab='learn';
+  renderNodeView(nd);
+  buildSidebar();closeDrawer();
+}
+function switchTab(t){_curTab=t;const nd=seqNodes().find(n=>n.id===window._curNode);renderNodeView(nd);}
+function renderNodeView(nd){
+  const nv=document.getElementById('node-view');
+  const testLbl=nd.type==='gold'?'Revision':'Test (10 Q)';
+  nv.innerHTML=`<div class="node-tabs">
+    <button class="tab-btn${_curTab==='learn'?' active':''}" onclick="switchTab('learn')">📖 Learn</button>
+    <button class="tab-btn${_curTab==='flash'?' active':''}" onclick="switchTab('flash')">🗂 Flashcards</button>
+    ${nd.type!=='gold'?`<button class="tab-btn${_curTab==='test'?' active':''}" onclick="switchTab('test')">${testLbl}</button>`:''}
+  </div><div class="tab-content" id="tab-body"></div><div class="node-nav" id="node-nav"></div>`;
+  const body=document.getElementById('tab-body');
+  if(_curTab==='learn'){
+    let h='';
+    if(nd.type==='gold')h=`<div class="golden-banner">🏹 Golden Node — Master Revision — All content unlocked!</div>`+nd.learn;
+    else h=nd.learn;
+    if(nd.revision&&nd.revision.length){
+      h+='<div class="revision-box"><div class="revision-box-title">⚡ 30 Second Revision</div><ul>';
+      nd.revision.forEach(r=>h+='<li>'+r+'</li>');
+      h+='</ul></div>';
+    }
+    if(nd.oneliners&&nd.oneliners.length){
+      h+='<div class="oneliner-box"><div class="oneliner-box-title">🎯 20 Exam One-Liners</div><ul>';
+      nd.oneliners.forEach(o=>h+='<li>'+o+'</li>');
+      h+='</ul></div>';
+    }
+    body.innerHTML=h;
+  } else if(_curTab==='flash'){
+    buildFlashPane(nd,body);
+  } else {
+    buildTestPane(nd,body);
+  }
+  buildNodeNavWH(nd);
+}
+function buildFlashPane(nd,body){
+  const cards=nd.flashcards||[];
+  if(!cards.length){body.innerHTML='<p style="color:var(--text3);text-align:center;padding:2rem">No flashcards for this node yet.</p>';return;}
+  let h='<p class="flash-hint">TAP A CARD TO FLIP • '+cards.length+' CARDS</p><div class="flash-grid">';
+  cards.forEach((c,i)=>{
+    h+='<div class="flash-card" id="fc-'+nd.id+'-'+i+'" onclick="this.classList.toggle(\'flipped\')">'+
+      '<div class="flash-inner">'+
+      '<div class="flash-front">'+c.q+'</div>'+
+      '<div class="flash-back">'+c.a+'</div>'+
+      '</div></div>';
+  });
+  h+='</div><div class="flash-reset-row"><button class="opt-btn" onclick="resetFlash(\''+nd.id+'\')">↺ Reset All Cards</button></div>';
+  body.innerHTML=h;
+}
+function resetFlash(nid){
+  document.querySelectorAll('[id^="fc-'+nid+'-"]').forEach(c=>c.classList.remove('flipped'));
+}
+function buildTestPane(nd,body){
+  if(!S.mcq[nd.id])S.mcq[nd.id]={answers:[],faa:[],lastScore:null};
+  const ms=S.mcq[nd.id];
+  const attempted=ms.answers.length===nd.mcqs.length;
+  if(attempted&&ms.lastScore!==null){
+    const sc=ms.lastScore;
+    const pass=sc===nd.mcqs.length;
+    body.innerHTML=`<div class="score-banner">
+      <div class="score-big">${sc}/${nd.mcqs.length}</div>
+      <div class="score-label">${pass?'🎉 Perfect! Node Complete!':'Keep going — you need 10/10 to unlock next node'}</div>
+    </div>
+    ${pass?`<button class="action-btn btn-gold" onclick="showDash()">← Dashboard</button>`
+      :`<button class="action-btn btn-gold" onclick="startFresh('${nd.id}')">↺ Retry (New Attempt)</button>
+       <button class="action-btn btn-outline" onclick="switchTab('learn')">📖 Review Notes</button>`}
+    <hr style="border-color:var(--border);margin:1rem 0">
+    ${nd.mcqs.map((q,i)=>{
+      const ua=ms.answers[i]??-1;const correct=q.a;
+      const icon=ua===correct?'✓':'✗';const col=ua===correct?'var(--green)':'var(--red)';
+      const opts=q.o.map((o,oi)=>{
+        const cls=oi===correct?'correct':oi===ua&&ua!==correct?'wrong':'';
+        return `<div class="opt-btn ${cls}" style="margin-bottom:.3rem">${o}</div>`;
+      }).join('');
+      return `<div class="mcq-wrap">
+        <div class="mcq-num" style="color:${col}">${i+1}/${nd.mcqs.length} ${icon}</div>
+        <div class="mcq-q">${q.q}</div>
+        <div class="mcq-opts">${opts}</div>
+        <div class="exp-box">💡 ${q.e}</div></div>`;
+    }).join('')}`;
+    return;
+  }
+  // fresh attempt
+  let h='';
+  nd.mcqs.forEach((q,i)=>{
+    const answered=ms.answers[i]!==undefined;
+    const ua=ms.answers[i]??-1;
+    const faa=ms.faa[i];
+    const opts=q.o.map((o,oi)=>{
+      let cls='';
+      if(answered){cls=oi===q.a?'correct':oi===ua&&ua!==q.a?'wrong':faa&&oi===q.a?'reveal':'';}
+      const dis=answered?'disabled':'';
+      return `<button class="opt-btn ${cls}" ${dis} onclick="answer('${nd.id}',${i},${oi})">${o}</button>`;
+    }).join('');
+    const expHtml=answered?`<div class="exp-box">💡 ${q.e}</div>`:'';
+    h+=`<div class="mcq-wrap" id="q${i}">
+      <div class="mcq-num">Question ${i+1} of ${nd.mcqs.length}</div>
+      <div class="mcq-q">${q.q}</div>
+      <div class="mcq-opts">${opts}</div>${expHtml}</div>`;
+  });
+  const allAnswered=ms.answers.length===nd.mcqs.length;
+  const finBtn=allAnswered?`<button class="action-btn btn-gold" onclick="finishAttempt('${nd.id}')">Submit & See Score →</button>`:'';
+  body.innerHTML=h+finBtn;
+}
+
+function startFresh(nid){
+  if(!S.mcq[nid])S.mcq[nid]={answers:[],faa:[],lastScore:null};
+  S.mcq[nid].answers=[];S.mcq[nid].faa=[];S.mcq[nid].lastScore=null;
+  saveState();switchTab('test');
+}
+function answer(nid,qi,oi){
+  if(!S.mcq[nid])S.mcq[nid]={answers:[],faa:[],lastScore:null};
+  const ms=S.mcq[nid];
+  if(ms.answers[qi]!==undefined)return;
+  if(!ms.faa[qi])ms.faa[qi]=true;
+  ms.answers[qi]=oi;
+  saveState();
+  const nd=seqNodes().find(n=>n.id===nid);
+  const body=document.getElementById('tab-body');
+  buildTestPane(nd,body);
+  // scroll to question
+  const el=document.getElementById('q'+qi);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function finishAttempt(nid){
+  const nd=seqNodes().find(n=>n.id===nid);
+  const ms=S.mcq[nid];
+  const sc=nd.mcqs.reduce((acc,q,i)=>acc+(ms.answers[i]===q.a?1:0),0);
+  if(!S.attempts)S.attempts={};
+  S.attempts[nid]=(S.attempts[nid]||0)+1;
+  if(S.attempts[nid]===1)ms.faaPct=Math.round(sc/nd.mcqs.length*100);
+  const faaPct=ms.faaPct||0;
+  ms.lastScore=sc;
+  if(sc===nd.mcqs.length){
+    S.done[nid]=true;S.xp+=nd.xp;
+    track('node_completed',{node_id:nid,node_title:nd.title,xp_earned:nd.xp,score:sc,total:nd.mcqs.length,faa_pct:faaPct,attempts:S.attempts[nid]});
+    showToast('🎉 Perfect! +'+nd.xp+' XP! Node unlocked!');
+  } else {
+    track('mcq_completed',{node_id:nid,node_title:nd.title,score:sc,total:nd.mcqs.length,pct:Math.round(sc/nd.mcqs.length*100),faa_pct:faaPct,passed:false,attempts:S.attempts[nid]});
+    showToast('Score: '+sc+'/'+nd.mcqs.length+' — Need 10/10 to unlock next node');
+  }
+  saveState();updateHeader();buildSidebar();
+  const body=document.getElementById('tab-body');buildTestPane(nd,body);
+}
+function showToast(msg){
+  const t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);setTimeout(()=>t.remove(),2800);
+}
+function openDrawer(){document.getElementById('sidebar').classList.add('open');document.getElementById('overlay').classList.add('show');}
+function closeDrawer(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+
+
+/* ── METRICS ── */
+let _mToken=null,_mSid=null;
+function initMetrics(){
+  // Supabase stores the session under a key like `sb-<ref>-auth-token`
+  // in either localStorage or sessionStorage depending on the user's "keep me
+  // signed in" choice (see centumania-mvp/src/lib/supabase/client.ts).
+  try {
+    const stores=[localStorage,sessionStorage];
+    for(const store of stores){
+      if(_mToken)break;
+      for(let i=0;i<store.length;i++){
+        const k=store.key(i);
+        if(k&&k.startsWith('sb-')&&k.endsWith('-auth-token')){
+          const d=JSON.parse(store.getItem(k)||'{}');
+          _mToken=d?.access_token||null;
+          break;
+        }
+      }
+    }
+  } catch(e){}
+  _mSid='wh1-'+(Date.now().toString(36));
+}
+function track(name,meta={}){
+  if(!_mToken)return;
+  fetch('/api/events',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},
+    body:JSON.stringify({event_name:name,session_id:_mSid,event_timestamp:new Date().toISOString(),metadata:meta})
+  }).catch(()=>{});
+}
+initMetrics();track('material_opened',{material:'world_history_part1'});loadState();showDash();
+
+function buildNodeNavWH(nd){
+  const sn=seqNodes();
+  const idx=sn.findIndex(n=>n.id===nd.id);
+  const prev=idx>0?sn[idx-1]:null;
+  const next=sn[idx+1]||null;
+  const nextOk=next&&isUnlocked(next.id);
+  const nav=document.getElementById('node-nav');if(!nav)return;
+  nav.innerHTML=
+    `<button class="nav-btn"${prev?'':' disabled'}${prev?` onclick="openNode('${prev.id}')"`:''}>← ${prev?prev.title:'Start'}</button>`+
+    `<button class="nav-btn home-btn" onclick="showDash()">⊞ Dashboard</button>`+
+    `<button class="nav-btn"${nextOk?'':' disabled'}${nextOk?` onclick="openNode('${next.id}')"`:''}>→ ${next?next.title:'End'}</button>`;
+}
+</script>
+</body>
+</html>
