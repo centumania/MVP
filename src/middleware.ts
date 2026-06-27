@@ -73,11 +73,14 @@ export function middleware(request: NextRequest): NextResponse {
 
   // Cookie gate: /study/*, /content/*, /pdfs/* require cm_access cookie
   // (set by /api/materials/status after auth + payment check).
-  if (
-    pathname.startsWith('/study/') ||
+  // Excluded: /study/daily-test — this is a Next.js app route that uses JWT auth,
+  // not the cm_access cookie used for static HTML study files.
+  const isCookieGated =
+    (pathname.startsWith('/study/') && !pathname.startsWith('/study/daily-test')) ||
     pathname.startsWith('/content/') ||
     pathname.startsWith('/pdfs/')
-  ) {
+
+  if (isCookieGated) {
     const accessCookie = request.cookies.get('cm_access')
     if (!accessCookie) {
       return NextResponse.redirect(new URL('/auth/login', request.url), { status: 302 })
@@ -89,7 +92,7 @@ export function middleware(request: NextRequest): NextResponse {
     pathname.startsWith('/materials/viewer/') ||
     pathname.startsWith('/materials/mindmap/') ||
     (pathname.startsWith('/materials/') && pathname.split('/').filter(Boolean).length >= 3) ||
-    pathname.startsWith('/study/') ||
+    (pathname.startsWith('/study/') && !pathname.startsWith('/study/daily-test')) ||
     pathname.startsWith('/content/') ||
     pathname.startsWith('/pdfs/')
 
@@ -106,7 +109,7 @@ export function middleware(request: NextRequest): NextResponse {
   // /study/, /content/, /pdfs/ are iframed by the viewer — allow same-origin framing.
   // All other routes deny framing.
   const isFrameable =
-    pathname.startsWith('/study/') ||
+    (pathname.startsWith('/study/') && !pathname.startsWith('/study/daily-test')) ||
     pathname.startsWith('/content/') ||
     pathname.startsWith('/pdfs/')
 

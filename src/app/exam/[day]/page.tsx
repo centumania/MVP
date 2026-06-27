@@ -147,17 +147,7 @@ export default function ExamPage() {
           {phase === 'window-closed' ? 'Exam closed' : 'Something went wrong'}
         </h2>
         <p className="text-sm max-w-xs mb-6" style={{ color: 'var(--color-cm-neutral-300)' }}>{errorMsg}</p>
-        {phase === 'window-closed' && closedLinkUrl && (
-          <a
-            href={closedLinkUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mb-3 px-6 py-3 rounded-xl text-sm font-semibold text-white"
-            style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.9), rgba(217,119,6,0.9))' }}
-          >
-            Open Test Link
-          </a>
-        )}
+        <AiDailyTestBanner />
         <Button onClick={() => router.push('/dashboard')} variant="secondary">Back to dashboard</Button>
       </div>
     )
@@ -185,24 +175,7 @@ export default function ExamPage() {
           <span className="text-2xl text-text-muted">/ {data.submission.total_marks}</span>
         </div>
         <p className="text-sm font-bold mb-8" style={{ color: col }}>{pct}%</p>
-        {data.exam.linkUrl && (
-          <a
-            href={data.exam.linkUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl mb-4 text-sm font-semibold transition-all"
-            style={{
-              background: 'linear-gradient(135deg,rgba(245,158,11,0.12),rgba(245,158,11,0.08))',
-              border: '1px solid rgba(245,158,11,0.30)',
-              color: '#D97706',
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-            </svg>
-            Open Test Link
-          </a>
-        )}
+        <AiDailyTestBanner />
         <Button onClick={() => router.push('/dashboard')}>Back to dashboard</Button>
       </div>
     )
@@ -267,35 +240,6 @@ export default function ExamPage() {
 
         {/* ── Questions ─────────────────────────────────────────── */}
         <div className="flex-1 space-y-4">
-          {data.exam.linkUrl && (
-            <a
-              href={data.exam.linkUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between px-5 py-4 rounded-xl transition-all"
-              style={{
-                background: 'linear-gradient(135deg,rgba(245,158,11,0.12),rgba(245,158,11,0.08))',
-                border: '1px solid rgba(245,158,11,0.30)',
-              }}
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ background: 'rgba(245,158,11,0.15)' }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-                  </svg>
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-semibold" style={{ color: '#D97706' }}>Open Test Link</p>
-                  <p className="text-xs text-text-muted mt-0.5">Opens in new tab</p>
-                </div>
-              </div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-            </a>
-          )}
           {questions.map((q, i) => {
             const sel       = answers[q.id] ?? null
             const isFlagged = flagged.has(q.id)
@@ -562,5 +506,43 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
         </div>
       </div>
     </div>
+  )
+}
+
+// ── AI Daily Test banner — shown after exam submitted or when window is closed ──
+
+function AiDailyTestBanner() {
+  return (
+    <a
+      href="/study/daily-test"
+      style={{
+        display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16,
+        padding: '14px 16px', borderRadius: 14,
+        background: 'linear-gradient(135deg, rgba(37,51,255,0.12), rgba(14,165,160,0.07))',
+        border: '1px solid rgba(37,51,255,0.25)', textDecoration: 'none',
+      }}
+    >
+      <div style={{
+        width: 40, height: 40, borderRadius: 10, flexShrink: 0,
+        background: 'rgba(37,51,255,0.15)', border: '1px solid rgba(37,51,255,0.3)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
+      }}>🤖</div>
+      <div style={{ flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
+          <span style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>AI Daily Test</span>
+          <span style={{
+            fontSize: 9, padding: '2px 6px', borderRadius: 4, fontWeight: 700, letterSpacing: 0.5,
+            background: 'rgba(37,51,255,0.2)', color: '#818CF8',
+            border: '1px solid rgba(37,51,255,0.35)',
+          }}>PERSONALISED</span>
+        </div>
+        <p style={{ fontSize: 12, color: '#9CA3AF', lineHeight: 1.4, margin: 0 }}>
+          Practice with questions from today&apos;s exam tailored to your weak topics
+        </p>
+      </div>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#818CF8" strokeWidth="2.5" strokeLinecap="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </a>
   )
 }

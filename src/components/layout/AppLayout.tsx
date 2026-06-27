@@ -54,13 +54,23 @@ function IcoProfile({ a }: { a: boolean }) {
     </svg>
   )
 }
+function IcoInsights({ a }: { a: boolean }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={a ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
+      <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+    </svg>
+  )
+}
 
 const NAV = [
-  { href: '/dashboard',   label: 'Dashboard',   short: 'Home',  Icon: IcoDashboard   },
-  { href: '/exam/today',  label: "Today's Exam", short: 'Exam',  Icon: IcoExam        },
-  { href: '/materials',   label: 'Materials',    short: 'Study', Icon: IcoBook        },
-  { href: '/leaderboard', label: 'Leaderboard',  short: 'Ranks', Icon: IcoLeaderboard },
-  { href: '/profile',     label: 'Profile',      short: 'Me',    Icon: IcoProfile     },
+  { href: '/dashboard',   label: 'Dashboard',   short: 'Home',    Icon: IcoDashboard,   highlight: false },
+  { href: '/materials',   label: 'Materials',   short: 'Study',   Icon: IcoBook,        highlight: true  },
+  { href: '/exam/today',  label: "Today's Exam",short: 'Exam',    Icon: IcoExam,        highlight: false },
+  { href: '/insights',    label: 'AI Insights', short: 'Insights',Icon: IcoInsights,    highlight: false },
+  { href: '/leaderboard', label: 'Leaderboard', short: 'Ranks',   Icon: IcoLeaderboard, highlight: false },
+  { href: '/profile',     label: 'Profile',     short: 'Me',      Icon: IcoProfile,     highlight: false },
 ] as const
 
 
@@ -99,7 +109,7 @@ export function AppLayout({ children, userName, batchName }: {
 
         {/* Navigation */}
         <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto" aria-label="Main navigation">
-          {NAV.map(({ href, label, short: _short, Icon }) => {
+          {NAV.map(({ href, label, short: _short, Icon, highlight }) => {
             const active = pathname === href || pathname.startsWith(href + '/')
             return (
               <Link
@@ -107,21 +117,33 @@ export function AppLayout({ children, userName, batchName }: {
                 href={href}
                 className={[
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150 relative',
-                  active
-                    ? 'font-semibold'
-                    : 'hover:bg-white/5',
+                  active ? 'font-semibold' : 'hover:bg-white/5',
                 ].join(' ')}
-                style={active
-                  ? { color: '#F9FAFB', background: 'rgba(37,51,255,0.18)', border: '1px solid rgba(37,51,255,0.25)' }
-                  : { color: 'var(--color-cm-neutral-300)' }
+                style={
+                  active
+                    ? { color: '#F9FAFB', background: 'rgba(37,51,255,0.18)', border: '1px solid rgba(37,51,255,0.25)' }
+                    : highlight
+                      ? { color: '#F6B300', background: 'rgba(246,179,0,0.07)', border: '1px solid rgba(246,179,0,0.2)' }
+                      : { color: 'var(--color-cm-neutral-300)' }
                 }
               >
                 {active && (
                   <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full"
                     style={{ background: '#2533FF' }} />
                 )}
+                {!active && highlight && (
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-full"
+                    style={{ background: '#F6B300' }} />
+                )}
                 <Icon a={active} />
-                <span className="tracking-tight">{label}</span>
+                <span className="tracking-tight flex-1">{label}</span>
+                {highlight && !active && (
+                  <span style={{
+                    fontSize: 9, fontWeight: 800, letterSpacing: 1.2, padding: '2px 6px',
+                    borderRadius: 4, background: 'rgba(246,179,0,0.15)', color: '#F6B300',
+                    border: '1px solid rgba(246,179,0,0.3)', flexShrink: 0,
+                  }}>STUDY</span>
+                )}
               </Link>
             )
           })}
@@ -186,7 +208,7 @@ export function AppLayout({ children, userName, batchName }: {
       <nav className="surface-blur md:hidden fixed bottom-0 inset-x-0 z-20 flex mobile-nav-safe"
         aria-label="Mobile navigation"
         style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-        {NAV.map(({ href, short, Icon }) => {
+        {NAV.map(({ href, short, Icon, highlight }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
             <Link
@@ -194,11 +216,15 @@ export function AppLayout({ children, userName, batchName }: {
               href={href}
               aria-current={active ? 'page' : undefined}
               className="flex-1 flex flex-col items-center justify-center py-2 gap-0.5 transition-colors touch-target relative"
-              style={{ color: active ? '#F9FAFB' : 'var(--color-cm-neutral-300)' }}
+              style={{ color: active ? '#F9FAFB' : highlight ? '#F6B300' : 'var(--color-cm-neutral-300)' }}
             >
               {active && (
                 <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] rounded-full"
                   style={{ background: '#2533FF' }} />
+              )}
+              {!active && highlight && (
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] rounded-full"
+                  style={{ background: '#F6B300' }} />
               )}
               <Icon a={active} />
               <span className="text-[11px] font-medium tracking-wide">

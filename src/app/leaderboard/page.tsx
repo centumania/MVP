@@ -97,7 +97,6 @@ export default function LeaderboardPage() {
           <h1 className="text-2xl font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
             Leaderboard
           </h1>
-          <p className="text-sm text-text-muted mt-0.5 font-mono">LDC Batch 2026 · {entries.length} students</p>
         </div>
 
         {/* My Rank Banner */}

@@ -155,7 +155,20 @@ export function getExamWindowStatus(
   // Valid assumption: all CentuMania exams open at 6:00 AM IST daily.
   const nextOpenMs = openMs + 24 * 60 * 60 * 1000
   const opensInMs  = nextOpenMs - nowMs
-  const opensIn    = formatDuration(opensInMs)
+
+  // If the "next" open time is already in the past (exam is >24h old),
+  // show a static message instead of "0 seconds".
+  if (opensInMs <= 0) {
+    return {
+      isOpen:   false,
+      opensIn:  null,
+      closesIn: null,
+      message:  "Today's exam window has closed. New exams open daily at 6:00 AM IST.",
+      serverTimeIST,
+    }
+  }
+
+  const opensIn = formatDuration(opensInMs)
 
   return {
     isOpen:   false,

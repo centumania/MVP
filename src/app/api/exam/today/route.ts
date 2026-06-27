@@ -74,7 +74,36 @@ export async function GET(request: NextRequest) {
     const exam = todayExams?.[0] ?? null
 
     if (!exam) {
-      return NextResponse.json({ error: 'No exam today' }, { status: 404 })
+      // No exam scheduled today — fall back to the most recent past exam so
+      // students always have something to practice on.
+      const { data: recent } = await adminSupabase
+        .from('exams')
+        .select('id, day_number')
+        .eq('batch_id', batch.id)
+        .eq('is_active', true)
+        .order('day_number', { ascending: false })
+        .limit(1)
+
+      if (!recent?.[0]) {
+        return NextResponse.json({ error: 'No exam available' }, { status: 404 })
+      }
+
+      const fallback = recent[0]
+      const { data: prevSub } = await adminSupabase
+        .from('submissions')
+        .select('id, score, total_marks')
+        .eq('user_id', user.id)
+        .eq('exam_id', fallback.id)
+        .maybeSingle()
+
+      return NextResponse.json({
+        dayNumber:        fallback.day_number,
+        examId:           fallback.id,
+        alreadySubmitted: prevSub !== null,
+        score:            prevSub?.score      ?? null,
+        totalMarks:       prevSub?.total_marks ?? null,
+        isPractice:       true,
+      })
     }
 
     // ── 4. Check for existing submission ─────────────────────────

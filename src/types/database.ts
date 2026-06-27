@@ -80,6 +80,8 @@ export type Question = {
   explanation:    string | null // Shown after submission
   marks:          number
   sort_order:     number
+  topic:          string        // Added in migration 023, DEFAULT 'General Studies'
+  subtopic:       string | null // Added in migration 023, nullable
   created_at:     string
 }
 
@@ -87,7 +89,7 @@ export type Question = {
 //   - correct_answer stripped (never sent before submission)
 //   - explanation stripped (would give hints before submission)
 // After submission, explanation is returned inside ExamSubmitResult.answerKey.
-export type QuestionForClient = Omit<Question, 'correct_answer' | 'explanation' | 'created_at'>
+export type QuestionForClient = Omit<Question, 'correct_answer' | 'explanation' | 'created_at' | 'topic' | 'subtopic'> & { topic?: string }
 
 export type Material = {
   id:           string
@@ -240,6 +242,90 @@ export type CentumIndexLogRow = {
 }
 
 // ---------------------------------------------------------------------------
+// Daily test / Centum Index submissions (migrations 007, 024, 028)
+// ---------------------------------------------------------------------------
+
+export type DailyTest = {
+  id:              string
+  batch_id:        string
+  test_date:       string    // YYYY-MM-DD
+  is_published:    boolean
+  total_questions: number | null
+  created_at:      string
+}
+
+export type TestSubmission = {
+  id:           string
+  user_id:      string      // FK → profiles.id
+  test_id:      string      // FK → daily_tests.id
+  score:        number
+  submitted_at: string
+}
+
+export type TestSubmissionAnswer = {
+  id:              string
+  submission_id:   string   // FK → test_submissions.id
+  question_id:     string   // FK → questions.id
+  selected_answer: AnswerOption
+  is_correct:      boolean
+}
+
+export type DailyTestAssignment = {
+  id:               string
+  user_id:          string
+  test_date:        string         // YYYY-MM-DD
+  question_ids:     string[]
+  html_question_ids: string[]      // Added in migration 029
+  generated_at:     string
+  topic_weights:    Record<string, string[]> | null
+}
+
+// ---------------------------------------------------------------------------
+// HTML question bank (migration 029)
+// ---------------------------------------------------------------------------
+
+export type HtmlQuestion = {
+  id:             string
+  source_file:    string
+  node_title:     string | null
+  question_text:  string
+  option_a:       string
+  option_b:       string
+  option_c:       string
+  option_d:       string
+  correct_option: number    // 0-based (0=A, 1=B, 2=C, 3=D)
+  explanation:    string | null
+  topic:          string
+  is_trap:        boolean
+  extracted_at:   string
+}
+
+export type HtmlQuestionAccuracy = {
+  id:               string
+  user_id:          string
+  html_question_id: string
+  total_attempted:  number
+  total_correct:    number
+  last_updated:     string
+}
+
+// ---------------------------------------------------------------------------
+// Current Affairs (migration 030)
+// ---------------------------------------------------------------------------
+
+export type CurrentAffair = {
+  id:             string
+  title:          string
+  summary:        string
+  category:       string
+  exam_relevance: 'High' | 'Medium' | 'Low'
+  tags:           string[]
+  source_date:    string    // YYYY-MM-DD
+  generated_at:   string
+  is_active:      boolean
+}
+
+// ---------------------------------------------------------------------------
 // Analytics Events
 // ---------------------------------------------------------------------------
 
@@ -325,7 +411,7 @@ export type Database = {
       }
       questions: {
         Row:           Question
-        Insert:        Omit<Question, 'id' | 'created_at'>
+        Insert:        Omit<Question, 'id' | 'created_at' | 'topic' | 'subtopic'> & { topic?: string; subtopic?: string | null }
         Update:        Partial<Omit<Question, 'id' | 'created_at'>>
         Relationships: []
       }
@@ -407,6 +493,48 @@ export type Database = {
         Update:        Record<string, never>
         Relationships: []
       }
+      daily_tests: {
+        Row:           DailyTest
+        Insert:        Omit<DailyTest, 'id' | 'created_at'>
+        Update:        Partial<Omit<DailyTest, 'id' | 'created_at'>>
+        Relationships: []
+      }
+      test_submissions: {
+        Row:           TestSubmission
+        Insert:        Omit<TestSubmission, 'id' | 'submitted_at'> & { submitted_at?: string }
+        Update:        Partial<Omit<TestSubmission, 'id'>>
+        Relationships: []
+      }
+      test_submission_answers: {
+        Row:           TestSubmissionAnswer
+        Insert:        Omit<TestSubmissionAnswer, 'id'>
+        Update:        Partial<Omit<TestSubmissionAnswer, 'id'>>
+        Relationships: []
+      }
+      daily_test_assignments: {
+        Row:           DailyTestAssignment
+        Insert:        Omit<DailyTestAssignment, 'id'>
+        Update:        Partial<Omit<DailyTestAssignment, 'id'>>
+        Relationships: []
+      }
+      html_question_bank: {
+        Row:           HtmlQuestion
+        Insert:        Omit<HtmlQuestion, 'id' | 'extracted_at'> & { extracted_at?: string }
+        Update:        Partial<Omit<HtmlQuestion, 'id'>>
+        Relationships: []
+      }
+      html_question_accuracy: {
+        Row:           HtmlQuestionAccuracy
+        Insert:        Omit<HtmlQuestionAccuracy, 'id'>
+        Update:        Partial<Omit<HtmlQuestionAccuracy, 'id'>>
+        Relationships: []
+      }
+      current_affairs: {
+        Row:           CurrentAffair
+        Insert:        Omit<CurrentAffair, 'id' | 'generated_at'> & { generated_at?: string }
+        Update:        Partial<Omit<CurrentAffair, 'id'>>
+        Relationships: []
+      }
     }
     Views: {
       leaderboard: {
@@ -432,6 +560,18 @@ export type Database = {
       refresh_student_metrics: {
         Args:    Record<string, never>
         Returns: { students_updated: number }[]
+      }
+      update_topic_accuracy_after_submission: {
+        Args:    { p_submission_id: string }
+        Returns: void
+      }
+      update_realtime_attendance: {
+        Args:    { p_user_id: string; p_batch_id: string }
+        Returns: void
+      }
+      upsert_html_question_accuracy: {
+        Args:    { p_user_id: string; p_html_question_id: string; p_correct: boolean }
+        Returns: void
       }
     }
     Enums: {
