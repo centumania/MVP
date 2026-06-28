@@ -50,6 +50,7 @@ export type Profile = {
   payment_verified:    boolean
   is_admin:            boolean
   registration_number: string | null
+  batch_id:            string | null  // FK → batches.id
   created_at:          string
   updated_at:          string
 }

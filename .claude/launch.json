@@ -3,6 +3,7 @@
   "configurations": [
     {
       "name": "centumania-mvp",
+
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000

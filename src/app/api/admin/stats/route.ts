@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('is_admin', false).eq('payment_verified', false),
     supabase.from('submissions').select('*', { count: 'exact', head: true }),
     supabase.from('submissions').select('submitted_at, score, total_marks').order('submitted_at', { ascending: false }).limit(7),
-    supabase.from('batches').select('id, name, total_days, starts_on, ends_on, is_active').eq('is_active', true).maybeSingle(),
+    supabase.from('batches').select('id, name, total_days, starts_on, ends_on, is_active').eq('is_active', true).order('starts_on', { ascending: false }).limit(1).maybeSingle(),
   ])
 
   // Today's submissions

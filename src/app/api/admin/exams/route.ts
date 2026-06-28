@@ -19,6 +19,8 @@ export async function GET(request: NextRequest) {
     .from('batches')
     .select('id')
     .eq('is_active', true)
+    .order('starts_on', { ascending: false })
+    .limit(1)
     .maybeSingle()
 
   if (!batch) {

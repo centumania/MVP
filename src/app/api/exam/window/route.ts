@@ -86,6 +86,8 @@ export async function GET(): Promise<NextResponse<ExamWindowStatus>> {
       .from('batches')
       .select('id, total_days')
       .eq('is_active', true)
+      .order('starts_on', { ascending: false })
+      .limit(1)
       .maybeSingle()
 
     if (batchError) {

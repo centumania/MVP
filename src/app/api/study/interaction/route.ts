@@ -132,12 +132,16 @@ export async function POST(request: NextRequest) {
     { onConflict: 'id', ignoreDuplicates: true }
   )
 
-  // ── 2. Resolve active batch ──────────────────────────────────────────────────
-  const { data: batch } = await supabase
-    .from('batches')
-    .select('id')
-    .eq('is_active', true)
-    .maybeSingle()
+  // ── 2. Resolve student's batch ───────────────────────────────────────────────
+  const { data: profileRow } = await supabase
+    .from('profiles').select('batch_id').eq('id', user.id).maybeSingle()
+
+  const batchQuery = supabase.from('batches').select('id')
+  const { data: batch } = await (
+    profileRow?.batch_id
+      ? batchQuery.eq('id', profileRow.batch_id).maybeSingle()
+      : batchQuery.eq('is_active', true).maybeSingle()
+  )
 
   // ── 3. Auto-assign node to active batch ─────────────────────────────────────
   // node_assignments has no unique(batch_id, node_id) constraint, so we check

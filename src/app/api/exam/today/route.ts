@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     // ── 2. Payment gate ───────────────────────────────────────────
     const { data: profile } = await adminSupabase
       .from('profiles')
-      .select('payment_verified')
+      .select('payment_verified, batch_id')
       .eq('id', user.id)
       .single()
 
@@ -51,12 +51,12 @@ export async function GET(request: NextRequest) {
     const now      = new Date()
     const todayIST = getTodayInIST(now)
 
-    const { data: batch } = await adminSupabase
-      .from('batches')
-      .select('id')
-      .eq('is_active', true)
-      .limit(1)
-      .maybeSingle()
+    const batchQuery = adminSupabase.from('batches').select('id')
+    const { data: batch } = await (
+      profile.batch_id
+        ? batchQuery.eq('id', profile.batch_id).maybeSingle()
+        : batchQuery.eq('is_active', true).limit(1).maybeSingle()
+    )
 
     if (!batch) {
       return NextResponse.json({ error: 'No active batch' }, { status: 404 })

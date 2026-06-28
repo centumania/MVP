@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
 
     const { data: profile } = await supabase
       .from('profiles')
-      .select('name, payment_verified, tier, is_admin')
+      .select('name, payment_verified, tier, is_admin, batch_id')
       .eq('id', user.id)
       .single()
 
@@ -47,7 +47,9 @@ export async function GET(request: NextRequest) {
       { count: cohortSize },
       { data: metrics },
     ] = await Promise.all([
-      supabase.from('batches').select('id, total_days, starts_on').eq('is_active', true).maybeSingle(),
+      profile.batch_id
+        ? supabase.from('batches').select('id, total_days, starts_on').eq('id', profile.batch_id).maybeSingle()
+        : supabase.from('batches').select('id, total_days, starts_on').eq('is_active', true).maybeSingle(),
       supabase.from('study_leaderboard').select('rank, total_score, days_attended, accuracy_percent').eq('user_id', user.id).maybeSingle(),
       supabase.from('submissions').select('id, score, total_marks, submitted_at, exam_id').eq('user_id', user.id).order('submitted_at', { ascending: false }).limit(30),
       supabase.from('study_leaderboard').select('*', { count: 'exact', head: true }),

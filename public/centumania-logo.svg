@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <!-- Blue radial gradient matching the actual logo -->
+    <radialGradient id="bgGrad" cx="44%" cy="36%" r="64%">
+      <stop offset="0%"   stop-color="#3AABF5"/>
+      <stop offset="40%"  stop-color="#2196F3"/>
+      <stop offset="100%" stop-color="#1059BB"/>
+    </radialGradient>
+    <!-- Drop shadow for depth elements -->
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="rgba(0,40,100,0.35)"/>
+    </filter>
+    <filter id="bookShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="rgba(0,40,120,0.4)"/>
+    </filter>
+  </defs>
+
+  <!-- Outer light ring -->
+  <circle cx="100" cy="100" r="98" fill="#D8DDE8"/>
+  <circle cx="100" cy="100" r="95" fill="#EEF0F4"/>
+
+  <!-- Blue circle background -->
+  <circle cx="100" cy="100" r="92" fill="url(#bgGrad)"/>
+
+  <!-- ── BOOK (bottom, drawn first so C overlaps it) ─────────────── -->
+  <!-- Book left page cluster — fan of pages -->
+  <g filter="url(#bookShadow)">
+    <!-- Outermost left page -->
+    <path d="M100 152 Q62 138 30 148 Q32 162 100 170 Z" fill="white" opacity="0.55"/>
+    <!-- Next left page -->
+    <path d="M100 152 Q65 141 36 150 Q38 163 100 170 Z" fill="white" opacity="0.65"/>
+    <!-- Next left page -->
+    <path d="M100 152 Q68 143 42 152 Q44 164 100 170 Z" fill="white" opacity="0.75"/>
+    <!-- Inner left page -->
+    <path d="M100 152 Q72 146 50 155 Q51 165 100 170 Z" fill="white" opacity="0.9"/>
+    <!-- Top surface left page (most visible) -->
+    <path d="M100 150 Q74 144 52 154 Q53 162 100 168 Z" fill="white"/>
+
+    <!-- Outermost right page -->
+    <path d="M100 152 Q138 138 170 148 Q168 162 100 170 Z" fill="white" opacity="0.55"/>
+    <!-- Next right page -->
+    <path d="M100 152 Q135 141 164 150 Q162 163 100 170 Z" fill="white" opacity="0.65"/>
+    <!-- Next right page -->
+    <path d="M100 152 Q132 143 158 152 Q156 164 100 170 Z" fill="white" opacity="0.75"/>
+    <!-- Inner right page -->
+    <path d="M100 152 Q128 146 150 155 Q149 165 100 170 Z" fill="white" opacity="0.9"/>
+    <!-- Top surface right page -->
+    <path d="M100 150 Q126 144 148 154 Q147 162 100 168 Z" fill="white"/>
+  </g>
+
+  <!-- Blue page accent lines - left -->
+  <path d="M100 152 Q74 145 52 154" stroke="#1565C0" stroke-width="1.2" fill="none" opacity="0.45"/>
+  <path d="M100 155 Q75 148 55 157" stroke="#1565C0" stroke-width="1" fill="none" opacity="0.35"/>
+  <path d="M100 158 Q76 151 58 160" stroke="#1565C0" stroke-width="0.8" fill="none" opacity="0.25"/>
+  <!-- Blue page accent lines - right -->
+  <path d="M100 152 Q126 145 148 154" stroke="#1565C0" stroke-width="1.2" fill="none" opacity="0.45"/>
+  <path d="M100 155 Q125 148 145 157" stroke="#1565C0" stroke-width="1" fill="none" opacity="0.35"/>
+  <path d="M100 158 Q124 151 142 160" stroke="#1565C0" stroke-width="0.8" fill="none" opacity="0.25"/>
+
+  <!-- Book spine center line -->
+  <line x1="100" y1="150" x2="100" y2="170" stroke="rgba(15,60,150,0.5)" stroke-width="2"/>
+
+  <!-- ── LARGE C ──────────────────────────────────────────────────── -->
+  <!-- The C spans from upper-right to lower-right going counterclockwise through the left -->
+  <!-- Start ≈ (142,44), End ≈ (142,156), center near (100,100), radius ≈ 70 -->
+  <path d="M 141 44 A 70 70 0 1 0 141 156"
+        stroke="white" stroke-width="22" fill="none"
+        stroke-linecap="round"
+        filter="url(#softShadow)"/>
+
+  <!-- ── M LETTER ─────────────────────────────────────────────────── -->
+  <!-- White left strokes of M -->
+  <path d="M 62 128 L 62 80 L 100 112 L 100 80"
+        stroke="white" stroke-width="12" fill="none"
+        stroke-linecap="round" stroke-linejoin="round"
+        filter="url(#softShadow)"/>
+  <!-- Gold right strokes of M -->
+  <path d="M 100 80 L 100 112 L 138 80 L 138 128"
+        stroke="#FFB800" stroke-width="12" fill="none"
+        stroke-linecap="round" stroke-linejoin="round"
+        filter="url(#softShadow)"/>
+
+  <!-- ── PERSON FIGURE ──────────────────────────────────────────────── -->
+  <!-- Head -->
+  <circle cx="114" cy="50" r="10" fill="white" filter="url(#softShadow)"/>
+  <!-- Body arc — leaping figure, concave faces lower-left -->
+  <path d="M 96 64 Q 116 54 132 72"
+        stroke="white" stroke-width="7" fill="none"
+        stroke-linecap="round" filter="url(#softShadow)"/>
+
+  <!-- ── GOLD 4-POINT STAR ──────────────────────────────────────────── -->
+  <path d="M 152 34
+           L 155 44
+           L 165 48
+           L 155 52
+           L 152 62
+           L 149 52
+           L 139 48
+           L 149 44
+           Z"
+        fill="#FFD700"/>
+  <!-- Add inner highlight to star -->
+  <path d="M 152 36 L 154.5 44.5 L 163 48 L 154.5 51.5 L 152 60 L 149.5 51.5 L 141 48 L 149.5 44.5 Z"
+        fill="#FFEC3D"/>
+</svg>

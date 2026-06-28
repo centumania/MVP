@@ -48,7 +48,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     // ── 2. Payment gate ───────────────────────────────────────────
     const { data: profile } = await supabase
       .from('profiles')
-      .select('payment_verified')
+      .select('payment_verified, batch_id')
       .eq('id', user.id)
       .single()
 
@@ -57,12 +57,12 @@ export async function GET(request: NextRequest, { params }: Params) {
     }
 
     // ── 3. Find exam ──────────────────────────────────────────────
-    const { data: batch } = await supabase
-      .from('batches')
-      .select('id, total_days')
-      .eq('is_active', true)
-      .limit(1)
-      .maybeSingle()
+    const batchQuery = supabase.from('batches').select('id, total_days')
+    const { data: batch } = await (
+      profile.batch_id
+        ? batchQuery.eq('id', profile.batch_id).maybeSingle()
+        : batchQuery.eq('is_active', true).limit(1).maybeSingle()
+    )
 
     if (!batch) {
       return NextResponse.json({ error: 'No active batch' }, { status: 404 })

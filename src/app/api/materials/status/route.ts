@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
   const { data: profile } = await supabase
     .from('profiles')
-    .select('payment_verified, registration_number, created_at')
+    .select('payment_verified, registration_number, created_at, batch_id')
     .eq('id', user.id)
     .single()
 
@@ -23,12 +23,12 @@ export async function GET(request: NextRequest) {
     ? profile.created_at.slice(0, 10)
     : new Date().toISOString().slice(0, 10)
 
-  const { data: batch } = await supabase
-    .from('batches')
-    .select('id, starts_on')
-    .eq('is_active', true)
-    .limit(1)
-    .maybeSingle()
+  const batchQuery = supabase.from('batches').select('id, starts_on').eq('is_active', true)
+  const { data: batch } = await (
+    profile?.batch_id
+      ? batchQuery.eq('id', profile.batch_id).maybeSingle()
+      : batchQuery.order('starts_on', { ascending: false }).limit(1).maybeSingle()
+  )
 
   let activeDays: number[] = []
   let testLinks: Record<number, string> = {}
