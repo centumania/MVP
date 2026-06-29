@@ -47,11 +47,9 @@ export const materials: Material[] = [
   { id: 'day-7-mod4',  day: 7, title: 'Modern History — Part 4',   htmlPath: '/study/mod-hist4.html',  totalNodes: 14 },
 
   // ── Day 8 ──────────────────────────────────────────────────────────────────
-  { id: 'day-8-bio',  day: 8, title: 'Biology — Part 8',       htmlPath: '/content/day-8/biology.html' },
-  { id: 'day-8-chem', day: 8, title: 'Chemistry — Part H',     htmlPath: '/content/day-8/chemistry.html' },
-  { id: 'day-8-math', day: 8, title: 'Maths — Time & Work',    htmlPath: '/content/day-8/math.html' },
-  { id: 'day-8-eng',  day: 8, title: 'English — One Word Sub', htmlPath: '/content/day-8/english.html' },
-  { id: 'day-8-ca',   day: 8, title: 'Current Affairs',        htmlPath: '/content/day-8/current-affairs.html' },
+  { id: 'day-8-anc3', day: 8, title: 'Ancient History — Part 3 (Revision)', htmlPath: '/study/anc-history-3.html', totalNodes: 22 },
+  { id: 'day-8-anc4', day: 8, title: 'Ancient History — Part 4 (Revision)', htmlPath: '/study/anc-history-4.html', totalNodes: 20 },
+  { id: 'day-8-eco1', day: 8, title: 'Economics — Part 1',                  htmlPath: '/study/economics-part1.html', totalNodes: 11 },
 
   // ── Day 9 ──────────────────────────────────────────────────────────────────
   { id: 'day-9-bio',  day: 9, title: 'Biology — Part 9',         htmlPath: '/content/day-9/biology.html' },
