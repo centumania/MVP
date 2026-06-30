@@ -69,7 +69,13 @@ export async function GET(request: NextRequest) {
     .eq('test_date', todayIST)
     .maybeSingle()
 
-  if (!assignment && activeBatch) {
+  // Treat a saved-but-empty assignment (from a previous broken run) as missing
+  const assignmentIsEmpty =
+    assignment &&
+    (assignment.question_ids ?? []).length === 0 &&
+    (assignment.html_question_ids ?? []).length === 0
+
+  if ((!assignment || assignmentIsEmpty) && activeBatch) {
     assignment = await generateOnDemandAssignment(supabase, user.id, activeBatch.id, todayIST)
   }
 
@@ -248,7 +254,7 @@ async function generateOnDemandAssignment(
     .from('daily_test_assignments')
     .upsert(
       { user_id: userId, test_date: testDate, question_ids: formalIds, html_question_ids: htmlIds, generated_at: new Date().toISOString(), topic_weights: null },
-      { onConflict: 'user_id,test_date', ignoreDuplicates: true },
+      { onConflict: 'user_id,test_date', ignoreDuplicates: false },
     )
 
   if (error) {
