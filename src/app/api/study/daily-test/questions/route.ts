@@ -220,14 +220,15 @@ async function generateOnDemandAssignment(
   }
 
   if (formalRows.length < 15) {
-    const excludeIds = formalRows.length > 0
-      ? formalRows.map(r => r.id)
-      : ['00000000-0000-0000-0000-000000000000']
-    const { data: extra } = await supabase
-      .from('questions')
-      .select('id, topic')
-      .not('id', 'in', `(${excludeIds.join(',')})`)
-      .limit(40)
+    // Only apply exclusion when there are already-selected IDs to exclude.
+    // Skipping the filter for new students avoids PostgREST quirks with
+    // dummy/placeholder UUIDs that can silently return 0 rows.
+    let extraQuery = supabase.from('questions').select('id, topic').limit(40)
+    if (formalRows.length > 0) {
+      extraQuery = extraQuery.not('id', 'in', `(${formalRows.map(r => r.id).join(',')})`)
+    }
+    const { data: extra, error: extraError } = await extraQuery
+    if (extraError) console.error('[daily-test/questions] fallback question fetch failed:', extraError)
     formalRows = [...formalRows, ...((extra ?? []) as { id: string; topic: string }[])]
   }
 
