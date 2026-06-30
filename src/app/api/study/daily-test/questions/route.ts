@@ -201,36 +201,47 @@ async function generateOnDemandAssignment(
     .filter(t => t.total_attempted >= 3 && t.total_correct / t.total_attempted < 0.7)
     .map(t => t.topic)
 
-  // 2. Fetch formal questions — prefer weak topics, fall back to any
-  let formalIds: string[] = []
+  // 2. Fetch formal questions WITH topic — prefer weak topics, fall back to any
+  let formalRows: { id: string; topic: string }[] = []
 
   if (weakTopics.length > 0) {
     const { data: weak } = await supabase
       .from('questions')
-      .select('id')
+      .select('id, topic')
       .in('topic', weakTopics)
       .limit(40)
-    formalIds = (weak ?? []).map(r => r.id)
+    formalRows = (weak ?? []) as { id: string; topic: string }[]
   }
 
-  if (formalIds.length < 15) {
-    const exclude = formalIds.length > 0 ? formalIds : ['00000000-0000-0000-0000-000000000000']
+  if (formalRows.length < 15) {
+    const excludeIds = formalRows.length > 0
+      ? formalRows.map(r => r.id)
+      : ['00000000-0000-0000-0000-000000000000']
     const { data: extra } = await supabase
       .from('questions')
-      .select('id')
-      .not('id', 'in', `(${exclude.map(id => `'${id}'`).join(',')})`)
+      .select('id, topic')
+      .not('id', 'in', `(${excludeIds.map(id => `'${id}'`).join(',')})`)
       .limit(40)
-    formalIds = [...formalIds, ...(extra ?? []).map(r => r.id)]
+    formalRows = [...formalRows, ...((extra ?? []) as { id: string; topic: string }[])]
   }
 
-  formalIds = formalIds.sort(() => Math.random() - 0.5).slice(0, 15)
+  formalRows = formalRows.sort(() => Math.random() - 0.5).slice(0, 15)
+  const formalIds = formalRows.map(r => r.id)
 
-  // 3. Fetch HTML trap questions (random)
-  const { data: htmlRows } = await supabase
-    .from('html_question_bank')
-    .select('id')
-    .limit(30)
-  const htmlIds = (htmlRows ?? []).map(r => r.id).sort(() => Math.random() - 0.5).slice(0, 10)
+  // Topics actually covered by the selected formal questions
+  const coveredTopics = [...new Set(formalRows.map(r => r.topic))]
+
+  // 3. Fetch HTML trap questions — only from topics already covered in formal questions
+  //    This prevents testing students on subjects not yet taught.
+  let htmlIds: string[] = []
+  if (coveredTopics.length > 0) {
+    const { data: htmlRows } = await supabase
+      .from('html_question_bank')
+      .select('id')
+      .in('topic', coveredTopics)
+      .limit(30)
+    htmlIds = (htmlRows ?? []).map(r => r.id).sort(() => Math.random() - 0.5).slice(0, 10)
+  }
 
   // 4. Persist so re-fetches within the same day return the same set
   const { error } = await supabase
