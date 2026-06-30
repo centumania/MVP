@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
 
   const todayIST = getTodayInIST(new Date())
 
-  // ── 1. Resolve daily_test row ──────────────────────────────────────────────
+  // ── 1. Resolve daily_test row (create on-demand if missing) ──────────────
 
   let testId = dailyTestId
   if (!testId) {
@@ -83,8 +83,31 @@ export async function POST(request: NextRequest) {
       .eq('test_date', todayIST)
       .eq('is_published', true)
       .maybeSingle()
-    // If no daily_test row exists, grade-only mode: results returned but not persisted
-    testId = todayTest?.id ?? null
+
+    if (todayTest) {
+      testId = todayTest.id
+    } else {
+      // Create the daily_tests row on-demand so the submission is persisted
+      const { data: activeBatch } = await supabase
+        .from('batches')
+        .select('id')
+        .eq('is_active', true)
+        .order('starts_on', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+
+      if (activeBatch) {
+        const { data: created } = await supabase
+          .from('daily_tests')
+          .upsert(
+            { batch_id: activeBatch.id, test_date: todayIST, is_published: true, total_questions: null },
+            { onConflict: 'batch_id,test_date', ignoreDuplicates: false },
+          )
+          .select('id')
+          .maybeSingle()
+        testId = created?.id ?? null
+      }
+    }
   }
 
   // ── 2. Prevent double submission (only when testId exists) ──────────────────

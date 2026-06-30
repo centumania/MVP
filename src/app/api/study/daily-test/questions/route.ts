@@ -10,9 +10,8 @@
  * Response:
  *   { testDate, alreadySubmitted, questions: DailyTestQuestion[] }
  *
- * If no assignment exists for today the response includes an empty questions
- * array and a `noAssignment: true` flag — the UI should prompt the student to
- * come back after the nightly generation runs (23:30 IST).
+ * If no nightly assignment exists, an on-demand fallback is generated using
+ * the student's weakest topics. The test is available any time of day.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
@@ -51,25 +50,41 @@ export async function GET(request: NextRequest) {
 
   const todayIST = getTodayInIST(new Date())
 
-  // ── 1. Get assignment for today ──────────────────────────────────────────
+  // ── 1. Get active batch (needed for daily_tests + on-demand assignment) ─────
 
-  const { data: assignment } = await supabase
+  const { data: activeBatch } = await supabase
+    .from('batches')
+    .select('id')
+    .eq('is_active', true)
+    .order('starts_on', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
+  // ── 2. Get assignment for today (generate on-demand if missing) ───────────
+
+  let { data: assignment } = await supabase
     .from('daily_test_assignments')
     .select('question_ids, html_question_ids')
     .eq('user_id', user.id)
     .eq('test_date', todayIST)
     .maybeSingle()
 
-  if (!assignment) {
-    return NextResponse.json({
-      testDate:      todayIST,
-      noAssignment:  true,
-      alreadySubmitted: false,
-      questions:     [],
-    })
+  if (!assignment && activeBatch) {
+    assignment = await generateOnDemandAssignment(supabase, user.id, activeBatch.id, todayIST)
   }
 
-  // ── 2. Check if already submitted ─────────────────────────────────────────
+  // ── 3. Ensure daily_tests row exists for today so grades are persisted ────
+
+  if (activeBatch) {
+    await supabase
+      .from('daily_tests')
+      .upsert(
+        { batch_id: activeBatch.id, test_date: todayIST, is_published: true, total_questions: null },
+        { onConflict: 'batch_id,test_date', ignoreDuplicates: true },
+      )
+  }
+
+  // ── 4. Check if already submitted ─────────────────────────────────────────
 
   const { data: todayTest } = await supabase
     .from('daily_tests')
@@ -89,7 +104,17 @@ export async function GET(request: NextRequest) {
     alreadySubmitted = !!existingSub
   }
 
-  // ── 3. Fetch formal exam questions (strip correct_answer) ─────────────────
+  if (!assignment) {
+    // No active batch — nothing to serve
+    return NextResponse.json({
+      testDate:         todayIST,
+      noAssignment:     true,
+      alreadySubmitted: false,
+      questions:        [],
+    })
+  }
+
+  // ── 5. Fetch formal exam questions (strip correct_answer) ─────────────────
 
   const formalIds: string[] = assignment.question_ids ?? []
   const htmlIds:   string[] = assignment.html_question_ids ?? []
@@ -115,7 +140,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // ── 4. Fetch HTML bank questions (strip correct_option) ───────────────────
+  // ── 6. Fetch HTML bank questions (strip correct_option) ───────────────────
 
   const htmlQuestions: DailyTestQuestion[] = []
 
@@ -138,7 +163,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // ── 5. Shuffle and return ─────────────────────────────────────────────────
+  // ── 7. Shuffle and return ─────────────────────────────────────────────────
 
   const all = [...formalQuestions, ...htmlQuestions]
     .sort(() => Math.random() - 0.5)
@@ -150,4 +175,75 @@ export async function GET(request: NextRequest) {
     dailyTestId:      todayTest?.id ?? null,
     questions:        all,
   })
+}
+
+// ---------------------------------------------------------------------------
+// On-demand assignment generator
+// Used when the nightly cron hasn't run yet (student takes test earlier in day).
+// Picks questions prioritising the student's weakest topics; falls back to random.
+// ---------------------------------------------------------------------------
+
+type SupabaseAdminClient = ReturnType<typeof import('@/src/lib/supabase/server').getSupabaseAdminClient>
+
+async function generateOnDemandAssignment(
+  supabase: SupabaseAdminClient,
+  userId:   string,
+  _batchId: string,
+  testDate: string,
+): Promise<{ question_ids: string[]; html_question_ids: string[] } | null> {
+  // 1. Find weak topics (accuracy < 70%, min 3 attempts)
+  const { data: topicRows } = await supabase
+    .from('student_topic_accuracy')
+    .select('topic, total_attempted, total_correct')
+    .eq('user_id', userId)
+
+  const weakTopics = (topicRows ?? [])
+    .filter(t => t.total_attempted >= 3 && t.total_correct / t.total_attempted < 0.7)
+    .map(t => t.topic)
+
+  // 2. Fetch formal questions — prefer weak topics, fall back to any
+  let formalIds: string[] = []
+
+  if (weakTopics.length > 0) {
+    const { data: weak } = await supabase
+      .from('questions')
+      .select('id')
+      .in('topic', weakTopics)
+      .limit(40)
+    formalIds = (weak ?? []).map(r => r.id)
+  }
+
+  if (formalIds.length < 15) {
+    const exclude = formalIds.length > 0 ? formalIds : ['00000000-0000-0000-0000-000000000000']
+    const { data: extra } = await supabase
+      .from('questions')
+      .select('id')
+      .not('id', 'in', `(${exclude.map(id => `'${id}'`).join(',')})`)
+      .limit(40)
+    formalIds = [...formalIds, ...(extra ?? []).map(r => r.id)]
+  }
+
+  formalIds = formalIds.sort(() => Math.random() - 0.5).slice(0, 15)
+
+  // 3. Fetch HTML trap questions (random)
+  const { data: htmlRows } = await supabase
+    .from('html_question_bank')
+    .select('id')
+    .limit(30)
+  const htmlIds = (htmlRows ?? []).map(r => r.id).sort(() => Math.random() - 0.5).slice(0, 10)
+
+  // 4. Persist so re-fetches within the same day return the same set
+  const { error } = await supabase
+    .from('daily_test_assignments')
+    .upsert(
+      { user_id: userId, test_date: testDate, question_ids: formalIds, html_question_ids: htmlIds, generated_at: new Date().toISOString(), topic_weights: null },
+      { onConflict: 'user_id,test_date', ignoreDuplicates: true },
+    )
+
+  if (error) {
+    console.error('[daily-test/questions] on-demand assignment upsert failed:', error)
+    return null
+  }
+
+  return { question_ids: formalIds, html_question_ids: htmlIds }
 }
