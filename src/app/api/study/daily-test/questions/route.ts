@@ -185,9 +185,19 @@ export async function GET(request: NextRequest) {
 
 // ---------------------------------------------------------------------------
 // On-demand assignment generator
-// Used when the nightly cron hasn't run yet (student takes test earlier in day).
-// Picks questions prioritising the student's weakest topics; falls back to random.
+//
+// Primary source: html_question_bank (MCQs, traps extracted from study HTML files).
+// Selection strategy:
+//   1. Weak questions — seen before with accuracy < 70% (needs more practice)
+//   2. Unseen questions — never attempted (discovery)
+//   3. Shuffle the combined set, cap at TARGET_HTML_COUNT
+//
+// Formal exam questions (questions table) are included only when real ones exist;
+// placeholder/sample rows are skipped by checking question count against MIN_FORMAL.
 // ---------------------------------------------------------------------------
+
+const TARGET_HTML_COUNT  = 20
+const MIN_FORMAL_TO_USE  = 5   // don't include formal questions if there are fewer than this
 
 type SupabaseAdminClient = ReturnType<typeof import('@/src/lib/supabase/server').getSupabaseAdminClient>
 
@@ -197,64 +207,74 @@ async function generateOnDemandAssignment(
   _batchId: string,
   testDate: string,
 ): Promise<{ question_ids: string[]; html_question_ids: string[] } | null> {
-  // 1. Find weak topics (accuracy < 70%, min 3 attempts)
-  const { data: topicRows } = await supabase
-    .from('student_topic_accuracy')
-    .select('topic, total_attempted, total_correct')
+
+  // ── 1. Load per-question accuracy from html_question_accuracy ───────────────
+  const { data: accuracyRows } = await supabase
+    .from('html_question_accuracy')
+    .select('html_question_id, total_attempted, total_correct')
     .eq('user_id', userId)
 
-  const weakTopics = (topicRows ?? [])
-    .filter(t => t.total_attempted >= 3 && t.total_correct / t.total_attempted < 0.7)
-    .map(t => t.topic)
+  const seenIds = (accuracyRows ?? []).map(r => r.html_question_id)
 
-  // 2. Fetch formal questions WITH topic — prefer weak topics, fall back to any
-  let formalRows: { id: string; topic: string }[] = []
+  // Weak = attempted at least twice AND accuracy below 70%
+  const weakIds = (accuracyRows ?? [])
+    .filter(r => r.total_attempted >= 2 && r.total_correct / r.total_attempted < 0.7)
+    .sort((a, b) =>
+      (a.total_correct / a.total_attempted) - (b.total_correct / b.total_attempted),
+    )
+    .map(r => r.html_question_id)
 
-  if (weakTopics.length > 0) {
-    const { data: weak } = await supabase
-      .from('questions')
-      .select('id, topic')
-      .in('topic', weakTopics)
-      .limit(40)
-    formalRows = (weak ?? []) as { id: string; topic: string }[]
-  }
+  // ── 2. Fill remaining slots with unseen HTML questions ─────────────────────
+  let htmlIds: string[] = [...weakIds]
 
-  if (formalRows.length < 15) {
-    // Only apply exclusion when there are already-selected IDs to exclude.
-    // Skipping the filter for new students avoids PostgREST quirks with
-    // dummy/placeholder UUIDs that can silently return 0 rows.
-    let extraQuery = supabase.from('questions').select('id, topic').limit(40)
-    if (formalRows.length > 0) {
-      extraQuery = extraQuery.not('id', 'in', `(${formalRows.map(r => r.id).join(',')})`)
-    }
-    const { data: extra, error: extraError } = await extraQuery
-    if (extraError) console.error('[daily-test/questions] fallback question fetch failed:', extraError)
-    formalRows = [...formalRows, ...((extra ?? []) as { id: string; topic: string }[])]
-  }
-
-  formalRows = formalRows.sort(() => Math.random() - 0.5).slice(0, 15)
-  const formalIds = formalRows.map(r => r.id)
-
-  // Topics actually covered by the selected formal questions
-  const coveredTopics = [...new Set(formalRows.map(r => r.topic))]
-
-  // 3. Fetch HTML trap questions — only from topics already covered in formal questions
-  //    This prevents testing students on subjects not yet taught.
-  let htmlIds: string[] = []
-  if (coveredTopics.length > 0) {
-    const { data: htmlRows } = await supabase
+  if (htmlIds.length < TARGET_HTML_COUNT) {
+    let unSeenQuery = supabase
       .from('html_question_bank')
       .select('id')
-      .in('topic', coveredTopics)
-      .limit(30)
-    htmlIds = (htmlRows ?? []).map(r => r.id).sort(() => Math.random() - 0.5).slice(0, 10)
+      .limit(60)
+
+    // Only apply exclusion when there are seen IDs (avoids PostgREST quirk
+    // where a dummy placeholder UUID can return 0 rows).
+    if (seenIds.length > 0) {
+      unSeenQuery = unSeenQuery.not('id', 'in', `(${seenIds.join(',')})`)
+    }
+
+    const { data: unseen, error: unSeenError } = await unSeenQuery
+    if (unSeenError) console.error('[daily-test/questions] unseen fetch error:', unSeenError)
+
+    const unSeenIds = (unseen ?? []).map(r => r.id).sort(() => Math.random() - 0.5)
+    htmlIds = [...htmlIds, ...unSeenIds].slice(0, TARGET_HTML_COUNT)
   }
 
-  // 4. Persist so re-fetches within the same day return the same set
+  // Final shuffle
+  htmlIds = htmlIds.sort(() => Math.random() - 0.5)
+
+  // ── 3. Optionally include formal exam questions (only if enough real ones exist)
+  let formalIds: string[] = []
+  const { count: formalCount } = await supabase
+    .from('questions')
+    .select('id', { count: 'exact', head: true })
+
+  if ((formalCount ?? 0) >= MIN_FORMAL_TO_USE) {
+    const { data: formalRows } = await supabase
+      .from('questions')
+      .select('id')
+      .limit(15)
+    formalIds = (formalRows ?? []).map(r => r.id).sort(() => Math.random() - 0.5).slice(0, 10)
+  }
+
+  // ── 4. Persist so re-fetches within the same day return the same set ────────
   const { error } = await supabase
     .from('daily_test_assignments')
     .upsert(
-      { user_id: userId, test_date: testDate, question_ids: formalIds, html_question_ids: htmlIds, generated_at: new Date().toISOString(), topic_weights: null },
+      {
+        user_id:          userId,
+        test_date:        testDate,
+        question_ids:     formalIds,
+        html_question_ids: htmlIds,
+        generated_at:     new Date().toISOString(),
+        topic_weights:    null,
+      },
       { onConflict: 'user_id,test_date', ignoreDuplicates: false },
     )
 
