@@ -198,12 +198,9 @@ export default function LeaderboardPage() {
                     </span>
                     <Avatar name={e.name} isMe={isMeEntry} size="sm" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-text truncate">
-                        {e.name}
-                        {isMeEntry && <span className="ml-1.5 text-[10px] text-primary font-bold uppercase tracking-wider font-mono">(you)</span>}
-                      </p>
-                      <p className="text-[10px] text-text-muted mt-0.5 font-mono">
+                      <p className="text-[10px] text-text-muted font-mono">
                         {e.days_attended} days · {e.accuracy_percent}% accuracy
+                        {isMeEntry && <span className="ml-1.5 text-primary font-bold uppercase tracking-wider">(you)</span>}
                       </p>
                     </div>
                     <div className="text-right shrink-0">
