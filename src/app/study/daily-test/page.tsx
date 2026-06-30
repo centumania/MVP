@@ -279,10 +279,11 @@ export default function DailyTestPage() {
             )}
 
             <button
-              onClick={() => setPhase('taking')}
-              style={{ width: '100%', padding: '16px', borderRadius: 12, background: 'linear-gradient(135deg, #2533FF, #4F46E5)', color: '#fff', border: 'none', fontFamily: 'var(--font-bebas)', fontSize: 20, letterSpacing: 2, cursor: 'pointer', boxShadow: '0 4px 24px rgba(37,51,255,0.35)' }}
+              onClick={() => questions.length > 0 && setPhase('taking')}
+              disabled={questions.length === 0}
+              style={{ width: '100%', padding: '16px', borderRadius: 12, background: questions.length === 0 ? '#374151' : 'linear-gradient(135deg, #2533FF, #4F46E5)', color: questions.length === 0 ? '#6B7280' : '#fff', border: 'none', fontFamily: 'var(--font-bebas)', fontSize: 20, letterSpacing: 2, cursor: questions.length === 0 ? 'not-allowed' : 'pointer', boxShadow: questions.length === 0 ? 'none' : '0 4px 24px rgba(37,51,255,0.35)' }}
             >
-              START TEST →
+              {questions.length === 0 ? 'NO QUESTIONS AVAILABLE' : 'START TEST →'}
             </button>
           </div>
 
@@ -293,6 +294,19 @@ export default function DailyTestPage() {
   }
 
   // ── Taking ─────────────────────────────────────────────────────────────────
+  if (phase === 'taking' && questions.length === 0) {
+    return (
+      <AppLayout>
+        <div style={{ maxWidth: 480, margin: '60px auto', padding: '0 20px', textAlign: 'center' }}>
+          <p style={{ color: '#9CA3AF', marginBottom: 20 }}>No questions available for today. Please check back later.</p>
+          <button onClick={() => router.push('/dashboard')} style={{ padding: '12px 28px', borderRadius: 10, background: '#2533FF', color: '#fff', border: 'none', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
+            Back to Dashboard
+          </button>
+        </div>
+      </AppLayout>
+    )
+  }
+
   const q          = questions[current]
   const isTimeLow  = timeLeft <= 60
   const isTimeCrit = timeLeft <= 20

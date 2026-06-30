@@ -220,7 +220,7 @@ async function generateOnDemandAssignment(
     const { data: extra } = await supabase
       .from('questions')
       .select('id, topic')
-      .not('id', 'in', `(${excludeIds.map(id => `'${id}'`).join(',')})`)
+      .not('id', 'in', `(${excludeIds.join(',')})`)
       .limit(40)
     formalRows = [...formalRows, ...((extra ?? []) as { id: string; topic: string }[])]
   }
