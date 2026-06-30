@@ -52,11 +52,7 @@ export const materials: Material[] = [
   { id: 'day-8-eco1', day: 8, title: 'Economics — Part 1',                  htmlPath: '/study/economics-part1.html', totalNodes: 11 },
 
   // ── Day 9 ──────────────────────────────────────────────────────────────────
-  { id: 'day-9-bio',  day: 9, title: 'Biology — Part 9',         htmlPath: '/content/day-9/biology.html' },
-  { id: 'day-9-chem', day: 9, title: 'Chemistry — Part I',       htmlPath: '/content/day-9/chemistry.html' },
-  { id: 'day-9-math', day: 9, title: 'Maths — Speed & Time',     htmlPath: '/content/day-9/math.html' },
-  { id: 'day-9-eng',  day: 9, title: 'English — Comprehension',  htmlPath: '/content/day-9/english.html' },
-  { id: 'day-9-ca',   day: 9, title: 'Current Affairs',          htmlPath: '/content/day-9/current-affairs.html' },
+  { id: 'day-9-eco1', day: 9, title: 'Economics — Part 1 (Revision)', htmlPath: '/study/economics-part1.html', totalNodes: 11 },
 
   // ── Day 10 ────────────────────────────────────────────────────────────────
   { id: 'day-10-bio',  day: 10, title: 'Biology — Part 10',    htmlPath: '/content/day-10/biology.html' },
