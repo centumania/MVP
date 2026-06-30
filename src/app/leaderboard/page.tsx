@@ -158,8 +158,7 @@ export default function LeaderboardPage() {
                     #{e.rank}
                   </div>
                   <Avatar name={e.name} isMe={isMeEntry} size={isFirst ? 'lg' : 'md'} />
-                  <p className="text-xs font-bold text-text mt-2.5 truncate">{e.name.split(' ')[0]}</p>
-                  <p className="text-base font-bold font-mono mt-1 tracking-tight" style={{ color: m.text }}>
+                  <p className="text-base font-bold font-mono mt-2.5 tracking-tight" style={{ color: m.text }}>
                     {e.total_score.toLocaleString()}
                   </p>
                   <p className="text-[10px] text-text-muted font-mono">pts</p>
