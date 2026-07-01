@@ -55,11 +55,7 @@ export const materials: Material[] = [
   { id: 'day-9-eco1', day: 9, title: 'Economics — Part 1 (Revision)', htmlPath: '/study/economics-part1.html', totalNodes: 11 },
 
   // ── Day 10 ────────────────────────────────────────────────────────────────
-  { id: 'day-10-bio',  day: 10, title: 'Biology — Part 10',    htmlPath: '/content/day-10/biology.html' },
-  { id: 'day-10-chem', day: 10, title: 'Chemistry — Part J',   htmlPath: '/content/day-10/chemistry.html' },
-  { id: 'day-10-math', day: 10, title: 'Maths — Revision',     htmlPath: '/content/day-10/math.html' },
-  { id: 'day-10-eng',  day: 10, title: 'English — Revision',   htmlPath: '/content/day-10/english.html' },
-  { id: 'day-10-ca',   day: 10, title: 'Current Affairs',      htmlPath: '/content/day-10/current-affairs.html' },
+  { id: 'day-10-pol1', day: 10, title: 'Polity — Part 1', htmlPath: '/study/polity-part1.html', totalNodes: 27 },
 
   // ── Days 11–30: Coming Soon ───────────────────────────────────────────────
   { id: 'day-11-placeholder', day: 11, title: 'Day 11 — Coming Soon', htmlPath: '/content/day-11/index.html', isStaticLocked: true },
