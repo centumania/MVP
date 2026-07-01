@@ -326,29 +326,24 @@ function buildTestPane(nd){
   }
   if(!_sess[nid]){document.getElementById('pane-test').innerHTML=h;return;}
   nd.mcqs.forEach((q,i)=>{
-    let faaKey=`${nid}_${i}`;let faaDone=(m.faa||{})[i];
-    let faaSet=faaDone!==undefined;
-    let sessAns=sess[i];let answered=sessAns!=null||faaSet;
+    let sessAns=sess[i];let answered=sessAns!=null;
     let correctIdx=q.a;
     h+=`<div class="mcq-card" id="qcard-${i}"><div class="qnum">Q${i+1}/10</div><div class="qtext">${q.q}</div>`;
     q.o.forEach((opt,oi)=>{
       let cls='opt-btn';let dis='';
       if(answered){
         dis='disabled';
-        let isCorrect=oi===correctIdx;
-        let myAns=faaDone?((m.faa||{})[i]===false&&oi===correctIdx?false:null):sessAns;
-        if(faaDone){cls+=(oi===correctIdx?' correct':'');}
-        else{if(oi===sessAns){cls+=(sessAns===correctIdx?' correct':' wrong');}else if(oi===correctIdx){cls+=' correct';}}
+        if(oi===sessAns){cls+=(sessAns===correctIdx?' correct':' wrong');}
+        else if(oi===correctIdx){cls+=' correct';}
       }
       h+=`<button class="${cls}" ${dis} onclick="answer('${nid}',${i},${oi})">${opt}</button>`;
     });
     if(answered){h+=`<div class="explanation show">${q.e}</div>`;}
     h+='</div>';
   });
-  let allAnswered=nd.mcqs.every((_,i)=>sess[i]!=null||(m.faa||{})[i]!=null);
+  let allAnswered=nd.mcqs.every((_,i)=>sess[i]!=null);
   if(allAnswered){
-    let sc=nd.mcqs.filter((_,i)=>{let fa=(m.faa||{})[i];let sa=sess[i];return fa?false:(sa===nd.mcqs[i].a);}).length+
-           nd.mcqs.filter((_,i)=>{let fa=(m.faa||{})[i];return fa===true;}).length;
+    let sc=nd.mcqs.filter((_,i)=>sess[i]===nd.mcqs[i].a).length;
     h+=`<div class="submit-row"><button class="btn btn-gold" onclick="finishAttempt('${nid}')">Finish & See Score</button></div>`;
   } else if(Object.keys(sess).length>0){
     h+=`<div class="submit-row"><span style="color:var(--muted);font-size:13px">Answer all questions to finish</span></div>`;
@@ -365,7 +360,6 @@ function answer(nid,qi,oi){
   let m=S.mcq[nid]||(S.mcq[nid]={faa:{},best:0,passed:false,attempts:0,lastScore:null});
   let sess=_sess[nid]||(_sess[nid]={});
   if(sess[qi]!=null)return;
-  if((m.faa||{})[qi]!=null)return;
   sess[qi]=oi;
   if(!m.faa)m.faa={};
   if(m.faa[qi]==null){m.faa[qi]=(oi===nd.mcqs[qi].a);}
@@ -381,12 +375,7 @@ function finishAttempt(nid){
   let nd=seqNodes().find(n=>n.id===nid);
   let sess=_sess[nid]||{};
   let m=S.mcq[nid]||(S.mcq[nid]={faa:{},best:0,passed:false,attempts:0,lastScore:null});
-  let score=nd.mcqs.reduce((acc,q,i)=>{
-    let fa=(m.faa||{})[i];
-    if(fa===true)return acc+1;
-    if(fa===false)return acc;
-    return acc+(sess[i]===q.a?1:0);
-  },0);
+  let score=nd.mcqs.reduce((acc,q,i)=>acc+(sess[i]===q.a?1:0),0);
   m.attempts=(m.attempts||0)+1;
   if(m.attempts===1)m.faaPct=Math.round(score*10);
   const faaPct=m.faaPct||0;
