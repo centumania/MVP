@@ -22,15 +22,20 @@ export async function GET(request: NextRequest) {
     if (authError || !user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const { data: profile } = await supabase
-      .from('profiles').select('payment_verified').eq('id', user.id).single()
+      .from('profiles').select('payment_verified, batch_id').eq('id', user.id).single()
     if (!profile?.payment_verified) return NextResponse.json({ error: 'Payment required' }, { status: 402 })
 
-    // Top 50
-    const { data: top, error: topErr } = await supabase
+    const batchId = profile?.batch_id
+
+    // Top 50 — filtered to user's batch
+    const topQuery = supabase
       .from('leaderboard')
       .select('user_id, name, tier, total_score, days_attended, accuracy_percent, rank')
       .order('rank', { ascending: true })
       .limit(50)
+    if (batchId) topQuery.eq('batch_id', batchId)
+
+    const { data: top, error: topErr } = await topQuery
 
     if (topErr) {
       console.error('[leaderboard] Query failed:', topErr)
@@ -38,11 +43,13 @@ export async function GET(request: NextRequest) {
     }
 
     // Current user's own rank (may be outside top 50)
-    const { data: myRank } = await supabase
+    const myRankQuery = supabase
       .from('leaderboard')
       .select('user_id, name, tier, total_score, days_attended, accuracy_percent, rank')
       .eq('user_id', user.id)
-      .maybeSingle()
+    if (batchId) myRankQuery.eq('batch_id', batchId)
+
+    const { data: myRank } = await myRankQuery.maybeSingle()
 
     return NextResponse.json({
       entries:   top ?? [],
