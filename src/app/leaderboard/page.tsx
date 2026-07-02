@@ -176,44 +176,6 @@ export default function LeaderboardPage() {
           </div>
         )}
 
-        {/* RANKINGS TABLE */}
-        {(top3.length < 3 ? entries : rest).length > 0 && (
-          <Card noPadding>
-            <div className="px-4 py-3" style={{ borderBottom: '1px solid #E5E7EB' }}>
-              <CardLabel>{top3.length >= 3 ? 'Rankings — #4 and below' : 'All students'}</CardLabel>
-            </div>
-            <div>
-              {(top3.length < 3 ? entries : rest).map((e, idx) => {
-                const isMeEntry = isMe(e)
-                return (
-                  <div key={e.rank}
-                    className="flex items-center gap-3 px-4 py-3 transition-colors"
-                    style={{
-                      borderBottom: idx < (top3.length < 3 ? entries : rest).length - 1 ? '1px solid rgba(229,231,235,0.5)' : undefined,
-                      background: isMeEntry ? 'rgba(11,61,145,0.05)' : undefined,
-                    }}
-                  >
-                    <span className="text-xs font-mono text-text-muted w-8 text-center shrink-0 font-semibold">
-                      #{e.rank}
-                    </span>
-                    <Avatar name={e.name} isMe={isMeEntry} size="sm" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[10px] text-text-muted font-mono">
-                        {e.days_attended} days · {e.accuracy_percent}% accuracy
-                        {isMeEntry && <span className="ml-1.5 text-primary font-bold uppercase tracking-wider">(you)</span>}
-                      </p>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <p className="text-sm font-bold text-text font-mono">{e.total_score.toLocaleString()}</p>
-                      <p className="text-[10px] text-text-muted font-mono">pts</p>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </Card>
-        )}
-
         {entries.length === 0 && (
           <div className="flex flex-col items-center py-16 gap-4">
             <div className="w-16 h-16 rounded-3xl flex items-center justify-center"
