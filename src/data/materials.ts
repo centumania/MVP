@@ -58,7 +58,7 @@ export const materials: Material[] = [
   { id: 'day-10-pol1', day: 10, title: 'Polity — Part 1', htmlPath: '/study/polity-part1.html', totalNodes: 27 },
 
   // ── Days 11–30: Coming Soon ───────────────────────────────────────────────
-  { id: 'day-11-placeholder', day: 11, title: 'Day 11 — Coming Soon', htmlPath: '/content/day-11/index.html', isStaticLocked: true },
+  { id: 'day-11-pol1', day: 11, title: 'Polity — Remaining', htmlPath: '/study/polity-part1.html', totalNodes: 27 },
   { id: 'day-12-placeholder', day: 12, title: 'Day 12 — Coming Soon', htmlPath: '/content/day-12/index.html', isStaticLocked: true },
   { id: 'day-13-placeholder', day: 13, title: 'Day 13 — Coming Soon', htmlPath: '/content/day-13/index.html', isStaticLocked: true },
   { id: 'day-14-placeholder', day: 14, title: 'Day 14 — Coming Soon', htmlPath: '/content/day-14/index.html', isStaticLocked: true },
