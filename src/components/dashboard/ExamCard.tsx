@@ -16,7 +16,7 @@ type TodayExam = {
 
 function scoreColor(pct: number): string {
   if (pct >= 80) return '#10B981'
-  if (pct >= 60) return '#0B3D91'
+  if (pct >= 60) return '#0284c7'
   if (pct >= 40) return '#F59E0B'
   return '#EF4444'
 }

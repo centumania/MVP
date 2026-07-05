@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { setCachedToken } from '@/src/lib/analytics/track'
-import { LogoFull } from '@/src/components/ui/Logo'
+import Logo from '@/src/components/landing-v2/Logo'
 
 const NAV = [
   { href: '/admin',           label: 'Overview',  icon: GridIcon    },
@@ -91,8 +91,11 @@ function NavContent({
     <>
       {/* Logo */}
       <div className="px-4 py-5" style={{ borderBottom: '1px solid #E5E7EB' }}>
-        <LogoFull size={24} glow />
-        <p className="text-[10px] text-text-muted leading-none mt-2 font-mono pl-0.5">Admin Console</p>
+        <div className="flex items-center gap-2.5">
+          <Logo size={30} />
+          <span className="text-sm font-bold tracking-tight text-text">CentuMania</span>
+        </div>
+        <p className="text-[10px] text-text-muted leading-none mt-2 pl-0.5">Admin Console</p>
       </div>
 
       {/* Nav */}
@@ -105,7 +108,7 @@ function NavContent({
               className={`flex items-center gap-2.5 px-3 py-3 md:py-2 rounded-lg text-sm transition-colors ${
                 active ? 'text-primary font-medium' : 'text-text-muted hover:text-text-secondary'
               }`}
-              style={active ? { background: 'rgba(11,61,145,0.08)' } : {}}>
+              style={active ? { background: 'rgba(2,132,199,0.08)' } : {}}>
               <Icon active={active} />
               {label}
             </Link>
@@ -130,7 +133,7 @@ function NavContent({
       <div className="px-2 py-3" style={{ borderTop: '1px solid #E5E7EB' }}>
         <div className="flex items-center gap-2.5 px-3 py-2 mb-1">
           <div className="w-6 h-6 rounded-full text-xs font-semibold flex items-center justify-center shrink-0"
-            style={{ background: 'rgba(11,61,145,0.15)', color: '#0B3D91' }}>
+            style={{ background: 'rgba(2,132,199,0.15)', color: '#0284c7' }}>
             {initials}
           </div>
           <p className="text-sm text-text-secondary truncate font-medium">{adminName}</p>
@@ -207,7 +210,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF' }}>
         <div className="w-5 h-5 rounded-full animate-spin"
-          style={{ border: '2px solid rgba(11,61,145,0.2)', borderTopColor: '#0B3D91' }} />
+          style={{ border: '2px solid rgba(2,132,199,0.2)', borderTopColor: '#0284c7' }} />
       </div>
     )
   }
@@ -282,7 +285,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </p>
             <p className="text-[10px] text-text-muted font-mono">Admin Console</p>
           </div>
-          <LogoFull size={20} glow />
+          <Logo size={26} />
         </header>
 
         <main id="main-content" className="flex-1" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>

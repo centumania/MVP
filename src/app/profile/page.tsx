@@ -105,15 +105,15 @@ export default function ProfilePage() {
 
         {/* ── Identity Card ───────────────────────────────────────── */}
         <div className="relative rounded-2xl overflow-hidden p-5"
-          style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(11,61,145,0.12)' }}>
-          <div className="absolute top-0 right-0 w-32 h-32 pointer-events-none opacity-15"
-            style={{ background: 'radial-gradient(circle,#0B3D91,transparent 70%)' }} />
+          style={{ background: 'linear-gradient(135deg,#f0f9ff,#e0f2fe)', border: '1px solid rgba(2,132,199,0.18)' }}>
+          <div className="absolute top-0 right-0 w-32 h-32 pointer-events-none opacity-30"
+            style={{ background: 'radial-gradient(circle,rgba(2,132,199,0.15),transparent 70%)' }} />
           <div className="relative flex items-center gap-4">
             <div className="relative shrink-0">
-              <ProgressRing value={xpPct} size={64} strokeWidth={3} color="#0B3D91" trackColor="rgba(11,61,145,0.10)" />
+              <ProgressRing value={xpPct} size={64} strokeWidth={3} color="#0284c7" trackColor="rgba(2,132,199,0.12)" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
-                  style={{ background: 'linear-gradient(135deg,#0B3D91,#10B981)', color: '#FFFFFF' }}>
+                  style={{ background: 'linear-gradient(135deg,#0284c7,#6366f1)', color: '#FFFFFF' }}>
                   {initials}
                 </div>
               </div>
@@ -125,8 +125,8 @@ export default function ProfilePage() {
               <p className="text-sm text-text-muted truncate">{user?.email}</p>
               <div className="flex items-center gap-2 mt-2 flex-wrap">
                 {dashData && (
-                  <span className="text-[10px] font-bold text-primary px-2 py-0.5 rounded-lg uppercase tracking-wider font-mono"
-                    style={{ background: 'rgba(11,61,145,0.10)', border: '1px solid rgba(11,61,145,0.20)' }}>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg uppercase tracking-wider font-mono"
+                    style={{ background: 'rgba(2,132,199,0.10)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }}>
                     Level {dashData.xpLevel ?? 1} · {(dashData.xp ?? 0).toLocaleString()} XP
                   </span>
                 )}
@@ -288,7 +288,7 @@ export default function ProfilePage() {
           {profile?.payment_verified ? (
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: 'rgba(11,61,145,0.10)', border: '1px solid rgba(11,61,145,0.20)' }}>
+                style={{ background: 'rgba(2,132,199,0.10)', border: '1px solid rgba(2,132,199,0.20)' }}>
                 <svg className="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>

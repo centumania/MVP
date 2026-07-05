@@ -39,9 +39,9 @@ function DayHeader({ day, status }: { day: number; status: Status }) {
   } else if (isAvailable) {
     badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(74,222,128,0.10)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.2)' }}>Open today</span>
   } else if (isScheduleUnlocked && !isPublished) {
-    badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.05)', color: '#9aa893' }}>Not published yet</span>
+    badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: '#F3F4F6', color: '#6B7280' }}>Not published yet</span>
   } else {
-    badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(255,255,255,0.05)', color: '#9aa893' }}>Unlocks in {daysLeft} day{daysLeft !== 1 ? 's' : ''}</span>
+    badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: '#F3F4F6', color: '#6B7280' }}>Unlocks in {daysLeft} day{daysLeft !== 1 ? 's' : ''}</span>
   }
 
   return (
@@ -122,7 +122,7 @@ function MaterialCard({
           </button>
         ) : (
           <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm"
-            style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid #27342b', color: '#9aa893' }}>
+            style={{ background: '#F9FAFB', border: '1px solid #E5E7EB', color: '#6B7280' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"/>

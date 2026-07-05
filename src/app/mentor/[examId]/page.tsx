@@ -16,8 +16,8 @@ import type { AiReport } from '@/src/types/database'
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function readinessColor(score: number) {
-  if (score >= 80) return '#0B3D91'
-  if (score >= 60) return '#0B3D91'
+  if (score >= 80) return '#0284c7'
+  if (score >= 60) return '#0284c7'
   if (score >= 40) return '#F59E0B'
   return '#EF4444'
 }
@@ -133,7 +133,7 @@ export default function MentorReportPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#F8FAFC' }}>
         <div className="w-8 h-8 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#0B3D91', boxShadow: '0 0 12px rgba(11,61,145,0.3)' }} />
+          style={{ borderTopColor: '#0284c7', boxShadow: '0 0 12px rgba(2,132,199,0.3)' }} />
         <p className="text-sm text-text-muted">
           {phase === 'generating' ? 'Your mentor report is being generated…' : 'Loading report…'}
         </p>
@@ -233,8 +233,8 @@ export default function MentorReportPage() {
         {report.strengths_text && (
           <ReportSection
             icon={<StrengthIcon />}
-            accent="rgba(11,61,145,0.12)"
-            accentBorder="rgba(11,61,145,0.20)"
+            accent="rgba(2,132,199,0.12)"
+            accentBorder="rgba(2,132,199,0.20)"
             label="Strengths"
             text={report.strengths_text}
           />
@@ -255,8 +255,8 @@ export default function MentorReportPage() {
         {report.recommendations_text && (
           <ReportSection
             icon={<RecommendIcon />}
-            accent="rgba(11,61,145,0.08)"
-            accentBorder="rgba(11,61,145,0.18)"
+            accent="rgba(2,132,199,0.08)"
+            accentBorder="rgba(2,132,199,0.18)"
             label="Today's Mission"
             text={report.recommendations_text}
           />
@@ -300,7 +300,7 @@ function ReportSection({
 
 function StrengthIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0B3D91" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284c7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="20 6 9 17 4 12"/>
     </svg>
   )
@@ -317,7 +317,7 @@ function WeaknessIcon() {
 
 function RecommendIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0B3D91" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284c7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
     </svg>
   )

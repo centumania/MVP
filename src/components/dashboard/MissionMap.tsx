@@ -36,9 +36,9 @@ interface MapNode {
 
 const STATE_META: Record<NodeState, { ring: string; fill: string; label: string; chipBg: string; chipText: string }> = {
   mastered:  { ring: '#00C897', fill: '#00C897', label: 'Mastered',     chipBg: 'rgba(0,200,151,0.12)',  chipText: '#047857' },
-  completed: { ring: '#0B3D91', fill: '#0B3D91', label: 'Completed',    chipBg: 'rgba(11,61,145,0.10)',  chipText: '#0B3D91' },
+  completed: { ring: '#0284c7', fill: '#0284c7', label: 'Completed',    chipBg: 'rgba(2,132,199,0.10)',  chipText: '#0284c7' },
   weak:      { ring: '#F59E0B', fill: '#F59E0B', label: 'Revision due', chipBg: 'rgba(245,158,11,0.14)', chipText: '#B45309' },
-  current:   { ring: '#0B3D91', fill: '#FFFFFF', label: 'In progress',  chipBg: 'rgba(11,61,145,0.10)',  chipText: '#0B3D91' },
+  current:   { ring: '#0284c7', fill: '#FFFFFF', label: 'In progress',  chipBg: 'rgba(2,132,199,0.10)',  chipText: '#0284c7' },
   missed:    { ring: '#E5E7EB', fill: '#FFFFFF', label: 'Missed',       chipBg: '#F1F5F9',               chipText: '#6B7280' },
   locked:    { ring: '#E5E7EB', fill: '#F8FAFC', label: 'Locked',       chipBg: '#F1F5F9',               chipText: '#9CA3AF' },
 }
@@ -217,7 +217,7 @@ function CheckIcon() {
 }
 function PlayIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="#0B3D91">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="#0284c7">
       <path d="M8 5v14l11-7z" />
     </svg>
   )

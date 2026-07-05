@@ -21,11 +21,10 @@ const TIER_BADGE: Record<PricingTier, { label: string; variant: BadgeVariant }> 
   legend:  { label: 'Legend',  variant: 'gold'    },
 }
 
-// Green-palette podium metals
 const METAL = {
-  1: { grad: 'linear-gradient(135deg,#F59E0B 0%,#c98c1e 60%,#8b6110 100%)', glow: 'rgba(245,158,11,0.25)',  text: '#f5d48a', border: 'rgba(245,158,11,0.30)'  },
-  2: { grad: 'linear-gradient(135deg,#d0d8c8 0%,#6B7280 60%,#9CA3AF 100%)', glow: 'rgba(154,168,147,0.20)', text: '#d0d8c8', border: 'rgba(154,168,147,0.25)' },
-  3: { grad: 'linear-gradient(135deg,#a37a50 0%,#7a5030 60%,#4a3018 100%)', glow: 'rgba(163,122,80,0.20)',  text: '#d4ad8a', border: 'rgba(163,122,80,0.30)'  },
+  1: { grad: 'linear-gradient(135deg,#D97706 0%,#B45309 60%,#92400E 100%)', glow: 'rgba(217,119,6,0.20)',   text: '#92400E', border: 'rgba(217,119,6,0.30)'    },
+  2: { grad: 'linear-gradient(135deg,#6B7280 0%,#4B5563 60%,#374151 100%)', glow: 'rgba(107,114,128,0.15)', text: '#4B5563', border: 'rgba(107,114,128,0.25)'   },
+  3: { grad: 'linear-gradient(135deg,#92400E 0%,#78350F 60%,#451A03 100%)', glow: 'rgba(120,53,15,0.15)',   text: '#78350F', border: 'rgba(120,53,15,0.25)'     },
 } as Record<number, { grad: string; glow: string; text: string; border: string }>
 
 function CrownIcon({ size = 18 }: { size?: number }) {
@@ -39,8 +38,8 @@ function Avatar({ name, isMe, size = 'md' }: { name: string; isMe?: boolean; siz
   return (
     <div className={`${sz} rounded-full flex items-center justify-center shrink-0 font-bold uppercase`}
       style={isMe
-        ? { background: 'linear-gradient(135deg,#0B3D91,#10B981)', color: '#FFFFFF', boxShadow: '0 0 12px rgba(11,61,145,0.4)' }
-        : { background: 'rgba(11,61,145,0.10)', color: '#0B3D91' }
+        ? { background: 'linear-gradient(135deg,#0284c7,#6366f1)', color: '#FFFFFF', boxShadow: '0 0 10px rgba(2,132,199,0.30)' }
+        : { background: '#F0F9FF', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }
       }>
       {init}
     </div>
@@ -102,12 +101,12 @@ export default function LeaderboardPage() {
         {/* My Rank Banner */}
         {myRank && (
           <div className="relative rounded-2xl overflow-hidden px-5 py-4"
-            style={{ background: 'linear-gradient(135deg,#112215,#0d1c10)', border: '1px solid rgba(11,61,145,0.20)' }}>
+            style={{ background: 'linear-gradient(135deg,#f0f9ff,#e0f2fe)', border: '1px solid rgba(2,132,199,0.20)' }}>
             <div className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse at left,rgba(11,61,145,0.08),transparent 60%)' }} />
+              style={{ background: 'radial-gradient(ellipse at left,rgba(2,132,199,0.06),transparent 60%)' }} />
             <div className="relative flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 font-bold text-sm font-mono"
-                style={{ background: 'rgba(11,61,145,0.12)', border: '1px solid rgba(11,61,145,0.25)', color: '#0B3D91' }}>
+                style={{ background: 'rgba(2,132,199,0.12)', border: '1px solid rgba(2,132,199,0.25)', color: '#0284c7' }}>
                 #{myRank.rank}
               </div>
               <div className="flex-1 min-w-0">
@@ -143,9 +142,9 @@ export default function LeaderboardPage() {
                 <div key={e.rank}
                   className={`relative rounded-2xl overflow-hidden p-4 text-center ${isFirst ? 'pb-5 pt-6' : 'py-4'}`}
                   style={{
-                    background: 'rgba(255,255,255,0.02)',
+                    background: '#FFFFFF',
                     border: `1px solid ${m.border}`,
-                    boxShadow: isMeEntry ? `0 0 20px ${m.glow}, 0 0 0 2px rgba(11,61,145,0.3)` : `0 0 12px ${m.glow}`,
+                    boxShadow: isMeEntry ? `0 4px 16px ${m.glow}, 0 0 0 2px rgba(2,132,199,0.25)` : `0 2px 10px ${m.glow}`,
                   }}
                 >
                   {isFirst && (

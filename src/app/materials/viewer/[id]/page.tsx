@@ -109,8 +109,8 @@ export default function MaterialViewerPage() {
           <span
             className="text-[10px] font-bold font-mono px-1.5 py-0.5 rounded"
             style={contentType === 'pdf'
-              ? { background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }
-              : { background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }
+              ? { background: 'rgba(2,132,199,0.10)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }
+              : { background: 'rgba(2,132,199,0.10)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }
             }
           >
             {contentType === 'pdf' ? 'PDF' : 'HTML'}
@@ -122,7 +122,7 @@ export default function MaterialViewerPage() {
         {state === 'loading' && (
           <div className="flex items-center gap-2 text-xs text-text-muted font-mono">
             <div className="w-3.5 h-3.5 rounded-full border animate-spin"
-              style={{ borderColor: 'rgba(11,61,145,0.2)', borderTopColor: '#0B3D91' }} />
+              style={{ borderColor: 'rgba(2,132,199,0.2)', borderTopColor: '#0284c7' }} />
             Loading…
           </div>
         )}
@@ -152,7 +152,7 @@ export default function MaterialViewerPage() {
         {state === 'loading' && (
           <div className="flex flex-col items-center justify-center flex-1 gap-3">
             <div className="w-8 h-8 rounded-full border-2 animate-spin"
-              style={{ borderColor: 'rgba(11,61,145,0.15)', borderTopColor: '#0B3D91' }} />
+              style={{ borderColor: 'rgba(2,132,199,0.15)', borderTopColor: '#0284c7' }} />
             <p className="text-xs text-text-muted font-mono">Loading study material…</p>
           </div>
         )}

@@ -8,14 +8,15 @@ export default function ContactPage() {
       lead="The fastest way to reach us is WhatsApp. We respond to all messages within a few hours during working hours."
     >
       <div style={{
-        background: '#111827',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: '#FFFFFF',
+        border: '1px solid #E5E7EB',
         borderRadius: 16,
         padding: '32px',
         marginBottom: 32,
         display: 'flex',
         flexDirection: 'column' as const,
         gap: 20,
+        boxShadow: '0 1px 3px rgba(16,24,40,0.08)',
       }}>
         <div>
           <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.12em', color: '#6B7280', marginBottom: 6 }}>WhatsApp</p>

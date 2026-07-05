@@ -51,13 +51,13 @@ export default function InsightsPage() {
 
         {/* Header */}
         <div className="pt-1">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-0.5" style={{ color: 'var(--color-cm-neutral-300)' }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-1 text-text-muted">
             Personalised
           </p>
-          <h1 className="font-bebas text-[42px] leading-none tracking-wide" style={{ color: '#F9FAFB' }}>
+          <h1 className="text-2xl font-bold tracking-tight text-text">
             AI Insights
           </h1>
-          <p className="text-xs mt-1" style={{ color: 'var(--color-cm-neutral-300)' }}>
+          <p className="text-xs mt-1 text-text-muted">
             Your topic-by-topic performance, analysed by AI
           </p>
         </div>
@@ -124,7 +124,7 @@ export default function InsightsPage() {
                   <p className="text-xs font-semibold" style={{ color: TIER_COLOR[tier] }}>
                     {TIER_LABEL[tier]} · {range}
                   </p>
-                  <p className="text-xs mt-0.5" style={{ color: 'var(--color-cm-neutral-300)' }}>{action}</p>
+                  <p className="text-xs mt-0.5 text-text-muted">{action}</p>
                 </div>
               </div>
             ))}

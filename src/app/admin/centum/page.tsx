@@ -127,12 +127,12 @@ export default function CentumPage() {
           {recalcState.phase === 'running' ? (
             <>
               <div className="w-3.5 h-3.5 rounded-full border border-t-transparent animate-spin"
-                style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
+                style={{ borderColor: 'rgba(2,132,199,0.3)', borderTopColor: '#0284c7' }} />
               Calculating {recalcState.done}/{recalcState.total}…
             </>
           ) : recalcState.phase === 'done' ? (
             <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0B3D91" strokeWidth="2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284c7" strokeWidth="2" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
               Done
             </>
           ) : (
@@ -202,7 +202,7 @@ export default function CentumPage() {
                 const refund = getRefundTier(Number(row.centum_index))
                 return (
                   <tr key={row.id} style={TROW}
-                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.015)')}
+                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(2,132,199,0.04)')}
                     onMouseLeave={e => (e.currentTarget.style.background = '')}>
                     <td className="px-4 py-3 font-mono text-xs text-text-muted">#{row.rank}</td>
                     <td className="px-4 py-3 font-medium text-text">{row.name}</td>
@@ -246,8 +246,8 @@ export default function CentumPage() {
         </p>
         <div className="grid grid-cols-3 gap-4">
           {[
-            { label: '50% Refund',  threshold: '95%+',    count: goldCount,   color: '#0B3D91' },
-            { label: '35% Refund',  threshold: '85–95%',  count: silverCount, color: '#0B3D91' },
+            { label: '50% Refund',  threshold: '95%+',    count: goldCount,   color: '#0284c7' },
+            { label: '35% Refund',  threshold: '85–95%',  count: silverCount, color: '#0284c7' },
             { label: '25% Refund',  threshold: '75–85%',  count: bronzeCount, color: '#F59E0B' },
           ].map(({ label, threshold, count, color }) => (
             <div key={label} className="rounded-xl p-5" style={CARD}>
@@ -263,7 +263,7 @@ export default function CentumPage() {
       </div>
 
       {/* ── Section 3: Formula ─────────────────────────────────────── */}
-      <div className="rounded-xl p-5" style={{ ...CARD, borderColor: 'rgba(11,61,145,0.15)' }}>
+      <div className="rounded-xl p-5" style={{ ...CARD, borderColor: 'rgba(2,132,199,0.15)' }}>
         <p className="text-[10px] font-semibold text-text-muted uppercase tracking-widest font-mono mb-4">
           Formula Reference
         </p>

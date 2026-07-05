@@ -162,7 +162,7 @@ export default function AdminStudents() {
           onChange={e => { setSearch(e.target.value); setPage(1) }}
           className="flex-1 max-w-xs h-11 px-3 text-sm rounded-lg text-text font-mono placeholder-text-muted focus:outline-none"
           style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}
-          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(11,61,145,0.5)')}
+          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(2,132,199,0.5)')}
           onBlur={e => (e.currentTarget.style.borderColor = '#E5E7EB')}
         />
         {(['all', 'verified', 'pending'] as const).map(s => (
@@ -214,7 +214,7 @@ export default function AdminStudents() {
               </tr>
             ) : students.map(s => (
               <tr key={s.id} style={TROW}
-                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.015)')}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(2,132,199,0.04)')}
                 onMouseLeave={e => (e.currentTarget.style.background = '')}>
                 <td className="px-4 py-3">
                   <div>
@@ -226,7 +226,7 @@ export default function AdminStudents() {
                 <td className="px-4 py-3">
                   {s.payment_verified ? (
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-medium font-mono"
-                      style={{ background: 'rgba(11,61,145,0.08)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
+                      style={{ background: 'rgba(2,132,199,0.08)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }}>
                       <span className="w-1.5 h-1.5 bg-primary rounded-full" />Verified
                     </span>
                   ) : (
@@ -272,7 +272,7 @@ export default function AdminStudents() {
                       className="p-1.5 rounded-md transition-colors hidden lg:flex items-center"
                       title="View student detail"
                       style={{ color: '#3a4a3d' }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#0B3D91'; (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(11,61,145,0.08)' }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#0284c7'; (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(2,132,199,0.08)' }}
                       onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLAnchorElement).style.background = '' }}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
@@ -284,11 +284,11 @@ export default function AdminStudents() {
                       title="Recalculate Centum Index"
                       className="p-1.5 rounded-md transition-colors hidden lg:flex items-center disabled:opacity-40"
                       style={{ color: '#3a4a3d' }}
-                      onMouseEnter={e => { if (!calculatingIds.has(s.id)) { (e.currentTarget as HTMLButtonElement).style.color = '#0B3D91'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(11,61,145,0.08)' } }}
+                      onMouseEnter={e => { if (!calculatingIds.has(s.id)) { (e.currentTarget as HTMLButtonElement).style.color = '#0284c7'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(2,132,199,0.08)' } }}
                       onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLButtonElement).style.background = '' }}>
                       {calculatingIds.has(s.id) ? (
                         <div className="w-3 h-3 rounded-full border border-t-transparent animate-spin"
-                          style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
+                          style={{ borderColor: 'rgba(2,132,199,0.3)', borderTopColor: '#0284c7' }} />
                       ) : (
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
@@ -299,7 +299,7 @@ export default function AdminStudents() {
                       <button
                         onClick={() => verifyPayment(s.id)}
                         className="px-2.5 py-1.5 text-xs font-medium rounded-md transition-colors font-mono"
-                        style={{ background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}
+                        style={{ background: 'rgba(2,132,199,0.10)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }}
                       >
                         Verify
                       </button>

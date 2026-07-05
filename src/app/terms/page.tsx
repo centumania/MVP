@@ -47,7 +47,7 @@ export default function TermsPage() {
       <h2>6. Refund Policy</h2>
       <p>
         A performance-linked refund is available under specific conditions. Please refer to our{' '}
-        <a href="/refund" style={{ color: '#2533FF', fontWeight: 600 }}>Refund Policy</a> for full details.
+        <a href="/refund" style={{ color: '#0284c7', fontWeight: 600 }}>Refund Policy</a> for full details.
         Refunds are not available on the basis of dissatisfaction alone; they are tied to completion and
         performance criteria.
       </p>

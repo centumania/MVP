@@ -81,7 +81,7 @@ function Tab({ label, active, onClick }: { label: string; active: boolean; onCli
       onClick={onClick}
       className="flex-1 py-2 text-xs font-semibold font-mono rounded-lg transition-colors"
       style={active
-        ? { background: 'rgba(11,61,145,0.12)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.25)' }
+        ? { background: 'rgba(2,132,199,0.12)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.25)' }
         : { background: 'transparent', color: '#9CA3AF', border: '1px solid transparent' }}
     >
       {label}
@@ -94,7 +94,7 @@ function TypeBadge({ type }: { type: ContentType }) {
   if (!type) return <span className="text-xs font-mono" style={{ color: '#EF4444' }}>No content</span>
   if (type === 'pdf') return (
     <span className="inline-flex items-center gap-1 text-[10px] font-bold font-mono px-1.5 py-0.5 rounded"
-      style={{ background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
+      style={{ background: 'rgba(2,132,199,0.10)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }}>
       <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
         <polyline points="14 2 14 8 20 8"/>
@@ -104,7 +104,7 @@ function TypeBadge({ type }: { type: ContentType }) {
   )
   return (
     <span className="inline-flex items-center gap-1 text-[10px] font-bold font-mono px-1.5 py-0.5 rounded"
-      style={{ background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
+      style={{ background: 'rgba(2,132,199,0.10)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }}>
       <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
         <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
         <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
@@ -320,9 +320,9 @@ export default function AdminMaterials() {
                   {uploadedKey ? (
                     /* Uploaded ✓ */
                     <div className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg"
-                      style={{ background: 'rgba(11,61,145,0.06)', border: '1px solid rgba(11,61,145,0.20)' }}>
+                      style={{ background: 'rgba(2,132,199,0.06)', border: '1px solid rgba(2,132,199,0.20)' }}>
                       <div className="flex items-center gap-2 min-w-0">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0B3D91" strokeWidth="2" strokeLinecap="round">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284c7" strokeWidth="2" strokeLinecap="round">
                           <polyline points="20 6 9 17 4 12"/>
                         </svg>
                         <span className="text-xs text-primary font-mono truncate">{pdfName(uploadedKey)}</span>
@@ -339,7 +339,7 @@ export default function AdminMaterials() {
                         onClick={() => fileInputRef.current?.click()}
                         className="flex flex-col items-center justify-center gap-2 py-5 rounded-lg cursor-pointer transition-colors"
                         style={{ border: '1.5px dashed #E5E7EB' }}
-                        onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(11,61,145,0.3)')}
+                        onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(2,132,199,0.3)')}
                         onMouseLeave={e => (e.currentTarget.style.borderColor = '#E5E7EB')}
                       >
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round">
@@ -372,7 +372,7 @@ export default function AdminMaterials() {
                           <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#FFFFFF' }}>
                             <div
                               className="h-full rounded-full transition-all duration-200"
-                              style={{ width: `${uploadPct}%`, background: '#0B3D91' }}
+                              style={{ width: `${uploadPct}%`, background: '#0284c7' }}
                             />
                           </div>
                           <p className="text-[10px] text-text-muted font-mono mt-1 text-right">{uploadPct}%</p>
@@ -384,7 +384,7 @@ export default function AdminMaterials() {
                         onClick={handleUpload}
                         disabled={!pdfFile || uploadPct !== null}
                         className="w-full h-9 text-sm font-medium rounded-lg font-mono transition-opacity disabled:opacity-40"
-                        style={{ background: 'rgba(11,61,145,0.12)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.25)' }}
+                        style={{ background: 'rgba(2,132,199,0.12)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.25)' }}
                       >
                         {uploadPct !== null ? `Uploading… ${uploadPct}%` : '⬆ Upload PDF'}
                       </button>
@@ -495,7 +495,7 @@ export default function AdminMaterials() {
       {loading ? (
         <div className="rounded-xl p-12 text-center" style={CARD}>
           <div className="w-5 h-5 border-2 rounded-full animate-spin mx-auto"
-            style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
+            style={{ borderColor: 'rgba(2,132,199,0.3)', borderTopColor: '#0284c7' }} />
         </div>
       ) : materials.length === 0 ? (
         <div className="rounded-xl p-12 text-center" style={CARD}>
@@ -516,11 +516,11 @@ export default function AdminMaterials() {
             <tbody>
               {materials.map(m => (
                 <tr key={m.id} style={{ ...TROW, opacity: m.isExpired ? 0.6 : 1 }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.015)')}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(2,132,199,0.04)')}
                   onMouseLeave={e => (e.currentTarget.style.background = '')}>
 
                   {/* Day */}
-                  <td className="px-4 py-3 font-mono text-sm font-medium" style={{ color: '#0B3D91' }}>D{m.dayNumber}</td>
+                  <td className="px-4 py-3 font-mono text-sm font-medium" style={{ color: '#0284c7' }}>D{m.dayNumber}</td>
 
                   {/* Title */}
                   <td className="px-4 py-3 text-text font-medium max-w-[160px]">
@@ -598,7 +598,7 @@ export default function AdminMaterials() {
                       {m.isExpired && (
                         <button onClick={() => extendExpiry(m.id)}
                           className="px-2 py-1.5 text-xs font-medium rounded-md font-mono"
-                          style={{ background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
+                          style={{ background: 'rgba(2,132,199,0.10)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }}>
                           Extend
                         </button>
                       )}
@@ -606,7 +606,7 @@ export default function AdminMaterials() {
                       {m.htmlUrl && (
                         <a href={m.htmlUrl} target="_blank" rel="noopener noreferrer"
                           className="p-1.5 rounded-md transition-colors" style={{ color: '#3a4a3d' }}
-                          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#0B3D91'; (e.currentTarget as HTMLElement).style.background = 'rgba(11,61,145,0.08)' }}
+                          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#0284c7'; (e.currentTarget as HTMLElement).style.background = 'rgba(2,132,199,0.08)' }}
                           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#3a4a3d'; (e.currentTarget as HTMLElement).style.background = '' }}
                           title="Preview URL">
                           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -690,11 +690,11 @@ function InlineEdit({
           onChange={e => setUrlVal(e.target.value)}
           placeholder="https://…"
           className="w-full text-xs font-mono px-2 py-1.5 rounded-lg"
-          style={{ background: '#F8FAFC', border: '1px solid #0B3D91', color: '#111827' }}
+          style={{ background: '#F8FAFC', border: '1px solid #0284c7', color: '#111827' }}
         />
       ) : uploadedKey ? (
         <div className="flex items-center gap-2 text-xs font-mono px-2 py-1.5 rounded-lg"
-          style={{ background: 'rgba(11,61,145,0.06)', border: '1px solid rgba(11,61,145,0.20)' }}>
+          style={{ background: 'rgba(2,132,199,0.06)', border: '1px solid rgba(2,132,199,0.20)' }}>
           <span className="text-primary truncate flex-1">{pdfName(uploadedKey)}</span>
           <button type="button" onClick={() => { setUploadedKey(null); setPdfFile(null) }} className="text-text-muted hover:text-text">✕</button>
         </div>
@@ -709,13 +709,13 @@ function InlineEdit({
           </button>
           {uploadPct !== null && (
             <div className="h-1 rounded-full overflow-hidden" style={{ background: '#FFFFFF' }}>
-              <div className="h-full rounded-full" style={{ width: `${uploadPct}%`, background: '#0B3D91' }} />
+              <div className="h-full rounded-full" style={{ width: `${uploadPct}%`, background: '#0284c7' }} />
             </div>
           )}
           {pdfFile && uploadPct === null && (
             <button type="button" onClick={handleUpload}
               className="w-full text-xs font-mono py-1 rounded-md"
-              style={{ background: 'rgba(11,61,145,0.10)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
+              style={{ background: 'rgba(2,132,199,0.10)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }}>
               ⬆ Upload
             </button>
           )}
@@ -737,7 +737,7 @@ function InlineEdit({
       <div className="flex gap-1.5">
         <button type="button" onClick={handleSave} disabled={!canSave && !testLinkVal.trim()}
           className="flex-1 text-[11px] font-mono py-1.5 rounded-md transition-opacity disabled:opacity-40"
-          style={{ background: 'rgba(11,61,145,0.12)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
+          style={{ background: 'rgba(2,132,199,0.12)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }}>
           Save
         </button>
         <button type="button" onClick={onCancel}

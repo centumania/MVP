@@ -29,10 +29,10 @@ function InsightsSkeleton() {
     <Card>
       <div className="flex items-center justify-between mb-4">
         <CardLabel>AI Study Insights</CardLabel>
-        <div className="w-14 h-3 rounded animate-pulse" style={{ background: 'rgba(255,255,255,0.07)' }} />
+        <div className="w-14 h-3 rounded animate-pulse" style={{ background: 'rgba(16,24,40,0.08)' }} />
       </div>
       {[80, 60, 70].map((w, i) => (
-        <div key={i} className="h-10 rounded-xl mb-2 animate-pulse" style={{ background: 'rgba(255,255,255,0.04)', width: `${w}%` }} />
+        <div key={i} className="h-10 rounded-xl mb-2 animate-pulse" style={{ background: 'rgba(16,24,40,0.05)', width: `${w}%` }} />
       ))}
     </Card>
   )
@@ -65,7 +65,7 @@ export function InsightsCard({ data }: { data: InsightsData }) {
           <IconBrain />
           <CardLabel>AI Study Insights</CardLabel>
         </div>
-        <p className="text-sm font-semibold mb-1" style={{ color: '#F9FAFB' }}>No data yet</p>
+        <p className="text-sm font-semibold mb-1" style={{ color: '#111827' }}>No data yet</p>
         <p className="text-xs leading-relaxed" style={{ color: 'var(--color-cm-neutral-300)' }}>
           Attempt a few daily tests and the AI will show you a personalised breakdown of every topic — what&apos;s strong, what&apos;s weak, and where to focus next.
         </p>
@@ -154,7 +154,7 @@ export function InsightsCard({ data }: { data: InsightsData }) {
 function IconBrain() {
   return (
     <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
-      style={{ background: 'rgba(37,51,255,0.15)', color: '#2533FF' }}>
+      style={{ background: 'rgba(2,132,199,0.10)', color: '#0284c7' }}>
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
         <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>

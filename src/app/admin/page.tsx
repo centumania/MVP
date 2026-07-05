@@ -18,9 +18,9 @@ function StatCard({ label, value, sub, accent = 'green' }: {
   label: string; value: string | number; sub?: string; accent?: 'green' | 'amber' | 'teal' | 'crimson'
 }) {
   const accents = {
-    green:   { text: '#0B3D91', bg: 'rgba(11,61,145,0.08)', dot: 'rgba(11,61,145,0.6)' },
+    green:   { text: '#0284c7', bg: 'rgba(2,132,199,0.08)', dot: 'rgba(2,132,199,0.6)' },
     amber:   { text: '#F59E0B', bg: 'rgba(245,158,11,0.08)',  dot: 'rgba(245,158,11,0.6)' },
-    teal:    { text: '#0B3D91', bg: 'rgba(11,61,145,0.08)',  dot: 'rgba(11,61,145,0.6)' },
+    teal:    { text: '#0284c7', bg: 'rgba(2,132,199,0.08)',  dot: 'rgba(2,132,199,0.6)' },
     crimson: { text: '#EF4444', bg: 'rgba(239,68,68,0.08)', dot: 'rgba(239,68,68,0.6)' },
   }
   const a = accents[accent]

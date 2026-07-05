@@ -173,13 +173,13 @@ export default function StudentMaterialViewer() {
   }, [day])
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#0B1020' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#FAFAF8' }}>
       <header
         className="sticky top-0 z-20 flex items-center gap-3 px-4 h-12 shrink-0"
         style={{
-          background: 'rgba(11,16,32,0.97)',
+          background: 'rgba(250,250,248,0.97)',
           backdropFilter: 'blur(8px)',
-          borderBottom: '1px solid rgba(255,255,255,0.09)',
+          borderBottom: '1px solid #E5E7EB',
           paddingTop: 'env(safe-area-inset-top)',
         }}
       >
@@ -202,7 +202,7 @@ export default function StudentMaterialViewer() {
         {state === 'loading' && (
           <div className="flex items-center gap-2 text-xs text-text-muted font-mono">
             <div className="w-3.5 h-3.5 rounded-full border animate-spin"
-              style={{ borderColor: 'rgba(37,51,255,0.2)', borderTopColor: '#2533FF' }} />
+              style={{ borderColor: 'rgba(2,132,199,0.20)', borderTopColor: '#0284c7' }} />
             Loading…
           </div>
         )}
@@ -231,33 +231,33 @@ export default function StudentMaterialViewer() {
         {state === 'loading' && (
           <div className="flex flex-col items-center justify-center flex-1 gap-3">
             <div className="w-8 h-8 rounded-full border-2 animate-spin"
-              style={{ borderColor: 'rgba(37,51,255,0.15)', borderTopColor: '#2533FF' }} />
+              style={{ borderColor: 'rgba(2,132,199,0.15)', borderTopColor: '#0284c7' }} />
             <p className="text-xs text-text-muted font-mono">Loading study material…</p>
           </div>
         )}
 
         {state === 'ready' && metrics && (
           <div className="flex items-center gap-0 shrink-0 overflow-x-auto"
-            style={{ height: 36, background: 'rgba(17,24,39,0.95)', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingLeft: 16, paddingRight: 16 }}>
+            style={{ height: 36, background: 'rgba(255,255,255,0.95)', borderBottom: '1px solid #E5E7EB', paddingLeft: 16, paddingRight: 16 }}>
             {/* Nodes */}
             <MetricChip
               label={metrics.total_nodes ? `${metrics.nodes_completed}/${metrics.total_nodes}` : String(metrics.nodes_completed)}
               sub="Nodes"
-              color="#4ADE80"
+              color="#16A34A"
             />
             <Divider />
             {/* Accuracy */}
-            <MetricChip label={`${metrics.first_accuracy_pct}%`} sub="Accuracy" color="#2533FF" />
+            <MetricChip label={`${metrics.first_accuracy_pct}%`} sub="Accuracy" color="#0284c7" />
             <Divider />
             {/* XP */}
-            <MetricChip label={`${metrics.xp} XP`} sub="Earned" color="#F6B300" />
+            <MetricChip label={`${metrics.xp} XP`} sub="Earned" color="#B45309" />
             <Divider />
             {/* Mode pills */}
             <div className="flex items-center gap-1.5 ml-1">
               <ModePill label="STUDY" done />
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
               <ModePill label="REVISE" done={metrics.mode_unlock === 'revise' || metrics.mode_unlock === 'quiz'} />
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
               <ModePill label="QUIZ"   done={metrics.mode_unlock === 'quiz'} />
             </div>
           </div>
@@ -288,15 +288,15 @@ function MetricChip({ label, sub, color }: { label: string; sub: string; color: 
   )
 }
 function Divider() {
-  return <div className="mx-3 h-3 w-px shrink-0" style={{ background: 'rgba(255,255,255,0.08)' }} />
+  return <div className="mx-3 h-3 w-px shrink-0" style={{ background: '#E5E7EB' }} />
 }
 function ModePill({ label, done }: { label: string; done: boolean }) {
   return (
     <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded"
       style={{
-        background: done ? 'rgba(37,51,255,0.15)' : 'rgba(255,255,255,0.04)',
-        color:      done ? '#818cf8'               : '#4B5563',
-        border:     `1px solid ${done ? 'rgba(37,51,255,0.3)' : 'rgba(255,255,255,0.06)'}`,
+        background: done ? 'rgba(2,132,199,0.10)' : '#F3F4F6',
+        color:      done ? '#0284c7'               : '#6B7280',
+        border:     `1px solid ${done ? 'rgba(2,132,199,0.25)' : '#E5E7EB'}`,
       }}>
       {!done && '🔒 '}{label}
     </span>

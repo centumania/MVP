@@ -19,9 +19,9 @@ const OPTIONS: AnswerOption[] = ['A', 'B', 'C', 'D']
 
 // score → color mapping (cm palette · no red near test results)
 function scoreColor(pct: number) {
-  if (pct >= 80) return '#22C55E'   // cm-success
+  if (pct >= 80) return '#16A34A'   // cm-success
   if (pct >= 60) return '#2563EB'   // cm-info
-  if (pct >= 40) return '#FBBF24'   // cm-warning
+  if (pct >= 40) return '#B45309'   // cm-warning
   return '#9CA3AF'                   // neutral (avoids anxiety-inducing red)
 }
 
@@ -120,10 +120,10 @@ export default function ExamPage() {
   // ── Loading / Submitting ──────────────────────────────────────
   if (phase === 'loading' || phase === 'submitting') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#0B1020' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#FAFAF8' }}>
         <div className="w-8 h-8 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#2533FF', borderRightColor: 'rgba(37,51,255,0.25)', borderBottomColor: 'rgba(37,51,255,0.25)', borderLeftColor: 'rgba(37,51,255,0.25)' }} />
-        <p className="text-sm" style={{ color: 'var(--color-cm-neutral-300)' }}>
+          style={{ borderTopColor: '#0284c7', borderRightColor: 'rgba(2,132,199,0.20)', borderBottomColor: 'rgba(2,132,199,0.20)', borderLeftColor: 'rgba(2,132,199,0.20)' }} />
+        <p className="text-sm" style={{ color: '#6B7280' }}>
           {phase === 'submitting' ? 'Submitting your answers…' : 'Loading exam…'}
         </p>
       </div>
@@ -133,20 +133,20 @@ export default function ExamPage() {
   // ── Window Closed / Error ─────────────────────────────────────
   if (phase === 'window-closed' || phase === 'error') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#0B1020' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#FAFAF8' }}>
         <div className="w-16 h-16 rounded-3xl flex items-center justify-center mx-auto mb-6"
           style={phase === 'error'
             ? { background: 'rgba(227,65,58,0.12)', border: '1px solid rgba(227,65,58,0.25)' }
-            : { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)' }}>
+            : { background: '#F3F4F6', border: '1px solid #E5E7EB' }}>
           {phase === 'window-closed'
-            ? <svg style={{ color: 'var(--color-cm-neutral-300)' }} className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            ? <svg style={{ color: '#6B7280' }} className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             : <svg style={{ color: '#E3413A' }} className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           }
         </div>
-        <h2 className="font-bebas text-[32px] leading-none tracking-wide mb-3" style={{ color: '#F9FAFB' }}>
+        <h2 className="text-[26px] font-extrabold leading-none tracking-tight mb-3" style={{ color: '#111827' }}>
           {phase === 'window-closed' ? 'Exam closed' : 'Something went wrong'}
         </h2>
-        <p className="text-sm max-w-xs mb-6" style={{ color: 'var(--color-cm-neutral-300)' }}>{errorMsg}</p>
+        <p className="text-sm max-w-xs mb-6" style={{ color: '#6B7280' }}>{errorMsg}</p>
         <AiDailyTestBanner />
         <Button onClick={() => router.push('/dashboard')} variant="secondary">Back to dashboard</Button>
       </div>
@@ -165,9 +165,9 @@ export default function ExamPage() {
       : 0
     const col = scoreColor(pct)
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#0B1020' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#FAFAF8' }}>
         <Badge variant="success" className="mb-5">Submitted</Badge>
-        <h2 className="font-bebas text-[40px] leading-none tracking-wide mb-3" style={{ color: '#F9FAFB' }}>
+        <h2 className="text-[32px] font-extrabold leading-none tracking-tight mb-3" style={{ color: '#111827' }}>
           Day {data.exam.dayNumber} complete
         </h2>
         <div className="flex items-baseline gap-2 mb-2">
@@ -188,26 +188,26 @@ export default function ExamPage() {
 
   return (
     /* Dark shell — Carbon Black background */
-    <div className="min-h-screen flex flex-col" style={{ background: '#0B1020' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#FAFAF8' }}>
 
       {/* ── STICKY HEADER ───────────────────────────────────────── */}
       <header className="sticky top-0 z-20"
-        style={{ background: 'rgba(11,16,32,0.92)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        style={{ background: 'rgba(250,250,248,0.92)', backdropFilter: 'blur(20px)', borderBottom: '1px solid #E5E7EB' }}>
         <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
             <button onClick={() => router.push('/dashboard')}
               className="p-1.5 -ml-1.5 rounded-lg transition-colors shrink-0"
-              style={{ color: 'var(--color-cm-neutral-300)' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#F9FAFB'; (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.06)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--color-cm-neutral-300)'; (e.currentTarget as HTMLButtonElement).style.background = '' }}>
+              style={{ color: '#6B7280' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#111827'; (e.currentTarget as HTMLButtonElement).style.background = '#F3F4F6' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#6B7280'; (e.currentTarget as HTMLButtonElement).style.background = '' }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
               </svg>
             </button>
             <div className="min-w-0">
               {/* Bebas Neue for exam title */}
-              <p className="font-bebas text-[18px] leading-tight tracking-wide truncate" style={{ color: '#F9FAFB' }}>{data.exam.title}</p>
-              <p className="text-[10px] uppercase tracking-wider font-mono" style={{ color: 'var(--color-cm-neutral-300)' }}>
+              <p className="text-[15px] font-bold leading-tight tracking-tight truncate" style={{ color: '#111827' }}>{data.exam.title}</p>
+              <p className="text-[10px] uppercase tracking-wider font-mono" style={{ color: '#6B7280' }}>
                 Day {data.exam.dayNumber} · {answered}/{total} answered
               </p>
             </div>
@@ -219,7 +219,7 @@ export default function ExamPage() {
             aria-live="polite"
             aria-atomic="true"
             style={urgent
-              ? { background: 'rgba(251,191,36,0.12)', border: '1px solid rgba(251,191,36,0.35)', color: '#FBBF24' }
+              ? { background: 'rgba(217,119,6,0.10)', border: '1px solid rgba(217,119,6,0.30)', color: '#B45309' }
               : { background: 'rgba(37,99,235,0.10)', border: '1px solid rgba(37,99,235,0.25)', color: '#2563EB' }
             }>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -230,9 +230,9 @@ export default function ExamPage() {
         </div>
 
         {/* Progress bar — Centumania Indigo */}
-        <div className="h-0.5" style={{ background: 'rgba(255,255,255,0.06)' }}>
+        <div className="h-0.5" style={{ background: '#F3F4F6' }}>
           <div className="h-full transition-all duration-300"
-            style={{ width: `${(answered / total) * 100}%`, background: 'linear-gradient(90deg,#2533FF,#0EA5A0)' }} />
+            style={{ width: `${(answered / total) * 100}%`, background: 'linear-gradient(90deg,#0284c7,#0EA5A0)' }} />
         </div>
       </header>
 
@@ -252,7 +252,7 @@ export default function ExamPage() {
                 key={q.id}
                 ref={el => { questionRefs.current[i] = el }}
                 className="card-question rounded-2xl p-5 transition-all duration-200"
-                style={isActive ? { outline: '2px solid rgba(37,51,255,0.35)', outlineOffset: '2px' } : undefined}
+                style={isActive ? { outline: '2px solid rgba(2,132,199,0.25)', outlineOffset: '2px' } : undefined}
                 onClick={() => setActiveQ(i)}
               >
                 <div className="flex items-start justify-between gap-3 mb-4">
@@ -268,7 +268,7 @@ export default function ExamPage() {
                     title={isFlagged ? 'Remove flag' : 'Flag for review'}
                     className="p-1.5 rounded-lg transition-all"
                     style={isFlagged
-                      ? { background: 'rgba(251,191,36,0.12)', color: '#FBBF24', border: '1px solid rgba(251,191,36,0.30)' }
+                      ? { background: 'rgba(217,119,6,0.10)', color: '#B45309', border: '1px solid rgba(217,119,6,0.30)' }
                       : { color: '#9CA3AF' }
                     }>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill={isFlagged ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -292,8 +292,8 @@ export default function ExamPage() {
                         onClick={e => { e.stopPropagation(); setAnswers(p => ({ ...p, [q.id]: opt })); setActiveQ(i) }}
                         className="w-full flex items-center gap-3.5 px-4 py-3 rounded-xl text-left transition-all duration-150 text-sm active:scale-[0.99]"
                         style={isSelected ? {
-                          background: 'rgba(37,51,255,0.08)',
-                          border: '1px solid rgba(37,51,255,0.35)',
+                          background: 'rgba(2,132,199,0.08)',
+                          border: '1px solid rgba(2,132,199,0.25)',
                           color: '#1925c0',
                         } : {
                           background: '#FAFAFA',
@@ -326,11 +326,11 @@ export default function ExamPage() {
 
           {/* ── Submit Section ─────────────────────────────────── */}
           <div className="pb-6">
-            <div className="rounded-2xl p-5" style={{ background: '#111827', border: '1px solid rgba(255,255,255,0.10)' }}>
+            <div className="rounded-2xl p-5" style={{ background: '#111827', border: '1px solid #E5E7EB' }}>
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <p className="text-sm font-bold" style={{ color: '#F9FAFB' }}>Ready to submit?</p>
-                  <p className="text-xs mt-0.5" style={{ color: 'var(--color-cm-neutral-300)' }}>
+                  <p className="text-sm font-bold" style={{ color: '#111827' }}>Ready to submit?</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#6B7280' }}>
                     {total - answered > 0
                       ? `${total - answered} question${total - answered > 1 ? 's' : ''} unanswered`
                       : 'All questions answered ✓'}
@@ -348,8 +348,8 @@ export default function ExamPage() {
 
         {/* ── Desktop Navigator ─────────────────────────────────── */}
         <aside className="hidden lg:block w-44 shrink-0">
-          <div className="sticky top-20 rounded-2xl p-4" style={{ background: '#111827', border: '1px solid rgba(255,255,255,0.09)' }}>
-            <p className="text-[9px] font-bold uppercase tracking-widest mb-3 font-mono" style={{ color: 'var(--color-cm-neutral-300)' }}>Navigator</p>
+          <div className="sticky top-20 rounded-2xl p-4" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
+            <p className="text-[9px] font-bold uppercase tracking-widest mb-3 font-mono" style={{ color: '#6B7280' }}>Navigator</p>
             <div className="grid grid-cols-5 gap-1.5">
               {questions.map((q, i) => {
                 const isAnswered = !!answers[q.id]
@@ -361,33 +361,33 @@ export default function ExamPage() {
                     style={isFlagged ? {
                       background: 'rgba(251,191,36,0.12)',
                       border: '1px solid rgba(251,191,36,0.30)',
-                      color: '#FBBF24',
+                      color: '#B45309',
                       outline: isActive ? '2px solid rgba(251,191,36,0.45)' : undefined,
                     } : isAnswered ? {
-                      background: 'linear-gradient(135deg,#2533FF,#0EA5A0)',
+                      background: 'linear-gradient(135deg,#0284c7,#0EA5A0)',
                       color: '#FFFFFF',
-                      outline: isActive ? '2px solid rgba(37,51,255,0.50)' : undefined,
+                      outline: isActive ? '2px solid rgba(2,132,199,0.40)' : undefined,
                     } : {
-                      background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.10)',
-                      color: 'var(--color-cm-neutral-300)',
-                      outline: isActive ? '2px solid rgba(255,255,255,0.20)' : undefined,
+                      background: '#F3F4F6',
+                      border: '1px solid #E5E7EB',
+                      color: '#6B7280',
+                      outline: isActive ? '2px solid rgba(2,132,199,0.30)' : undefined,
                     }}>
                     {i + 1}
                   </button>
                 )
               })}
             </div>
-            <div className="mt-4 space-y-1.5 pt-3" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+            <div className="mt-4 space-y-1.5 pt-3" style={{ borderTop: '1px solid #E5E7EB' }}>
               {[
-                { bg: 'linear-gradient(135deg,#2533FF,#0EA5A0)', label: 'Answered' },
+                { bg: 'linear-gradient(135deg,#0284c7,#0EA5A0)', label: 'Answered' },
                 { bg: 'rgba(251,191,36,0.12)',                   label: 'Flagged',  border: 'rgba(251,191,36,0.30)' },
-                { bg: 'rgba(255,255,255,0.05)',                  label: 'Skipped',  border: 'rgba(255,255,255,0.10)' },
+                { bg: '#F3F4F6',                                 label: 'Skipped',  border: '#E5E7EB' },
               ].map(({ bg, label, border }) => (
                 <div key={label} className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-md shrink-0"
                     style={{ background: bg, border: border ? `1px solid ${border}` : undefined }} />
-                  <span className="text-[10px]" style={{ color: 'var(--color-cm-neutral-300)' }}>{label}</span>
+                  <span className="text-[10px]" style={{ color: '#6B7280' }}>{label}</span>
                 </div>
               ))}
             </div>
@@ -404,11 +404,11 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
   const router = useRouter()
 
   // No red for scores — avoid post-test anxiety spiral
-  const col   = percentage >= 80 ? '#22C55E' : percentage >= 60 ? '#2563EB' : percentage >= 40 ? '#FBBF24' : '#9CA3AF'
+  const col   = percentage >= 80 ? '#16A34A' : percentage >= 60 ? '#2563EB' : percentage >= 40 ? '#B45309' : '#6B7280'
   const label = percentage >= 80 ? 'Excellent' : percentage >= 60 ? 'Good' : percentage >= 40 ? 'Solid attempt' : 'Keep going'
 
   return (
-    <div className="min-h-screen" style={{ background: '#0B1020' }}>
+    <div className="min-h-screen" style={{ background: '#FAFAF8' }}>
       {/* Score header */}
       <div className="py-12 px-4 text-center">
         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-widest mb-5 font-mono"
@@ -418,12 +418,12 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
 
         {/* Bebas Neue score display */}
         <div className="flex items-baseline justify-center gap-3 mb-2">
-          <span className="font-bebas text-[96px] leading-none tracking-wide" style={{ color: col }}>{score}</span>
-          <span className="text-3xl" style={{ color: 'var(--color-cm-neutral-300)' }}>/ {total}</span>
+          <span className="text-[80px] font-extrabold leading-none tracking-tight" style={{ color: col }}>{score}</span>
+          <span className="text-3xl" style={{ color: '#6B7280' }}>/ {total}</span>
         </div>
-        <p className="text-sm" style={{ color: 'var(--color-cm-neutral-300)' }}>Day {dayNumber} · {percentage}% accuracy</p>
+        <p className="text-sm" style={{ color: '#6B7280' }}>Day {dayNumber} · {percentage}% accuracy</p>
 
-        <div className="max-w-xs mx-auto mt-5 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.07)' }}>
+        <div className="max-w-xs mx-auto mt-5 h-1.5 rounded-full overflow-hidden" style={{ background: '#F3F4F6' }}>
           <div className="h-full rounded-full transition-all duration-700"
             style={{ width: `${percentage}%`, background: col }} />
         </div>
@@ -456,11 +456,11 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
           {[
             { label: 'Correct',   value: answerKey.filter(a => a.isCorrect).length, col: '#22C55E' },
             { label: 'Skipped',   value: answerKey.filter(a => !a.isCorrect).length, col: '#9CA3AF' },
-            { label: 'Total',     value: total,                                      col: '#F9FAFB' },
+            { label: 'Total',     value: total,                                      col: '#111827' },
           ].map(({ label, value, col: c }) => (
             <div key={label} className="text-center">
               <p className="text-2xl font-bold font-mono" style={{ color: c }}>{value}</p>
-              <p className="text-[10px] mt-0.5 uppercase tracking-wider font-mono" style={{ color: 'var(--color-cm-neutral-300)' }}>{label}</p>
+              <p className="text-[10px] mt-0.5 uppercase tracking-wider font-mono" style={{ color: '#6B7280' }}>{label}</p>
             </div>
           ))}
         </div>
@@ -468,7 +468,7 @@ function ResultsScreen({ result, dayNumber, examId }: { result: ExamSubmitResult
 
       {/* Answer key — light panels inside dark page */}
       <div className="max-w-2xl mx-auto px-4 pb-12">
-        <p className="text-[10px] font-bold uppercase tracking-widest mb-4 font-mono" style={{ color: 'var(--color-cm-neutral-300)' }}>Answer Key</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest mb-4 font-mono" style={{ color: '#6B7280' }}>Answer Key</p>
         <div className="space-y-2.5">
           {answerKey.map((item, i) => (
             <div key={item.questionId} className="card-question rounded-2xl p-4 transition-all">
@@ -518,29 +518,29 @@ function AiDailyTestBanner() {
       style={{
         display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16,
         padding: '14px 16px', borderRadius: 14,
-        background: 'linear-gradient(135deg, rgba(37,51,255,0.12), rgba(14,165,160,0.07))',
-        border: '1px solid rgba(37,51,255,0.25)', textDecoration: 'none',
+        background: 'linear-gradient(135deg, rgba(2,132,199,0.10), rgba(14,165,160,0.07))',
+        border: '1px solid rgba(2,132,199,0.20)', textDecoration: 'none',
       }}
     >
       <div style={{
         width: 40, height: 40, borderRadius: 10, flexShrink: 0,
-        background: 'rgba(37,51,255,0.15)', border: '1px solid rgba(37,51,255,0.3)',
+        background: 'rgba(2,132,199,0.12)', border: '1px solid rgba(2,132,199,0.25)',
         display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
       }}>🤖</div>
       <div style={{ flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
-          <span style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>AI Daily Test</span>
+          <span style={{ fontSize: 14, fontWeight: 700, color: '#111827' }}>AI Daily Test</span>
           <span style={{
             fontSize: 9, padding: '2px 6px', borderRadius: 4, fontWeight: 700, letterSpacing: 0.5,
-            background: 'rgba(37,51,255,0.2)', color: '#818CF8',
-            border: '1px solid rgba(37,51,255,0.35)',
+            background: 'rgba(2,132,199,0.10)', color: '#0284c7',
+            border: '1px solid rgba(2,132,199,0.25)',
           }}>PERSONALISED</span>
         </div>
-        <p style={{ fontSize: 12, color: '#9CA3AF', lineHeight: 1.4, margin: 0 }}>
+        <p style={{ fontSize: 12, color: '#6B7280', lineHeight: 1.4, margin: 0 }}>
           Practice with questions from today&apos;s exam tailored to your weak topics
         </p>
       </div>
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#818CF8" strokeWidth="2.5" strokeLinecap="round">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0284c7" strokeWidth="2.5" strokeLinecap="round">
         <polyline points="9 18 15 12 9 6"/>
       </svg>
     </a>

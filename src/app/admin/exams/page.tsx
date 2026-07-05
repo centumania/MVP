@@ -211,7 +211,7 @@ export default function AdminExams() {
       {loading ? (
         <div className="rounded-xl p-8 text-center" style={CARD}>
           <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto"
-            style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
+            style={{ borderColor: 'rgba(2,132,199,0.3)', borderTopColor: '#0284c7' }} />
         </div>
       ) : (
         <div className="rounded-xl overflow-hidden table-scroll" style={CARD}>
@@ -232,9 +232,9 @@ export default function AdminExams() {
                 <tr><td colSpan={6} className="px-4 py-12 text-center text-sm text-text-muted">No exams. Create one above.</td></tr>
               ) : exams.map(exam => (
                 <tr key={exam.id} style={TROW}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.015)')}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(2,132,199,0.04)')}
                   onMouseLeave={e => (e.currentTarget.style.background = '')}>
-                  <td className="px-4 py-3 font-mono text-sm font-medium" style={{ color: '#0B3D91' }}>D{exam.day_number}</td>
+                  <td className="px-4 py-3 font-mono text-sm font-medium" style={{ color: '#0284c7' }}>D{exam.day_number}</td>
                   <td className="px-4 py-3 text-text font-medium">{exam.title}</td>
                   <td className="px-4 py-3 text-text-muted text-xs hidden md:table-cell font-mono">
                     {new Date(exam.exam_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
@@ -242,7 +242,7 @@ export default function AdminExams() {
                   <td className="px-4 py-3">
                     <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium font-mono"
                       style={exam.questionCount > 0
-                        ? { background: 'rgba(11,61,145,0.08)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }
+                        ? { background: 'rgba(2,132,199,0.08)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }
                         : { background: 'rgba(245,158,11,0.08)', color: '#F59E0B', border: '1px solid rgba(245,158,11,0.20)' }
                       }>
                       {exam.questionCount} Qs
@@ -258,12 +258,12 @@ export default function AdminExams() {
                           onChange={e => setEditLinkVal(e.target.value)}
                           placeholder="https://forms.gle/…"
                           className="flex-1 text-xs font-mono px-2 py-1.5 rounded-lg"
-                          style={{ background: '#F8FAFC', border: '1px solid rgba(11,61,145,0.4)', color: '#111827', minWidth: 0 }}
+                          style={{ background: '#F8FAFC', border: '1px solid rgba(2,132,199,0.4)', color: '#111827', minWidth: 0 }}
                           onKeyDown={e => { if (e.key === 'Enter') saveLink(exam.id); if (e.key === 'Escape') setEditLinkId(null) }}
                         />
                         <button type="button" onClick={() => saveLink(exam.id)}
                           className="text-[11px] font-mono px-2 py-1.5 rounded-md shrink-0"
-                          style={{ background: 'rgba(11,61,145,0.12)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
+                          style={{ background: 'rgba(2,132,199,0.12)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }}>
                           Save
                         </button>
                         <button type="button" onClick={() => setEditLinkId(null)}
@@ -306,9 +306,9 @@ export default function AdminExams() {
                     <button
                       onClick={() => openQuestions(exam)}
                       className="px-3 py-1.5 text-xs font-medium rounded-md transition-colors font-mono"
-                      style={{ background: 'rgba(11,61,145,0.08)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.15)' }}
-                      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(11,61,145,0.16)')}
-                      onMouseLeave={e => (e.currentTarget.style.background = 'rgba(11,61,145,0.08)')}
+                      style={{ background: 'rgba(2,132,199,0.08)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.15)' }}
+                      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(2,132,199,0.16)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'rgba(2,132,199,0.08)')}
                     >
                       {exam.questionCount > 0 ? 'Edit Questions' : 'Add Questions'}
                     </button>
@@ -360,7 +360,7 @@ export default function AdminExams() {
               {qLoading ? (
                 <div className="flex items-center justify-center py-12">
                   <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
-                    style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
+                    style={{ borderColor: 'rgba(2,132,199,0.3)', borderTopColor: '#0284c7' }} />
                 </div>
               ) : questions.map((q, i) => (
                 <div key={i} className="rounded-xl p-4" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
@@ -386,7 +386,7 @@ export default function AdminExams() {
                       rows={2}
                       className="w-full px-3 py-2 text-sm rounded-lg resize-none focus:outline-none"
                       style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', color: '#111827' }}
-                      onFocus={e => (e.currentTarget.style.borderColor = 'rgba(11,61,145,0.5)')}
+                      onFocus={e => (e.currentTarget.style.borderColor = 'rgba(2,132,199,0.5)')}
                       onBlur={e => (e.currentTarget.style.borderColor = '#E5E7EB')}
                     />
                     {(['A','B','C','D'] as const).map(opt => (
@@ -406,7 +406,7 @@ export default function AdminExams() {
                           onChange={e => updateQ(i, `option_${opt.toLowerCase()}` as keyof Question, e.target.value)}
                           className="flex-1 h-11 px-3 text-sm rounded-lg focus:outline-none"
                           style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', color: '#111827' }}
-                          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(11,61,145,0.5)')}
+                          onFocus={e => (e.currentTarget.style.borderColor = 'rgba(2,132,199,0.5)')}
                           onBlur={e => (e.currentTarget.style.borderColor = '#E5E7EB')}
                         />
                       </div>
@@ -418,7 +418,7 @@ export default function AdminExams() {
                       rows={2}
                       className="w-full px-3 py-2 text-xs rounded-lg resize-none focus:outline-none"
                       style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', color: '#6B7280' }}
-                      onFocus={e => (e.currentTarget.style.borderColor = 'rgba(11,61,145,0.4)')}
+                      onFocus={e => (e.currentTarget.style.borderColor = 'rgba(2,132,199,0.4)')}
                       onBlur={e => (e.currentTarget.style.borderColor = '#E5E7EB')}
                     />
                   </div>

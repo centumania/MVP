@@ -92,7 +92,7 @@ export default function AdminPayments() {
         <p className="text-sm text-text-muted mt-0.5 font-mono">
           <span style={{ color: '#F59E0B' }}>{pending.length} pending</span>
           {' · '}
-          <span style={{ color: '#0B3D91' }}>{verified.length} verified</span>
+          <span style={{ color: '#0284c7' }}>{verified.length} verified</span>
         </p>
       </div>
 
@@ -116,7 +116,7 @@ export default function AdminPayments() {
       {loading ? (
         <div className="rounded-xl p-12 text-center" style={CARD}>
           <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin mx-auto"
-            style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
+            style={{ borderColor: 'rgba(2,132,199,0.3)', borderTopColor: '#0284c7' }} />
         </div>
       ) : list.length === 0 ? (
         <div className="rounded-xl p-12 text-center" style={CARD}>
@@ -149,7 +149,7 @@ export default function AdminPayments() {
             <tbody>
               {list.map(s => (
                 <tr key={s.id} style={TROW}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.015)')}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(2,132,199,0.04)')}
                   onMouseLeave={e => (e.currentTarget.style.background = '')}>
                   <td className="px-4 py-3">
                     <p className="font-medium text-text">{s.name}</p>

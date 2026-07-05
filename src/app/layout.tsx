@@ -57,8 +57,8 @@ export const viewport: Viewport = {
   // maximumScale intentionally not set — locking zoom violates WCAG 1.4.4
   viewportFit:     'cover',
   themeColor:      [
-    { media: '(prefers-color-scheme: light)', color: '#0B1020' },
-    { media: '(prefers-color-scheme: dark)',  color: '#0B1020' },
+    { media: '(prefers-color-scheme: light)', color: '#FAFAF8' },
+    { media: '(prefers-color-scheme: dark)',  color: '#FAFAF8' },
   ],
 }
 
@@ -86,12 +86,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       suppressHydrationWarning
       className={`${inter.variable} ${bebasNeue.variable}`}
     >
-      <body className="bg-cm-carbon text-cm-neutral-50 font-sans antialiased" suppressHydrationWarning>
+      <body className="bg-[#FAFAF8] text-[#111827] font-sans antialiased" suppressHydrationWarning>
         {/* Skip-to-content link — WCAG 2.1 SC 2.4.1 */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold focus:outline-none"
-          style={{ background: '#2533FF', color: '#F9FAFB' }}
+          style={{ background: '#0284c7', color: '#FFFFFF' }}
         >
           Skip to main content
         </a>

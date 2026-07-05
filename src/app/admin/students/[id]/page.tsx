@@ -195,7 +195,7 @@ export default function StudentDetailPage() {
             {calculating ? (
               <>
                 <div className="w-3 h-3 rounded-full border border-t-transparent animate-spin"
-                  style={{ borderColor: 'rgba(11,61,145,0.3)', borderTopColor: '#0B3D91' }} />
+                  style={{ borderColor: 'rgba(2,132,199,0.3)', borderTopColor: '#0284c7' }} />
                 Calculating…
               </>
             ) : (
@@ -216,7 +216,7 @@ export default function StudentDetailPage() {
               onClick={recalculate}
               disabled={calculating}
               className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-              style={{ background: 'rgba(11,61,145,0.08)', color: '#0B3D91', border: '1px solid rgba(11,61,145,0.20)' }}>
+              style={{ background: 'rgba(2,132,199,0.08)', color: '#0284c7', border: '1px solid rgba(2,132,199,0.20)' }}>
               Calculate Now
             </button>
           </div>
@@ -329,7 +329,7 @@ export default function StudentDetailPage() {
           <div>
             {submissions.slice(0, 10).map((s, i) => {
               const pct = s.total_marks > 0 ? Math.round((s.score / s.total_marks) * 100) : 0
-              const col = pct >= 80 ? '#6fcf8f' : pct >= 60 ? '#0B3D91' : pct >= 40 ? '#F59E0B' : '#EF4444'
+              const col = pct >= 80 ? '#6fcf8f' : pct >= 60 ? '#0284c7' : pct >= 40 ? '#F59E0B' : '#EF4444'
               return (
                 <div key={s.id}
                   className="flex items-center gap-4 px-5 py-3"

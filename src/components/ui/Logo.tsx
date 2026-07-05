@@ -31,9 +31,9 @@ export function LogoMark({ size = 32, glow = false }: { size?: number; glow?: bo
       role="img"
     >
       {/* Concentric precision rings — institutional navy, teal bullseye */}
-      <circle cx="16" cy="16" r="13.5" stroke="#0B3D91" strokeWidth="1.6" opacity="0.30" />
-      <circle cx="16" cy="16" r="8.5"  stroke="#0B3D91" strokeWidth="1.5" opacity="0.62" />
-      <circle cx="16" cy="16" r="4"    stroke="#0B3D91" strokeWidth="1.4" opacity="0.90" />
+      <circle cx="16" cy="16" r="13.5" stroke="#0284c7" strokeWidth="1.6" opacity="0.30" />
+      <circle cx="16" cy="16" r="8.5"  stroke="#0284c7" strokeWidth="1.5" opacity="0.62" />
+      <circle cx="16" cy="16" r="4"    stroke="#0284c7" strokeWidth="1.4" opacity="0.90" />
       <circle cx="16" cy="16" r="2.1"  fill={`url(#${id}g)`} />
       <defs>
         <radialGradient id={`${id}g`} cx="50%" cy="50%" r="50%">
@@ -72,7 +72,7 @@ export function LogoFull({
         }}
       >
         <span style={{ color: 'var(--color-text, #111827)' }}>Centu</span>
-        <span style={{ color: '#0B3D91' }}>Mania</span>
+        <span style={{ color: '#0284c7' }}>Mania</span>
       </span>
     </div>
   )

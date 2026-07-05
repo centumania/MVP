@@ -1,121 +1,121 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════
-   CENTUMANIA — DESIGN SYSTEM  (v3 · Dark-first)
+   CENTUMANIA — DESIGN SYSTEM  (v4 · Light premium)
    Discipline-first EdTech for Indian govt-exam aspirants.
-   Personality: Linear restraint × Headspace calm × Stripe trust.
-   Core palette: Carbon Black · Centumania Indigo · Champion Gold
-   Rules: Dark shell · Light question panels · Bebas headings · No glow
+   Personality: Apple clarity × Stripe trust × Linear restraint.
+   Core palette: Sky Blue · Indigo · Emerald · Amber highlights
+   Rules: Light shell (#FAFAF8) · White cards · Inter headings · Soft shadows
    ═══════════════════════════════════════════════════════════════════ */
 
 @theme {
   /* ── CM Brand Tokens ────────────────────────────────────────────── */
-  /* Core surfaces */
-  --color-cm-carbon:        #0B1020;
-  --color-cm-carbon-soft:   #111827;
+  /* Core surfaces (names kept for backward-compat; values now light) */
+  --color-cm-carbon:        #FAFAF8;
+  --color-cm-carbon-soft:   #FFFFFF;
   /* Primary accent */
-  --color-cm-indigo:        #2533FF;
+  --color-cm-indigo:        #0284c7;
   /* Achievement / Centum Index only */
-  --color-cm-gold:          #F6B300;
+  --color-cm-gold:          #d97706;
   /* Semantic */
   --color-cm-info:          #2563EB;
-  --color-cm-success:       #22C55E;
-  --color-cm-warning:       #FBBF24;
-  --color-cm-danger:        #E3413A;
+  --color-cm-success:       #16A34A;
+  --color-cm-warning:       #d97706;
+  --color-cm-danger:        #DC2626;
   /* Support accents */
   --color-cm-mentor-teal:   #0EA5A0;
   --color-cm-streak-amber:  #F97316;
   --color-cm-slate:         #4B5563;
   --color-cm-blush:         #F9E2E7;
   --color-cm-bg-soft:       #F5F7FA;
-  /* Neutrals */
-  --color-cm-neutral-50:    #F9FAFB;
-  --color-cm-neutral-100:   #E5E7EB;
-  --color-cm-neutral-300:   #9CA3AF;
+  /* Neutrals (names kept; values flipped for light backgrounds) */
+  --color-cm-neutral-50:    #111827;
+  --color-cm-neutral-100:   #374151;
+  --color-cm-neutral-300:   #6B7280;
   --color-cm-neutral-500:   #6B7280;
-  --color-cm-neutral-700:   #4B5563;
-  --color-cm-neutral-900:   #111827;
+  --color-cm-neutral-700:   #D1D5DB;
+  --color-cm-neutral-900:   #F9FAFB;
 
   /* ── Legacy tokens (kept for backward-compat) ───────────────────── */
-  --color-primary:          #2533FF;
-  --color-primary-hover:    #1f2bdb;
-  --color-primary-active:   #1925c0;
-  --color-primary-strong:   #1925c0;
-  --color-primary-subtle:   rgba(37,51,255,0.10);
-  --color-primary-muted:    rgba(37,51,255,0.15);
-  --color-primary-border:   rgba(37,51,255,0.30);
-  --color-primary-tint:     rgba(37,51,255,0.08);
+  --color-primary:          #0284c7;
+  --color-primary-hover:    #0369a1;
+  --color-primary-active:   #075985;
+  --color-primary-strong:   #075985;
+  --color-primary-subtle:   rgba(2,132,199,0.10);
+  --color-primary-muted:    rgba(2,132,199,0.15);
+  --color-primary-border:   rgba(2,132,199,0.30);
+  --color-primary-tint:     rgba(2,132,199,0.08);
 
-  --color-secondary:        #0EA5A0;
-  --color-secondary-hover:  #0d9490;
-  --color-secondary-subtle: rgba(14,165,160,0.12);
-  --color-secondary-tint:   rgba(14,165,160,0.08);
+  --color-secondary:        #6366f1;
+  --color-secondary-hover:  #4f46e5;
+  --color-secondary-subtle: rgba(99,102,241,0.12);
+  --color-secondary-tint:   rgba(99,102,241,0.08);
 
-  --color-accent:           #F6B300;
-  --color-accent-hover:     #e0a300;
-  --color-accent-subtle:    rgba(246,179,0,0.12);
-  --color-accent-tint:      rgba(246,179,0,0.08);
+  --color-accent:           #10B981;
+  --color-accent-hover:     #059669;
+  --color-accent-subtle:    rgba(16,185,129,0.12);
+  --color-accent-tint:      rgba(16,185,129,0.08);
 
-  /* ── Surfaces (dark shell) ──────────────────────────────────────── */
-  --color-bg:               #0B1020;
-  --color-bg2:              #111827;
-  --color-surface:          #111827;
-  --color-surface-raised:   #1a2235;
-  --color-surface-overlay:  rgba(255,255,255,0.04);
-  --color-surface-sunken:   rgba(255,255,255,0.03);
+  /* ── Surfaces (light shell) ─────────────────────────────────────── */
+  --color-bg:               #FAFAF8;
+  --color-bg2:              #F3F4F6;
+  --color-surface:          #FFFFFF;
+  --color-surface-raised:   #FFFFFF;
+  --color-surface-overlay:  #F9FAFB;
+  --color-surface-sunken:   #F1F5F9;
 
   /* ── Borders ───────────────────────────────────────────────────── */
-  --color-border:           rgba(255,255,255,0.09);
-  --color-border-strong:    rgba(255,255,255,0.16);
-  --color-border-focus:     #2533FF;
+  --color-border:           #E5E7EB;
+  --color-border-strong:    #D1D5DB;
+  --color-border-focus:     #0284c7;
 
-  /* ── Text (on dark) ────────────────────────────────────────────── */
-  --color-text:             #F9FAFB;
-  --color-text-secondary:   #D1D5DB;
-  --color-text-muted:       #9CA3AF;
-  --color-text-faint:       #6B7280;
-  --color-text-disabled:    #4B5563;
-  --color-text-inverse:     #111827;
+  /* ── Text (on light) ───────────────────────────────────────────── */
+  --color-text:             #111827;
+  --color-text-secondary:   #4B5563;
+  --color-text-muted:       #6B7280;
+  --color-text-faint:       #9CA3AF;
+  --color-text-disabled:    #D1D5DB;
+  --color-text-inverse:     #FFFFFF;
 
   /* ── Semantic ──────────────────────────────────────────────────── */
-  --color-success:          #22C55E;
-  --color-success-subtle:   rgba(34,197,94,0.12);
-  --color-success-text:     #22C55E;
+  --color-success:          #16A34A;
+  --color-success-subtle:   rgba(22,163,74,0.10);
+  --color-success-text:     #15803D;
 
-  --color-warning:          #FBBF24;
-  --color-warning-subtle:   rgba(251,191,36,0.12);
-  --color-warning-text:     #FBBF24;
+  --color-warning:          #d97706;
+  --color-warning-subtle:   rgba(217,119,6,0.10);
+  --color-warning-text:     #B45309;
 
-  --color-error:            #E3413A;
-  --color-error-subtle:     rgba(227,65,58,0.12);
-  --color-error-text:       #E3413A;
+  --color-error:            #DC2626;
+  --color-error-subtle:     rgba(220,38,38,0.08);
+  --color-error-text:       #B91C1C;
 
   --color-info:             #2563EB;
-  --color-info-subtle:      rgba(37,99,235,0.12);
+  --color-info-subtle:      rgba(37,99,235,0.10);
 
-  --color-gold:             #F6B300;
-  --color-gold-subtle:      rgba(246,179,0,0.12);
-  --color-gold-text:        #F6B300;
+  --color-gold:             #d97706;
+  --color-gold-subtle:      rgba(217,119,6,0.10);
+  --color-gold-text:        #B45309;
 
-  /* ── Typography ─────────────────────────────────────────────────── */
-  --font-bebas:    var(--font-bebas-neue), 'Bebas Neue', system-ui, sans-serif;
+  /* ── Typography — Inter everywhere (Bebas retired with dark UI) ─── */
+  --font-bebas:    var(--font-inter), 'Inter', system-ui, sans-serif;
   --font-display:  var(--font-inter), 'Inter', system-ui, sans-serif;
   --font-sans:     var(--font-inter), 'Inter', 'Noto Sans Tamil', system-ui, sans-serif;
   --font-mono:     var(--font-inter), 'Inter', system-ui, sans-serif;
 
   /* Legacy var names */
-  --font-fraunces:  var(--font-bebas-neue), 'Bebas Neue', system-ui, sans-serif;
+  --font-fraunces:  var(--font-inter), 'Inter', system-ui, sans-serif;
   --font-hanken:    var(--font-inter);
   --font-jetbrains: var(--font-inter);
 
-  /* ── Elevation (deep — dark surface) ───────────────────────────── */
-  --shadow-xs:       0 1px 2px rgba(0,0,0,0.25);
-  --shadow-sm:       0 2px 6px rgba(0,0,0,0.30);
-  --shadow-md:       0 6px 16px rgba(0,0,0,0.35);
-  --shadow-lg:       0 12px 32px rgba(0,0,0,0.40);
-  --shadow-xl:       0 24px 48px rgba(0,0,0,0.50);
-  --shadow-elevated: 0 18px 45px rgba(15,23,42,0.65);
-  --shadow-primary:  0 6px 20px rgba(37,51,255,0.25);
+  /* ── Elevation (soft — light surface) ──────────────────────────── */
+  --shadow-xs:       0 1px 2px rgba(16,24,40,0.05);
+  --shadow-sm:       0 1px 3px rgba(16,24,40,0.08);
+  --shadow-md:       0 4px 12px rgba(16,24,40,0.08);
+  --shadow-lg:       0 12px 24px rgba(16,24,40,0.10);
+  --shadow-xl:       0 20px 40px rgba(16,24,40,0.12);
+  --shadow-elevated: 0 12px 32px rgba(16,24,40,0.10);
+  --shadow-primary:  0 4px 14px rgba(2,132,199,0.20);
   --radius:          14px;
 }
 
@@ -148,8 +148,8 @@ html {
 }
 
 body {
-  background-color: #0B1020;
-  color: #F9FAFB;
+  background-color: #FAFAF8;
+  color: #111827;
   font-family: var(--font-inter, 'Inter'), 'Noto Sans Tamil', system-ui, -apple-system, sans-serif;
   font-size: 16px;
   line-height: 1.6;
@@ -159,24 +159,24 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Focus — Centumania Indigo ───────────────────────────────────── */
+/* ── Focus — Sky Blue ────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid #2533FF;
+  outline: 2px solid #0284c7;
   outline-offset: 2px;
   border-radius: 6px;
 }
 
 /* ── Selection ───────────────────────────────────────────────────── */
 ::selection {
-  background-color: rgba(37,51,255,0.25);
-  color: #F9FAFB;
+  background-color: rgba(2,132,199,0.18);
+  color: #111827;
 }
 
-/* ── Scrollbar — dark, unobtrusive ──────────────────────────────── */
+/* ── Scrollbar — light, unobtrusive ─────────────────────────────── */
 ::-webkit-scrollbar        { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track  { background: transparent; }
-::-webkit-scrollbar-thumb  { background: rgba(255,255,255,0.15); border-radius: 6px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+::-webkit-scrollbar-thumb  { background: rgba(16,24,40,0.18); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(16,24,40,0.30); }
 
 /* ── Inputs ──────────────────────────────────────────────────────── */
 input, textarea, select { font-family: inherit; }
@@ -200,9 +200,9 @@ input::placeholder, textarea::placeholder { color: #9CA3AF; }
   box-shadow: var(--shadow-md);
 }
 
-/* Translucent sticky-header — dark shell ─────────────────────────── */
+/* Translucent sticky-header — light shell ─────────────────────────── */
 .surface-blur {
-  background: rgba(11,16,32,0.88);
+  background: rgba(250,250,248,0.88);
   backdrop-filter: saturate(180%) blur(16px);
   -webkit-backdrop-filter: saturate(180%) blur(16px);
 }
@@ -210,7 +210,7 @@ input::placeholder, textarea::placeholder { color: #9CA3AF; }
 /* .glow-* → subtle emphasis glows ───────────────────────────────── */
 .glow-primary { box-shadow: var(--shadow-primary); }
 .glow-success { box-shadow: 0 6px 20px rgba(34,197,94,0.20); }
-.glow-gold    { box-shadow: 0 6px 20px rgba(246,179,0,0.22); }
+.glow-gold    { box-shadow: 0 6px 20px rgba(217,119,6,0.20); }
 
 /* Gradient borders → flat clean border ──────────────────────────── */
 .border-gradient-green { position: relative; }
@@ -260,20 +260,20 @@ input::placeholder, textarea::placeholder { color: #9CA3AF; }
   50%       { transform: translateY(-4px); }
 }
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(37,51,255,0.18); }
-  50%       { box-shadow: 0 0 0 6px rgba(37,51,255,0.00); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(2,132,199,0.18); }
+  50%       { box-shadow: 0 0 0 6px rgba(2,132,199,0.00); }
 }
 .animate-pulse-glow { animation: pulse-glow 2s ease-out infinite; }
 .animate-float      { animation: float 3s ease-in-out infinite; }
 .animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
 
-/* ── Skeleton shimmer — dark ─────────────────────────────────────── */
+/* ── Skeleton shimmer — light ────────────────────────────────────── */
 .skeleton {
   background: linear-gradient(
     90deg,
-    rgba(255,255,255,0.05) 0%,
-    rgba(255,255,255,0.10) 50%,
-    rgba(255,255,255,0.05) 100%
+    rgba(16,24,40,0.05) 0%,
+    rgba(16,24,40,0.10) 50%,
+    rgba(16,24,40,0.05) 100%
   );
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
@@ -283,13 +283,13 @@ input::placeholder, textarea::placeholder { color: #9CA3AF; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ── Premium input — dark ────────────────────────────────────────── */
+/* ── Premium input — light ───────────────────────────────────────── */
 .input-premium {
   width: 100%;
   height: 46px;
   padding: 0 14px;
   font-size: 0.9375rem;
-  background: rgba(255,255,255,0.05);
+  background: #FFFFFF;
   border: 1px solid var(--color-border-strong);
   border-radius: 10px;
   color: var(--color-text);
@@ -298,8 +298,8 @@ input::placeholder, textarea::placeholder { color: #9CA3AF; }
 .input-premium::placeholder { color: var(--color-text-faint); }
 .input-premium:focus {
   outline: none;
-  border-color: #2533FF;
-  box-shadow: 0 0 0 3px rgba(37,51,255,0.18);
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2,132,199,0.15);
 }
 
 /* ── Stat number ─────────────────────────────────────────────────── */
@@ -312,11 +312,12 @@ input::placeholder, textarea::placeholder { color: #9CA3AF; }
 }
 .tabular { font-variant-numeric: tabular-nums; }
 
-/* ── Display heading — Bebas Neue ────────────────────────────────── */
+/* ── Display heading — Inter (Bebas retired with the dark UI) ────── */
 .font-display {
-  font-family: var(--font-bebas-neue, 'Bebas Neue'), system-ui, sans-serif;
-  letter-spacing: 0.04em;
-  line-height: 1.05;
+  font-family: var(--font-inter, 'Inter'), system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
 }
 .font-display-inter {
   font-family: var(--font-inter, 'Inter'), system-ui, sans-serif;
@@ -364,8 +365,8 @@ input::placeholder, textarea::placeholder { color: #9CA3AF; }
 
 /* ── Achievement glow (Champion Gold · use sparingly) ────────────── */
 @keyframes gold-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(246,179,0,0.35); }
-  50%       { box-shadow: 0 0 0 8px rgba(246,179,0,0.00); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217,119,6,0.30); }
+  50%       { box-shadow: 0 0 0 8px rgba(217,119,6,0.00); }
 }
 .animate-gold-pulse { animation: gold-pulse 1.8s ease-out; }
 
@@ -376,8 +377,9 @@ input::placeholder, textarea::placeholder { color: #9CA3AF; }
   gap: 4px;
   padding: 2px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(246,179,0,0.35);
-  color: #F6B300;
+  border: 1px solid rgba(217,119,6,0.30);
+  background: rgba(217,119,6,0.06);
+  color: #B45309;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.04em;
