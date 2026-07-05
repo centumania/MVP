@@ -28,14 +28,15 @@ export async function GET(request: NextRequest) {
     const batchId = profile?.batch_id
 
     // Top 50 — filtered to user's batch
-    const topQuery = supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let topQ: any = supabase
       .from('leaderboard')
-      .select('user_id, name, tier, total_score, days_attended, accuracy_percent, rank')
+      .select('user_id, name, tier, total_score, days_attended, accuracy_percent, rank, batch_id')
       .order('rank', { ascending: true })
       .limit(50)
-    if (batchId) topQuery.eq('batch_id', batchId)
+    if (batchId) topQ = topQ.eq('batch_id', batchId)
 
-    const { data: top, error: topErr } = await topQuery
+    const { data: top, error: topErr } = await topQ
 
     if (topErr) {
       console.error('[leaderboard] Query failed:', topErr)
@@ -43,13 +44,14 @@ export async function GET(request: NextRequest) {
     }
 
     // Current user's own rank (may be outside top 50)
-    const myRankQuery = supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let myRankQ: any = supabase
       .from('leaderboard')
-      .select('user_id, name, tier, total_score, days_attended, accuracy_percent, rank')
+      .select('user_id, name, tier, total_score, days_attended, accuracy_percent, rank, batch_id')
       .eq('user_id', user.id)
-    if (batchId) myRankQuery.eq('batch_id', batchId)
+    if (batchId) myRankQ = myRankQ.eq('batch_id', batchId)
 
-    const { data: myRank } = await myRankQuery.maybeSingle()
+    const { data: myRank } = await myRankQ.maybeSingle()
 
     return NextResponse.json({
       entries:   top ?? [],
