@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Profit Loss Discount — Centumania</title>
+<style>
+:root{--bg:#0f1a14;--card:#162019;--border:#1e2e22;--text:#e8f0ea;--muted:#6b8c72;--sec:#8faa95;--green:#3ecf6e;--teal:#2dd4a0;--yellow:#d4a017;--active:#1e3424;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px;line-height:1.75;padding-bottom:60px;}
+.hero{background:var(--card);border-bottom:1px solid var(--border);padding:32px 48px 24px;}
+.hero h1{font-size:1.8rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.hero .sub{color:var(--muted);font-size:.82rem;letter-spacing:.5px;font-family:'Courier New',monospace;text-transform:uppercase;}
+.content{max-width:920px;margin:0 auto;padding:32px 24px;}
+h1{font-size:1rem;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-family:'Courier New',monospace;margin:48px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+h2{font-size:1rem;font-weight:600;color:var(--green);background:var(--card);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:0 6px 6px 0;padding:10px 16px;margin:28px 0 12px;}
+h3{font-size:.9rem;font-weight:600;color:var(--teal);margin:20px 0 8px;padding-left:12px;border-left:2px solid var(--teal);}
+p{margin:8px 0;color:var(--text);}
+blockquote{background:#1a2a1e;border:1px solid var(--border);border-left:3px solid var(--yellow);border-radius:0 6px 6px 0;padding:10px 16px;margin:12px 0;}
+blockquote p{color:var(--yellow);margin:3px 0;font-size:.88rem;}
+pre{background:#0d1610;border:1px solid var(--border);border-radius:6px;padding:14px 18px;overflow-x:auto;margin:12px 0;font-size:.82rem;line-height:1.65;}
+code{font-family:'Courier New',Consolas,monospace;color:var(--green);}
+p code,li code{background:var(--active);border:1px solid var(--border);border-radius:3px;padding:1px 6px;color:var(--green);font-size:.87em;}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.86rem;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+thead tr{background:var(--active);}
+thead th{color:var(--muted);font-family:'Courier New',monospace;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;padding:9px 13px;text-align:left;border-bottom:1px solid var(--border);}
+tbody tr{border-bottom:1px solid var(--border);}
+tbody tr:hover{background:#1a2a1e;}
+tbody td{padding:8px 13px;color:var(--text);vertical-align:top;}
+tbody td:first-child{color:var(--sec);}
+ul,ol{padding-left:22px;margin:8px 0;}
+li{margin:5px 0;}
+strong{color:var(--green);font-weight:600;}
+hr{border:none;border-top:1px solid var(--border);margin:28px 0;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+</style></head><body>
+<div class="hero"><h1>🎯 Profit, Loss &amp; Discount — Centumania Format</h1>
+<div class="sub">SSC / RRB / Banking / CAT &nbsp;·&nbsp; Recognition → Shortcut → Trap → PYQ → Mastery</div></div>
+<div class="content"><h1>🎯 Profit, Loss &amp; Discount — Centumania Format</h1>
+<h3>Exam Navigation Architecture · SSC / RRB / Banking / CAT</h3>
+<blockquote>
+<p>Remapped from Theory → Question-Type Navigation<br />
+Architecture: Recognition → Shortcut → Trap → PYQ → Mastery</p>
+</blockquote>
+<hr />
+<h2>MASTER MAP</h2>
+<pre><code>Profit, Loss &amp; Discount
+│
+├── 🧱 FOUNDATION (Knowledge Base)
+│   ├── CP / SP / MP Definitions
+│   ├── Core Formulas
+│   └── Multiplier Method
+│
+├── 🎯 QUESTION TYPES (Exam Navigation)
+│   ├── 🎯 Type 1 — Basic CP↔SP↔Profit/Loss
+│   ├── 🎯 Type 2 — Marked Price &amp; Discount
+│   ├── 🎯 Type 3 — Successive Discounts
+│   ├── 🎯 Type 4 — Same SP, Equal Profit% &amp; Loss%
+│   ├── 🎯 Type 5 — Dishonest Dealer (False Weight)
+│   ├── 🎯 Type 6 — SP of x Articles = CP of y Articles
+│   ├── 🎯 Type 7 — &quot;Had He Sold For ₹X More&quot; Type
+│   ├── 🎯 Type 8 — Mixed/Partial Selling (Fractions)
+│   └── 🎯 Type 9 — Profit on CP vs Profit on SP
+│
+└── 🔧 TOOLS
+    ├── Buy x Get y Free
+    ├── Multiplier Chains
+    └── Master Formula Sheet
+</code></pre>
+<hr />
+<hr />
+<h1>🧱 FOUNDATION</h1>
+<h2>F1. The Three Prices</h2>
+<pre><code>CP  = Cost Price     → what you PAY to get the article
+SP  = Selling Price  → what you SELL it for
+MP  = Marked Price   → label/printed price (before discount)
+
+CP → add markup → MP → subtract discount → SP
+</code></pre>
+<p><strong>Key relationships:</strong></p>
+<pre><code>Profit  = SP − CP   (when SP &gt; CP)
+Loss    = CP − SP   (when CP &gt; SP)
+Discount = MP − SP  (always on MP)
+</code></pre>
+<hr />
+<h2>F2. Core Formulas</h2>
+<pre><code>Profit%   = (Profit / CP) × 100
+Loss%     = (Loss / CP) × 100
+Discount% = (Discount / MP) × 100
+
+SP = CP × (100 + Profit%) / 100
+SP = CP × (100 − Loss%) / 100
+
+CP = SP × 100 / (100 + Profit%)
+CP = SP × 100 / (100 − Loss%)
+
+SP = MP × (100 − Discount%) / 100
+MP = SP × 100 / (100 − Discount%)
+</code></pre>
+<blockquote>
+<p>⚠️ <strong>Profit% and Loss% are ALWAYS calculated on CP — unless explicitly stated otherwise</strong><br />
+⚠️ <strong>Discount% is ALWAYS calculated on MP — never on CP or SP</strong></p>
+</blockquote>
+<hr />
+<h2>F3. Multiplier Method (fastest)</h2>
+<pre><code>Profit of 20%  → multiply CP by 1.20
+Loss of 20%    → multiply CP by 0.80
+Discount of 20% → multiply MP by 0.80
+Markup of 30%  → multiply CP by 1.30
+</code></pre>
+<p><strong>Chain: CP → MP → SP</strong></p>
+<pre><code>If markup = 30% and discount = 20%:
+SP = CP × 1.30 × 0.80 = CP × 1.04
+→ Net profit = 4%
+</code></pre>
+<hr />
+<hr />
+<h1>🎯 TYPE 1 — BASIC CP ↔ SP ↔ PROFIT/LOSS</h1>
+<h2>👀 Recognition</h2>
+<p><strong>Trigger words:</strong><br />
+- "bought for...sold for...profit/loss is?"<br />
+- "sells at 14% profit for ₹2850, find CP"<br />
+- "SP of 12 articles = CP of 15 articles, find gain%"<br />
+- "bought at rate of X per rupee, sold at rate of Y per rupee"</p>
+<hr />
+<h2>⚡ Shortcut</h2>
+<h3>Finding CP from SP and Profit%</h3>
+<pre><code>CP = SP × 100 / (100 + Profit%)
+CP = SP × 100 / (100 − Loss%)
+</code></pre>
+<h3>SP of x articles = CP of y articles</h3>
+<pre><code>If CP of x = SP of y → Profit% = (x−y)/y × 100
+If SP of x = CP of y → Profit% = (y−x)/x × 100
+                                [or Loss% if negative]
+</code></pre>
+<h3>Buying at rate of m per ₹1, selling at n per ₹1</h3>
+<pre><code>CP of 1 article = 1/m
+SP of 1 article = 1/n
+Profit% = (m−n)/n × 100   [if n &lt; m → profit]
+Loss%   = (n−m)/m × 100   [if n &gt; m → loss]
+</code></pre>
+<h3>Two different buying rates, one selling rate</h3>
+<pre><code>Use LCM of the two &quot;per rupee&quot; numbers to equalise quantity
+Then: Total CP vs Total SP → find Profit/Loss%
+</code></pre>
+<hr />
+<h2>🚨 Trap</h2>
+<table>
+<thead>
+<tr>
+<th>Trap</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Profit% on SP</td>
+<td>Question says "on CP unless stated" — check wording</td>
+</tr>
+<tr>
+<td>SP of 12 = CP of 15 → 12/15 = loss</td>
+<td><strong>WRONG</strong> — more CP articles for same money = gain. Apply formula: (15−12)/12 × 100 = <strong>25% profit</strong></td>
+</tr>
+<tr>
+<td>Buying at 11 for ₹10 and 9 for ₹10 → rate 10 = no profit</td>
+<td>Must take LCM and compute actual CP vs SP</td>
+</tr>
+<tr>
+<td>"Sold at cost price" = no profit/loss</td>
+<td>Only true for honest dealers — check for false weight</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>📜 PYQ Style</h2>
+<p><strong>Q1.</strong> Bicycle sold for ₹2850 at 14% profit. Find CP. Then find SP at 8% profit.</p>
+<pre><code>CP = 2850 × 100/114 = ₹2500
+SP at 8% = 2500 × 108/100 = ₹2700
+</code></pre>
+<p><strong>Q2.</strong> SP of 12 articles = CP of 15 articles. Find gain%.</p>
+<pre><code>Gain% = (15−12)/12 × 100 = 3/12 × 100 = 25%
+</code></pre>
+<p><strong>Q3.</strong> Article: profit 20% on CP. Find profit% on SP.</p>
+<pre><code>Let CP = 100, Profit = 20, SP = 120
+Profit% on SP = 20/120 × 100 = 16⅔%
+</code></pre>
+<p><strong>Q4.</strong> Fruit seller: buys 11 for ₹10 and 9 for ₹10. Sells all at ₹1 each. Gain/Loss%?</p>
+<pre><code>LCM(11,9) = 99 fruits of each type
+CP = (10/11)×99 + (10/9)×99 = 90 + 110 = ₹200
+SP = 198 × 1 = ₹198
+Loss% = (200−198)/200 × 100 = 1%
+</code></pre>
+<p><strong>Q5.</strong> Buys at 5 per rupee, same number at 4 per rupee. Mixes and sells at 9 for ₹2. Loss = ₹3. Total articles?</p>
+<pre><code>Per 10 articles: CP = 1/5×5 + 1/4×5 = 1+1.25 = ₹9/4
+SP of 10 = (2/9)×10 = ₹20/9
+Loss per 10 = 9/4 − 20/9 = (81−80)/36 = ₹1/36
+Loss = ₹3 → articles = 10 × 3 × 36 = 1080
+</code></pre>
+<hr />
+<h2>🏆 Mastery</h2>
+<p><strong>Easy:</strong> CP = ₹120, sells at 20% profit. Find SP.<br />
+<strong>Medium:</strong> SP of 20 articles = CP of 16 articles. Find loss%.<br />
+<strong>Hard:</strong> A person buys 5 articles for ₹4 and sells 4 articles for ₹5. Find profit%.</p>
+<p><em>(Answers: ₹144 | 20% loss | CP per article = 4/5; SP per article = 5/4; Profit% = (5/4−4/5)/(4/5)×100 = (9/20)/(4/5)×100 = 56.25%)</em></p>
+<hr />
+<hr />
+<h1>🎯 TYPE 2 — MARKED PRICE &amp; DISCOUNT</h1>
+<h2>👀 Recognition</h2>
+<p><strong>Trigger words:</strong><br />
+- "marked price...discount...selling price"<br />
+- "bought at X% discount on labelled price, sold at Y% profit on labelled price"<br />
+- "after giving 20% discount, shopkeeper still makes 20% profit — find MP"<br />
+- "reduction of x% enables buying y more for ₹Z"</p>
+<hr />
+<h2>⚡ Shortcut</h2>
+<h3>MP → SP → CP chain</h3>
+<pre><code>SP = MP × (100 − d%) / 100
+CP = SP × 100 / (100 + p%)
+
+Net: SP = CP × (100+p%) / 100 = MP × (100−d%) / 100
+→ CP/MP = (100−d%) / (100+p%)
+</code></pre>
+<h3>Find MP given SP and discount%</h3>
+<pre><code>MP = SP × 100 / (100 − discount%)
+</code></pre>
+<h3>Markup% needed to allow x% discount and still make y% profit</h3>
+<pre><code>(100 + markup%) × (100 − discount%) / 100 = (100 + profit%)
+→ (100 + markup%) = (100 + profit%) × 100 / (100 − discount%)
+</code></pre>
+<h3>"Price reduction → buy more" type</h3>
+<pre><code>Savings = reduction% × total money
+Extra articles bought at NEW price
+New price per unit = Savings / extra articles
+Old price = New price × 100 / (100 − reduction%)
+</code></pre>
+<hr />
+<h2>🚨 Trap</h2>
+<table>
+<thead>
+<tr>
+<th>Trap</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Discount on CP</td>
+<td>Discount is ALWAYS on MP</td>
+</tr>
+<tr>
+<td>Profit on SP</td>
+<td>Profit is ALWAYS on CP (unless stated)</td>
+</tr>
+<tr>
+<td>"20% profit on labelled price" = 20% profit on CP</td>
+<td><strong>WRONG</strong> — profit on CP vs profit on MP are different</td>
+</tr>
+<tr>
+<td>MP = CP + profit%</td>
+<td>Only if no discount is given and SP = MP</td>
+</tr>
+<tr>
+<td>20% discount + 20% profit → net = 0</td>
+<td><strong>WRONG</strong> — apply multipliers: ×0.8×1.2 = ×0.96 → actual net</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>Always work backward: SP known → find MP or CP using their respective formulas</strong></p>
+</blockquote>
+<hr />
+<h2>📜 PYQ Style</h2>
+<p><strong>Q1.</strong> CP = ₹300, markup = 30%. Find MP.</p>
+<pre><code>MP = 300 × 1.30 = ₹390
+</code></pre>
+<p><strong>Q2.</strong> Ashish buys at 20% discount on labelled price. Sells at 30% profit on labelled price. Profit% on his buying price?</p>
+<pre><code>Let labelled price = 100
+CP (his) = 80, SP (his) = 130
+Profit = 130 − 80 = 50
+Profit% = 50/80 × 100 = 62.5%
+</code></pre>
+<p><strong>Q3.</strong> Sold for ₹400 after 20% discount. Made 20% profit on CP. If no discount given, what profit%?</p>
+<pre><code>MP = 400 × 100/80 = ₹500
+CP = 400 × 100/120 = ₹1000/3
+If sold at MP: Profit% = (500 − 1000/3)/(1000/3) × 100
+= (1500−1000)/3 ÷ (1000/3) × 100
+= (500/3)/(1000/3) × 100 = 50%
+</code></pre>
+<p><strong>Q4.</strong> 20% reduction in mango price → can buy 12 more for ₹15. Price of 16 mangoes before reduction?</p>
+<pre><code>Savings = 20% of 15 = ₹3
+₹3 buys 12 mangoes at new price → new price = 3/12 = ₹0.25/mango
+Old price = 0.25 × 100/80 = ₹0.3125 = 31.25 paise
+16 mangoes at old price = 16 × 31.25/100 = ₹5
+</code></pre>
+<p><strong>Q5.</strong> Garment company: 15% discount for wholesale. Hemant buys for ₹8500 after discount. Sells at 10% profit on original company price. Find SP.</p>
+<pre><code>Original (MP) = 8500 × 100/85 = ₹10,000
+SP = 10000 × 1.10 = ₹11,000
+</code></pre>
+<hr />
+<h2>🏆 Mastery</h2>
+<p><strong>Easy:</strong> MP = ₹500. Discount 20%. SP = ?<br />
+<strong>Medium:</strong> After 25% discount, profit is 12.5%. What is markup%?<br />
+<strong>Hard:</strong> A dealer marks 40% above CP and allows 25% discount. On a further bargain of ₹10, he makes only 5% profit. Find CP.</p>
+<p><em>(Answers: ₹400 | (1+m%)×0.75=1.125 → m% = 50% | CP×1.40×0.75 = CP×1.05; extra ₹10 brings from 5% to actual; CP×1.05−10 = CP×1.05_adj; solve → ₹200)</em></p>
+<hr />
+<hr />
+<h1>🎯 TYPE 3 — SUCCESSIVE DISCOUNTS</h1>
+<h2>👀 Recognition</h2>
+<p><strong>Trigger words:</strong><br />
+- "two successive discounts of x% and y%"<br />
+- "first discount 30%, then another 20%"<br />
+- "buy 3 get 1 free"<br />
+- "equivalent/net discount"</p>
+<hr />
+<h2>⚡ Shortcut</h2>
+<h3>Two successive discounts a% and b%</h3>
+<pre><code>Net discount = a + b − (ab/100) %
+
+Equivalently: SP = MP × (1−a/100) × (1−b/100)
+</code></pre>
+<h3>Three successive discounts</h3>
+<pre><code>Apply pairwise:
+First: net₁ = a + b − ab/100
+Then: net = net₁ + c − (net₁ × c)/100
+</code></pre>
+<h3>Buy x get y free → discount%</h3>
+<pre><code>Discount% = y/(x+y) × 100
+
+Reason: (x+y) articles sold at CP of x articles
+SP of (x+y) = x × (CP per article)
+</code></pre>
+<hr />
+<h2>🚨 Trap</h2>
+<table>
+<thead>
+<tr>
+<th>Trap</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>50% + 50% = 100% discount</td>
+<td>Net = 50+50−25 = <strong>75%</strong> (not 100%)</td>
+</tr>
+<tr>
+<td>30% + 20% = 50%</td>
+<td>Net = 30+20−6 = <strong>44%</strong></td>
+</tr>
+<tr>
+<td>Successive discounts are commutative</td>
+<td>Yes — order doesn't matter for net effect</td>
+</tr>
+<tr>
+<td>"Buy 3 get 1 free" → 25% discount</td>
+<td>Discount% = 1/(3+1) × 100 = <strong>25%</strong> ✓</td>
+</tr>
+<tr>
+<td>"Buy 4 get 1 free" → 25% discount</td>
+<td>Discount% = 1/(4+1) × 100 = <strong>20%</strong> (not 25%)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>📜 PYQ Style</h2>
+<p><strong>Q1.</strong> Two successive discounts 50% and 50%. Net discount?</p>
+<pre><code>= 50 + 50 − (50×50/100) = 100 − 25 = 75%
+</code></pre>
+<p><strong>Q2.</strong> Successive discounts 20% and 10%. Net discount?</p>
+<pre><code>= 20 + 10 − (20×10/100) = 30 − 2 = 28%
+</code></pre>
+<p><strong>Q3.</strong> Buy 2 get 1 free. Effective discount%?</p>
+<pre><code>= 1/(2+1) × 100 = 33.33%
+</code></pre>
+<p><strong>Q4.</strong> Three successive discounts: 20%, 10%, 5%. Net?</p>
+<pre><code>Step 1: 20+10−2 = 28%
+Step 2: 28+5−(28×5/100) = 33−1.4 = 31.6%
+</code></pre>
+<p><strong>Q5.</strong> MP = ₹8400. Sales tax reduced from 3½% to 3⅓%. Difference in amount paid?</p>
+<pre><code>Difference in rate = 3½ − 3⅓ = 7/2 − 10/3 = 21/6 − 20/6 = 1/6%
+Amount saved = (1/6)% of 8400 = 8400/600 = ₹14
+</code></pre>
+<hr />
+<h2>🏆 Mastery</h2>
+<p><strong>Easy:</strong> Net discount for successive 25% and 20%?<br />
+<strong>Medium:</strong> MP = ₹1000. First 20% discount then 10% off the reduced price. Final SP?<br />
+<strong>Hard:</strong> A shopkeeper allows 30% discount and still makes 10.5% profit. If he allows no discount, what % profit?</p>
+<p><em>(Answers: 40% | ₹720 | SP=MP×0.7; CP=SP/1.105; if SP=MP: profit=(MP−CP)/CP×100 = (0.3×MP/CP)×100 → 57.86%)</em></p>
+<hr />
+<hr />
+<h1>🎯 TYPE 4 — SAME SP, EQUAL PROFIT% &amp; LOSS%</h1>
+<h2>👀 Recognition</h2>
+<p><strong>Trigger words:</strong><br />
+- "sold at same price...one at x% profit...other at x% loss"<br />
+- "two articles each sold for ₹X..."<br />
+- "percentage profit = percentage loss"</p>
+<hr />
+<h2>⚡ Shortcut</h2>
+<h3>Same SP, same profit% and loss%</h3>
+<pre><code>ALWAYS a net loss
+Loss% = (Common %)² / 100 = (P/10)²%
+
+Absolute loss = 2P²x / (100² − P²)
+where x = SP of each article, P = common %
+</code></pre>
+<h3>Same CP, same profit% and loss%</h3>
+<pre><code>No gain, no loss (they cancel perfectly)
+</code></pre>
+<hr />
+<h2>🚨 Trap</h2>
+<table>
+<thead>
+<tr>
+<th>Trap</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Same SP, equal P% and L% → break even</td>
+<td><strong>ALWAYS a loss</strong> — the loss article's CP is higher</td>
+</tr>
+<tr>
+<td>Same CP, equal P% and L% → loss</td>
+<td>No — <strong>break even</strong> when CP is same</td>
+</tr>
+<tr>
+<td>Loss% = Common%</td>
+<td><strong>WRONG</strong> — Loss% = (Common%)²/100</td>
+</tr>
+<tr>
+<td>10% profit + 10% loss → 1% loss</td>
+<td>Correct formula: (10)²/100 = 1% loss ✓</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>"Same SP" = always loss. "Same CP" = always break even.</strong></p>
+</blockquote>
+<hr />
+<h2>📜 PYQ Style</h2>
+<p><strong>Q1.</strong> Two cars each sold for ₹1000. One at 25% profit, other at 25% loss. Net%?</p>
+<pre><code>Loss% = (25)²/100 = 625/100 = 6.25%
+</code></pre>
+<p><strong>Q2.</strong> Two articles each sold at ₹300. One at 20% profit, one at 20% loss. Absolute loss?</p>
+<pre><code>Loss = 2×(20²)×300 / (100²−20²)
+= 2×400×300 / (10000−400)
+= 240000/9600 = ₹25
+</code></pre>
+<p><strong>Q3.</strong> Two cycles sold for ₹1710 total. CP of 1st = SP of 2nd. 1st sold at 10% loss, 2nd at 25% gain. Total gain/loss?</p>
+<pre><code>Let CP of 1st = 100 (= SP of 2nd)
+SP of 1st = 90 (10% loss)
+CP of 2nd = 100×100/125 = 80 (since SP=100 at 25% gain)
+Total CP = 100+80 = 180; Total SP = 90+100 = 190
+CP:SP = 18:19
+Profit = (1/19) × 1710 = ₹90
+</code></pre>
+<hr />
+<h2>🏆 Mastery</h2>
+<p><strong>Easy:</strong> Two items each sold at ₹500. One at 10% profit, one at 10% loss. Net profit/loss?<br />
+<strong>Medium:</strong> Two items each sold at ₹480. One at 20% profit, one at 20% loss. Find total CP and total loss.<br />
+<strong>Hard:</strong> Two articles sold for ₹990 each. One at 10% profit, one at 10% loss. Total SP = ₹1980. How much money was lost?</p>
+<p><em>(Answers: 1% loss = ₹10 total | CP₁=400,CP₂=600,Total=1000,Loss=40 | Loss=2×100×990/(10000−100)=1980/99=₹20)</em></p>
+<hr />
+<hr />
+<h1>🎯 TYPE 5 — DISHONEST DEALER (FALSE WEIGHT)</h1>
+<h2>👀 Recognition</h2>
+<p><strong>Trigger words:</strong><br />
+- "sells at cost price but uses false weight"<br />
+- "uses 900g instead of 1kg"<br />
+- "cheats by x grams per kg"<br />
+- "professes to sell at CP"</p>
+<hr />
+<h2>⚡ Shortcut</h2>
+<pre><code>Gain% = Error / (True value − Error) × 100
+      = (True weight − False weight) / False weight × 100
+
+Where:
+Error = True weight − False weight
+</code></pre>
+<p><strong>Memory hook</strong>: Gain is on the FALSE weight (what customer actually gets)</p>
+<hr />
+<h2>🚨 Trap</h2>
+<table>
+<thead>
+<tr>
+<th>Trap</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gain% = Error/True weight × 100</td>
+<td><strong>WRONG</strong> — denominator is TRUE − ERROR (= false weight)</td>
+</tr>
+<tr>
+<td>960g instead of 1000g → gain = 40/1000 × 100 = 4%</td>
+<td><strong>WRONG</strong> — gain = 40/960 × 100 = 4.16%</td>
+</tr>
+<tr>
+<td>Dealer sells AT a profit AND uses false weight</td>
+<td>Compound: apply both multipliers</td>
+</tr>
+<tr>
+<td>"Uses 800g instead of 1kg" → gain% = 20%</td>
+<td>Gain = 200/800 × 100 = 25%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>📜 PYQ Style</h2>
+<p><strong>Q1.</strong> Shopkeeper uses 960g instead of 1kg, sells at CP. Profit%?</p>
+<pre><code>Gain% = (1000−960)/960 × 100 = 40/960 × 100 = 4 1/6%
+</code></pre>
+<p><strong>Q2.</strong> Trader uses 800g instead of 1000g AND sells at 10% profit. Overall gain%?</p>
+<pre><code>Gain from false weight = 200/800 × 100 = 25%
+Combined: (1.25 × 1.10 − 1) × 100 = 37.5%
+</code></pre>
+<p><strong>Q3.</strong> A dishonest dealer claims to sell at CP but gains 25%. What weight does he use per kg?</p>
+<pre><code>25 = Error/(1000−Error) × 100
+25(1000−Error) = 100×Error
+25000 = 125×Error
+Error = 200g → uses 800g per kg
+</code></pre>
+<hr />
+<h2>🏆 Mastery</h2>
+<p><strong>Easy:</strong> Dealer uses 900g instead of 1kg. Profit%?<br />
+<strong>Medium:</strong> A shopkeeper cheats by 10% while buying and 10% while selling. Net profit%?<br />
+<strong>Hard:</strong> A dealer uses false weight and gives 10% discount on MP. Still makes 20% profit on actual CP. What is his markup% and what weight per kg does he use?</p>
+<p><em>(Answers: 11.11% | Buys 1100g for price of 1000g AND sells 900g for price of 1000g → net = 1.1×(10000/9000)=1.222 → 22.2% | requires two unknowns, set up simultaneous)</em></p>
+<hr />
+<hr />
+<h1>🎯 TYPE 6 — SP OF x ARTICLES = CP OF y ARTICLES</h1>
+<h2>👀 Recognition</h2>
+<p><strong>Trigger words:</strong><br />
+- "SP of 12 = CP of 15"<br />
+- "CP of x articles = SP of y articles"<br />
+- "by selling 80 articles he gains CP of 20 articles"</p>
+<hr />
+<h2>⚡ Shortcut</h2>
+<pre><code>CASE A: SP of x = CP of y (y &gt; x → profit)
+Profit% = (y − x) / x × 100
+
+CASE B: CP of x = SP of y (x &gt; y → profit)
+Profit% = (x − y) / y × 100
+
+CASE C: &quot;Gains CP of z articles by selling n articles&quot;
+→ means: Profit = z × (CP per article)
+→ SP of n = CP of n + CP of z = CP of (n+z)
+→ Apply Case B with y=n, x=n+z
+</code></pre>
+<hr />
+<h2>📜 PYQ Style</h2>
+<p><strong>Q1.</strong> SP of 12 = CP of 15. Gain%?</p>
+<pre><code>Profit% = (15−12)/12 × 100 = 25%
+</code></pre>
+<p><strong>Q2.</strong> CP of 20 = SP of 25. Loss%?</p>
+<pre><code>Loss% = (25−20)/25 × 100 = 20%
+</code></pre>
+<p><strong>Q3.</strong> By selling 80 articles, gain = CP of 20 articles. Gain%?</p>
+<pre><code>SP of 80 = CP of 80 + CP of 20 = CP of 100
+Profit% = (100−80)/80 × 100 = 25%
+</code></pre>
+<hr />
+<h2>🏆 Mastery</h2>
+<p><strong>Easy:</strong> SP of 10 articles = CP of 12 articles. Profit%?<br />
+<strong>Medium:</strong> SP of 16 articles = CP of 12 articles. Loss%?<br />
+<strong>Hard:</strong> By selling 56 articles a man gains the CP of 14 articles. Gain%?</p>
+<p><em>(Answers: 20% | Loss=(16−12)/16×100=25% | SP of 56 = CP of 70; gain% = 14/56×100 = 25%)</em></p>
+<hr />
+<hr />
+<h1>🎯 TYPE 7 — "HAD HE SOLD FOR ₹X MORE" TYPE</h1>
+<h2>👀 Recognition</h2>
+<p><strong>Trigger words:</strong><br />
+- "had he sold for ₹X more, he would have gained Y%"<br />
+- "sold at 10% loss; if sold for ₹108 more, would get 10% profit"<br />
+- "difference between two SPs = ₹X"</p>
+<hr />
+<h2>⚡ Shortcut</h2>
+<pre><code>Set up two SP equations:
+SP₁ = CP × (100 ± p₁%) / 100
+SP₂ = CP × (100 ± p₂%) / 100
+
+SP₂ − SP₁ = given amount
+
+Solve for CP:
+CP × [(100±p₂) − (100±p₁)] / 100 = difference
+CP = difference × 100 / (p₂ − p₁)   [if both same side]
+CP = difference × 100 / (p₁ + p₂)   [one profit, one loss]
+</code></pre>
+<hr />
+<h2>📜 PYQ Style</h2>
+<p><strong>Q1.</strong> Book sold at 10% loss. If sold for ₹108 more, 10% profit. Find CP.</p>
+<pre><code>SP₁ = 0.9 × CP
+SP₂ = 1.1 × CP
+SP₂ − SP₁ = 0.2 × CP = 108
+CP = 108/0.2 = ₹540
+</code></pre>
+<p><strong>Q2.</strong> Article sold at 5% loss. If sold for ₹96 more, 15% profit. Find CP.</p>
+<pre><code>0.2 × CP = 96 [same logic]
+Wait: SP₂−SP₁ = (1.15−0.95)×CP = 0.20×CP = 96
+CP = ₹480
+</code></pre>
+<p><strong>Q3.</strong> Man sells at 8% profit. Had he sold for ₹150 more, profit would be 14%. Find CP.</p>
+<pre><code>(1.14−1.08) × CP = 150
+0.06 × CP = 150
+CP = ₹2500
+</code></pre>
+<hr />
+<h2>🏆 Mastery</h2>
+<p><strong>Easy:</strong> Sold at 5% loss; if sold for ₹20 more, would break even. Find CP.<br />
+<strong>Medium:</strong> Sold at 10% profit; if sold for ₹100 less, loss = 5%. Find CP.<br />
+<strong>Hard:</strong> Sold for ₹756 at 8% profit. If sold at 4% loss, what would SP be?</p>
+<p><em>(Answers: ₹400 | 0.15×CP=100; CP=₹667 | CP=700; SP at 4% loss=700×0.96=₹672)</em></p>
+<hr />
+<hr />
+<h1>🎯 TYPE 8 — MIXED/PARTIAL SELLING (FRACTIONS)</h1>
+<h2>👀 Recognition</h2>
+<p><strong>Trigger words:</strong><br />
+- "sells 1/3 at loss of 20% and 2/5 at gain of 25%...remaining at what price for overall 10% profit?"<br />
+- "buys land for ₹X...sells parts at different P/L..."<br />
+- "two traders calculate profit on buying and selling price respectively"</p>
+<hr />
+<h2>⚡ Shortcut</h2>
+<pre><code>Step 1: Find required total SP for overall profit/loss
+  Total SP target = CP × (100 + overall%) / 100
+
+Step 2: Find SP of each sold portion
+  SP of fraction = fraction × CP × (100 ± their P or L%) / 100
+
+Step 3: Remaining SP = Total target − sum of sold portions
+</code></pre>
+<h3>Profit on CP vs Profit on SP (two traders)</h3>
+<pre><code>Trader A: profit% on CP → straightforward
+Trader B: claims same profit% but calculates on SP
+  SP × profit% / 100 = profit amount
+  CP = SP − profit = SP(1 − profit%/100)
+
+Difference in actual profits → set up ratio → find SP
+</code></pre>
+<hr />
+<h2>📜 PYQ Style</h2>
+<p><strong>Q1.</strong> Land ₹3,60,000. Sells 1/3 at 20% loss, 2/5 at 25% gain. Rest for overall 10% profit. Find remaining SP.</p>
+<pre><code>Total SP needed = 360000 × 1.10 = ₹396000
+SP of 1/3 = (1/3)×360000×0.80 = ₹96000
+SP of 2/5 = (2/5)×360000×1.25 = ₹180000
+Remaining SP = 396000−96000−180000 = ₹120000
+</code></pre>
+<p><strong>Q2.</strong> Two traders, same SP. Both claim 20% profit. One calculates on CP, other on SP. Actual profit difference = ₹85. Find SP.</p>
+<pre><code>Trader A (on CP): Let CP=100, SP=120; profit=₹20
+Trader B (on SP): SP=120; profit=20%×120=₹24; CP=96
+Actual profit B = 24, profit A = 20; difference = ₹4
+When difference = ₹4, SP = ₹120
+When difference = ₹85: SP = 120×85/4 = ₹2550
+</code></pre>
+<p><strong>Q3.</strong> Man sells two cycles for ₹1710 total. 1st at 10% loss, 2nd at 25% gain. CP₁ = SP₂. Total gain?</p>
+<pre><code>[See Type 4, Q3 — same problem]
+Profit = ₹90
+</code></pre>
+<hr />
+<h2>🏆 Mastery</h2>
+<p><strong>Easy:</strong> Buys 3 items for ₹100. Sells 2 at 10% profit, 1 at 10% loss. Overall profit/loss?<br />
+<strong>Medium:</strong> Sells ½ of goods at 20% profit and ½ at 20% loss. Overall?<br />
+<strong>Hard:</strong> Sells 40% at 25% profit, 30% at 10% loss, rest at 15% profit. Overall profit%?</p>
+<p><em>(Answers: 2×1.1+1×0.9=3.1 SP vs 3 CP → gain 3.33% | exactly 4% loss (same SP rule) | 0.4×25−0.3×10+0.3×15 = 10−3+4.5 = 11.5%)</em></p>
+<hr />
+<hr />
+<h1>🎯 TYPE 9 — PROFIT ON CP vs PROFIT ON SP</h1>
+<h2>👀 Recognition</h2>
+<p><strong>Trigger words:</strong><br />
+- "profit of 20% on cost price" vs "profit of 20% on selling price"<br />
+- "find profit% when calculated on selling price"<br />
+- "one trader calculates on buying price, another on selling price"</p>
+<hr />
+<h2>⚡ Shortcut</h2>
+<pre><code>Profit% on CP = p%
+→ Profit% on SP = p/(100+p) × 100
+
+Profit% on SP = q%
+→ Profit% on CP = q/(100−q) × 100
+</code></pre>
+<hr />
+<h2>📜 PYQ Style</h2>
+<p><strong>Q1.</strong> Profit 20% on CP. Find profit% on SP.</p>
+<pre><code>Profit% on SP = 20/(100+20) × 100 = 20/120 × 100 = 16⅔%
+</code></pre>
+<p><strong>Q2.</strong> Profit 25% on SP. Find profit% on CP.</p>
+<pre><code>Profit% on CP = 25/(100−25) × 100 = 25/75 × 100 = 33⅓%
+</code></pre>
+<hr />
+<hr />
+<h1>🔧 TOOLS</h1>
+<h2>T1. Master Formula Sheet</h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SP from CP + profit%</td>
+<td>CP × (100+p)/100</td>
+</tr>
+<tr>
+<td>CP from SP + profit%</td>
+<td>SP × 100/(100+p)</td>
+</tr>
+<tr>
+<td>CP from SP + loss%</td>
+<td>SP × 100/(100−l)</td>
+</tr>
+<tr>
+<td>MP from SP + discount%</td>
+<td>SP × 100/(100−d)</td>
+</tr>
+<tr>
+<td>SP from MP + discount%</td>
+<td>MP × (100−d)/100</td>
+</tr>
+<tr>
+<td>Two successive discounts a%, b%</td>
+<td>Net = a+b−ab/100</td>
+</tr>
+<tr>
+<td>Same SP, same P% and L%</td>
+<td>Loss = P²/100%</td>
+</tr>
+<tr>
+<td>False weight gain</td>
+<td>(True−False)/False × 100</td>
+</tr>
+<tr>
+<td>SP x = CP y → profit</td>
+<td>(y−x)/x × 100</td>
+</tr>
+<tr>
+<td>"₹X more → extra profit"</td>
+<td>CP = X × 100/(p₂+p₁)</td>
+</tr>
+<tr>
+<td>Buy x get y free → discount</td>
+<td>y/(x+y) × 100</td>
+</tr>
+<tr>
+<td>Profit on CP p% → profit on SP</td>
+<td>p/(100+p) × 100</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>T2. Multiplier Quick Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Multiplier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Profit 10%</td>
+<td>×1.10</td>
+</tr>
+<tr>
+<td>Profit 20%</td>
+<td>×1.20</td>
+</tr>
+<tr>
+<td>Profit 25%</td>
+<td>×1.25 = ×5/4</td>
+</tr>
+<tr>
+<td>Profit 33⅓%</td>
+<td>×4/3</td>
+</tr>
+<tr>
+<td>Loss 10%</td>
+<td>×0.90</td>
+</tr>
+<tr>
+<td>Loss 20%</td>
+<td>×0.80</td>
+</tr>
+<tr>
+<td>Loss 25%</td>
+<td>×0.75 = ×3/4</td>
+</tr>
+<tr>
+<td>Discount 20%</td>
+<td>×0.80</td>
+</tr>
+<tr>
+<td>Markup 30%</td>
+<td>×1.30</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<hr />
+<h1>⚠️ MASTER TRAP SHEET</h1>
+<blockquote>
+<p>Every item here has caused wrong answers in SSC/Banking/CAT papers</p>
+</blockquote>
+<ol>
+<li><strong>Profit% and Loss% are ALWAYS on CP</strong> — unless question says "on SP"</li>
+<li><strong>Discount% is ALWAYS on MP</strong> — never on CP or SP</li>
+<li><strong>Same SP, same P% and L%</strong> → ALWAYS a loss of P²/100% (not break even)</li>
+<li><strong>Same CP, same P% and L%</strong> → ALWAYS break even (not a loss)</li>
+<li><strong>50% + 50% successive discount ≠ 100%</strong> — net = 75%</li>
+<li><strong>30% + 20% ≠ 50%</strong> — net = 44% (must subtract cross term)</li>
+<li><strong>False weight: gain% = Error/False weight × 100</strong> (not Error/True weight)</li>
+<li><strong>SP of 12 = CP of 15 → 25% profit</strong> (more money per article than you pay)</li>
+<li><strong>CP of 15 = SP of 12 → 25% loss</strong> (getting less money per article)</li>
+<li><strong>"₹X more" problems: CP = X × 100 / (sum of %)</strong> when one profit one loss</li>
+<li><strong>Discount on labelled price ≠ profit on labelled price</strong> — these use different bases</li>
+<li><strong>"Buy 4 get 1 free"</strong> → discount = 1/5 × 100 = 20% (not 25%)</li>
+<li><strong>"Buy 3 get 1 free"</strong> → discount = 1/4 × 100 = 25% ✓</li>
+<li><strong>Two traders, same SP, both 20% profit on different bases</strong> → different CPs and actual profits</li>
+<li><strong>Net effect: markup then discount</strong> → SP = CP × (1+m%) × (1−d%) — always multiply, never add/subtract%</li>
+<li><strong>Profit on SP → Profit on CP</strong>: divide by (100−p%), not add the same %</li>
+<li><strong>False weight + extra profit</strong>: use compound multiplier, not add the two gains</li>
+<li><strong>"Remaining part" problems</strong>: total SP target − sum of parts already sold = remaining SP</li>
+<li><strong>CP of first = SP of second</strong> (linked items): set up ratio table, don't assume equal CPs</li>
+<li><strong>Profit% on SP will always be LESS than profit% on CP</strong> for the same transaction</li>
+</ol>
+<hr />
+<p><em>🎯 Centumania Format — Built from: Adda247 QA 3rd Ed. Ch.04 (pp.80–83) + CAT Short Tricks PDF (Tips 1–7, pp.27–33)</em><br />
+<em>Architecture: Question-Type Navigation · Not Chapter Navigation</em><br />
+<em>Build: Recognition → Shortcut → Trap → PYQ → Mastery</em></p></div>
+<script>
+var _mToken='',_mSid='',_tStart=Date.now();
+function initMetrics(){
+  var ks=Object.keys(localStorage);
+  var k=ks.find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});
+  if(k){try{var d=JSON.parse(localStorage.getItem(k));_mToken=(d&&d.access_token)||'';}catch(e){}}
+  if(!_mToken){var sk=Object.keys(sessionStorage).find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});if(sk){try{var d2=JSON.parse(sessionStorage.getItem(sk));_mToken=(d2&&d2.access_token)||'';}catch(e){}}}
+  _mSid=Math.random().toString(36).slice(2);
+  track('study_material_opened',{material_id:'day-14-maths-pl',title:'Maths — Profit, Loss & Discount'});
+}
+function track(name,meta){
+  if(_mToken){fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},body:JSON.stringify({event_name:name,session_id:_mSid,event_timestamp:new Date().toISOString(),metadata:meta})}).catch(function(){});}
+}
+window.addEventListener('load',initMetrics);
+window.addEventListener('beforeunload',function(){track('study_material_closed',{material_id:'day-14-maths-pl',time_spent:Math.round((Date.now()-_tStart)/1000)});});
+</script>
+</body></html>
