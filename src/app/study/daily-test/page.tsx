@@ -183,7 +183,7 @@ export default function DailyTestPage() {
             <div style={{ fontSize: 48, marginBottom: 16 }}>🌙</div>
             <div style={{ fontFamily: 'var(--font-inter)', fontSize: 22, fontWeight: 800, letterSpacing: -0.4, color: '#B45309', marginBottom: 10 }}>Test not ready yet</div>
             <p style={{ color: '#4B5563', fontSize: 14, lineHeight: 1.7, marginBottom: 24 }}>
-              Your AI-personalised test for <strong style={{ color: '#111827' }}>{testDate || 'today'}</strong> is prepared nightly at <strong style={{ color: '#111827' }}>11:30 PM IST</strong>, drawing from your weak topics in yesterday's materials.
+              Your AI-personalised test for <strong style={{ color: '#111827' }}>{testDate || 'today'}</strong> is prepared nightly at <strong style={{ color: '#111827' }}>11:30 PM IST</strong>, drawing from your weak topics in yesterday&apos;s materials.
             </p>
             <button onClick={() => router.push('/dashboard')} style={{ padding: '12px 28px', borderRadius: 10, background: '#0284c7', color: '#fff', border: 'none', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
               Back to dashboard
@@ -202,7 +202,7 @@ export default function DailyTestPage() {
           <div style={{ background: 'linear-gradient(135deg, rgba(34,197,94,0.08), rgba(2,132,199,0.06))', border: '1px solid rgba(34,197,94,0.2)', borderRadius: 20, padding: '40px 32px', textAlign: 'center' }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
             <div style={{ fontFamily: 'var(--font-inter)', fontSize: 22, fontWeight: 800, letterSpacing: -0.4, color: '#16A34A', marginBottom: 10 }}>Already completed</div>
-            <p style={{ color: '#4B5563', fontSize: 14, lineHeight: 1.7, marginBottom: 24 }}>You've already taken today's test. Come back tomorrow for a fresh one.</p>
+            <p style={{ color: '#4B5563', fontSize: 14, lineHeight: 1.7, marginBottom: 24 }}>You&apos;ve already taken today&apos;s test. Come back tomorrow for a fresh one.</p>
             <button onClick={() => router.push('/dashboard')} style={{ padding: '12px 28px', borderRadius: 10, background: '#0284c7', color: '#fff', border: 'none', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}>
               Back to dashboard
             </button>
@@ -250,7 +250,7 @@ export default function DailyTestPage() {
               Your Personalised<br />Revision Test
             </div>
             <p style={{ color: '#4B5563', fontSize: 14, lineHeight: 1.6, marginBottom: 28 }}>
-              AI-selected questions targeting your weak areas from yesterday's study material.
+              AI-selected questions targeting your weak areas from yesterday&apos;s study material.
             </p>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginBottom: 28 }}>
