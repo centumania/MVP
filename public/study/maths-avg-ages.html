@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" style="color-scheme:dark;background:#161e1b">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Average & Ages — Centumania</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg:      #161e1b;
+  --bg2:     #1a2420;
+  --bg3:     #1f2d28;
+  --card:    #1e2a26;
+  --card2:   #243028;
+  --border:  #2e4a3a;
+  --border2: #3d6050;
+  --teal:    #22c98f;
+  --teal-l:  #6ee7b7;
+  --teal-d:  #0a3d2e;
+  --teal-dd: #061f17;
+  --amber:   #fbbf24;
+  --amb-d:   #d97706;
+  --amb-bg:  #1e1a0a;
+  --red:     #f87171;
+  --red-bg:  #200e0e;
+  --red-b:   #7f1d1d;
+  --purple:  #c4b5fd;
+  --blue:    #93c5fd;
+  --text:    #e2f5ec;
+  --text2:   #a8d5bc;
+  --text3:   #6db393;
+  --mono:    'Courier New', Courier, monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:#161e1b !important;color:#e2f5ec !important;font-family:var(--mono);font-size:14px;line-height:1.6;overflow-x:hidden}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:11px 16px}
+.tl{display:flex;align-items:center;gap:9px}
+.logo{width:32px;height:32px;border-radius:8px;background:var(--teal-d);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--teal-l);border:1px solid var(--teal-d);flex-shrink:0}
+.brand{font-size:13px;font-weight:700;color:var(--text)}
+.sub{font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.pill{background:var(--teal-dd);color:var(--teal-l);font-size:9px;font-weight:600;padding:3px 9px;border-radius:20px;border:1px solid var(--teal-d);white-space:nowrap}
+
+/* HERO */
+.hero{background:var(--bg3);border-bottom:1px solid var(--border);padding:18px 16px 16px}
+.hero-ey{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.hero-t{font-size:21px;font-weight:800;color:var(--teal-l);letter-spacing:-.01em;line-height:1.2}
+.hero-s{font-size:11px;color:var(--text3);margin-top:3px}
+.hero-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:11px}
+.tag{font-size:9px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:20px;border:1px solid}
+.tag-t{color:var(--teal-l);border-color:var(--teal-d);background:var(--teal-dd)}
+.tag-a{color:var(--amber);border-color:var(--amb-d);background:var(--amb-bg)}
+.tag-r{color:#fca5a5;border-color:var(--red-b);background:var(--red-bg)}
+
+/* MASTER MAP */
+.mmap{background:var(--bg3);border:1px solid var(--border);border-radius:10px;margin:13px 12px;overflow:hidden}
+.mmap-hd{background:var(--teal-dd);border-bottom:1px solid var(--border);padding:9px 14px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-l)}
+.mmap-body{padding:11px 14px}
+.mmap-sec{margin-bottom:11px}
+.mmap-sec:last-child{margin-bottom:0}
+.mmap-st{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:5px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.mmap-items{display:flex;flex-direction:column;gap:3px}
+.mmap-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--bg2);border-radius:6px;border:1px solid var(--border);font-size:12px;color:var(--text2);text-decoration:none;transition:background .15s}
+.mmap-item:active{background:var(--card2)}
+.mmap-ic{font-size:13px;width:18px;text-align:center}
+.mmap-tx{flex:1}
+.mmap-ar{color:var(--text3);font-size:10px}
+
+/* SECTION WRAPPER */
+.sw{padding:0 12px 18px}
+
+/* QT HEADER */
+.qt-hd{background:var(--card);border:1px solid var(--border);border-radius:10px 10px 0 0;border-bottom:none;padding:13px 16px 11px;margin-top:18px}
+.qt-n{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.qt-t{font-size:17px;font-weight:800;color:var(--teal-l);letter-spacing:-.01em}
+
+/* SECTION BANNER */
+.s-banner{background:var(--card2);border:1px solid var(--border);border-radius:10px;margin:18px 12px 0;padding:12px 16px;border-left:3px solid var(--teal)}
+.s-banner-t{font-size:13px;font-weight:700;color:var(--text2);letter-spacing:.03em;text-transform:uppercase}
+
+/* NODE CARDS */
+.nc{background:var(--card);border:1px solid var(--border);border-top:none}
+.nc:last-child{border-radius:0 0 10px 10px}
+.nh{display:flex;align-items:center;gap:9px;padding:10px 16px;cursor:pointer;border-bottom:1px solid transparent;user-select:none}
+.nh.open{border-bottom:1px solid var(--border)}
+.ni{font-size:15px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0}
+.ib{background:#0c2040;color:#93c5fd}
+.it{background:var(--teal-dd);color:var(--teal-l)}
+.ia{background:#2a1e08;color:var(--amber)}
+.ir{background:#2a0e0e;color:#f87171}
+.ip{background:#1e1840;color:#c4b5fd}
+.nl{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;flex:1}
+.lb{color:#93c5fd}.lt{color:var(--teal-l)}.la{color:var(--amber)}.lr{color:#f87171}.lp{color:#c4b5fd}
+.nch{color:var(--text3);font-size:11px;transition:transform .2s}
+.nch.open{transform:rotate(180deg)}
+.nb{display:none;padding:13px 16px;background:#1a2420 !important}
+.nb.open{display:block}
+
+/* TRIGGER ITEMS */
+.trig-it{display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2)}
+.trig-it:last-child{border-bottom:none}
+.trig-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);margin-top:7px;flex-shrink:0}
+
+/* CODE BLOCK */
+.cb{background:#0e1a16;border:1px solid var(--border2);border-left:3px solid var(--teal);border-radius:6px;padding:11px 13px;font-size:12px;line-height:1.85;color:#c8e8d8;overflow-x:auto;margin:9px 0;white-space:pre}
+.cb .ct{color:#6ee7b7;font-weight:600}
+.cb .ca{color:#fbbf24;font-weight:600}
+.cb .cd{color:#7ecfa8;font-style:italic}
+
+/* WARN BOX */
+.warn{background:#1e1a08;border:1px solid var(--amb-d);border-left:3px solid var(--amber);border-radius:6px;padding:10px 12px;margin:8px 0;font-size:12px;color:#fde68a;display:flex;align-items:flex-start;gap:8px}
+
+/* DATA TABLE */
+.dt{width:100%;border-collapse:collapse;font-size:12px;margin:9px 0}
+.dt th{background:#0e1a16;color:var(--text3);font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:7px 9px;text-align:left;border-bottom:1px solid var(--border2)}
+.dt td{padding:8px 9px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+.dt tr:last-child td{border-bottom:none}
+.dt tr:nth-child(even) td{background:var(--card2)}
+.vt{color:#6ee7b7;font-weight:700}.va{color:#fbbf24;font-weight:700}.vr{color:#fca5a5}
+
+/* SOLVED / PYQ */
+.pyq{background:#0e1a16;border:1px solid var(--border2);border-radius:8px;padding:12px 14px;margin:7px 0}
+.pyq-q{font-size:13px;color:var(--text);margin-bottom:7px;font-weight:700;line-height:1.5}
+.pyq-sv{background:#162820;border-radius:6px;padding:9px 12px;font-size:12px;color:var(--text2);line-height:1.9}
+.pyq-ans{color:#6ee7b7;font-weight:700;margin-top:6px;font-size:13px;border-top:1px solid var(--border);padding-top:6px}
+
+/* MASTERY */
+.mr{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.mr:last-child{border-bottom:none}
+.mb{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+.be{background:var(--teal-dd);color:var(--teal-l);border:1px solid var(--teal-d)}
+.bm{background:var(--amb-bg);color:var(--amber);border:1px solid var(--amb-d)}
+.bh{background:var(--red-bg);color:#fca5a5;border:1px solid var(--red-b)}
+.mt{flex:1;color:var(--text2);line-height:1.5}
+
+/* TRAP SHEET */
+.trap-sheet{margin:13px 12px;background:var(--red-bg);border:1px solid var(--red-b);border-radius:10px;overflow:hidden}
+.tsh{background:#2a0e0e;border-bottom:1px solid var(--red-b);padding:12px 16px}
+.tst{font-size:13px;font-weight:800;color:#f87171;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.tss{font-size:10px;color:#793030;margin-top:2px}
+.ti{padding:9px 16px;border-bottom:1px solid #3a1515;font-size:12px;color:#c98080;display:flex;align-items:flex-start;gap:9px}
+.ti:last-child{border-bottom:none}
+.ti:nth-child(even){background:#250e0e}
+.tn{font-size:10px;font-weight:700;color:#793030;min-width:22px;flex-shrink:0;margin-top:1px}
+.ti strong{color:#f87171}
+
+/* TOOLS / FORMULA BOX */
+.tc{background:var(--card);border:1px solid var(--border);border-radius:10px;margin:9px 12px;overflow:hidden}
+.tch{background:var(--card2);border-bottom:1px solid var(--border);padding:10px 16px;font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.04em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:8px}
+.tcb{padding:13px 16px;display:none;background:#1a2420 !important}
+.tcb.open{display:block}
+
+/* FOUNDATION CARD */
+.fw{margin:13px 12px 0}
+.fh{background:var(--card2);border:1px solid var(--border);border-radius:10px 10px 0 0;border-bottom:none;padding:11px 16px}
+.ft{font-size:13px;font-weight:700;color:var(--text2);letter-spacing:.03em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+
+.flag{background:var(--teal-dd);border:1px solid var(--teal-d);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:12px;color:var(--teal-l);display:flex;align-items:flex-start;gap:8px}
+
+.bp{height:40px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.qt-hd,.nc,.trap-sheet,.tc,.fw,.s-banner{animation:fadeUp .25s ease both}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="tl">
+    <div class="logo">C</div>
+    <div>
+      <div class="brand">Centumania</div>
+      <div class="sub">Average &amp; Ages</div>
+    </div>
+  </div>
+  <span class="pill">SSC · RRB · Banking</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-ey">Exam Navigation Architecture</div>
+  <div class="hero-t">Average &amp; Ages</div>
+  <div class="hero-s">Remapped: Theory → Question-Type Navigation</div>
+  <div class="hero-tags">
+    <span class="tag tag-t">🎯 7 QTypes</span>
+    <span class="tag tag-t">🧮 Ages Section</span>
+    <span class="tag tag-a">⚡ Shortcuts</span>
+    <span class="tag tag-r">🚨 15 Traps</span>
+    <span class="tag tag-t">📜 PYQ Style</span>
+    <span class="tag tag-t">🏆 Mastery</span>
+  </div>
+</div>
+
+<!-- MASTER MAP -->
+<div class="mmap">
+  <div class="mmap-hd">📌 Master Map — Jump to Any Section</div>
+  <div class="mmap-body">
+    <div class="mmap-sec">
+      <div class="mmap-st">🧱 Foundation</div>
+      <div class="mmap-items">
+        <a class="mmap-item" href="#f1"><span class="mmap-ic">📐</span><span class="mmap-tx">Core Formula & Basic Formulae</span><span class="mmap-ar">↓</span></a>
+        <a class="mmap-item" href="#f2"><span class="mmap-ic">📋</span><span class="mmap-tx">Useful Formulae (4 types)</span><span class="mmap-ar">↓</span></a>
+      </div>
+    </div>
+    <div class="mmap-sec">
+      <div class="mmap-st">🎯 Question Types</div>
+      <div class="mmap-items">
+        <a class="mmap-item" href="#qt1"><span class="mmap-ic">🎯</span><span class="mmap-tx">QT1 — Inclusion / Exclusion</span><span class="mmap-ar">↓</span></a>
+        <a class="mmap-item" href="#qt2"><span class="mmap-ic">🎯</span><span class="mmap-tx">QT2 — Replacement Model</span><span class="mmap-ar">↓</span></a>
+        <a class="mmap-item" href="#qt3"><span class="mmap-ic">🎯</span><span class="mmap-tx">QT3 — AP / Series Average</span><span class="mmap-ar">↓</span></a>
+        <a class="mmap-item" href="#qt4"><span class="mmap-ic">🎯</span><span class="mmap-tx">QT4 — Wrongly Entered Data</span><span class="mmap-ar">↓</span></a>
+        <a class="mmap-item" href="#qt5"><span class="mmap-ic">🎯</span><span class="mmap-tx">QT5 — Average Speed</span><span class="mmap-ar">↓</span></a>
+        <a class="mmap-item" href="#qt6"><span class="mmap-ic">🎯</span><span class="mmap-tx">QT6 — Cricket / Batting Average</span><span class="mmap-ar">↓</span></a>
+        <a class="mmap-item" href="#qt7"><span class="mmap-ic">🎯</span><span class="mmap-tx">QT7 — Weighted Average (Alligation)</span><span class="mmap-ar">↓</span></a>
+      </div>
+    </div>
+    <div class="mmap-sec">
+      <div class="mmap-st">🧮 Ages</div>
+      <div class="mmap-items">
+        <a class="mmap-item" href="#ages-props"><span class="mmap-ic">📘</span><span class="mmap-tx">Properties & Key Terms</span><span class="mmap-ar">↓</span></a>
+        <a class="mmap-item" href="#ages-solved"><span class="mmap-ic">📝</span><span class="mmap-tx">8 Solved Examples (All Types)</span><span class="mmap-ar">↓</span></a>
+      </div>
+    </div>
+    <div class="mmap-sec">
+      <div class="mmap-st">🚨 Traps</div>
+      <div class="mmap-items">
+        <a class="mmap-item" href="#traps"><span class="mmap-ic">🚨</span><span class="mmap-tx">Master Trap Sheet (15 Traps)</span><span class="mmap-ar">↓</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- FOUNDATION -->
+<!-- ══════════════════════════════════════════ -->
+<div class="fw" id="f1">
+  <div class="fh"><div class="ft">🧱 Foundation — Core Formulae</div></div>
+  <div class="nc" style="border-top:1px solid var(--border);border-radius:0 0 10px 10px">
+    <div class="nb open" style="display:block;border-radius:0 0 10px 10px">
+      <div class="cb"><span class="cd">Definition:</span>
+<span class="ct">Average = Sum of terms / Total number of terms</span>
+
+<span class="cd">Basic Formulae:</span>
+  1. Avg of n natural numbers      = <span class="ct">(n+1) / 2</span>
+  2. Avg of n even numbers         = <span class="ct">n + 1</span>
+  3. Avg of n odd numbers          = <span class="ct">n</span>
+  4. Avg of n consecutive naturals = <span class="ct">(First + Last) / 2</span>
+  5. Avg sum of squares of first n = <span class="ct">(n+1)(2n+1) / 6</span></div>
+      <div class="warn"><span>⚠️</span>If same value added/subtracted/multiplied/divided to ALL terms — average changes the SAME way</div>
+      <table class="dt">
+        <thead><tr><th>Operation on every term</th><th>Effect on average</th></tr></thead>
+        <tbody>
+          <tr><td>Add a</td><td class="vt">Average + a</td></tr>
+          <tr><td>Subtract a</td><td class="vt">Average − a</td></tr>
+          <tr><td>Multiply by a</td><td class="vt">Average × a</td></tr>
+          <tr><td>Divide by a</td><td class="vt">Average ÷ a</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="fw" id="f2" style="margin-top:10px">
+  <div class="fh"><div class="ft">🧱 Foundation — Useful Formulae</div></div>
+  <div class="nc" style="border-top:1px solid var(--border);border-radius:0 0 10px 10px">
+    <div class="nb open" style="display:block;border-radius:0 0 10px 10px">
+      <div class="cb"><span class="cd">Formula 1 — Combining two groups:</span>
+Avg of x numbers = a,  Avg of y numbers = b
+<span class="ct">Combined avg = (xa + yb) / (x + y)</span>
+
+Example: 10 numbers avg 15, 15 numbers avg 20
+  = (10×15 + 15×20) / 25 = 450/25 = <span class="ca">18</span></div>
+      <div class="cb"><span class="cd">Formula 2 — Removed quantity:</span>
+Avg of n quantities = x. One removed → avg = y
+<span class="ct">Removed value = n(x − y) + y</span>
+
+Example: Avg of 24 men + 1 woman = 35. Woman leaves → avg 34
+  Age of woman = 25(35−34) + 34 = <span class="ca">59 years</span></div>
+      <div class="cb"><span class="cd">Formula 3 — Pass/Fail split:</span>
+n students, overall avg = M
+Passed avg = P,  Failed avg = F
+<span class="ct">No. of failed = n(P − M) / (P − F)</span>
+
+Example: 125 students, avg=29, passed=36, failed=11
+  Failed = 125(36−29)/(36−11) = 125×7/25 = <span class="ca">35</span></div>
+      <div class="cb"><span class="cd">Formula 4 — Batsman innings:</span>
+nth inning score = s, avg increases by t
+<span class="ct">Average after n innings = s − t(n−1)</span>
+
+Example: 44th inning score=86, avg increases by 1
+  Avg = 86 − 1(44−1) = 86 − 43 = <span class="ca">43</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- QT1 — INCLUSION / EXCLUSION -->
+<!-- ══════════════════════════════════════════ -->
+<div class="sw" id="qt1">
+  <div class="qt-hd">
+    <div class="qt-n">Question Type 1</div>
+    <div class="qt-t">🎯 Inclusion / Exclusion Model</div>
+  </div>
+  <div class="nc">
+    <div class="nh open" onclick="tog(this)"><div class="ni ib">👀</div><div class="nl lb">Recognition</div><div class="nch open">▼</div></div>
+    <div class="nb open">
+      <div class="trig-it"><span class="trig-dot"></span>"average increases/decreases when one person added/removed"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"teacher included/excluded — average changes by..."</div>
+      <div class="trig-it"><span class="trig-dot"></span>"n persons + 1 more — find the extra person's value"</div>
+      <div class="flag"><span>🚩</span><strong>Mental flag:</strong> Count changes → total changes → find unknown</div>
+    </div>
+  </div>
+  <div class="nc">
+    <div class="nh" onclick="tog(this)"><div class="ni it">⚡</div><div class="nl lt">Shortcut</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="cb"><span class="cd">When 1 person ADDED, avg increases by d (new total = n+1):</span>
+<span class="ct">New person's value = old avg + d × (n+1)</span>
+
+<span class="cd">When 1 person REMOVED, avg changes:</span>
+<span class="ct">Removed value = n(old avg − new avg) + new avg</span>
+
+<span class="cd">General shortcut:</span>
+Change in total = Change in avg × total count</div>
+      <div class="warn"><span>⚠️</span>When adding: use n+1 as denominator, NOT n</div>
+    </div>
+  </div>
+  <div class="nc">
+    <div class="nh" onclick="tog(this)"><div class="ni ir">🚨</div><div class="nl lr">Trap</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <table class="dt">
+        <thead><tr><th>Trap</th><th>Correction</th></tr></thead>
+        <tbody>
+          <tr><td>Using n instead of n+1 when adding</td><td class="vt">Total becomes n+1 after addition</td></tr>
+          <tr><td>Ignoring direction of change</td><td class="vt">Increase in avg → added value > old avg</td></tr>
+          <tr><td>Mixing removed vs replaced formula</td><td class="vt">Replacement = two separate changes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="nc">
+    <div class="nh" onclick="tog(this)"><div class="ni ip">📜</div><div class="nl lp">PYQ Style</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="pyq"><div class="pyq-q">Q1. Avg age of 30 students = 15 yrs. Teacher included → avg increases by 1. Teacher's age?</div><div class="pyq-sv">Total now = 31<br>Teacher's age = 15 + 1×31 = 46<div class="pyq-ans">Answer: 46 years</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q2. Avg wt of 10 persons increases by 1.5 kg when one weighing 50 kg is replaced.</div><div class="pyq-sv">Weight increase = 1.5×10 = 15 kg<br>New person's weight = 50 + 15 = 65<div class="pyq-ans">Answer: 65 kg</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q3. Avg score in 10 innings = 45. Runs needed in 11th to increase avg by 5?</div><div class="pyq-sv">Required avg = 50<br>Score = 50×11 − 45×10 = 550−450 = 100<div class="pyq-ans">Answer: 100 runs</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q4. Avg age of 24 students + teacher = 16. Without teacher avg = 15. Teacher's age?</div><div class="pyq-sv">Teacher's age = 25(16−15) + 15 = 25+15<div class="pyq-ans">Answer: 40 years</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q5. Avg wt of 8 persons increases by 2.5 kg when new person replaces one weighing 65 kg.</div><div class="pyq-sv">New person = 65 + 2.5×8 = 65+20<div class="pyq-ans">Answer: 85 kg</div></div></div>
+    </div>
+  </div>
+  <div class="nc" style="border-radius:0 0 10px 10px">
+    <div class="nh" onclick="tog(this)"><div class="ni ia">🏆</div><div class="nl la">Mastery</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="mr"><span class="mb be">Easy</span><span class="mt">Avg of 5 = 20. One number 30 removed. New avg? <strong style="color:var(--teal-l)">→ 17.5</strong></span></div>
+      <div class="mr"><span class="mb bm">Medium</span><span class="mt">Avg of 20 = 35. One number misread 85 as 58. Correct avg? <strong style="color:var(--teal-l)">→ 36.35</strong></span></div>
+      <div class="mr"><span class="mb bh">Hard</span><span class="mt">Avg of 9 = 50. If one number doubled, avg becomes 55. Find the number. <strong style="color:var(--teal-l)">→ 45</strong></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- QT2 — REPLACEMENT -->
+<!-- ══════════════════════════════════════════ -->
+<div class="sw" id="qt2">
+  <div class="qt-hd"><div class="qt-n">Question Type 2</div><div class="qt-t">🎯 Replacement Model</div></div>
+  <div class="nc"><div class="nh open" onclick="tog(this)"><div class="ni ib">👀</div><div class="nl lb">Recognition</div><div class="nch open">▼</div></div>
+    <div class="nb open">
+      <div class="trig-it"><span class="trig-dot"></span>"one student replaced by another — avg changes"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"a group leaves and new group joins"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"highest/lowest value replaced — new avg?"</div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni it">⚡</div><div class="nl lt">Shortcut</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="cb"><span class="cd">Single replacement:</span>
+<span class="ct">New value = Old value + (change in avg × n)</span>
+
+<span class="cd">Group replacement:</span>
+New total = Old total − (leaving avg × count)
+                      + (joining avg × count)
+<span class="ct">New avg = New total / n</span>
+
+<span class="cd">Key insight:</span> Track TOTAL change, not individual</div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni ir">🚨</div><div class="nl lr">Trap</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <table class="dt"><thead><tr><th>Trap</th><th>Correction</th></tr></thead>
+        <tbody>
+          <tr><td>n changes when group replaced</td><td class="vt">n stays same if equal count replaced</td></tr>
+          <tr><td>Using avg change directly</td><td class="vt">Always compute new total first</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni ip">📜</div><div class="nl lp">PYQ Style</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="pyq"><div class="pyq-q">Q1. Avg wt of 15 students = 20 kg. Student weighing 25 kg replaced → avg becomes 19 kg. New student's weight?</div><div class="pyq-sv">New total = 19×15 = 285<br>Old total = 20×15 = 300<br>New student = 285 − (300−25) = 285−275<div class="pyq-ans">Answer: 10 kg</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q2. Avg age of 40 students = 16. 10 students (avg 15) leave; 10 new (avg 17) join. New avg?</div><div class="pyq-sv">Old total = 640<br>New total = 640 − 150 + 170 = 660<br>New avg = 660/40<div class="pyq-ans">Answer: 16.5 years</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q3. Avg of 10 batsmen = 35. Highest 75 replaced by 25. New avg?</div><div class="pyq-sv">Change = 25−75 = −50<br>New avg = 35 + (−50/10) = 35−5<div class="pyq-ans">Answer: 30 runs</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q4. Avg monthly salary 20 employees = ₹1500. Manager included → avg +₹100. Manager's salary?</div><div class="pyq-sv">Manager = 1500 + 100×21 = 1500+2100<div class="pyq-ans">Answer: ₹3600</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q5. Avg age of 5 family members = 24. Youngest = 8 yrs. Avg just before youngest was born?</div><div class="pyq-sv">Total now = 120<br>Other 4 members at birth = 120−8−(4×8) = 120−8−32 = 80<br>Avg of 4 at that time = 80/4<div class="pyq-ans">Answer: 20 years</div></div></div>
+    </div>
+  </div>
+  <div class="nc" style="border-radius:0 0 10px 10px"><div class="nh" onclick="tog(this)"><div class="ni ia">🏆</div><div class="nl la">Mastery</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="mr"><span class="mb be">Easy</span><span class="mt">Avg of 6 = 30. One number 50 replaced by 30. New avg? <strong style="color:var(--teal-l)">→ 26.67</strong></span></div>
+      <div class="mr"><span class="mb bm">Medium</span><span class="mt">20 students avg 40. 5 leave (avg 35), 5 join (avg 45). New avg? <strong style="color:var(--teal-l)">→ 41.25</strong></span></div>
+      <div class="mr"><span class="mb bh">Hard</span><span class="mt">Group of 12, avg salary 5000. 3 leave (avg 4000), 3 join. New avg=5250. Joining avg? <strong style="color:var(--teal-l)">→ 7000</strong></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- QT3 — AP / SERIES -->
+<!-- ══════════════════════════════════════════ -->
+<div class="sw" id="qt3">
+  <div class="qt-hd"><div class="qt-n">Question Type 3</div><div class="qt-t">🎯 AP / Series Average Model</div></div>
+  <div class="nc"><div class="nh open" onclick="tog(this)"><div class="ni ib">👀</div><div class="nl lb">Recognition</div><div class="nch open">▼</div></div>
+    <div class="nb open">
+      <div class="trig-it"><span class="trig-dot"></span>"average of first n natural/even/odd numbers"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"average of multiples of n"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"average of consecutive numbers from a to b"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"average of series: a, a+d, a+2d..."</div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni it">⚡</div><div class="nl lt">Shortcut</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="cb"><span class="ct">AP Average = (First + Last) / 2</span>
+              = Middle term (if odd count)
+
+Avg of first n naturals       = <span class="ct">(n+1)/2</span>
+Avg of first n even numbers   = <span class="ct">n+1</span>
+Avg of first n odd numbers    = <span class="ct">n</span>
+Avg of first n multiples of k = <span class="ct">k(n+1)/2</span>
+
+Consecutive a to b:  Avg = <span class="ct">(a+b)/2</span></div>
+      <div class="warn"><span>⚠️</span>For equal-spaced series: middle value = average (direct answer)</div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni ip">📜</div><div class="nl lp">PYQ Style</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="pyq"><div class="pyq-q">Q1. Average of first 50 natural numbers.</div><div class="pyq-sv">Avg = (50+1)/2 = 51/2<div class="pyq-ans">Answer: 25.5</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q2. Average of all even numbers from 1 to 100.</div><div class="pyq-sv">Even numbers 2,4,...,100 → n=50<br>Avg of first n even = n+1 = 51<div class="pyq-ans">Answer: 51</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q3. Average of first 20 multiples of 7.</div><div class="pyq-sv">Multiples: 7,14,...,140<br>Avg = 7(20+1)/2 = 7×21/2 = 147/2<div class="pyq-ans">Answer: 73.5</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q4. Average of all odd numbers between 20 and 40.</div><div class="pyq-sv">Odd: 21,23,...,39<br>Avg = (21+39)/2<div class="pyq-ans">Answer: 30</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q5. Average of series 1, 3, 5, ..., 99.</div><div class="pyq-sv">First 50 odd numbers (n=50)<br>Avg of first n odd = n<div class="pyq-ans">Answer: 50</div></div></div>
+    </div>
+  </div>
+  <div class="nc" style="border-radius:0 0 10px 10px"><div class="nh" onclick="tog(this)"><div class="ni ia">🏆</div><div class="nl la">Mastery</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="mr"><span class="mb be">Easy</span><span class="mt">Avg of first 100 natural numbers <strong style="color:var(--teal-l)">→ 50.5</strong></span></div>
+      <div class="mr"><span class="mb bm">Medium</span><span class="mt">Avg of all multiples of 3 from 3 to 99 <strong style="color:var(--teal-l)">→ 51</strong></span></div>
+      <div class="mr"><span class="mb bh">Hard</span><span class="mt">Avg of all numbers divisible by 6 between 100 and 200 <strong style="color:var(--teal-l)">→ 150</strong></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- QT4 — WRONG DATA -->
+<!-- ══════════════════════════════════════════ -->
+<div class="sw" id="qt4">
+  <div class="qt-hd"><div class="qt-n">Question Type 4</div><div class="qt-t">🎯 Wrongly Entered Data Model</div></div>
+  <div class="nc"><div class="nh open" onclick="tog(this)"><div class="ni ib">👀</div><div class="nl lb">Recognition</div><div class="nch open">▼</div></div>
+    <div class="nb open">
+      <div class="trig-it"><span class="trig-dot"></span>"misread as / wrongly written as"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"it was later found that..."</div>
+      <div class="trig-it"><span class="trig-dot"></span>"correct average / correct sum"</div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni it">⚡</div><div class="nl lt">Shortcut</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="cb">Correct sum  = Wrong sum − Wrong value + Correct value
+<span class="ct">Correct avg  = Wrong avg + (Correct − Wrong) / n</span>
+
+If each term multiplied by k:
+<span class="ct">New avg = Old avg × k</span></div>
+      <div class="warn"><span>⚠️</span>If multiplied/divided by same number — just multiply/divide average. No individual values needed.</div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni ip">📜</div><div class="nl lp">PYQ Style</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="pyq"><div class="pyq-q">Q1. Avg of 20 numbers = 35. One number 85 was misread as 58. Correct avg?</div><div class="pyq-sv">Correct avg = 35 + (85−58)/20 = 35 + 27/20 = 35 + 1.35<div class="pyq-ans">Answer: 36.35</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q2. Avg marks of 100 students = 40. Score of 53 misread as 83. Correct avg?</div><div class="pyq-sv">Correct avg = 40 + (53−83)/100 = 40 − 0.3<div class="pyq-ans">Answer: 39.7</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q3. Avg of 5 observations = 60. One observation 75 should be 25. Correct avg?</div><div class="pyq-sv">Correct avg = 60 + (25−75)/5 = 60 − 10<div class="pyq-ans">Answer: 50</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q4. Avg age of 30 students = 14 yr 4 mo. One student's age misread 16 instead of 14. Correct avg?</div><div class="pyq-sv">Correction = (14−16)/30 = −2/30 yr = −0.8 months<br>Correct avg = 14 yr 4 mo − 0.8 mo<div class="pyq-ans">Answer: 14 yr 3 mo 8 days (approx)</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q5. Avg of 10 numbers = 20. Each number multiplied by 2. New avg?</div><div class="pyq-sv">Multiply all → avg multiplied same way<br>New avg = 20 × 2<div class="pyq-ans">Answer: 40</div></div></div>
+    </div>
+  </div>
+  <div class="nc" style="border-radius:0 0 10px 10px"><div class="nh" onclick="tog(this)"><div class="ni ia">🏆</div><div class="nl la">Mastery</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="mr"><span class="mb be">Easy</span><span class="mt">Avg of 15 = 50. Number 75 misread as 57. Correct avg? <strong style="color:var(--teal-l)">→ 51.2</strong></span></div>
+      <div class="mr"><span class="mb bm">Medium</span><span class="mt">Avg of 25 = 60. Two numbers 37&28 misread as 73&82. Correct avg? <strong style="color:var(--teal-l)">→ 56.4</strong></span></div>
+      <div class="mr"><span class="mb bh">Hard</span><span class="mt">Avg of n = 40. One number misread +18. Avg becomes 41. Find n. <strong style="color:var(--teal-l)">→ 18</strong></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- QT5 — AVERAGE SPEED -->
+<!-- ══════════════════════════════════════════ -->
+<div class="sw" id="qt5">
+  <div class="qt-hd"><div class="qt-n">Question Type 5</div><div class="qt-t">🎯 Average Speed Model</div></div>
+  <div class="nc"><div class="nh open" onclick="tog(this)"><div class="ni ib">👀</div><div class="nl lb">Recognition</div><div class="nch open">▼</div></div>
+    <div class="nb open">
+      <div class="trig-it"><span class="trig-dot"></span>"travels to and fro at different speeds"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"covers equal/unequal distances at different speeds"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"find average speed for entire journey"</div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni it">⚡</div><div class="nl lt">Shortcut</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="cb"><span class="cd">Two equal distances, speeds a and b:</span>
+<span class="ct">Avg speed = 2ab / (a + b)   ← Harmonic Mean</span>
+
+<span class="cd">Three equal distances, speeds a, b, c:</span>
+<span class="ct">Avg speed = 3abc / (ab + bc + ca)</span>
+
+<span class="cd">Unequal distances:</span>
+<span class="ct">Avg speed = Total distance / Total time</span></div>
+      <div class="warn"><span>⚠️</span>Average speed ≠ (a+b)/2 for equal distances — this is the #1 trap in speed problems</div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni ip">📜</div><div class="nl lp">PYQ Style</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="pyq"><div class="pyq-q">Q1. A→B at 40 km/h, returns at 60 km/h. Average speed?</div><div class="pyq-sv">Equal distances → Avg = 2×40×60/(40+60) = 4800/100<div class="pyq-ans">Answer: 48 km/h</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q2. Car covers 100 km each at 50, 40, 25 km/h. Average speed?</div><div class="pyq-sv">Total distance = 300 km<br>Total time = 100/50 + 100/40 + 100/25 = 2+2.5+4 = 8.5 hrs<br>Avg = 300/8.5<div class="pyq-ans">Answer: 35.29 km/h</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q3. Three equal distances at 10, 15, 30 km/h.</div><div class="pyq-sv">Avg = 3×10×15×30 / (150+450+300) = 13500/900<div class="pyq-ans">Answer: 15 km/h</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q4. Train at 30 km/h for 2 hrs, then 45 km/h for 3 hrs. Average speed?</div><div class="pyq-sv">Total dist = 60+135 = 195 km<br>Total time = 5 hrs<br>Avg = 195/5<div class="pyq-ans">Answer: 39 km/h</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q5. Home→office at 20 km/h, return at 30 km/h. Total time = 5 hrs. Distance?</div><div class="pyq-sv">Let distance = d<br>d/20 + d/30 = 5 → (3d+2d)/60 = 5 → 5d = 300<div class="pyq-ans">Answer: 60 km</div></div></div>
+    </div>
+  </div>
+  <div class="nc" style="border-radius:0 0 10px 10px"><div class="nh" onclick="tog(this)"><div class="ni ia">🏆</div><div class="nl la">Mastery</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="mr"><span class="mb be">Easy</span><span class="mt">Travel at 30, return at 60 km/h. Avg speed? <strong style="color:var(--teal-l)">→ 40 km/h</strong></span></div>
+      <div class="mr"><span class="mb bm">Medium</span><span class="mt">4 equal distances at 10, 20, 30, 60 km/h. Avg speed? <strong style="color:var(--teal-l)">→ 20 km/h</strong></span></div>
+      <div class="mr"><span class="mb bh">Hard</span><span class="mt">A:B:C distance ratio 1:2:3, speeds 10:20:30 km/h. Avg speed? <strong style="color:var(--teal-l)">→ 18 km/h</strong></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- QT6 — CRICKET -->
+<!-- ══════════════════════════════════════════ -->
+<div class="sw" id="qt6">
+  <div class="qt-hd"><div class="qt-n">Question Type 6</div><div class="qt-t">🎯 Cricket / Batting Average</div></div>
+  <div class="nc"><div class="nh open" onclick="tog(this)"><div class="ni ib">👀</div><div class="nl lb">Recognition</div><div class="nch open">▼</div></div>
+    <div class="nb open">
+      <div class="trig-it"><span class="trig-dot"></span>"batsman's average increases/decreases after nth inning"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"runs needed to reach target average"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"bowler's average improves by x after y wickets"</div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni it">⚡</div><div class="nl lt">Shortcut</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="cb"><span class="cd">Batsman — avg after nth inning:</span>
+<span class="ct">Avg = s − t(n−1)</span>
+where s = score in nth inning, t = increase in avg
+
+<span class="cd">Bowler formula:</span>
+Avg = total runs / total wickets
+<span class="ct">New avg = (old total + new runs) / (old + new wkts)</span>
+
+<span class="cd">Runs needed for target avg A after n innings:</span>
+<span class="ct">= current avg × (n−1) + increase × n</span></div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni ip">📜</div><div class="nl lp">PYQ Style</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="pyq"><div class="pyq-q">Q1. Batsman avg = 87 in 17 innings. Runs needed in 18th to increase avg by 3?</div><div class="pyq-sv">Required avg = 90<br>Runs = 90×18 − 87×17 = 1620−1479<div class="pyq-ans">Answer: 141 runs</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q2. Cricketer's 11th inning = 100 runs, avg increases by 5. New avg?</div><div class="pyq-sv">Avg = s − t(n−1) = 100 − 5(11−1) = 100−50<div class="pyq-ans">Answer: 50 runs</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q3. Bowler avg = 12.4. Takes 5 wkts for 26 runs, avg decreases by 0.4. Total wickets before?</div><div class="pyq-sv">New avg = 12.0<br>(12.4n + 26)/(n+5) = 12.0<br>12.4n + 26 = 12n + 60<br>0.4n = 34 → n = 85<div class="pyq-ans">Answer: 85 wickets</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q4. Batsman in 12th inning scores 90, avg increases by 5. Avg after 12th?</div><div class="pyq-sv">Avg = 90 − 5(12−1) = 90−55<div class="pyq-ans">Answer: 35 runs</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q5. Bowler avg = 24.85. Takes 5 wkts for 52 runs, avg improves by 0.85. Total wickets now?</div><div class="pyq-sv">New avg = 24.0<br>(24.85n+52)/(n+5) = 24.0<br>0.85n = 68 → n=80<br>Total now = 80+5<div class="pyq-ans">Answer: 85 wickets</div></div></div>
+    </div>
+  </div>
+  <div class="nc" style="border-radius:0 0 10px 10px"><div class="nh" onclick="tog(this)"><div class="ni ia">🏆</div><div class="nl la">Mastery</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="mr"><span class="mb be">Easy</span><span class="mt">Batsman avg 50 in 10 innings. Runs for 11th to keep avg 50? <strong style="color:var(--teal-l)">→ 50</strong></span></div>
+      <div class="mr"><span class="mb bm">Medium</span><span class="mt">Avg after 20 = 40. After 21st inning avg = 41. Score in 21st? <strong style="color:var(--teal-l)">→ 61</strong></span></div>
+      <div class="mr"><span class="mb bh">Hard</span><span class="mt">Bowler: 30 wkts, avg 20. Takes 6 wkts for 18 runs. New avg? <strong style="color:var(--teal-l)">→ 19.75</strong></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- QT7 — WEIGHTED AVERAGE -->
+<!-- ══════════════════════════════════════════ -->
+<div class="sw" id="qt7">
+  <div class="qt-hd"><div class="qt-n">Question Type 7</div><div class="qt-t">🎯 Weighted Average (Alligation)</div></div>
+  <div class="nc"><div class="nh open" onclick="tog(this)"><div class="ni ib">👀</div><div class="nl lb">Recognition</div><div class="nch open">▼</div></div>
+    <div class="nb open">
+      <div class="trig-it"><span class="trig-dot"></span>"two groups, find ratio from combined avg"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"combined average given, find counts"</div>
+      <div class="trig-it"><span class="trig-dot"></span>"mixture of two averages"</div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni it">⚡</div><div class="nl lt">Shortcut — Alligation</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="cb"><span class="cd">Group A avg = a,  Group B avg = b,  Combined = c</span>
+
+        a               b
+          \           /
+            c (combined)
+          /           \
+       (b−c)         (c−a)
+
+<span class="ct">Ratio A:B  =  (b−c) : (c−a)</span>
+
+<span class="cd">Weighted avg formula:</span>
+<span class="ct">= (n1×a1 + n2×a2 + ...) / (n1 + n2 + ...)</span></div>
+    </div>
+  </div>
+  <div class="nc"><div class="nh" onclick="tog(this)"><div class="ni ip">📜</div><div class="nl lp">PYQ Style</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="pyq"><div class="pyq-q">Q1. Boys avg = 60, Girls avg = 70, Class avg = 64. Ratio boys:girls?</div><div class="pyq-sv">Alligation: (70−64):(64−60) = 6:4<div class="pyq-ans">Answer: 3:2</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q2. 120 students avg 13. Boys avg 14, girls avg 12. Find boys and girls.</div><div class="pyq-sv">Ratio boys:girls = (13−12):(14−13) = 1:1<br>Boys = Girls = 120/2<div class="pyq-ans">Answer: 60 boys, 60 girls</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q3. 20 kg rice (10% impurity) + 30 kg (5% impurity). Combined impurity %?</div><div class="pyq-sv">Total impurity = 20×0.10 + 30×0.05 = 2+1.5 = 3.5 kg<br>Total = 50 kg → 3.5/50×100<div class="pyq-ans">Answer: 7%</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q4. Factory avg salary = ₹8000. 7 technicians avg ₹12000, rest avg ₹6000. Total employees?</div><div class="pyq-sv">Alligation: non-tech:tech = (12000−8000):(8000−6000) = 4000:2000 = 2:1<br>Non-tech = 2×7 = 14<br>Total = 14+7<div class="pyq-ans">Answer: 21 employees</div></div></div>
+      <div class="pyq"><div class="pyq-q">Q5. Section A: 40 students avg 75. Section B: 60 students avg 80. Combined avg?</div><div class="pyq-sv">(40×75 + 60×80)/(100) = (3000+4800)/100<div class="pyq-ans">Answer: 78</div></div></div>
+    </div>
+  </div>
+  <div class="nc" style="border-radius:0 0 10px 10px"><div class="nh" onclick="tog(this)"><div class="ni ia">🏆</div><div class="nl la">Mastery</div><div class="nch">▼</div></div>
+    <div class="nb">
+      <div class="mr"><span class="mb be">Easy</span><span class="mt">Group A: 10 people avg 20. Group B: 20 people avg 30. Combined avg? <strong style="color:var(--teal-l)">→ 26.67</strong></span></div>
+      <div class="mr"><span class="mb bm">Medium</span><span class="mt">Milk at ₹20/L and ₹30/L mixed; cost = ₹24/L. Ratio? <strong style="color:var(--teal-l)">→ 3:2</strong></span></div>
+      <div class="mr"><span class="mb bh">Hard</span><span class="mt">Three sections: 30(avg 70), 40(avg 80), 50(avg 60). Overall avg? <strong style="color:var(--teal-l)">→ 69.17</strong></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- AGES SECTION -->
+<!-- ══════════════════════════════════════════ -->
+<div class="s-banner" id="ages-props">
+  <div class="s-banner-t">🧮 Ages — Concept &amp; Properties</div>
+</div>
+
+<div class="fw" style="margin-top:10px">
+  <div class="fh"><div class="ft">📘 Key Terms &amp; Properties</div></div>
+  <div class="nc" style="border-top:1px solid var(--border);border-radius:0 0 10px 10px">
+    <div class="nb open" style="display:block;border-radius:0 0 10px 10px">
+      <table class="dt">
+        <thead><tr><th>Term</th><th>Meaning</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td class="vt">Hence / Later</td><td>Age in FUTURE</td><td>"5 years hence" = 5 yrs from now</td></tr>
+          <tr><td class="vt">Ago / Thence</td><td>Age in PAST</td><td>"3 years ago" = 3 yrs before now</td></tr>
+          <tr><td class="vt">Present</td><td>Current age</td><td>No time shift</td></tr>
+        </tbody>
+      </table>
+      <div class="cb"><span class="cd">Property 1 — Avg shifts with time:</span>
+Present avg = x yrs
+  n years AGO   → avg was <span class="ct">(x − n)</span>
+  n years LATER → avg will be <span class="ct">(x + n)</span>
+
+<span class="cd">Property 2 — Age difference is CONSTANT:</span>
+<span class="ct">Age difference between two persons never changes</span>
+  → Use this as the KEY equation in ratio problems
+
+<span class="cd">Property 3 — Child born in family:</span>
+  Include child in count from birth onwards
+  Before birth: old count; After birth: new count
+
+<span class="cd">Property 4 — Ratio problems:</span>
+  Let future/past ages as kx, form equations
+  <span class="ct">Use age difference = constant to solve</span></div>
+      <div class="warn"><span>⚠️</span>Age difference NEVER changes — this is the most powerful tool in ages problems</div>
+    </div>
+  </div>
+</div>
+
+<!-- AGES SOLVED -->
+<div class="s-banner" id="ages-solved" style="margin-top:18px">
+  <div class="s-banner-t">📝 Ages — 8 Solved Examples (All Types)</div>
+</div>
+
+<div class="sw" style="padding-top:14px">
+  <div class="pyq"><div class="pyq-q">Ex1 [Ratio + Future] 4 yrs ago A is 4 yrs younger than B. 6 yrs hence ratio A:B = 16:17. Sum of ages 4 yrs ago?</div><div class="pyq-sv">Let ages 6 yrs hence: A=16x, B=17x<br>Age difference = 17x−16x = x = 4 (constant, given 4 yrs ago A is 4 yrs younger)<br>Ages 6 yrs hence: A=64, B=68<br>Ages 4 yrs ago: A=64−10=54, B=68−10=58<br>Sum = 54+58<div class="pyq-ans">Answer: 112 years</div></div></div>
+
+  <div class="pyq"><div class="pyq-q">Ex2 [Child Born] Family of 3, avg age 4 yrs ago = 20. Child born in this period. Avg 3 yrs hence = 21.5. Child's present age?</div><div class="pyq-sv">Sum including child 3 yrs hence = 21.5×4 = 86<br>Sum excluding child 3 yrs hence = (20+4+3)×3 = 81<br>Child's age 3 yrs hence = 86−81 = 5<br>Child's present age = 5−3<div class="pyq-ans">Answer: 2 years</div></div></div>
+
+  <div class="pyq"><div class="pyq-q">Ex3 [Two Unknowns] Sum of Hari & Mohan's ages = double their difference. 4 yrs ago ratio = 3:2. Ratio after 12 yrs?</div><div class="pyq-sv">Let Hari=x, Mohan=y<br>x+y = 2(x−y) → x = 3y  ...(i)<br>4 yrs ago: (x−4+y−4) = (3/2){(x−4)−(y−4)}<br>2x+2y−16 = 3x−3y → 5y−x = 16  ...(ii)<br>From (i): 5y−3y = 16 → 2y = 16 → y=8, x=24<br>After 12 yrs: Hari=36, Mohan=20<br>Ratio = 36:20<div class="pyq-ans">Answer: 9:5</div></div></div>
+
+  <div class="pyq"><div class="pyq-q">Ex4 [Father-Children] Geeta 5 yrs older than Mahesh. Father = 2×(sum of their ages). At Mahesh's birth, father = 8×Geeta's age.</div><div class="pyq-sv">Let Mahesh=x, Geeta=x+5, Father=2(x+x+5)=4x+10<br>At Mahesh's birth: Geeta=5, Father=4x+10−x=3x+10<br>3x+10 = 8×5 = 40 → 3x=30 → x=10<div class="pyq-ans">Answer: Mahesh=10, Geeta=15, Father=50</div></div></div>
+
+  <div class="pyq"><div class="pyq-q">Ex5 [Innings Average] Batsman scores 34, 36, 38, 40, 42 in five innings. Average?</div><div class="pyq-sv">Sum = 34+36+38+40+42 = 190<br>Avg = 190/5<div class="pyq-ans">Answer: 38 runs</div></div></div>
+
+  <div class="pyq"><div class="pyq-q">Ex6 [Remaining Average] Avg of 10 quantities = 12. Avg of 6 of them = 8. Avg of remaining 4?</div><div class="pyq-sv">Total of 10 = 120<br>Total of 6 = 48<br>Remaining sum = 72<br>Avg = 72/4<div class="pyq-ans">Answer: 18</div></div></div>
+
+  <div class="pyq"><div class="pyq-q">Ex7 [Height Replacement] Avg height 50 students = 152 cm. 10 (avg 148) leave; 10 new (avg 150) join. New avg?</div><div class="pyq-sv">Total = 7600<br>After change = 7600 − 1480 + 1500 = 7620<br>New avg = 7620/50<div class="pyq-ans">Answer: 152.4 cm</div></div></div>
+
+  <div class="pyq"><div class="pyq-q">Ex8 [Salary + Alligation] Office avg salary = ₹120. Officers avg = ₹460, non-officers = ₹110. Officers = 15. Find non-officers.</div><div class="pyq-sv">Alligation ratio non-officers:officers = (460−120):(120−110) = 340:10 = 34:1<br>Non-officers = 15×34<div class="pyq-ans">Answer: 510</div></div></div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- MASTER TRAP SHEET -->
+<!-- ══════════════════════════════════════════ -->
+<div class="trap-sheet" id="traps">
+  <div class="tsh">
+    <div class="tst">🚨 Master Trap Sheet</div>
+    <div class="tss">Every item = wrong answer in SSC/RRB/Banking papers</div>
+  </div>
+  <div class="ti"><span class="tn">01</span><span><strong>Average speed for equal distances</strong> — NOT (a+b)/2, use 2ab/(a+b)</span></div>
+  <div class="ti"><span class="tn">02</span><span><strong>Adding 1 person to n-person group</strong> — denominator becomes n+1, not n</span></div>
+  <div class="ti"><span class="tn">03</span><span><strong>Multiply each term by k</strong> — avg multiplied by k (no individual values needed)</span></div>
+  <div class="ti"><span class="tn">04</span><span><strong>Age difference</strong> — ALWAYS constant at any point of time</span></div>
+  <div class="ti"><span class="tn">05</span><span><strong>Child born — count</strong> — include child in count; before birth use old count</span></div>
+  <div class="ti"><span class="tn">06</span><span><strong>"n years ago" average</strong> — subtract n from current avg (not multiply)</span></div>
+  <div class="ti"><span class="tn">07</span><span><strong>Pass/fail formula</strong> — n(P−M)/(P−F), NOT n(M−F)/(P−F)</span></div>
+  <div class="ti"><span class="tn">08</span><span><strong>Batsman formula</strong> — s − t(n−1), NOT s − t(n)</span></div>
+  <div class="ti"><span class="tn">09</span><span><strong>Removed quantity formula</strong> — n = ORIGINAL count (including removed person)</span></div>
+  <div class="ti"><span class="tn">10</span><span><strong>Weighted avg ratio</strong> — alligation gives ratio, not individual counts directly</span></div>
+  <div class="ti"><span class="tn">11</span><span><strong>Wrong data correction</strong> — Correct avg = Wrong avg + (correct−wrong)/n</span></div>
+  <div class="ti"><span class="tn">12</span><span><strong>Avg of n naturals</strong> — (n+1)/2, NOT n/2</span></div>
+  <div class="ti"><span class="tn">13</span><span><strong>Avg of n even numbers</strong> — n+1, NOT n</span></div>
+  <div class="ti"><span class="tn">14</span><span><strong>Avg of n odd numbers</strong> — n, NOT n+1</span></div>
+  <div class="ti"><span class="tn">15</span><span><strong>Three equal distances</strong> — use 3abc/(ab+bc+ca), NOT arithmetic mean of speeds</span></div>
+</div>
+
+<div class="bp"></div>
+
+<script>
+function tog(h){
+  const b=h.nextElementSibling,ch=h.querySelector('.nch'),o=b.classList.contains('open');
+  b.classList.toggle('open',!o);
+  h.classList.toggle('open',!o);
+  if(ch) ch.classList.toggle('open',!o);
+}
+var _mToken='',_mSid='',_tStart=Date.now();
+function initMetrics(){
+  var ks=Object.keys(localStorage);
+  var k=ks.find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});
+  if(k){try{var d=JSON.parse(localStorage.getItem(k));_mToken=(d&&d.access_token)||'';}catch(e){}}
+  if(!_mToken){var sk=Object.keys(sessionStorage).find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});if(sk){try{var d2=JSON.parse(sessionStorage.getItem(sk));_mToken=(d2&&d2.access_token)||'';}catch(e){}}}
+  _mSid=Math.random().toString(36).slice(2);
+  track('study_material_opened',{material_id:'day-13-maths-avg',title:'Maths — Average & Ages'});
+}
+function track(name,meta){
+  if(_mToken){fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},body:JSON.stringify({event_name:name,session_id:_mSid,event_timestamp:new Date().toISOString(),metadata:meta})}).catch(function(){});}
+}
+window.addEventListener('load',initMetrics);
+window.addEventListener('beforeunload',function(){track('study_material_closed',{material_id:'day-13-maths-avg',time_spent:Math.round((Date.now()-_tStart)/1000)});});
+</script>
+</body>
+</html>
