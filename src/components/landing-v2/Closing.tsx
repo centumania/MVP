@@ -117,7 +117,7 @@ export default function Closing() {
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:gap-14">
               {FOOTER_COLS.map((col) => (
                 <div key={col.title}>
-                  <h4 className="text-[12px] font-bold uppercase tracking-wider text-gray-400">{col.title}</h4>
+                  <h4 className="text-[12px] font-bold uppercase tracking-wider text-gray-500">{col.title}</h4>
                   <ul className="mt-3.5 space-y-2.5">
                     {col.links.map((l) => (
                       <li key={l.label}>
@@ -139,8 +139,8 @@ export default function Closing() {
           </div>
 
           <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-gray-100 pt-6 sm:flex-row">
-            <p className="text-[12.5px] text-gray-400">© 2026 CentuMania. All rights reserved.</p>
-            <p className="text-[12.5px] font-medium text-gray-400">Winning is a habit.</p>
+            <p className="text-[12.5px] text-gray-500">© 2026 CentuMania. All rights reserved.</p>
+            <p className="text-[12.5px] font-medium text-gray-500">Winning is a habit.</p>
           </div>
         </Container>
       </footer>

@@ -40,7 +40,7 @@ export default function Problem() {
               <ul className="mt-5 space-y-4">
                 {WITHOUT.map((t) => (
                   <li key={t} className="flex items-start gap-3">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-400">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-500">
                       <X size={12} />
                     </span>
                     <span className="text-[14.5px] leading-relaxed text-gray-500">{t}</span>

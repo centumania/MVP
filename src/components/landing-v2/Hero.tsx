@@ -150,7 +150,7 @@ export default function Hero() {
                     {i > 0 && <span className="text-lg font-bold text-gray-300">:</span>}
                     <div className="text-center">
                       <div className="min-w-[2.2rem] text-2xl font-bold tabular-nums tracking-tight text-gray-900">{cd[k]}</div>
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">{tag}</div>
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-500">{tag}</div>
                     </div>
                   </div>
                 ))}
@@ -218,7 +218,7 @@ export default function Hero() {
               </div>
               <div className="rounded-xl border border-gray-100 bg-gray-50/60 p-3.5">
                 <div className="text-[12px] font-semibold uppercase tracking-wide text-gray-500">Centum Index</div>
-                <div className="mt-1 text-xl font-bold tabular-nums text-gray-900">87<span className="text-sm font-semibold text-gray-400">/100</span></div>
+                <div className="mt-1 text-xl font-bold tabular-nums text-gray-900">87<span className="text-sm font-semibold text-gray-500">/100</span></div>
                 <div className="text-[12px] font-medium text-sky-600">Silver refund tier</div>
               </div>
             </div>

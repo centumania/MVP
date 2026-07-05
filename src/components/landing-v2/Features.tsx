@@ -9,7 +9,7 @@ import { Reveal, Container, SectionHeading } from './ui'
 
 const LEADERBOARD_ROWS = [
   { rank: 1, name: 'Meena P.', streak: '25-day streak', score: '2,840', tone: 'text-amber-500' },
-  { rank: 2, name: 'Ravi V.', streak: '23-day streak', score: '2,710', tone: 'text-gray-400' },
+  { rank: 2, name: 'Ravi V.', streak: '23-day streak', score: '2,710', tone: 'text-gray-500' },
   { rank: 3, name: 'Arun K.', streak: '21-day streak', score: '2,590', tone: 'text-orange-400' },
 ]
 
@@ -138,14 +138,14 @@ export default function Features() {
                   <span className="inline-flex items-center gap-2 text-[13px] font-bold text-gray-900">
                     <Trophy size={15} className="text-amber-500" /> Batch leaderboard
                   </span>
-                  <span className="text-[11px] font-semibold text-gray-400">updates after every exam</span>
+                  <span className="text-[11px] font-semibold text-gray-500">updates after every exam</span>
                 </div>
                 {LEADERBOARD_ROWS.map((r) => (
                   <div key={r.rank} className="flex items-center gap-3 border-b border-gray-50 px-5 py-3">
                     <span className={`w-5 text-center text-[15px] font-bold tabular-nums ${r.tone}`}>{r.rank}</span>
                     <div className="flex-1">
                       <div className="text-[13.5px] font-semibold text-gray-900">{r.name}</div>
-                      <div className="text-[11.5px] text-gray-400">{r.streak}</div>
+                      <div className="text-[11.5px] text-gray-500">{r.streak}</div>
                     </div>
                     <span className="text-[13.5px] font-bold tabular-nums text-gray-700">{r.score}</span>
                   </div>
@@ -159,10 +159,10 @@ export default function Features() {
                   <span className="text-[13.5px] font-bold tabular-nums text-sky-700">1,980</span>
                 </div>
                 <div className="flex items-center gap-3 px-5 py-3 opacity-60">
-                  <span className="w-5 text-center text-[15px] font-bold tabular-nums text-gray-400">13</span>
+                  <span className="w-5 text-center text-[15px] font-bold tabular-nums text-gray-500">13</span>
                   <div className="flex-1">
                     <div className="text-[13.5px] font-semibold text-gray-900">Kavya S.</div>
-                    <div className="text-[11.5px] text-gray-400">12-day streak</div>
+                    <div className="text-[11.5px] text-gray-500">12-day streak</div>
                   </div>
                   <span className="text-[13.5px] font-bold tabular-nums text-gray-700">1,940</span>
                 </div>

@@ -1,53 +1,52 @@
 'use client'
 
 /**
- * /auth/confirm
+ * /auth/confirm — v2 design system.
  *
- * Handles email verification after the user clicks the link in their inbox.
- *
- * Mobile-safe design — supports two Supabase auth flows:
- *
- *   1. PKCE (default v2, same-browser): URL has ?code=...
- *      → exchangeCodeForSession() exchanges the code using the PKCE verifier
- *        stored in localStorage from the original signUp call.
- *
- *   2. Hash / implicit (different browser on mobile): URL hash has
- *      #access_token=...&refresh_token=...
- *      → detectSessionInUrl=true in the Supabase client handles this
- *        automatically on any page load. We just check getSession().
- *
- *   3. No code, no hash: link is invalid or already used — show error.
- *
- * Also handles the `?message=` query param set by /auth/callback for
- * expired-link redirects.
+ * Business logic unchanged from v1. Handles email verification after the
+ * user clicks the link in their inbox. Mobile-safe: supports both Supabase
+ * flows —
+ *   1. PKCE (same browser): ?code=... → exchangeCodeForSession()
+ *   2. Hash / implicit (different browser on mobile): detectSessionInUrl
+ *      establishes the session automatically; we just check getSession().
+ *   3. Neither → link invalid or already used.
+ * Also handles the ?message= param set by /auth/callback for expired links.
  */
-
 import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { Spinner, StatusIcon } from '@/src/components/auth-v2/controls'
 
 type State = 'loading' | 'success' | 'error'
 
+function Screen({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="flex min-h-screen flex-col items-center justify-center bg-[#FAFAF8] px-6 text-center text-gray-900 antialiased"
+      style={{ fontFamily: 'var(--font-inter), Inter, system-ui, sans-serif' }}
+    >
+      {children}
+    </div>
+  )
+}
+
 function ConfirmInner() {
-  const router       = useRouter()
+  const router = useRouter()
   const searchParams = useSearchParams()
-  const [state, setState] = useState<State>('loading')
-  const [message, setMsg] = useState('')
+  // ?message= is set by /auth/callback on expired links — known at render
+  // time, so derive the initial state from it instead of setting it in an effect.
+  const upstreamError = searchParams.get('message')
+  const [state, setState] = useState<State>(upstreamError ? 'error' : 'loading')
+  const [message, setMsg] = useState(upstreamError ? decodeURIComponent(upstreamError) : '')
 
   useEffect(() => {
-    const supabase = getSupabaseBrowserClient()
-    const code     = searchParams.get('code')
-    const errMsg   = searchParams.get('message') // set by /auth/callback on error
+    if (upstreamError) return
 
-    // Show error from upstream redirect (e.g. expired link from /auth/callback)
-    if (errMsg) {
-      setMsg(decodeURIComponent(errMsg))
-      setState('error')
-      return
-    }
+    const supabase = getSupabaseBrowserClient()
+    const code = searchParams.get('code')
 
     async function verify() {
-      // ── Path 1: PKCE code exchange ──────────────────────────────
+      // ── Path 1: PKCE code exchange ──
       if (code) {
         console.log('[confirm] Attempting PKCE code exchange')
         const { error } = await supabase.auth.exchangeCodeForSession(code)
@@ -86,7 +85,7 @@ function ConfirmInner() {
         return
       }
 
-      // ── Path 3: Nothing — link invalid or already used ───────────
+      // ── Path 3: Nothing — link invalid or already used ──
       console.warn('[confirm] No code and no session found')
       setMsg('Verification link is invalid or has already been used. Please sign in or register again.')
       setState('error')
@@ -96,74 +95,54 @@ function ConfirmInner() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // ── Loading ──────────────────────────────────────────────────
   if (state === 'loading') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#F8FAFC' }}>
-        <div className="w-8 h-8 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#0B3D91', boxShadow: '0 0 12px rgba(11,61,145,0.3)' }} />
-        <p className="text-sm text-text-muted">Confirming your account…</p>
-        <p className="text-xs text-text-muted" style={{ opacity: 0.4 }}>This takes just a moment</p>
-      </div>
+      <Screen>
+        <Spinner label="Confirming your account…" />
+        <p className="-mt-8 text-[12px] text-gray-400">This takes just a moment</p>
+      </Screen>
     )
   }
 
-  // ── Error ────────────────────────────────────────────────────
   if (state === 'error') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center" style={{ background: '#F8FAFC' }}>
-        <div className="w-16 h-16 rounded-3xl mx-auto mb-6 flex items-center justify-center"
-          style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.18)' }}>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-        </div>
-        <h2 className="text-xl font-bold text-text mb-2" style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-          Verification failed
-        </h2>
-        <p className="text-sm text-text-muted max-w-xs mb-8 leading-relaxed">{message}</p>
-
-        <div className="flex flex-col items-center gap-3">
+      <Screen>
+        <StatusIcon tone="error" />
+        <h2 className="text-xl font-extrabold tracking-tight text-gray-900">Verification failed</h2>
+        <p className="mt-2 max-w-xs text-[14px] leading-relaxed text-gray-600">{message}</p>
+        <div className="mt-8 flex flex-col items-center gap-3">
           <a
             href="/auth/register"
-            className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
-            style={{ background: '#10B981', color: '#FFFFFF' }}
+            className="rounded-xl bg-sky-600 px-6 py-3 text-[14px] font-bold text-white shadow-[0_4px_14px_rgba(2,132,199,0.3)] transition-all hover:-translate-y-0.5 hover:bg-sky-700"
           >
             Register again
           </a>
-          <a href="/auth/login" className="text-sm text-primary hover:text-primary-hover transition-colors font-medium">
+          <a href="/auth/login" className="text-[14px] font-semibold text-sky-600 transition-colors hover:text-sky-700">
             Back to sign in
           </a>
         </div>
-      </div>
+      </Screen>
     )
   }
 
-  // ── Success (brief flash before redirect) ────────────────────
+  // ── Success (brief flash before redirect) ──
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#F8FAFC' }}>
-      <div className="w-16 h-16 rounded-3xl flex items-center justify-center"
-        style={{ background: 'rgba(11,61,145,0.10)', border: '1px solid rgba(11,61,145,0.25)' }}>
-        <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-      </div>
-      <p className="text-sm text-text-muted">Email verified — taking you to your dashboard…</p>
-    </div>
+    <Screen>
+      <StatusIcon tone="success" />
+      <p className="text-[14px] text-gray-600">Email verified — taking you to your dashboard…</p>
+    </Screen>
   )
 }
 
 export default function ConfirmPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex flex-col items-center justify-center gap-3" style={{ background: '#F8FAFC' }}>
-        <div className="w-6 h-6 rounded-full border-2 border-transparent animate-spin"
-          style={{ borderTopColor: '#0B3D91' }} />
-        <p className="text-sm text-text-muted">Loading…</p>
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <Screen>
+          <Spinner label="Loading…" />
+        </Screen>
+      }
+    >
       <ConfirmInner />
     </Suspense>
   )

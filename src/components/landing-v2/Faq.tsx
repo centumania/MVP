@@ -67,7 +67,7 @@ export default function Faq() {
                       <span className="text-[15px] font-semibold text-gray-900">{item.q}</span>
                       <ChevronDown
                         size={18}
-                        className={`shrink-0 text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180 text-sky-600' : ''}`}
+                        className={`shrink-0 text-gray-500 transition-transform duration-300 ${isOpen ? 'rotate-180 text-sky-600' : ''}`}
                       />
                     </button>
                     <div

@@ -70,7 +70,7 @@ export default function CentumIndex() {
                   <span className="text-[13px] font-bold text-sky-700">Attendance × 60%</span>
                   <span className="text-[13px] font-medium text-gray-500"> + </span>
                   <span className="text-[13px] font-bold text-indigo-700">Mastery × 40%</span>
-                  <p className="mt-1.5 text-[12px] text-gray-400">Recalculated daily. Fully automatic. Impossible to game.</p>
+                  <p className="mt-1.5 text-[12px] text-gray-500">Recalculated daily. Fully automatic. Impossible to game.</p>
                 </div>
               </div>
             </div>
@@ -100,7 +100,7 @@ export default function CentumIndex() {
                 ))}
               </div>
 
-              <p className="mt-auto pt-5 text-[12px] leading-relaxed text-gray-400">
+              <p className="mt-auto pt-5 text-[12px] leading-relaxed text-gray-500">
                 Refund rewards are computed automatically from your Centum Index at programme end.
                 No forms, no negotiation — the data decides.
               </p>

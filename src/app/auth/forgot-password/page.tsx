@@ -1,16 +1,32 @@
 'use client'
 
+/**
+ * /auth/forgot-password — v2 design system.
+ * Business logic unchanged from v1: resetPasswordForEmail with redirectTo
+ * /auth/reset-password.
+ */
 import { useState, FormEvent } from 'react'
 import Link from 'next/link'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
-import { Button } from '@/src/components/ui/Button'
-import { LogoFull } from '@/src/components/ui/Logo'
+import Logo from '@/src/components/landing-v2/Logo'
+import { AuthButton, ErrorBanner, Field, StatusIcon } from '@/src/components/auth-v2/controls'
+
+function Shell({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="flex min-h-screen items-center justify-center bg-[#FAFAF8] px-6 text-gray-900 antialiased"
+      style={{ fontFamily: 'var(--font-inter), Inter, system-ui, sans-serif' }}
+    >
+      <div className="w-full max-w-sm">{children}</div>
+    </div>
+  )
+}
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail]     = useState('')
-  const [sent, setSent]       = useState(false)
+  const [email, setEmail] = useState('')
+  const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [error, setError]     = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -37,89 +53,68 @@ export default function ForgotPasswordPage() {
 
   if (sent) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#F8FAFC' }}>
-        <div className="max-w-sm w-full text-center">
-          <div className="w-16 h-16 rounded-3xl mx-auto mb-6 flex items-center justify-center"
-            style={{ background: 'rgba(11,61,145,0.10)', border: '1px solid rgba(11,61,145,0.25)', boxShadow: '0 0 24px rgba(11,61,145,0.12)' }}>
-            <svg className="w-7 h-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
-          </div>
-          <h2 className="text-2xl font-bold text-text tracking-tight mb-2"
-            style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
+      <Shell>
+        <div className="text-center">
+          <StatusIcon tone="success" />
+          <h2 className="text-2xl font-extrabold tracking-tight text-gray-900" style={{ letterSpacing: '-0.02em' }}>
             Reset link sent
           </h2>
-          <p className="text-sm text-text-muted mb-2">
-            We sent a password reset link to{' '}
-            <span className="font-semibold text-text">{email}</span>
+          <p className="mt-3 text-[14.5px] leading-relaxed text-gray-600">
+            We sent a password reset link to <span className="font-bold text-gray-900">{email}</span>.
           </p>
-          <p className="text-sm text-text-muted mb-8">
+          <p className="mt-2 text-[13.5px] leading-relaxed text-gray-500">
             Check your inbox and click the link to set a new password. The link expires in 1 hour.
           </p>
-          <Link href="/auth/login" className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors">
+          <Link href="/auth/login" className="mt-7 inline-block text-[14px] font-bold text-sky-600 transition-colors hover:text-sky-700">
             Back to sign in →
           </Link>
         </div>
-      </div>
+      </Shell>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6" style={{ background: '#F8FAFC' }}>
-      <div className="w-full max-w-sm">
+    <Shell>
+      <Link href="/" className="mb-9 flex items-center gap-2.5">
+        <Logo size={36} />
+        <span>
+          <span className="block text-[16px] font-bold tracking-tight text-gray-900">
+            Centu<span className="text-sky-600">Mania</span>
+          </span>
+          <span className="block text-[10.5px] font-semibold uppercase tracking-wider text-gray-400">Winning is a habit</span>
+        </span>
+      </Link>
 
-        {/* Logo */}
-        <div className="mb-10">
-          <LogoFull size={24} glow />
-          <span className="text-[10px] text-text-muted font-mono tracking-wide block mt-1 pl-0.5">Winning is a Habit</span>
-        </div>
+      <Link href="/auth/login" className="mb-7 inline-flex items-center gap-1.5 text-[13px] font-medium text-gray-500 transition-colors hover:text-gray-800">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back to sign in
+      </Link>
 
-        {/* Back link */}
-        <Link href="/auth/login"
-          className="inline-flex items-center gap-1.5 text-xs text-text-muted hover:text-text-secondary transition-colors mb-8 font-mono">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-          </svg>
-          Back to sign in
-        </Link>
+      <h1 className="text-3xl font-extrabold tracking-tight text-gray-900" style={{ letterSpacing: '-0.03em' }}>
+        Forgot password?
+      </h1>
+      <p className="mt-2 text-[14.5px] text-gray-500">Enter your registered email and we&apos;ll send you a reset link.</p>
 
-        <h1 className="text-3xl font-bold text-text tracking-tight mb-1.5"
-          style={{ fontFamily: 'var(--font-fraunces,serif)' }}>
-          Forgot password?
-        </h1>
-        <p className="text-sm mb-8 text-text-muted">
-          Enter your registered email and we&apos;ll send you a reset link.
-        </p>
+      <form onSubmit={handleSubmit} className="mt-7 flex flex-col gap-4">
+        <Field
+          id="email"
+          label="Email address"
+          type="email"
+          autoComplete="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
+        />
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-widest mb-2 text-text-muted font-mono">
-              Email address
-            </label>
-            <input
-              id="email" type="email" required autoComplete="email"
-              placeholder="you@example.com"
-              value={email} onChange={e => setEmail(e.target.value)}
-              className="input-premium"
-            />
-          </div>
+        {error && <ErrorBanner>{error}</ErrorBanner>}
 
-          {error && (
-            <div className="flex items-start gap-2.5 p-3 rounded-xl"
-              style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.20)' }}>
-              <svg className="w-4 h-4 text-error shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-              </svg>
-              <p className="text-xs text-error">{error}</p>
-            </div>
-          )}
-
-          <Button type="submit" loading={loading} fullWidth size="lg">
-            Send reset link
-          </Button>
-        </form>
-      </div>
-    </div>
+        <AuthButton type="submit" loading={loading}>
+          Send reset link
+        </AuthButton>
+      </form>
+    </Shell>
   )
 }
