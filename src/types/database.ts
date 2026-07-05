@@ -539,7 +539,7 @@ export type Database = {
     }
     Views: {
       leaderboard: {
-        Row:           LeaderboardEntry
+        Row:           LeaderboardEntry & { batch_id: string }
         Insert:        Record<string, never>
         Update:        Record<string, never>
         Relationships: []
