@@ -10,7 +10,7 @@ const WITHOUT = [
   'Scattered preparation with no daily structure',
   'No accountability — easy to skip a day, then a week',
   'No benchmark against real competitors',
-  'Generic material not built for the LDC/UDC pattern',
+  'Generic material not built for the real exam pattern',
   'Motivation fades after the first week',
 ]
 

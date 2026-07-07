@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import LandingV2 from '@/src/components/landing-v2/LandingV2'
 
 export const metadata: Metadata = {
-  title: 'CentuMania — Crack your government exam with daily discipline',
+  title: 'Crack your government exam with daily discipline',
   description:
-    'Intensive LDC/UDC (30-day) and SSC (50-day) exam preparation for Tamil Nadu & Puducherry aspirants. Daily timed exams, AI mentor coaching, live leaderboard and a performance-linked refund guarantee. Winning is a habit.',
+    'Intensive daily preparation for India\'s competitive government exams — SSC (CGL, CHSL, MTS, CPO), RRB (NTPC, Group D), Banking and Tamil Nadu & Puducherry state exams. Daily timed tests, AI mentor coaching, a live leaderboard and a performance-linked refund guarantee. More exams coming soon. Winning is a habit.',
 }
 
 export default function RootPage() {

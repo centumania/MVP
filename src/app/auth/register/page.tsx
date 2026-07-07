@@ -98,7 +98,7 @@ export default function RegisterPage() {
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
           <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
         </span>
-        LDC Batch 2026 — open enrolment
+        Founder Batch 2026 — open enrolment
       </span>
 
       <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-gray-900" style={{ letterSpacing: '-0.03em' }}>
@@ -155,7 +155,7 @@ export default function RegisterPage() {
           <Link href="/privacy" target="_blank" className="font-semibold text-sky-600 underline decoration-sky-300 underline-offset-2 hover:text-sky-700">
             Privacy Policy
           </Link>{' '}
-          and confirm I am enrolling in the LDC/UDC 2026 cohort.
+          and confirm I am enrolling in the CentuMania 2026 founder cohort.
         </Checkbox>
 
         {error && <ErrorBanner>{error}</ErrorBanner>}

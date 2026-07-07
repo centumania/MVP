@@ -5,7 +5,7 @@
  * When you run a new migration, update this file in the same commit.
  *
  * Actual tables in Supabase:
- *   batches            — exam cohorts (LDC 2026, UDC 2026…)
+ *   batches            — exam cohorts (SSC 2026, RRB 2026…)
  *   profiles           — extends auth.users
  *   exams              — daily exam sessions
  *   questions          — MCQ questions (separate table, NOT jsonb on exams)
@@ -32,8 +32,8 @@ export type AnswerOption = 'A' | 'B' | 'C' | 'D'
 
 export type Batch = {
   id:          string
-  name:        string           // "LDC June 2026"
-  exam_type:   string           // "LDC" | "UDC"
+  name:        string           // "SSC June 2026"
+  exam_type:   string           // "SSC" | "RRB" | "Banking" | "TN" …
   starts_on:   string           // YYYY-MM-DD
   ends_on:     string           // YYYY-MM-DD
   total_days:  number
@@ -311,6 +311,28 @@ export type HtmlQuestionAccuracy = {
 }
 
 // ---------------------------------------------------------------------------
+// Uploaded Tests (migration 031) — admin pre-uploaded daily tests
+// ---------------------------------------------------------------------------
+
+export type UploadedTest = {
+  id:             string
+  test_date:      string    // YYYY-MM-DD, unique
+  title:          string
+  questions:      {
+    question:    string
+    options:     [string, string, string, string]
+    correct:     number
+    explanation: string | null
+    topic:       string
+  }[]
+  question_count: number
+  is_published:   boolean
+  created_by:     string | null
+  created_at:     string
+  updated_at:     string
+}
+
+// ---------------------------------------------------------------------------
 // Current Affairs (migration 030)
 // ---------------------------------------------------------------------------
 
@@ -448,7 +470,7 @@ export type Database = {
       }
       nodes: {
         Row:           Node
-        Insert:        Omit<Node, 'id' | 'created_at'>
+        Insert:        Omit<Node, 'id' | 'created_at' | 'topic_id'> & { id?: string; topic_id?: string | null }
         Update:        Partial<Omit<Node, 'id' | 'created_at'>>
         Relationships: []
       }
@@ -490,8 +512,8 @@ export type Database = {
       }
       student_topic_accuracy: {
         Row:           { user_id: string; topic: string; total_attempted: number; total_correct: number; last_updated: string }
-        Insert:        Record<string, never>
-        Update:        Record<string, never>
+        Insert:        { user_id: string; topic: string; total_attempted: number; total_correct: number; last_updated?: string }
+        Update:        { total_attempted?: number; total_correct?: number; last_updated?: string }
         Relationships: []
       }
       daily_tests: {
@@ -534,6 +556,12 @@ export type Database = {
         Row:           CurrentAffair
         Insert:        Omit<CurrentAffair, 'id' | 'generated_at'> & { generated_at?: string }
         Update:        Partial<Omit<CurrentAffair, 'id'>>
+        Relationships: []
+      }
+      uploaded_tests: {
+        Row:           UploadedTest
+        Insert:        Omit<UploadedTest, 'id' | 'created_at' | 'updated_at'> & { updated_at?: string }
+        Update:        Partial<Omit<UploadedTest, 'id'>>
         Relationships: []
       }
     }

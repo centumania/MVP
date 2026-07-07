@@ -72,7 +72,7 @@ export async function GET(): Promise<NextResponse<ExamWindowStatus>> {
     // ── 1. Find the active batch ─────────────────────────────────────────
     //
     // Fix: without this filter, two batches with overlapping exam_dates
-    // (e.g. LDC Day 25 and UDC Day 1 on the same calendar date) would
+    // (e.g. SSC Day 25 and RRB Day 1 on the same calendar date) would
     // cause maybeSingle() to error. The active batch narrows the exam
     // query to exactly one cohort.
     //

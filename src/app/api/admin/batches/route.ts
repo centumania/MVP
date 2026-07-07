@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     .from('batches')
     .insert({
       name:       String(name).trim(),
-      exam_type:  String(examType ?? 'LDC'),
+      exam_type:  String(examType ?? 'SSC'),
       starts_on:  String(startsOn),
       ends_on:    String(endsOn),
       total_days: Number(totalDays ?? 25),

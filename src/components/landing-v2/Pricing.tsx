@@ -1,6 +1,6 @@
 /**
  * Landing v2 — pricing.
- * Two programmes: LDC/UDC Founder Batch (30 days, ₹999 founder learners
+ * Two programmes: Foundation Founder Batch (30 days, ₹999 founder learners
  * discount) and SSC Programme (50 days, ₹1,999). One-time payments,
  * WhatsApp escape hatch for hesitant buyers. Cards use the .lv2-card3d
  * tilt hover defined in LandingV2.
@@ -21,13 +21,13 @@ const SHARED_FEATURES = [
 
 const PLANS = [
   {
-    name: 'LDC / UDC Founder Batch',
+    name: 'Foundation Founder Batch',
     badge: 'Founder Learners Discount',
     featured: true,
     price: '₹999',
     period: 'one-time · 30-day programme',
     hook: '≈ ₹33 a day — less than a plate of parotta, for a government job shot.',
-    features: ['30 daily full-length timed exams', ...SHARED_FEATURES],
+    features: ['30 daily full-length timed exams', 'Built for SSC & Tamil Nadu / Puducherry govt exams', ...SHARED_FEATURES],
     cta: 'Claim my founder seat',
   },
   {

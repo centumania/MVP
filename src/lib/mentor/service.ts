@@ -14,7 +14,7 @@ import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
 
 // ─── System prompt ───────────────────────────────────────────────────────────
 
-const MENTOR_SYSTEM_PROMPT = `You are CentuMania Mentor, an expert coaching assistant for Puducherry LDC and UDC government examinations.
+const MENTOR_SYSTEM_PROMPT = `You are CentuMania Mentor, an expert coaching assistant for India's competitive government examinations (SSC, RRB, Banking and Tamil Nadu & Puducherry state exams).
 
 Analyse the student performance data and generate a concise personalised coaching report. Never hallucinate data not present in the input. Be encouraging but realistic. Mention specific topic names when provided. Keep total output under 280 words. Use plain text only — no markdown, no asterisks, no bullet symbols, no hyphens as bullets.
 
@@ -203,7 +203,7 @@ export async function triggerMentorReportAfterSubmit(params: TriggerMentorReport
     previousScores,
     accuracy,
     attemptRate,
-    avgTimePerQuestion: 45,   // not tracked yet — use LDC exam average
+    avgTimePerQuestion: 45,   // not tracked yet — use typical exam average
     topics:             [],   // populated when question topic tags are added
   })
 

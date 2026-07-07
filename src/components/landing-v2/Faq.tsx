@@ -15,8 +15,8 @@ const FAQS = [
     a: "If you miss the 6:00–8:30 AM window, that day's exam is automatically marked as missed. Your rank won't update for that day and consecutive misses affect your streak. The programme rewards consistency — plan your schedule before you start.",
   },
   {
-    q: 'Which exam is this specifically for?',
-    a: 'CentuMania is purpose-built for LDC (Lower Division Clerk) and UDC (Upper Division Clerk) government competitive exams. All content is calibrated to the actual exam syllabus and question pattern.',
+    q: 'Which exams does CentuMania cover?',
+    a: "CentuMania is building one disciplined platform for India's major competitive government exams — SSC (CGL, CHSL, MTS, CPO), RRB (NTPC, Group D), Banking, and Tamil Nadu & Puducherry state government exams. Every batch is calibrated to its exam's syllabus and question pattern, and more exams are being added — more exams coming soon.",
   },
   {
     q: 'What language are the exams in?',

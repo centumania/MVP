@@ -12,7 +12,7 @@ const TESTIMONIALS = [
       'I used to study for hours without knowing if it was actually helping. The daily exam gave me an honest score every morning. By week 3, I could see real improvement in my accuracy across subjects.',
     initials: 'AK',
     name: 'Arun K.',
-    role: 'LDC Aspirant',
+    role: 'SSC Aspirant',
     tone: 'from-sky-500 to-sky-600',
   },
   {

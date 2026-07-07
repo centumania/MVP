@@ -9,6 +9,7 @@ import Logo from '@/src/components/landing-v2/Logo'
 
 const NAV = [
   { href: '/admin',           label: 'Overview',  icon: GridIcon    },
+  { href: '/admin/ops',       label: 'Operations',icon: BoltIcon    },
   { href: '/admin/students',  label: 'Students',  icon: UsersIcon   },
   { href: '/admin/exams',     label: 'Exams',     icon: PencilIcon  },
   { href: '/admin/centum',    label: 'Centum',    icon: TrendingIcon },
@@ -24,6 +25,14 @@ function GridIcon({ active }: { active: boolean }) {
       <rect x="14" y="3"  width="7" height="7" rx="1"/>
       <rect x="14" y="14" width="7" height="7" rx="1"/>
       <rect x="3"  y="14" width="7" height="7" rx="1"/>
+    </svg>
+  )
+}
+function BoltIcon({ active }: { active: boolean }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={active ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
     </svg>
   )
 }
@@ -159,8 +168,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [adminName,  setAdminName]  = useState('')
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  // Close drawer on route change
-  useEffect(() => { setDrawerOpen(false) }, [pathname])
+  // Close drawer on route change — adjusted during render (not an effect) so
+  // there's no extra render pass; React supports setState-in-render for this.
+  const [prevPathname, setPrevPathname] = useState(pathname)
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname)
+    setDrawerOpen(false)
+  }
 
   // Lock body scroll when drawer is open
   useEffect(() => {
@@ -168,6 +182,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     else            document.body.classList.remove('overflow-hidden')
     return ()      => document.body.classList.remove('overflow-hidden')
   }, [drawerOpen])
+
+  // Professional per-page browser title (client layout can't export metadata)
+  useEffect(() => {
+    const label = NAV.find(n =>
+      n.href === '/admin' ? pathname === n.href : pathname.startsWith(n.href)
+    )?.label ?? 'Admin'
+    document.title = `${label === 'Overview' ? 'Admin Console' : label + ' • Admin'} • CentuMania`
+  }, [pathname])
 
   useEffect(() => {
     let cancelled = false

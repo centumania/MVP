@@ -22,31 +22,49 @@ const bebasNeue = Bebas_Neue({
   weight: ['400'],
 })
 
+// Resolves relative OG/Twitter image URLs to absolute ones. Prefers an explicit
+// site URL; falls back to Vercel's auto-injected deployment URL, then localhost.
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+
+const DESCRIPTION =
+  "Disciplined daily preparation for India's competitive government exams — SSC (CGL, CHSL, MTS, CPO), RRB (NTPC, Group D), Banking and Tamil Nadu & Puducherry state exams. Daily timed tests, AI mentor coaching, a live leaderboard and a performance-linked refund guarantee. More exams coming soon."
+
 export const metadata: Metadata = {
-  title: 'CentuMania — Winning is a habit',
-  description: "India's most disciplined LDC/UDC exam prep platform. Intensive daily programme for Puducherry LDC/UDC competitive exam aspirants.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default:  'CentuMania — Winning is a Habit',
+    template: '%s • CentuMania',
+  },
+  description: DESCRIPTION,
+  applicationName: 'CentuMania',
   icons: {
-    icon:  '/favicon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icons/icon-32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    shortcut: '/favicon.svg',
     apple: '/icons/apple-touch-icon.png',
   },
   manifest: '/manifest.json',
   appleWebApp: {
     capable:        true,
-    statusBarStyle: 'black-translucent',
+    statusBarStyle: 'default',
     title:          'CentuMania',
   },
   formatDetection: { telephone: false },
   openGraph: {
     type:        'website',
-    title:       'CentuMania — Winning is a habit',
-    description: "India's most disciplined LDC/UDC exam prep platform. Intensive daily programme for Puducherry competitive exam aspirants.",
+    title:       'CentuMania — Winning is a Habit',
+    description: DESCRIPTION,
     siteName:    'CentuMania',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CentuMania' }],
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CentuMania — disciplined government exam preparation' }],
   },
   twitter: {
     card:        'summary_large_image',
-    title:       'CentuMania — Winning is a habit',
-    description: "India's most disciplined LDC/UDC exam prep platform.",
+    title:       'CentuMania — Winning is a Habit',
+    description: DESCRIPTION,
     images:      ['/og-image.png'],
   },
 }

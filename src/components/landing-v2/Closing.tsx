@@ -110,7 +110,7 @@ export default function Closing() {
                 </span>
               </div>
               <p className="mt-3 text-[13px] leading-relaxed text-gray-500">
-                The most disciplined LDC, UDC &amp; SSC exam preparation platform for Tamil Nadu and Puducherry aspirants. Winning is a habit.
+                The most disciplined preparation platform for SSC, RRB, Banking &amp; Tamil Nadu / Puducherry government exams. More exams coming soon. Winning is a habit.
               </p>
             </div>
 

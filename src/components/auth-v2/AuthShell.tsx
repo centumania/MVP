@@ -9,7 +9,7 @@ import { Check } from '@/src/components/landing-v2/icons'
 import type { ReactNode } from 'react'
 
 const STATS: [string, string][] = [
-  ['30 days', 'LDC / UDC programme'],
+  ['30 days', 'intensive programme'],
   ['100+', 'daily questions'],
   ['3×', 'score improvement'],
 ]
@@ -45,7 +45,7 @@ function PanelContent({ variant }: { variant: 'login' | 'register' }) {
   }
   return (
     <div>
-      <p className="text-[12px] font-bold uppercase tracking-wider text-sky-600">LDC · UDC · SSC — 2026</p>
+      <p className="text-[12px] font-bold uppercase tracking-wider text-sky-600">SSC · RRB · Banking · TN Govt — 2026</p>
       <blockquote className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900" style={{ letterSpacing: '-0.025em' }}>
         “Discipline is the bridge between goals and accomplishment.”
       </blockquote>
