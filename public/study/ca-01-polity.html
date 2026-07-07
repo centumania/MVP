@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CentuMania · Indian Polity & Governance · CA Node</title>
+<style>
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --bg:        #0D0F14;
+  --surface:   #151820;
+  --card:      #1C2030;
+  --border:    #252A3A;
+  --accent:    #F5A623;
+  --accent2:   #3B82F6;
+  --accent3:   #10B981;
+  --danger:    #EF4444;
+  --warning:   #FBBF24;
+  --text:      #E8EAF0;
+  --muted:     #8892A4;
+  --subtle:    #3A4055;
+  --trap:      #7C3AED;
+  --radius:    12px;
+  --radius-sm: 8px;
+  font-size: 15px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* ===== HEADER ===== */
+.node-header {
+  background: linear-gradient(135deg, #1a1060 0%, #0D0F14 60%);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 16px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.breadcrumb {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 6px;
+}
+.breadcrumb span { color: var(--accent); }
+.node-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+.node-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.badge-blue   { color: var(--accent2); border-color: var(--accent2); background: #1e3a5f22; }
+.badge-green  { color: var(--accent3); border-color: var(--accent3); background: #10b98122; }
+.badge-orange { color: var(--accent);  border-color: var(--accent);  background: #f5a62322; }
+
+/* progress bar at top */
+.node-progress-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-top: 14px;
+  overflow: hidden;
+}
+.node-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent2), var(--accent));
+  border-radius: 2px;
+  transition: width .4s ease;
+}
+
+/* ===== MAIN CONTENT ===== */
+.content-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 14px;
+}
+
+/* ===== TABS ===== */
+.tab-bar {
+  display: flex;
+  gap: 4px;
+  padding: 14px 14px 0;
+  max-width: 680px;
+  margin: 0 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  background: var(--card);
+  color: var(--accent);
+  border-color: var(--border);
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ===== SECTION CARDS ===== */
+.section-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-top: 14px;
+  overflow: hidden;
+}
+.section-head {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-icon {
+  width: 34px; height: 34px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.section-head h2 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+.section-head .sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+.section-body { padding: 16px; }
+
+/* ===== KEY FACTS GRID ===== */
+.fact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.fact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.fact-month {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.fact-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 7px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.fact-item:last-child { margin-bottom: 0; }
+.fact-label {
+  font-weight: 600;
+  color: var(--accent2);
+  flex-shrink: 0;
+  min-width: 130px;
+  font-size: 12px;
+}
+.fact-value { color: var(--text); }
+
+/* ===== EXAM TRAPS ===== */
+.trap-list { display: flex; flex-direction: column; gap: 8px; }
+.trap-item {
+  background: #2a1040;
+  border: 1px solid #4a2080;
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-size: 13px;
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+}
+.trap-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.trap-text strong { color: var(--warning); display: block; margin-bottom: 2px; font-size: 12px; }
+.trap-text span { color: #c4b5e8; }
+
+/* ===== TABLES ===== */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  margin-top: 4px;
+}
+.data-table th {
+  background: #0D0F14;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: .06em;
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.data-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table td:first-child { color: var(--accent); font-weight: 600; font-size: 12px; }
+.data-table tr:hover td { background: #ffffff06; }
+
+/* ===== VISUAL DIAGRAMS ===== */
+.diagram-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-top: 10px;
+}
+.diagram-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--muted);
+  margin-bottom: 12px;
+  text-align: center;
+}
+/* Parliament diagram */
+.parl-wrap { display: flex; flex-direction: column; gap: 12px; }
+.parl-house {
+  border: 1.5px solid;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.parl-house.ls { border-color: var(--accent2); }
+.parl-house.rs { border-color: var(--accent3); }
+.parl-house-name {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.parl-house.ls .parl-house-name { color: var(--accent2); }
+.parl-house.rs .parl-house-name { color: var(--accent3); }
+.parl-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.parl-stat { font-size: 12px; }
+.parl-stat strong { display: block; font-size: 16px; font-weight: 800; }
+.parl-house.ls .parl-stat strong { color: var(--accent2); }
+.parl-house.rs .parl-stat strong { color: var(--accent3); }
+.parl-stat span { color: var(--muted); font-size: 11px; }
+
+/* Writ flow */
+.writ-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+@media (min-width: 480px) { .writ-grid { grid-template-columns: repeat(3, 1fr); } }
+.writ-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  text-align: center;
+}
+.writ-name { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+.writ-meaning { font-size: 11px; color: var(--accent2); margin-bottom: 4px; font-style: italic; }
+.writ-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+/* Amendment timeline */
+.amend-timeline { position: relative; padding-left: 20px; }
+.amend-timeline::before {
+  content: '';
+  position: absolute; left: 6px; top: 0; bottom: 0;
+  width: 2px; background: var(--border);
+}
+.amend-item {
+  position: relative;
+  margin-bottom: 14px;
+  padding-left: 16px;
+}
+.amend-item::before {
+  content: '';
+  position: absolute;
+  left: -14px; top: 6px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+}
+.amend-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: .04em;
+}
+.amend-year { color: var(--muted); font-size: 11px; }
+.amend-desc { font-size: 13px; color: var(--text); margin-top: 2px; line-height: 1.4; }
+
+/* ===== MCQ SECTION ===== */
+.mcq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.mcq-counter { font-size: 13px; color: var(--muted); }
+.mcq-counter strong { color: var(--text); }
+.mcq-timer {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--warning);
+  font-variant-numeric: tabular-nums;
+}
+.question-nav {
+  display: flex;
+  gap: 6px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.question-nav::-webkit-scrollbar { display: none; }
+.q-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all .2s;
+}
+.q-dot.active   { border-color: var(--accent2); color: var(--accent2); background: #1e3a5f22; }
+.q-dot.correct  { background: var(--accent3); border-color: var(--accent3); color: #000; }
+.q-dot.wrong    { background: var(--danger); border-color: var(--danger); color: #fff; }
+
+.question-wrap { padding: 16px; }
+.question-num { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.question-text { font-size: 15px; font-weight: 600; color: #fff; line-height: 1.55; margin-bottom: 16px; }
+.options-list { display: flex; flex-direction: column; gap: 8px; }
+.option-btn {
+  width: 100%;
+  text-align: left;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  transition: all .18s;
+  line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+.option-btn:active { transform: scale(.98); }
+.option-btn.disabled { pointer-events: none; }
+.option-btn.selected { border-color: var(--accent2); background: #1e3a5f33; }
+.option-btn.correct-ans { border-color: var(--accent3); background: #10b98122; color: #fff; }
+.option-btn.wrong-ans   { border-color: var(--danger); background: #ef444422; }
+.option-letter {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all .18s;
+}
+.option-btn.correct-ans .option-letter { background: var(--accent3); color: #000; }
+.option-btn.wrong-ans .option-letter   { background: var(--danger); color: #fff; }
+.option-btn.selected .option-letter    { background: var(--accent2); color: #fff; }
+.option-btn:not(.disabled):hover { border-color: var(--subtle); background: #ffffff08; }
+
+.explanation-box {
+  display: none;
+  margin-top: 14px;
+  background: #0a1628;
+  border: 1px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #c8d4e8;
+}
+.explanation-box.show { display: block; }
+.explanation-box .exp-head {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--accent2);
+  margin-bottom: 6px;
+}
+.next-btn {
+  margin-top: 14px;
+  width: 100%;
+  padding: 14px;
+  background: var(--accent2);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.next-btn.show { display: block; }
+.next-btn:active { opacity: .85; }
+
+/* Results screen */
+.result-screen {
+  display: none;
+  padding: 24px 16px;
+  text-align: center;
+}
+.result-screen.show { display: block; }
+.result-score {
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.result-label { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 16px 0 24px;
+}
+.result-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 8px;
+}
+.result-stat-val { font-size: 22px; font-weight: 800; }
+.result-stat-key { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.retry-btn {
+  padding: 13px 32px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 8px;
+}
+.complete-btn {
+  padding: 13px 32px;
+  background: var(--accent3);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #000;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ===== ARTICLE REFERENCE ===== */
+.art-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0;
+}
+.art-row {
+  display: contents;
+}
+.art-row > div {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.art-row > div:first-child {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+  padding-right: 14px;
+  background: #0D0F1488;
+}
+.art-row:last-child > div { border-bottom: none; }
+
+/* ===== COMPLETE BANNER ===== */
+.complete-banner {
+  background: linear-gradient(135deg, #0a2010, #05140a);
+  border: 1.5px solid var(--accent3);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  text-align: center;
+  margin-top: 14px;
+}
+.complete-banner .icon { font-size: 36px; margin-bottom: 8px; }
+.complete-banner h3 { font-size: 17px; font-weight: 800; color: var(--accent3); }
+.complete-banner p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #222740;
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  z-index: 999;
+  transition: transform .3s ease;
+  pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ===== UTIL ===== */
+.mt-10 { margin-top: 10px; }
+.mt-16 { margin-top: 16px; }
+.text-muted { color: var(--muted); font-size: 13px; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+.highlight { color: var(--accent); font-weight: 700; }
+.highlight-blue { color: var(--accent2); font-weight: 700; }
+.highlight-green { color: var(--accent3); font-weight: 700; }
+
+@media (min-width: 520px) {
+  .fact-grid { grid-template-columns: repeat(2, 1fr); }
+  .parl-wrap { flex-direction: row; }
+  .parl-house { flex: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="node-header">
+  <div class="breadcrumb">CentuMania · <span>Indian Polity & Governance</span> · Current Affairs</div>
+  <div class="node-title">CA 01 — Indian Polity & Governance</div>
+  <div class="node-meta">
+    <span class="badge badge-blue">📅 Jul 2025 – Jul 2026</span>
+    <span class="badge badge-green">✅ 13 Months</span>
+    <span class="badge badge-orange">🎯 SSC · RRB · TNPSC</span>
+  </div>
+  <div class="node-progress-bar"><div class="node-progress-fill" id="progressBar" style="width:0%"></div></div>
+</div>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('material', this)">📖 Study Material</button>
+  <button class="tab-btn" onclick="switchTab('articles', this)">📜 Quick Ref</button>
+  <button class="tab-btn" onclick="switchTab('mcq', this)">🧠 MCQ Practice</button>
+</div>
+
+<!-- ========== TAB: STUDY MATERIAL ========== -->
+<div class="tab-panel active" id="tab-material">
+<div class="content-wrap">
+
+  <!-- Month-wise Key Facts -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#1e3a5f">📰</div>
+      <div>
+        <h2>Month-wise Key Facts</h2>
+        <div class="sub">July 2025 – July 2026 · Polity & Governance</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="fact-grid">
+
+        <div class="fact-card">
+          <div class="fact-month">🟡 July 2025</div>
+          <div class="fact-item"><span class="fact-label">131st Amendment</span><span class="fact-value">Defeated in Rajya Sabha — OBC reservation in local bodies (NOT educational institutions)</span></div>
+          <div class="fact-item"><span class="fact-label">52nd CJI</span><span class="fact-value">Justice B.R. Gavai sworn in as 52nd CJI after Sanjiv Khanna</span></div>
+          <div class="fact-item"><span class="fact-label">Women Reservation</span><span class="fact-value">Requires delimitation — delayed to 2029 election cycle</span></div>
+          <div class="fact-item"><span class="fact-label">NJAC</span><span class="fact-value">SC upheld collegium; NJAC remains unconstitutional</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟠 August 2025</div>
+          <div class="fact-item"><span class="fact-label">Independence Day</span><span class="fact-value">79th Independence Day — Viksit Bharat 2047 theme</span></div>
+          <div class="fact-item"><span class="fact-label">RTI</span><span class="fact-value">SC upheld RTI applicability to political parties</span></div>
+          <div class="fact-item"><span class="fact-label">Election Commission</span><span class="fact-value">Two new ECs appointed under new EC Act 2023</span></div>
+          <div class="fact-item"><span class="fact-label">One Nation One Election</span><span class="fact-value">JPC report submitted; implementation set for 2029</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟣 September 2025</div>
+          <div class="fact-item"><span class="fact-label">Joint Sitting</span><span class="fact-value">Special session — centenary of Constitution draft discussion</span></div>
+          <div class="fact-item"><span class="fact-label">UCC</span><span class="fact-value">Law Commission invited public comments; Goa only state with UCC</span></div>
+          <div class="fact-item"><span class="fact-label">Article 370</span><span class="fact-value">SC upheld J&K reorganisation; statehood restoration awaited</span></div>
+          <div class="fact-item"><span class="fact-label">Speaker</span><span class="fact-value">Om Birla re-elected for 18th Lok Sabha; Deputy Speaker post vacant</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🔴 October 2025</div>
+          <div class="fact-item"><span class="fact-label">SC Electoral Bonds</span><span class="fact-value">Constitution bench expanded for electoral bonds matter</span></div>
+          <div class="fact-item"><span class="fact-label">Delimitation</span><span class="fact-value">Commission reconstitution announced post-2026 census</span></div>
+          <div class="fact-item"><span class="fact-label">Panchayati Raj</span><span class="fact-value">73rd Amendment — 33rd anniversary; discussion on 50% women quota</span></div>
+          <div class="fact-item"><span class="fact-label">Anti-Defection</span><span class="fact-value">SC hearing on Speaker's delay in disqualification petitions (10th Schedule)</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟤 November 2025</div>
+          <div class="fact-item"><span class="fact-label">Bihar Elections</span><span class="fact-value">BJP+JDU alliance won majority</span></div>
+          <div class="fact-item"><span class="fact-label">NOTA</span><span class="fact-value">SC hearing — NOTA winner does NOT trigger fresh elections</span></div>
+          <div class="fact-item"><span class="fact-label">Electoral Bonds</span><span class="fact-value">SC declared unconstitutional Feb 2024; SBI submitted data</span></div>
+          <div class="fact-item"><span class="fact-label">President's Rule</span><span class="fact-value">No Art 356 in 2025; last was Maharashtra 2019</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🔵 December 2025</div>
+          <div class="fact-item"><span class="fact-label">CAA</span><span class="fact-value">Rules implemented 2024; citizenship grants continued into 2025</span></div>
+          <div class="fact-item"><span class="fact-label">NRC</span><span class="fact-value">Only Assam has NRC — nationwide NRC not implemented</span></div>
+          <div class="fact-item"><span class="fact-label">Constitution Day</span><span class="fact-value">Nov 26 = Samvidhan Diwas; adopted 1949, in force Jan 26 1950</span></div>
+          <div class="fact-item"><span class="fact-label">Collegium</span><span class="fact-value">50+ HC judges recommended; MoP dispute continues</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">⚪ January 2026</div>
+          <div class="fact-item"><span class="fact-label">Republic Day</span><span class="fact-value">77th Republic Day — Chief Guest from ASEAN; Padma Awards announced on eve</span></div>
+          <div class="fact-item"><span class="fact-label">Budget Session</span><span class="fact-value">Union Budget 2026-27 presented</span></div>
+          <div class="fact-item"><span class="fact-label">New EC Act</span><span class="fact-value">EC Act 2023 — first EC appointed under new law</span></div>
+          <div class="fact-item"><span class="fact-label">NJAC 2.0</span><span class="fact-value">Collegium reform Bill proposed — discussion stage</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟡 February 2026</div>
+          <div class="fact-item"><span class="fact-label">Union Budget</span><span class="fact-value">₹11.2 lakh crore capex; income tax slabs revised</span></div>
+          <div class="fact-item"><span class="fact-label">Railway Budget</span><span class="fact-value">Merged with Union Budget since 2017; Vande Bharat expansion</span></div>
+          <div class="fact-item"><span class="fact-label">Economic Survey</span><span class="fact-value">2025-26: GDP growth 6.8%</span></div>
+          <div class="fact-item"><span class="fact-label">16th Finance Commission</span><span class="fact-value">Constituted under Art 280; recommendations awaited 2026</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟠 March 2026</div>
+          <div class="fact-item"><span class="fact-label">Delhi MCD</span><span class="fact-value">AAP retained majority</span></div>
+          <div class="fact-item"><span class="fact-label">Rajya Sabha</span><span class="fact-value">Biennial elections — 12 nominated seats filled; NOT dissolved</span></div>
+          <div class="fact-item"><span class="fact-label">SC Sub-classification</span><span class="fact-value">States can give priority to most backward within SC/ST</span></div>
+          <div class="fact-item"><span class="fact-label">Women in Parliament</span><span class="fact-value">14.4% — 74 women MPs in 18th Lok Sabha</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟣 April 2026</div>
+          <div class="fact-item"><span class="fact-label">TN Local Body</span><span class="fact-value">Elections — AIADMK vs DMK contest</span></div>
+          <div class="fact-item"><span class="fact-label">Lok Adalat</span><span class="fact-value">1.5 crore cases disposed in one day — awards FINAL, no appeal</span></div>
+          <div class="fact-item"><span class="fact-label">Fast Track Courts</span><span class="fact-value">1023 FTCs operational for POCSO and rape cases</span></div>
+          <div class="fact-item"><span class="fact-label">ADR Data</span><span class="fact-value">44% of new MPs have criminal cases (ADR = not a govt body)</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🔴 May 2026</div>
+          <div class="fact-item"><span class="fact-label">GST Revenue</span><span class="fact-value">First time crossed ₹2.2 lakh crore monthly</span></div>
+          <div class="fact-item"><span class="fact-label">SC Live Streaming</span><span class="fact-value">Guidelines issued for expanded court live-streaming</span></div>
+          <div class="fact-item"><span class="fact-label">Registered Voters</span><span class="fact-value">97 crore registered voters in India</span></div>
+          <div class="fact-item"><span class="fact-label">MPLAD Fund</span><span class="fact-value">Enhanced to ₹5 crore per MP per year</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🔵 June 2026</div>
+          <div class="fact-item"><span class="fact-label">SC 9-Judge Bench</span><span class="fact-value">Property rights and personal laws</span></div>
+          <div class="fact-item"><span class="fact-label">Census Begins</span><span class="fact-value">Data collection started — Delimitation to follow</span></div>
+          <div class="fact-item"><span class="fact-label">SC Strength</span><span class="fact-value">32 of 34 sanctioned judges (34 total including CJI)</span></div>
+          <div class="fact-item"><span class="fact-label">INDIA Alliance</span><span class="fact-value">26 parties; NDA = 38+ parties; 2029 election planning</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">⚪ July 2026</div>
+          <div class="fact-item"><span class="fact-label">Monsoon Session</span><span class="fact-value">Parliament 2026 — key legislation pending</span></div>
+          <div class="fact-item"><span class="fact-label">CJI Change</span><span class="fact-value">Succession by seniority convention — NOT political appointment</span></div>
+          <div class="fact-item"><span class="fact-label">Press Freedom</span><span class="fact-value">India ranks 150-160 globally (Reporters Without Borders)</span></div>
+          <div class="fact-item"><span class="fact-label">Urban Body Elections</span><span class="fact-value">Scheduled in multiple states</span></div>
+        </div>
+
+      </div><!-- /fact-grid -->
+    </div>
+  </div>
+
+  <!-- EXAM TRAPS -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#2a1040">⚠️</div>
+      <div>
+        <h2>Exam Traps — Don't Get Fooled</h2>
+        <div class="sub">High-frequency confusion points in SSC / RRB / TNPSC exams</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="trap-list">
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>131st Amendment ≠ Educational Institutions</strong><span>It was about OBC reservation in local bodies — defeated in Rajya Sabha</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>B.R. Gavai = 52nd CJI, NOT 51st</strong><span>Sanjiv Khanna was the preceding CJI — Gavai is 52nd</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>2025 = 79th Independence Day</strong><span>1947 + 78 years = 2025, but it's the 79th celebration. Formula: Year − 1947 + 1</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>2026 = 77th Republic Day</strong><span>26 Jan 1950 was 1st. Formula: 2026 − 1950 + 1 = 77</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>UCC: Only Goa (NOT Uttarakhand)</strong><span>Uttarakhand drafted but not fully implemented. Goa is the ONLY state with UCC</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Anti-defection = 10th Schedule, NOT 11th</strong><span>11th Schedule = Panchayati Raj (73rd Amendment)</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Electoral Bonds: SC declared unconstitutional Feb 2024</strong><span>Not a 2025 event — SBI submitted data in 2024 per SC order</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>NOTA does NOT win elections</strong><span>NOTA (None Of The Above) introduced 2013 — it does NOT trigger fresh elections</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>CAA rules implemented 2024, NOT 2025</strong><span>Citizenship Act 1955 amended; rules notified March 2024; grants continued into 2025</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Constitution: Adopted 26 Nov 1949; In force 26 Jan 1950</strong><span>Samvidhan Diwas = Nov 26. Republic Day = Jan 26. Different dates!</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Railway Budget merged since 2017, NOT 2016</strong><span>Union Budget 2017-18 was the first merged budget under Arun Jaitley</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Finance Commission = Constitutional body under Art 280</strong><span>16th FC constituted 2024; Dr Arvind Panagariya is Chairman</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Rajya Sabha is NOT dissolved</strong><span>1/3 members retire every 2 years — it is a permanent house</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Lok Adalat awards = FINAL and binding</strong><span>No appeal lies against Lok Adalat awards in any court</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>ADR = Association for Democratic Reforms (NOT a govt body)</strong><span>Independent non-profit that tracks electoral candidates' backgrounds</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>MPLAD = ₹5 crore/year/MP</strong><span>Members of Parliament Local Area Development Scheme — enhanced to ₹5 crore</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>SC = 34 total judges including CJI</strong><span>Increased from 31 by Parliament. Currently 32 of 34 posts filled (June 2026)</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Padma Awards announced on Republic Day EVE</strong><span>NOT on Republic Day itself — announced the evening of 25th January</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Article 370 abrogation = August 2019; SC upheld = December 2023</strong><span>Not a 2025 event — don't confuse the year of abrogation vs SC verdict</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>CJI appointment = seniority convention, NOT political</strong><span>Senior-most SC judge becomes CJI — NOT a political appointment</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Delimitation is AFTER Census</strong><span>Census postponed to 2026 → Women Reservation also delayed → 2029 cycle</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>GST launched 1 July 2017 — "One Nation One Tax"</strong><span>101st Constitutional Amendment. Not 2016, not 2018.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Parliament Diagram -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#1e3a5f">🏛️</div>
+      <div>
+        <h2>Parliament Structure (Art 79)</h2>
+        <div class="sub">President + Lok Sabha + Rajya Sabha</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="diagram-wrap">
+        <div class="diagram-title">Parliament of India — Key Numbers</div>
+        <div class="parl-wrap">
+          <div class="parl-house ls">
+            <div class="parl-house-name">🟦 Lok Sabha (Lower House)</div>
+            <div class="parl-stats">
+              <div class="parl-stat"><strong>543</strong><span>Elected seats</span></div>
+              <div class="parl-stat"><strong>5 years</strong><span>Term</span></div>
+              <div class="parl-stat"><strong>25 yrs</strong><span>Min. age</span></div>
+              <div class="parl-stat"><strong>Speaker</strong><span>Om Birla (18th LS)</span></div>
+            </div>
+            <div style="margin-top:10px; font-size:12px; color:var(--muted);">Art 81 · Can be dissolved · Money Bill originates here</div>
+          </div>
+          <div class="parl-house rs">
+            <div class="parl-house-name">🟩 Rajya Sabha (Upper House)</div>
+            <div class="parl-stats">
+              <div class="parl-stat"><strong>245</strong><span>Max seats</span></div>
+              <div class="parl-stat"><strong>6 years</strong><span>Member term</span></div>
+              <div class="parl-stat"><strong>30 yrs</strong><span>Min. age</span></div>
+              <div class="parl-stat"><strong>VP</strong><span>Ex-officio Chair</span></div>
+            </div>
+            <div style="margin-top:10px; font-size:12px; color:var(--muted);">Art 80 · NEVER dissolved · 1/3 retire every 2 years</div>
+          </div>
+        </div>
+        <div style="margin-top:14px; background:var(--bg); border-radius:var(--radius-sm); padding:10px 14px;">
+          <div style="font-size:12px; color:var(--muted); text-align:center; margin-bottom:8px;">KEY DIFFERENCE</div>
+          <div style="display:flex; justify-content:space-around; flex-wrap:wrap; gap:8px;">
+            <div style="text-align:center; font-size:12px;"><span style="color:var(--accent2); font-weight:700;">Lok Sabha</span><br><span style="color:var(--muted);">Can be dissolved</span></div>
+            <div style="text-align:center; font-size:12px; color:var(--border);">vs</div>
+            <div style="text-align:center; font-size:12px;"><span style="color:var(--accent3); font-weight:700;">Rajya Sabha</span><br><span style="color:var(--muted);">Permanent house</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Writs diagram -->
+      <div style="margin-top:14px;">
+        <div class="diagram-title" style="text-align:left; margin-bottom:10px; font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; font-weight:700;">⚖️ Five Writs (Art 32 — SC | Art 226 — HC)</div>
+        <div class="writ-grid">
+          <div class="writ-card">
+            <div class="writ-name">Habeas Corpus</div>
+            <div class="writ-meaning">"Produce the body"</div>
+            <div class="writ-desc">Protects against illegal detention</div>
+          </div>
+          <div class="writ-card">
+            <div class="writ-name">Mandamus</div>
+            <div class="writ-meaning">"We command"</div>
+            <div class="writ-desc">Forces public official to perform duty</div>
+          </div>
+          <div class="writ-card">
+            <div class="writ-name">Prohibition</div>
+            <div class="writ-meaning">"To forbid"</div>
+            <div class="writ-desc">HC stops lower court proceedings</div>
+          </div>
+          <div class="writ-card">
+            <div class="writ-name">Certiorari</div>
+            <div class="writ-meaning">"To be certified"</div>
+            <div class="writ-desc">Quash lower court order</div>
+          </div>
+          <div class="writ-card">
+            <div class="writ-name">Quo Warranto</div>
+            <div class="writ-meaning">"By what authority"</div>
+            <div class="writ-desc">Challenge to a public appointment</div>
+          </div>
+        </div>
+        <div style="margin-top:10px; font-size:11px; color:var(--muted); background:var(--bg); padding:8px 10px; border-radius:var(--radius-sm);">
+          ⚠️ <strong style="color:var(--warning);">Exam Trap:</strong> Art 32 (SC writs) is a <em>Fundamental Right</em> itself — Art 226 (HC writs) is NOT a FR, it's a constitutional right.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Amendments Timeline -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#1a1060">📋</div>
+      <div>
+        <h2>Key Amendments — Visual Timeline</h2>
+        <div class="sub">Most frequently asked in SSC CGL / RRB NTPC</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="amend-timeline">
+        <div class="amend-item">
+          <div class="amend-num">42nd Amendment <span class="amend-year">1976</span></div>
+          <div class="amend-desc">Added "Socialist" & "Secular" to Preamble; added Fundamental Duties (Art 51A) — called "Mini-Constitution"</div>
+        </div>
+        <div class="amend-item">
+          <div class="amend-num">44th Amendment <span class="amend-year">1978</span></div>
+          <div class="amend-desc">Restored right to property as legal right (not fundamental) — Art 300A</div>
+        </div>
+        <div class="amend-item">
+          <div class="amend-num">52nd Amendment <span class="amend-year">1985</span></div>
+          <div class="amend-desc">Anti-defection law — added 10th Schedule to Constitution</div>
+        </div>
+        <div class="amend-item">
+          <div class="amend-num">61st Amendment <span class="amend-year">1988</span></div>
+          <div class="amend-desc">Voting age reduced from 21 → 18 years</div>
+        </div>
+        <div class="amend-item">
+          <div class="amend-num">73rd Amendment <span class="amend-year">1992</span></div>
+          <div class="amend-desc">Panchayati Raj — added 11th Schedule. Mandatory elections, reservations, 5-year term</div>
+        </div>
+        <div class="amend-item">
+          <div class="amend-num">74th Amendment <span class="amend-year">1992</span></div>
+          <div class="amend-desc">Urban Local Bodies (Municipalities) — added 12th Schedule</div>
+        </div>
+        <div class="amend-item">
+          <div class="amend-num">86th Amendment <span class="amend-year">2002</span></div>
+          <div class="amend-desc">Right to Education — Art 21A (6-14 years free education)</div>
+        </div>
+        <div class="amend-item">
+          <div class="amend-num">101st Amendment <span class="amend-year">2016</span></div>
+          <div class="amend-desc">GST — One Nation One Tax; came into force 1 July 2017</div>
+        </div>
+        <div class="amend-item">
+          <div class="amend-num">103rd Amendment <span class="amend-year">2019</span></div>
+          <div class="amend-desc">10% EWS (Economically Weaker Sections) reservation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Committees & Commissions -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#0a2a10">🏢</div>
+      <div>
+        <h2>Committees & Commissions 2024–25</h2>
+        <div class="sub">Recent appointments — exam-ready</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead><tr><th>Body</th><th>Key Fact</th></tr></thead>
+        <tbody>
+          <tr><td>JPC — One Nation One Election</td><td>Chaired by Ram Nath Kovind; report submitted 2025</td></tr>
+          <tr><td>16th Finance Commission</td><td>Constituted 2024; Dr Arvind Panagariya Chairman; Art 280</td></tr>
+          <tr><td>NHRC</td><td>National Human Rights Commission; retired CJI as Chairman</td></tr>
+          <tr><td>NCW</td><td>National Commission for Women; Rekha Sharma Chairperson</td></tr>
+          <tr><td>CVC</td><td>Chief Vigilance Commissioner — Praveen Kumar Srivastava</td></tr>
+          <tr><td>Election Commission</td><td>EC Act 2023 — 2 new ECs appointed in Aug 2025</td></tr>
+          <tr><td>Law Commission</td><td>Invited public comments on UCC (2025)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /content-wrap -->
+</div><!-- /tab-material -->
+
+<!-- ========== TAB: QUICK REF ========== -->
+<div class="tab-panel" id="tab-articles">
+<div class="content-wrap">
+
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#1e3a5f">📜</div>
+      <div><h2>High-Frequency Constitutional Articles</h2><div class="sub">Most asked in SSC CGL, CHSL, RRB NTPC, TNPSC</div></div>
+    </div>
+    <div class="section-body">
+      <div class="art-grid">
+        <div class="art-row"><div>Art 12–35</div><div>Fundamental Rights (Part III)</div></div>
+        <div class="art-row"><div>Art 36–51</div><div>Directive Principles of State Policy (Part IV)</div></div>
+        <div class="art-row"><div>Art 51A</div><div>Fundamental Duties (added by 42nd Amendment, 1976)</div></div>
+        <div class="art-row"><div>Art 52</div><div>President of India</div></div>
+        <div class="art-row"><div>Art 79</div><div>Parliament = President + Lok Sabha + Rajya Sabha</div></div>
+        <div class="art-row"><div>Art 80</div><div>Rajya Sabha composition (max 245)</div></div>
+        <div class="art-row"><div>Art 81</div><div>Lok Sabha composition (543 elected seats)</div></div>
+        <div class="art-row"><div>Art 110</div><div>Money Bill — definition and procedure</div></div>
+        <div class="art-row"><div>Art 123</div><div>President's Ordinance making power</div></div>
+        <div class="art-row"><div>Art 148</div><div>CAG (Comptroller & Auditor General) — constitutional post</div></div>
+        <div class="art-row"><div>Art 280</div><div>Finance Commission — constitutional body</div></div>
+        <div class="art-row"><div>Art 324</div><div>Election Commission of India</div></div>
+        <div class="art-row"><div>Art 356</div><div>President's Rule — invoked 134 times; last: Maharashtra 2019</div></div>
+        <div class="art-row"><div>Art 360</div><div>Financial Emergency — NEVER invoked in India's history</div></div>
+        <div class="art-row"><div>Art 368</div><div>Amendment procedure for the Constitution</div></div>
+        <div class="art-row"><div>Art 370</div><div>Abrogated Aug 5, 2019; SC upheld December 2023</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Schedules quick ref -->
+  <div class="section-card mt-10">
+    <div class="section-head">
+      <div class="section-icon" style="background:#1a1060">📁</div>
+      <div><h2>Important Schedules</h2><div class="sub">Exam trap area — know which schedule = which subject</div></div>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead><tr><th>Schedule</th><th>Subject</th><th>Amendment</th></tr></thead>
+        <tbody>
+          <tr><td>6th Schedule</td><td>Tribal areas (Assam, Meghalaya, Tripura, Mizoram)</td><td>Original</td></tr>
+          <tr><td>8th Schedule</td><td>22 Official Languages</td><td>Multiple</td></tr>
+          <tr><td>9th Schedule</td><td>Laws protected from judicial review</td><td>1st Amend.</td></tr>
+          <tr><td>10th Schedule</td><td>Anti-Defection Law</td><td>52nd (1985)</td></tr>
+          <tr><td>11th Schedule</td><td>Panchayati Raj (29 subjects)</td><td>73rd (1992)</td></tr>
+          <tr><td>12th Schedule</td><td>Urban Local Bodies (18 subjects)</td><td>74th (1992)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Emergency Types -->
+  <div class="section-card mt-10">
+    <div class="section-head">
+      <div class="section-icon" style="background:#2a0a10">🚨</div>
+      <div><h2>Types of Emergency</h2><div class="sub">Art 352 / 356 / 360 — confused often!</div></div>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead><tr><th>Article</th><th>Type</th><th>Ground</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Art 352</td><td>National Emergency</td><td>War / External aggression / Armed rebellion</td><td>Proclaimed 3 times (1962, 1971, 1975)</td></tr>
+          <tr><td>Art 356</td><td>President's Rule (State Emergency)</td><td>Constitutional machinery failure</td><td>134 times; last: Maharashtra 2019</td></tr>
+          <tr><td>Art 360</td><td>Financial Emergency</td><td>Financial stability / credit threatened</td><td><strong style="color:var(--accent3)">NEVER invoked</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ========== TAB: MCQ ========== -->
+<div class="tab-panel" id="tab-mcq">
+<div class="section-card" style="margin:14px 14px 0; max-width:652px; margin-left:auto; margin-right:auto;">
+
+  <div class="mcq-header">
+    <div class="mcq-counter">Question <strong id="qCurrent">1</strong> of <strong>5</strong></div>
+    <div class="mcq-timer" id="mcqTimer">⏱ 00:00</div>
+  </div>
+
+  <div class="question-nav" id="questionNav">
+    <div class="q-dot active" id="dot-0" onclick="jumpTo(0)">1</div>
+    <div class="q-dot" id="dot-1" onclick="jumpTo(1)">2</div>
+    <div class="q-dot" id="dot-2" onclick="jumpTo(2)">3</div>
+    <div class="q-dot" id="dot-3" onclick="jumpTo(3)">4</div>
+    <div class="q-dot" id="dot-4" onclick="jumpTo(4)">5</div>
+  </div>
+
+  <div class="question-wrap" id="questionWrap">
+    <!-- Rendered by JS -->
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-label">out of 5 questions</div>
+    <div class="result-grid">
+      <div class="result-stat"><div class="result-stat-val" id="resCorrect" style="color:var(--accent3)"></div><div class="result-stat-key">Correct</div></div>
+      <div class="result-stat"><div class="result-stat-val" id="resWrong" style="color:var(--danger)"></div><div class="result-stat-key">Wrong</div></div>
+      <div class="result-stat"><div class="result-stat-val" id="resTime" style="color:var(--accent)"></div><div class="result-stat-key">Seconds</div></div>
+    </div>
+    <div>
+      <button class="retry-btn" onclick="restartQuiz()">↺ Retry</button>
+      <button class="complete-btn" onclick="markComplete()">✓ Complete Node</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// =========================================================
+// ANALYTICS TRACKING — CentuMania Architecture
+// =========================================================
+const NODE_ID = 'ca_01_polity';
+const CHAPTER_ID = 'current_affairs_01';
+const MCQ_SET_ID = 'mcq_ca01_polity';
+const SESSION_ID = 'sess_' + Math.random().toString(36).slice(2, 10);
+const USER_ID = 'user_demo';
+
+const nodeOpenedAt = Date.now();
+let materialCompleted = false;
+let mcqStartedAt = null;
+let mcqTimerInterval = null;
+let mcqElapsedSec = 0;
+let _mToken = '';
+(function initToken(){
+  var ks=Object.keys(localStorage);
+  var k=ks.find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});
+  if(k){try{var d=JSON.parse(localStorage.getItem(k));_mToken=(d&&d.access_token)||'';}catch(e){}}
+  if(!_mToken){var sk=Object.keys(sessionStorage).find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});if(sk){try{var d2=JSON.parse(sessionStorage.getItem(sk));_mToken=(d2&&d2.access_token)||'';}catch(e){}}}
+})();
+
+function fireEvent(eventName, payload) {
+  const fullPayload = { event: eventName, user_id: USER_ID, session_id: SESSION_ID, timestamp: new Date().toISOString(), ...payload };
+  console.log('[CentuMania Event]', JSON.stringify(fullPayload));
+  if (_mToken) {
+    fetch('/api/events', {method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},body:JSON.stringify({event_name:eventName,session_id:SESSION_ID,event_timestamp:new Date().toISOString(),metadata:payload})}).catch(function(){});
+  }
+}
+
+// Track node_opened immediately
+fireEvent('node_opened', { node_id: NODE_ID, node_type: 'standard', chapter_id: CHAPTER_ID, attempt_number: 1 });
+
+// Track node_abandoned on page close/nav away (before completion)
+window.addEventListener('beforeunload', () => {
+  if (!materialCompleted) {
+    const timeSpent = Math.round((Date.now() - nodeOpenedAt) / 1000);
+    fireEvent('node_abandoned', {
+      node_id: NODE_ID,
+      chapter_id: CHAPTER_ID,
+      time_spent_sec: timeSpent,
+      completion_percent: Math.round((tabProgress.material ? 50 : 0) + (tabProgress.mcq ? 50 : 0))
+    });
+  }
+});
+
+// Page visibility — pause/resume
+document.addEventListener('visibilitychange', () => {
+  fireEvent('tab_visibility_change', {
+    node_id: NODE_ID,
+    material_id: 'mat_ca01_study',
+    hidden_duration_sec: 0
+  });
+});
+
+// =========================================================
+// TAB MANAGEMENT
+// =========================================================
+const tabProgress = { material: false, articles: false, mcq: false };
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'material') tabProgress.material = true;
+  if (name === 'articles') tabProgress.articles = true;
+  if (name === 'mcq') {
+    if (!mcqStarted) initMCQ();
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const done = Object.values(tabProgress).filter(Boolean).length;
+  const pct = Math.round((done / 3) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+// =========================================================
+// MCQ DATA — 5 Questions, SSC/RRB level
+// =========================================================
+const questions = [
+  {
+    id: 'q1',
+    text: 'Which Constitutional Amendment added "Socialist" and "Secular" to the Preamble of the Indian Constitution?',
+    options: ['40th Amendment', '42nd Amendment', '44th Amendment', '52nd Amendment'],
+    correct: 1,
+    explanation: 'The 42nd Constitutional Amendment (1976) added the words "Socialist" and "Secular" to the Preamble, and also added Fundamental Duties (Art 51A). It is often called the "Mini-Constitution". ⚠️ Do not confuse with 44th Amendment (1978) which made Right to Property a legal right.'
+  },
+  {
+    id: 'q2',
+    text: 'As of June 2026, which state is the ONLY state in India with a Uniform Civil Code (UCC) in force?',
+    options: ['Uttarakhand', 'Goa', 'Gujarat', 'Himachal Pradesh'],
+    correct: 1,
+    explanation: 'Goa is the ONLY state in India with a UCC currently in force — inherited from Portuguese civil law. Uttarakhand drafted a UCC but has NOT fully implemented it. This is a very common exam trap in SSC and RRB papers.'
+  },
+  {
+    id: 'q3',
+    text: 'Which schedule of the Indian Constitution deals with the Anti-Defection Law?',
+    options: ['8th Schedule', '9th Schedule', '10th Schedule', '11th Schedule'],
+    correct: 2,
+    explanation: '10th Schedule = Anti-Defection Law (added by 52nd Amendment, 1985). Common trap: 11th Schedule = Panchayati Raj (73rd Amendment, 1992). 8th Schedule = 22 Official Languages. 9th Schedule = Laws shielded from judicial review.'
+  },
+  {
+    id: 'q4',
+    text: 'The 77th Republic Day was celebrated on 26 January 2026. Which year did India become a Republic?',
+    options: ['1947', '1948', '1949', '1950'],
+    correct: 3,
+    explanation: 'India became a Republic on 26 January 1950, when the Constitution came into force. The 1st Republic Day = 1950, so 2026 − 1950 + 1 = 77th Republic Day. Note: The Constitution was ADOPTED on 26 November 1949 (Samvidhan Diwas) but came into FORCE on 26 January 1950.'
+  },
+  {
+    id: 'q5',
+    text: 'Which Article of the Indian Constitution empowers the President to impose President\'s Rule in a state?',
+    options: ['Art 352', 'Art 356', 'Art 360', 'Art 368'],
+    correct: 1,
+    explanation: 'Art 356 = President\'s Rule (State Emergency) when constitutional machinery fails. It has been invoked 134 times; the last was Maharashtra in 2019. Art 352 = National Emergency (war/armed rebellion). Art 360 = Financial Emergency (NEVER invoked). Art 368 = Amendment procedure.'
+  }
+];
+
+let mcqStarted = false;
+let currentQ = 0;
+let answers = new Array(5).fill(null); // null = unanswered
+let answerTimes = new Array(5).fill(null);
+let questionStartTime = null;
+let firstAttemptLocked = new Array(5).fill(false);
+
+function initMCQ() {
+  mcqStarted = true;
+  mcqStartedAt = Date.now();
+  mcqTimerInterval = setInterval(updateTimer, 1000);
+  fireEvent('mcq_started', {
+    mcq_set_id: MCQ_SET_ID,
+    node_id: NODE_ID,
+    chapter_id: CHAPTER_ID,
+    question_count: 5,
+    attempt_number: 1
+  });
+  renderQuestion(0);
+}
+
+function updateTimer() {
+  mcqElapsedSec++;
+  const m = String(Math.floor(mcqElapsedSec / 60)).padStart(2, '0');
+  const s = String(mcqElapsedSec % 60).padStart(2, '0');
+  document.getElementById('mcqTimer').textContent = '⏱ ' + m + ':' + s;
+}
+
+function renderQuestion(idx) {
+  currentQ = idx;
+  questionStartTime = Date.now();
+  const q = questions[idx];
+  document.getElementById('qCurrent').textContent = idx + 1;
+
+  // Update nav dots
+  document.querySelectorAll('.q-dot').forEach((d, i) => {
+    d.classList.remove('active');
+    if (i === idx) d.classList.add('active');
+  });
+
+  const answered = answers[idx] !== null;
+  const correctIdx = q.correct;
+
+  let optionsHTML = q.options.map((opt, oi) => {
+    let cls = 'option-btn';
+    if (answered) {
+      cls += ' disabled';
+      if (oi === correctIdx) cls += ' correct-ans';
+      else if (oi === answers[idx] && oi !== correctIdx) cls += ' wrong-ans';
+    }
+    return `<button class="${cls}" onclick="selectAnswer(${idx}, ${oi})" data-opt="${oi}">
+      <span class="option-letter">${String.fromCharCode(65+oi)}</span>
+      <span>${opt}</span>
+    </button>`;
+  }).join('');
+
+  const showExp = answered;
+  const expHTML = showExp ? `<div class="explanation-box show"><div class="exp-head">💡 Explanation</div>${q.explanation}</div>` : `<div class="explanation-box"></div>`;
+
+  const isLast = idx === 4;
+  const nextLabel = isLast ? '✓ See Results' : 'Next Question →';
+  const nextBtn = `<button class="next-btn${answered ? ' show' : ''}" id="nextBtn" onclick="${isLast ? 'showResults()' : 'renderQuestion(' + (idx+1) + ')'}">${nextLabel}</button>`;
+
+  document.getElementById('questionWrap').innerHTML = `
+    <div class="question-num">Question ${idx+1} of 5</div>
+    <div class="question-text">${q.text}</div>
+    <div class="options-list">${optionsHTML}</div>
+    ${expHTML}
+    ${nextBtn}
+  `;
+}
+
+function selectAnswer(qIdx, optIdx) {
+  if (answers[qIdx] !== null) return; // already answered — first attempt locked
+  const timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
+  const isRapid = timeTaken < 2;
+  const isCorrect = optIdx === questions[qIdx].correct;
+
+  answers[qIdx] = optIdx;
+  answerTimes[qIdx] = timeTaken;
+  firstAttemptLocked[qIdx] = true;
+
+  // Update nav dot
+  const dot = document.getElementById('dot-' + qIdx);
+  dot.classList.remove('active');
+  dot.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  // Fire mcq_question_answered (first attempt lock)
+  fireEvent('mcq_question_answered', {
+    question_id: questions[qIdx].id,
+    mcq_set_id: MCQ_SET_ID,
+    node_id: NODE_ID,
+    selected_option: String.fromCharCode(65 + optIdx),
+    is_correct: isCorrect,
+    time_taken_sec: timeTaken,
+    attempt_number: 1,
+    is_rapid: isRapid
+  });
+
+  if (isRapid) {
+    fireEvent('rapid_answer_flag', { question_id: questions[qIdx].id, time_ms: timeTaken * 1000 });
+  }
+
+  renderQuestion(qIdx);
+}
+
+function jumpTo(idx) {
+  if (answers[idx] !== null || idx === currentQ) {
+    renderQuestion(idx);
+  }
+}
+
+function showResults() {
+  clearInterval(mcqTimerInterval);
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  const wrong = answers.filter((a, i) => a !== null && a !== questions[i].correct).length;
+  const accuracyPct = Math.round((correct / 5) * 100);
+
+  fireEvent('mcq_completed', {
+    mcq_set_id: MCQ_SET_ID,
+    node_id: NODE_ID,
+    chapter_id: CHAPTER_ID,
+    score: correct,
+    total_questions: 5,
+    correct_count: correct,
+    duration_sec: mcqElapsedSec,
+    attempt_number: 1,
+    accuracy_pct: accuracyPct
+  });
+
+  tabProgress.mcq = true;
+  updateProgress();
+
+  document.getElementById('questionWrap').style.display = 'none';
+  const rs = document.getElementById('resultScreen');
+  rs.classList.add('show');
+
+  const scoreEl = document.getElementById('resultScore');
+  scoreEl.textContent = correct + '/5';
+  scoreEl.style.color = correct >= 4 ? 'var(--accent3)' : correct >= 2 ? 'var(--warning)' : 'var(--danger)';
+  document.getElementById('resCorrect').textContent = correct;
+  document.getElementById('resWrong').textContent = wrong;
+  document.getElementById('resTime').textContent = mcqElapsedSec + 's';
+}
+
+function restartQuiz() {
+  answers = new Array(5).fill(null);
+  answerTimes = new Array(5).fill(null);
+  firstAttemptLocked = new Array(5).fill(false);
+  mcqElapsedSec = 0;
+  mcqStartedAt = Date.now();
+  document.getElementById('resultScreen').classList.remove('show');
+  document.getElementById('questionWrap').style.display = '';
+  document.querySelectorAll('.q-dot').forEach((d,i) => { d.className = 'q-dot'; if(i===0) d.classList.add('active'); });
+  clearInterval(mcqTimerInterval);
+  mcqTimerInterval = setInterval(updateTimer, 1000);
+  // Note: reattempts do NOT count toward first-attempt accuracy (backend enforced)
+  fireEvent('mcq_reattempted', { mcq_set_id: MCQ_SET_ID, node_id: NODE_ID, prior_attempt_count: 1 });
+  renderQuestion(0);
+}
+
+function markComplete() {
+  const timeSpentSec = Math.round((Date.now() - nodeOpenedAt) / 1000);
+  const correct = answers.filter((a, i) => a === questions[i].correct).length;
+  materialCompleted = true;
+
+  fireEvent('node_completed', {
+    node_id: NODE_ID,
+    chapter_id: CHAPTER_ID,
+    completion_time_sec: timeSpentSec,
+    xp_earned: 20,
+    accuracy_pct: Math.round((correct / 5) * 100)
+  });
+
+  showToast('🎉 Node Completed! +20 XP earned');
+  document.getElementById('resultScreen').innerHTML += `
+    <div class="complete-banner">
+      <div class="icon">🎯</div>
+      <h3>Node Complete!</h3>
+      <p>+20 XP · Centum Index updated · Great work!</p>
+    </div>
+  `;
+}
+
+// =========================================================
+// TOAST
+// =========================================================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Mark material tab as visited on load
+tabProgress.material = true;
+updateProgress();
+</script>
+
+</body>
+</html>

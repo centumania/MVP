@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>English Map · Tenses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<style>
+:root{
+  --bg:#0B1020;--bg2:#090e1c;--panel:#111827;--panel2:#161b22;--line:#1f2d42;
+  --ink:#F9FAFB;--ink2:#9CA3AF;--ink3:#6B7280;
+  --green:#F6B300;--green2:#d49b00;--green-glow:rgba(246,179,0,.13);
+  --teal:#0EA5A0;--gold:#2533FF;--gold-bg:rgba(37,51,255,.12);
+  --red:#E3413A;--red-bg:rgba(227,65,58,.10);
+  --blue:#2563EB;--violet:#22C55E;--violet-bg:rgba(34,197,94,.11);
+  --mono:"JetBrains Mono","Courier New",Courier,monospace;
+  --serif:"Bebas Neue",Impact,"Arial Narrow",Arial,sans-serif;
+  --sans:"Inter",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --nav-h:56px;--aside-w:260px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px}
+.shell{display:grid;grid-template-rows:var(--nav-h) 1fr;height:100vh;overflow:hidden}
+.topbar{display:flex;align-items:center;gap:12px;padding:0 18px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.97);backdrop-filter:blur(14px);z-index:60}
+.logo{font-family:var(--serif);font-size:19px;letter-spacing:0.05em;color:var(--green);display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0}
+.nav-stats{display:flex;gap:14px;align-items:center;margin-left:auto}
+.stat{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.stat b{font-size:13px}
+.stat.xp b{color:var(--gold)}.stat.vis b{color:var(--teal)}.stat.trap b{color:var(--red)}
+.body{display:grid;grid-template-columns:var(--aside-w) 1fr;overflow:hidden;height:calc(100vh - var(--nav-h))}
+aside{background:var(--bg2);border-right:1px solid var(--line);overflow-y:auto}
+aside::-webkit-scrollbar{width:3px}aside::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+main{overflow-y:auto;background:var(--bg)}
+main::-webkit-scrollbar{width:4px}main::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+.sidebar-inner{padding:10px 8px 60px}
+.ch-group{margin-bottom:3px}
+.ch-toggle{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink2);padding:9px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:.13s;font-family:var(--sans)}
+.ch-toggle:hover,.ch-toggle.open{background:var(--panel);color:var(--ink)}
+.ch-toggle .cht-pct{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-left:auto}
+.ch-toggle.open .cht-pct{color:var(--green)}
+.node-items{display:none;padding:3px 4px 3px 10px}
+.ch-group.expanded .node-items{display:block}
+.ni-btn{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink3);padding:7px 9px;border-radius:8px;cursor:pointer;font-size:13px;transition:.12s;font-family:var(--sans);margin-bottom:1px;min-height:44px}
+.ni-btn:hover:not(.locked){background:var(--panel);color:var(--ink)}
+.ni-btn.current{background:var(--green-glow);border-color:var(--green);color:var(--green)}
+.ni-btn.done:not(.current){color:var(--ink)}
+.ni-btn.locked{cursor:default;opacity:.4}
+.ni-tag{font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:4px;margin-left:auto;flex-shrink:0}
+.ni-tag.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(227,65,58,.25)}
+.ni-tag.hidden{background:var(--violet-bg);color:var(--violet);border:1px solid rgba(34,197,94,.25)}
+.ni-tag.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(37,51,255,.25)}
+.node-view{padding:28px clamp(16px,3.5vw,52px) 80px;max-width:900px;margin:0 auto}
+.tabs{display:flex;gap:3px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:22px;width:fit-content}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:8px;cursor:pointer;border:0;background:none;color:var(--ink2);transition:.14s}
+.tab:hover:not(.on){color:var(--ink)}.tab.on{background:var(--gold);color:#fff;font-weight:700}
+.node-hd{margin-bottom:20px}
+.node-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:10px}
+.node-badge.regular{background:var(--green-glow);color:var(--green);border:1px solid var(--green2)}
+.node-badge.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(227,65,58,.3)}
+.node-badge.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(37,51,255,.3)}
+h1.nt{font-family:var(--serif);font-size:clamp(24px,4vw,38px);letter-spacing:0.04em;line-height:1.05;margin-bottom:6px}
+.xp-pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--gold);background:var(--gold-bg);border:1px solid rgba(37,51,255,.2);border-radius:6px;padding:3px 8px}
+.fact-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
+.fb-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink2);border-bottom:1px solid var(--line);background:var(--panel2);display:flex;align-items:center;gap:7px}
+.fb-body{padding:14px 16px}
+ul.facts{list-style:none;padding:0}
+ul.facts li{padding:7px 0 7px 22px;border-bottom:1px dashed var(--line);font-size:14px;position:relative;line-height:1.55;color:var(--ink)}
+ul.facts li:last-child{border-bottom:0}
+ul.facts li::before{content:"▸";position:absolute;left:3px;top:8px;color:var(--teal);font-size:11px}
+ul.facts b{color:var(--green)}
+ul.facts code{font-family:var(--mono);font-size:12px;background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--gold)}
+.trap-block{background:var(--red-bg);border:1px solid rgba(227,65,58,.35);border-radius:12px;padding:16px;margin:12px 0}
+.trap-block .tb-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--red);margin-bottom:10px}
+.trap-block ul{list-style:none;padding:0}
+.trap-block li{padding:7px 0 7px 20px;position:relative;font-size:14px;border-bottom:1px dashed rgba(227,65,58,.18);line-height:1.5}
+.trap-block li:last-child{border-bottom:0}
+.trap-block li::before{content:"⚠";position:absolute;left:0;top:7px;font-size:11px;color:var(--red)}
+.trap-block b{color:var(--red)}
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--line);margin:12px 0}
+table.dt{width:100%;border-collapse:collapse;font-size:13px}
+table.dt th{padding:9px 13px;text-align:left;background:var(--green2);color:#fff;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
+table.dt td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line);color:var(--ink);line-height:1.4}
+table.dt tr:last-child td{border-bottom:0}
+table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono);font-size:12px;white-space:nowrap}
+.diag-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:12px 0}
+.diag-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--green);border-bottom:1px solid var(--line);background:var(--panel2)}
+.diag-body{padding:16px;overflow-x:auto}
+.diag-body svg{display:block;width:100%;height:auto}
+.golden-block{background:linear-gradient(135deg,rgba(37,51,255,.09),rgba(246,179,0,.06));border:1px solid rgba(37,51,255,.3);border-radius:14px;padding:20px;margin:14px 0}
+.golden-block .gb-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:14px}
+.golden-block ul{list-style:none;padding:0}
+.golden-block li{padding:8px 0 8px 24px;position:relative;font-size:14px;border-bottom:1px dashed rgba(37,51,255,.15);line-height:1.5}
+.golden-block li:last-child{border-bottom:0}
+.golden-block li::before{content:"→";position:absolute;left:0;color:var(--gold)}
+.golden-block b{color:var(--green)}
+.mcq-list{display:flex;flex-direction:column;gap:14px}
+.mcq-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.mcq-q{font-size:15px;font-weight:600;margin-bottom:12px;line-height:1.45;color:var(--ink)}
+.mcq-qn{font-family:var(--mono);font-size:11px;color:var(--teal);margin-right:6px}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mopt{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);font-size:13px;cursor:pointer;text-align:left;font-family:var(--sans);transition:.13s;line-height:1.35}
+.mopt:hover:not([disabled]){border-color:var(--green2);background:var(--green-glow)}
+.mopt.correct{background:rgba(246,179,0,.12);border-color:var(--green);color:var(--green)}
+.mopt.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.mopt.show-correct{background:rgba(246,179,0,.07);border-color:var(--green)}
+.mcq-fb{margin-top:10px;font-size:13px;padding:9px 12px;border-radius:8px;display:none;line-height:1.5}
+.mcq-fb.show{display:block}
+.mcq-fb.right{background:rgba(246,179,0,.10);color:var(--green);border:1px solid rgba(246,179,0,.25)}
+.mcq-fb.wrong{background:var(--red-bg);color:var(--red);border:1px solid rgba(227,65,58,.25)}
+.mcq-score{font-family:var(--mono);font-size:12px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.mcq-score span{color:var(--green)}
+.node-nav{display:flex;gap:10px;margin-top:26px;padding-top:16px;border-top:1px solid var(--line);align-items:center}
+.nnav{font-family:var(--sans);font-weight:600;font-size:14px;border-radius:9px;padding:9px 15px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:.14s}
+.nnav:hover{border-color:var(--gold)}.nnav.primary{background:var(--gold);color:#fff;border-color:var(--gold);margin-left:auto}
+.locked-view{text-align:center;padding:70px 20px}
+.locked-view .lv-ico{font-size:52px;margin-bottom:14px;opacity:.3}
+.locked-view h2{font-family:var(--serif);font-size:28px;letter-spacing:0.04em;color:var(--ink2);margin-bottom:8px}
+.locked-view p{color:var(--ink2);font-size:14px;max-width:320px;margin:0 auto 18px;line-height:1.6}
+.lock-req-list{display:inline-flex;flex-direction:column;gap:8px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.lreq{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink3)}
+.lreq.met{color:var(--green)}.lreq::before{content:"○"}.lreq.met::before{content:"✓"}
+.toast{position:fixed;top:64px;right:18px;background:linear-gradient(135deg,rgba(37,51,255,.15),rgba(246,179,0,.10));border:1px solid var(--gold);border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:10px;z-index:300;opacity:0;transform:translateY(-8px);transition:.3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast-val{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--gold)}
+.toast-msg{font-size:13px;font-weight:600}
+.dash{padding:36px clamp(18px,4vw,56px) 80px;max-width:700px;margin:0 auto}
+.dash-t{font-family:var(--serif);font-size:clamp(30px,5vw,50px);font-style:italic;margin-bottom:4px}
+.dash-s{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:26px;letter-spacing:1px}
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.dc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px;text-align:center}
+.dc .dv{font-family:var(--mono);font-size:20px;font-weight:700;margin-bottom:4px}
+.dc .dl{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:1px;text-transform:uppercase}
+.dc.gold .dv{color:var(--gold)}.dc.g .dv{color:var(--green)}.dc.r .dv{color:var(--red)}.dc.b .dv{color:var(--teal)}
+.ch-prog{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+.cpr{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.cpr:last-child{margin-bottom:0}
+.cpr-n{font-family:var(--mono);font-size:11px;color:var(--ink2);width:200px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cpr-bar{flex:1;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.cpr-fill{height:100%;background:var(--green);border-radius:3px;transition:.5s}
+.cpr-pct{font-family:var(--mono);font-size:10px;color:var(--green);width:30px;text-align:right}
+.start-btn{background:linear-gradient(135deg,var(--green2),var(--green));color:#fff;border:0;border-radius:12px;padding:13px 28px;font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer;margin-right:12px}
+.mob-bar{display:none}.mob-overlay{display:none}
+.sync-dot{position:fixed;bottom:16px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--green);opacity:0;transition:.4s;z-index:200}
+.sync-dot.show{opacity:1}
+.node-complete-banner{background:linear-gradient(135deg,rgba(246,179,0,.12),rgba(14,165,160,.08));border:1px solid rgba(246,179,0,.35);border-radius:12px;padding:14px 16px;margin-top:16px;display:flex;align-items:center;gap:10px}
+.ncb-icon{font-size:22px;flex-shrink:0}
+.ncb-title{font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:1px;margin-bottom:3px}
+.ncb-sub{font-size:13px;color:var(--ink2)}
+/* Tense timeline strip */
+.tl-strip{display:flex;align-items:stretch;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--line);margin:12px 0}
+.tl-cell{flex:1;padding:10px 8px;text-align:center;border-right:1px solid var(--line);font-size:11px;line-height:1.4}
+.tl-cell:last-child{border-right:0}
+.tl-cell .tl-label{font-family:var(--mono);font-size:9px;letter-spacing:1px;margin-bottom:5px;text-transform:uppercase}
+.tl-cell .tl-val{font-size:12px;font-weight:600}
+.tl-past{background:rgba(227,65,58,.07)}.tl-past .tl-label{color:var(--red)}
+.tl-pres{background:rgba(246,179,0,.07)}.tl-pres .tl-label{color:var(--green)}
+.tl-fut{background:rgba(37,99,235,.07)}.tl-fut .tl-label{color:var(--blue)}
+@media(max-width:720px){
+  :root{--nav-h:52px}
+  .shell{grid-template-rows:var(--nav-h) 1fr var(--nav-h);height:100dvh}
+  .body{grid-template-columns:1fr;grid-row:2;height:calc(100dvh - calc(var(--nav-h)*2))}
+  aside{display:none}
+  .mob-bar{display:flex;grid-row:3;background:rgba(11,16,32,.98);backdrop-filter:blur(16px);border-top:1px solid var(--line);align-items:stretch;z-index:50}
+  .mob-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;color:var(--ink3);cursor:pointer;padding:8px 4px;font-family:var(--mono);font-size:9px;transition:.13s}
+  .mob-tab.active{color:var(--green)}.mob-tab .mt-ico{font-size:18px}
+  .mob-overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;opacity:0;pointer-events:none;transition:.2s}
+  .mob-overlay.show{opacity:1;pointer-events:all}
+  .mob-drawer{position:fixed;left:-100%;top:0;bottom:0;width:min(300px,88vw);background:var(--bg2);border-right:1px solid var(--line);z-index:101;transition:.28s cubic-bezier(.2,.8,.4,1);overflow-y:auto}
+  .mob-drawer.open{left:0}
+  .mob-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px;border-bottom:1px solid var(--line)}
+  .mob-close{background:none;border:1px solid var(--line);color:var(--ink2);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+  .node-view{padding:16px 14px 100px}
+  h1.nt{font-size:24px}
+  .dash{padding:18px 14px 100px}
+  .dash-grid{grid-template-columns:repeat(2,1fr)}
+  .mcq-opts{grid-template-columns:1fr}
+  .tabs{overflow-x:auto;white-space:nowrap;width:100%;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .nav-stats{display:none}
+  .toast{bottom:70px;top:auto;left:14px;right:14px}
+  .sync-dot{bottom:calc(var(--nav-h) + 8px)}
+  .tl-strip{flex-wrap:wrap}
+  .tl-cell{flex:1 1 30%;border-bottom:1px solid var(--line)}
+}
+@media(min-width:721px){.mob-drawer{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="topbar">
+  <div class="logo"><span class="logo-dot"></span>English Map</div>
+  <div class="nav-stats">
+    <div class="stat xp">XP <b id="hXP">0</b></div>
+    <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
+    <div class="stat trap">Traps <b id="hTrap">0/0</b></div>
+  </div>
+</nav>
+<div class="body">
+  <aside><div class="sidebar-inner" id="sideInner"></div></aside>
+  <main id="mainArea"><div id="viewWrap"></div></main>
+</div>
+<nav class="mob-bar">
+  <button class="mob-tab active" onclick="showDash()"><span class="mt-ico">◈</span>Home</button>
+  <button class="mob-tab" onclick="openDrawer()"><span class="mt-ico">☰</span>Topics</button>
+  <button class="mob-tab" onclick="goTraps()"><span class="mt-ico">⚠</span>Traps</button>
+</nav>
+</div>
+<div class="sync-dot" id="syncDot"></div>
+<div class="mob-overlay" id="mobOverlay" onclick="closeDrawer()"></div>
+<div class="mob-drawer" id="mobDrawer">
+  <div class="mob-drawer-head">
+    <div class="logo"><span class="logo-dot"></span>Topics</div>
+    <button class="mob-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="sidebar-inner" id="mobSideInner"></div>
+</div>
+<div class="toast" id="toast"><div class="toast-val" id="toastVal"></div><div class="toast-msg" id="toastMsg"></div></div>
+
+<script>
+const DIAGRAMS = {
+
+"tense-master": `<svg viewBox="0 0 780 310" xmlns="http://www.w3.org/2000/svg" style="max-width:780px;width:100%">
+<!-- Header -->
+<rect x="4" y="4" width="772" height="26" rx="6" fill="rgba(246,179,0,.08)" stroke="#F6B300" stroke-width="1"/>
+<text x="390" y="22" fill="#F6B300" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">12 TENSES — STRUCTURE · SIGNAL WORDS · EXAMPLE</text>
+<!-- Column headers -->
+<rect x="4" y="34" width="772" height="20" rx="0" fill="#d49b00"/>
+<text x="100" y="48" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" letter-spacing="1">TENSE</text>
+<text x="260" y="48" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" letter-spacing="1">STRUCTURE</text>
+<text x="450" y="48" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" letter-spacing="1">SIGNAL WORDS</text>
+<text x="660" y="48" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" letter-spacing="1">EXAMPLE</text>
+<!-- PRESENT rows bg -->
+<rect x="4" y="54" width="772" height="96" rx="0" fill="rgba(246,179,0,.05)" stroke="none"/>
+<!-- present label bar -->
+<rect x="4" y="54" width="16" height="96" fill="rgba(246,179,0,.3)"/>
+<text x="12" y="106" fill="#F6B300" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" transform="rotate(-90,12,106)">PRESENT</text>
+<!-- Row 1 -->
+<line x1="4" y1="78" x2="776" y2="78" stroke="#1f2d42" stroke-width="0.5"/>
+<text x="108" y="69" fill="#0EA5A0" font-size="10" font-weight="600" font-family="Inter,sans-serif">Simple Present</text>
+<text x="108" y="82" fill="#9CA3AF" font-size="9" font-family="JetBrains Mono,monospace">V1 / V1+s</text>
+<text x="260" y="69" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">V1 / V1+s/es</text>
+<text x="440" y="69" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">always, usually, often, daily</text>
+<text x="610" y="69" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He reads daily.</text>
+<!-- Row 2 -->
+<line x1="4" y1="102" x2="776" y2="102" stroke="#1f2d42" stroke-width="0.5"/>
+<text x="108" y="93" fill="#0EA5A0" font-size="10" font-weight="600" font-family="Inter,sans-serif">Present Continuous</text>
+<text x="260" y="93" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">is/am/are + V-ing</text>
+<text x="440" y="93" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">now, currently, at present</text>
+<text x="610" y="93" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He is reading now.</text>
+<!-- Row 3 -->
+<line x1="4" y1="126" x2="776" y2="126" stroke="#1f2d42" stroke-width="0.5"/>
+<text x="108" y="117" fill="#0EA5A0" font-size="10" font-weight="600" font-family="Inter,sans-serif">Present Perfect</text>
+<text x="260" y="117" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">has/have + V3</text>
+<text x="440" y="117" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">just, already, yet, ever, since, for</text>
+<text x="610" y="117" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He has read it.</text>
+<!-- Row 4 -->
+<text x="108" y="139" fill="#0EA5A0" font-size="10" font-weight="600" font-family="Inter,sans-serif">Present Perfect Cont.</text>
+<text x="260" y="139" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">has/have+been+V-ing</text>
+<text x="440" y="139" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">since, for (ongoing)</text>
+<text x="610" y="139" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He has been reading for 2 hrs.</text>
+<!-- PAST rows bg -->
+<rect x="4" y="150" width="772" height="96" rx="0" fill="rgba(227,65,58,.04)"/>
+<rect x="4" y="150" width="16" height="96" fill="rgba(227,65,58,.25)"/>
+<text x="12" y="202" fill="#E3413A" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" transform="rotate(-90,12,202)">PAST</text>
+<!-- Row 5 -->
+<line x1="4" y1="174" x2="776" y2="174" stroke="#1f2d42" stroke-width="0.5"/>
+<text x="108" y="165" fill="#E3413A" font-size="10" font-weight="600" font-family="Inter,sans-serif">Simple Past</text>
+<text x="260" y="165" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">V2</text>
+<text x="440" y="165" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">yesterday, ago, last, in 1990</text>
+<text x="610" y="165" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He read it yesterday.</text>
+<!-- Row 6 -->
+<line x1="4" y1="198" x2="776" y2="198" stroke="#1f2d42" stroke-width="0.5"/>
+<text x="108" y="189" fill="#E3413A" font-size="10" font-weight="600" font-family="Inter,sans-serif">Past Continuous</text>
+<text x="260" y="189" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">was/were + V-ing</text>
+<text x="440" y="189" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">while, when (ongoing past)</text>
+<text x="610" y="189" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He was reading when I came.</text>
+<!-- Row 7 -->
+<line x1="4" y1="222" x2="776" y2="222" stroke="#1f2d42" stroke-width="0.5"/>
+<text x="108" y="213" fill="#E3413A" font-size="10" font-weight="600" font-family="Inter,sans-serif">Past Perfect</text>
+<text x="260" y="213" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">had + V3</text>
+<text x="440" y="213" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">before, after, by the time</text>
+<text x="610" y="213" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He had read before I came.</text>
+<!-- Row 8 -->
+<text x="108" y="237" fill="#E3413A" font-size="10" font-weight="600" font-family="Inter,sans-serif">Past Perfect Cont.</text>
+<text x="260" y="237" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">had+been+V-ing</text>
+<text x="440" y="237" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">for, since (before past point)</text>
+<text x="610" y="237" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He had been reading for 2 hrs.</text>
+<!-- FUTURE rows bg -->
+<rect x="4" y="246" width="772" height="60" rx="0" fill="rgba(37,99,235,.04)"/>
+<rect x="4" y="246" width="16" height="60" fill="rgba(37,99,235,.25)"/>
+<text x="12" y="280" fill="#2563EB" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" transform="rotate(-90,12,280)">FUTURE</text>
+<!-- Row 9 -->
+<line x1="4" y1="246" x2="776" y2="246" stroke="#1f2d42" stroke-width="0.5"/>
+<line x1="4" y1="270" x2="776" y2="270" stroke="#1f2d42" stroke-width="0.5"/>
+<text x="108" y="261" fill="#2563EB" font-size="10" font-weight="600" font-family="Inter,sans-serif">Simple Future</text>
+<text x="260" y="261" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">will/shall + V1</text>
+<text x="440" y="261" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">tomorrow, next, soon</text>
+<text x="610" y="261" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He will read tomorrow.</text>
+<!-- Row 10 -->
+<text x="108" y="285" fill="#2563EB" font-size="10" font-weight="600" font-family="Inter,sans-serif">Future Perfect</text>
+<text x="260" y="285" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">will + have + V3</text>
+<text x="440" y="285" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">by tomorrow, by next week</text>
+<text x="610" y="285" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He will have read it by then.</text>
+<!-- outer border -->
+<rect x="4" y="4" width="772" height="302" rx="6" fill="none" stroke="#1f2d42" stroke-width="1"/>
+<!-- column dividers -->
+<line x1="196" y1="34" x2="196" y2="306" stroke="#1f2d42" stroke-width="0.8"/>
+<line x1="328" y1="34" x2="328" y2="306" stroke="#1f2d42" stroke-width="0.8"/>
+<line x1="580" y1="34" x2="580" y2="306" stroke="#1f2d42" stroke-width="0.8"/>
+</svg>`,
+
+"since-vs-for": `<svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(37,51,255,.08)" stroke="#2533FF" stroke-width="1"/>
+<text x="380" y="22" fill="#2533FF" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">SINCE vs FOR — Most Repeated SSC Pattern</text>
+<rect x="4" y="36" width="370" height="88" rx="8" fill="rgba(246,179,0,.07)" stroke="#F6B300" stroke-width="1.5"/>
+<text x="189" y="60" fill="#F6B300" font-size="14" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">SINCE = Point of Time</text>
+<text x="189" y="80" fill="#F9FAFB" font-size="12" text-anchor="middle" font-family="Inter,sans-serif">since 2010 · since Monday · since morning</text>
+<text x="189" y="98" fill="#9CA3AF" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">since birth · since childhood · since 5 pm</text>
+<text x="189" y="116" fill="#2533FF" font-size="10" text-anchor="middle" font-family="JetBrains Mono,monospace">→ needs Present/Past Perfect tense</text>
+<rect x="386" y="36" width="370" height="88" rx="8" fill="rgba(227,65,58,.07)" stroke="#E3413A" stroke-width="1.5"/>
+<text x="571" y="60" fill="#E3413A" font-size="14" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">FOR = Period of Time</text>
+<text x="571" y="80" fill="#F9FAFB" font-size="12" text-anchor="middle" font-family="Inter,sans-serif">for 2 hours · for 3 years · for a long time</text>
+<text x="571" y="98" fill="#9CA3AF" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">for centuries · for days · for a week</text>
+<text x="571" y="116" fill="#2533FF" font-size="10" text-anchor="middle" font-family="JetBrains Mono,monospace">→ needs Present/Past Perfect tense</text>
+</svg>`,
+
+"conditional-map": `<svg viewBox="0 0 760 175" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(34,197,94,.08)" stroke="#22C55E" stroke-width="1"/>
+<text x="380" y="22" fill="#22C55E" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">CONDITIONAL SENTENCES — 4 TYPES</text>
+<!-- Type 0 -->
+<rect x="4" y="36" width="184" height="130" rx="8" fill="rgba(14,165,160,.06)" stroke="#0EA5A0" stroke-width="1.2"/>
+<text x="96" y="56" fill="#0EA5A0" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 0</text>
+<text x="96" y="70" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Universal Truth</text>
+<text x="96" y="88" fill="#2533FF" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If + Pres → Pres</text>
+<text x="96" y="108" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">If you heat water,</text>
+<text x="96" y="122" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">it boils.</text>
+<text x="96" y="142" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Always true facts</text>
+<text x="96" y="156" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">scientific truths</text>
+<!-- Type 1 -->
+<rect x="196" y="36" width="184" height="130" rx="8" fill="rgba(246,179,0,.06)" stroke="#F6B300" stroke-width="1.2"/>
+<text x="288" y="56" fill="#F6B300" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 1</text>
+<text x="288" y="70" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Real / Possible</text>
+<text x="288" y="88" fill="#2533FF" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If + Pres → will + V1</text>
+<text x="288" y="108" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">If he comes,</text>
+<text x="288" y="122" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">I will go.</text>
+<text x="288" y="142" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Future possible</text>
+<text x="288" y="156" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif">NOT "will come"</text>
+<!-- Type 2 -->
+<rect x="388" y="36" width="184" height="130" rx="8" fill="rgba(37,51,255,.06)" stroke="#2533FF" stroke-width="1.2"/>
+<text x="480" y="56" fill="#2533FF" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 2</text>
+<text x="480" y="70" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Unreal / Present</text>
+<text x="480" y="88" fill="#2533FF" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If + Past → would+V1</text>
+<text x="480" y="108" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">If I had money,</text>
+<text x="480" y="122" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">I would help.</text>
+<text x="480" y="142" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Hypothetical</text>
+<text x="480" y="156" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif">NOT "would have"</text>
+<!-- Type 3 -->
+<rect x="580" y="36" width="176" height="130" rx="8" fill="rgba(227,65,58,.06)" stroke="#E3413A" stroke-width="1.2"/>
+<text x="668" y="56" fill="#E3413A" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 3</text>
+<text x="668" y="70" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Unreal / Past</text>
+<text x="668" y="88" fill="#2533FF" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If+PastPerf → wd+hv+V3</text>
+<text x="668" y="108" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">If he had come,</text>
+<text x="668" y="122" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">I would have gone.</text>
+<text x="668" y="142" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Regret / missed</text>
+<text x="668" y="156" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif">NOT "would have had"</text>
+</svg>`,
+
+"stative-verbs": `<svg viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(227,65,58,.08)" stroke="#E3413A" stroke-width="1"/>
+<text x="380" y="22" fill="#E3413A" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">STATIVE VERBS — NEVER USE -ING FORM</text>
+<rect x="4" y="36" width="183" height="116" rx="8" fill="rgba(246,179,0,.05)" stroke="#F6B300" stroke-width="1"/>
+<text x="95" y="54" fill="#F6B300" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">THINKING / KNOWING</text>
+<text x="95" y="70" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">believe · know · understand</text>
+<text x="95" y="86" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">remember · forget · think</text>
+<text x="95" y="102" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">realise · mean · doubt</text>
+<text x="95" y="118" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "I am knowing"</text>
+<text x="95" y="134" fill="#F6B300" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "I know"</text>
+<rect x="195" y="36" width="183" height="116" rx="8" fill="rgba(14,165,160,.05)" stroke="#0EA5A0" stroke-width="1"/>
+<text x="287" y="54" fill="#0EA5A0" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">FEELINGS / EMOTIONS</text>
+<text x="287" y="70" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">love · hate · like · prefer</text>
+<text x="287" y="86" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">want · need · wish · care</text>
+<text x="287" y="102" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">dislike · adore · mind</text>
+<text x="287" y="118" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "I am wanting"</text>
+<text x="287" y="134" fill="#F6B300" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "I want"</text>
+<rect x="386" y="36" width="183" height="116" rx="8" fill="rgba(37,51,255,.05)" stroke="#2533FF" stroke-width="1"/>
+<text x="477" y="54" fill="#2533FF" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">SENSES / PERCEPTION</text>
+<text x="477" y="70" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">see · hear · smell · taste</text>
+<text x="477" y="86" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">feel (mental) · notice</text>
+<text x="477" y="102" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">seem · appear · look (=seem)</text>
+<text x="477" y="118" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "She is seeing him"</text>
+<text x="477" y="134" fill="#F6B300" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "She sees him"</text>
+<rect x="577" y="36" width="179" height="116" rx="8" fill="rgba(34,197,94,.05)" stroke="#22C55E" stroke-width="1"/>
+<text x="667" y="54" fill="#22C55E" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">POSSESSION / STATE</text>
+<text x="667" y="70" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">have (=own) · own · belong</text>
+<text x="667" y="86" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">consist · contain · include</text>
+<text x="667" y="102" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">resemble · matter · owe</text>
+<text x="667" y="118" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "She is having a car"</text>
+<text x="667" y="134" fill="#F6B300" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "She has a car"</text>
+</svg>`,
+
+"reported-speech": `<svg viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(37,99,235,.08)" stroke="#2563EB" stroke-width="1"/>
+<text x="380" y="22" fill="#2563EB" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">REPORTED SPEECH — TENSE BACKSHIFT TABLE</text>
+<rect x="4" y="34" width="375" height="110" rx="8" fill="rgba(227,65,58,.06)" stroke="#E3413A" stroke-width="1"/>
+<text x="191" y="52" fill="#E3413A" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">DIRECT (original)</text>
+<text x="191" y="68" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">is / am / are</text>
+<text x="191" y="84" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">has / have + V3</text>
+<text x="191" y="100" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">Simple Present (V1)</text>
+<text x="191" y="116" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">Simple Past (V2)</text>
+<text x="191" y="132" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">will / can / may</text>
+<rect x="385" y="34" width="371" height="110" rx="8" fill="rgba(246,179,0,.06)" stroke="#F6B300" stroke-width="1"/>
+<text x="570" y="52" fill="#F6B300" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">REPORTED (backshift)</text>
+<text x="570" y="68" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">was / were</text>
+<text x="570" y="84" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">had + V3</text>
+<text x="570" y="100" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">Simple Past (V2)</text>
+<text x="570" y="116" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">Past Perfect (had+V3)</text>
+<text x="570" y="132" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">would / could / might</text>
+<text x="380" y="82" fill="#2533FF" font-size="18" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
+<text x="380" y="100" fill="#2533FF" font-size="18" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
+<text x="380" y="118" fill="#2533FF" font-size="18" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
+</svg>`
+};
+
+const CHAPTERS = [
+{id:"tense-overview",title:"Tense Overview",icon:"📖",nodes:[
+
+{id:"12-tenses",title:"12 Tenses — Master Table",xp:20,type:"regular",
+diag:"tense-master",
+facts:[
+  "<b>12 tenses = 3 times × 4 aspects</b> (Simple, Continuous, Perfect, Perfect Continuous)",
+  "<b>Present Simple</b>: V1/V1+s — always, usually, often, daily, every day",
+  "<b>Present Continuous</b>: is/am/are + V-ing — now, currently, at present, look!",
+  "<b>Present Perfect</b>: has/have + V3 — just, already, yet, ever, never, since, for, recently",
+  "<b>Present Perfect Continuous</b>: has/have + been + V-ing — since/for (ongoing action up to now)",
+  "<b>Simple Past</b>: V2 — yesterday, ago, last week, in 2010, then, once",
+  "<b>Past Continuous</b>: was/were + V-ing — while, when (action in progress in past)",
+  "<b>Past Perfect</b>: had + V3 — before, after, by the time, already (earlier of two past actions)",
+  "<b>Past Perfect Continuous</b>: had + been + V-ing — for/since before a past point",
+  "<b>Simple Future</b>: will/shall + V1 — tomorrow, next week, soon, in future",
+  "<b>Future Continuous</b>: will + be + V-ing — at this time tomorrow, at noon",
+  "<b>Future Perfect</b>: will + have + V3 — by tomorrow, by next week, by then",
+  "<b>Future Perfect Continuous</b>: will + have + been + V-ing — by + time, for"
+],
+table:{h:["Tense","Structure","Key Signal Words"],r:[
+  ["Simple Present","V1 / V1+s/es","always, usually, often, daily, every"],
+  ["Present Continuous","is/am/are + V-ing","now, currently, at present, still"],
+  ["Present Perfect","has/have + V3","just, already, yet, ever, never, since, for"],
+  ["Pres. Perfect Cont.","has/have + been + V-ing","since, for (ongoing up to now)"],
+  ["Simple Past","V2","yesterday, ago, last, in 1990, then"],
+  ["Past Continuous","was/were + V-ing","while, when (ongoing past)"],
+  ["Past Perfect","had + V3","before, after, by the time, already"],
+  ["Past Perfect Cont.","had + been + V-ing","for, since (before a past point)"],
+  ["Simple Future","will/shall + V1","tomorrow, next, soon, in future"],
+  ["Future Perfect","will + have + V3","by tomorrow, by next week, by then"]
+]},
+traps:[
+  "Signal words determine tense — 'yesterday' = Simple Past; 'just' = Present Perfect",
+  "<b>'ago'</b> always triggers Simple Past — never Present Perfect",
+  "<b>'since/for'</b> with ongoing duration → always Perfect tense (not Simple or Continuous)",
+  "<b>'by + future time'</b> → Future Perfect (will + have + V3)"
+],
+mcqs:[
+  {q:"She ___ here since 2015. (Choose correct tense)",o:["is working","works","has been working","worked"],a:2,e:"'Since 2015' = point of time, ongoing action up to now → Present Perfect Continuous. 'Has been working since 2015' is correct."},
+  {q:"He ___ the letter before she arrived.",o:["wrote","has written","had written","was writing"],a:2,e:"Two past actions — 'wrote' (later) = simple past, 'arrived' (later) = simple past. The earlier action = Past Perfect. 'Had written' before she arrived."},
+  {q:"I ___ her yesterday at the market.",o:["have seen","had seen","see","saw"],a:3,e:"'Yesterday' = specific past time → Simple Past only. 'Saw' is correct. NEVER use present perfect with yesterday/last/ago."},
+  {q:"She will have completed the project ___ next Friday.",o:["since","for","by","from"],a:2,e:"Future Perfect (will have + V3) pairs with 'by + future time'. 'By next Friday' = correct signal for Future Perfect."},
+  {q:"He ___ for two hours when I reached.",o:["was waiting","had been waiting","has been waiting","waited"],a:1,e:"Ongoing action BEFORE a specific past point → Past Perfect Continuous. 'Had been waiting for two hours when I reached.'"}
+]},
+
+]},
+
+{id:"critical-rules",title:"Critical Rules",icon:"⚡",nodes:[
+
+{id:"since-for",title:"Since vs For",xp:20,type:"trap",
+diag:"since-vs-for",
+facts:[
+  "<b>SINCE = point of time</b> — marks WHEN the action started",
+  "since 2010, since Monday, since morning, since birth, since childhood, since 5 pm, since last year",
+  "<b>FOR = period of time</b> — marks HOW LONG the action has lasted",
+  "for 2 hours, for 3 years, for a long time, for centuries, for a week, for ages",
+  "<b>Both SINCE and FOR need Perfect tense</b> (Present Perfect or Past Perfect)",
+  "<b>He has been working here since 2010</b> ✓",
+  "<b>He has been working here for 3 years</b> ✓",
+  "<b>Quick test</b>: If you can ask 'HOW LONG?' → FOR. If you can ask 'SINCE WHEN?' → SINCE"
+],
+table:{h:["Preposition","Meaning","Examples","Tense Needed"],r:[
+  ["SINCE","Point of time (start)","since 2010 · since Monday · since 5 pm · since birth","Present/Past Perfect"],
+  ["FOR","Period/duration","for 2 hours · for 3 years · for a long time · for ages","Present/Past Perfect"],
+  ["DURING","Within a period","during the war · during summer","Simple Past"],
+  ["AGO","Past point (from now)","2 years ago · 3 days ago","Simple Past ONLY"]
+]},
+traps:[
+  "<b>He is working here since 2010</b> → WRONG — 'since' needs Perfect tense → USE: <b>has been working</b>",
+  "<b>I am living here for 5 years</b> → WRONG — 'for + period' needs Perfect → USE: <b>have been living</b>",
+  "<b>Since three years</b> → WRONG — three years is a period → USE: <b>for three years</b>",
+  "<b>For 2010</b> → WRONG — 2010 is a point in time → USE: <b>since 2010</b>",
+  "SSC loves testing: 'working here since/for 2019' — ask: is 2019 a point or a period? → Point → SINCE"
+],
+mcqs:[
+  {q:"He has been working here ___ 2019.",o:["for","during","since","from"],a:2,e:"2019 = specific point in time (when it started) → SINCE. 'Has been working here SINCE 2019' is correct."},
+  {q:"She has been practicing the piano ___ three hours.",o:["since","from","during","for"],a:3,e:"Three hours = period of time (how long) → FOR. 'Has been practicing FOR three hours' is correct."},
+  {q:"I ___ here for 5 years. (correct tense + preposition)",o:["am living / since","lived / for","have been living / for","live / since"],a:2,e:"'For 5 years' = period → needs Present Perfect Continuous. 'Have been living for 5 years' is correct. NOT 'am living'."},
+  {q:"He has not eaten anything ___ morning.",o:["for","during","from","since"],a:3,e:"'Morning' = point of time (when it started) → SINCE. 'Has not eaten since morning.' SINCE = point, FOR = period."},
+  {q:"We have known each other ___ many years.",o:["since","from","during","for"],a:3,e:"'Many years' = duration/period → FOR. 'Have known each other for many years.' Stative verb 'know' in Perfect tense."}
+]},
+
+{id:"past-perfect-sequence",title:"Past Perfect — Sequence of Events",xp:20,type:"trap",
+facts:[
+  "<b>When TWO past actions occur: earlier action → Past Perfect (had + V3), later → Simple Past (V2)</b>",
+  "<b>He had eaten before she arrived</b> — eaten first (Past Perfect), arrived second (Simple Past)",
+  "<b>Trigger words for Past Perfect</b>: before, after, by the time, already, when, no sooner...than, hardly...when, scarcely...when",
+  "<b>No sooner had he entered than the bell rang</b> — inversion structure",
+  "<b>Hardly had she spoken when the phone rang</b> — inversion structure",
+  "<b>By the time the fire brigade came, the house had burnt down</b>",
+  "<b>After he had eaten, he left</b> OR <b>After he ate, he had left</b> — both acceptable if 'after' signals order",
+  "<b>If 'before/after' is present, order is clear</b> — Past Perfect still preferred for the earlier action"
+],
+table:{h:["Signal","Earlier Action","Later Action","Example"],r:[
+  ["before","Past Perfect","Simple Past","He had left before she came"],
+  ["after","Past Perfect","Simple Past","After he had eaten, she arrived"],
+  ["by the time","Past Perfect","Simple Past","By the time I reached, he had left"],
+  ["no sooner...than","Past Perfect","Simple Past","No sooner had I slept than he came"],
+  ["hardly...when","Past Perfect","Simple Past","Hardly had she arrived when it rained"],
+  ["already","Past Perfect","—","He had already gone when I called"]
+]},
+traps:[
+  "<b>Before she came, he left</b> → WRONG — earlier action needs Past Perfect → USE: <b>he had left</b>",
+  "<b>No sooner did he enter than the bell has rung</b> → WRONG → USE: <b>rang</b> (Simple Past)",
+  "<b>Inversion trap</b>: 'No sooner / Hardly / Scarcely' → auxiliary comes BEFORE subject → 'No sooner HAD he entered...'",
+  "<b>By the time + present → future perfect</b>: 'By the time he comes, I will have left'",
+  "SSC CGL loves 'before/after' sequences — if you see both clauses in simple past, one is wrong"
+],
+mcqs:[
+  {q:"Before I reached the station, the train ___.",o:["left","has left","had left","was leaving"],a:2,e:"Earlier action (train leaving) = Past Perfect. Later action (I reached) = Simple Past. 'The train HAD LEFT before I reached.'"},
+  {q:"No sooner ___ he entered the hall than the lights went out.",o:["did","has","had","was"],a:2,e:"'No sooner...than' structure requires Past Perfect with inversion. 'No sooner HAD he entered than the lights went out.'"},
+  {q:"She ___ the report before the manager arrived.",o:["submitted","has submitted","submits","had submitted"],a:3,e:"Submitted = earlier action (Past Perfect). Manager arrived = later action (Simple Past). 'Had submitted' is correct."},
+  {q:"By the time the doctor came, the patient ___.",o:["died","has died","had died","was dying"],a:2,e:"'By the time + Simple Past' → earlier event = Past Perfect. 'The patient HAD DIED' by the time the doctor came."},
+  {q:"Hardly ___ she finished speaking when the audience applauded.",o:["did","has","had","was"],a:2,e:"'Hardly...when' = Past Perfect inversion. 'Hardly HAD she finished when...' — same structure as No sooner/Scarcely."}
+]},
+
+{id:"present-perfect-vs-past",title:"Present Perfect vs Simple Past",xp:20,type:"trap",
+facts:[
+  "<b>Present Perfect (has/have + V3)</b>: action completed, effect still relevant NOW",
+  "<b>Use with</b>: just, already, yet, ever, never, since, for, recently, lately, so far",
+  "<b>NEVER use Present Perfect with specific past time words</b>: yesterday, last week, in 2010, ago, then, once",
+  "<b>Simple Past (V2)</b>: completed action at a definite, specific past time",
+  "<b>Use with</b>: yesterday, last week, in 2010, ago, then, once, that day",
+  "<b>I met him yesterday</b> ✓ (specific past) — <b>I have met him yesterday</b> ✗",
+  "<b>I have just met him</b> ✓ (just = recent, no specific time) — <b>I just met him</b> ✗",
+  "<b>He has gone to Delhi</b> ✓ (he is still there) vs <b>He went to Delhi last year</b> ✓ (specific time)",
+  "<b>I have seen this movie three times</b> ✓ (no specific time mentioned)"
+],
+table:{h:["Use PRESENT PERFECT","Use SIMPLE PAST"],r:[
+  ["just, already, yet, ever, never","yesterday, last week/month/year"],
+  ["since, for (ongoing)","ago (2 days ago, 3 years ago)"],
+  ["recently, lately, so far","in 1990, in March, on Monday"],
+  ["No specific time given","Specific time stated"],
+  ["Effect still present now","Completed, no current link"]
+]},
+traps:[
+  "<b>I have met him yesterday</b> → WRONG — 'yesterday' = specific past → USE: <b>I met him yesterday</b>",
+  "<b>He has gone to Delhi last year</b> → WRONG — 'last year' = specific past → USE: <b>He went to Delhi last year</b>",
+  "<b>I just met him</b> → WRONG — 'just' = Present Perfect signal → USE: <b>I have just met him</b>",
+  "<b>Did you eat yet?</b> → WRONG — 'yet' = Present Perfect signal → USE: <b>Have you eaten yet?</b>",
+  "SSC PYQ pattern: 'He has returned from Mumbai last week' → error = 'has returned' → 'returned'"
+],
+mcqs:[
+  {q:"I ___ him just now outside the office.",o:["met","have met","had met","was meeting"],a:1,e:"'Just now' = very recent, no specific past time → Present Perfect. 'Have met him just now.' NOTE: 'just now' requires Present Perfect, not Simple Past."},
+  {q:"She ___ to Ooty last summer with her family.",o:["has gone","has been","went","goes"],a:2,e:"'Last summer' = specific past time → Simple Past only. 'Went to Ooty last summer.' NEVER use Present Perfect with specific past times."},
+  {q:"___ you ever visited the Taj Mahal?",o:["Did","Have","Had","Do"],a:1,e:"'Ever' = Present Perfect signal (life experience, no specific time). 'Have you ever visited?' is correct."},
+  {q:"He ___ this novel three times so far.",o:["read","reads","had read","has read"],a:3,e:"'Three times so far' = no specific time, cumulative experience up to now → Present Perfect. 'Has read this novel three times so far.'"},
+  {q:"The match ___ an hour ago. (Correct tense)",o:["has started","had started","starts","started"],a:3,e:"'An hour ago' = specific past time → Simple Past. 'The match STARTED an hour ago.' Never: 'has started an hour ago.'"}
+]},
+
+{id:"stative-verbs",title:"Stative Verbs — No Continuous Form",xp:20,type:"trap",
+diag:"stative-verbs",
+facts:[
+  "<b>Stative verbs describe STATES (not actions) — never used with -ing</b>",
+  "<b>THINKING/KNOWING</b>: believe, know, understand, remember, forget, think (=opinion), realise, mean, doubt",
+  "<b>FEELINGS/EMOTIONS</b>: love, hate, like, prefer, want, need, wish, care, dislike, adore, mind",
+  "<b>SENSES</b>: see, hear, smell, taste, feel (mental), notice, seem, appear, look (=seem)",
+  "<b>POSSESSION/STATE</b>: have (=own), own, belong, consist, contain, include, resemble, matter, owe",
+  "<b>EXCEPTION — 'have' in action sense CAN use -ing</b>:",
+  "'She is having lunch' ✓ (having = eating) vs 'She is having a car' ✗ (having = possessing)",
+  "'She is having a great time' ✓ (having = experiencing)",
+  "<b>EXCEPTION — 'think' in active sense</b>: 'I am thinking about you' ✓ (=active process)"
+],
+table:{h:["Wrong (Stative + -ing)","Correct","Reason"],r:[
+  ["I am knowing the answer","I know the answer","'know' = stative"],
+  ["She is having a car","She has a car","'have' = possess = stative"],
+  ["He is believing you","He believes you","'believe' = stative"],
+  ["I am understanding now","I understand now","'understand' = stative"],
+  ["She is wanting to go","She wants to go","'want' = stative"],
+  ["She is having lunch","✓ CORRECT","'have' = action (eating)"],
+  ["I am thinking of you","✓ CORRECT","'think' = active process"]
+]},
+traps:[
+  "<b>I am knowing the answer</b> → WRONG → USE: <b>I know</b>",
+  "<b>She is having a car</b> → WRONG → USE: <b>She has a car</b>",
+  "<b>She is having lunch</b> → CORRECT — 'have' in action sense CAN use -ing",
+  "<b>I am thinking of you</b> → CORRECT — 'think' as an active mental process",
+  "SSC trap: 'He is believing that she is right' → error = 'is believing' → 'believes'"
+],
+mcqs:[
+  {q:"I ___ the answer to your question.",o:["am knowing","was knowing","know","have been knowing"],a:2,e:"'Know' = stative verb (mental state). Cannot use -ing. 'I KNOW the answer.' Never 'am knowing.'"},
+  {q:"She ___ a beautiful house near the lake.",o:["is having","was having","has been having","has"],a:3,e:"'Have' in possession sense = stative. Cannot use -ing. 'She HAS a beautiful house.' Compare: 'She is having lunch' (action sense)."},
+  {q:"The food ___ delicious. (correct form of 'smell')",o:["is smelling","smells","was smelling","has been smelling"],a:1,e:"'Smell' in sense/state meaning = stative. 'The food SMELLS delicious.' But 'She is smelling the flowers' (action) is correct."},
+  {q:"She ___ lunch when I called her.",o:["has","was having","had","is having"],a:1,e:"'Have' in action sense (eating) = NOT stative → CAN use -ing. 'She WAS HAVING lunch when I called.' Past continuous is correct here."},
+  {q:"He ___ that she is telling the truth.",o:["is believing","was believing","has been believing","believes"],a:3,e:"'Believe' = always stative. Cannot use -ing in any tense. 'He BELIEVES that she is telling the truth.'"}
+]},
+
+{id:"conditionals",title:"Conditional Sentences — 4 Types",xp:25,type:"trap",
+diag:"conditional-map",
+facts:[
+  "<b>Type 0 — Universal Truth</b>: If + Simple Present, Simple Present",
+  "If you heat water, it boils. | If you mix blue and yellow, you get green.",
+  "<b>Type 1 — Real / Possible Future</b>: If + Simple Present, will + V1",
+  "If it rains, I will stay home. | If he comes, we will go.",
+  "<b>Type 2 — Unreal / Hypothetical Present</b>: If + Simple Past, would + V1",
+  "If I had money, I would help. | If she were here, she would know.",
+  "<b>Type 3 — Unreal / Missed Past</b>: If + Past Perfect, would + have + V3",
+  "If he had come, I would have gone. | If she had studied, she would have passed.",
+  "<b>'Were' is used for all persons in Type 2</b>: 'If I were you...' (NOT 'if I was')",
+  "<b>Unless = If...not</b>: 'Unless you hurry, you will be late' = 'If you don't hurry...'"
+],
+table:{h:["Type","IF Clause","Main Clause","Use"],r:[
+  ["Type 0","Simple Present","Simple Present","Universal / scientific truth"],
+  ["Type 1","Simple Present","will + V1","Real/possible future event"],
+  ["Type 2","Simple Past","would + V1","Unreal/hypothetical present"],
+  ["Type 3","Past Perfect","would + have + V3","Unreal past / regret / missed chance"]
+]},
+traps:[
+  "<b>If he will come, I will go</b> → WRONG — Type 1 IF clause never uses 'will' → USE: <b>If he comes</b>",
+  "<b>If I would have money, I would help</b> → WRONG — Type 2 IF uses Simple Past → USE: <b>If I had money</b>",
+  "<b>If I was you, I would apologise</b> → WRONG — Type 2 uses 'were' for all persons → USE: <b>If I were you</b>",
+  "<b>If he would have come, I would have met him</b> → WRONG — Type 3 IF uses Past Perfect → USE: <b>If he had come</b>",
+  "SSC trap: mixing Type 2 and Type 3 — 'If she studied (Type 2) she would have passed (Type 3)' → WRONG — both clauses must match"
+],
+mcqs:[
+  {q:"If it ___, we will cancel the match.",o:["rained","will rain","rains","would rain"],a:2,e:"Type 1 conditional (real/possible future). IF clause = Simple Present. 'If it RAINS, we will cancel.' Never 'will rain' in IF clause."},
+  {q:"If I ___ you, I would apologise immediately.",o:["am","was","were","will be"],a:2,e:"Type 2 conditional (unreal/hypothetical). 'Were' is used for all persons in Type 2. 'If I WERE you, I would apologise.'"},
+  {q:"If she ___ harder, she would have passed the exam.",o:["studied","had studied","studies","would study"],a:1,e:"Type 3 conditional (unreal past/regret). IF clause = Past Perfect. 'If she HAD STUDIED harder, she would have passed.'"},
+  {q:"___ you work hard, you will succeed.",o:["If","Unless","Until","Though"],a:0,e:"'If you work hard, you will succeed' = Type 1. Simple Present in IF clause + will in main. 'Unless' would change the meaning to negative."},
+  {q:"If water ___ 0°C, it freezes. (Type 0)",o:["reached","will reach","would reach","reaches"],a:3,e:"Type 0 = universal truth. Both clauses in Simple Present. 'If water REACHES 0°C, it freezes.' Always true = Type 0."}
+]},
+
+{id:"reported-speech-tense",title:"Reported Speech — Tense Backshift",xp:20,type:"trap",
+diag:"reported-speech",
+facts:[
+  "<b>When reporting verb is past (said, told, asked) → backshift all tenses in reported speech</b>",
+  "<b>is/am/are → was/were</b>: 'I am tired' → He said he was tired.",
+  "<b>has/have → had</b>: 'I have finished' → She said she had finished.",
+  "<b>Simple Present → Simple Past</b>: 'I work here' → He said he worked there.",
+  "<b>Simple Past → Past Perfect</b>: 'I met him' → She said she had met him.",
+  "<b>will → would | can → could | may → might</b>",
+  "<b>EXCEPTION — Universal/Scientific truths: NO backshift</b>",
+  "Teacher said the sun RISES in the east. (NOT 'rose')",
+  "He said light TRAVELS faster than sound. (NOT 'travelled')",
+  "<b>EXCEPTION — Historical facts: some allow no backshift</b>",
+  "She said Gandhi WAS born in 1869. (past is fine — fixed fact)"
+],
+table:{h:["Direct Speech","Reported Speech","Example"],r:[
+  ["is / am / are","was / were","'I am happy' → said she was happy"],
+  ["has / have + V3","had + V3","'I have done it' → said he had done it"],
+  ["Simple Present (V1)","Simple Past (V2)","'I go' → said he went"],
+  ["Simple Past (V2)","Past Perfect (had+V3)","'I went' → said she had gone"],
+  ["will","would","'I will come' → said he would come"],
+  ["can","could","'I can do it' → said he could do it"],
+  ["may","might","'It may rain' → said it might rain"],
+  ["Universal truth","NO change","said the sun rises (not rose)"]
+]},
+traps:[
+  "<b>He said that the sun rose in the east</b> → WRONG — universal truth = no backshift → USE: <b>the sun rises</b>",
+  "<b>She said she went there tomorrow</b> → WRONG — 'tomorrow' must change to 'the next day' in reported speech",
+  "<b>He said 'I will come' → He said he will come</b> → WRONG → USE: <b>he would come</b>",
+  "Time/place references also change: now→then, here→there, today→that day, tomorrow→the next day"
+],
+mcqs:[
+  {q:"He said, 'I am feeling sick.' → He said that he ___ sick.",o:["is feeling","feels","was feeling","had felt"],a:2,e:"Backshift: 'am feeling' (Present Continuous) → 'was feeling' (Past Continuous). Reporting verb 'said' triggers backshift."},
+  {q:"She said, 'The sun rises in the east.' → She said that the sun ___ in the east.",o:["rose","had risen","rises","would rise"],a:2,e:"Universal truth = NO backshift. Even though reporting verb is past ('said'), 'rises' stays as 'rises'. SSC CGL standard question."},
+  {q:"He said, 'I can swim.' → He said that he ___ swim.",o:["can","may","could","would"],a:2,e:"Backshift: 'can' → 'could'. 'He said he COULD swim.' Modal backshift rule: can→could, may→might, will→would."},
+  {q:"She said, 'I finished the work yesterday.' → She said she ___ the work the previous day.",o:["finished","has finished","had finished","finishes"],a:2,e:"Backshift: Simple Past ('finished') → Past Perfect ('had finished'). Also 'yesterday' → 'the previous day' in reported speech."},
+  {q:"Teacher said, 'Light travels faster than sound.' → Teacher said that light ___ faster than sound.",o:["travelled","had travelled","travels","would travel"],a:2,e:"Scientific/universal truth = NO backshift. 'Travels' stays as 'travels'. A classic SSC pattern — universal truths never change in reported speech."}
+]},
+
+{id:"time-clauses",title:"Time Clauses — No Future Tense",xp:15,type:"trap",
+facts:[
+  "<b>In time clauses, use PRESENT tense to express future meaning — NEVER use 'will'</b>",
+  "<b>Conjunctions that introduce time clauses</b>: when, before, after, until, till, as soon as, by the time, once, the moment, whenever",
+  "<b>I will call you when he comes</b> ✓ (NOT 'when he will come')",
+  "<b>Wait here until she arrives</b> ✓ (NOT 'until she will arrive')",
+  "<b>As soon as she finishes, we will leave</b> ✓ (NOT 'will finish')",
+  "<b>After she completes the course, she will apply</b> ✓",
+  "<b>Before you go, call me</b> ✓ (NOT 'before you will go')",
+  "<b>The moment he arrives, inform me</b> ✓",
+  "<b>Exception — if clause expressing CONDITION (not time)</b>: 'I will ask him if he comes' — 'if' can also be conditional"
+],
+table:{h:["Time Conjunction","Wrong","Correct"],r:[
+  ["when","when he will come","when he comes"],
+  ["before","before she will leave","before she leaves"],
+  ["after","after it will rain","after it rains"],
+  ["until / till","until she will arrive","until she arrives"],
+  ["as soon as","as soon as I will reach","as soon as I reach"],
+  ["by the time","by the time he will come","by the time he comes"],
+  ["once","once she will finish","once she finishes"]
+]},
+traps:[
+  "<b>I will call you when he will come</b> → WRONG — time clause cannot have 'will' → USE: <b>when he comes</b>",
+  "<b>After she will finish, we will leave</b> → WRONG → USE: <b>After she finishes</b>",
+  "<b>Wait until she will return</b> → WRONG → USE: <b>until she returns</b>",
+  "SSC CGL: this rule appears in almost every paper — spot 'when/before/after/until' + 'will' = always an error"
+],
+mcqs:[
+  {q:"I will call you when he ___.",o:["will come","comes","would come","is coming"],a:1,e:"Time clause (when) = Present tense for future meaning. 'When he COMES' — never 'will come' inside a time clause."},
+  {q:"She will not leave until the work ___.",o:["will complete","completes","would complete","is completed"],a:3,e:"Time clause (until) = Present tense. 'Until the work IS COMPLETED.' The main clause has 'will' — time clause must not."},
+  {q:"As soon as I ___, I will call you.",o:["will reach","would reach","reach","reached"],a:2,e:"'As soon as' = time conjunction → Present tense for future. 'As soon as I REACH.' Never 'will reach' in the as-soon-as clause."},
+  {q:"He will inform you before he ___.",o:["will leave","would leave","leaves","left"],a:2,e:"'Before' = time conjunction → Present tense. 'Before he LEAVES.' Main clause has 'will inform' — subordinate time clause uses simple present."},
+  {q:"By the time she ___, we will have finished.",o:["will arrive","arrives","would arrive","had arrived"],a:1,e:"'By the time' = time conjunction → Present tense. 'By the time she ARRIVES, we will have finished.' (Main clause = Future Perfect.)"}
+]},
+
+]},
+
+{id:"pyq-tenses",title:"PYQ Patterns",icon:"🎯",nodes:[
+
+{id:"tense-find-error",title:"Find the Error — Tense Questions",xp:25,type:"trap",
+facts:[
+  "<b>SSC approach</b>: Read the sentence → spot signal word → check if tense matches → find mismatch",
+  "<b>Pattern 1 — Specific past + Present Perfect</b>: 'I have met him yesterday' → error = 'have met' → 'met'",
+  "<b>Pattern 2 — Since/For tense</b>: 'He is working since 2010' → error = 'is working' → 'has been working'",
+  "<b>Pattern 3 — Stative + -ing</b>: 'She is knowing the answer' → error = 'is knowing' → 'knows'",
+  "<b>Pattern 4 — Conditional</b>: 'If he will come, I will go' → error = 'will come' → 'comes'",
+  "<b>Pattern 5 — Time clause</b>: 'Call me when he will arrive' → error = 'will arrive' → 'arrives'",
+  "<b>Pattern 6 — Past sequence</b>: 'Before she came, he left' → error = 'left' → 'had left'",
+  "<b>Pattern 7 — Universal truth</b>: 'He said the sun rose in the east' → error = 'rose' → 'rises'"
+],
+traps:[
+  "Long sentences hide the real error — always find the signal word first, then check the verb",
+  "'No sooner...than' — inversion required AND Past Perfect required — two traps in one structure",
+  "Reported speech + universal truth = NO backshift — most students apply backshift and get it wrong"
+],
+mcqs:[
+  {q:"Find error: 'She (A) has returned from (B) Mumbai (C) last week. (D) No error'",o:["Part A","Part B","Part C","No error"],a:0,e:"Part A: 'has returned' is wrong. 'Last week' = specific past time → Simple Past. Correct: 'She RETURNED from Mumbai last week.'"},
+  {q:"Find error: 'He (A) is working (B) here (C) since 2015. (D) No error'",o:["Part A","Part B","Part C","No error"],a:1,e:"Part B: 'is working' is wrong. 'Since 2015' = point of time with ongoing duration → Present Perfect Continuous. Correct: 'has been working here since 2015.'"},
+  {q:"Find error: 'If (A) he will come (B) tomorrow, we (C) will go. (D) No error'",o:["Part A","Part B","Part C","No error"],a:1,e:"Part B: 'will come' is wrong in Type 1 IF clause. IF clause = Simple Present. Correct: 'If he COMES tomorrow, we will go.'"},
+  {q:"Find error: 'She (A) is knowing (B) the answer (C) very well. (D) No error'",o:["Part A","Part B","Part C","No error"],a:1,e:"Part B: 'is knowing' is wrong. 'Know' = stative verb — no -ing form. Correct: 'She KNOWS the answer very well.'"},
+  {q:"Find error: 'The teacher (A) said that (B) the earth revolves (C) around the sun. (D) No error'",o:["Part A","Part B","Part C","No error"],a:3,e:"No error. 'The earth revolves around the sun' = universal/scientific truth → NO backshift even in reported speech. This is the correct form."}
+]},
+
+{id:"tense-fill-blank",title:"Fill in the Blank — Tense Patterns",xp:25,type:"trap",
+facts:[
+  "<b>Step 1</b>: Find the signal word in the sentence",
+  "<b>Step 2</b>: Apply the matching tense rule",
+  "<b>Since/For + ongoing</b> → Present Perfect Continuous",
+  "<b>Yesterday/ago/last</b> → Simple Past only",
+  "<b>Just/already/yet/ever</b> → Present Perfect",
+  "<b>Before/after + two past events</b> → earlier = Past Perfect",
+  "<b>If clause + will in main</b> → Simple Present in if clause",
+  "<b>When/until/as soon as</b> → Simple Present (not will)",
+  "<b>By + future time</b> → Future Perfect (will have + V3)",
+  "<b>No sooner...than / Hardly...when</b> → Past Perfect + inversion"
+],
+traps:[
+  "Two blanks in same sentence — each may have different rules — don't apply one rule to both",
+  "'Just now' → Present Perfect (not Simple Past): 'I have just met him just now'",
+  "'Already' in questions → Present Perfect: 'Have you already eaten?'"
+],
+mcqs:[
+  {q:"By the time he ___, she will have left.",o:["comes","will come","came","had come"],a:0,e:"Time clause 'by the time' = Simple Present (not will). Main clause = Future Perfect. 'By the time he COMES, she will have left.'"},
+  {q:"I ___ this movie before. I don't want to watch it again.",o:["saw","had seen","have seen","see"],a:2,e:"'Before' here = life experience without specific time → Present Perfect. 'I HAVE SEEN this movie before.'"},
+  {q:"No sooner ___ the bell ring than the students rushed out.",o:["did","had","has","does"],a:1,e:"'No sooner...than' = Past Perfect with inversion. 'No sooner HAD the bell rung than...' Note: verb also becomes V3 (rung)."},
+  {q:"She ___ here for ten years before she retired.",o:["has worked","works","had worked","was working"],a:2,e:"Completed action BEFORE a past point (retired) → Past Perfect. 'She HAD WORKED here for ten years before she retired.'"},
+  {q:"If I ___ wings, I would fly to the moon.",o:["have","had","will have","would have"],a:1,e:"Type 2 conditional (hypothetical present). IF clause = Simple Past. 'If I HAD wings, I would fly.' Never 'would have' in the IF clause."}
+]},
+
+]},
+
+{id:"golden-ch",title:"Golden Node",icon:"🏹",nodes:[
+{id:"tenses-golden",title:"🏹 Golden Node — High Probability Points",xp:35,type:"gold",requires_pct:80,
+golden:[
+  "<b>SINCE = point of time | FOR = period of time</b> — both need Perfect tense",
+  "<b>Specific past time (yesterday/ago/last) → Simple Past ONLY</b> — never Present Perfect",
+  "<b>just, already, yet, ever, never → Present Perfect (has/have + V3)</b>",
+  "<b>Stative verbs (know/believe/want/have/see) → NO -ing form ever</b>",
+  "<b>'have' in action sense CAN use -ing</b>: is having lunch ✓ vs is having a car ✗",
+  "<b>Two past actions: earlier = Past Perfect (had+V3), later = Simple Past (V2)</b>",
+  "<b>No sooner / Hardly / Scarcely → Past Perfect + inversion of subject and auxiliary</b>",
+  "<b>Type 0: If + Present → Present (universal truth)</b>",
+  "<b>Type 1: If + Present → will + V1 (possible future)</b>",
+  "<b>Type 2: If + Simple Past → would + V1 (unreal present)</b>",
+  "<b>Type 3: If + Past Perfect → would + have + V3 (unreal past/regret)</b>",
+  "<b>If clause NEVER takes 'will' in Type 1 — always Simple Present</b>",
+  "<b>'If I were you' — WERE for all persons in Type 2, not 'was'</b>",
+  "<b>Time clauses (when/before/after/until/as soon as) → Simple Present for future, NO will</b>",
+  "<b>Reported speech: backshift all tenses when reporting verb is past</b>",
+  "<b>Universal / scientific truths → NO backshift in reported speech</b>",
+  "<b>By + future time → Future Perfect (will have + V3)</b>",
+  "<b>While/when + ongoing past action → Past Continuous (was/were + V-ing)</b>",
+  "<b>For + duration → Present Perfect Continuous (has/have + been + V-ing)</b>",
+  "<b>Signal word check sequence: specific time? → SPast | since/for ongoing? → PerfCont | just/yet? → Pres Perf | before/after two past? → Past Perf</b>"
+]}
+]}
+];
+
+const SKEY="eng_ten_v1";
+let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
+try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
+
+let _mToken='';
+(function initToken(){
+  var ks=Object.keys(localStorage);var k=ks.find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});
+  if(k){try{var d=JSON.parse(localStorage.getItem(k));_mToken=(d&&d.access_token)||'';}catch(e){}}
+  if(!_mToken){var sk=Object.keys(sessionStorage).find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});if(sk){try{var d2=JSON.parse(sessionStorage.getItem(sk));_mToken=(d2&&d2.access_token)||'';}catch(e){}}}
+})();
+let _ns={nodeId:null,openedAt:null,answered:0,correct:0,totalQ:0};
+function trackEvent(ev,payload){
+  const body=Object.assign({event:ev,mapId:"eng_03_tenses",ts:new Date().toISOString()},payload);
+  const sid='sess_'+(Math.random().toString(36).slice(2,10));
+  try{fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json',...(_mToken?{'Authorization':'Bearer '+_mToken}:{})},body:JSON.stringify({event_name:ev,session_id:sid,event_timestamp:new Date().toISOString(),metadata:body})}).then(()=>flashSync()).catch(()=>{});}catch(e){}
+}
+function flashSync(){const d=document.getElementById('syncDot');if(!d)return;d.classList.add('show');setTimeout(()=>d.classList.remove('show'),900);}
+function startNodeSession(nodeId,totalQ){
+  if(_ns.nodeId&&_ns.nodeId!==nodeId&&_ns.totalQ>0&&_ns.answered<_ns.totalQ)
+    trackEvent('node_abandoned',{nodeId:_ns.nodeId,timeSpentSeconds:Math.floor((Date.now()-_ns.openedAt)/1000),questionsAnswered:_ns.answered,totalQuestions:_ns.totalQ});
+  _ns={nodeId,openedAt:Date.now(),answered:0,correct:0,totalQ};
+  trackEvent('node_opened',{nodeId,totalQuestions:totalQ,openedAt:new Date().toISOString()});
+}
+function trackAnswer(nodeId,qi,isCorrect){
+  _ns.answered++;if(isCorrect)_ns.correct++;
+  trackEvent('question_answered',{nodeId,questionIndex:qi,firstAttemptCorrect:isCorrect,timeIntoNodeSeconds:Math.floor((Date.now()-_ns.openedAt)/1000)});
+  if(_ns.answered>=_ns.totalQ)
+    trackEvent('node_completed',{nodeId,totalQuestions:_ns.totalQ,correctOnFirstAttempt:_ns.correct,firstAttemptAccuracyPct:Math.round(_ns.correct/_ns.totalQ*100),timeSpentSeconds:Math.floor((Date.now()-_ns.openedAt)/1000),completedAt:new Date().toISOString()});
+}
+
+function allNodes(){const a=[];CHAPTERS.forEach(c=>c.nodes.forEach(n=>a.push({...n,chId:c.id})));return a;}
+function getNode(id){for(const c of CHAPTERS)for(const n of c.nodes)if(n.id===id)return n;return null;}
+function isVisited(id){return!!S.visited[id];}
+function isUnlocked(node){
+  if(!node)return false;
+  if(node.type==="gold"){const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===node.id));if(ch){const reg=ch.nodes.filter(n=>n.id!==node.id);const pct=reg.length?reg.filter(n=>isVisited(n.id)).length/reg.length*100:0;return pct>=(node.requires_pct||80);}}
+  return true;
+}
+function chPct(ch){const reg=ch.nodes.filter(n=>n.type!=="gold");return reg.length?Math.round(reg.filter(n=>isVisited(n.id)).length/reg.length*100):0;}
+function totalNodes(){return allNodes().length;}
+function visitedCount(){return Object.keys(S.visited).length;}
+function trapNodes(){return allNodes().filter(n=>n.type==="trap");}
+function trapVisited(){return trapNodes().filter(n=>isVisited(n.id)).length;}
+
+function showToast(xp,msg){
+  const t=document.getElementById("toast");
+  document.getElementById("toastVal").textContent=xp>0?"+"+xp+" XP":"✓";
+  document.getElementById("toastMsg").textContent=msg;
+  t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2800);
+}
+function updateHeader(){
+  document.getElementById("hXP").textContent=S.xp;
+  document.getElementById("hVis").textContent=visitedCount()+"/"+totalNodes();
+  document.getElementById("hTrap").textContent=trapVisited()+"/"+trapNodes().length;
+}
+function buildSidebar(){
+  ["sideInner","mobSideInner"].forEach(sid=>{
+    const el=document.getElementById(sid);if(!el)return;el.innerHTML="";
+    CHAPTERS.forEach(ch=>{
+      const pct=chPct(ch),isOpen=S.chOpen===ch.id;
+      const div=document.createElement("div");div.className="ch-group"+(isOpen?" expanded":"");
+      div.innerHTML=`<button class="ch-toggle${isOpen?" open":""}" data-ch="${ch.id}">
+        <span style="font-size:16px">${ch.icon}</span><span>${ch.title}</span>
+        <span class="cht-pct">${pct}%</span></button>
+      <div class="node-items">${ch.nodes.map(n=>{
+        const unl=isUnlocked(n),vis=isVisited(n.id),cur=S.curNode===n.id;
+        let ico=vis?"✓":"○",tag="";
+        if(!unl){ico="🔒";tag=`<span class="ni-tag hidden">LOCKED</span>`;}
+        else if(n.type==="gold"){ico="🏹";tag=`<span class="ni-tag gold">GOLD</span>`;}
+        else if(n.type==="trap"){ico=vis?"⚠️":"⚠";tag=`<span class="ni-tag trap">TRAP</span>`;}
+        return `<button class="ni-btn${cur?" current":""}${vis?" done":""}${!unl?" locked":""}" data-nid="${n.id}" data-unl="${unl}">
+          <span style="width:15px;text-align:center;font-size:12px">${ico}</span>
+          <span>${n.title}</span>${tag}</button>`;
+      }).join("")}</div>`;
+      el.appendChild(div);
+      div.querySelector(".ch-toggle").onclick=()=>{
+        S.chOpen=isOpen?null:ch.id;save();buildSidebar();
+        if(!isOpen){const first=ch.nodes.find(n=>isUnlocked(n));if(first)openNode(first.id);}
+      };
+      div.querySelectorAll(".ni-btn[data-unl='true']").forEach(b=>b.onclick=()=>{openNode(b.dataset.nid);closeDrawer();});
+      div.querySelectorAll(".ni-btn[data-unl='false']").forEach(b=>b.onclick=()=>{openLocked(b.dataset.nid);closeDrawer();});
+    });
+  });
+}
+
+function openNode(id){
+  const node=getNode(id);if(!node||!isUnlocked(node))return openLocked(id);
+  const fresh=!isVisited(id);
+  S.curNode=id;S.chOpen=CHAPTERS.find(c=>c.nodes.some(n=>n.id===id))?.id||S.chOpen;
+  if(fresh){S.visited[id]=Date.now();S.xp+=node.xp;
+    const msgs={trap:"⚠ Exam Trap Found!",gold:"🏹 Golden Node!"};
+    showToast(node.xp,msgs[node.type]||"Node Visited");}
+  save();buildSidebar();updateHeader();renderNode(node);
+  document.getElementById("mainArea").scrollTop=0;
+  startNodeSession(id,node.mcqs?.length||0);
+}
+function openLocked(id){
+  const node=getNode(id);if(!node)return;
+  S.curNode=id;save();buildSidebar();
+  const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===id));
+  let reqs="";
+  if(node.type==="gold"){const pct=ch?chPct(ch):0;reqs=`<div class="lreq${pct>=(node.requires_pct||80)?" met":""}">Complete ${node.requires_pct||80}% of chapter nodes (${pct}% done)</div>`;}
+  document.getElementById("viewWrap").innerHTML=`<div class="locked-view"><div class="lv-ico">🔒</div><h2>Locked</h2><p>Complete chapter requirements to unlock this Golden Node.</p><div class="lock-req-list">${reqs}</div></div>`;
+}
+function buildTable(t){return`<div class="tbl-wrap"><table class="dt"><thead><tr>${t.h.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${t.r.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;}
+
+function renderNode(node){
+  const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===node.id));
+  const bm={regular:["◇ LEARN","regular"],trap:["⚠ EXAM TRAP","trap"],gold:["🏹 GOLDEN","gold"]};
+  const [bl,bc]=bm[node.type]||["◇","regular"];
+  let content="";
+  if(node.type==="gold"){
+    content=`<div class="golden-block"><div class="gb-h">🏹 GOLDEN NODE — Highest Probability Points · Tenses</div><ul>${(node.golden||[]).map(g=>`<li>${g}</li>`).join("")}</ul></div>`;
+  } else {
+    if(node.diag&&DIAGRAMS[node.diag])content+=`<div class="diag-box"><div class="diag-head">📊 DIAGRAM</div><div class="diag-body">${DIAGRAMS[node.diag]}</div></div>`;
+    if(node.facts)content+=`<div class="fact-block"><div class="fb-head">◇ KEY FACTS</div><div class="fb-body"><ul class="facts">${node.facts.map(f=>`<li>${f}</li>`).join("")}</ul></div></div>`;
+    if(node.table)content+=buildTable(node.table);
+    if(node.traps)content+=`<div class="trap-block"><div class="tb-h">⚠ EXAM TRAPS — HIGH YIELD</div><ul>${node.traps.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;
+  }
+  let mcqContent="";
+  if(node.mcqs?.length){
+    const best=S.mcq[node.id]||0;
+    mcqContent=`<div class="mcq-list">
+      ${best?`<div style="font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:8px">Best score: <span style="color:var(--green)">${best}%</span></div>`:""}
+      ${node.mcqs.map((q,qi)=>`<div class="mcq-card" data-qi="${qi}" data-nid="${node.id}">
+        <div class="mcq-q"><span class="mcq-qn">Q${qi+1}</span>${q.q}</div>
+        <div class="mcq-opts">${q.o.map((op,oi)=>`<button class="mopt" data-oi="${oi}">${String.fromCharCode(65+oi)}. ${op}</button>`).join("")}</div>
+        <div class="mcq-fb" id="fb_${node.id}_${qi}"></div>
+      </div>`).join("")}
+      <div class="mcq-score" id="scr_${node.id}">Answer all questions to see your score</div>
+    </div>`;
+  } else {mcqContent=`<div style="text-align:center;padding:40px;color:var(--ink3);font-family:var(--mono);font-size:13px">No MCQs for this node</div>`;}
+  const idx=ch?.nodes.findIndex(n=>n.id===node.id)??-1;
+  const prev=idx>0?ch.nodes[idx-1]:null;
+  const next=idx<(ch?.nodes.length-1)?ch.nodes[idx+1]:null;
+  const nav=`<div class="node-nav">
+    ${prev?`<button class="nnav" onclick="openNode('${prev.id}')">‹ ${prev.title.replace(/&amp;/g,'&').substring(0,26)}</button>`:""}
+    ${next&&isUnlocked(next)?`<button class="nnav primary" onclick="openNode('${next.id}')">Next ›</button>`:""}
+  </div>`;
+  document.getElementById("viewWrap").innerHTML=`<div class="node-view">
+    <div class="node-hd">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink3);margin-bottom:6px">${ch?.title||""} › ${node.title}</div>
+      <div class="node-badge ${bc}">${bl}</div>
+      <h1 class="nt">${node.title}</h1>
+      <div class="xp-pill">✦ +${node.xp} XP${isVisited(node.id)?" earned":""}</div>
+    </div>
+    <div class="tabs"><button class="tab on" data-t="learn">📖 Learn</button><button class="tab" data-t="test">🎯 Test</button></div>
+    <div id="pane-learn">${content}${nav}</div>
+    <div id="pane-test" style="display:none">${mcqContent}${nav}</div>
+  </div>`;
+  document.querySelectorAll(".tab").forEach(btn=>{
+    btn.onclick=()=>{
+      const t=btn.dataset.t;
+      document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
+      ["learn","test"].forEach(p=>{const e=document.getElementById("pane-"+p);if(e)e.style.display=p===t?"block":"none";});
+    };
+  });
+  bindMCQ(node);
+}
+
+function bindMCQ(node){
+  if(!node.mcqs)return;
+  let correct=0,answered=0,total=node.mcqs.length;
+  node.mcqs.forEach((q,qi)=>{
+    const card=document.querySelector(`.mcq-card[data-qi="${qi}"][data-nid="${node.id}"]`);if(!card)return;
+    card.querySelectorAll(".mopt").forEach(btn=>{
+      btn.onclick=()=>{
+        if(card.dataset.done)return;
+        card.dataset.done=1;
+        const oi=+btn.dataset.oi,fb=document.getElementById(`fb_${node.id}_${qi}`);
+        const isCorrect=(oi===q.a);
+        card.querySelectorAll(".mopt").forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("show-correct");});
+        if(isCorrect){btn.classList.add("correct");correct++;fb.className="mcq-fb show right";fb.innerHTML="✓ "+q.e;}
+        else{btn.classList.add("wrong");fb.className="mcq-fb show wrong";fb.innerHTML="✗ Wrong. "+q.e;}
+        answered++;
+        trackAnswer(node.id,qi,isCorrect);
+        if(answered===total){
+          const pct=Math.round(correct/total*100);
+          const scr=document.getElementById(`scr_${node.id}`);
+          if(scr){const gr=pct>=80?"🎯 Excellent":pct>=60?"✓ Good":"⚠ Revise";scr.innerHTML=`Score: <span>${correct}/${total} = ${pct}%</span> ${gr}`;}
+          if(pct>(S.mcq[node.id]||0)){S.mcq[node.id]=pct;save();}
+          if(pct>=80)showToast(0,"MCQ Cleared 🎯");else if(pct>=60)showToast(0,"Good attempt ✓");
+          const tp=document.getElementById("pane-test");
+          if(tp){const b=document.createElement("div");b.className="node-complete-banner";
+            b.innerHTML=`<div class="ncb-icon">${pct>=80?"🏆":pct>=60?"✅":"📖"}</div><div><div class="ncb-title">NODE COMPLETE — ${pct}%</div><div class="ncb-sub">${correct}/${total} correct on first attempt${pct<60?" — revisit Learn tab":""}</div></div>`;
+            tp.appendChild(b);}
+        }
+      };
+    });
+  });
+}
+
+function showDash(){
+  S.curNode=null;save();buildSidebar();
+  const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
+  document.getElementById("viewWrap").innerHTML=`<div class="dash">
+    <div class="dash-t">English Map</div>
+    <div class="dash-s">SSC ENGLISH 03 — TENSES</div>
+    <div class="dash-grid">
+      <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
+      <div class="dc g"><div class="dv">${vis}/${tot}</div><div class="dl">Nodes</div></div>
+      <div class="dc r"><div class="dv">${trapVisited()}/${trapNodes().length}</div><div class="dl">Traps</div></div>
+      <div class="dc b"><div class="dv">${pct}%</div><div class="dl">Done</div></div>
+    </div>
+    <div class="ch-prog">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--ink3);margin-bottom:12px">CHAPTER PROGRESS</div>
+      ${CHAPTERS.map(ch=>{const p=chPct(ch);return`<div class="cpr"><span class="cpr-n">${ch.icon} ${ch.title}</span><div class="cpr-bar"><div class="cpr-fill" style="width:${p}%"></div></div><span class="cpr-pct">${p}%</span></div>`;}).join("")}
+    </div>
+    <button class="start-btn" onclick="startLearning()">${visitedCount()===0?"Start Learning →":"Continue →"}</button>
+    <div style="margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);margin-bottom:10px">📘 TOPICS COVERED</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:var(--ink2)">
+        <span>📋 12 Tenses Master Table</span><span>⏱ Since vs For</span>
+        <span>🔢 Past Perfect Sequence</span><span>✅ Present Perfect vs Simple Past</span>
+        <span>🚫 Stative Verbs (No -ing)</span><span>🔀 Conditional Types 0–3</span>
+        <span>📣 Reported Speech Backshift</span><span>⏰ Time Clauses (No Future)</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function startLearning(){
+  const first=allNodes().find(n=>isUnlocked(n)&&!isVisited(n.id))||allNodes()[0];
+  if(first){S.chOpen=CHAPTERS.find(c=>c.nodes.some(n=>n.id===first.id))?.id;openNode(first.id);}
+}
+function goTraps(){
+  const t=trapNodes();if(!t.length)return;
+  const next=t.find(n=>!isVisited(n.id))||t[0];openNode(next.id);
+}
+function openDrawer(){document.getElementById("mobDrawer").classList.add("open");document.getElementById("mobOverlay").classList.add("show");}
+function closeDrawer(){document.getElementById("mobDrawer").classList.remove("open");document.getElementById("mobOverlay").classList.remove("show");}
+
+if(!S.chOpen)S.chOpen=CHAPTERS[0].id;
+buildSidebar();updateHeader();showDash();
+</script>
+</body>
+</html>
