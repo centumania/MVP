@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>English Map · Subject-Verb Agreement (SVA)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<style>
+:root{
+  --bg:#0B1020;--bg2:#090e1c;--panel:#111827;--panel2:#161b22;--line:#1f2d42;
+  --ink:#F9FAFB;--ink2:#9CA3AF;--ink3:#6B7280;
+  --green:#F6B300;--green2:#d49b00;--green-glow:rgba(246,179,0,.13);
+  --teal:#0EA5A0;--gold:#2533FF;--gold-bg:rgba(37,51,255,.12);
+  --red:#E3413A;--red-bg:rgba(227,65,58,.10);
+  --blue:#2563EB;--violet:#22C55E;--violet-bg:rgba(34,197,94,.11);
+  --mono:"JetBrains Mono","Courier New",Courier,monospace;
+  --serif:"Bebas Neue",Impact,"Arial Narrow",Arial,sans-serif;
+  --sans:"Inter",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --nav-h:56px;--aside-w:260px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px}
+.shell{display:grid;grid-template-rows:var(--nav-h) 1fr;height:100vh;overflow:hidden}
+.topbar{display:flex;align-items:center;gap:12px;padding:0 18px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.97);backdrop-filter:blur(14px);z-index:60}
+.logo{font-family:var(--serif);font-size:19px;letter-spacing:0.05em;color:var(--green);display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0}
+.nav-stats{display:flex;gap:14px;align-items:center;margin-left:auto}
+.stat{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.stat b{font-size:13px}
+.stat.xp b{color:var(--gold)}.stat.vis b{color:var(--teal)}.stat.trap b{color:var(--red)}
+.body{display:grid;grid-template-columns:var(--aside-w) 1fr;overflow:hidden;height:calc(100vh - var(--nav-h))}
+aside{background:var(--bg2);border-right:1px solid var(--line);overflow-y:auto}
+aside::-webkit-scrollbar{width:3px}aside::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+main{overflow-y:auto;background:var(--bg)}
+main::-webkit-scrollbar{width:4px}main::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+.sidebar-inner{padding:10px 8px 60px}
+.ch-group{margin-bottom:3px}
+.ch-toggle{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink2);padding:9px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:.13s;font-family:var(--sans)}
+.ch-toggle:hover,.ch-toggle.open{background:var(--panel);color:var(--ink)}
+.ch-toggle .cht-pct{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-left:auto}
+.ch-toggle.open .cht-pct{color:var(--green)}
+.node-items{display:none;padding:3px 4px 3px 10px}
+.ch-group.expanded .node-items{display:block}
+.ni-btn{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink3);padding:7px 9px;border-radius:8px;cursor:pointer;font-size:13px;transition:.12s;font-family:var(--sans);margin-bottom:1px;min-height:44px}
+.ni-btn:hover:not(.locked){background:var(--panel);color:var(--ink)}
+.ni-btn.current{background:var(--green-glow);border-color:var(--green);color:var(--green)}
+.ni-btn.done:not(.current){color:var(--ink)}
+.ni-btn.locked{cursor:default;opacity:.4}
+.ni-tag{font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:4px;margin-left:auto;flex-shrink:0}
+.ni-tag.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(227,65,58,.25)}
+.ni-tag.hidden{background:var(--violet-bg);color:var(--violet);border:1px solid rgba(34,197,94,.25)}
+.ni-tag.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(37,51,255,.25)}
+.node-view{padding:28px clamp(16px,3.5vw,52px) 80px;max-width:900px;margin:0 auto}
+.tabs{display:flex;gap:3px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:22px;width:fit-content}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:8px;cursor:pointer;border:0;background:none;color:var(--ink2);transition:.14s}
+.tab:hover:not(.on){color:var(--ink)}.tab.on{background:var(--gold);color:#fff;font-weight:700}
+.node-hd{margin-bottom:20px}
+.node-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:10px}
+.node-badge.regular{background:var(--green-glow);color:var(--green);border:1px solid var(--green2)}
+.node-badge.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(227,65,58,.3)}
+.node-badge.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(37,51,255,.3)}
+h1.nt{font-family:var(--serif);font-size:clamp(24px,4vw,38px);letter-spacing:0.04em;line-height:1.05;margin-bottom:6px}
+.xp-pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--gold);background:var(--gold-bg);border:1px solid rgba(37,51,255,.2);border-radius:6px;padding:3px 8px}
+.fact-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
+.fb-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink2);border-bottom:1px solid var(--line);background:var(--panel2);display:flex;align-items:center;gap:7px}
+.fb-body{padding:14px 16px}
+ul.facts{list-style:none;padding:0}
+ul.facts li{padding:7px 0 7px 22px;border-bottom:1px dashed var(--line);font-size:14px;position:relative;line-height:1.55;color:var(--ink)}
+ul.facts li:last-child{border-bottom:0}
+ul.facts li::before{content:"▸";position:absolute;left:3px;top:8px;color:var(--teal);font-size:11px}
+ul.facts b{color:var(--green)}
+ul.facts code{font-family:var(--mono);font-size:12px;background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--gold)}
+.trap-block{background:var(--red-bg);border:1px solid rgba(227,65,58,.35);border-radius:12px;padding:16px;margin:12px 0}
+.trap-block .tb-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--red);margin-bottom:10px}
+.trap-block ul{list-style:none;padding:0}
+.trap-block li{padding:7px 0 7px 20px;position:relative;font-size:14px;border-bottom:1px dashed rgba(227,65,58,.18);line-height:1.5}
+.trap-block li:last-child{border-bottom:0}
+.trap-block li::before{content:"⚠";position:absolute;left:0;top:7px;font-size:11px;color:var(--red)}
+.trap-block b{color:var(--red)}
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--line);margin:12px 0}
+table.dt{width:100%;border-collapse:collapse;font-size:13px}
+table.dt th{padding:9px 13px;text-align:left;background:var(--gold);color:#fff;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+table.dt td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line);color:var(--ink)}
+table.dt tr:last-child td{border-bottom:0}
+table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono);font-size:12px}
+.diag-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:12px 0}
+.diag-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--green);border-bottom:1px solid var(--line);background:var(--panel2)}
+.diag-body{padding:16px;overflow-x:auto}
+.diag-body svg{display:block;width:100%;height:auto}
+.golden-block{background:linear-gradient(135deg,rgba(37,51,255,.09),rgba(246,179,0,.06));border:1px solid rgba(37,51,255,.3);border-radius:14px;padding:20px;margin:14px 0}
+.golden-block .gb-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:14px}
+.golden-block ul{list-style:none;padding:0}
+.golden-block li{padding:8px 0 8px 24px;position:relative;font-size:14px;border-bottom:1px dashed rgba(37,51,255,.15);line-height:1.5}
+.golden-block li:last-child{border-bottom:0}
+.golden-block li::before{content:"→";position:absolute;left:0;color:var(--gold)}
+.golden-block b{color:var(--green)}
+.mcq-list{display:flex;flex-direction:column;gap:14px}
+.mcq-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.mcq-q{font-size:15px;font-weight:600;margin-bottom:12px;line-height:1.45;color:var(--ink)}
+.mcq-qn{font-family:var(--mono);font-size:11px;color:var(--teal);margin-right:6px}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mopt{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);font-size:13px;cursor:pointer;text-align:left;font-family:var(--sans);transition:.13s}
+.mopt:hover:not([disabled]){border-color:var(--green2);background:var(--green-glow)}
+.mopt.correct{background:rgba(246,179,0,.12);border-color:var(--green);color:var(--green)}
+.mopt.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.mopt.show-correct{background:rgba(246,179,0,.07);border-color:var(--green)}
+.mcq-fb{margin-top:10px;font-size:13px;padding:9px 12px;border-radius:8px;display:none;line-height:1.5}
+.mcq-fb.show{display:block}
+.mcq-fb.right{background:rgba(246,179,0,.10);color:var(--green);border:1px solid rgba(246,179,0,.25)}
+.mcq-fb.wrong{background:var(--red-bg);color:var(--red);border:1px solid rgba(227,65,58,.25)}
+.mcq-score{font-family:var(--mono);font-size:12px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.mcq-score span{color:var(--green)}
+.node-nav{display:flex;gap:10px;margin-top:26px;padding-top:16px;border-top:1px solid var(--line);align-items:center}
+.nnav{font-family:var(--sans);font-weight:600;font-size:14px;border-radius:9px;padding:9px 15px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:.14s}
+.nnav:hover{border-color:var(--gold)}.nnav.primary{background:var(--gold);color:#fff;border-color:var(--gold);margin-left:auto}
+.locked-view{text-align:center;padding:70px 20px}
+.locked-view .lv-ico{font-size:52px;margin-bottom:14px;opacity:.3}
+.locked-view h2{font-family:var(--serif);font-size:28px;letter-spacing:0.04em;color:var(--ink2);margin-bottom:8px}
+.locked-view p{color:var(--ink2);font-size:14px;max-width:320px;margin:0 auto 18px;line-height:1.6}
+.lock-req-list{display:inline-flex;flex-direction:column;gap:8px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.lreq{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink3)}
+.lreq.met{color:var(--green)}.lreq::before{content:"○"}.lreq.met::before{content:"✓"}
+.toast{position:fixed;top:64px;right:18px;background:linear-gradient(135deg,rgba(37,51,255,.15),rgba(246,179,0,.10));border:1px solid var(--gold);border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:10px;z-index:300;opacity:0;transform:translateY(-8px);transition:.3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast-val{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--gold)}
+.toast-msg{font-size:13px;font-weight:600}
+.dash{padding:36px clamp(18px,4vw,56px) 80px;max-width:700px;margin:0 auto}
+.dash-t{font-family:var(--serif);font-size:clamp(30px,5vw,50px);font-style:italic;margin-bottom:4px}
+.dash-s{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:26px;letter-spacing:1px}
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.dc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px;text-align:center}
+.dc .dv{font-family:var(--mono);font-size:20px;font-weight:700;margin-bottom:4px}
+.dc .dl{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:1px;text-transform:uppercase}
+.dc.gold .dv{color:var(--gold)}.dc.g .dv{color:var(--green)}.dc.r .dv{color:var(--red)}.dc.b .dv{color:var(--teal)}
+.ch-prog{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+.cpr{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.cpr:last-child{margin-bottom:0}
+.cpr-n{font-family:var(--mono);font-size:11px;color:var(--ink2);width:200px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cpr-bar{flex:1;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.cpr-fill{height:100%;background:var(--green);border-radius:3px;transition:.5s}
+.cpr-pct{font-family:var(--mono);font-size:10px;color:var(--green);width:30px;text-align:right}
+.start-btn{background:linear-gradient(135deg,var(--green2),var(--green));color:#fff;border:0;border-radius:12px;padding:13px 28px;font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer;margin-right:12px}
+.mob-bar{display:none}
+.mob-overlay{display:none}
+.sync-dot{position:fixed;bottom:16px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--green);opacity:0;transition:.4s;z-index:200}
+.sync-dot.show{opacity:1}
+.node-complete-banner{background:linear-gradient(135deg,rgba(246,179,0,.12),rgba(14,165,160,.08));border:1px solid rgba(246,179,0,.35);border-radius:12px;padding:14px 16px;margin-top:16px;display:flex;align-items:center;gap:10px}
+.ncb-icon{font-size:22px;flex-shrink:0}
+.ncb-title{font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:1px;margin-bottom:3px}
+.ncb-sub{font-size:13px;color:var(--ink2)}
+/* two-column memorise blocks */
+.mem-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.mem-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+.mem-card-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;margin-bottom:10px}
+.mem-card-h.sing{color:var(--green)}.mem-card-h.plur{color:var(--red)}
+.mem-card ul{list-style:none;padding:0}
+.mem-card li{font-size:13px;color:var(--ink2);padding:4px 0 4px 14px;position:relative;border-bottom:1px dashed var(--line)}
+.mem-card li:last-child{border-bottom:0}
+.mem-card li::before{content:"·";position:absolute;left:4px;color:var(--ink3)}
+@media(max-width:720px){
+  :root{--nav-h:52px}
+  .shell{grid-template-rows:var(--nav-h) 1fr var(--nav-h);height:100dvh}
+  .body{grid-template-columns:1fr;grid-row:2;height:calc(100dvh - calc(var(--nav-h)*2))}
+  aside{display:none}
+  .mob-bar{display:flex;grid-row:3;background:rgba(11,16,32,.98);backdrop-filter:blur(16px);border-top:1px solid var(--line);align-items:stretch;z-index:50}
+  .mob-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;color:var(--ink3);cursor:pointer;padding:8px 4px;font-family:var(--mono);font-size:9px;transition:.13s}
+  .mob-tab.active{color:var(--green)}.mob-tab .mt-ico{font-size:18px}
+  .mob-overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;opacity:0;pointer-events:none;transition:.2s}
+  .mob-overlay.show{opacity:1;pointer-events:all}
+  .mob-drawer{position:fixed;left:-100%;top:0;bottom:0;width:min(300px,88vw);background:var(--bg2);border-right:1px solid var(--line);z-index:101;transition:.28s cubic-bezier(.2,.8,.4,1);overflow-y:auto}
+  .mob-drawer.open{left:0}
+  .mob-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px;border-bottom:1px solid var(--line)}
+  .mob-close{background:none;border:1px solid var(--line);color:var(--ink2);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+  .node-view{padding:16px 14px 100px}
+  h1.nt{font-size:24px}
+  .dash{padding:18px 14px 100px}
+  .dash-grid{grid-template-columns:repeat(2,1fr)}
+  .mcq-opts{grid-template-columns:1fr}
+  .tabs{overflow-x:auto;white-space:nowrap;width:100%;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .nav-stats{display:none}
+  .toast{bottom:70px;top:auto;left:14px;right:14px}
+  .sync-dot{bottom:calc(var(--nav-h) + 8px)}
+  .mem-grid{grid-template-columns:1fr}
+}
+@media(min-width:721px){.mob-drawer{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="topbar">
+  <div class="logo"><span class="logo-dot"></span>English Map</div>
+  <div class="nav-stats">
+    <div class="stat xp">XP <b id="hXP">0</b></div>
+    <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
+    <div class="stat trap">Traps <b id="hTrap">0/0</b></div>
+  </div>
+</nav>
+<div class="body">
+  <aside><div class="sidebar-inner" id="sideInner"></div></aside>
+  <main id="mainArea"><div id="viewWrap"></div></main>
+</div>
+<nav class="mob-bar">
+  <button class="mob-tab active" onclick="showDash()"><span class="mt-ico">◈</span>Home</button>
+  <button class="mob-tab" onclick="openDrawer()"><span class="mt-ico">☰</span>Topics</button>
+  <button class="mob-tab" onclick="goTraps()"><span class="mt-ico">⚠</span>Traps</button>
+</nav>
+</div>
+<div class="sync-dot" id="syncDot"></div>
+<div class="mob-overlay" id="mobOverlay" onclick="closeDrawer()"></div>
+<div class="mob-drawer" id="mobDrawer">
+  <div class="mob-drawer-head">
+    <div class="logo"><span class="logo-dot"></span>Topics</div>
+    <button class="mob-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="sidebar-inner" id="mobSideInner"></div>
+</div>
+<div class="toast" id="toast"><div class="toast-val" id="toastVal"></div><div class="toast-msg" id="toastMsg"></div></div>
+
+<script>
+const DIAGRAMS = {
+
+"sva-decision": `<svg viewBox="0 0 760 180" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="8" y="8" width="744" height="28" rx="6" fill="rgba(246,179,0,.08)" stroke="#F6B300" stroke-width="1"/>
+<text x="380" y="27" fill="#F6B300" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">SVA DECISION FLOW — Find the REAL Subject</text>
+<rect x="270" y="44" width="220" height="34" rx="8" fill="rgba(14,165,160,.08)" stroke="#0EA5A0" stroke-width="1.2"/>
+<text x="380" y="65" fill="#0EA5A0" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">Step 1: Identify the subject</text>
+<line x1="380" y1="78" x2="380" y2="96" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="4,3"/>
+<rect x="240" y="96" width="280" height="34" rx="8" fill="rgba(14,165,160,.08)" stroke="#0EA5A0" stroke-width="1.2"/>
+<text x="380" y="117" fill="#0EA5A0" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">Step 2: IGNORE phrases between S and V</text>
+<text x="380" y="131" fill="#6B7280" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">(of / with / along with / as well as / except / besides)</text>
+<line x1="380" y1="142" x2="380" y2="155" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="4,3"/>
+<rect x="200" y="155" width="170" height="20" rx="6" fill="rgba(227,65,58,.08)" stroke="#E3413A" stroke-width="1"/>
+<text x="285" y="169" fill="#E3413A" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">SINGULAR → verb +s/es</text>
+<rect x="390" y="155" width="170" height="20" rx="6" fill="rgba(246,179,0,.08)" stroke="#F6B300" stroke-width="1"/>
+<text x="475" y="169" fill="#F6B300" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">PLURAL → verb (no -s)</text>
+</svg>`,
+
+"either-neither-flow": `<svg viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="8" y="8" width="744" height="28" rx="6" fill="rgba(227,65,58,.08)" stroke="#E3413A" stroke-width="1"/>
+<text x="380" y="27" fill="#E3413A" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">EITHER/OR · NEITHER/NOR — PROXIMITY RULE</text>
+<rect x="100" y="44" width="230" height="96" rx="8" fill="rgba(14,165,160,.06)" stroke="#0EA5A0" stroke-width="1.2"/>
+<text x="215" y="66" fill="#0EA5A0" font-size="11" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif">B is SINGULAR → singular verb</text>
+<text x="215" y="86" fill="#F9FAFB" font-size="12" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Either Ram or</text>
+<text x="215" y="104" fill="#F6B300" font-size="12" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Shyam IS wrong.</text>
+<text x="215" y="122" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">Shyam (B) = singular → IS</text>
+<text x="215" y="136" fill="#6B7280" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">VERB AGREES WITH B</text>
+<rect x="430" y="44" width="230" height="96" rx="8" fill="rgba(246,179,0,.06)" stroke="#F6B300" stroke-width="1.2"/>
+<text x="545" y="66" fill="#0EA5A0" font-size="11" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif">B is PLURAL → plural verb</text>
+<text x="545" y="86" fill="#F9FAFB" font-size="12" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Either Ram or</text>
+<text x="545" y="104" fill="#F6B300" font-size="12" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">his brothers ARE coming.</text>
+<text x="545" y="122" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">brothers (B) = plural → ARE</text>
+<text x="545" y="136" fill="#6B7280" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">VERB AGREES WITH B</text>
+</svg>`,
+
+"the-number-vs-a-number": `<svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="8" y="8" width="744" height="28" rx="6" fill="rgba(37,51,255,.08)" stroke="#2533FF" stroke-width="1"/>
+<text x="380" y="27" fill="#2533FF" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">THE NUMBER OF vs A NUMBER OF — Most Tested SSC Pattern</text>
+<rect x="30" y="44" width="330" height="78" rx="8" fill="rgba(227,65,58,.07)" stroke="#E3413A" stroke-width="1.5"/>
+<text x="195" y="68" fill="#E3413A" font-size="13" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">THE number of + noun → SINGULAR</text>
+<text x="195" y="88" fill="#F9FAFB" font-size="13" text-anchor="middle" font-family="Inter,sans-serif">The number of students IS increasing.</text>
+<text x="195" y="108" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">"The number" = one definite count = singular</text>
+<rect x="400" y="44" width="330" height="78" rx="8" fill="rgba(246,179,0,.07)" stroke="#F6B300" stroke-width="1.5"/>
+<text x="565" y="68" fill="#F6B300" font-size="13" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">A number of + noun → PLURAL</text>
+<text x="565" y="88" fill="#F9FAFB" font-size="13" text-anchor="middle" font-family="Inter,sans-serif">A number of students ARE absent.</text>
+<text x="565" y="108" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">"A number" = some / many = plural</text>
+</svg>`,
+
+"collective-noun-flow": `<svg viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="8" y="8" width="744" height="28" rx="6" fill="rgba(37,99,235,.08)" stroke="#2563EB" stroke-width="1"/>
+<text x="380" y="27" fill="#2563EB" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">COLLECTIVE NOUNS — Unit vs Individual</text>
+<rect x="30" y="44" width="330" height="96" rx="8" fill="rgba(246,179,0,.07)" stroke="#F6B300" stroke-width="1.5"/>
+<text x="195" y="68" fill="#F6B300" font-size="12" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Acting as ONE UNIT → SINGULAR</text>
+<text x="195" y="88" fill="#F9FAFB" font-size="13" text-anchor="middle" font-family="Inter,sans-serif">The team HAS won the match.</text>
+<text x="195" y="108" fill="#9CA3AF" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">The committee HAS decided.</text>
+<text x="195" y="126" fill="#9CA3AF" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">The jury HAS reached a verdict.</text>
+<rect x="400" y="44" width="330" height="96" rx="8" fill="rgba(227,65,58,.07)" stroke="#E3413A" stroke-width="1.5"/>
+<text x="565" y="68" fill="#E3413A" font-size="12" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Acting as INDIVIDUALS → PLURAL</text>
+<text x="565" y="88" fill="#F9FAFB" font-size="13" text-anchor="middle" font-family="Inter,sans-serif">The team ARE arguing among themselves.</text>
+<text x="565" y="108" fill="#9CA3AF" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">The committee ARE divided on this.</text>
+<text x="565" y="126" fill="#9CA3AF" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">Key word: "among themselves"</text>
+</svg>`
+};
+
+const CHAPTERS = [
+{id:"core-sva",title:"Core Rules",icon:"📖",nodes:[
+
+{id:"basic-agreement",title:"Basic Agreement & Ignoring Phrases",xp:20,type:"regular",
+diag:"sva-decision",
+facts:[
+  "<b>Singular subject → Singular verb</b> (verb ends in -s/-es): The boy RUNS fast.",
+  "<b>Plural subject → Plural verb</b> (no -s/-es): The boys RUN fast.",
+  "<b>CRITICAL</b>: Ignore ALL phrases between subject and verb when deciding verb form",
+  "<b>Phrases to ignore</b>: of, with, along with, together with, as well as, in addition to, except, besides, including, accompanied by, rather than",
+  "<b>The bag of apples IS heavy</b> — subject = bag (singular), ignore 'of apples'",
+  "<b>The quality of these mangoes IS good</b> — subject = quality, not mangoes",
+  "<b>The boys in the class ARE noisy</b> — subject = boys (plural), ignore 'in the class'",
+  "<b>He, along with his friends, IS going</b> — subject = He (singular)"
+],
+table:{h:["Sentence","Real Subject","Phrase Ignored","Correct Verb"],r:[
+  ["The bag of apples ___ heavy","bag (singular)","of apples","IS"],
+  ["The quality of mangoes ___ good","quality (singular)","of mangoes","IS"],
+  ["The boys in the class ___ noisy","boys (plural)","in the class","ARE"],
+  ["He along with his friends ___ going","He (singular)","along with his friends","IS"],
+  ["The price of vegetables ___ rising","price (singular)","of vegetables","IS"],
+  ["The team, as well as the coach, ___ ready","team (singular)","as well as the coach","IS"]
+]},
+traps:[
+  "<b>He along with his friends are going</b> → WRONG — subject = He (singular) → USE: <b>IS going</b>",
+  "<b>The quality of these products are very good</b> → WRONG — subject = quality → USE: <b>IS very good</b>",
+  "<b>SSC CGL 2021 actual question</b>: 'The quality of these products are very good' → error = 'are' → should be 'is'",
+  "Phrases with 'as well as / along with / together with' DO NOT make the subject plural — the subject before them remains the real subject"
+],
+mcqs:[
+  {q:"The quality of these products ___ very good.",o:["are","were","is","have been"],a:2,e:"Subject = 'quality' (singular). Ignore 'of these products'. SSC CGL 2021 actual PYQ — answer is IS. Classic phrase-between trap."},
+  {q:"The price of vegetables ___ rising rapidly this season.",o:["are","were","is","have"],a:2,e:"Subject = 'price' (singular). Ignore 'of vegetables'. 'The price IS rising' is correct."},
+  {q:"He, along with his brothers, ___ invited to the function.",o:["are","were","is","have been"],a:2,e:"Subject = 'He' (singular). 'Along with his brothers' is a parenthetical phrase — ignore it. So: IS invited."},
+  {q:"The boys in the room ___ making noise.",o:["is","was","are","has"],a:2,e:"Subject = 'boys' (plural). Ignore 'in the room'. Plural subject → plural verb: ARE making."},
+  {q:"A box of chocolates ___ given to each student.",o:["are","were","is","have been"],a:2,e:"Subject = 'A box' (singular). Ignore 'of chocolates'. 'A box IS given' is correct."}
+]},
+
+{id:"either-neither",title:"Either/Or · Neither/Nor — Proximity Rule",xp:20,type:"trap",
+diag:"either-neither-flow",
+facts:[
+  "<b>RULE: Verb agrees with the CLOSER (B) subject — the one just before the verb</b>",
+  "<b>Either A or B</b> → verb agrees with B",
+  "<b>Neither A nor B</b> → verb agrees with B",
+  "<b>Either Ram or Shyam IS coming</b> — B = Shyam (singular) → IS",
+  "<b>Either Ram or his brothers ARE coming</b> — B = brothers (plural) → ARE",
+  "<b>Neither she nor I AM guilty</b> — B = I → AM",
+  "<b>Neither the boys nor Ram IS responsible</b> — B = Ram (singular) → IS",
+  "<b>Neither the manager nor the workers WERE present</b> — B = workers (plural) → WERE",
+  "Same rule applies to: not only A but also B, not A but B"
+],
+table:{h:["Structure","B Subject","Correct Verb","Example"],r:[
+  ["Either A or B","B","agrees with B","Either he or they ARE wrong"],
+  ["Neither A nor B","B","agrees with B","Neither she nor he IS ready"],
+  ["Not only A but also B","B","agrees with B","Not only Ram but also his friends ARE wrong"],
+  ["Not A but B","B","agrees with B","Not you but he IS responsible"]
+]},
+traps:[
+  "<b>Either Ram or Shyam are wrong</b> → WRONG — B = Shyam (singular) → USE: <b>IS wrong</b>",
+  "<b>Neither the manager nor the workers was present</b> → WRONG — B = workers (plural) → USE: <b>WERE present</b>",
+  "<b>SSC trap</b>: The sentence is long so students look at the first subject (A) — always look at B (the one just before the verb)",
+  "Neither/Either as PRONOUN (without or/nor) → ALWAYS singular: 'Neither of them IS correct', 'Either of them IS fine'"
+],
+mcqs:[
+  {q:"Either Ram or his brothers ___ responsible for this.",o:["is","was","are","has"],a:2,e:"Proximity rule: verb agrees with B (closer subject). B = 'brothers' (plural) → ARE. SSC CGL repeat pattern."},
+  {q:"Neither the manager nor the workers ___ present yesterday.",o:["was","is","were","has"],a:2,e:"B = 'workers' (plural) → WERE. Ignore the manager (A). Always look at the subject just before the verb."},
+  {q:"Neither of them ___ correct in their approach.",o:["are","were","is","have"],a:2,e:"'Neither' as a pronoun (no 'nor') = always singular. 'Neither of them IS correct.' Don't confuse with neither/nor structure."},
+  {q:"Not only the students but also the teacher ___ present.",o:["were","are","is","have been"],a:2,e:"'Not only A but also B' → verb agrees with B. B = 'teacher' (singular) → IS present."},
+  {q:"Either she or I ___ wrong about this.",o:["am","is","are","was"],a:0,e:"B = 'I'. When 'I' is the closer subject, use AM. 'Either she or I AM wrong.' This is a tricky SSC-level question."}
+]},
+
+{id:"the-number-a-number",title:"The Number of vs A Number of",xp:20,type:"trap",
+diag:"the-number-vs-a-number",
+facts:[
+  "<b>THE number of + plural noun → SINGULAR verb</b>",
+  "<b>A number of + plural noun → PLURAL verb</b>",
+  "<b>The number of students IS increasing</b> — 'The number' = one definite count = singular",
+  "<b>A number of students ARE absent</b> — 'A number' = some/many = plural meaning",
+  "<b>Memory trick</b>: THE = definite = one thing = singular; A = indefinite = many = plural",
+  "<b>SSC CGL 2022 actual PYQ</b>: 'A number of students was absent' → error = 'was' → should be 'were'",
+  "<b>Extended pattern</b>: 'A large number of / A great number of' → also PLURAL",
+  "<b>A majority of / A variety of / A series of</b> → PLURAL verb (same logic as 'a number of')"
+],
+table:{h:["Expression","Verb","Memory Tip","Example"],r:[
+  ["The number of","SINGULAR","'The number' = 1 thing","The number of errors IS small"],
+  ["A number of","PLURAL","'A number' = many","A number of errors ARE present"],
+  ["A large number of","PLURAL","'A large number' = many","A large number of birds ARE migrating"],
+  ["A majority of","PLURAL","= many people","A majority of students ARE passing"],
+  ["A variety of","PLURAL","= several types","A variety of dishes ARE served"],
+  ["A series of","PLURAL","= multiple events","A series of events ARE planned"]
+]},
+traps:[
+  "<b>A number of students was absent</b> → WRONG → USE: <b>were absent</b> (SSC CGL 2022 PYQ)",
+  "<b>The number of applicants are increasing</b> → WRONG → USE: <b>is increasing</b>",
+  "<b>Trick question</b>: 'A number of books was found' — looks right because 'books' is plural and 'was' sounds less awkward, but it's still WRONG. Use 'were'."
+],
+mcqs:[
+  {q:"A number of students ___ absent from the rally.",o:["was","is","were","has"],a:2,e:"A number of = plural verb. 'A number of students WERE absent.' This is SSC CGL 2022 PYQ pattern. A = many = plural."},
+  {q:"The number of applicants ___ increasing every year.",o:["are","were","is","have"],a:2,e:"THE number of = singular verb. 'The number IS increasing.' THE = one definite number = singular concept."},
+  {q:"A large number of birds ___ migrated south this winter.",o:["has","is","have","was"],a:2,e:"'A large number of' follows same rule as 'a number of' → plural. HAVE migrated. Any 'a ___ number of' = plural."},
+  {q:"The number of errors in the report ___ shocking.",o:["are","were","is","have been"],a:2,e:"THE number of = singular. IS shocking. The subject is 'the number' (singular concept), not 'errors'."},
+  {q:"A variety of dishes ___ served at the function.",o:["was","is","were","has"],a:2,e:"'A variety of' = plural verb (same logic as a number of). WERE served. A variety, a majority, a series — all take plural verbs."}
+]},
+
+{id:"collective-nouns",title:"Collective Nouns — Unit vs Individual",xp:15,type:"regular",
+diag:"collective-noun-flow",
+facts:[
+  "<b>Collective noun acting as ONE UNIT → SINGULAR verb</b>",
+  "<b>Collective noun acting as INDIVIDUALS → PLURAL verb</b>",
+  "<b>Key word test</b>: 'among themselves / each other / divided' → signals individual action → plural",
+  "<b>The team HAS won</b> — team as a single unit → singular",
+  "<b>The team ARE arguing among themselves</b> — members acting individually → plural",
+  "<b>Always SINGULAR regardless</b>: committee (deciding), jury (delivering verdict), government (passing bill)",
+  "<b>SSC CGL 2023</b>: 'The committee have decided' → error → should be 'has decided' (unit acting together)"
+],
+table:{h:["Collective Noun","As Unit (Singular)","As Individuals (Plural)"],r:[
+  ["team","The team HAS won","The team ARE fighting among themselves"],
+  ["committee","The committee HAS decided","The committee ARE divided on this issue"],
+  ["jury","The jury HAS delivered the verdict","The jury ARE arguing among themselves"],
+  ["family","The family IS happy","The family ARE unable to agree"],
+  ["class","The class WAS silent","The class ARE preparing individually"],
+  ["army","The army IS ready","The army ARE dispersing to their posts"]
+]},
+traps:[
+  "<b>The committee have decided to postpone</b> → WRONG — acting as unit → USE: <b>has decided</b> (SSC CGL 2023 PYQ)",
+  "<b>The jury are divided</b> → CORRECT — divided = acting individually → plural is right here",
+  "<b>Trick</b>: If no phrase like 'among themselves / divided / each other' → assume unit → singular"
+],
+mcqs:[
+  {q:"The committee ___ decided to postpone the meeting.",o:["have","had","has","were"],a:2,e:"Committee acting as one decision-making unit → singular. HAS decided. SSC CGL 2023 actual PYQ."},
+  {q:"The jury ___ divided on the question of punishment.",o:["is","was","are","has"],a:2,e:"'Divided' signals individual action among members → plural. The jury ARE divided is correct here."},
+  {q:"The government ___ announced a new scheme for farmers.",o:["have","are","has","were"],a:2,e:"Government acting as a single body making one announcement → singular. HAS announced."},
+  {q:"The team ___ arguing among themselves about the strategy.",o:["is","was","has","are"],a:3,e:"'Among themselves' is the key signal — members acting as individuals → plural. The team ARE arguing."},
+  {q:"The audience ___ requested the performer to sing once more.",o:["have","are","has","were"],a:2,e:"Audience acting as one united group making one request → singular. HAS requested. If 'divided in their opinion' → plural."}
+]},
+
+]},
+
+{id:"special-sva",title:"Special Cases",icon:"⚡",nodes:[
+
+{id:"indefinite-pronouns",title:"Indefinite Pronouns — Always Singular/Plural",xp:20,type:"trap",
+facts:[
+  "<b>ALWAYS SINGULAR</b>: each, every, either, neither, one, everyone, everybody, everything, someone, somebody, something, anyone, anybody, anything, no one, nobody, nothing",
+  "<b>Memory trick for SINGULAR</b>: -one, -body, -thing endings = ALWAYS singular",
+  "<b>Each of the boys IS present</b> — Each = singular",
+  "<b>Everyone HAS submitted the form</b> — Everyone = singular",
+  "<b>Neither of them IS correct</b> — Neither (as pronoun) = singular",
+  "<b>Nobody WAS hurt</b> — Nobody = singular",
+  "<b>ALWAYS PLURAL</b>: both, few, many, several, others",
+  "<b>Both ARE wrong</b> — Both = always plural",
+  "<b>Few WERE present</b> — Few = always plural",
+  "<b>Several members WERE absent</b> — Several = always plural"
+],
+table:{h:["Always SINGULAR","Always PLURAL"],r:[
+  ["each, every, either, neither","both, few, many"],
+  ["everyone, everybody, everything","several, others"],
+  ["someone, somebody, something","—"],
+  ["anyone, anybody, anything","—"],
+  ["no one, nobody, nothing","—"],
+  ["one (pronoun)","—"]
+]},
+traps:[
+  "<b>Each of the boys are present</b> → WRONG — Each = singular → USE: <b>IS present</b>",
+  "<b>Everyone have submitted</b> → WRONG — Everyone = singular → USE: <b>HAS submitted</b>",
+  "<b>Nobody were hurt</b> → WRONG — Nobody = singular → USE: <b>WAS hurt</b>",
+  "<b>Both has gone</b> → WRONG — Both = plural → USE: <b>HAVE gone</b>",
+  "<b>Several was absent</b> → WRONG — Several = plural → USE: <b>WERE absent</b>",
+  "SSC trap: 'Each of the participants were given' → error = 'were' → should be 'was' (SSC CHSL 2023)"
+],
+mcqs:[
+  {q:"Each of the participants ___ given a certificate of merit.",o:["were","are","was","have"],a:2,e:"'Each' = always singular → WAS. SSC CHSL 2023 actual PYQ. Ignore 'of the participants' — subject = Each."},
+  {q:"Everyone ___ to submit their forms by Friday.",o:["have","are","were","has"],a:3,e:"'Everyone' = always singular → HAS. The -one/-body/-thing words are always singular in SVA."},
+  {q:"Nobody ___ hurt in the accident.",o:["were","are","have been","was"],a:3,e:"'Nobody' = always singular → WAS. Don't be confused by the plural sound. Nobody = no single person."},
+  {q:"Both the brothers ___ gone abroad for higher studies.",o:["has","is","have","was"],a:2,e:"'Both' = always plural → HAVE gone. 'Both' is in the always-plural list (both, few, several, many)."},
+  {q:"Several members ___ absent from yesterday's meeting.",o:["was","is","has","were"],a:3,e:"'Several' = always plural → WERE absent. Along with: both, few, many, others = always plural."}
+]},
+
+{id:"special-nouns",title:"Always Singular / Always Plural Nouns",xp:20,type:"trap",
+facts:[
+  "<b>ALWAYS SINGULAR (even though plural-looking)</b>:",
+  "News, Mathematics, Physics, Economics, Ethics, Politics (as subject), Civics, Statistics (as subject)",
+  "The Arabian Nights, Gulliver's Travels (titles)",
+  "Measles, Mumps, Rickets, Rabies, Scabies (disease names ending in -s)",
+  "Athletics (as a sport), Innings, Wages (= salary meaning)",
+  "<b>ALWAYS PLURAL (even though singular-looking)</b>:",
+  "Cattle, People, Police, Clergy, Gentry, Public, Poultry, Peasantry",
+  "Scissors, Trousers, Spectacles, Binoculars, Tongs, Pliers, Bellows, Shears",
+  "Riches, Belongings, Surroundings, Customs, Clothes, Premises, Thanks, Earnings",
+  "<b>The news IS shocking</b> — News = always singular",
+  "<b>The cattle ARE grazing</b> — Cattle = always plural",
+  "<b>Measles IS contagious</b> — Disease names in -s = singular",
+  "<b>The scissors ARE on the table</b> — Pair nouns = always plural"
+],
+table:{h:["Always Singular","Always Plural"],r:[
+  ["News (IS)","Cattle (ARE)"],
+  ["Mathematics (IS)","People (ARE)"],
+  ["Physics (IS)","Police (ARE)"],
+  ["Economics (IS)","Scissors (ARE)"],
+  ["Politics (IS, as subject)","Trousers (ARE)"],
+  ["Measles, Mumps, Rickets (IS)","Spectacles (ARE)"],
+  ["Athletics (IS, as sport)","Belongings (ARE)"],
+  ["The Arabian Nights (IS)","Premises (ARE)"],
+  ["Innings (IS)","Clothes (ARE)"]
+]},
+traps:[
+  "<b>The news about the floods are shocking</b> → WRONG — News = singular → USE: <b>IS shocking</b>",
+  "<b>The cattle is grazing</b> → WRONG — Cattle = always plural → USE: <b>ARE grazing</b>",
+  "<b>Measles are a contagious disease</b> → WRONG — Disease in -s = singular → USE: <b>IS</b>",
+  "<b>The scissors is on the table</b> → WRONG — Pair noun = always plural → USE: <b>ARE</b>",
+  "<b>Politics are a dirty game</b> → WRONG — Politics as subject = singular → USE: <b>IS a dirty game</b>",
+  "<b>The Arabian Nights are a great book</b> → WRONG — Title as unit = singular → USE: <b>IS</b>"
+],
+mcqs:[
+  {q:"The news about the floods ___ very shocking.",o:["are","were","is","have been"],a:2,e:"News = always singular. IS shocking. The word 'news' never takes a plural verb, regardless of content."},
+  {q:"The cattle ___ grazing in the field near the river.",o:["is","was","has","are"],a:3,e:"Cattle = always plural. ARE grazing. 'Cattle' has no singular form in modern English grammar."},
+  {q:"Measles ___ a contagious disease that spreads quickly.",o:["are","were","have","is"],a:3,e:"Disease names ending in -s (Measles, Mumps, Rickets, Rabies) = always singular. IS a contagious disease."},
+  {q:"The scissors ___ on the table near the sewing kit.",o:["is","was","has","are"],a:3,e:"Scissors = pair noun = always plural. ARE on the table. Same rule: spectacles, trousers, binoculars, tongs."},
+  {q:"Politics ___ a dirty game according to many people.",o:["are","were","have been","is"],a:3,e:"Politics used as a subject (topic/field) = singular. IS a dirty game. Same for: Mathematics, Physics, Economics, Ethics."}
+]},
+
+{id:"amount-as-unit",title:"Amount / Distance / Time as Unit",xp:15,type:"regular",
+facts:[
+  "<b>When amount/distance/time/title is treated as ONE UNIT → SINGULAR verb</b>",
+  "<b>Five thousand rupees IS a large amount</b> — rupees = one sum of money",
+  "<b>Ten kilometres IS a long distance</b> — kilometres = one measurement",
+  "<b>Ten years IS a long time</b> — years = one period of time",
+  "<b>The Arabian Nights IS a famous book</b> — title = one unit",
+  "<b>Contrast</b>: '500 rupees WERE found on the road' — individual coins/notes scattered",
+  "<b>Arithmetic rule</b>: 5 + 5 IS ten, 10 ÷ 2 IS five (arithmetic result = singular)",
+  "<b>Exception</b>: 'Two and two MAKE four' — idiomatic expression uses plural"
+],
+table:{h:["Expression","Verb","Reason"],r:[
+  ["Three thousand rupees","IS enough","One lump sum"],
+  ["Five kilometres","IS far","One distance"],
+  ["Ten years","IS a long time","One period"],
+  ["5 + 5","IS ten","One result"],
+  ["10 ÷ 2","IS five","One result"],
+  ["Two and two","MAKE four","Idiomatic — exception"],
+  ["The Arabian Nights","IS a book","Title as one unit"]
+]},
+traps:[
+  "<b>Five thousand rupees are not enough</b> → WRONG (as one sum) → USE: <b>IS not enough</b>",
+  "<b>Five kilometres are a long distance</b> → WRONG → USE: <b>IS a long distance</b>",
+  "<b>Two and two makes four</b> → WRONG — idiomatic plural → USE: <b>MAKE four</b>",
+  "<b>Trick</b>: If the number refers to the TOTAL AMOUNT as one thing = singular. If it refers to individual items scattered = plural"
+],
+mcqs:[
+  {q:"Five thousand rupees ___ not enough to buy that item.",o:["are","were","is","have"],a:2,e:"When a sum of money is treated as one unit = singular. Five thousand rupees IS not enough."},
+  {q:"Ten years ___ a very long time to wait for justice.",o:["are","were","have been","is"],a:3,e:"A period of time treated as one unit = singular. Ten years IS a long time. One period = singular concept."},
+  {q:"Two and two ___ four, not three.",o:["makes","is","are","make"],a:3,e:"'Two and two make four' is an idiomatic exception. Despite arithmetic logic, this expression uses MAKE (plural). Fixed phrase."},
+  {q:"Three kilometres ___ a short distance for a trained runner.",o:["are","were","is","have"],a:2,e:"Distance treated as one measurement unit = singular. Three kilometres IS a short distance."},
+  {q:"'The Arabian Nights' ___ a collection of ancient stories.",o:["are","were","have","is"],a:3,e:"Titles of books/works = singular (one unit). IS a collection. Same: 'Gulliver's Travels IS a novel.'"}
+]},
+
+{id:"relative-pronoun-gerund",title:"Relative Pronoun & Gerund as Subject",xp:15,type:"trap",
+facts:[
+  "<b>Verb of relative pronoun agrees with its ANTECEDENT</b>",
+  "<b>'One of those who'</b> → antecedent = 'those' (plural) → plural verb",
+  "<b>'The only one of those who'</b> → antecedent = 'one' (singular) → singular verb",
+  "<b>He is one of those students who WORK hard</b> — who refers to 'students' (plural) → WORK",
+  "<b>He is the only one of those students who WORKS hard</b> — who refers to 'one' (singular) → WORKS",
+  "<b>More than one + singular noun → SINGULAR verb</b> (paradox!)",
+  "<b>More than one student HAS failed</b> — grammatically singular despite meaning",
+  "<b>More + plural noun + than one → PLURAL verb</b>",
+  "<b>More students than one HAVE failed</b>",
+  "<b>Gerund/Infinitive as subject → SINGULAR verb</b>",
+  "<b>Swimming IS good exercise</b>",
+  "<b>To err IS human</b>",
+  "<b>Reading books IS his hobby</b>"
+],
+table:{h:["Structure","Antecedent/Logic","Correct Verb"],r:[
+  ["He is one of those who ___","those (plural)","WORK/ARE"],
+  ["He is the only one who ___","one (singular)","WORKS/IS"],
+  ["More than one student ___","grammatically singular","HAS/IS"],
+  ["More students than one ___","plural by meaning","HAVE/ARE"],
+  ["Swimming ___","gerund = singular subject","IS"],
+  ["To err ___","infinitive = singular subject","IS"],
+  ["Reading books ___","gerund phrase = singular","IS"]
+]},
+traps:[
+  "<b>He is one of those who works hard</b> → WRONG — antecedent = 'those' (plural) → USE: <b>WORK</b>",
+  "<b>He is the only one who work hard</b> → WRONG — antecedent = 'one' (singular) → USE: <b>WORKS</b>",
+  "<b>More than one person have been arrested</b> → WRONG — paradox! → USE: <b>HAS been</b>",
+  "<b>Swimming are good</b> → WRONG — gerund as subject = singular → USE: <b>IS good</b>",
+  "SSC loves 'one of those who' — most students get the one/only one distinction wrong"
+],
+mcqs:[
+  {q:"He is one of those writers who ___ beautifully.",o:["writes","write","has written","is writing"],a:1,e:"Antecedent of 'who' = 'writers' (plural) → plural verb. 'One of those who WRITE.' SSC CGL 2023 PYQ pattern."},
+  {q:"She is the only one of those writers who ___ daily.",o:["write","are writing","writes","have written"],a:2,e:"'The only one of those' — antecedent = 'one' (singular) → singular verb. WRITES daily. Key difference from previous question."},
+  {q:"More than one student ___ failed the examination.",o:["have","were","has","are"],a:2,e:"'More than one + singular noun' = paradox rule = SINGULAR verb. HAS failed. This is counterintuitive but a fixed grammar rule."},
+  {q:"Swimming in the sea ___ dangerous without a lifeguard.",o:["are","were","have been","is"],a:3,e:"Gerund phrase as subject = singular verb. Swimming IS dangerous. Any -ing verb as subject = singular."},
+  {q:"More students than one ___ failed in the district.",o:["has","is","have","was"],a:2,e:"'More + plural noun + than one' = plural verb. HAVE failed. This is the reverse of 'more than one student' (singular)."}
+]},
+
+]},
+
+{id:"pyq-sva",title:"PYQ Patterns",icon:"🎯",nodes:[
+
+{id:"sva-find-error",title:"Find the Error — SVA Questions",xp:25,type:"trap",
+facts:[
+  "<b>SSC approach</b>: Isolate the subject → check if singular/plural → check verb → find mismatch",
+  "<b>SSC CGL 2023</b>: 'The committee have decided' → error = 'have' → should be 'has' (unit)",
+  "<b>SSC CGL 2022</b>: 'A number of students was absent' → error = 'was' → should be 'were'",
+  "<b>SSC CHSL 2023</b>: 'Each of the participants were given' → error = 'were' → should be 'was'",
+  "<b>SSC CGL 2021</b>: 'The quality of these products are very good' → error = 'are' → should be 'is'",
+  "<b>Check list for Find the Error</b>:",
+  "1. Is there a phrase between subject and verb? (Ignore it)",
+  "2. Is there either/or or neither/nor? (Check B)",
+  "3. Is it 'the/a number of'? (THE = singular, A = plural)",
+  "4. Is it an indefinite pronoun? (each/every/none = singular)",
+  "5. Is it a collective noun? (unit = singular, divided = plural)"
+],
+traps:[
+  "Long sentences are designed to make you forget the real subject — always trace back to find it",
+  "The verb in a relative clause agrees with the ANTECEDENT — not the overall sentence subject",
+  "'The number of...' questions appear almost every year — memorise: THE = singular"
+],
+mcqs:[
+  {q:"SSC CGL 2023: 'The committee (A) have decided (B) to postpone (C) the meeting. (D) No error'",o:["Part A","Part B","Part C","No error"],a:1,e:"Part B: 'have decided' is wrong. Committee acting as one unit = singular. Correct: HAS decided. Classic collective noun unit trap."},
+  {q:"SSC CGL 2022: 'A number of students (A) was (B) absent (C) yesterday. (D) No error'",o:["Part A","Part B","Part C","No error"],a:1,e:"Part B: 'was' is wrong. A number of = plural verb. Correct: WERE absent. THE number of = singular. This distinction is tested every year."},
+  {q:"SSC CHSL 2023: 'Each of the participants (A) were (B) given a certificate (C) of merit. (D) No error'",o:["Part A","Part B","Part C","No error"],a:1,e:"Part B: 'were' is wrong. 'Each' = always singular. Correct: WAS given. Ignore 'of the participants'."},
+  {q:"Find error: 'Swimming in the sea (A) are (B) dangerous (C) for untrained swimmers. (D) No error'",o:["Part A","Part B","Part C","No error"],a:1,e:"Part B: 'are' is wrong. Gerund phrase as subject = singular. Swimming IS dangerous. Correct answer: Part B."},
+  {q:"Find error: 'More than one (A) person have (B) been arrested (C) for the crime. (D) No error'",o:["Part A","Part B","Part C","No error"],a:1,e:"Part B: 'have been' is wrong. 'More than one + singular noun' = paradox rule = singular verb. HAS been arrested. Correct answer: Part B."}
+]},
+
+{id:"sva-fill-blank",title:"Fill in the Blank — SVA Patterns",xp:25,type:"trap",
+facts:[
+  "<b>Step 1</b>: Find the real subject (ignore phrases in between)",
+  "<b>Step 2</b>: Apply the special rule if any (either/or, collective, number of, etc.)",
+  "<b>Step 3</b>: Choose matching verb form",
+  "<b>Pattern 1</b>: 'The number of applicants ___ increasing' → IS (THE = singular)",
+  "<b>Pattern 2</b>: 'A number of people ___ present' → WERE (A = plural)",
+  "<b>Pattern 3</b>: 'Either he or his friends ___ responsible' → ARE (B = friends, plural)",
+  "<b>Pattern 4</b>: 'The team ___ decided unanimously' → HAS (unit acting together)",
+  "<b>Pattern 5</b>: 'Each student ___ submitted the form' → HAS (each = singular)",
+  "<b>Pattern 6</b>: 'The news ___ shocking' → IS (news = always singular)",
+  "<b>Pattern 7</b>: 'Five thousand rupees ___ not enough' → IS (amount as unit)"
+],
+traps:[
+  "Two-step traps: first find the subject, then apply the special rule — students fail at step 1",
+  "Collective noun questions: the marker word 'among themselves' or 'divided' signals plural",
+  "Indefinite pronoun questions: if you see each/every/either/neither → immediately think SINGULAR"
+],
+mcqs:[
+  {q:"The number of students applying for this course ___ growing every year.",o:["are","were","is","have"],a:2,e:"THE number of = singular. IS growing. 'The number' is the subject (singular concept). Ignore 'of students applying'."},
+  {q:"Either the principal or the teachers ___ responsible for this decision.",o:["is","was","has","are"],a:3,e:"Either/or → verb agrees with B (closer subject). B = 'teachers' (plural) → ARE responsible."},
+  {q:"The jury ___ divided on the question of the accused's guilt.",o:["is","was","has","are"],a:3,e:"'Divided' signals members acting as individuals → plural. The jury ARE divided. Key trigger word = 'divided'."},
+  {q:"Each student in all three batches ___ asked to submit the fee by Monday.",o:["were","are","have","was"],a:3,e:"'Each' = always singular. Ignore 'in all three batches'. WAS asked. Don't be distracted by 'batches' (plural)."},
+  {q:"The cattle ___ allowed to graze freely in that region.",o:["is","was","has","are"],a:3,e:"Cattle = always plural. ARE allowed. It's one of the words in the always-plural list that has no singular form."}
+]},
+
+
+{id:"sva-golden",title:"🏹 Golden Node — High Probability Points",xp:35,type:"gold",requires_pct:80,
+golden:[
+  "<b>IGNORE phrases between subject and verb</b> — of / with / along with / as well as / except / besides",
+  "<b>Either/or + Neither/nor → verb agrees with B (closer subject)</b>",
+  "<b>THE number of → SINGULAR | A number of → PLURAL</b> — most repeated SSC pattern",
+  "<b>Collective noun as unit → SINGULAR | among themselves / divided → PLURAL</b>",
+  "<b>Each, Every, Either, Neither, Everyone, Nobody, Nothing → ALWAYS SINGULAR</b>",
+  "<b>Both, Few, Several, Many → ALWAYS PLURAL</b>",
+  "<b>-one / -body / -thing endings → ALWAYS SINGULAR</b> (someone, everybody, nothing...)",
+  "<b>Amount / Distance / Time as single unit → SINGULAR</b> — 'Five km IS / Three years IS'",
+  "<b>More than one + singular noun → SINGULAR (paradox!)</b> — 'More than one student HAS'",
+  "<b>More + plural + than one → PLURAL</b> — 'More students than one HAVE'",
+  "<b>One of those who → antecedent = those → PLURAL verb</b>",
+  "<b>The only one of those who → antecedent = one → SINGULAR verb</b>",
+  "<b>Gerund / Infinitive as subject → SINGULAR</b> — Swimming IS, To err IS",
+  "<b>News / Maths / Physics / Politics (as subject) → SINGULAR</b>",
+  "<b>Cattle / People / Police / Scissors / Trousers → ALWAYS PLURAL</b>",
+  "<b>Measles / Mumps / Rickets / Rabies → SINGULAR (disease -s nouns)</b>",
+  "<b>Titles as one unit → SINGULAR</b> — The Arabian Nights IS",
+  "<b>Two and two MAKE four</b> — idiomatic exception, don't apply arithmetic rule",
+  "<b>5 + 5 IS ten</b> — all other arithmetic → singular",
+  "<b>Not only A but also B → verb agrees with B</b> (same as either/or rule)"
+]}
+
+]}];
+
+const SKEY="eng_sva_v1";
+let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
+try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
+
+// ── TRACKING ──────────────────────────────────────────────────────────────────
+let _mToken='';
+(function initToken(){
+  var ks=Object.keys(localStorage);var k=ks.find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});
+  if(k){try{var d=JSON.parse(localStorage.getItem(k));_mToken=(d&&d.access_token)||'';}catch(e){}}
+  if(!_mToken){var sk=Object.keys(sessionStorage).find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});if(sk){try{var d2=JSON.parse(sessionStorage.getItem(sk));_mToken=(d2&&d2.access_token)||'';}catch(e){}}}
+})();
+let _ns={nodeId:null,openedAt:null,answered:0,correct:0,totalQ:0};
+function trackEvent(ev,payload){
+  const body=Object.assign({event:ev,mapId:"eng_02_sva",ts:new Date().toISOString()},payload);
+  const sid='sess_'+(Math.random().toString(36).slice(2,10));
+  try{fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json',...(_mToken?{'Authorization':'Bearer '+_mToken}:{})},body:JSON.stringify({event_name:ev,session_id:sid,event_timestamp:new Date().toISOString(),metadata:body})}).then(()=>flashSync()).catch(()=>{});}catch(e){}
+}
+function flashSync(){const d=document.getElementById('syncDot');if(!d)return;d.classList.add('show');setTimeout(()=>d.classList.remove('show'),900);}
+function startNodeSession(nodeId,totalQ){
+  if(_ns.nodeId&&_ns.nodeId!==nodeId&&_ns.totalQ>0&&_ns.answered<_ns.totalQ)
+    trackEvent('node_abandoned',{nodeId:_ns.nodeId,timeSpentSeconds:Math.floor((Date.now()-_ns.openedAt)/1000),questionsAnswered:_ns.answered,totalQuestions:_ns.totalQ});
+  _ns={nodeId,openedAt:Date.now(),answered:0,correct:0,totalQ};
+  trackEvent('node_opened',{nodeId,totalQuestions:totalQ,openedAt:new Date().toISOString()});
+}
+function trackAnswer(nodeId,qi,isCorrect){
+  _ns.answered++;if(isCorrect)_ns.correct++;
+  trackEvent('question_answered',{nodeId,questionIndex:qi,firstAttemptCorrect:isCorrect,timeIntoNodeSeconds:Math.floor((Date.now()-_ns.openedAt)/1000)});
+  if(_ns.answered>=_ns.totalQ)
+    trackEvent('node_completed',{nodeId,totalQuestions:_ns.totalQ,correctOnFirstAttempt:_ns.correct,firstAttemptAccuracyPct:Math.round(_ns.correct/_ns.totalQ*100),timeSpentSeconds:Math.floor((Date.now()-_ns.openedAt)/1000),completedAt:new Date().toISOString()});
+}
+
+function allNodes(){const a=[];CHAPTERS.forEach(c=>c.nodes.forEach(n=>a.push({...n,chId:c.id})));return a;}
+function getNode(id){for(const c of CHAPTERS)for(const n of c.nodes)if(n.id===id)return n;return null;}
+function isVisited(id){return!!S.visited[id];}
+function isUnlocked(node){
+  if(!node)return false;
+  if(node.type==="gold"){const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===node.id));if(ch){const reg=ch.nodes.filter(n=>n.id!==node.id);const pct=reg.length?reg.filter(n=>isVisited(n.id)).length/reg.length*100:0;return pct>=(node.requires_pct||80);}}
+  return true;
+}
+function chPct(ch){const reg=ch.nodes.filter(n=>n.type!=="gold");return reg.length?Math.round(reg.filter(n=>isVisited(n.id)).length/reg.length*100):0;}
+function totalNodes(){return allNodes().length;}
+function visitedCount(){return Object.keys(S.visited).length;}
+function trapNodes(){return allNodes().filter(n=>n.type==="trap");}
+function trapVisited(){return trapNodes().filter(n=>isVisited(n.id)).length;}
+
+function showToast(xp,msg){
+  const t=document.getElementById("toast");
+  document.getElementById("toastVal").textContent=xp>0?"+"+xp+" XP":"✓";
+  document.getElementById("toastMsg").textContent=msg;
+  t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2800);
+}
+function updateHeader(){
+  document.getElementById("hXP").textContent=S.xp;
+  document.getElementById("hVis").textContent=visitedCount()+"/"+totalNodes();
+  document.getElementById("hTrap").textContent=trapVisited()+"/"+trapNodes().length;
+}
+function buildSidebar(){
+  ["sideInner","mobSideInner"].forEach(sid=>{
+    const el=document.getElementById(sid);if(!el)return;el.innerHTML="";
+    CHAPTERS.forEach(ch=>{
+      const pct=chPct(ch),isOpen=S.chOpen===ch.id;
+      const div=document.createElement("div");div.className="ch-group"+(isOpen?" expanded":"");
+      div.innerHTML=`<button class="ch-toggle${isOpen?" open":""}" data-ch="${ch.id}">
+        <span style="font-size:16px">${ch.icon}</span><span>${ch.title}</span>
+        <span class="cht-pct">${pct}%</span></button>
+      <div class="node-items">${ch.nodes.map(n=>{
+        const unl=isUnlocked(n),vis=isVisited(n.id),cur=S.curNode===n.id;
+        let ico=vis?"✓":"○",tag="";
+        if(!unl){ico="🔒";tag=`<span class="ni-tag hidden">LOCKED</span>`;}
+        else if(n.type==="gold"){ico="🏹";tag=`<span class="ni-tag gold">GOLD</span>`;}
+        else if(n.type==="trap"){ico=vis?"⚠️":"⚠";tag=`<span class="ni-tag trap">TRAP</span>`;}
+        return `<button class="ni-btn${cur?" current":""}${vis?" done":""}${!unl?" locked":""}" data-nid="${n.id}" data-unl="${unl}">
+          <span style="width:15px;text-align:center;font-size:12px">${ico}</span>
+          <span>${n.title}</span>${tag}</button>`;
+      }).join("")}</div>`;
+      el.appendChild(div);
+      div.querySelector(".ch-toggle").onclick=()=>{
+        S.chOpen=isOpen?null:ch.id;save();buildSidebar();
+        if(!isOpen){const first=ch.nodes.find(n=>isUnlocked(n));if(first)openNode(first.id);}
+      };
+      div.querySelectorAll(".ni-btn[data-unl='true']").forEach(b=>b.onclick=()=>{openNode(b.dataset.nid);closeDrawer();});
+      div.querySelectorAll(".ni-btn[data-unl='false']").forEach(b=>b.onclick=()=>{openLocked(b.dataset.nid);closeDrawer();});
+    });
+  });
+}
+
+function openNode(id){
+  const node=getNode(id);if(!node||!isUnlocked(node))return openLocked(id);
+  const fresh=!isVisited(id);
+  S.curNode=id;S.chOpen=CHAPTERS.find(c=>c.nodes.some(n=>n.id===id))?.id||S.chOpen;
+  if(fresh){S.visited[id]=Date.now();S.xp+=node.xp;
+    const msgs={trap:"⚠ Exam Trap Found!",gold:"🏹 Golden Node!"};
+    showToast(node.xp,msgs[node.type]||"Node Visited");}
+  save();buildSidebar();updateHeader();renderNode(node);
+  document.getElementById("mainArea").scrollTop=0;
+  startNodeSession(id,node.mcqs?.length||0);
+}
+function openLocked(id){
+  const node=getNode(id);if(!node)return;
+  S.curNode=id;save();buildSidebar();
+  const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===id));
+  let reqs="";
+  if(node.type==="gold"){const pct=ch?chPct(ch):0;reqs=`<div class="lreq${pct>=(node.requires_pct||80)?" met":""}">Complete ${node.requires_pct||80}% of chapter nodes (${pct}% done)</div>`;}
+  document.getElementById("viewWrap").innerHTML=`<div class="locked-view"><div class="lv-ico">🔒</div><h2>Locked</h2><p>Complete chapter requirements to unlock this Golden Node.</p><div class="lock-req-list">${reqs}</div></div>`;
+}
+function buildTable(t){return`<div class="tbl-wrap"><table class="dt"><thead><tr>${t.h.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${t.r.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;}
+
+function renderNode(node){
+  const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===node.id));
+  const bm={regular:["◇ LEARN","regular"],trap:["⚠ EXAM TRAP","trap"],gold:["🏹 GOLDEN","gold"]};
+  const [bl,bc]=bm[node.type]||["◇","regular"];
+  let content="";
+  if(node.type==="gold"){
+    content=`<div class="golden-block"><div class="gb-h">🏹 GOLDEN NODE — Highest Probability Points · Subject-Verb Agreement</div><ul>${(node.golden||[]).map(g=>`<li>${g}</li>`).join("")}</ul></div>`;
+  } else {
+    if(node.diag&&DIAGRAMS[node.diag])content+=`<div class="diag-box"><div class="diag-head">📊 DIAGRAM</div><div class="diag-body">${DIAGRAMS[node.diag]}</div></div>`;
+    if(node.facts)content+=`<div class="fact-block"><div class="fb-head">◇ KEY FACTS</div><div class="fb-body"><ul class="facts">${node.facts.map(f=>`<li>${f}</li>`).join("")}</ul></div></div>`;
+    if(node.table)content+=buildTable(node.table);
+    if(node.traps)content+=`<div class="trap-block"><div class="tb-h">⚠ EXAM TRAPS — HIGH YIELD</div><ul>${node.traps.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;
+  }
+  let mcqContent="";
+  if(node.mcqs?.length){
+    const best=S.mcq[node.id]||0;
+    mcqContent=`<div class="mcq-list">
+      ${best?`<div style="font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:8px">Best score: <span style="color:var(--green)">${best}%</span></div>`:""}
+      ${node.mcqs.map((q,qi)=>`<div class="mcq-card" data-qi="${qi}" data-nid="${node.id}">
+        <div class="mcq-q"><span class="mcq-qn">Q${qi+1}</span>${q.q}</div>
+        <div class="mcq-opts">${q.o.map((op,oi)=>`<button class="mopt" data-oi="${oi}">${String.fromCharCode(65+oi)}. ${op}</button>`).join("")}</div>
+        <div class="mcq-fb" id="fb_${node.id}_${qi}"></div>
+      </div>`).join("")}
+      <div class="mcq-score" id="scr_${node.id}">Answer all questions to see your score</div>
+    </div>`;
+  } else {mcqContent=`<div style="text-align:center;padding:40px;color:var(--ink3);font-family:var(--mono);font-size:13px">No MCQs for this node</div>`;}
+  const idx=ch?.nodes.findIndex(n=>n.id===node.id)??-1;
+  const prev=idx>0?ch.nodes[idx-1]:null;
+  const next=idx<(ch?.nodes.length-1)?ch.nodes[idx+1]:null;
+  const nav=`<div class="node-nav">
+    ${prev?`<button class="nnav" onclick="openNode('${prev.id}')">‹ ${prev.title.replace(/&amp;/g,'&').substring(0,26)}</button>`:""}
+    ${next&&isUnlocked(next)?`<button class="nnav primary" onclick="openNode('${next.id}')">Next ›</button>`:""}
+  </div>`;
+  document.getElementById("viewWrap").innerHTML=`<div class="node-view">
+    <div class="node-hd">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink3);margin-bottom:6px">${ch?.title||""} › ${node.title}</div>
+      <div class="node-badge ${bc}">${bl}</div>
+      <h1 class="nt">${node.title}</h1>
+      <div class="xp-pill">✦ +${node.xp} XP${isVisited(node.id)?" earned":""}</div>
+    </div>
+    <div class="tabs"><button class="tab on" data-t="learn">📖 Learn</button><button class="tab" data-t="test">🎯 Test</button></div>
+    <div id="pane-learn">${content}${nav}</div>
+    <div id="pane-test" style="display:none">${mcqContent}${nav}</div>
+  </div>`;
+  document.querySelectorAll(".tab").forEach(btn=>{
+    btn.onclick=()=>{
+      const t=btn.dataset.t;
+      document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
+      ["learn","test"].forEach(p=>{const e=document.getElementById("pane-"+p);if(e)e.style.display=p===t?"block":"none";});
+    };
+  });
+  bindMCQ(node);
+}
+
+function bindMCQ(node){
+  if(!node.mcqs)return;
+  let correct=0,answered=0,total=node.mcqs.length;
+  node.mcqs.forEach((q,qi)=>{
+    const card=document.querySelector(`.mcq-card[data-qi="${qi}"][data-nid="${node.id}"]`);if(!card)return;
+    card.querySelectorAll(".mopt").forEach(btn=>{
+      btn.onclick=()=>{
+        if(card.dataset.done)return;
+        card.dataset.done=1;
+        const oi=+btn.dataset.oi,fb=document.getElementById(`fb_${node.id}_${qi}`);
+        const isCorrect=(oi===q.a);
+        card.querySelectorAll(".mopt").forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("show-correct");});
+        if(isCorrect){btn.classList.add("correct");correct++;fb.className="mcq-fb show right";fb.innerHTML="✓ "+q.e;}
+        else{btn.classList.add("wrong");fb.className="mcq-fb show wrong";fb.innerHTML="✗ Wrong. "+q.e;}
+        answered++;
+        trackAnswer(node.id,qi,isCorrect);
+        if(answered===total){
+          const pct=Math.round(correct/total*100);
+          const scr=document.getElementById(`scr_${node.id}`);
+          if(scr){const gr=pct>=80?"🎯 Excellent":pct>=60?"✓ Good":"⚠ Revise";scr.innerHTML=`Score: <span>${correct}/${total} = ${pct}%</span> ${gr}`;}
+          if(pct>(S.mcq[node.id]||0)){S.mcq[node.id]=pct;save();}
+          if(pct>=80)showToast(0,"MCQ Cleared 🎯");else if(pct>=60)showToast(0,"Good attempt ✓");
+          const tp=document.getElementById("pane-test");
+          if(tp){const b=document.createElement("div");b.className="node-complete-banner";
+            b.innerHTML=`<div class="ncb-icon">${pct>=80?"🏆":pct>=60?"✅":"📖"}</div><div><div class="ncb-title">NODE COMPLETE — ${pct}%</div><div class="ncb-sub">${correct}/${total} correct on first attempt${pct<60?" — revisit Learn tab":""}</div></div>`;
+            tp.appendChild(b);}
+        }
+      };
+    });
+  });
+}
+
+function showDash(){
+  S.curNode=null;save();buildSidebar();
+  const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
+  document.getElementById("viewWrap").innerHTML=`<div class="dash">
+    <div class="dash-t">English Map</div>
+    <div class="dash-s">SSC ENGLISH 02 — SUBJECT-VERB AGREEMENT</div>
+    <div class="dash-grid">
+      <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
+      <div class="dc g"><div class="dv">${vis}/${tot}</div><div class="dl">Nodes</div></div>
+      <div class="dc r"><div class="dv">${trapVisited()}/${trapNodes().length}</div><div class="dl">Traps</div></div>
+      <div class="dc b"><div class="dv">${pct}%</div><div class="dl">Done</div></div>
+    </div>
+    <div class="ch-prog">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--ink3);margin-bottom:12px">CHAPTER PROGRESS</div>
+      ${CHAPTERS.map(ch=>{const p=chPct(ch);return`<div class="cpr"><span class="cpr-n">${ch.icon} ${ch.title}</span><div class="cpr-bar"><div class="cpr-fill" style="width:${p}%"></div></div><span class="cpr-pct">${p}%</span></div>`;}).join("")}
+    </div>
+    <button class="start-btn" onclick="startLearning()">${visitedCount()===0?"Start Learning →":"Continue →"}</button>
+    <div style="margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);margin-bottom:10px">📘 TOPICS COVERED</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:var(--ink2)">
+        <span>📌 Basic Agreement & Phrases</span><span>⚡ Either/Or · Neither/Nor</span>
+        <span>🔢 The/A Number Of</span><span>👥 Collective Nouns</span>
+        <span>🔤 Indefinite Pronouns</span><span>📚 Special Singular/Plural Nouns</span>
+        <span>⏱ Amount/Distance/Time</span><span>🎯 PYQ Find Error & Fill Blank</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function startLearning(){
+  const first=allNodes().find(n=>isUnlocked(n)&&!isVisited(n.id))||allNodes()[0];
+  if(first){S.chOpen=CHAPTERS.find(c=>c.nodes.some(n=>n.id===first.id))?.id;openNode(first.id);}
+}
+function goTraps(){
+  const t=trapNodes();if(!t.length)return;
+  const next=t.find(n=>!isVisited(n.id))||t[0];openNode(next.id);
+}
+function openDrawer(){document.getElementById("mobDrawer").classList.add("open");document.getElementById("mobOverlay").classList.add("show");}
+function closeDrawer(){document.getElementById("mobDrawer").classList.remove("open");document.getElementById("mobOverlay").classList.remove("show");}
+
+if(!S.chOpen)S.chOpen=CHAPTERS[0].id;
+buildSidebar();updateHeader();showDash();
+</script>
+</body>
+</html>

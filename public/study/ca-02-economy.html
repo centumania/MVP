@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CentuMania · Indian Economy · CA Node 02</title>
+<style>
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --bg:        #0B0F0D;
+  --surface:   #131A15;
+  --card:      #192020;
+  --border:    #233028;
+  --accent:    #22D3A0;   /* teal — economy = growth */
+  --accent2:   #F59E0B;   /* amber — budget/gold */
+  --accent3:   #60A5FA;   /* blue — banking/RBI */
+  --danger:    #F87171;
+  --warning:   #FBBF24;
+  --text:      #E0EAE5;
+  --muted:     #7A9488;
+  --subtle:    #2A3C35;
+  --trap:      #7C3AED;
+  --radius:    12px;
+  --radius-sm: 8px;
+  font-size: 15px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 48px;
+}
+
+/* ===== HEADER ===== */
+.node-header {
+  background: linear-gradient(135deg, #051a12 0%, #0B0F0D 65%);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 16px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.breadcrumb { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+.breadcrumb span { color: var(--accent); }
+.node-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.3; }
+.node-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; border: 1px solid; text-transform: uppercase; letter-spacing: .04em; }
+.badge-teal   { color: var(--accent);  border-color: var(--accent);  background: #22d3a022; }
+.badge-amber  { color: var(--accent2); border-color: var(--accent2); background: #f59e0b22; }
+.badge-blue   { color: var(--accent3); border-color: var(--accent3); background: #60a5fa22; }
+.node-progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: 14px; overflow: hidden; }
+.node-progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width .4s ease; }
+
+/* ===== TABS ===== */
+.tab-bar { display: flex; gap: 4px; padding: 14px 14px 0; max-width: 700px; margin: 0 auto; overflow-x: auto; scrollbar-width: none; }
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn { flex-shrink: 0; padding: 8px 14px; border-radius: var(--radius-sm) var(--radius-sm) 0 0; border: 1px solid var(--border); border-bottom: none; background: var(--surface); color: var(--muted); font-size: 13px; font-weight: 600; cursor: pointer; transition: all .2s; white-space: nowrap; }
+.tab-btn.active { background: var(--card); color: var(--accent); border-color: var(--border); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ===== CONTENT WRAP ===== */
+.content-wrap { max-width: 700px; margin: 0 auto; padding: 0 14px; }
+
+/* ===== CARDS ===== */
+.section-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); margin-top: 14px; overflow: hidden; }
+.section-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.section-icon { width: 34px; height: 34px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.section-head h2 { font-size: 15px; font-weight: 700; color: #fff; }
+.section-head .sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.section-body { padding: 16px; }
+
+/* ===== MONTH FACTS ===== */
+.fact-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.fact-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius-sm); padding: 12px 14px; }
+.fact-card.rbi-month { border-left-color: var(--accent3); }
+.fact-card.budget-month { border-left-color: var(--accent2); }
+.fact-month { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.fact-card.rbi-month .fact-month { color: var(--accent3); }
+.fact-card.budget-month .fact-month { color: var(--accent2); }
+.fact-item { display: flex; gap: 8px; margin-bottom: 7px; font-size: 13px; line-height: 1.5; }
+.fact-item:last-child { margin-bottom: 0; }
+.fact-label { font-weight: 600; color: var(--accent); flex-shrink: 0; min-width: 120px; font-size: 12px; }
+.fact-card.rbi-month .fact-label { color: var(--accent3); }
+.fact-card.budget-month .fact-label { color: var(--accent2); }
+.fact-value { color: var(--text); }
+
+/* ===== EXAM TRAPS ===== */
+.trap-list { display: flex; flex-direction: column; gap: 8px; }
+.trap-item { background: #150a28; border: 1px solid #3d1c70; border-radius: var(--radius-sm); padding: 11px 14px; font-size: 13px; display: flex; gap: 9px; align-items: flex-start; }
+.trap-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.trap-text strong { color: var(--warning); display: block; margin-bottom: 2px; font-size: 12px; }
+.trap-text span { color: #c4b5e8; }
+
+/* ===== TABLES ===== */
+.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.data-table th { background: #0B0F0D; color: var(--muted); text-transform: uppercase; font-size: 10px; letter-spacing: .06em; padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+.data-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table td:first-child { color: var(--accent); font-weight: 600; font-size: 12px; }
+.data-table tr:hover td { background: #ffffff05; }
+
+/* ===== KPI TILES ===== */
+.kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.kpi-tile { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 12px; text-align: center; }
+.kpi-val { font-size: 24px; font-weight: 900; line-height: 1.1; margin-bottom: 4px; }
+.kpi-label { font-size: 11px; color: var(--muted); line-height: 1.4; }
+.kpi-sub { font-size: 10px; color: var(--subtle); margin-top: 3px; font-style: italic; }
+
+/* ===== GDP DONUT (SVG) ===== */
+.diagram-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-top: 10px; }
+.diagram-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 12px; text-align: center; }
+
+/* ===== RATE LADDER ===== */
+.rate-ladder { display: flex; flex-direction: column; gap: 0; }
+.rate-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.rate-row:last-child { border-bottom: none; }
+.rate-name { font-size: 12px; font-weight: 700; color: var(--text); width: 130px; flex-shrink: 0; }
+.rate-bar-wrap { flex: 1; background: var(--bg); border-radius: 4px; height: 8px; overflow: hidden; }
+.rate-bar { height: 100%; border-radius: 4px; background: var(--accent); transition: width 1s ease; }
+.rate-val { font-size: 13px; font-weight: 800; color: var(--accent); width: 52px; text-align: right; flex-shrink: 0; }
+
+/* ===== TRADE FLOW ===== */
+.trade-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+.trade-col { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; }
+.trade-col-head { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.trade-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px; }
+.trade-item:last-child { margin-bottom: 0; }
+.trade-rank { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0; }
+
+/* ===== SCHEME CARDS ===== */
+.scheme-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+.scheme-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
+.scheme-name { font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+.scheme-full { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.scheme-facts { display: flex; flex-direction: column; gap: 3px; }
+.scheme-fact { font-size: 12.5px; display: flex; gap: 6px; }
+.scheme-fact::before { content: '▸'; color: var(--accent2); flex-shrink: 0; }
+
+/* ===== MCQ ===== */
+.mcq-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.mcq-counter { font-size: 13px; color: var(--muted); }
+.mcq-counter strong { color: var(--text); }
+.mcq-timer { font-size: 13px; font-weight: 700; color: var(--warning); font-variant-numeric: tabular-nums; }
+.question-nav { display: flex; gap: 6px; padding: 10px 16px; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+.question-nav::-webkit-scrollbar { display: none; }
+.q-dot { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--surface); color: var(--muted); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all .2s; }
+.q-dot.active   { border-color: var(--accent); color: var(--accent); background: #22d3a022; }
+.q-dot.correct  { background: var(--accent); border-color: var(--accent); color: #000; }
+.q-dot.wrong    { background: var(--danger); border-color: var(--danger); color: #fff; }
+.question-wrap { padding: 16px; }
+.question-num { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.question-text { font-size: 15px; font-weight: 600; color: #fff; line-height: 1.55; margin-bottom: 16px; }
+.options-list { display: flex; flex-direction: column; gap: 8px; }
+.option-btn { width: 100%; text-align: left; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 13px 14px; color: var(--text); font-size: 14px; cursor: pointer; display: flex; align-items: flex-start; gap: 10px; transition: all .18s; line-height: 1.45; -webkit-tap-highlight-color: transparent; }
+.option-btn:active { transform: scale(.98); }
+.option-btn.disabled { pointer-events: none; }
+.option-btn.selected { border-color: var(--accent); background: #22d3a022; }
+.option-btn.correct-ans { border-color: var(--accent); background: #22d3a022; color: #fff; }
+.option-btn.wrong-ans   { border-color: var(--danger); background: #f8717122; }
+.option-letter { width: 24px; height: 24px; border-radius: 50%; background: var(--border); color: var(--muted); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; transition: all .18s; }
+.option-btn.correct-ans .option-letter { background: var(--accent); color: #000; }
+.option-btn.wrong-ans .option-letter   { background: var(--danger); color: #fff; }
+.option-btn.selected .option-letter    { background: var(--accent); color: #000; }
+.option-btn:not(.disabled):hover { border-color: var(--subtle); background: #ffffff08; }
+.explanation-box { display: none; margin-top: 14px; background: #05150e; border: 1px solid var(--accent); border-radius: var(--radius-sm); padding: 13px 14px; font-size: 13px; line-height: 1.6; color: #b8d8c8; }
+.explanation-box.show { display: block; }
+.explanation-box .exp-head { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 6px; }
+.next-btn { margin-top: 14px; width: 100%; padding: 14px; background: var(--accent); color: #000; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; display: none; -webkit-tap-highlight-color: transparent; }
+.next-btn.show { display: block; }
+.next-btn:active { opacity: .85; }
+.result-screen { display: none; padding: 24px 16px; text-align: center; }
+.result-screen.show { display: block; }
+.result-score { font-size: 72px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+.result-label { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+.result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0 24px; }
+.result-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 8px; }
+.result-stat-val { font-size: 22px; font-weight: 800; }
+.result-stat-key { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.retry-btn { padding: 13px 28px; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 14px; font-weight: 600; cursor: pointer; margin-right: 8px; }
+.complete-btn { padding: 13px 28px; background: var(--accent); border: none; border-radius: var(--radius-sm); color: #000; font-size: 14px; font-weight: 700; cursor: pointer; }
+.complete-banner { background: linear-gradient(135deg, #051a12, #020d08); border: 1.5px solid var(--accent); border-radius: var(--radius); padding: 18px 16px; text-align: center; margin-top: 14px; }
+.complete-banner .icon { font-size: 36px; margin-bottom: 8px; }
+.complete-banner h3 { font-size: 17px; font-weight: 800; color: var(--accent); }
+.complete-banner p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* ===== TOAST ===== */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a2a22; border: 1px solid var(--border); border-radius: 40px; padding: 10px 20px; font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; z-index: 999; transition: transform .3s ease; pointer-events: none; }
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ===== UTILS ===== */
+.mt-10 { margin-top: 10px; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+.note-box { background: #0a1a10; border: 1px solid var(--accent); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12px; color: #a8c8b8; margin-top: 10px; }
+.note-box strong { color: var(--warning); }
+
+@media (min-width: 500px) {
+  .fact-grid { grid-template-columns: repeat(2, 1fr); }
+  .kpi-grid  { grid-template-columns: repeat(4, 1fr); }
+  .scheme-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="node-header">
+  <div class="breadcrumb">CentuMania · <span>Indian Economy</span> · Current Affairs 02</div>
+  <div class="node-title">CA 02 — Indian Economy</div>
+  <div class="node-meta">
+    <span class="badge badge-teal">📅 Jul 2025 – Jul 2026</span>
+    <span class="badge badge-amber">💰 GDP · Budget · RBI</span>
+    <span class="badge badge-blue">🎯 SSC · RRB · TNPSC</span>
+  </div>
+  <div class="node-progress-bar"><div class="node-progress-fill" id="progressBar" style="width:0%"></div></div>
+</div>
+
+<!-- ===== TABS ===== -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('material', this)">📰 Study Material</button>
+  <button class="tab-btn" onclick="switchTab('quickref', this)">📊 Quick Ref</button>
+  <button class="tab-btn" onclick="switchTab('mcq', this)">🧠 MCQ Practice</button>
+</div>
+
+<!-- ================================================================
+     TAB 1 — STUDY MATERIAL
+     ================================================================ -->
+<div class="tab-panel active" id="tab-material">
+<div class="content-wrap">
+
+  <!-- KPI Snapshot -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#051a12">📈</div>
+      <div><h2>Key Economic Indicators — At a Glance</h2><div class="sub">FY2025-26 Snapshot</div></div>
+    </div>
+    <div class="section-body">
+      <div class="kpi-grid">
+        <div class="kpi-tile"><div class="kpi-val" style="color:var(--accent)">6.8%</div><div class="kpi-label">GDP Growth FY26</div><div class="kpi-sub">6.5% in FY25</div></div>
+        <div class="kpi-tile"><div class="kpi-val" style="color:var(--accent2)">5.75%</div><div class="kpi-label">Repo Rate</div><div class="kpi-sub">↓125 bps since Feb 2025</div></div>
+        <div class="kpi-tile"><div class="kpi-val" style="color:var(--accent3)">3.8%</div><div class="kpi-label">CPI Inflation</div><div class="kpi-sub">Target: 4% ±2%</div></div>
+        <div class="kpi-tile"><div class="kpi-val" style="color:#e879f9">4.8%</div><div class="kpi-label">Fiscal Deficit</div><div class="kpi-sub">of GDP (FY27 budget)</div></div>
+        <div class="kpi-tile"><div class="kpi-val" style="color:var(--accent)">$680B</div><div class="kpi-label">Forex Reserves</div><div class="kpi-sub">4th largest globally</div></div>
+        <div class="kpi-tile"><div class="kpi-val" style="color:var(--accent2)">2.3%</div><div class="kpi-label">Gross NPA</div><div class="kpi-sub">13-year low (Mar 2026)</div></div>
+        <div class="kpi-tile"><div class="kpi-val" style="color:var(--accent3)">15B</div><div class="kpi-label">UPI Txns/month</div><div class="kpi-sub">46% of global RTP</div></div>
+        <div class="kpi-tile"><div class="kpi-val" style="color:#e879f9">7.1%</div><div class="kpi-label">IMF FY27 Forecast</div><div class="kpi-sub">Fastest among G20</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Month-wise Facts -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#1a1500">📰</div>
+      <div><h2>Month-wise Key Facts</h2><div class="sub">July 2025 – July 2026</div></div>
+    </div>
+    <div class="section-body">
+      <div class="fact-grid">
+
+        <div class="fact-card">
+          <div class="fact-month">🟢 July 2025</div>
+          <div class="fact-item"><span class="fact-label">GDP FY25</span><span class="fact-value">6.5% — India fastest major economy (CSO advance estimate)</span></div>
+          <div class="fact-item"><span class="fact-label">Repo Rate</span><span class="fact-value">RBI cut to 6.0% — 4th consecutive cut in easing cycle</span></div>
+          <div class="fact-item"><span class="fact-label">CPI Inflation</span><span class="fact-value">3.8% — within RBI target band of 2–6%</span></div>
+          <div class="fact-item"><span class="fact-label">Trade Deficit</span><span class="fact-value">$23 billion/month; exports grew 8%</span></div>
+          <div class="fact-item"><span class="fact-label">PLI Electronics</span><span class="fact-value">₹6,500 crore disbursed; 1.2 lakh jobs created</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟡 August 2025</div>
+          <div class="fact-item"><span class="fact-label">Forex Reserves</span><span class="fact-value">$680 billion — 4th largest globally (USA > China > Japan > India)</span></div>
+          <div class="fact-item"><span class="fact-label">FDI FY25</span><span class="fact-value">$71 billion; top source: Singapore, Mauritius, USA</span></div>
+          <div class="fact-item"><span class="fact-label">Disinvestment</span><span class="fact-value">LIC stake diluted; Air India profitable post-Tata for first time</span></div>
+          <div class="fact-item"><span class="fact-label">PM Gati Shakti</span><span class="fact-value">1500+ infra projects mapped and tracked on portal</span></div>
+        </div>
+
+        <div class="fact-card rbi-month">
+          <div class="fact-month">🔵 September 2025</div>
+          <div class="fact-item"><span class="fact-label">GST Revenue</span><span class="fact-value">₹2.1 lakh crore monthly average FY26 — all-time high</span></div>
+          <div class="fact-item"><span class="fact-label">BSE Sensex</span><span class="fact-value">Crossed 90,000 points for first time</span></div>
+          <div class="fact-item"><span class="fact-label">RBI MPC</span><span class="fact-value">4:2 vote to cut rates; 6 members (3 RBI + 3 Govt-appointed)</span></div>
+          <div class="fact-item"><span class="fact-label">Unemployment</span><span class="fact-value">PLFS: 3.2% overall; urban youth higher</span></div>
+          <div class="fact-item"><span class="fact-label">PMGSY</span><span class="fact-value">6.5 lakh km rural roads completed</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟠 October 2025</div>
+          <div class="fact-item"><span class="fact-label">World Bank</span><span class="fact-value">India needs 7% growth for Viksit Bharat 2047</span></div>
+          <div class="fact-item"><span class="fact-label">IMF</span><span class="fact-value">India growth 6.5% FY26 (WEO); HQ Washington DC</span></div>
+          <div class="fact-item"><span class="fact-label">NPA</span><span class="fact-value">Gross NPA fell to 2.5% — lowest in 12 years</span></div>
+          <div class="fact-item"><span class="fact-label">Gold</span><span class="fact-value">Crossed ₹80,000/10g; RBI increased gold reserves</span></div>
+          <div class="fact-item"><span class="fact-label">UPI</span><span class="fact-value">15 billion txns/month; India = 46% of global real-time payments</span></div>
+        </div>
+
+        <div class="fact-card rbi-month">
+          <div class="fact-month">🔵 November 2025</div>
+          <div class="fact-item"><span class="fact-label">MSME</span><span class="fact-value">30% of GDP, 48% of exports, 110 million jobs</span></div>
+          <div class="fact-item"><span class="fact-label">RBI Governor</span><span class="fact-value">Sanjay Malhotra — 25th RBI Governor (NOT 26th)</span></div>
+          <div class="fact-item"><span class="fact-label">Inflation Target</span><span class="fact-value">4% ±2% (2–6% band) under Flexible Inflation Targeting; RBI Act 2016</span></div>
+          <div class="fact-item"><span class="fact-label">B-READY Index</span><span class="fact-value">World Bank replaced EoDB with B-READY; India rank improved</span></div>
+          <div class="fact-item"><span class="fact-label">NBFCs</span><span class="fact-value">RBI tightened — 12% CAR required for upper-layer NBFCs</span></div>
+        </div>
+
+        <div class="fact-card budget-month">
+          <div class="fact-month">🟡 December 2025</div>
+          <div class="fact-item"><span class="fact-label">Credit Growth</span><span class="fact-value">13% YoY; retail loans leading</span></div>
+          <div class="fact-item"><span class="fact-label">Green Bonds</span><span class="fact-value">India issued ₹20,000 crore sovereign green bonds</span></div>
+          <div class="fact-item"><span class="fact-label">PLI Results</span><span class="fact-value">₹1.2 lakh crore investment; 8.5 lakh direct jobs; 14 sectors</span></div>
+          <div class="fact-item"><span class="fact-label">Repo Rate</span><span class="fact-value">5.75% after cumulative 125 bps cuts since Feb 2025</span></div>
+          <div class="fact-item"><span class="fact-label">India Stack</span><span class="fact-value">Aadhaar+UPI+DigiLocker; 99% adults covered by Aadhaar (UIDAI)</span></div>
+        </div>
+
+        <div class="fact-card budget-month">
+          <div class="fact-month">🟠 January 2026 — Budget Month</div>
+          <div class="fact-item"><span class="fact-label">Total Expenditure</span><span class="fact-value">₹50.6 lakh crore (Union Budget 2026-27)</span></div>
+          <div class="fact-item"><span class="fact-label">Capex</span><span class="fact-value">₹11.2 lakh crore — highest ever; ₹1.5 lakh crore to states</span></div>
+          <div class="fact-item"><span class="fact-label">Fiscal Deficit</span><span class="fact-value">4.8% of GDP; glide path to 4.5% by 2027-28</span></div>
+          <div class="fact-item"><span class="fact-label">Income Tax</span><span class="fact-value">No tax up to ₹12.75 lakh (₹12L + ₹75,000 std deduction) under new regime</span></div>
+          <div class="fact-item"><span class="fact-label">PMKVY 5.0</span><span class="fact-value">20 lakh youth to be skilled FY26</span></div>
+          <div class="fact-item"><span class="fact-label">Agri Budget</span><span class="fact-value">₹2.37 lakh crore — highest farm sector allocation</span></div>
+        </div>
+
+        <div class="fact-card rbi-month">
+          <div class="fact-month">🔵 February 2026</div>
+          <div class="fact-item"><span class="fact-label">Q3 FY26 GDP</span><span class="fact-value">6.8% — services sector led growth</span></div>
+          <div class="fact-item"><span class="fact-label">RBI Policy</span><span class="fact-value">Repo held at 5.75%; accommodative stance</span></div>
+          <div class="fact-item"><span class="fact-label">Jan Dhan</span><span class="fact-value">53 crore accounts; ₹2.3 lakh crore deposits; zero-balance accounts</span></div>
+          <div class="fact-item"><span class="fact-label">EPFO</span><span class="fact-value">1.8 crore new members FY25 — under Labour Ministry (NOT Finance)</span></div>
+          <div class="fact-item"><span class="fact-label">Crypto</span><span class="fact-value">Exchanges registered with FIU; PMLA provisions applied</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟢 March 2026</div>
+          <div class="fact-item"><span class="fact-label">Fiscal Track</span><span class="fact-value">FY26 fiscal deficit on track at 4.8%; capex utilisation 89%</span></div>
+          <div class="fact-item"><span class="fact-label">India-UAE CEPA</span><span class="fact-value">Bilateral trade $80 billion; FTA with UK likely by 2026</span></div>
+          <div class="fact-item"><span class="fact-label">Direct Tax</span><span class="fact-value">₹22 lakh crore collection FY26 — 15% growth</span></div>
+          <div class="fact-item"><span class="fact-label">PLI Electronics</span><span class="fact-value">Apple/Foxconn — ₹40,000 crore under PLI</span></div>
+          <div class="fact-item"><span class="fact-label">Unicorns</span><span class="fact-value">India has 113 unicorns — 3rd globally after USA and China</span></div>
+        </div>
+
+        <div class="fact-card rbi-month">
+          <div class="fact-month">🔵 April 2026</div>
+          <div class="fact-item"><span class="fact-label">FY27 Begins</span><span class="fact-value">New tax rates effective April 1, 2026</span></div>
+          <div class="fact-item"><span class="fact-label">SEBI F&O Rules</span><span class="fact-value">Lot sizes increased; margin requirements raised</span></div>
+          <div class="fact-item"><span class="fact-label">D-SIBs</span><span class="fact-value">SBI, HDFC Bank, ICICI Bank — "Too big to fail"; higher capital needed</span></div>
+          <div class="fact-item"><span class="fact-label">IPO Market</span><span class="fact-value">₹2 lakh crore IPO pipeline in 2026 — record year</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟢 May 2026</div>
+          <div class="fact-item"><span class="fact-label">Unemployment</span><span class="fact-value">PLFS: Urban 6.7%; Rural 2.5%</span></div>
+          <div class="fact-item"><span class="fact-label">Exports Target</span><span class="fact-value">$800 billion merchandise exports target for FY27</span></div>
+          <div class="fact-item"><span class="fact-label">Rupee</span><span class="fact-value">₹83.5/$; RBI intervened to prevent sharp depreciation</span></div>
+          <div class="fact-item"><span class="fact-label">GIFT City</span><span class="fact-value">700+ entities registered; IFSC = International Financial Services Centre (Gujarat)</span></div>
+          <div class="fact-item"><span class="fact-label">Mudra Loans</span><span class="fact-value">₹5 lakh crore disbursed cumulatively; NPA rate 3.8%</span></div>
+        </div>
+
+        <div class="fact-card rbi-month">
+          <div class="fact-month">🔵 June 2026</div>
+          <div class="fact-item"><span class="fact-label">FY27 Growth</span><span class="fact-value">7% projected (Economic Survey preview)</span></div>
+          <div class="fact-item"><span class="fact-label">G7 Outreach</span><span class="fact-value">India pushed IMF quota reform; India's quota = 2.75%</span></div>
+          <div class="fact-item"><span class="fact-label">CPI Projection</span><span class="fact-value">RBI projects 4.2% for FY27 — within target</span></div>
+          <div class="fact-item"><span class="fact-label">Gross NPA</span><span class="fact-value">2.3% — 13-year low for Indian banks</span></div>
+          <div class="fact-item"><span class="fact-label">Crypto</span><span class="fact-value">India crypto market cap $100 billion; regulations finalised</span></div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-month">🟡 July 2026</div>
+          <div class="fact-item"><span class="fact-label">RBI Annual Report</span><span class="fact-value">Credit growth 14%; NPA 2.3%</span></div>
+          <div class="fact-item"><span class="fact-label">Trade Policy</span><span class="fact-value">Foreign Trade Policy 2025-30 mid-term review</span></div>
+          <div class="fact-item"><span class="fact-label">MSME</span><span class="fact-value">5 crore MSMEs on Udyam portal (replaced Udyog Aadhaar 2020)</span></div>
+          <div class="fact-item"><span class="fact-label">IMF Revised</span><span class="fact-value">India FY27 growth 7.1% — fastest among G20</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Exam Traps -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#150a28">⚠️</div>
+      <div><h2>Exam Traps — Economy Edition</h2><div class="sub">Most commonly confused in SSC CGL / RRB NTPC</div></div>
+    </div>
+    <div class="section-body">
+      <div class="trap-list">
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Repo Rate ≠ Reverse Repo Rate</strong><span>Repo = RBI lends to commercial banks. Reverse Repo = commercial banks park money with RBI (currently 5.50%)</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>CPI ≠ WPI</strong><span>CPI = Consumer Price Index = retail inflation. WPI = Wholesale Price Index = wholesale level. RBI targets CPI, NOT WPI.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>FDI ≠ FII</strong><span>FDI = Foreign Direct Investment (long-term, company stake). FII = Foreign Institutional Investor (short-term, stock market).</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Forex Rank: USA > China > Japan > India (4th)</strong><span>India is 4th largest forex reserve holder globally. Common trap — India is NOT 3rd.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Sensex = 30 stocks (BSE) ≠ Nifty = 50 stocks (NSE)</strong><span>BSE = Bombay Stock Exchange (Sensex). NSE = National Stock Exchange (Nifty 50). Different exchanges!</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>RBI MPC = 6 members: 3 RBI + 3 External</strong><span>Not 4, not 5, not 8. Exactly 6. External members are appointed by the Government (NOT RBI).</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>NPA = 90+ days overdue (NOT 30 or 60)</strong><span>Non-Performing Asset = loan where repayment is overdue for more than 90 days.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>IMF ≠ World Bank (both in Washington DC)</strong><span>Both HQ in Washington DC. IMF = monetary stability. World Bank = development lending. Different institutions!</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>RBI Governor = Sanjay Malhotra = 25th (NOT 26th)</strong><span>The November 2025 PDF had a typo. Verify carefully — Sanjay Malhotra is the 25th RBI Governor.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Aadhaar issued by UIDAI under IT Ministry (NOT RBI, NOT Finance Ministry)</strong><span>UIDAI = Unique Identification Authority of India. Under Ministry of Electronics and IT (MeitY).</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>₹12.75 lakh tax-free = ₹12L income + ₹75,000 standard deduction</strong><span>Under new tax regime default. The ₹75,000 is standard deduction — it's NOT a rebate. Total effective tax-free = ₹12.75 lakh.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Jan Dhan = zero-balance basic savings accounts (not regular)</strong><span>PM Jan Dhan Yojana (2014) — basic savings bank account, no minimum balance required.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>EPFO = Labour Ministry (NOT Finance Ministry)</strong><span>Employees' Provident Fund Organisation is under Ministry of Labour & Employment.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>CEPA ≠ FTA</strong><span>CEPA = Comprehensive Economic Partnership Agreement (covers trade + investment + services). FTA = Free Trade Agreement (mainly goods).</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Unicorn = startup valued $1 billion+ (NOT publicly listed)</strong><span>A unicorn is a private startup. Once it lists on a stock exchange, it is no longer called a unicorn. India has 113 (3rd globally).</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>D-SIBs = SBI, HDFC Bank, ICICI Bank ("Too big to fail")</strong><span>Domestic Systemically Important Banks require higher capital buffers. Axis Bank is NOT a D-SIB.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>GIFT City = Gujarat, NOT Mumbai</strong><span>Gujarat International Finance Tec-City (GIFT City) is near Gandhinagar, Gujarat. India's first IFSC.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Mudra Loan Tiers: Shishu &lt;₹50K · Kishore ₹50K–5L · Tarun ₹5L–10L · Tarun Plus ₹10L–20L</strong><span>All four tiers asked in exams. Shishu = smallest. Tarun Plus added later for ₹10–20 lakh.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>G7 ≠ G20 — India is G20, NOT G7</strong><span>G7 = USA, UK, France, Germany, Italy, Japan, Canada. India held G20 presidency in 2023. 2026 presidency is NOT India.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Udyam portal ≠ Udyog Aadhaar</strong><span>Udyog Aadhaar was replaced by Udyam portal in 2020. MSME registration now happens on Udyam. 5 crore MSMEs registered.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>Railway Budget merged since 2017 (Union Budget 2017-18)</strong><span>First budget to merge both was presented by Arun Jaitley on 1 Feb 2017. NOT 2016.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>RBI established April 1, 1935 | Nationalised 1949 | HQ Mumbai</strong><span>Set up on recommendations of Hilton Young Commission. NOT a government department — it's a statutory body.</span></div></div>
+        <div class="trap-item"><span class="trap-icon">🪤</span><div class="trap-text"><strong>SEBI: Established 1988 (non-statutory) → 1992 (statutory by SEBI Act)</strong><span>Many confuse 1988 and 1992. SEBI got statutory powers only in 1992. HQ Mumbai.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RBI Rate Ladder -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#0a1e30">🏦</div>
+      <div><h2>RBI Policy Rate Ladder</h2><div class="sub">Current rates — as of FY2025-26 easing cycle</div></div>
+    </div>
+    <div class="section-body">
+      <div class="diagram-wrap" style="padding:12px;">
+        <div class="diagram-title">Policy Rate Corridor (% per annum)</div>
+        <div class="rate-ladder">
+          <div class="rate-row">
+            <div class="rate-name">MSF Rate</div>
+            <div class="rate-bar-wrap"><div class="rate-bar" style="width:80%; background:var(--danger)"></div></div>
+            <div class="rate-val" style="color:var(--danger)">6.00%</div>
+          </div>
+          <div class="rate-row">
+            <div class="rate-name">Repo Rate ⭐</div>
+            <div class="rate-bar-wrap"><div class="rate-bar" style="width:72.5%"></div></div>
+            <div class="rate-val">5.75%</div>
+          </div>
+          <div class="rate-row">
+            <div class="rate-name">Reverse Repo</div>
+            <div class="rate-bar-wrap"><div class="rate-bar" style="width:68.75%; background:var(--accent3)"></div></div>
+            <div class="rate-val" style="color:var(--accent3)">5.50%</div>
+          </div>
+          <div class="rate-row">
+            <div class="rate-name">CRR</div>
+            <div class="rate-bar-wrap"><div class="rate-bar" style="width:32%; background:var(--accent2)"></div></div>
+            <div class="rate-val" style="color:var(--accent2)">4.00%</div>
+          </div>
+          <div class="rate-row">
+            <div class="rate-name">SLR</div>
+            <div class="rate-bar-wrap"><div class="rate-bar" style="width:90%; background:#a78bfa"></div></div>
+            <div class="rate-val" style="color:#a78bfa">18.00%</div>
+          </div>
+        </div>
+        <div class="note-box">
+          ⭐ <strong>Repo Rate</strong> = rate at which RBI lends to commercial banks overnight. Cut from 6.5% → 5.75% cumulatively (125 bps since Feb 2025). Lower repo = cheaper credit = stimulates economy.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GDP Structure Diagram -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#051a12">🥧</div>
+      <div><h2>GDP Structure — India FY26</h2><div class="sub">Sectoral composition + world ranking</div></div>
+    </div>
+    <div class="section-body">
+      <div class="diagram-wrap">
+        <div class="diagram-title">Sector Share in GDP</div>
+        <!-- Visual bar chart for GDP sectors -->
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+              <span style="color:#a78bfa; font-weight:700;">Services</span>
+              <span style="color:#a78bfa; font-weight:800;">55%</span>
+            </div>
+            <div style="background:var(--bg); border-radius:4px; height:10px; overflow:hidden;">
+              <div style="width:55%; height:100%; background:linear-gradient(90deg,#7c3aed,#a78bfa); border-radius:4px;"></div>
+            </div>
+            <div style="font-size:11px; color:var(--muted); margin-top:3px;">IT, BPO, Finance, Trade, Tourism</div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+              <span style="color:var(--accent3); font-weight:700;">Industry</span>
+              <span style="color:var(--accent3); font-weight:800;">27%</span>
+            </div>
+            <div style="background:var(--bg); border-radius:4px; height:10px; overflow:hidden;">
+              <div style="width:27%; height:100%; background:linear-gradient(90deg,#1d4ed8,var(--accent3)); border-radius:4px;"></div>
+            </div>
+            <div style="font-size:11px; color:var(--muted); margin-top:3px;">Manufacturing 16% + Construction 9% + Mining 2%</div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+              <span style="color:var(--accent); font-weight:700;">Agriculture</span>
+              <span style="color:var(--accent); font-weight:800;">18%</span>
+            </div>
+            <div style="background:var(--bg); border-radius:4px; height:10px; overflow:hidden;">
+              <div style="width:18%; height:100%; background:linear-gradient(90deg,#065f46,var(--accent)); border-radius:4px;"></div>
+            </div>
+            <div style="font-size:11px; color:var(--muted); margin-top:3px;">46% of employment | Monsoon dependent</div>
+          </div>
+        </div>
+        <hr class="divider" style="margin:14px 0 10px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:12px;">
+          <div style="background:var(--bg); border-radius:var(--radius-sm); padding:10px 12px;">
+            <div style="color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px;">PPP GDP Rank</div>
+            <div style="font-size:20px; font-weight:900; color:var(--accent);">3rd</div>
+            <div style="color:var(--muted); font-size:11px;">After USA, China</div>
+          </div>
+          <div style="background:var(--bg); border-radius:var(--radius-sm); padding:10px 12px;">
+            <div style="color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px;">Nominal GDP Rank</div>
+            <div style="font-size:20px; font-weight:900; color:var(--accent2);">5th</div>
+            <div style="color:var(--muted); font-size:11px;">$3.7 trillion</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trade Flow -->
+      <div class="diagram-wrap mt-10">
+        <div class="diagram-title">India's Trade Partners</div>
+        <div class="trade-cols">
+          <div class="trade-col">
+            <div class="trade-col-head" style="color:var(--accent)">📤 Top Exports Destination</div>
+            <div class="trade-item"><span class="trade-rank" style="background:#22d3a022; color:var(--accent)">1</span>USA (trade surplus)</div>
+            <div class="trade-item"><span class="trade-rank" style="background:#22d3a015; color:var(--accent)">2</span>UAE (CEPA; $80B bilateral)</div>
+            <div class="trade-item"><span class="trade-rank" style="background:#22d3a010; color:var(--accent)">3</span>Netherlands</div>
+            <div class="trade-item"><span class="trade-rank" style="background:#22d3a008; color:var(--accent)">4</span>China</div>
+          </div>
+          <div class="trade-col">
+            <div class="trade-col-head" style="color:var(--danger)">📥 Top Import Source</div>
+            <div class="trade-item"><span class="trade-rank" style="background:#f8717122; color:var(--danger)">1</span>China (≈$85B deficit/yr)</div>
+            <div class="trade-item"><span class="trade-rank" style="background:#f8717115; color:var(--danger)">2</span>UAE</div>
+            <div class="trade-item"><span class="trade-rank" style="background:#f8717110; color:var(--danger)">3</span>Russia (oil)</div>
+            <div class="trade-item"><span class="trade-rank" style="background:#f8717108; color:var(--danger)">4</span>USA</div>
+          </div>
+        </div>
+        <div class="note-box" style="margin-top:10px;">
+          <strong>Trade Surplus</strong> with USA, UK, UAE (India earns more than it spends) |
+          <strong>Trade Deficit</strong> with China (largest ≈$85B/yr), Russia, Ukraine
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Schemes -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#1a1000">🏗️</div>
+      <div><h2>Key Economic Schemes — Exam Ready</h2><div class="sub">Numbers that appear every exam</div></div>
+    </div>
+    <div class="section-body">
+      <div class="scheme-grid">
+        <div class="scheme-card">
+          <div class="scheme-name">PLI Scheme</div>
+          <div class="scheme-full">Production Linked Incentive</div>
+          <div class="scheme-facts">
+            <div class="scheme-fact">14 sectors covered</div>
+            <div class="scheme-fact">₹1.2 lakh crore investment attracted</div>
+            <div class="scheme-fact">8.5 lakh direct jobs created</div>
+            <div class="scheme-fact">Electronics: Apple/Foxconn ₹40,000 cr</div>
+          </div>
+        </div>
+        <div class="scheme-card">
+          <div class="scheme-name">PM Jan Dhan</div>
+          <div class="scheme-full">Pradhan Mantri Jan Dhan Yojana</div>
+          <div class="scheme-facts">
+            <div class="scheme-fact">53 crore accounts opened</div>
+            <div class="scheme-fact">₹2.3 lakh crore deposits</div>
+            <div class="scheme-fact">Zero-balance basic savings</div>
+            <div class="scheme-fact">Part of JAM Trinity (Jan Dhan-Aadhaar-Mobile)</div>
+          </div>
+        </div>
+        <div class="scheme-card">
+          <div class="scheme-name">PM Mudra Yojana</div>
+          <div class="scheme-full">Micro Units Development & Refinance</div>
+          <div class="scheme-facts">
+            <div class="scheme-fact">Shishu: &lt;₹50,000</div>
+            <div class="scheme-fact">Kishore: ₹50K–₹5 lakh</div>
+            <div class="scheme-fact">Tarun: ₹5L–₹10 lakh</div>
+            <div class="scheme-fact">Tarun Plus: ₹10L–₹20 lakh (new)</div>
+            <div class="scheme-fact">₹5 lakh crore disbursed cumulatively</div>
+          </div>
+        </div>
+        <div class="scheme-card">
+          <div class="scheme-name">UPI & Digital Payments</div>
+          <div class="scheme-full">Unified Payments Interface</div>
+          <div class="scheme-facts">
+            <div class="scheme-fact">15 billion transactions/month</div>
+            <div class="scheme-fact">India = 46% of global real-time payments</div>
+            <div class="scheme-fact">Run by NPCI (National Payments Corp.)</div>
+            <div class="scheme-fact">India Stack = Aadhaar + UPI + DigiLocker</div>
+          </div>
+        </div>
+        <div class="scheme-card">
+          <div class="scheme-name">PM Gati Shakti</div>
+          <div class="scheme-full">National Master Plan for Infra</div>
+          <div class="scheme-facts">
+            <div class="scheme-fact">1500+ infra projects mapped</div>
+            <div class="scheme-fact">GIS-based portal for multimodal connectivity</div>
+            <div class="scheme-fact">Integrates 16 ministries</div>
+          </div>
+        </div>
+        <div class="scheme-card">
+          <div class="scheme-name">PMGSY</div>
+          <div class="scheme-full">PM Gram Sadak Yojana</div>
+          <div class="scheme-facts">
+            <div class="scheme-fact">6.5 lakh km rural roads completed</div>
+            <div class="scheme-fact">Connects villages to all-weather roads</div>
+            <div class="scheme-fact">Under Ministry of Rural Development</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /content-wrap -->
+</div><!-- /tab-material -->
+
+<!-- ================================================================
+     TAB 2 — QUICK REF
+     ================================================================ -->
+<div class="tab-panel" id="tab-quickref">
+<div class="content-wrap">
+
+  <!-- Key Indicators Table -->
+  <div class="section-card">
+    <div class="section-head">
+      <div class="section-icon" style="background:#051a12">📊</div>
+      <div><h2>Key Economic Indicators 2025-26</h2><div class="sub">Static reference — memorise these numbers</div></div>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead><tr><th>Indicator</th><th>Value / Detail</th></tr></thead>
+        <tbody>
+          <tr><td>GDP Growth FY26</td><td>6.8% | FY25: 6.5% | IMF FY27 forecast: 7.1%</td></tr>
+          <tr><td>Inflation (CPI)</td><td>3.8% avg FY26 | RBI target: 4% (±2%) = 2–6% band</td></tr>
+          <tr><td>Repo Rate</td><td>5.75% | Cut 125 bps since Feb 2025</td></tr>
+          <tr><td>Reverse Repo Rate</td><td>5.50%</td></tr>
+          <tr><td>MSF Rate</td><td>6.00% (Marginal Standing Facility)</td></tr>
+          <tr><td>CRR</td><td>4% (Cash Reserve Ratio — kept with RBI, no interest)</td></tr>
+          <tr><td>SLR</td><td>18% (Statutory Liquidity Ratio — in liquid assets)</td></tr>
+          <tr><td>Fiscal Deficit</td><td>4.8% of GDP (FY27) | Glide path: 4.5% by FY28</td></tr>
+          <tr><td>Current Account</td><td>−1.2% of GDP | Trade deficit $23 bn/month</td></tr>
+          <tr><td>Forex Reserves</td><td>$680 billion — 4th largest globally</td></tr>
+          <tr><td>Gross NPA</td><td>2.3% (Mar 2026) — 13-year low</td></tr>
+          <tr><td>Credit Growth</td><td>13–14% YoY FY26</td></tr>
+          <tr><td>India Nominal GDP</td><td>5th largest ($3.7 trillion) | PPP: 3rd</td></tr>
+          <tr><td>Per Capita Income</td><td>₹2.1 lakh/year (~$2,500) — medium income</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Banking Sector -->
+  <div class="section-card mt-10">
+    <div class="section-head">
+      <div class="section-icon" style="background:#0a1e30">🏦</div>
+      <div><h2>Banking Sector Key Facts</h2><div class="sub">RBI, SEBI, NABARD — regulatory ecosystem</div></div>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead><tr><th>Entity</th><th>Key Fact</th></tr></thead>
+        <tbody>
+          <tr><td>RBI</td><td>Est. Apr 1, 1935 | Nationalised 1949 | HQ Mumbai | 25th Governor: Sanjay Malhotra</td></tr>
+          <tr><td>SEBI</td><td>Est. 1988 (non-statutory) | Statutory 1992 (SEBI Act) | HQ Mumbai</td></tr>
+          <tr><td>NABARD</td><td>National Bank for Agriculture & Rural Development | Est. 1982</td></tr>
+          <tr><td>Scheduled Banks</td><td>12 Public Sector + 22 Private + 46 Foreign Banks</td></tr>
+          <tr><td>D-SIBs</td><td>SBI, HDFC Bank, ICICI Bank — "Too big to fail"</td></tr>
+          <tr><td>MPC</td><td>6 members: 3 RBI officials + 3 External (Govt-appointed)</td></tr>
+          <tr><td>RBI MPC Mandate</td><td>Inflation target 4% ±2% (under Flexible Inflation Targeting, RBI Act 2016)</td></tr>
+          <tr><td>BSE Sensex</td><td>30 stocks | BSE = Bombay Stock Exchange (Asia's oldest, 1875)</td></tr>
+          <tr><td>NSE Nifty</td><td>50 stocks | NSE = National Stock Exchange (est. 1992)</td></tr>
+          <tr><td>F&O (Derivatives)</td><td>Futures & Options — regulated by SEBI; lot sizes revised Apr 2026</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Mudra Quick Table -->
+      <div style="margin-top:14px;">
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:8px;">Mudra Loan Tiers (PM Mudra Yojana)</div>
+        <table class="data-table">
+          <thead><tr><th>Category</th><th>Loan Amount</th><th>Target Beneficiary</th></tr></thead>
+          <tbody>
+            <tr><td>Shishu</td><td>Up to ₹50,000</td><td>Micro/startup businesses</td></tr>
+            <tr><td>Kishore</td><td>₹50,001 – ₹5 lakh</td><td>Established small businesses</td></tr>
+            <tr><td>Tarun</td><td>₹5 lakh – ₹10 lakh</td><td>Growing enterprises</td></tr>
+            <tr><td>Tarun Plus</td><td>₹10 lakh – ₹20 lakh</td><td>Scaling MSMEs (added later)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Exports & Imports -->
+  <div class="section-card mt-10">
+    <div class="section-head">
+      <div class="section-icon" style="background:#0a1500">🌍</div>
+      <div><h2>India's Top Exports & Imports</h2><div class="sub">Trade composition — frequently asked</div></div>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead><tr><th>Category</th><th>Item (in order)</th></tr></thead>
+        <tbody>
+          <tr><td>Top 5 Exports</td><td>Petroleum products → Gems/Jewellery → Engineering goods → Pharma → IT services</td></tr>
+          <tr><td>Top 5 Imports</td><td>Crude oil → Gold → Electronic components → Capital goods → Coal</td></tr>
+          <tr><td>Trade Surplus with</td><td>USA, UK, UAE (India earns more than it spends)</td></tr>
+          <tr><td>Trade Deficit with</td><td>China (≈$85B/yr, largest deficit), Russia, Ukraine</td></tr>
+          <tr><td>Export Target FY27</td><td>$800 billion merchandise exports</td></tr>
+          <tr><td>India-UAE CEPA</td><td>Bilateral trade $80 billion; India's first CEPA in recent era</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ================================================================
+     TAB 3 — MCQ
+     ================================================================ -->
+<div class="tab-panel" id="tab-mcq">
+<div class="section-card" style="margin:14px 14px 0; max-width:672px; margin-left:auto; margin-right:auto;">
+
+  <div class="mcq-header">
+    <div class="mcq-counter">Question <strong id="qCurrent">1</strong> of <strong>5</strong></div>
+    <div class="mcq-timer" id="mcqTimer">⏱ 00:00</div>
+  </div>
+
+  <div class="question-nav" id="questionNav">
+    <div class="q-dot active" id="dot-0" onclick="jumpTo(0)">1</div>
+    <div class="q-dot" id="dot-1" onclick="jumpTo(1)">2</div>
+    <div class="q-dot" id="dot-2" onclick="jumpTo(2)">3</div>
+    <div class="q-dot" id="dot-3" onclick="jumpTo(3)">4</div>
+    <div class="q-dot" id="dot-4" onclick="jumpTo(4)">5</div>
+  </div>
+
+  <div class="question-wrap" id="questionWrap"></div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-label">out of 5 questions</div>
+    <div class="result-grid">
+      <div class="result-stat"><div class="result-stat-val" id="resCorrect" style="color:var(--accent)"></div><div class="result-stat-key">Correct</div></div>
+      <div class="result-stat"><div class="result-stat-val" id="resWrong" style="color:var(--danger)"></div><div class="result-stat-key">Wrong</div></div>
+      <div class="result-stat"><div class="result-stat-val" id="resTime" style="color:var(--accent2)"></div><div class="result-stat-key">Seconds</div></div>
+    </div>
+    <button class="retry-btn" onclick="restartQuiz()">↺ Retry</button>
+    <button class="complete-btn" onclick="markComplete()">✓ Complete Node</button>
+  </div>
+
+</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CENTUMANIA ANALYTICS — CA_02_Economy
+   Implements: node_opened, node_abandoned, mcq_started,
+   mcq_question_answered (first-attempt lock), mcq_completed,
+   mcq_reattempted, node_completed, rapid_answer_flag,
+   tab_visibility_change
+   ============================================================ */
+const NODE_ID    = 'ca_02_economy';
+const CHAPTER_ID = 'current_affairs_02';
+const MCQ_SET_ID = 'mcq_ca02_economy';
+const SESSION_ID = 'sess_' + Math.random().toString(36).slice(2, 10);
+const USER_ID    = 'user_demo';
+
+const nodeOpenedAt = Date.now();
+let materialCompleted = false;
+let _mToken = '';
+(function initToken(){
+  var ks=Object.keys(localStorage);
+  var k=ks.find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});
+  if(k){try{var d=JSON.parse(localStorage.getItem(k));_mToken=(d&&d.access_token)||'';}catch(e){}}
+  if(!_mToken){var sk=Object.keys(sessionStorage).find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});if(sk){try{var d2=JSON.parse(sessionStorage.getItem(sk));_mToken=(d2&&d2.access_token)||'';}catch(e){}}}
+})();
+
+function fireEvent(name, payload) {
+  const p = { event: name, user_id: USER_ID, session_id: SESSION_ID, timestamp: new Date().toISOString(), ...payload };
+  console.log('[CentuMania]', JSON.stringify(p));
+  if (_mToken) {
+    fetch('/api/events', {method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},body:JSON.stringify({event_name:name,session_id:SESSION_ID,event_timestamp:new Date().toISOString(),metadata:payload})}).catch(function(){});
+  }
+}
+
+fireEvent('node_opened', { node_id: NODE_ID, node_type: 'standard', chapter_id: CHAPTER_ID, attempt_number: 1 });
+
+window.addEventListener('beforeunload', () => {
+  if (!materialCompleted) {
+    fireEvent('node_abandoned', {
+      node_id: NODE_ID, chapter_id: CHAPTER_ID,
+      time_spent_sec: Math.round((Date.now() - nodeOpenedAt) / 1000),
+      completion_percent: Math.round((tabProgress.material ? 40 : 0) + (tabProgress.quickref ? 30 : 0) + (tabProgress.mcq ? 30 : 0))
+    });
+  }
+});
+
+document.addEventListener('visibilitychange', () => {
+  fireEvent('tab_visibility_change', { node_id: NODE_ID, material_id: 'mat_ca02_study' });
+});
+
+/* ===== TABS ===== */
+const tabProgress = { material: true, quickref: false, mcq: false };
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'quickref') tabProgress.quickref = true;
+  if (name === 'mcq' && !mcqStarted) initMCQ();
+  updateProgress();
+}
+
+function updateProgress() {
+  const done = Object.values(tabProgress).filter(Boolean).length;
+  document.getElementById('progressBar').style.width = Math.round((done / 3) * 100) + '%';
+}
+
+/* ===== MCQ DATA — 5 SSC/RRB Questions ===== */
+const questions = [
+  {
+    id: 'q1',
+    text: 'What is the current Repo Rate set by the RBI after the cumulative 125 basis point cuts since February 2025?',
+    options: ['6.00%', '5.75%', '5.50%', '6.25%'],
+    correct: 1,
+    explanation: 'The Repo Rate stands at 5.75% after a cumulative reduction of 125 bps (basis points) since February 2025. The MSF Rate is 6.00% and the Reverse Repo Rate is 5.50%. Repo Rate is the rate at which RBI lends to commercial banks — lower repo = cheaper loans for the economy.'
+  },
+  {
+    id: 'q2',
+    text: 'How many members does the RBI Monetary Policy Committee (MPC) have, and how are they divided?',
+    options: ['4 members: 2 RBI + 2 External', '6 members: 3 RBI + 3 External', '5 members: 3 RBI + 2 External', '8 members: 4 RBI + 4 External'],
+    correct: 1,
+    explanation: 'The MPC has exactly 6 members: 3 from RBI (Governor + 2 Deputy Governors) and 3 external members appointed by the Central Government. In September 2025, MPC voted 4:2 to cut rates. Common trap: people confuse 4, 5, or 8 members.'
+  },
+  {
+    id: 'q3',
+    text: 'India\'s forex reserves of $680 billion make it the _____ largest holder globally.',
+    options: ['2nd', '3rd', '4th', '5th'],
+    correct: 2,
+    explanation: 'India is the 4th largest forex reserve holder: USA (1st) > China (2nd) > Japan (3rd) > India (4th). A very common exam trap is marking India as 3rd — Japan holds a larger reserve than India. As of FY2025-26, India\'s reserves stand at $680 billion.'
+  },
+  {
+    id: 'q4',
+    text: 'Under the PM Mudra Yojana, which category covers loans between ₹5 lakh and ₹10 lakh?',
+    options: ['Shishu', 'Kishore', 'Tarun', 'Tarun Plus'],
+    correct: 2,
+    explanation: 'Tarun covers ₹5 lakh to ₹10 lakh. The full range: Shishu = up to ₹50,000 | Kishore = ₹50,001 to ₹5 lakh | Tarun = ₹5 lakh to ₹10 lakh | Tarun Plus = ₹10 lakh to ₹20 lakh. Cumulative disbursement under Mudra: ₹5 lakh crore.'
+  },
+  {
+    id: 'q5',
+    text: 'Which of the following correctly identifies the D-SIBs (Domestic Systemically Important Banks) in India as of 2026?',
+    options: ['SBI, HDFC Bank, Axis Bank', 'SBI, ICICI Bank, Kotak Bank', 'SBI, HDFC Bank, ICICI Bank', 'HDFC Bank, ICICI Bank, Axis Bank'],
+    correct: 2,
+    explanation: 'D-SIBs are "Too Big to Fail" banks that require higher capital buffers. As of 2026, India\'s D-SIBs are: SBI (public sector), HDFC Bank, and ICICI Bank (both private). Axis Bank is NOT a D-SIB despite being a large private bank. These banks must maintain additional Capital Adequacy as per RBI directives.'
+  }
+];
+
+let mcqStarted = false, currentQ = 0;
+let answers = new Array(5).fill(null);
+let answerTimes = new Array(5).fill(null);
+let questionStartTime = null;
+let mcqTimerInterval = null, mcqElapsedSec = 0, mcqStartedAt = null;
+
+function initMCQ() {
+  mcqStarted = true;
+  mcqStartedAt = Date.now();
+  mcqTimerInterval = setInterval(() => {
+    mcqElapsedSec++;
+    const m = String(Math.floor(mcqElapsedSec / 60)).padStart(2,'0');
+    const s = String(mcqElapsedSec % 60).padStart(2,'0');
+    document.getElementById('mcqTimer').textContent = '⏱ ' + m + ':' + s;
+  }, 1000);
+  fireEvent('mcq_started', { mcq_set_id: MCQ_SET_ID, node_id: NODE_ID, chapter_id: CHAPTER_ID, question_count: 5, attempt_number: 1 });
+  renderQuestion(0);
+}
+
+function renderQuestion(idx) {
+  currentQ = idx;
+  questionStartTime = Date.now();
+  const q = questions[idx];
+  document.getElementById('qCurrent').textContent = idx + 1;
+  document.querySelectorAll('.q-dot').forEach((d,i) => { d.classList.remove('active'); if(i===idx) d.classList.add('active'); });
+
+  const answered = answers[idx] !== null;
+  const optionsHTML = q.options.map((opt, oi) => {
+    let cls = 'option-btn';
+    if (answered) {
+      cls += ' disabled';
+      if (oi === q.correct) cls += ' correct-ans';
+      else if (oi === answers[idx] && oi !== q.correct) cls += ' wrong-ans';
+    }
+    return `<button class="${cls}" onclick="selectAnswer(${idx},${oi})">
+      <span class="option-letter">${'ABCD'[oi]}</span>
+      <span>${opt}</span>
+    </button>`;
+  }).join('');
+
+  const expHTML = answered
+    ? `<div class="explanation-box show"><div class="exp-head">💡 Explanation</div>${q.explanation}</div>`
+    : `<div class="explanation-box"></div>`;
+
+  const isLast = idx === 4;
+  const nextBtn = `<button class="next-btn${answered ? ' show' : ''}" onclick="${isLast ? 'showResults()' : 'renderQuestion('+(idx+1)+')'}">${isLast ? '✓ See Results' : 'Next Question →'}</button>`;
+
+  document.getElementById('questionWrap').innerHTML = `
+    <div class="question-num">Question ${idx+1} of 5</div>
+    <div class="question-text">${q.text}</div>
+    <div class="options-list">${optionsHTML}</div>
+    ${expHTML}${nextBtn}`;
+}
+
+function selectAnswer(qIdx, optIdx) {
+  if (answers[qIdx] !== null) return;
+  const timeTaken = Math.round((Date.now() - questionStartTime) / 1000);
+  const isCorrect = optIdx === questions[qIdx].correct;
+  const isRapid = timeTaken < 2;
+  answers[qIdx] = optIdx;
+  answerTimes[qIdx] = timeTaken;
+
+  const dot = document.getElementById('dot-' + qIdx);
+  dot.classList.remove('active');
+  dot.classList.add(isCorrect ? 'correct' : 'wrong');
+
+  fireEvent('mcq_question_answered', {
+    question_id: questions[qIdx].id, mcq_set_id: MCQ_SET_ID, node_id: NODE_ID,
+    selected_option: 'ABCD'[optIdx], is_correct: isCorrect,
+    time_taken_sec: timeTaken, attempt_number: 1, is_rapid: isRapid
+  });
+  if (isRapid) fireEvent('rapid_answer_flag', { question_id: questions[qIdx].id, time_ms: timeTaken * 1000 });
+  renderQuestion(qIdx);
+}
+
+function jumpTo(idx) { if (answers[idx] !== null || idx === currentQ) renderQuestion(idx); }
+
+function showResults() {
+  clearInterval(mcqTimerInterval);
+  const correct = answers.filter((a,i) => a === questions[i].correct).length;
+  const wrong   = answers.filter((a,i) => a !== null && a !== questions[i].correct).length;
+  fireEvent('mcq_completed', {
+    mcq_set_id: MCQ_SET_ID, node_id: NODE_ID, chapter_id: CHAPTER_ID,
+    score: correct, total_questions: 5, correct_count: correct,
+    duration_sec: mcqElapsedSec, attempt_number: 1,
+    accuracy_pct: Math.round((correct/5)*100)
+  });
+  tabProgress.mcq = true;
+  updateProgress();
+  document.getElementById('questionWrap').style.display = 'none';
+  const rs = document.getElementById('resultScreen');
+  rs.classList.add('show');
+  const scoreEl = document.getElementById('resultScore');
+  scoreEl.textContent = correct + '/5';
+  scoreEl.style.color = correct >= 4 ? 'var(--accent)' : correct >= 2 ? 'var(--warning)' : 'var(--danger)';
+  document.getElementById('resCorrect').textContent = correct;
+  document.getElementById('resWrong').textContent = wrong;
+  document.getElementById('resTime').textContent = mcqElapsedSec + 's';
+}
+
+function restartQuiz() {
+  answers = new Array(5).fill(null);
+  answerTimes = new Array(5).fill(null);
+  mcqElapsedSec = 0;
+  mcqStartedAt = Date.now();
+  document.getElementById('resultScreen').classList.remove('show');
+  document.getElementById('questionWrap').style.display = '';
+  document.querySelectorAll('.q-dot').forEach((d,i) => { d.className = 'q-dot'; if(i===0) d.classList.add('active'); });
+  clearInterval(mcqTimerInterval);
+  mcqTimerInterval = setInterval(() => {
+    mcqElapsedSec++;
+    const m = String(Math.floor(mcqElapsedSec/60)).padStart(2,'0');
+    const s = String(mcqElapsedSec%60).padStart(2,'0');
+    document.getElementById('mcqTimer').textContent = '⏱ '+m+':'+s;
+  }, 1000);
+  fireEvent('mcq_reattempted', { mcq_set_id: MCQ_SET_ID, node_id: NODE_ID, prior_attempt_count: 1 });
+  renderQuestion(0);
+}
+
+function markComplete() {
+  const timeSpentSec = Math.round((Date.now() - nodeOpenedAt) / 1000);
+  const correct = answers.filter((a,i) => a === questions[i].correct).length;
+  materialCompleted = true;
+  fireEvent('node_completed', {
+    node_id: NODE_ID, chapter_id: CHAPTER_ID,
+    completion_time_sec: timeSpentSec, xp_earned: 20,
+    accuracy_pct: Math.round((correct/5)*100)
+  });
+  showToast('🎉 Node Completed! +20 XP earned');
+  document.getElementById('resultScreen').insertAdjacentHTML('beforeend', `
+    <div class="complete-banner">
+      <div class="icon">📈</div>
+      <h3>Node Complete!</h3>
+      <p>+20 XP · Centum Index updated · Economy mastered!</p>
+    </div>`);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+updateProgress();
+</script>
+</body>
+</html>
