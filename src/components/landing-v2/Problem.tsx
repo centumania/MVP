@@ -15,7 +15,7 @@ const WITHOUT = [
 ]
 
 const WITH = [
-  'A fixed 30-day plan that covers the full syllabus',
+  'A fixed daily plan that covers the full syllabus',
   'A timed exam every morning at 6 AM — no exceptions',
   'A live batch leaderboard updated after every exam',
   'Questions modelled on the actual exam pattern',
