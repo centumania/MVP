@@ -155,7 +155,7 @@ export default function Hero() {
           </Reveal>
         </div>
 
-        {/* ── Exam-universe column (live 3D neural map) ── */}
+        {/* ── Knowledge-universe column (live 3D neural map) ── */}
         <Reveal delay={200} className="relative">
           <div aria-hidden className="absolute -inset-6 rounded-[32px] bg-gradient-to-br from-sky-100/80 via-transparent to-indigo-100/60 blur-2xl" />
 
@@ -167,8 +167,8 @@ export default function Hero() {
                   <Sparkles size={15} />
                 </span>
                 <div>
-                  <div className="text-[13px] font-bold tracking-tight text-gray-900">Your exam universe</div>
-                  <div className="text-[11px] font-medium text-gray-500">One platform · every major exam</div>
+                  <div className="text-[13px] font-bold tracking-tight text-gray-900">Your knowledge universe</div>
+                  <div className="text-[11px] font-medium text-gray-500">Every subject you&apos;ll master</div>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-600 ring-1 ring-emerald-200/70">
@@ -185,13 +185,15 @@ export default function Hero() {
               <NeuralMap />
             </div>
 
-            {/* Legend */}
-            <div className="mt-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5">
+            {/* Legend — subject families */}
+            <div className="mt-1 flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1.5">
               {[
-                ['SSC', '#0284c7'],
-                ['RRB', '#6366f1'],
-                ['Banking', '#059669'],
-                ['TN & Puducherry', '#d97706'],
+                ['General Studies', '#0284c7'],
+                ['Aptitude', '#6366f1'],
+                ['Reasoning', '#059669'],
+                ['English', '#d97706'],
+                ['Tamil', '#e11d48'],
+                ['Current Affairs', '#7c3aed'],
               ].map(([label, color]) => (
                 <span key={label} className="inline-flex items-center gap-1.5 text-[11px] font-medium text-gray-600">
                   <span className="h-2 w-2 rounded-full" style={{ background: color }} />
@@ -200,8 +202,8 @@ export default function Hero() {
               ))}
             </div>
             <p className="mt-2.5 border-t border-gray-100 pt-2.5 text-center text-[11px] font-medium text-gray-500">
-              CGL · CHSL · MTS · CPO · NTPC · Group D · Banking · TN exams —{' '}
-              <span className="font-semibold text-indigo-600">more coming soon</span>
+              One disciplined syllabus for{' '}
+              <span className="font-semibold text-indigo-600">SSC, RRB, Banking &amp; TN exams</span>
             </p>
           </div>
         </Reveal>

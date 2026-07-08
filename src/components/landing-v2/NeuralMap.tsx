@@ -28,10 +28,12 @@ interface GNode {
 }
 
 const CATS = [
-  { label: 'SSC',              core: '#0284c7', leaf: '#38bdf8', children: ['CGL', 'CHSL', 'MTS', 'CPO'] },
-  { label: 'RRB',              core: '#6366f1', leaf: '#818cf8', children: ['NTPC', 'Group D'] },
-  { label: 'Banking',          core: '#059669', leaf: '#34d399', children: ['IBPS PO', 'SBI PO'] },
-  { label: 'TN & Puducherry',  core: '#d97706', leaf: '#fbbf24', children: ['Group 4', 'VAO'] },
+  { label: 'General Studies', core: '#0284c7', leaf: '#38bdf8', children: ['History', 'Geography', 'Polity', 'Economy'] },
+  { label: 'Aptitude',        core: '#6366f1', leaf: '#818cf8', children: ['Arithmetic', 'Algebra', 'Data Interp.'] },
+  { label: 'Reasoning',       core: '#059669', leaf: '#34d399', children: ['Verbal', 'Non-Verbal', 'Series'] },
+  { label: 'English',         core: '#d97706', leaf: '#fbbf24', children: ['Grammar', 'Vocabulary', 'Reading'] },
+  { label: 'Tamil',           core: '#e11d48', leaf: '#fb7185', children: ['Grammar', 'Literature'] },
+  { label: 'Current Affairs', core: '#7c3aed', leaf: '#a78bfa', children: ['National', 'Sports', 'Awards'] },
 ]
 
 function hexToRgb(hex: string): string {
@@ -44,21 +46,21 @@ function hexToRgb(hex: string): string {
 const NODES: GNode[] = []
 const EDGES: [number, number][] = []
 ;(function build() {
-  NODES.push({ label: 'CentuMania', type: 'root', color: '#4f46e5', glow: '99,102,241', r: 15, bx: 0, by: 0, bz: 0 })
-  const Rh = 1.05, Rl = 1.95
+  NODES.push({ label: 'CentuMania', type: 'root', color: '#4f46e5', glow: '99,102,241', r: 16, bx: 0, by: 0, bz: 0 })
+  const Rh = 1.15, Rl = 2.05
   CATS.forEach((c, ci) => {
     const a = (ci / CATS.length) * Math.PI * 2 - Math.PI / 2
-    const hy = ci % 2 === 0 ? -0.34 : 0.34
+    const hy = ci % 2 === 0 ? -0.26 : 0.26
     const hubIndex = NODES.length
-    NODES.push({ label: c.label, type: 'hub', color: c.core, glow: hexToRgb(c.core), r: 10.5, bx: Math.cos(a) * Rh, by: hy, bz: Math.sin(a) * Rh })
+    NODES.push({ label: c.label, type: 'hub', color: c.core, glow: hexToRgb(c.core), r: 9.5, bx: Math.cos(a) * Rh, by: hy, bz: Math.sin(a) * Rh })
     EDGES.push([0, hubIndex])
     const n = c.children.length
     c.children.forEach((leaf, li) => {
       const off = n > 1 ? (li - (n - 1) / 2) : 0
-      const la = a + off * 0.44
-      const ly = hy * 1.5 + off * 0.17
+      const la = a + off * 0.28
+      const ly = hy * 1.5 + off * 0.14
       const leafIndex = NODES.length
-      NODES.push({ label: leaf, type: 'leaf', color: c.leaf, glow: hexToRgb(c.leaf), r: 6, bx: Math.cos(la) * Rl, by: ly, bz: Math.sin(la) * Rl })
+      NODES.push({ label: leaf, type: 'leaf', color: c.leaf, glow: hexToRgb(c.leaf), r: 5.5, bx: Math.cos(la) * Rl, by: ly, bz: Math.sin(la) * Rl })
       EDGES.push([hubIndex, leafIndex])
     })
   })
@@ -74,7 +76,7 @@ const PARTICLES: Particle[] = EDGES.flatMap(([a, b], i) => {
 })
 
 const F = 3.4   // focal length (unit space)
-const TILT = 0.42
+const TILT = 0.34
 
 export default function NeuralMap() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -161,11 +163,10 @@ export default function NeuralMap() {
         ctx.fill()
       }
 
-      // nodes — far first (painter's algorithm)
-      const order = P.map((p, i) => ({ p, i })).sort((u, v) => v.p.z - u.p.z)
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
-      for (const { p } of order) {
+
+      const drawNode = (p: (typeof P)[number]) => {
         const { nd, sx, sy, s } = p
         const R = nd.r * s
         // glow halo
@@ -190,19 +191,52 @@ export default function NeuralMap() {
         ctx.fillStyle = 'rgba(255,255,255,0.55)'
         ctx.fill()
         // label
-        const showLabel = nd.type !== 'leaf' || s > 0.92
+        const showLabel = nd.type === 'hub' || s > 0.9
         if (showLabel) {
-          const fs = nd.type === 'root' ? 13 : nd.type === 'hub' ? 11.5 : 10
-          ctx.font = `${nd.type === 'leaf' ? 500 : 700} ${fs * Math.max(0.8, s)}px Inter, system-ui, sans-serif`
-          const ty = sy + R + (nd.type === 'root' ? 15 : 12) * s
-          ctx.fillStyle = 'rgba(255,255,255,0.9)'
+          const fs = nd.type === 'hub' ? 11 : 9.5
+          ctx.font = `${nd.type === 'leaf' ? 500 : 700} ${fs * Math.max(0.82, s)}px Inter, system-ui, sans-serif`
+          const ty = sy + R + 12 * s
           ctx.lineWidth = 3
-          ctx.strokeStyle = 'rgba(255,255,255,0.9)'
+          ctx.strokeStyle = 'rgba(255,255,255,0.92)'
           ctx.strokeText(nd.label, sx, ty)
-          ctx.fillStyle = nd.type === 'leaf' ? 'rgba(71,85,105,0.95)' : 'rgba(15,23,42,0.95)'
+          ctx.fillStyle = nd.type === 'leaf' ? 'rgba(71,85,105,0.95)' : 'rgba(15,23,42,0.96)'
           ctx.fillText(nd.label, sx, ty)
         }
       }
+
+      // hubs + leaves — far first (painter's algorithm); root excluded
+      const order = P.map((p, i) => ({ p, i }))
+        .filter((x) => x.i !== 0)
+        .sort((u, v) => v.p.z - u.p.z)
+      for (const { p } of order) drawNode(p)
+
+      // ── Root (CentuMania) — always centered, always on top ──
+      const rp = P[0]
+      const RR = rp.nd.r * rp.s
+      const rhalo = ctx.createRadialGradient(rp.sx, rp.sy, 0, rp.sx, rp.sy, RR * 4)
+      rhalo.addColorStop(0, 'rgba(99,102,241,0.34)')
+      rhalo.addColorStop(1, 'rgba(99,102,241,0)')
+      ctx.fillStyle = rhalo
+      ctx.beginPath(); ctx.arc(rp.sx, rp.sy, RR * 4, 0, Math.PI * 2); ctx.fill()
+      const rcore = ctx.createLinearGradient(rp.sx - RR, rp.sy - RR, rp.sx + RR, rp.sy + RR)
+      rcore.addColorStop(0, '#0284c7'); rcore.addColorStop(1, '#6366f1')
+      ctx.beginPath(); ctx.arc(rp.sx, rp.sy, RR, 0, Math.PI * 2)
+      ctx.fillStyle = rcore; ctx.fill()
+      ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(255,255,255,0.95)'; ctx.stroke()
+      ctx.beginPath(); ctx.arc(rp.sx - RR * 0.28, rp.sy - RR * 0.32, RR * 0.34, 0, Math.PI * 2)
+      ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.fill()
+      // label chip so "CentuMania" stays legible in the middle
+      ctx.font = `800 ${13 * Math.max(0.9, rp.s)}px Inter, system-ui, sans-serif`
+      const rlabel = 'CentuMania'
+      const tw = ctx.measureText(rlabel).width
+      const ty = rp.sy + RR + 16
+      const padX = 9, chipH = 22
+      ctx.beginPath()
+      ctx.roundRect(rp.sx - tw / 2 - padX, ty - chipH / 2, tw + padX * 2, chipH, chipH / 2)
+      ctx.fillStyle = 'rgba(255,255,255,0.92)'; ctx.fill()
+      ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(99,102,241,0.22)'; ctx.stroke()
+      ctx.fillStyle = '#4338ca'
+      ctx.fillText(rlabel, rp.sx, ty)
     }
 
     function loop(now: number) {
@@ -250,8 +284,6 @@ export default function NeuralMap() {
     }
   }, [])
 
-  const allExams = CATS.flatMap((c) => c.children)
-
   return (
     <div className="relative h-full w-full">
       <canvas ref={canvasRef} className="h-full w-full" aria-hidden />
@@ -259,7 +291,7 @@ export default function NeuralMap() {
         {CATS.map((c) => (
           <li key={c.label}>{c.label}: {c.children.join(', ')}</li>
         ))}
-        <li>Supported and upcoming exams: {allExams.join(', ')}. More exams coming soon.</li>
+        <li>Every subject you&apos;ll master with CentuMania, across SSC, RRB, Banking and Tamil Nadu &amp; Puducherry government exams.</li>
       </ul>
     </div>
   )
