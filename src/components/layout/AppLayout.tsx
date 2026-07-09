@@ -20,6 +20,7 @@ const IcoExam      = (p: IconProps) => <Ico {...p}><path d="M9 5H7a2 2 0 0 0-2 2
 const IcoBook      = (p: IconProps) => <Ico {...p}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></Ico>
 const IcoRanks     = (p: IconProps) => <Ico {...p}><path d="M18 20V10M12 20V4M6 20v-6"/></Ico>
 const IcoInsights  = (p: IconProps) => <Ico {...p}><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></Ico>
+const IcoNews      = (p: IconProps) => <Ico {...p}><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/><line x1="18" y1="14" x2="10" y2="14"/><line x1="15" y1="18" x2="10" y2="18"/><rect x="10" y="6" width="8" height="4" rx="0.5"/></Ico>
 const IcoProfile   = (p: IconProps) => <Ico {...p}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></Ico>
 const IcoOut       = (p: IconProps) => <Ico {...p}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></Ico>
 
@@ -27,6 +28,7 @@ const NAV = [
   { href: '/dashboard',   label: 'Dashboard',    short: 'Home',  Icon: IcoDashboard, highlight: false, mobile: true  },
   { href: '/materials',   label: 'Materials',    short: 'Study', Icon: IcoBook,      highlight: true,  mobile: true  },
   { href: '/exam/today',  label: "Today's Exam", short: 'Exam',  Icon: IcoExam,      highlight: false, mobile: true  },
+  { href: '/current-affairs', label: 'Current Affairs', short: 'News', Icon: IcoNews, highlight: false, mobile: true },
   { href: '/insights',    label: 'AI Insights',  short: 'AI',    Icon: IcoInsights,  highlight: false, mobile: false },
   { href: '/leaderboard', label: 'Leaderboard',  short: 'Ranks', Icon: IcoRanks,     highlight: false, mobile: true  },
   { href: '/profile',     label: 'Profile',      short: 'Me',    Icon: IcoProfile,   highlight: false, mobile: true  },
