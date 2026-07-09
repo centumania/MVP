@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { AppLayout } from '@/src/components/layout/AppLayout'
-import { Card, CardLabel } from '@/src/components/ui/Card'
 import { Badge } from '@/src/components/ui/Badge'
 import { SkeletonCard } from '@/src/components/ui/Skeleton'
 import type { StudyLeaderboardEntry, PricingTier } from '@/src/types/database'
@@ -169,6 +168,41 @@ export default function LeaderboardPage() {
                     </div>
                   )}
                   {isMeEntry && <p className="text-[10px] text-primary font-bold mt-1 uppercase tracking-wider font-mono">You</p>}
+                </div>
+              )
+            })}
+          </div>
+        )}
+
+        {/* RANKS 4+ */}
+        {rest.length > 0 && (
+          <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFFFF', border: '1px solid #E5E7EB' }}>
+            {rest.map(e => {
+              const isMeEntry = isMe(e)
+              return (
+                <div key={e.rank}
+                  className="flex items-center gap-3 px-4 py-3"
+                  style={{
+                    borderBottom: '1px solid rgba(229,231,235,0.6)',
+                    background: isMeEntry ? 'rgba(2,132,199,0.05)' : undefined,
+                  }}
+                >
+                  <span className="w-7 text-center text-xs font-bold font-mono shrink-0 text-text-muted">
+                    #{e.rank}
+                  </span>
+                  <Avatar name={e.name} isMe={isMeEntry} size="sm" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-text truncate">
+                      {e.name}{isMeEntry && <span className="text-primary"> (You)</span>}
+                    </p>
+                    <p className="text-xs text-text-muted">{e.days_attended} days · {e.accuracy_percent}% accuracy</p>
+                  </div>
+                  {e.tier && (
+                    <Badge variant={TIER_BADGE[e.tier]?.variant ?? 'neutral'} size="sm">
+                      {TIER_BADGE[e.tier]?.label}
+                    </Badge>
+                  )}
+                  <span className="text-sm font-bold font-mono shrink-0">{e.total_score.toLocaleString()}</span>
                 </div>
               )
             })}

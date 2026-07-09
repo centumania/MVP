@@ -106,9 +106,11 @@ export default function MentorReportPage() {
   }, [router])
 
   // First fetch once token is available
+  // Deferred via microtask: fetchReport calls state setters, so invoking it
+  // directly here would cascade renders within the effect's synchronous phase.
   useEffect(() => {
     if (token && phase === 'loading') {
-      fetchReport(token)
+      void Promise.resolve().then(() => fetchReport(token))
     }
   }, [token, phase, fetchReport])
 
@@ -116,8 +118,10 @@ export default function MentorReportPage() {
   useEffect(() => {
     if (phase !== 'generating' || !token || polls >= 5) {
       if (phase === 'generating' && polls >= 5) {
-        setErrMsg('Report is taking longer than expected. Please refresh the page.')
-        setPhase('error')
+        void Promise.resolve().then(() => {
+          setErrMsg('Report is taking longer than expected. Please refresh the page.')
+          setPhase('error')
+        })
       }
       return
     }

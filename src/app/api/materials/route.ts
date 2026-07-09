@@ -25,16 +25,12 @@ export async function GET(request: NextRequest) {
     if (authError || !user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const { data: profile } = await supabase
-      .from('profiles').select('payment_verified, batch_id').eq('id', user.id).single()
+      .from('profiles').select('payment_verified').eq('id', user.id).single()
 
     const isPaid = profile?.payment_verified === true
 
-    const batchQuery = supabase.from('batches').select('id')
-    const { data: batch } = await (
-      profile?.batch_id
-        ? batchQuery.eq('id', profile.batch_id).maybeSingle()
-        : batchQuery.eq('is_active', true).limit(1).maybeSingle()
-    )
+    const { data: batch } = await supabase
+      .from('batches').select('id').eq('is_active', true).limit(1).maybeSingle()
     if (!batch) return NextResponse.json({ error: 'No active batch' }, { status: 404 })
 
     let query = supabase

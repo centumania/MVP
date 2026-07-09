@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { ALLOWED_EVENTS, isAllowedEvent, getSessionId } from '../../src/lib/analytics/track'
 
 describe('ALLOWED_EVENTS', () => {
-  it('contains all 7 required event names', () => {
+  it('contains all 14 required event names', () => {
     expect(ALLOWED_EVENTS).toContain('login')
     expect(ALLOWED_EVENTS).toContain('material_opened')
     expect(ALLOWED_EVENTS).toContain('daily_material_completed')
@@ -10,7 +10,15 @@ describe('ALLOWED_EVENTS', () => {
     expect(ALLOWED_EVENTS).toContain('node_completed')
     expect(ALLOWED_EVENTS).toContain('mcq_started')
     expect(ALLOWED_EVENTS).toContain('mcq_completed')
-    expect(ALLOWED_EVENTS).toHaveLength(7)
+    // Added for the daily-test/study session tracker:
+    expect(ALLOWED_EVENTS).toContain('session_start')
+    expect(ALLOWED_EVENTS).toContain('session_end')
+    expect(ALLOWED_EVENTS).toContain('node_open')
+    expect(ALLOWED_EVENTS).toContain('tab_switch')
+    expect(ALLOWED_EVENTS).toContain('test_start')
+    expect(ALLOWED_EVENTS).toContain('answer')
+    expect(ALLOWED_EVENTS).toContain('test_finish')
+    expect(ALLOWED_EVENTS).toHaveLength(14)
   })
 })
 

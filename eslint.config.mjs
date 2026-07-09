@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Standalone CommonJS dev tooling — not part of the app bundle.
+    "scripts/**",
+    // Plain ES5 script injected into third-party HTML study-map iframes —
+    // not compiled by Next.js/TypeScript, not part of the app bundle.
+    "public/**/*.js",
   ]),
 ]);
 

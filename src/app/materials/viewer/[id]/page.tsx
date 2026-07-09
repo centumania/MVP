@@ -53,8 +53,8 @@ export default function MaterialViewerPage() {
       // Store token + material_id in localStorage so the HTML file's
       // centumania-tracker.js can authenticate its /api/study/interaction calls.
       if (data.type === 'html') {
-        try { localStorage.setItem('cm:access_token', session.access_token) } catch (_) {}
-        try { localStorage.setItem('cm:material_id', id) } catch (_) {}
+        try { localStorage.setItem('cm:access_token', session.access_token) } catch { /* private browsing */ }
+        try { localStorage.setItem('cm:material_id', id) } catch { /* private browsing */ }
         window.location.href = data.url
         return
       }

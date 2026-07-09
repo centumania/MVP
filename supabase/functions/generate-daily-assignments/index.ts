@@ -106,13 +106,6 @@ function accuracyWeight(attempted: number, correct: number): number {
   return 0.2                   // near-mastered: low probability
 }
 
-function difficultyBuckets(total: number): { easy: number; medium: number; hard: number } {
-  const easy   = Math.round(total * 0.60)
-  const medium = Math.round(total * 0.30)
-  const hard   = total - easy - medium
-  return { easy, medium, hard: Math.max(0, hard) }
-}
-
 function pickRandom<T>(arr: T[], n: number): T[] {
   return [...arr].sort(() => Math.random() - 0.5).slice(0, n)
 }

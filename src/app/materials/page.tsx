@@ -6,7 +6,7 @@ import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { AppLayout } from '@/src/components/layout/AppLayout'
 import { Card } from '@/src/components/ui/Card'
 import { SkeletonCard } from '@/src/components/ui/Skeleton'
-import { materials, getUniqueDays, getMaterialsByDay } from '@/src/data/materials'
+import { getUniqueDays, getMaterialsByDay } from '@/src/data/materials'
 import type { Material } from '@/src/data/materials'
 
 type Status = {
@@ -35,9 +35,9 @@ function DayHeader({ day, status }: { day: number; status: Status }) {
 
   let badge: React.ReactNode
   if (!status.paymentVerified) {
-    badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(231,177,76,0.12)', color: '#e7b14c', border: '1px solid rgba(231,177,76,0.2)' }}>Payment required</span>
+    badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(217,119,6,0.10)', color: '#d97706', border: '1px solid rgba(217,119,6,0.20)' }}>Payment required</span>
   } else if (isAvailable) {
-    badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(74,222,128,0.10)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.2)' }}>Open today</span>
+    badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: 'rgba(22,163,74,0.10)', color: '#16A34A', border: '1px solid rgba(22,163,74,0.20)' }}>Open today</span>
   } else if (isScheduleUnlocked && !isPublished) {
     badge = <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ background: '#F3F4F6', color: '#6B7280' }}>Not published yet</span>
   } else {
@@ -97,7 +97,7 @@ function MaterialCard({
 
       {error && (
         <div className="mb-3 px-3 py-2 rounded-lg text-xs font-mono"
-          style={{ background: 'rgba(232,115,107,0.08)', color: '#e8736b', border: '1px solid rgba(232,115,107,0.20)' }}>
+          style={{ background: 'rgba(220,38,38,0.06)', color: '#DC2626', border: '1px solid rgba(220,38,38,0.20)' }}>
           {error}
         </div>
       )}
@@ -108,10 +108,10 @@ function MaterialCard({
             onClick={openMaterial}
             disabled={opening}
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all disabled:opacity-60"
-            style={{ background: 'linear-gradient(135deg,rgba(74,222,128,0.12),rgba(94,200,192,0.08))', border: '1px solid rgba(74,222,128,0.25)', color: '#4ADE80' }}
+            style={{ background: '#0284c7', border: '1px solid #0284c7', color: '#FFFFFF' }}
           >
             {opening ? (
-              <div className="w-3.5 h-3.5 rounded-full border-2 animate-spin" style={{ borderColor: 'rgba(74,222,128,0.3)', borderTopColor: '#4ADE80' }} />
+              <div className="w-3.5 h-3.5 rounded-full border-2 animate-spin" style={{ borderColor: 'rgba(255,255,255,0.4)', borderTopColor: '#FFFFFF' }} />
             ) : (
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
@@ -134,7 +134,7 @@ function MaterialCard({
         {m.videoUrl && isAvailable && (
           <a href={m.videoUrl} target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
-            style={{ background: 'rgba(94,200,192,0.08)', border: '1px solid rgba(94,200,192,0.20)', color: '#5ec8c0' }}>
+            style={{ background: 'rgba(14,165,160,0.08)', border: '1px solid rgba(14,165,160,0.20)', color: '#0EA5A0' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <polygon points="5 3 19 12 5 21 5 3"/>
             </svg>
@@ -145,7 +145,7 @@ function MaterialCard({
         {m.pdfPath && isAvailable && (
           <a href={m.pdfPath} target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
-            style={{ background: 'rgba(168,139,250,0.08)', border: '1px solid rgba(168,139,250,0.20)', color: '#a88bfa' }}>
+            style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.20)', color: '#6366f1' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
@@ -157,7 +157,7 @@ function MaterialCard({
         {testLink && isAvailable && (
           <a href={testLink} target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
-            style={{ background: 'rgba(231,177,76,0.08)', border: '1px solid rgba(231,177,76,0.20)', color: '#e7b14c' }}>
+            style={{ background: 'rgba(217,119,6,0.08)', border: '1px solid rgba(217,119,6,0.20)', color: '#d97706' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
@@ -178,8 +178,8 @@ function ComingSoonCard({ day }: { day: number }) {
     <Card>
       <div className="flex items-center gap-3 py-1">
         <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-          style={{ background: '#16201a', border: '1px solid #27342b' }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9aa893" strokeWidth="1.8" strokeLinecap="round">
+          style={{ background: '#F5F7FA', border: '1px solid #E5E7EB' }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="1.8" strokeLinecap="round">
             <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
         </div>
@@ -246,16 +246,16 @@ export default function MaterialsPage() {
         </div>
 
         {fetchErr && (
-          <div className="p-4 rounded-2xl mb-4" style={{ background: 'rgba(232,115,107,0.08)', border: '1px solid rgba(232,115,107,0.15)' }}>
+          <div className="p-4 rounded-2xl mb-4" style={{ background: 'rgba(220,38,38,0.06)', border: '1px solid rgba(220,38,38,0.20)' }}>
             <p className="text-sm text-error">Failed to load. Please refresh.</p>
           </div>
         )}
 
         {paymentErr && (
           <div className="flex items-start gap-4 p-5 rounded-2xl mb-4"
-            style={{ background: 'rgba(231,177,76,0.08)', border: '1px solid rgba(231,177,76,0.18)' }}>
+            style={{ background: 'rgba(217,119,6,0.07)', border: '1px solid rgba(217,119,6,0.20)' }}>
             <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-              style={{ background: 'rgba(231,177,76,0.12)' }}>
+              style={{ background: 'rgba(217,119,6,0.12)' }}>
               <svg className="w-5 h-5 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
               </svg>

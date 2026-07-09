@@ -59,7 +59,9 @@ export default function CentumPage() {
   }, [router, loadLeaderboard])
 
   useEffect(() => {
-    if (token) loadLeaderboard(token, batchId)
+    // Deferred via microtask: loadLeaderboard sets state synchronously as its
+    // first statement, so calling it directly here would cascade renders.
+    if (token) void Promise.resolve().then(() => loadLeaderboard(token, batchId))
   }, [batchId, token, loadLeaderboard])
 
   async function recalculateAll() {

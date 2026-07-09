@@ -25,7 +25,7 @@ export default function AboutPage() {
 
       <h2>The Refund Guarantee</h2>
       <p>
-        We back the programme with a performance-linked refund. If you attend every exam and still score below 50% on average, we return your money — no arguments, no hassle. That's how confident we are in what daily discipline does to exam scores.
+        We back the programme with a performance-linked refund. If you attend every exam and still score below 50% on average, we return your money — no arguments, no hassle. That&apos;s how confident we are in what daily discipline does to exam scores.
       </p>
 
       <h2>Contact Us</h2>

@@ -118,30 +118,24 @@ export async function POST(request: NextRequest) {
   // ── 1. Auto-create node in `nodes` table ────────────────────────────────────
   // ignoreDuplicates=true: if the UUID already exists (subsequent interactions),
   // silently skip — we never overwrite an admin-created node's title/type.
-  // Cast to `any` because the generated Insert type excludes `id` (PK), but
-  // upsert requires it to detect the conflict.
+  // The generated Insert type excludes `id` (every table's Insert omits the PK,
+  // since it's normally DB-generated) — but upsert needs `id` here to detect the
+  // conflict against our deterministic UUID. supabase-js's upsert() applies
+  // excess-property checking against the exact Insert type, so no type-safe
+  // intersection survives at the call site; `any` is the honest escape hatch.
+  const nodeRow: Record<string, unknown> = {
+    id:        nodeUuid,
+    title:     typeof meta.node_title === 'string' ? meta.node_title : node_id,
+    node_type: nodeType,
+    content:   { material_id, html_node_id: node_id, auto_created: true } as Record<string, unknown>,
+    is_active: true,
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await supabase.from('nodes').upsert(
-    {
-      id:        nodeUuid,
-      title:     typeof meta.node_title === 'string' ? meta.node_title : node_id,
-      node_type: nodeType,
-      content:   { material_id, html_node_id: node_id, auto_created: true } as Record<string, unknown>,
-      is_active: true,
-    } as any,
-    { onConflict: 'id', ignoreDuplicates: true }
-  )
+  await supabase.from('nodes').upsert(nodeRow as any, { onConflict: 'id', ignoreDuplicates: true })
 
   // ── 2. Resolve student's batch ───────────────────────────────────────────────
-  const { data: profileRow } = await supabase
-    .from('profiles').select('batch_id').eq('id', user.id).maybeSingle()
-
-  const batchQuery = supabase.from('batches').select('id')
-  const { data: batch } = await (
-    profileRow?.batch_id
-      ? batchQuery.eq('id', profileRow.batch_id).maybeSingle()
-      : batchQuery.eq('is_active', true).maybeSingle()
-  )
+  const { data: batch } = await supabase
+    .from('batches').select('id').eq('is_active', true).maybeSingle()
 
   // ── 3. Auto-assign node to active batch ─────────────────────────────────────
   // node_assignments has no unique(batch_id, node_id) constraint, so we check

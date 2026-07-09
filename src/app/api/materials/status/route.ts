@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
   )
 
   let activeDays: number[] = []
-  let testLinks: Record<number, string> = {}
+  const testLinks: Record<number, string> = {}
 
   if (batch) {
     // Auto-compute today's batch day in IST (UTC+5:30)

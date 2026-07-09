@@ -22,7 +22,7 @@ export const dynamic = 'force-dynamic'
 
 export interface DailyTestQuestion {
   id:          string
-  type:        'formal' | 'html'
+  type:        'formal' | 'html' | 'uploaded'
   topic:       string
   question:    string
   options:     [string, string, string, string]
@@ -49,6 +49,92 @@ export async function GET(request: NextRequest) {
   }
 
   const todayIST = getTodayInIST(new Date())
+
+  // ── Priority: uploaded test for today takes precedence over AI assignment ─────
+  {
+    const { data: uploadedTest } = await supabase
+      .from('uploaded_tests')
+      .select('id, questions')
+      .eq('test_date', todayIST)
+      .eq('is_published', true)
+      .maybeSingle()
+
+    if (uploadedTest) {
+      // Ensure a daily_tests row exists so submissions can be persisted + deduplicated
+      const { data: batchRow } = await supabase
+        .from('batches')
+        .select('id')
+        .eq('is_active', true)
+        .order('starts_on', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+
+      let dailyTestId: string | null = null
+      if (batchRow) {
+        // upsert (ignoreDuplicates: false will touch the row on conflict and return it)
+        const { data: upserted } = await supabase
+          .from('daily_tests')
+          .upsert(
+            { batch_id: batchRow.id, test_date: todayIST, is_published: true, total_questions: null },
+            { onConflict: 'batch_id,test_date', ignoreDuplicates: false },
+          )
+          .select('id')
+          .maybeSingle()
+        dailyTestId = upserted?.id ?? null
+
+        // Fallback: ignoreDuplicates: false may still not return on some Supabase versions
+        if (!dailyTestId) {
+          const { data: existing } = await supabase
+            .from('daily_tests')
+            .select('id')
+            .eq('test_date', todayIST)
+            .eq('is_published', true)
+            .maybeSingle()
+          dailyTestId = existing?.id ?? null
+        }
+      }
+
+      let alreadySubmitted = false
+      if (dailyTestId) {
+        const { data: sub } = await supabase
+          .from('test_submissions')
+          .select('id')
+          .eq('user_id', user.id)
+          .eq('test_id', dailyTestId)
+          .maybeSingle()
+        alreadySubmitted = !!sub
+      }
+
+      interface UploadedQ {
+        question: string
+        options:  [string, string, string, string]
+        correct:  number
+        explanation: string | null
+        topic:    string
+      }
+
+      const uploadedQuestions: DailyTestQuestion[] = (uploadedTest.questions as UploadedQ[])
+        .map((q, idx) => ({
+          id:          `up:${uploadedTest.id}:${idx}`,
+          type:        'uploaded' as const,
+          topic:       q.topic?.trim() || 'General Studies',
+          question:    q.question,
+          options:     q.options,
+          explanation: q.explanation ?? null,
+          marks:       1,
+        }))
+        .sort(() => Math.random() - 0.5)
+
+      return NextResponse.json({
+        testDate:        todayIST,
+        noAssignment:    false,
+        alreadySubmitted,
+        uploadedTestId:  uploadedTest.id,
+        dailyTestId,
+        questions:       uploadedQuestions,
+      })
+    }
+  }
 
   // ── 1. Get active batch (needed for daily_tests + on-demand assignment) ─────
 

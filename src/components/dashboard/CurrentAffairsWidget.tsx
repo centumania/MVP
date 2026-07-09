@@ -48,7 +48,7 @@ export function CurrentAffairsWidget({ items, generatedToday, todayDate }: Props
       }}>
         <WidgetHeader generatedToday={generatedToday} date={todayDate} />
         <p style={{ color: 'var(--cm-neutral-300)', fontSize: 13, marginTop: 12, textAlign: 'center' }}>
-          Today's current affairs are being generated… check back at 7 AM IST.
+          Today&apos;s current affairs are being generated… check back at 7 AM IST.
         </p>
       </div>
     )

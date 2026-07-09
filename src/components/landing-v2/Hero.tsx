@@ -12,16 +12,16 @@ import { ArrowRight, Check, Sparkles, Zap } from './icons'
 import { Reveal } from './ui'
 import NeuralMap from './NeuralMap'
 
+// Founder-offer HARD deadline (IST). This is a real, fixed date — the countdown
+// genuinely ticks down to it and stops at 00 once it passes.
+// 👉 To extend/shorten the offer, edit ONLY this one line.
+const FOUNDER_DEADLINE = new Date('2026-07-20T23:59:59+05:30')
+
 function useCountdown() {
   const [cd, setCd] = useState({ d: '--', h: '--', m: '--', s: '--' })
   useEffect(() => {
     function tick() {
-      const now = new Date()
-      // Founder offer deadline: end of day, 2 days from now
-      const t = new Date()
-      t.setDate(t.getDate() + 2)
-      t.setHours(23, 59, 59, 0)
-      const diff = Math.max(0, +t - +now)
+      const diff = Math.max(0, +FOUNDER_DEADLINE - Date.now())
       const pad = (n: number) => String(n).padStart(2, '0')
       setCd({
         d: pad(Math.floor(diff / 864e5)),
@@ -99,13 +99,24 @@ export default function Hero() {
 
           <Reveal delay={240}>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
-              <Link
-                href="/auth/register"
-                className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-600 px-7 py-3.5 text-[15px] font-semibold text-white shadow-[0_4px_14px_rgba(2,132,199,0.35)] transition-all hover:-translate-y-0.5 hover:bg-sky-700 hover:shadow-[0_8px_24px_rgba(2,132,199,0.4)] sm:w-auto"
-              >
-                Start the programme
-                <ArrowRight size={17} className="transition-transform group-hover:translate-x-0.5" />
-              </Link>
+              {/* Primary CTA — high-urgency: pulsing aura, gradient, value in the label */}
+              <div className="relative w-full sm:w-auto">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -inset-1 animate-pulse rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-500 opacity-40 blur-lg"
+                />
+                <Link
+                  href="/auth/register"
+                  className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-sky-600 to-indigo-600 px-8 py-4 text-[16px] font-bold text-white shadow-[0_6px_20px_rgba(2,132,199,0.45)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(2,132,199,0.55)] sm:w-auto"
+                >
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                  />
+                  Start now — lock in ₹999
+                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
+                </Link>
+              </div>
               <a
                 href="#features"
                 onClick={(e) => {
@@ -118,6 +129,9 @@ export default function Hero() {
                 See how it works
               </a>
             </div>
+            <p className="mt-3 text-center text-[12.5px] font-medium text-gray-600 lg:text-left">
+              <span className="font-semibold text-amber-600">Founder pricing</span> — the ₹999 rate ends the moment the timer below hits zero.
+            </p>
           </Reveal>
 
           <Reveal delay={320}>

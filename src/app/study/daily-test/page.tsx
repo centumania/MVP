@@ -12,7 +12,7 @@ type Phase = 'loading' | 'no-assignment' | 'already-done' | 'ready' | 'taking' |
 
 interface GradeBreakdown {
   questionId:  string
-  type:        'formal' | 'html'
+  type:        'formal' | 'html' | 'uploaded'
   selected:    string
   correct:     string
   isCorrect:   boolean
@@ -69,10 +69,11 @@ function ScoreRing({ pct }: { pct: number }) {
 
 export default function DailyTestPage() {
   const router = useRouter()
-  const [phase, setPhase]             = useState<Phase>('loading')
-  const [questions, setQuestions]     = useState<DailyTestQuestion[]>([])
-  const [testDate, setTestDate]       = useState('')
-  const [dailyTestId, setDailyTestId] = useState<string | null>(null)
+  const [phase, setPhase]                   = useState<Phase>('loading')
+  const [questions, setQuestions]           = useState<DailyTestQuestion[]>([])
+  const [testDate, setTestDate]             = useState('')
+  const [dailyTestId, setDailyTestId]       = useState<string | null>(null)
+  const [uploadedTestId, setUploadedTestId] = useState<string | null>(null)
   const [answers, setAnswers]         = useState<Record<string, string>>({})
   const [htmlAnswers, setHtmlAnswers] = useState<Record<string, number>>({})
   const [current, setCurrent]         = useState(0)
@@ -102,6 +103,7 @@ export default function DailyTestPage() {
       setQuestions(data.questions ?? [])
       setTestDate(data.testDate ?? '')
       setDailyTestId(data.dailyTestId ?? null)
+      setUploadedTestId(data.uploadedTestId ?? null)
       setTimeLeft((data.questions?.length ?? 30) * 60) // 1 min per question
       setPhase('ready')
     })
@@ -117,21 +119,26 @@ export default function DailyTestPage() {
       if (answers[q.id]) formalAns[q.id] = answers[q.id]
     }
     const htmlAns: Record<string, number> = {}
-    for (const q of questions.filter(q => q.type === 'html')) {
-      if (htmlAnswers[q.id] !== undefined) htmlAns[q.id] = htmlAnswers[q.id]
+    const uploadedAns: Record<string, number> = {}
+    for (const q of questions) {
+      if (q.type === 'html' && htmlAnswers[q.id] !== undefined) {
+        htmlAns[q.id] = htmlAnswers[q.id]
+      } else if (q.type === 'uploaded' && htmlAnswers[q.id] !== undefined) {
+        uploadedAns[q.id] = htmlAnswers[q.id]
+      }
     }
 
     const res = await fetch('/api/study/daily-test/grade', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${tokenRef.current}` },
-      body:    JSON.stringify({ dailyTestId, answers: formalAns, htmlAnswers: htmlAns }),
+      body:    JSON.stringify({ dailyTestId, answers: formalAns, htmlAnswers: htmlAns, uploadedTestId, uploadedAnswers: uploadedAns }),
     })
     const data = await res.json()
     setSubmitting(false)
     if (!res.ok) { setErrorMsg(data.error ?? 'Submission failed'); return }
     setResult(data)
     setPhase('submitted')
-  }, [submitting, questions, answers, htmlAnswers, dailyTestId])
+  }, [submitting, questions, answers, htmlAnswers, dailyTestId, uploadedTestId])
 
   // keep submitRef current so the timer callback always calls the latest version
   useEffect(() => { submitRef.current = handleSubmit }, [handleSubmit])
@@ -152,10 +159,6 @@ export default function DailyTestPage() {
     else setHtmlAnswers(p => ({ ...p, [q.id]: Number(val) }))
   }, [])
 
-  const getAnswer = (q: DailyTestQuestion) => {
-    if (q.type === 'formal') return answers[q.id] ?? null
-    return htmlAnswers[q.id] !== undefined ? htmlAnswers[q.id] : null
-  }
 
   const answeredCount = questions.filter(q =>
     q.type === 'formal' ? answers[q.id] !== undefined : htmlAnswers[q.id] !== undefined
@@ -233,33 +236,47 @@ export default function DailyTestPage() {
 
   // ── Ready (start screen) ───────────────────────────────────────────────────
   if (phase === 'ready') {
-    const trapCount   = questions.filter(q => q.type === 'html').length
-    const formalCount = questions.filter(q => q.type === 'formal').length
-    const topics      = [...new Set(questions.map(q => q.topic))].slice(0, 5)
+    const isUploadedTest = !!uploadedTestId
+    const trapCount      = questions.filter(q => q.type === 'html').length
+    const formalCount    = questions.filter(q => q.type === 'formal').length
+    const topicCount     = new Set(questions.map(q => q.topic)).size
+    const topics         = [...new Set(questions.map(q => q.topic))].slice(0, 5)
+
+    const statCards = isUploadedTest
+      ? [
+          { label: 'Questions', value: questions.length, icon: '📝' },
+          { label: 'Topics',    value: topicCount,        icon: '📚' },
+          { label: 'Minutes',   value: questions.length,  icon: '⏱' },
+          { label: 'Fixed Set', value: '—',               icon: '🔒' },
+        ]
+      : [
+          { label: 'Questions', value: questions.length, icon: '📝' },
+          { label: 'Trap MCQs', value: trapCount,        icon: '⚠️' },
+          { label: 'From Exam', value: formalCount,      icon: '📋' },
+          { label: 'Minutes',   value: questions.length, icon: '⏱' },
+        ]
+
     return (
       <AppLayout>
         <div style={{ maxWidth: 560, margin: '40px auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: 24 }}>
             <span style={{ display: 'inline-block', padding: '5px 16px', borderRadius: 20, background: 'rgba(2,132,199,0.12)', border: '1px solid rgba(2,132,199,0.25)', fontSize: 11, fontWeight: 700, letterSpacing: 1.2, color: '#0284c7' }}>
-              🧠 AI DAILY TEST · {testDate}
+              {isUploadedTest ? `📝 DAILY TEST · ${testDate}` : `🧠 AI DAILY TEST · ${testDate}`}
             </span>
           </div>
 
           <div style={{ background: 'linear-gradient(145deg, rgba(2,132,199,0.08) 0%, rgba(14,165,160,0.07) 100%)', border: '1px solid rgba(2,132,199,0.18)', borderRadius: 24, padding: '36px 28px', textAlign: 'center', marginBottom: 16 }}>
             <div style={{ fontFamily: 'var(--font-inter)', fontSize: 30, fontWeight: 800, color: '#111827', letterSpacing: -0.5, lineHeight: 1.1, marginBottom: 8 }}>
-              Your Personalised<br />Revision Test
+              {isUploadedTest ? <>Today&apos;s<br />Daily Test</> : <>Your Personalised<br />Revision Test</>}
             </div>
             <p style={{ color: '#4B5563', fontSize: 14, lineHeight: 1.6, marginBottom: 28 }}>
-              AI-selected questions targeting your weak areas from yesterday&apos;s study material.
+              {isUploadedTest
+                ? 'Questions prepared by your coordinator for today.'
+                : "AI-selected questions targeting your weak areas from yesterday’s study material."}
             </p>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginBottom: 28 }}>
-              {[
-                { label: 'Questions', value: questions.length, icon: '📝' },
-                { label: 'Trap MCQs', value: trapCount,        icon: '⚠️' },
-                { label: 'From Exam', value: formalCount,      icon: '📋' },
-                { label: 'Minutes',   value: questions.length, icon: '⏱' },
-              ].map(s => (
+              {statCards.map(s => (
                 <div key={s.label} style={{ background: '#FFFFFF', border: '1px solid #E5E7EB', borderRadius: 12, padding: '12px 6px' }}>
                   <div style={{ fontSize: 18, marginBottom: 4 }}>{s.icon}</div>
                   <div style={{ fontFamily: 'var(--font-inter)', fontSize: 20, fontWeight: 700, color: '#111827', letterSpacing: -0.3 }}>{s.value}</div>
@@ -319,7 +336,7 @@ export default function DailyTestPage() {
         {/* Top bar */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
           <div>
-            <div style={{ fontFamily: 'var(--font-inter)', fontSize: 10, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: 1.2, color: '#4B5563' }}>AI DAILY TEST · {testDate}</div>
+            <div style={{ fontFamily: 'var(--font-inter)', fontSize: 10, fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: 1.2, color: '#4B5563' }}>{uploadedTestId ? 'DAILY TEST' : 'AI DAILY TEST'} · {testDate}</div>
             <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>{answeredCount}/{questions.length} answered</div>
           </div>
           <div style={{
@@ -546,7 +563,12 @@ function ResultsView({ result, questions, date, onHome }: {
             return (
               <div key={b.questionId} style={{ background: '#FAFAFA', borderRadius: 14, overflow: 'hidden', border: `1px solid ${b.isCorrect ? 'rgba(34,197,94,0.25)' : 'rgba(251,191,36,0.25)'}` }}>
                 <button
-                  onClick={() => setExpanded(s => { const n = new Set(s); n.has(b.questionId) ? n.delete(b.questionId) : n.add(b.questionId); return n })}
+                  onClick={() => setExpanded(s => {
+                    const n = new Set(s)
+                    if (n.has(b.questionId)) n.delete(b.questionId)
+                    else n.add(b.questionId)
+                    return n
+                  })}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
                 >
                   <span style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, background: b.isCorrect ? 'rgba(34,197,94,0.15)' : 'rgba(251,191,36,0.15)', color: b.isCorrect ? '#16A34A' : '#D97706' }}>

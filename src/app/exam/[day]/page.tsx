@@ -148,6 +148,12 @@ export default function ExamPage() {
         </h2>
         <p className="text-sm max-w-xs mb-6" style={{ color: '#6B7280' }}>{errorMsg}</p>
         <AiDailyTestBanner />
+        {phase === 'window-closed' && closedLinkUrl && (
+          <a href={closedLinkUrl} target="_blank" rel="noopener noreferrer"
+            className="mb-3 inline-flex h-9 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white shadow-[var(--shadow-sm)] hover:bg-primary-hover">
+            Take today&apos;s exam externally
+          </a>
+        )}
         <Button onClick={() => router.push('/dashboard')} variant="secondary">Back to dashboard</Button>
       </div>
     )

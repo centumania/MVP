@@ -35,8 +35,7 @@ import { getTodayInIST }               from '@/src/lib/exam-window'
 
 export const dynamic = 'force-dynamic'
 
-const OPTION_MAP: Record<string, number> = { A: 0, B: 1, C: 2, D: 3 }
-const IDX_MAP:    Record<number, string> = { 0: 'A', 1: 'B', 2: 'C', 3: 'D' }
+const IDX_MAP: Record<number, string> = { 0: 'A', 1: 'B', 2: 'C', 3: 'D' }
 
 export async function POST(request: NextRequest) {
   const token = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '')
@@ -61,10 +60,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { dailyTestId, answers, htmlAnswers } = body as {
-    dailyTestId:  string | null
-    answers:      Record<string, string>
-    htmlAnswers:  Record<string, number>
+  const { dailyTestId, answers, htmlAnswers, uploadedTestId, uploadedAnswers } = body as {
+    dailyTestId:     string | null
+    answers:         Record<string, string>
+    htmlAnswers:     Record<string, number>
+    uploadedTestId:  string | null
+    uploadedAnswers: Record<string, number>
   }
 
   if (typeof answers !== 'object' || answers === null) {
@@ -213,8 +214,56 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  const totalScore = formalScore + htmlScore
-  const totalMarks = formalTotal + htmlIds.length
+  // ── 4b. Grade uploaded test questions ─────────────────────────────────────────
+
+  interface UploadedTestQ {
+    question: string; options: string[]; correct: number; explanation: string | null; topic: string
+  }
+
+  const uploadedGrades: Array<{
+    questionId:  string
+    type:        'uploaded'
+    selected:    string
+    correct:     string
+    isCorrect:   boolean
+    explanation: string | null
+    marks:       number
+    topic:       string
+  }> = []
+  let uploadedScore = 0
+
+  if (uploadedTestId && typeof uploadedAnswers === 'object' && uploadedAnswers !== null) {
+    const { data: uploadedTest } = await supabase
+      .from('uploaded_tests')
+      .select('questions')
+      .eq('id', uploadedTestId)
+      .single()
+
+    if (uploadedTest) {
+      const qs = uploadedTest.questions as UploadedTestQ[]
+      for (const [key, selectedIdx] of Object.entries(uploadedAnswers)) {
+        const parts = key.split(':') // up:{testId}:{idx}
+        const idx   = parseInt(parts[2] ?? '')
+        if (isNaN(idx) || idx < 0 || idx >= qs.length) continue
+        const q         = qs[idx]
+        const isCorrect = selectedIdx === q.correct
+        if (isCorrect) uploadedScore++
+        uploadedGrades.push({
+          questionId:  key,
+          type:        'uploaded',
+          selected:    IDX_MAP[selectedIdx] ?? '?',
+          correct:     IDX_MAP[q.correct],
+          isCorrect,
+          explanation: q.explanation ?? null,
+          marks:       1,
+          topic:       q.topic?.trim() || 'General Studies',
+        })
+      }
+    }
+  }
+
+  const totalScore = formalScore + htmlScore + uploadedScore
+  const totalMarks = formalTotal + htmlIds.length + uploadedGrades.length
   const percentage = totalMarks > 0 ? Math.round((totalScore / totalMarks) * 100) : 0
 
   // ── 5. Persist submission (skipped in grade-only mode when no daily_test) ───
@@ -272,13 +321,41 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  // ── 7. Update student_topic_accuracy for uploaded questions ─────────────────
+
+  if (uploadedGrades.length > 0) {
+    const topicTotals: Record<string, { attempted: number; correct: number }> = {}
+    for (const g of uploadedGrades) {
+      if (!topicTotals[g.topic]) topicTotals[g.topic] = { attempted: 0, correct: 0 }
+      topicTotals[g.topic].attempted++
+      if (g.isCorrect) topicTotals[g.topic].correct++
+    }
+    for (const [topic, counts] of Object.entries(topicTotals)) {
+      const { data: existing } = await supabase
+        .from('student_topic_accuracy')
+        .select('total_attempted, total_correct')
+        .eq('user_id', user.id)
+        .eq('topic', topic)
+        .maybeSingle()
+      await supabase
+        .from('student_topic_accuracy')
+        .upsert({
+          user_id:         user.id,
+          topic,
+          total_attempted: (existing?.total_attempted ?? 0) + counts.attempted,
+          total_correct:   (existing?.total_correct   ?? 0) + counts.correct,
+          last_updated:    new Date().toISOString(),
+        }, { onConflict: 'user_id,topic' })
+    }
+  }
+
   // ── 9. Return graded results ───────────────────────────────────────────────
 
   return NextResponse.json({
     score:      totalScore,
     totalMarks,
     percentage,
-    breakdown:  [...formalGrades, ...htmlGrades].map(g => ({
+    breakdown:  [...formalGrades, ...htmlGrades, ...uploadedGrades].map(g => ({
       questionId:  g.questionId,
       type:        g.type,
       selected:    g.selected,
