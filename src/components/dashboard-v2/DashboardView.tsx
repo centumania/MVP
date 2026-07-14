@@ -5,15 +5,17 @@
  *
  * Visual hierarchy (one primary action, calm supporting layers):
  *   1. Greeting          — orientation
- *   2. ExamHero          — the ONE thing to do right now (was missing in v1)
- *   3. DailyTestCard     — secondary AI action
- *   4. Stat tiles        — standings at a glance
- *   5. Centum Index      — the long-game score
- *   6. Performance       — trend + history (merged, capped)
- *   7. Insights / News   — study intelligence
- *   8. Batch timeline + tip — closing rhythm
+ *   2. TodayStudy        — today's topic, what to study, where to continue
+ *   3. ExamHero          — today's formal exam
+ *   4. DailyTestCard     — secondary AI action
+ *   5. Stat tiles        — standings at a glance
+ *   6. Centum Index      — the long-game score
+ *   7. Performance       — trend + history (merged, capped)
+ *   8. Insights / News   — study intelligence
+ *   9. Batch timeline + tip — closing rhythm
  */
 import { StatTile } from './ui'
+import { TodayStudy, type TodayStudyData } from './TodayStudy'
 import { ExamHero, DailyTestCard, type TodayExam } from './ExamHero'
 import { CentumCard, type CentumData } from './CentumCard'
 import { InsightsPanel } from './InsightsPanel'
@@ -62,11 +64,12 @@ function greeting() {
   return 'Late session'
 }
 
-export function DashboardView({ firstName, data, insights, currentAffairs }: {
+export function DashboardView({ firstName, data, insights, currentAffairs, todayStudy = null }: {
   firstName: string
   data: DashData
   insights: InsightsData
   currentAffairs: CurrentAffairsPayload
+  todayStudy?: TodayStudyData
 }) {
   const lr = data.leaderboard
   const totalDays = data.batchTotalDays || 30
@@ -101,7 +104,10 @@ export function DashboardView({ firstName, data, insights, currentAffairs }: {
         </div>
       </header>
 
-      {/* ── Primary action: today's exam ── */}
+      {/* ── Primary action: today's study — topic, task, continue point ── */}
+      <TodayStudy data={todayStudy} />
+
+      {/* ── Today's exam ── */}
       <ExamHero exam={data.todayExam} />
 
       {/* ── Secondary action: AI revision test ── */}

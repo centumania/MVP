@@ -103,8 +103,8 @@ export default function StudentMaterialViewer() {
         return
       }
 
-      // Check payment — ALL days require payment verification
-      if (!status.paymentVerified) {
+      // Check payment — Day 1 is the free preview day, all later days require verification
+      if (!status.paymentVerified && material.day !== 1) {
         if (!cancelled) { setErrorMsg('Your payment is pending. Contact your coordinator to unlock access.'); setState('error') }
         return
       }
@@ -194,7 +194,10 @@ export default function StudentMaterialViewer() {
         </Link>
 
         {state === 'ready' && title && (
-          <span className="text-xs text-text-muted font-mono truncate">{title}</span>
+          <span className="flex items-center gap-2 min-w-0">
+            <span className="w-1 h-1 rounded-full shrink-0" style={{ background: '#1A1A2E' }} />
+            <span className="text-xs font-semibold truncate" style={{ color: '#111827', letterSpacing: '-0.01em' }}>{title}</span>
+          </span>
         )}
 
         <div className="flex-1" />
@@ -238,27 +241,39 @@ export default function StudentMaterialViewer() {
 
         {state === 'ready' && metrics && (
           <div className="flex items-center gap-0 shrink-0 overflow-x-auto"
-            style={{ height: 36, background: 'rgba(255,255,255,0.95)', borderBottom: '1px solid #E5E7EB', paddingLeft: 16, paddingRight: 16 }}>
+            style={{ height: 40, background: '#1A1A2E', paddingLeft: 16, paddingRight: 16 }}>
+            <span className="text-[9px] font-extrabold uppercase mr-4 shrink-0 hidden sm:inline"
+              style={{ color: '#A5B4FC', letterSpacing: '0.16em' }}>
+              Centum&nbsp;Path
+            </span>
             {/* Nodes */}
             <MetricChip
               label={metrics.total_nodes ? `${metrics.nodes_completed}/${metrics.total_nodes}` : String(metrics.nodes_completed)}
               sub="Nodes"
-              color="#16A34A"
+              color="#4ADE80"
             />
             <Divider />
             {/* Accuracy */}
-            <MetricChip label={`${metrics.first_accuracy_pct}%`} sub="Accuracy" color="#0284c7" />
+            <MetricChip label={`${metrics.first_accuracy_pct}%`} sub="FAA" color="#22D3EE" />
             <Divider />
             {/* XP */}
-            <MetricChip label={`${metrics.xp} XP`} sub="Earned" color="#B45309" />
+            <MetricChip label={`${metrics.xp} XP`} sub="Earned" color="#FCD34D" />
             <Divider />
             {/* Mode pills */}
             <div className="flex items-center gap-1.5 ml-1">
               <ModePill label="STUDY" done />
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
               <ModePill label="REVISE" done={metrics.mode_unlock === 'revise' || metrics.mode_unlock === 'quiz'} />
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
               <ModePill label="QUIZ"   done={metrics.mode_unlock === 'quiz'} />
+            </div>
+            <div className="flex-1" />
+            {/* Live-tracking trust signal */}
+            <div className="hidden md:flex items-center gap-1.5 shrink-0 ml-4">
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#4ADE80' }} />
+              <span className="text-[9.5px] font-bold uppercase" style={{ color: 'rgba(255,255,255,0.45)', letterSpacing: '0.12em' }}>
+                Tracking live
+              </span>
             </div>
           </div>
         )}
@@ -281,22 +296,23 @@ export default function StudentMaterialViewer() {
 
 function MetricChip({ label, sub, color }: { label: string; sub: string; color: string }) {
   return (
-    <div className="flex items-baseline gap-1 shrink-0">
-      <span className="text-xs font-bold font-mono tabular" style={{ color }}>{label}</span>
-      <span className="text-[10px] text-text-muted font-mono">{sub}</span>
+    <div className="flex items-baseline gap-1.5 shrink-0">
+      <span className="text-[13px] font-extrabold tabular-nums" style={{ color }}>{label}</span>
+      <span className="text-[9px] font-bold uppercase" style={{ color: 'rgba(255,255,255,0.40)', letterSpacing: '0.1em' }}>{sub}</span>
     </div>
   )
 }
 function Divider() {
-  return <div className="mx-3 h-3 w-px shrink-0" style={{ background: '#E5E7EB' }} />
+  return <div className="mx-3.5 h-3.5 w-px shrink-0" style={{ background: 'rgba(255,255,255,0.12)' }} />
 }
 function ModePill({ label, done }: { label: string; done: boolean }) {
   return (
-    <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded"
+    <span className="text-[9px] font-extrabold px-2 py-[3px] rounded-md"
       style={{
-        background: done ? 'rgba(2,132,199,0.10)' : '#F3F4F6',
-        color:      done ? '#0284c7'               : '#6B7280',
-        border:     `1px solid ${done ? 'rgba(2,132,199,0.25)' : '#E5E7EB'}`,
+        background: done ? 'rgba(165,180,252,0.14)' : 'rgba(255,255,255,0.05)',
+        color:      done ? '#C7D2FE'                 : 'rgba(255,255,255,0.35)',
+        border:     `1px solid ${done ? 'rgba(165,180,252,0.30)' : 'rgba(255,255,255,0.10)'}`,
+        letterSpacing: '0.08em',
       }}>
       {!done && '🔒 '}{label}
     </span>
