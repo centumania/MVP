@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CentuMania · Daily Test Engine</title>
+<link rel="icon" href="/centumania-logo.png" />
+<style>
+  :root{
+    --bg:#F8FAFC; --panel:#FFFFFF; --panel2:#F5F7FA; --line:#E5E7EB;
+    --ink:#111827; --mut:#6B7280; --gold:#0284c7; --gold2:#0369a1;
+    --grn:#16A34A; --red:#DC2626; --blu:#0284c7; --amber:#d97706;
+    --shadow:0 1px 3px rgba(17,24,39,.06),0 4px 14px rgba(17,24,39,.05);
+    --r:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Segoe UI",Roboto,system-ui,Arial,sans-serif;
+    background:radial-gradient(1200px 600px at 80% -10%,#EFF6FF,#F8FAFC 60%);
+    color:var(--ink); min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blu)}
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 18px 60px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .logo{width:44px;height:44px;border-radius:50%;display:block;object-fit:contain;box-shadow:var(--shadow)}
+  .brand h1{font-size:20px;margin:0;letter-spacing:.5px}
+  .brand span{color:var(--gold);font-weight:800}
+  .sub{color:var(--mut);font-size:12.5px;margin:2px 0 0 54px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+  .pad{padding:18px}
+  .hidden{display:none !important}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--ink);
+    padding:11px 16px;border-radius:11px;font-weight:600;font-size:14px;transition:.15s;user-select:none}
+  .btn:hover{border-color:var(--gold);transform:translateY(-1px)}
+  .btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#FFFFFF;border:none}
+  .btn.ghost{background:transparent}
+  .btn.sm{padding:8px 12px;font-size:13px}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--mut);
+    background:var(--panel2);border:1px solid var(--line);padding:5px 10px;border-radius:999px}
+  .star{color:var(--gold)}
+  h2{margin:.2em 0 .5em;font-size:17px}
+  /* HOME */
+  .banner{margin:16px 0 18px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+  .banner .meta{color:var(--mut);font-size:13px;line-height:1.6}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:6px}
+  .day{position:relative;padding:14px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);cursor:pointer;transition:.15s}
+  .day:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .day.locked{opacity:.5;cursor:not-allowed}
+  .day .dnum{font-size:12px;color:var(--gold);font-weight:800;letter-spacing:1px}
+  .day .dttl{font-weight:700;margin:4px 0 6px;font-size:14px;line-height:1.35}
+  .day .dtop{font-size:12px;color:var(--mut);line-height:1.5}
+  .day .qc{position:absolute;top:12px;right:12px;font-size:11px;color:var(--mut)}
+  .day.locked .qc{color:var(--mut)}
+  /* TEST */
+  .testhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:20px;background:var(--panel2);
+    border:1px solid var(--line);padding:8px 14px;border-radius:11px}
+  .timer.warn{border-color:var(--amber);color:var(--amber)}
+  .timer.crit{border-color:var(--red);color:var(--red);animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.55}}
+  .layout{display:grid;grid-template-columns:1fr 260px;gap:16px}
+  @media(max-width:820px){.layout{grid-template-columns:1fr}}
+  .qmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+  .qtext{font-size:16px;line-height:1.6;margin:6px 0 16px;font-weight:600}
+  .opt{display:flex;gap:12px;align-items:flex-start;padding:13px 14px;border:1px solid var(--line);
+    border-radius:11px;margin-bottom:10px;cursor:pointer;background:var(--panel2);transition:.12s}
+  .opt:hover{border-color:var(--gold)}
+  .opt.sel{border-color:var(--gold);background:rgba(2,132,199,0.08)}
+  .opt .key{width:26px;height:26px;flex:0 0 26px;border-radius:7px;display:grid;place-items:center;
+    background:var(--panel);border:1px solid var(--line);font-weight:800;font-size:13px}
+  .opt.sel .key{background:var(--gold);color:#FFFFFF;border:none}
+  .opt .txt{font-size:14.5px;line-height:1.5;padding-top:2px}
+  .navbtns{display:flex;justify-content:space-between;gap:10px;margin-top:8px;flex-wrap:wrap}
+  .palette{align-self:start;position:sticky;top:14px}
+  .palette h3{font-size:13px;margin:0 0 10px;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
+  .pal{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
+  .pal button{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);background:var(--panel);
+    color:var(--ink);font-weight:700;font-size:13px;cursor:pointer}
+  .pal button.cur{outline:2px solid var(--gold)}
+  .pal button.answered{background:var(--grn);color:#FFFFFF;border:none}
+  .pal button.review{background:var(--blu);color:#FFFFFF;border:none}
+  .legend{margin-top:14px;font-size:12px;color:var(--mut);line-height:1.9}
+  .dot{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  /* RESULT */
+  .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:14px 0}
+  .kpi{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+  .kpi .v{font-size:26px;font-weight:900;margin-top:4px}
+  .kpi .l{font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
+  .att{border-radius:12px;padding:14px 16px;margin:12px 0;font-weight:600;border:1px solid}
+  .att.ok{background:rgba(22,163,74,0.08);border-color:rgba(22,163,74,0.35);color:#166534}
+  .att.no{background:rgba(220,38,38,0.06);border-color:rgba(220,38,38,0.30);color:#991B1B}
+  .rev{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;background:var(--panel2)}
+  .rev .rq{font-weight:600;line-height:1.55;margin-bottom:10px}
+  .rev .ro{font-size:13.5px;padding:8px 11px;border-radius:8px;margin:5px 0;border:1px solid var(--line)}
+  .ro.correct{background:rgba(22,163,74,0.08);border-color:rgba(22,163,74,0.35)}
+  .ro.wrong{background:rgba(220,38,38,0.06);border-color:rgba(220,38,38,0.30)}
+  .exp{font-size:13px;color:var(--mut);margin-top:9px;line-height:1.6;border-left:3px solid var(--gold);padding-left:12px}
+  .tag{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
+  .foot{color:var(--mut);font-size:12px;text-align:center;margin-top:28px;line-height:1.7}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--panel2);
+    border:1px solid var(--gold);padding:12px 18px;border-radius:11px;box-shadow:var(--shadow);z-index:50;font-size:13.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <img class="logo" src="/centumania-logo.png" alt="CentuMania" />
+    <div>
+      <h1><span>CENTU</span>MANIA · Daily Test Engine</h1>
+    </div>
+  </div>
+  <div class="sub">Puducherry UDC · GS-Weighted Edition · Daily test on the previous day's syllabus · 30-min · +1 / &minus;0.25</div>
+
+  <!-- ================= HOME ================= -->
+  <section id="home">
+    <div class="banner">
+      <div class="meta">
+        Pick a day to attempt its <b>25-question</b> daily test.<br>
+        Each test covers that day's syllabus (i.e. <b>yesterday's</b> lessons). <span class="star">&#9733;</span> = examiner-favourite question.
+      </div>
+      <div class="row">
+        <span class="pill">&#9200; 30:00 timer</span>
+        <span class="pill">&#10133;1 correct &nbsp; &minus;0.25 wrong</span>
+        <span class="pill">Centum Index attendance: 6:00&ndash;8:30&nbsp;AM</span>
+      </div>
+    </div>
+    <div id="dayGrid" class="grid"></div>
+  </section>
+
+  <!-- ================= TEST ================= -->
+  <section id="test" class="hidden">
+    <div class="testhead">
+      <div>
+        <div id="testTitle" style="font-weight:800;font-size:15px"></div>
+        <div id="testTopics" style="color:var(--mut);font-size:12.5px;margin-top:3px"></div>
+      </div>
+      <div class="row" style="align-items:center">
+        <div id="timer" class="timer">30:00</div>
+        <button class="btn ghost sm" id="quitBtn">Quit</button>
+      </div>
+    </div>
+    <div class="layout">
+      <div class="card pad">
+        <div class="qmeta">
+          <span class="pill" id="qCounter">Q 1 / 25</span>
+          <span class="pill" id="qSubject">Subject</span>
+          <span class="pill star hidden" id="qStar">&#9733; Examiner favourite</span>
+        </div>
+        <div class="qtext" id="qText"></div>
+        <div id="qOptions"></div>
+        <div class="navbtns">
+          <div class="row">
+            <button class="btn sm" id="prevBtn">&larr; Prev</button>
+            <button class="btn sm ghost" id="clearBtn">Clear</button>
+            <button class="btn sm ghost" id="markBtn">Mark for review</button>
+          </div>
+          <div class="row">
+            <button class="btn sm" id="nextBtn">Next &rarr;</button>
+            <button class="btn primary sm" id="submitBtn">Submit test</button>
+          </div>
+        </div>
+      </div>
+      <div class="card pad palette">
+        <h3>Question palette</h3>
+        <div class="pal" id="palette"></div>
+        <div class="legend">
+          <div><span class="dot" style="background:var(--grn)"></span>Answered &nbsp; <span id="cAns">0</span></div>
+          <div><span class="dot" style="background:var(--blu)"></span>Marked for review &nbsp; <span id="cRev">0</span></div>
+          <div><span class="dot" style="background:var(--panel)"></span>Not visited / skipped &nbsp; <span id="cSkip">25</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESULT ================= -->
+  <section id="result" class="hidden">
+    <div class="card pad">
+      <h2 id="rTitle">Result</h2>
+      <div id="attBox" class="att"></div>
+      <div class="stat">
+        <div class="kpi"><div class="l">Net score</div><div class="v" id="rNet">0</div></div>
+        <div class="kpi"><div class="l">Correct</div><div class="v" style="color:var(--grn)" id="rCor">0</div></div>
+        <div class="kpi"><div class="l">Wrong</div><div class="v" style="color:var(--red)" id="rWro">0</div></div>
+        <div class="kpi"><div class="l">Skipped</div><div class="v" id="rSkip">0</div></div>
+        <div class="kpi"><div class="l">Accuracy</div><div class="v" id="rAcc">0%</div></div>
+        <div class="kpi"><div class="l">Time used</div><div class="v" id="rTime">0:00</div></div>
+      </div>
+      <div class="row" style="margin:6px 0 4px">
+        <button class="btn primary sm" id="againBtn">Retake this day</button>
+        <button class="btn sm" id="homeBtn">&larr; All days</button>
+        <button class="btn sm ghost" id="dlJson">Download JSON</button>
+        <button class="btn sm ghost" id="dlCsv">Download CSV</button>
+        <button class="btn sm ghost" id="pushBtn">Resend result</button>
+      </div>
+      <div class="foot" style="text-align:left;margin-top:10px" id="pushHint"></div>
+    </div>
+    <h2 style="margin-top:22px">Answer review</h2>
+    <div id="review"></div>
+  </section>
+
+  <div class="foot">
+    Built for CentuMania &middot; Puducherry UDC &middot; GS-Weighted &middot; <span class="star">&#9733;</span> = recurring examiner favourite<br>
+    Results are captured as structured data for the CentuMania Centum Index. Attendance credited only for tests submitted 6:00&ndash;8:30&nbsp;AM.
+  </div>
+</div>
+
+<script>
+/* Self-diagnosing error trap: any uncaught error paints a visible banner
+   instead of silently leaving the page half-rendered. */
+window.addEventListener('error', function(e){
+  try{
+    var b = document.createElement('div');
+    b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#DC2626;color:#fff;font:12px/1.5 monospace;padding:10px 14px;white-space:pre-wrap';
+    b.textContent = 'Engine error: ' + (e.message||'?') + ' @ line ' + (e.lineno||'?') + ':' + (e.colno||'?');
+    document.body.appendChild(b);
+  }catch(_){}
+});
+
+/* ============================================================
+   CENTUMANIA — CONFIG  (wire these to your back end when ready)
+   ============================================================ */
+const CONFIG = {
+  questionsPerTest: 25,
+  timerSeconds: 30 * 60,          // 30-minute test
+  markCorrect: 1,
+  markWrong: -0.25,               // 0.25 negative marking
+  markSkip: 0,
+  attendanceWindow: { startMin: 6*60, endMin: 8*60+30 }, // 06:00–08:30 (local time)
+  postMessageEnabled: true,       // posts result to parent window when embedded as an iframe
+  appId: "daily-test-engine"
+};
+
+/* ============================================================
+   CENTUMANIA TRACKING — two-layer template (same as study modules)
+   Layer 1: window._send → /api/study/interaction  (Centum Index:
+            node_progress / mcq_attempts / analytics_events)
+   Layer 2: cmTrack → /api/events  (engagement stream)
+            cmBeacon → /api/events/beacon  (survives page close)
+   Served inside the app: the materials viewer writes cm:access_token +
+   cm:material_id to localStorage. Standalone: sends no-op silently.
+   ============================================================ */
+function cmMaterialId(){
+  try{var m=localStorage.getItem('cm:material_id');if(m)return m;}catch(e){}
+  return CONFIG.appId; // built-in fallback — must match the id in src/data/materials.ts
+}
+function cmToken(){
+  try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}
+  try{ /* fallback: the Supabase session the app keeps under sb-<ref>-auth-token */
+    var stores=[localStorage,sessionStorage];
+    for(var s=0;s<stores.length;s++){for(var i=0;i<stores[s].length;i++){var k=stores[s].key(i),d;
+      if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(stores[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}
+  }catch(e){}
+  return null;
+}
+function cmSessionId(){
+  try{
+    var s=sessionStorage.getItem('cm:dte:session');
+    if(!s){s=(crypto.randomUUID?crypto.randomUUID():String(Date.now())+'-'+Math.random().toString(16).slice(2));sessionStorage.setItem('cm:dte:session',s);}
+    return s;
+  }catch(e){return 'anon-'+Date.now();}
+}
+window._send = function(itype, nodeId, meta){
+  try{
+    var token=cmToken(), materialId=cmMaterialId();
+    if(!token||!materialId||!nodeId)return;
+    fetch('/api/study/interaction',{method:'POST',keepalive:true,
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+      body:JSON.stringify({interaction_type:itype,node_id:nodeId,material_id:materialId,
+        session_id:cmSessionId(),timestamp:new Date().toISOString(),metadata:meta||{}})}).catch(function(){});
+  }catch(e){}
+};
+function cmTrack(name, meta){
+  try{
+    var t=cmToken(); if(!t)return;
+    fetch('/api/events',{method:'POST',keepalive:true,
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},
+      body:JSON.stringify({event_name:name,session_id:cmSessionId(),event_timestamp:new Date().toISOString(),
+        metadata:Object.assign({material_id:cmMaterialId()},meta||{})})}).catch(function(){});
+  }catch(e){}
+}
+function cmBeacon(name, meta){ /* fired on unload — _token in body because beacons cannot set headers */
+  try{
+    var t=cmToken(); if(!t)return;
+    var payload=JSON.stringify({_token:t,event_name:name,session_id:cmSessionId(),event_timestamp:new Date().toISOString(),
+      metadata:Object.assign({material_id:cmMaterialId()},meta||{})});
+    if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([payload],{type:'application/json'}));
+    else if(typeof fetch==='function')fetch('/api/events/beacon',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:payload}).catch(function(){});
+  }catch(e){}
+}
+
+/* ============================================================
+   QUESTION BANK — grouped by day. Extend to Day 30 in the same shape.
+   { id, day, subject, star, q, options:[4], answer:index, exp }
+   ============================================================ */
+const QUESTION_BANK = [
+// ================= DAY 1 =================
+{id:"D1-01",day:1,subject:"History",star:true,q:"In which year was the English East India Company chartered?",options:["1600","1757","1764","1526"],answer:0,exp:"The EIC received its royal charter in 1600, long before it gained political power in India."},
+{id:"D1-02",day:1,subject:"History",star:true,q:"The Battle of Plassey (1757) was fought between Robert Clive and which Indian ruler?",options:["Siraj-ud-Daulah","Mir Qasim","Shah Alam II","Tipu Sultan"],answer:0,exp:"Plassey (1757), Clive vs Siraj-ud-Daulah, gave the British their first foothold in Bengal."},
+{id:"D1-03",day:1,subject:"History",star:true,q:"After which battle did the British win the Diwani (revenue rights) of Bengal?",options:["Battle of Buxar (1764)","Battle of Plassey (1757)","Third Battle of Panipat","Battle of Wandiwash"],answer:0,exp:"At Buxar (1764) the British beat Mir Qasim + Nawab of Awadh + Shah Alam II, winning the Diwani — real power in Bengal."},
+{id:"D1-04",day:1,subject:"History",star:false,q:"The Subsidiary Alliance system was introduced by which Governor-General?",options:["Lord Wellesley","Lord Dalhousie","Lord Cornwallis","Lord Bentinck"],answer:0,exp:"Wellesley's Subsidiary Alliance made a ruler keep British troops and cede revenue while losing control of foreign policy."},
+{id:"D1-05",day:1,subject:"History",star:true,q:"The Doctrine of Lapse is associated with which Governor-General?",options:["Lord Dalhousie","Lord Wellesley","Lord Curzon","Lord Ripon"],answer:0,exp:"Dalhousie's Doctrine of Lapse annexed states with no natural male heir — Jhansi, Satara, Nagpur, Sambalpur."},
+{id:"D1-06",day:1,subject:"History",star:false,q:"Which state was annexed under the Doctrine of Lapse?",options:["Jhansi","Mysore","Hyderabad","Travancore"],answer:0,exp:"Jhansi, Satara, Nagpur and Sambalpur were annexed under the Doctrine of Lapse."},
+{id:"D1-07",day:1,subject:"History",star:true,q:"The Permanent Settlement (1793) in Bengal was introduced by whom?",options:["Cornwallis","Munro","Wellesley","Dalhousie"],answer:0,exp:"Permanent Settlement 1793 — Cornwallis, with zamindars as revenue intermediaries in Bengal."},
+{id:"D1-08",day:1,subject:"History",star:false,q:"The Ryotwari land-revenue system is associated with which official?",options:["Thomas Munro","Cornwallis","Warren Hastings","Robert Clive"],answer:0,exp:"Ryotwari (Munro) collected revenue directly from ryots (cultivators) in the Madras and Bombay regions."},
+{id:"D1-09",day:1,subject:"History",star:false,q:"In the Mahalwari system, revenue was assessed on the basis of which unit?",options:["The village (mahal)","The individual ryot","The zamindar's estate","The district"],answer:0,exp:"Mahalwari assessed revenue on the whole village/mahal, mainly in North India."},
+{id:"D1-10",day:1,subject:"History",star:false,q:"Under the Subsidiary Alliance, an Indian ruler primarily lost control over which area?",options:["Foreign policy / foreign affairs","Religion","Local festivals","Language of court"],answer:0,exp:"The ally kept British troops and ceded territory/revenue, but crucially lost control of foreign policy."},
+{id:"D1-11",day:1,subject:"Polity",star:false,q:"The Constituent Assembly of India was formed in which month and year?",options:["December 1946","January 1950","August 1947","November 1949"],answer:0,exp:"The Constituent Assembly was formed in Dec 1946; it adopted the Constitution on 26 Nov 1949."},
+{id:"D1-12",day:1,subject:"Polity",star:false,q:"Who moved the Objectives Resolution in the Constituent Assembly?",options:["Jawaharlal Nehru","B.R. Ambedkar","Rajendra Prasad","Sardar Patel"],answer:0,exp:"Nehru moved the Objectives Resolution, which later became the basis of the Preamble."},
+{id:"D1-13",day:1,subject:"Polity",star:true,q:"The Drafting Committee of the Constitution was chaired by whom?",options:["B.R. Ambedkar","Jawaharlal Nehru","Rajendra Prasad","B.N. Rau"],answer:0,exp:"The Drafting Committee was chaired by Dr. B.R. Ambedkar."},
+{id:"D1-14",day:1,subject:"Polity",star:false,q:"The Directive Principles of State Policy (DPSP) were borrowed from the constitution of which country?",options:["Ireland","USA","UK","Canada"],answer:0,exp:"DPSP were borrowed from Ireland; FR/judicial review from USA; parliamentary system from UK."},
+{id:"D1-15",day:1,subject:"Polity",star:false,q:"India's parliamentary/cabinet form of government was borrowed from which country?",options:["United Kingdom","United States","Ireland","Canada"],answer:0,exp:"The UK gave India the parliamentary and cabinet system and the rule of law."},
+{id:"D1-16",day:1,subject:"Polity",star:true,q:"The words 'Socialist' and 'Secular' were added to the Preamble by which amendment?",options:["42nd Amendment, 1976","44th Amendment, 1978","1st Amendment, 1951","73rd Amendment, 1992"],answer:0,exp:"The 42nd Amendment (1976) added 'Socialist', 'Secular' and 'Integrity' to the Preamble."},
+{id:"D1-17",day:1,subject:"Polity",star:false,q:"On which date did the Constitution of India come into force?",options:["26 January 1950","26 November 1949","15 August 1947","26 January 1949"],answer:0,exp:"Adopted 26 Nov 1949; enforced 26 Jan 1950 (celebrated as Republic Day)."},
+{id:"D1-18",day:1,subject:"Polity",star:false,q:"How many Articles did the original Constitution of India contain?",options:["395","448","356","300"],answer:0,exp:"Originally 395 Articles, 8 Schedules and 22 Parts."},
+{id:"D1-19",day:1,subject:"Reasoning",star:false,q:"In the EJOTY rule, which letter stands at position 15?",options:["O","T","J","Y"],answer:0,exp:"EJOTY marks 5,10,15,20,25 → E=5, J=10, O=15, T=20, Y=25."},
+{id:"D1-20",day:1,subject:"Reasoning",star:false,q:"Opposite letter pairs sum to 27 (A↔Z). The opposite of B is?",options:["Y","X","A","W"],answer:0,exp:"B=2, and 27−2=25=Y. So B↔Y."},
+{id:"D1-21",day:1,subject:"Reasoning",star:false,q:"Find the next term: 2, 6, 12, 20, 30, ?",options:["42","40","44","36"],answer:0,exp:"Differences are 4,6,8,10,12 → 30+12 = 42."},
+{id:"D1-22",day:1,subject:"Reasoning",star:false,q:"Find the next term: 1, 4, 9, 16, ?",options:["25","20","24","36"],answer:0,exp:"Perfect squares 1²,2²,3²,4² → next is 5² = 25."},
+{id:"D1-23",day:1,subject:"Reasoning",star:false,q:"If CAT is coded as DBU (each letter +1), then DOG is coded as?",options:["EPH","CPF","EPG","DPH"],answer:0,exp:"Apply the same +1 shift: D→E, O→P, G→H = EPH."},
+{id:"D1-24",day:1,subject:"Reasoning",star:false,q:"Using reverse-alphabet coding (A↔Z, B↔Y…), the code for C is?",options:["X","W","Y","D"],answer:0,exp:"C=3, 27−3=24=X."},
+{id:"D1-25",day:1,subject:"Reasoning",star:false,q:"If 2→5 and 3→7 under the rule (×2 + 1), then 4→?",options:["9","8","10","7"],answer:0,exp:"4×2+1 = 9. Apply the same operation found on the first pair."},
+{id:"D1-26",day:1,subject:"Reasoning",star:false,q:"Find the next term: 3, 6, 11, 18, 27, ?",options:["38","36","40","35"],answer:0,exp:"Differences are 3,5,7,9,11 → 27+11 = 38."},
+
+// ================= DAY 2 =================
+{id:"D2-01",day:2,subject:"History",star:true,q:"What was the immediate cause of the Revolt of 1857?",options:["Greased Enfield cartridges","Doctrine of Lapse","Economic drain","Permanent Settlement"],answer:0,exp:"The greased cartridges (rumoured cow/pig fat) were the immediate trigger; deeper causes included Doctrine of Lapse and economic drain."},
+{id:"D2-02",day:2,subject:"History",star:false,q:"Who fired the first spark of the 1857 revolt at Barrackpore?",options:["Mangal Pandey","Tantia Tope","Kunwar Singh","Nana Sahib"],answer:0,exp:"Mangal Pandey at Barrackpore was the first spark of the 1857 revolt."},
+{id:"D2-03",day:2,subject:"History",star:false,q:"Who led the 1857 revolt at Jhansi?",options:["Rani Lakshmibai","Begum Hazrat Mahal","Rani Durgavati","Ahilyabai Holkar"],answer:0,exp:"Rani Lakshmibai led at Jhansi; the British recaptured Jhansi in April 1858."},
+{id:"D2-04",day:2,subject:"History",star:false,q:"Which pair led the revolt at Kanpur?",options:["Nana Sahib and Tantia Tope","Bahadur Shah Zafar and Bakht Khan","Kunwar Singh and Amar Singh","Nana Sahib and Mangal Pandey"],answer:0,exp:"Kanpur was led by Nana Sahib along with Tantia Tope."},
+{id:"D2-05",day:2,subject:"History",star:false,q:"Begum Hazrat Mahal was associated with the 1857 revolt at which centre?",options:["Lucknow","Delhi","Kanpur","Bihar"],answer:0,exp:"Begum Hazrat Mahal led at Lucknow."},
+{id:"D2-06",day:2,subject:"History",star:false,q:"Who was the symbolic leader of the 1857 revolt at Delhi?",options:["Bahadur Shah Zafar","Nana Sahib","Kunwar Singh","Tantia Tope"],answer:0,exp:"The rebels rallied around the last Mughal, Bahadur Shah Zafar, as the symbol at Delhi."},
+{id:"D2-07",day:2,subject:"History",star:false,q:"The 1857 revolt formally began at Meerut on which date?",options:["10 May 1857","4 February 1922","13 April 1919","8 August 1942"],answer:0,exp:"It started at Meerut on 10 May 1857 and moved to Delhi."},
+{id:"D2-08",day:2,subject:"History",star:true,q:"Company rule was replaced by Crown rule through which Act?",options:["Government of India Act 1858","Regulating Act 1773","Indian Councils Act 1861","Pitt's India Act 1784"],answer:0,exp:"The Government of India Act 1858 ended Company rule and created the office of Secretary of State for India."},
+{id:"D2-09",day:2,subject:"History",star:false,q:"Who described the 1857 revolt as the 'First War of Independence'?",options:["V.D. Savarkar","British historians","Jawaharlal Nehru","Dadabhai Naoroji"],answer:0,exp:"Savarkar called it the First War of Independence; the British called it a 'Sepoy Mutiny'."},
+{id:"D2-10",day:2,subject:"History",star:false,q:"Which office was created by the Government of India Act 1858?",options:["Secretary of State for India","Viceroy of India","Governor-General","Attorney General"],answer:0,exp:"The Act created the Secretary of State for India, a member of the British Cabinet."},
+{id:"D2-11",day:2,subject:"Polity",star:false,q:"Fundamental Rights are contained in which range of Articles?",options:["Articles 12–35","Articles 36–51","Articles 52–78","Articles 5–11"],answer:0,exp:"Part III (Fundamental Rights) covers Articles 12–35."},
+{id:"D2-12",day:2,subject:"Polity",star:false,q:"The Right to Equality is guaranteed under which Articles?",options:["Articles 14–18","Articles 19–22","Articles 23–24","Articles 25–28"],answer:0,exp:"Right to Equality = Art 14–18; Freedom = 19–22; against Exploitation = 23–24."},
+{id:"D2-13",day:2,subject:"Polity",star:true,q:"Which Fundamental Right did Ambedkar call the 'heart and soul' of the Constitution?",options:["Right to Constitutional Remedies (Art 32)","Right to Freedom (Art 19)","Right to Equality (Art 14)","Right to Life (Art 21)"],answer:0,exp:"Art 32 (writs) was called the 'heart and soul' by Ambedkar."},
+{id:"D2-14",day:2,subject:"Polity",star:true,q:"The Right to Life and Personal Liberty is guaranteed under which Article?",options:["Article 21","Article 19","Article 14","Article 32"],answer:0,exp:"Art 21 is the most-litigated FR, now including dignity, privacy, livelihood and clean environment."},
+{id:"D2-15",day:2,subject:"Polity",star:false,q:"Which of these Fundamental Rights is available ONLY to citizens?",options:["Article 19 (Freedoms)","Article 21 (Life)","Article 20 (protection re: conviction)","Article 14 (Equality before law)"],answer:0,exp:"Art 15,16,19,29,30 are citizens-only; Art 14,20,21,22 apply to all persons."},
+{id:"D2-16",day:2,subject:"Polity",star:false,q:"Which writ is issued to produce a detained person before the court?",options:["Habeas Corpus","Mandamus","Quo Warranto","Certiorari"],answer:0,exp:"Habeas Corpus ('to have the body') is used against unlawful detention."},
+{id:"D2-17",day:2,subject:"Polity",star:false,q:"The Right against Exploitation is covered under which Articles?",options:["Articles 23–24","Articles 25–28","Articles 29–30","Articles 14–18"],answer:0,exp:"Right against Exploitation = Art 23–24 (bans forced labour and child labour)."},
+{id:"D2-18",day:2,subject:"Polity",star:false,q:"How many Fundamental Rights does the Constitution currently guarantee?",options:["Six","Seven","Five","Four"],answer:0,exp:"Six FRs remain after Right to Property was removed by the 44th Amendment."},
+{id:"D2-19",day:2,subject:"Quant",star:false,q:"The unit digit of powers of 2 repeats with a cyclicity of?",options:["4","2","1","3"],answer:0,exp:"2,4,8,6 repeats — cyclicity 4 (same for 3,7,8)."},
+{id:"D2-20",day:2,subject:"Quant",star:false,q:"A number is divisible by 4 if which part is divisible by 4?",options:["Last two digits","Digit sum","Last three digits","Alternating sum"],answer:0,exp:"Divisibility by 4 depends on the last two digits; by 8 on the last three."},
+{id:"D2-21",day:2,subject:"Quant",star:false,q:"The divisibility rule for 11 uses which test?",options:["Alternating sum of digits","Sum of all digits","Last two digits","Product of digits"],answer:0,exp:"For 11, take the alternating sum of digits and check divisibility by 11."},
+{id:"D2-22",day:2,subject:"Quant",star:true,q:"For two numbers, HCF × LCM equals?",options:["The product of the two numbers","Their sum","Their difference","Their average"],answer:0,exp:"HCF × LCM = product of the two numbers (valid only for two numbers)."},
+{id:"D2-23",day:2,subject:"Quant",star:false,q:"If n = p^a × q^b (p, q prime), the number of factors of n is?",options:["(a+1)(b+1)","a×b","a+b","(a−1)(b−1)"],answer:0,exp:"Number of factors of p^a q^b is (a+1)(b+1)."},
+{id:"D2-24",day:2,subject:"Quant",star:false,q:"Two numbers are called co-prime when their HCF is?",options:["1","0","2","Equal to the smaller number"],answer:0,exp:"Co-prime numbers share no common factor other than 1, so HCF = 1."},
+{id:"D2-25",day:2,subject:"Quant",star:false,q:"What is the unit digit of 2¹⁰?",options:["4","2","8","6"],answer:0,exp:"Cycle of 2 is 2,4,8,6 (length 4). 10 mod 4 = 2 → 2nd term = 4."},
+{id:"D2-26",day:2,subject:"Quant",star:false,q:"A number is divisible by 9 if?",options:["Its digit sum is divisible by 9","Its last digit is 9","Its last two digits are divisible by 9","It is even"],answer:0,exp:"Divisibility by 3 and 9 both use the digit sum."},
+
+// ================= DAY 3 =================
+{id:"D3-01",day:3,subject:"History",star:false,q:"Who founded the Brahmo Samaj (1828)?",options:["Raja Ram Mohan Roy","Dayananda Saraswati","Swami Vivekananda","Keshab Chandra Sen"],answer:0,exp:"Raja Ram Mohan Roy founded the Brahmo Samaj in 1828."},
+{id:"D3-02",day:3,subject:"History",star:true,q:"Sati was abolished in 1829 during the tenure of which Governor-General?",options:["Lord William Bentinck","Lord Dalhousie","Lord Curzon","Lord Wellesley"],answer:0,exp:"Sati was banned in 1829 by Bentinck, aided by Raja Ram Mohan Roy's campaign."},
+{id:"D3-03",day:3,subject:"History",star:false,q:"The slogan 'Back to the Vedas' is associated with which reformer?",options:["Dayananda Saraswati","Raja Ram Mohan Roy","Sir Syed Ahmed Khan","Jyotiba Phule"],answer:0,exp:"Dayananda Saraswati founded the Arya Samaj (1875) with the call 'Back to the Vedas'."},
+{id:"D3-04",day:3,subject:"History",star:false,q:"The Ramakrishna Mission (1897) was founded by whom?",options:["Swami Vivekananda","Ramakrishna Paramhansa","Dayananda Saraswati","Keshab Chandra Sen"],answer:0,exp:"Swami Vivekananda founded the Ramakrishna Mission in 1897."},
+{id:"D3-05",day:3,subject:"History",star:true,q:"Who delivered the famous 1893 speech at the Chicago Parliament of Religions?",options:["Swami Vivekananda","Raja Ram Mohan Roy","Rabindranath Tagore","Dayananda Saraswati"],answer:0,exp:"Vivekananda's 1893 Chicago address introduced Indian philosophy to the West."},
+{id:"D3-06",day:3,subject:"History",star:false,q:"The Aligarh Movement and MAO College are associated with whom?",options:["Sir Syed Ahmed Khan","Jyotiba Phule","Sir Syed Ali","Badruddin Tyabji"],answer:0,exp:"Sir Syed Ahmed Khan founded MAO College (1875), which grew into Aligarh Muslim University."},
+{id:"D3-07",day:3,subject:"History",star:false,q:"The Satyashodhak Samaj was founded by whom?",options:["Jyotiba Phule","B.R. Ambedkar","Dayananda Saraswati","Narayana Guru"],answer:0,exp:"Jyotiba Phule founded the Satyashodhak Samaj for women's and lower-caste education."},
+{id:"D3-08",day:3,subject:"History",star:true,q:"The Indian National Congress (1885) was founded by whom?",options:["A.O. Hume","W.C. Bonnerjee","Dadabhai Naoroji","Gopal Krishna Gokhale"],answer:0,exp:"A.O. Hume founded the INC in 1885; the first session was at Bombay under W.C. Bonnerjee."},
+{id:"D3-09",day:3,subject:"Polity",star:true,q:"The Directive Principles of State Policy are contained in which Articles?",options:["Articles 36–51","Articles 12–35","Articles 52–78","Articles 5–11"],answer:0,exp:"DPSP (Art 36–51) are non-justiciable welfare ideals borrowed from Ireland."},
+{id:"D3-10",day:3,subject:"Polity",star:true,q:"Which amendment is nicknamed the 'Mini-Constitution'?",options:["42nd Amendment (1976)","44th Amendment (1978)","1st Amendment (1951)","73rd Amendment (1992)"],answer:0,exp:"The 42nd Amendment (1976) made sweeping changes, earning it the 'Mini-Constitution' tag."},
+{id:"D3-11",day:3,subject:"Polity",star:false,q:"Fundamental Duties (Art 51A) were added to the Constitution by which amendment?",options:["42nd Amendment","44th Amendment","73rd Amendment","91st Amendment"],answer:0,exp:"The 42nd Amendment (1976) added Fundamental Duties as Art 51A."},
+{id:"D3-12",day:3,subject:"Polity",star:true,q:"The Right to Property was removed from Fundamental Rights by which amendment?",options:["44th Amendment (1978)","42nd Amendment (1976)","1st Amendment (1951)","24th Amendment (1971)"],answer:0,exp:"The 44th Amendment (1978) made Right to Property a legal right under Art 300A."},
+{id:"D3-13",day:3,subject:"Polity",star:true,q:"Panchayati Raj was given constitutional status by which amendment?",options:["73rd Amendment (1992)","74th Amendment (1992)","42nd Amendment (1976)","61st Amendment (1988)"],answer:0,exp:"The 73rd Amendment (1992) created 3-tier Panchayati Raj; the 74th covered urban local bodies."},
+{id:"D3-14",day:3,subject:"Polity",star:false,q:"The idea of DPSP was borrowed from which country?",options:["Ireland","USA","UK","Canada"],answer:0,exp:"DPSP are modelled on the Irish Constitution."},
+{id:"D3-15",day:3,subject:"Polity",star:false,q:"In which year was the 42nd Amendment enacted?",options:["1976","1978","1971","1992"],answer:0,exp:"The 42nd Amendment was passed in 1976 during the Emergency."},
+{id:"D3-16",day:3,subject:"Polity",star:false,q:"After 1978, the Right to Property exists as a legal right under which Article?",options:["Article 300A","Article 21","Article 19(1)(f)","Article 31"],answer:0,exp:"Right to Property is now a legal (not fundamental) right under Art 300A."},
+{id:"D3-17",day:3,subject:"English",star:true,q:"Choose the correct preposition: 'He is senior ___ me.'",options:["to","than","from","of"],answer:0,exp:"Use 'senior TO' (also junior/superior/prior TO), never 'senior than'."},
+{id:"D3-18",day:3,subject:"English",star:false,q:"Choose the correct article: 'I waited for ___ hour.'",options:["an","a","the","no article"],answer:0,exp:"'Hour' begins with a vowel SOUND (the h is silent), so 'an hour'."},
+{id:"D3-19",day:3,subject:"English",star:false,q:"Choose the correct verb: 'One of the boys ___ absent.'",options:["is","are","were","have"],answer:0,exp:"'One of + plural noun' takes a singular verb → 'One of the boys IS'."},
+{id:"D3-20",day:3,subject:"English",star:false,q:"Choose the correct verb: 'Each of the students ___ a book.'",options:["has","have","are","were"],answer:0,exp:"'Each/every/either/neither' take a singular verb → 'Each … has'."},
+{id:"D3-21",day:3,subject:"English",star:false,q:"Which sentence is correct?",options:["We discussed the matter.","We discussed about the matter.","We discussed on the matter.","We discussed for the matter."],answer:0,exp:"'Discuss' takes no preposition — 'discuss the matter', not 'discuss about'."},
+{id:"D3-22",day:3,subject:"English",star:false,q:"Choose the correct article: 'She holds ___ MBA degree.'",options:["an","a","the","no article"],answer:0,exp:"'MBA' starts with the vowel sound 'em', so 'an MBA'."},
+{id:"D3-23",day:3,subject:"English",star:false,q:"Choose the correct verb: 'The team ___ winning the match.'",options:["is","are","were","have"],answer:0,exp:"A collective noun like 'team' takes a singular verb when acting as one unit."},
+{id:"D3-24",day:3,subject:"English",star:false,q:"In 'Neither the teacher nor the students ___ present', the verb agrees with?",options:["the nearer subject (students → are)","the farther subject","either subject","always singular"],answer:0,exp:"With 'neither…nor / either…or', the verb agrees with the NEARER subject."},
+{id:"D3-25",day:3,subject:"History",star:false,q:"The first session of the Indian National Congress (1885) was held in which city?",options:["Bombay","Calcutta","Madras","Allahabad"],answer:0,exp:"The first INC session (1885) met in Bombay under president W.C. Bonnerjee."},
+{id:"D3-26",day:3,subject:"English",star:false,q:"Choose the correct sentence:",options:["He reached the station on time.","He reached to the station on time.","He reached at the station on time.","He reached in the station on time."],answer:0,exp:"'Reach' takes no preposition — 'reached the station', not 'reached to/at the station'."},
+
+// ================= DAY 4 =================
+{id:"D4-01",day:4,subject:"History",star:true,q:"The 'Drain of Wealth' theory was propounded by whom?",options:["Dadabhai Naoroji","Gopal Krishna Gokhale","Bal Gangadhar Tilak","R.C. Dutt"],answer:0,exp:"Dadabhai Naoroji explained the Drain of Wealth in 'Poverty and Un-British Rule in India'."},
+{id:"D4-02",day:4,subject:"History",star:false,q:"Who declared 'Swaraj is my birthright and I shall have it'?",options:["Bal Gangadhar Tilak","Lala Lajpat Rai","Bipin Chandra Pal","Dadabhai Naoroji"],answer:0,exp:"The slogan belongs to Bal Gangadhar Tilak of Maharashtra."},
+{id:"D4-03",day:4,subject:"History",star:false,q:"In the Lal-Bal-Pal trio, who represented Punjab?",options:["Lala Lajpat Rai","Bal Gangadhar Tilak","Bipin Chandra Pal","Gopal Krishna Gokhale"],answer:0,exp:"Lala Lajpat Rai (Punjab), Tilak (Maharashtra) and Bipin Chandra Pal (Bengal) were the extremist trio."},
+{id:"D4-04",day:4,subject:"History",star:true,q:"The Swadeshi Movement of 1905 was triggered by which event?",options:["Partition of Bengal by Curzon","Jallianwala Bagh massacre","Rowlatt Act","Simon Commission"],answer:0,exp:"Curzon's 1905 Partition of Bengal led to the boycott of foreign goods (Swadeshi)."},
+{id:"D4-05",day:4,subject:"History",star:false,q:"In which year was the Partition of Bengal annulled?",options:["1911","1905","1919","1907"],answer:0,exp:"The partition was annulled in 1911, when the capital shifted to Delhi."},
+{id:"D4-06",day:4,subject:"History",star:false,q:"In which year did the Surat Split of the Congress occur?",options:["1907","1905","1916","1920"],answer:0,exp:"The Surat Split (1907) divided Moderates and Extremists."},
+{id:"D4-07",day:4,subject:"History",star:false,q:"The Muslim League was founded in which year?",options:["1906","1885","1916","1919"],answer:0,exp:"The All-India Muslim League was founded in 1906."},
+{id:"D4-08",day:4,subject:"History",star:false,q:"Separate electorates were introduced by which reforms?",options:["Morley-Minto Reforms (1909)","Montagu-Chelmsford Reforms","Government of India Act 1935","Regulating Act 1773"],answer:0,exp:"The Morley-Minto Reforms of 1909 introduced separate electorates for Muslims."},
+{id:"D4-09",day:4,subject:"History",star:false,q:"Bipin Chandra Pal, of the extremist trio, belonged to which region?",options:["Bengal","Punjab","Maharashtra","Madras"],answer:0,exp:"Bipin Chandra Pal represented Bengal in the Lal-Bal-Pal trio."},
+{id:"D4-10",day:4,subject:"Geography",star:true,q:"Which is the most widespread soil type in India?",options:["Alluvial soil","Black soil","Red soil","Laterite soil"],answer:0,exp:"Alluvial soil (Indo-Gangetic plains) is the largest and most fertile soil group."},
+{id:"D4-11",day:4,subject:"Geography",star:true,q:"Which soil is considered best for growing cotton?",options:["Black (Regur) soil","Red soil","Laterite soil","Alluvial soil"],answer:0,exp:"Moisture-retentive Black/Regur soil is ideal for cotton — Maharashtra, MP, Gujarat."},
+{id:"D4-12",day:4,subject:"Geography",star:false,q:"Black soil is formed from which parent material?",options:["Deccan trap lava","River alluvium","Leached laterite","Wind-blown loess"],answer:0,exp:"Black soil forms from weathered Deccan trap basalt (lava)."},
+{id:"D4-13",day:4,subject:"Geography",star:false,q:"New, fertile alluvium in the plains is called?",options:["Khadar","Bhangar","Regur","Laterite"],answer:0,exp:"Khadar = new fertile alluvium; Bhangar = old alluvium with kankar nodules."},
+{id:"D4-14",day:4,subject:"Geography",star:false,q:"Red soil gets its colour mainly from?",options:["Iron oxide","Humus","Lime","Silica"],answer:0,exp:"Iron oxide gives red soil its colour; it is porous and less fertile."},
+{id:"D4-15",day:4,subject:"Geography",star:false,q:"Which crop is well suited to laterite soil?",options:["Coffee","Wheat","Cotton","Sugarcane"],answer:0,exp:"Laterite (acidic, leached) suits plantation crops — cashew, coffee, tea, rubber."},
+{id:"D4-16",day:4,subject:"Geography",star:false,q:"Red soil is chiefly found in which part of India?",options:["South and East India","Indo-Gangetic plains","Western Ghats","Thar Desert"],answer:0,exp:"Red soil occurs across South and East India where crystalline rocks weather."},
+{id:"D4-17",day:4,subject:"Geography",star:false,q:"Alluvial soil is most associated with which crops?",options:["Wheat and rice","Coffee and tea","Cashew and rubber","Groundnut and millets"],answer:0,exp:"Fertile alluvial plains grow wheat and rice."},
+{id:"D4-18",day:4,subject:"Geography",star:false,q:"Old alluvium with kankar (lime nodules) is called?",options:["Bhangar","Khadar","Regur","Bangar-free"],answer:0,exp:"Bhangar is the older alluvium; Khadar is the newer, more fertile layer."},
+{id:"D4-19",day:4,subject:"Reasoning",star:false,q:"Doctor : Hospital :: Teacher : ?",options:["School","Book","Student","Class"],answer:0,exp:"A doctor works in a hospital as a teacher works in a school (workplace relation)."},
+{id:"D4-20",day:4,subject:"Reasoning",star:true,q:"What is the recommended first step in every blood-relations question?",options:["Draw the family tree","Solve it mentally","Guess the gender","Start from the answer options"],answer:0,exp:"Always draw the family tree — never solve blood relations in your head."},
+{id:"D4-21",day:4,subject:"Reasoning",star:false,q:"2 : 8 :: 3 : ?",options:["27","9","12","18"],answer:0,exp:"2³=8, so apply cube: 3³ = 27."},
+{id:"D4-22",day:4,subject:"Reasoning",star:false,q:"Pen : Write :: Knife : ?",options:["Cut","Sharp","Kitchen","Metal"],answer:0,exp:"A pen is used to write as a knife is used to cut (tool-function relation)."},
+{id:"D4-23",day:4,subject:"Reasoning",star:false,q:"If P is the mother of Q, and Q is the sister of R, then P is R's?",options:["Mother","Aunt","Sister","Grandmother"],answer:0,exp:"Q and R are siblings, and P is Q's mother, so P is also R's mother."},
+{id:"D4-24",day:4,subject:"Reasoning",star:false,q:"6 : 36 :: 8 : ?",options:["64","48","56","72"],answer:0,exp:"6²=36, so apply square: 8² = 64."},
+{id:"D4-25",day:4,subject:"Reasoning",star:false,q:"Hot : Cold :: Up : ?",options:["Down","High","Above","Top"],answer:0,exp:"These are opposite (antonym) pairs, so Up ↔ Down."},
+
+// ================= DAY 5 =================
+{id:"D5-01",day:5,subject:"History",star:false,q:"In which year did Gandhi return to India from South Africa?",options:["1915","1917","1919","1920"],answer:0,exp:"Gandhi returned in 1915; his political guru was Gopal Krishna Gokhale."},
+{id:"D5-02",day:5,subject:"History",star:false,q:"Who was Gandhi's political guru?",options:["Gopal Krishna Gokhale","Bal Gangadhar Tilak","Dadabhai Naoroji","Motilal Nehru"],answer:0,exp:"Gandhi regarded Gopal Krishna Gokhale as his political guru."},
+{id:"D5-03",day:5,subject:"History",star:true,q:"The Champaran Satyagraha (1917) was launched on behalf of which group?",options:["Indigo farmers","Textile mill workers","Salt makers","Plantation tea workers"],answer:0,exp:"Champaran (1917) fought the tinkathia indigo system — Gandhi's first civil disobedience in India."},
+{id:"D5-04",day:5,subject:"History",star:false,q:"Gandhi's first hunger strike in India took place during which struggle?",options:["Ahmedabad Mill Strike (1918)","Champaran Satyagraha","Kheda Satyagraha","Salt March"],answer:0,exp:"The 1918 Ahmedabad Mill Strike saw Gandhi's first hunger strike."},
+{id:"D5-05",day:5,subject:"History",star:false,q:"The Kheda Satyagraha (1918) demanded what?",options:["Tax relief for crop-failed farmers","Higher indigo prices","Abolition of salt tax","Repeal of the Rowlatt Act"],answer:0,exp:"At Kheda (1918) Gandhi sought remission of land revenue after crop failure."},
+{id:"D5-06",day:5,subject:"History",star:true,q:"The Rowlatt Act (1919) was popularly called the?",options:["Black Act","Vernacular Act","Charter Act","Pitt's Act"],answer:0,exp:"The Rowlatt Act allowed detention without trial and was nicknamed the 'Black Act'."},
+{id:"D5-07",day:5,subject:"History",star:true,q:"On which date did the Jallianwala Bagh massacre occur?",options:["13 April 1919","10 May 1857","12 March 1930","8 August 1942"],answer:0,exp:"On 13 April 1919, General Dyer opened fire on a crowd at Amritsar."},
+{id:"D5-08",day:5,subject:"History",star:false,q:"Who ordered the firing at Jallianwala Bagh?",options:["General Dyer","Lord Curzon","General Outram","Lord Chelmsford"],answer:0,exp:"General Dyer ordered the firing; the Hunter Commission later inquired into it."},
+{id:"D5-09",day:5,subject:"History",star:false,q:"Who returned his knighthood in protest against the Jallianwala Bagh massacre?",options:["Rabindranath Tagore","Mahatma Gandhi","Motilal Nehru","C.R. Das"],answer:0,exp:"Rabindranath Tagore renounced his knighthood after the massacre."},
+{id:"D5-10",day:5,subject:"Geography",star:false,q:"Which is the highest (northernmost) range of the Himalayas?",options:["Greater Himalaya (Himadri)","Lesser Himalaya (Himachal)","Shiwaliks (Outer)","Aravalli"],answer:0,exp:"The Greater Himalaya (Himadri) is the highest range and holds Mt. Everest."},
+{id:"D5-11",day:5,subject:"Geography",star:false,q:"Arrange the Himalayan ranges from north to south:",options:["Himadri → Himachal → Shiwaliks","Shiwaliks → Himachal → Himadri","Himachal → Himadri → Shiwaliks","Himadri → Shiwaliks → Himachal"],answer:0,exp:"North to south: Greater (Himadri) → Lesser (Himachal) → Outer (Shiwaliks)."},
+{id:"D5-12",day:5,subject:"Geography",star:true,q:"Which physiographic region of India is the most densely populated?",options:["Northern Plains","Peninsular Plateau","Himalayas","Coastal islands"],answer:0,exp:"The fertile Indus-Ganga-Brahmaputra Northern Plains are the most densely populated."},
+{id:"D5-13",day:5,subject:"Geography",star:false,q:"Which landform is made of the oldest, hard crystalline rock?",options:["Peninsular Plateau","Northern Plains","Greater Himalaya","Coastal plains"],answer:0,exp:"The Peninsular Plateau is the oldest, most stable landmass in India."},
+{id:"D5-14",day:5,subject:"Geography",star:true,q:"The Andaman and Nicobar Islands are located in which water body?",options:["Bay of Bengal","Arabian Sea","Indian Ocean (south)","Lakshadweep Sea"],answer:0,exp:"Andaman & Nicobar (volcanic — Barren Island) lie in the Bay of Bengal."},
+{id:"D5-15",day:5,subject:"Geography",star:false,q:"The Lakshadweep Islands are of which origin?",options:["Coral","Volcanic","Tectonic","Alluvial"],answer:0,exp:"Lakshadweep in the Arabian Sea are coral islands (Andaman & Nicobar are volcanic)."},
+{id:"D5-16",day:5,subject:"Geography",star:false,q:"Which ghats are continuous and generally higher?",options:["Western Ghats","Eastern Ghats","Aravalli Ghats","Satpura Ghats"],answer:0,exp:"The Western Ghats are continuous and higher; the Eastern Ghats are broken."},
+{id:"D5-17",day:5,subject:"Geography",star:false,q:"What is the approximate height of Mt. Everest?",options:["8,849 m","8,611 m","8,167 m","7,816 m"],answer:0,exp:"Mt. Everest, in the Greater Himalaya, is about 8,849 m high."},
+{id:"D5-18",day:5,subject:"Quant",star:true,q:"Express 1/8 as a percentage.",options:["12.5%","16.67%","14.28%","10%"],answer:0,exp:"1/8 = 0.125 = 12.5%."},
+{id:"D5-19",day:5,subject:"Quant",star:false,q:"Express 1/3 as a percentage (approx).",options:["33.33%","30%","35%","3.33%"],answer:0,exp:"1/3 ≈ 33.33%."},
+{id:"D5-20",day:5,subject:"Quant",star:false,q:"A successive increase of 10% then 20% gives a net increase of?",options:["32%","30%","28%","35%"],answer:0,exp:"Net = a + b + ab/100 = 10 + 20 + 200/100 = 32%."},
+{id:"D5-21",day:5,subject:"Quant",star:true,q:"If price rises 25%, by how much must consumption fall to keep expenditure constant?",options:["20%","25%","30%","15%"],answer:0,exp:"Reduction = [x/(100+x)]×100 = [25/125]×100 = 20%."},
+{id:"D5-22",day:5,subject:"Quant",star:false,q:"If a:b = 2:3 and b:c = 4:5, then a:b:c = ?",options:["8:12:15","2:3:5","2:12:5","6:12:15"],answer:0,exp:"Make b common (LCM 12): a:b = 8:12, b:c = 12:15 → a:b:c = 8:12:15."},
+{id:"D5-23",day:5,subject:"Quant",star:false,q:"Express 1/7 as a percentage (approx).",options:["14.28%","16.67%","12.5%","11.11%"],answer:0,exp:"1/7 ≈ 14.28%."},
+{id:"D5-24",day:5,subject:"Quant",star:false,q:"Which fraction equals 25%?",options:["1/4","1/5","1/3","2/5"],answer:0,exp:"25% = 25/100 = 1/4."},
+{id:"D5-25",day:5,subject:"Quant",star:false,q:"If 40% of a number is 80, the number is?",options:["200","160","240","320"],answer:0,exp:"Number = 80 ÷ 0.40 = 200."}
+];
+
+/* ============================================================
+   DAY METADATA
+   ============================================================ */
+const DAY_META = {
+  1:{title:"Modern History I: Colonial Expansion",topics:"Company Rule · Constitution Framework · Reasoning: Series & Coding"},
+  2:{title:"Modern History II: Revolt of 1857",topics:"1857 Revolt · Fundamental Rights · Quant: Number System"},
+  3:{title:"Modern History III: Reform Movements",topics:"Socio-Religious Reform · DPSP & Amendments · English: Grammar"},
+  4:{title:"Modern History IV: Early Nationalism & Swadeshi",topics:"Nationalism 1885–1919 · Indian Soils · Reasoning: Analogy & Blood Relations"},
+  5:{title:"Modern History V: Gandhi Era I",topics:"Gandhi's Early Movements · Physical India · Quant: % & Ratio"}
+};
+const TOTAL_DAYS = 30;
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const $ = id => document.getElementById(id);
+const el = {
+  home:$("home"), test:$("test"), result:$("result"),
+  dayGrid:$("dayGrid"), timer:$("timer"),
+  testTitle:$("testTitle"), testTopics:$("testTopics"),
+  qCounter:$("qCounter"), qSubject:$("qSubject"), qStar:$("qStar"),
+  qText:$("qText"), qOptions:$("qOptions"), palette:$("palette"),
+  cAns:$("cAns"), cRev:$("cRev"), cSkip:$("cSkip")
+};
+let state = null;      // active attempt
+let tickHandle = null;
+
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function pad2(n){ return String(n).padStart(2,"0"); }
+function fmtClock(sec){ const m=Math.floor(sec/60), s=sec%60; return m+":"+pad2(s); }
+function countForDay(day){ return QUESTION_BANK.filter(q=>q.day===day).length; }
+function dayAvailable(day){ return countForDay(day) >= CONFIG.questionsPerTest; }
+
+/* ---------- HOME ---------- */
+function renderHome(){
+  el.dayGrid.innerHTML = "";
+  for(let d=1; d<=TOTAL_DAYS; d++){
+    const meta = DAY_META[d];
+    const has = dayAvailable(d);
+    const div = document.createElement("div");
+    div.className = "day" + (has ? "" : " locked");
+    const title = meta ? meta.title : "Day "+d;
+    const topics = meta ? meta.topics : "Coming soon";
+    div.innerHTML =
+      '<div class="qc">'+(has?countForDay(d)+" Q":"soon")+'</div>'+
+      '<div class="dnum">DAY '+d+'</div>'+
+      '<div class="dttl">'+title+'</div>'+
+      '<div class="dtop">'+topics+'</div>';
+    if(has) div.onclick = ()=>startTest(d);
+    el.dayGrid.appendChild(div);
+  }
+}
+
+/* ---------- START TEST ---------- */
+function startTest(day){
+  const pool = QUESTION_BANK.filter(q=>q.day===day);
+  if(pool.length < CONFIG.questionsPerTest){ toast("Not enough questions for Day "+day+" yet."); return; }
+  const picked = shuffle(pool).slice(0, CONFIG.questionsPerTest).map(q=>{
+    const order = shuffle([0,1,2,3]);
+    return {
+      id:q.id, day:q.day, subject:q.subject, star:!!q.star, q:q.q, exp:q.exp,
+      opts: order.map(i=>q.options[i]),
+      correctIdx: order.indexOf(q.answer),
+      chosen: null, marked:false
+    };
+  });
+  state = { day, items:picked, cur:0, remaining:CONFIG.timerSeconds, startedAt:new Date(), submitted:false };
+  const meta = DAY_META[day] || {title:"Day "+day, topics:""};
+  el.testTitle.textContent = "Day "+day+" · "+meta.title;
+  el.testTopics.textContent = meta.topics;
+  show("test");
+  buildPalette();
+  renderQuestion();
+  startTimer();
+  // Centum Index: opening a day's test opens its node; engagement funnel start
+  _send('node_opened','daily-test-day-'+day,{total_questions:CONFIG.questionsPerTest,node_type:'mastery'});
+  cmTrack('test_start',{day:day,questions:CONFIG.questionsPerTest});
+}
+
+function startTimer(){
+  clearInterval(tickHandle);
+  updateTimer();
+  tickHandle = setInterval(()=>{
+    state.remaining--;
+    updateTimer();
+    if(state.remaining<=0){ clearInterval(tickHandle); submitTest(true); }
+  },1000);
+}
+function updateTimer(){
+  el.timer.textContent = fmtClock(Math.max(0,state.remaining));
+  el.timer.classList.toggle("warn", state.remaining<=300 && state.remaining>60);
+  el.timer.classList.toggle("crit", state.remaining<=60);
+}
+
+/* ---------- QUESTION VIEW ---------- */
+function renderQuestion(){
+  const it = state.items[state.cur];
+  el.qCounter.textContent = "Q "+(state.cur+1)+" / "+state.items.length;
+  el.qSubject.textContent = it.subject;
+  el.qStar.classList.toggle("hidden", !it.star);
+  el.qText.textContent = it.q;
+  el.qOptions.innerHTML = "";
+  const keys = ["A","B","C","D"];
+  it.opts.forEach((opt,i)=>{
+    const d = document.createElement("div");
+    d.className = "opt" + (it.chosen===i ? " sel":"");
+    d.innerHTML = '<div class="key">'+keys[i]+'</div><div class="txt">'+opt+'</div>';
+    d.onclick = ()=>{ it.chosen = i; renderQuestion(); refreshPalette(); };
+    el.qOptions.appendChild(d);
+  });
+  $("markBtn").textContent = it.marked ? "Unmark review" : "Mark for review";
+  $("prevBtn").disabled = state.cur===0;
+  $("nextBtn").disabled = state.cur===state.items.length-1;
+  refreshPalette();
+}
+
+/* ---------- PALETTE ---------- */
+function buildPalette(){
+  el.palette.innerHTML = "";
+  state.items.forEach((it,i)=>{
+    const b = document.createElement("button");
+    b.textContent = i+1;
+    b.onclick = ()=>{ state.cur=i; renderQuestion(); };
+    el.palette.appendChild(b);
+  });
+  refreshPalette();
+}
+function refreshPalette(){
+  const btns = el.palette.children;
+  let ans=0, rev=0;
+  state.items.forEach((it,i)=>{
+    const b = btns[i];
+    b.className = "";
+    if(it.chosen!==null){ b.classList.add("answered"); ans++; }
+    if(it.marked){ b.classList.add("review"); rev++; }
+    if(i===state.cur) b.classList.add("cur");
+  });
+  el.cAns.textContent = ans;
+  el.cRev.textContent = rev;
+  el.cSkip.textContent = state.items.length - ans;
+}
+
+/* ---------- SUBMIT / SCORE ---------- */
+function submitTest(auto){
+  if(state.submitted) return;
+  if(!auto){
+    const unans = state.items.filter(it=>it.chosen===null).length;
+    const msg = unans>0 ? ("You have "+unans+" unanswered question(s). Submit anyway?") : "Submit your test?";
+    if(!confirm(msg)) return;
+  }
+  state.submitted = true;
+  clearInterval(tickHandle);
+  const submittedAt = new Date();
+  let cor=0,wro=0,skip=0;
+  const detail = state.items.map((it,i)=>{
+    let outcome, marks;
+    if(it.chosen===null){ outcome="skipped"; marks=CONFIG.markSkip; skip++; }
+    else if(it.chosen===it.correctIdx){ outcome="correct"; marks=CONFIG.markCorrect; cor++; }
+    else { outcome="wrong"; marks=CONFIG.markWrong; wro++; }
+    return {
+      seq:i+1, id:it.id, subject:it.subject, star:it.star, outcome, marks,
+      chosen: it.chosen===null?null:it.opts[it.chosen],
+      correct: it.opts[it.correctIdx]
+    };
+  });
+  const attempted = cor+wro;
+  const net = +(cor*CONFIG.markCorrect + wro*CONFIG.markWrong).toFixed(2);
+  const accuracy = attempted? Math.round(cor/attempted*100):0;
+  const timeUsed = CONFIG.timerSeconds - Math.max(0,state.remaining);
+  const present = inAttendanceWindow(submittedAt);
+
+  const payload = {
+    appId: CONFIG.appId,
+    version: 1,
+    day: state.day,
+    startedAt: state.startedAt.toISOString(),
+    submittedAt: submittedAt.toISOString(),
+    autoSubmitted: !!auto,
+    timeUsedSeconds: timeUsed,
+    totals: { questions: state.items.length, correct:cor, wrong:wro, skipped:skip, attempted },
+    scoring: { markCorrect:CONFIG.markCorrect, markWrong:CONFIG.markWrong, net, maxPossible: state.items.length*CONFIG.markCorrect },
+    accuracyPct: accuracy,
+    centumIndex: {
+      windowLocal: "06:00-08:30",
+      submittedLocal: submittedAt.toLocaleTimeString(),
+      attendancePresent: present
+    },
+    responses: detail
+  };
+  state.payload = payload;
+  showResult(payload, detail);
+  dispatchToBackend(payload);
+}
+
+function inAttendanceWindow(dt){
+  const mins = dt.getHours()*60 + dt.getMinutes();
+  return mins >= CONFIG.attendanceWindow.startMin && mins <= CONFIG.attendanceWindow.endMin;
+}
+
+/* ---------- RESULT VIEW ---------- */
+function showResult(p, detail){
+  show("result");
+  $("rTitle").textContent = "Day "+p.day+" · Result — "+(DAY_META[p.day]?DAY_META[p.day].title:"");
+  $("rNet").textContent = p.scoring.net + " / " + p.scoring.maxPossible;
+  $("rCor").textContent = p.totals.correct;
+  $("rWro").textContent = p.totals.wrong;
+  $("rSkip").textContent = p.totals.skipped;
+  $("rAcc").textContent = p.accuracyPct + "%";
+  $("rTime").textContent = fmtClock(p.timeUsedSeconds);
+  const ab = $("attBox");
+  if(p.centumIndex.attendancePresent){
+    ab.className = "att ok";
+    ab.innerHTML = "&#10004; <b>Attendance credited</b> to the Centum Index — submitted at "+p.centumIndex.submittedLocal+" (within 6:00&ndash;8:30&nbsp;AM).";
+  } else {
+    ab.className = "att no";
+    ab.innerHTML = "&#9888; <b>No attendance credit</b> — submitted at "+p.centumIndex.submittedLocal+", outside the 6:00&ndash;8:30&nbsp;AM Centum Index window. Your score still counts.";
+  }
+  // review
+  const box = $("review"); box.innerHTML = "";
+  state.items.forEach((it,i)=>{
+    const d = detail[i];
+    const keys=["A","B","C","D"];
+    let optsHtml = "";
+    it.opts.forEach((o,k)=>{
+      let cls="ro";
+      if(k===it.correctIdx) cls+=" correct";
+      else if(it.chosen===k) cls+=" wrong";
+      optsHtml += '<div class="'+cls+'">'+keys[k]+". "+o+
+        (k===it.correctIdx?'  &#10004;':'')+
+        (it.chosen===k && k!==it.correctIdx?'  &#10008; your answer':'')+'</div>';
+    });
+    const badge = d.outcome==="correct" ? '<span class="tag" style="color:var(--grn)">+1 correct</span>'
+                : d.outcome==="wrong" ? '<span class="tag" style="color:var(--red)">&minus;0.25 wrong</span>'
+                : '<span class="tag">0 skipped</span>';
+    const rev = document.createElement("div");
+    rev.className="rev";
+    rev.innerHTML =
+      '<div class="rq">'+(i+1)+". "+(it.star?'<span class="star">&#9733;</span> ':'')+it.q+
+      '  '+badge+' <span class="tag">'+it.subject+'</span></div>'+
+      optsHtml+
+      '<div class="exp"><b>Why:</b> '+it.exp+'</div>';
+    box.appendChild(rev);
+  });
+  window.scrollTo(0,0);
+}
+
+/* ---------- BACK-END DISPATCH (two-layer CentuMania wiring) ---------- */
+function dispatchToBackend(payload){
+  const hint = $("pushHint");
+  const notes = [];
+  const nodeId = 'daily-test-day-'+payload.day;
+  const authed = !!cmToken();
+
+  if(authed){
+    // Layer 1a — one mcq_attempt per ATTEMPTED question (first-attempt lock is server-side)
+    payload.responses.forEach(r=>{
+      if(r.outcome==='skipped')return;
+      _send('mcq_attempt', nodeId, { question_index:r.seq, is_correct:r.outcome==='correct', node_type:'mastery' });
+    });
+    // Layer 1b — node completion feeds the Centum Index
+    _send('node_completed', nodeId, {
+      total_questions: payload.totals.questions,
+      correct_first_attempt: payload.totals.correct,
+      accuracy_pct: payload.accuracyPct,
+      time_spent_seconds: payload.timeUsedSeconds
+    });
+    // Layer 2 — engagement stream (full attempt summary)
+    cmTrack('test_finish', {
+      day: payload.day, outcome: 'submitted', net: payload.scoring.net, correct: payload.totals.correct,
+      wrong: payload.totals.wrong, skipped: payload.totals.skipped,
+      accuracy_pct: payload.accuracyPct, time_used_seconds: payload.timeUsedSeconds,
+      auto_submitted: payload.autoSubmitted, attendance_present: payload.centumIndex.attendancePresent
+    });
+    notes.push("Centum Index: "+payload.totals.attempted+" attempts + completion sent.");
+  } else {
+    notes.push("Not signed in &mdash; open this test from Modules inside CentuMania to record your score.");
+  }
+
+  // postMessage to parent (viewer shell can react, e.g. refresh progress)
+  if(CONFIG.postMessageEnabled && window.parent && window.parent!==window){
+    try{
+      window.parent.postMessage({ type:"CENTUMANIA_DAILY_TEST_RESULT", payload }, window.location.origin);
+      notes.push("Result posted to CentuMania window.");
+    }catch(e){}
+  }
+
+  // local queue (survives reload — offline resilience)
+  try{
+    const q = JSON.parse(localStorage.getItem("cm_results")||"[]");
+    q.push(payload); localStorage.setItem("cm_results", JSON.stringify(q));
+    notes.push("Saved on this device ("+q.length+" result"+(q.length>1?"s":"")+").");
+  }catch(e){}
+  hint.innerHTML = notes.join("  ");
+}
+
+/* ---------- DOWNLOADS ---------- */
+function download(name, text, type){
+  const b = new Blob([text], {type}); const u = URL.createObjectURL(b);
+  const a = document.createElement("a"); a.href=u; a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(u), 500);
+}
+function toCsv(p){
+  const rows = [["seq","id","subject","star","outcome","marks","chosen","correct"]];
+  p.responses.forEach(r=> rows.push([r.seq,r.id,r.subject,r.star,r.outcome,r.marks,
+    '"'+(r.chosen||"")+'"','"'+r.correct+'"']));
+  rows.push([]); rows.push(["day",p.day]); rows.push(["net",p.scoring.net]);
+  rows.push(["correct",p.totals.correct]); rows.push(["wrong",p.totals.wrong]);
+  rows.push(["skipped",p.totals.skipped]); rows.push(["accuracyPct",p.accuracyPct]);
+  rows.push(["attendancePresent",p.centumIndex.attendancePresent]);
+  rows.push(["submittedAt",p.submittedAt]);
+  return rows.map(r=>r.join(",")).join("\n");
+}
+
+/* ---------- NAV / SCREENS ---------- */
+function show(name){
+  el.home.classList.toggle("hidden", name!=="home");
+  el.test.classList.toggle("hidden", name!=="test");
+  el.result.classList.toggle("hidden", name!=="result");
+}
+function toast(msg){
+  const t=document.createElement("div"); t.className="toast"; t.textContent=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(),2600);
+}
+
+/* ---------- EVENTS ---------- */
+$("prevBtn").onclick = ()=>{ if(state.cur>0){state.cur--; renderQuestion();} };
+$("nextBtn").onclick = ()=>{ if(state.cur<state.items.length-1){state.cur++; renderQuestion();} };
+$("clearBtn").onclick = ()=>{ state.items[state.cur].chosen=null; renderQuestion(); };
+$("markBtn").onclick = ()=>{ const it=state.items[state.cur]; it.marked=!it.marked; renderQuestion(); };
+$("submitBtn").onclick = ()=> submitTest(false);
+$("quitBtn").onclick = ()=>{ if(confirm("Quit this test? Progress will be lost.")){ cmTrack('test_finish',{day:state.day,outcome:'quit',remaining_seconds:state.remaining,answered:state.items.filter(it=>it.chosen!==null).length}); clearInterval(tickHandle); show("home"); } };
+$("againBtn").onclick = ()=> startTest(state.day);
+$("homeBtn").onclick = ()=> show("home");
+$("dlJson").onclick = ()=> download("centumania_day"+state.day+"_result.json", JSON.stringify(state.payload,null,2), "application/json");
+$("dlCsv").onclick  = ()=> download("centumania_day"+state.day+"_result.csv", toCsv(state.payload), "text/csv");
+$("pushBtn").onclick = ()=>{ dispatchToBackend(state.payload); toast("Re-sent result to back-end hooks."); };
+window.addEventListener("beforeunload", e=>{ if(state && !state.submitted){ e.preventDefault(); e.returnValue=""; } });
+window.addEventListener("pagehide", ()=>{ if(state && !state.submitted){ cmBeacon('session_end',{day:state.day,outcome:'abandoned',remaining_seconds:state.remaining,answered:state.items.filter(it=>it.chosen!==null).length}); } });
+
+/* ---------- BOOT ---------- */
+renderHome();
+cmTrack('material_opened',{});
+</script>
+</body>
+</html>

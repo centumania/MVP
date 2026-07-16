@@ -74,9 +74,13 @@ export function middleware(request: NextRequest): NextResponse {
   // Cookie gate: /study/*, /content/*, /pdfs/* require cm_access cookie
   // (set by /api/materials/status after auth + payment check).
   // Excluded: /study/daily-test — this is a Next.js app route that uses JWT auth,
-  // not the cm_access cookie used for static HTML study files.
+  // not the cm_access cookie used for static HTML study files. Must be an EXACT
+  // route match (not a prefix): static files like /study/daily-test-engine.html
+  // share the prefix but need the normal static-file treatment.
+  const isDailyTestAppRoute =
+    pathname === '/study/daily-test' || pathname.startsWith('/study/daily-test/')
   const isCookieGated =
-    (pathname.startsWith('/study/') && !pathname.startsWith('/study/daily-test')) ||
+    (pathname.startsWith('/study/') && !isDailyTestAppRoute) ||
     pathname.startsWith('/content/') ||
     pathname.startsWith('/pdfs/')
 
@@ -92,7 +96,7 @@ export function middleware(request: NextRequest): NextResponse {
     pathname.startsWith('/materials/viewer/') ||
     pathname.startsWith('/materials/mindmap/') ||
     (pathname.startsWith('/materials/') && pathname.split('/').filter(Boolean).length >= 3) ||
-    (pathname.startsWith('/study/') && !pathname.startsWith('/study/daily-test')) ||
+    (pathname.startsWith('/study/') && !isDailyTestAppRoute) ||
     pathname.startsWith('/content/') ||
     pathname.startsWith('/pdfs/')
 

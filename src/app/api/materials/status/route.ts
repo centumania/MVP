@@ -33,21 +33,20 @@ export async function GET(request: NextRequest) {
   let activeDays: number[] = []
   let testLinks: Record<number, string> = {}
 
+  // Unlock days based on the student's own enrollment date (IST UTC+5:30).
+  // Day 1 is available immediately on join. Day N unlocks N-1 days later.
+  // Batch membership is kept for admin/reporting only — it no longer gates content.
+  const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000
+  const todayIST  = new Date(Date.now() + IST_OFFSET_MS).toISOString().slice(0, 10)
+  const todayMs   = new Date(todayIST + 'T00:00:00Z').getTime()
+  const enrollMs  = new Date(enrolledDate + 'T00:00:00Z').getTime()
+  const daysSince = Math.floor((todayMs - enrollMs) / 86_400_000)
+  if (daysSince >= 0) {
+    activeDays = Array.from({ length: daysSince + 1 }, (_, i) => i + 1)
+  }
+
+  // Fetch test links from the DB materials table (batch-scoped, admin-managed)
   if (batch) {
-    // Auto-compute today's batch day in IST (UTC+5:30)
-    const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000
-    const todayIST   = new Date(Date.now() + IST_OFFSET_MS).toISOString().slice(0, 10)
-    const startMs    = new Date(batch.starts_on + 'T00:00:00Z').getTime()
-    const todayMs    = new Date(todayIST        + 'T00:00:00Z').getTime()
-    const daysSince  = Math.floor((todayMs - startMs) / 86_400_000)
-
-    if (daysSince >= 0) {
-      const today = daysSince + 1
-      // All days from Day 1 up to today are accessible
-      activeDays = Array.from({ length: today }, (_, i) => i + 1)
-    }
-
-    // Fetch test links for all days (no expiry filter needed)
     const { data: rows } = await supabase
       .from('materials')
       .select('day_number, test_link')
