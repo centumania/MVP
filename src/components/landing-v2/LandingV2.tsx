@@ -14,6 +14,7 @@ import Nav from './Nav'
 import Hero from './Hero'
 import Problem from './Problem'
 import Features from './Features'
+import KnowledgeUniverse from './KnowledgeUniverse'
 import CentumIndex from './CentumIndex'
 import Refund from './Refund'
 import Testimonials from './Testimonials'
@@ -53,6 +54,7 @@ export default function LandingV2() {
         <Hero />
         <Problem />
         <Features />
+        <KnowledgeUniverse />
         <CentumIndex />
         <Refund />
         <Testimonials />

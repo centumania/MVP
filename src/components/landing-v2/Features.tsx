@@ -220,7 +220,7 @@ export default function Features() {
         <Reveal delay={120}>
           <div className="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-gray-200/70 bg-gray-200/70 sm:grid-cols-4">
             {[
-              [<Calendar key="i" size={18} className="text-sky-600" />, '30 days', 'structured programme'],
+              [<Calendar key="i" size={18} className="text-sky-600" />, '8 subjects', 'one daily syllabus'],
               [<Timer key="i" size={18} className="text-indigo-600" />, '6:00 AM', 'daily exam window'],
               [<Brain key="i" size={18} className="text-emerald-600" />, '1 report', 'AI coaching per exam'],
               [<Trophy key="i" size={18} className="text-amber-500" />, 'Live', 'batch leaderboard'],

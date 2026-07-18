@@ -70,7 +70,7 @@ export default function Closing() {
                   <span className="bg-gradient-to-r from-sky-400 to-emerald-400 bg-clip-text text-transparent">Make it count.</span>
                 </h2>
                 <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-gray-300">
-                  The next 30 days can change the next 30 years. Join the most disciplined
+                  The habits you build now can change the next 30 years. Join the most disciplined
                   aspirants in Puducherry and Tamil Nadu.
                 </p>
                 <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">

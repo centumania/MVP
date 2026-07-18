@@ -98,7 +98,8 @@ export function middleware(request: NextRequest): NextResponse {
     (pathname.startsWith('/materials/') && pathname.split('/').filter(Boolean).length >= 3) ||
     (pathname.startsWith('/study/') && !isDailyTestAppRoute) ||
     pathname.startsWith('/content/') ||
-    pathname.startsWith('/pdfs/')
+    pathname.startsWith('/pdfs/') ||
+    pathname.startsWith('/demo/')   // public sample lessons (interactive HTML, no auth)
 
   const csp = isPermissive ? buildPermissiveCsp() : buildStrictCsp(nonce)
 
@@ -115,7 +116,8 @@ export function middleware(request: NextRequest): NextResponse {
   const isFrameable =
     (pathname.startsWith('/study/') && !pathname.startsWith('/study/daily-test')) ||
     pathname.startsWith('/content/') ||
-    pathname.startsWith('/pdfs/')
+    pathname.startsWith('/pdfs/') ||
+    pathname.startsWith('/demo/')   // public sample lessons are iframed by /demo + the hero
 
   for (const [key, value] of STATIC_HEADERS) {
     if (key === 'X-Frame-Options') {

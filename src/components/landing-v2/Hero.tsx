@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Check, Sparkles, Zap } from './icons'
 import { Reveal } from './ui'
-import NeuralMap from './NeuralMap'
 
 // Founder-offer HARD deadline (IST). This is a real, fixed date — the countdown
 // genuinely ticks down to it and stops at 00 once it passes.
@@ -39,6 +38,7 @@ function useCountdown() {
 
 export default function Hero() {
   const cd = useCountdown()
+  const [showDemo, setShowDemo] = useState(false)
 
   return (
     <section className="relative overflow-hidden pb-16 pt-28 sm:pb-24 sm:pt-36">
@@ -76,9 +76,9 @@ export default function Hero() {
               className="mt-5 text-[40px] font-extrabold leading-[1.06] tracking-tight text-gray-900 sm:text-6xl"
               style={{ letterSpacing: '-0.035em' }}
             >
-              Crack your government exam with{' '}
+              Get ahead of{' '}
               <span className="bg-gradient-to-r from-sky-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
-                daily discipline
+                90% of aspirants
               </span>
             </h1>
           </Reveal>
@@ -91,9 +91,9 @@ export default function Hero() {
 
           <Reveal delay={160}>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-gray-600 sm:text-lg lg:mx-0">
-              A 30-day intensive programme built for India&apos;s competitive government exams. One
-              timed exam every morning, AI-powered coaching after every test, and a live rank that
-              keeps you honest.
+              Most aspirants study hard and still miss the cut. You won&apos;t: one timed test every
+              morning, AI coaching after every attempt, and a live rank that keeps you honest —
+              for SSC, RRB, Banking &amp; TN-Govt exams.
             </p>
           </Reveal>
 
@@ -177,12 +177,12 @@ export default function Hero() {
             {/* Header */}
             <div className="mb-1 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-50 text-sky-600">
                   <Sparkles size={15} />
                 </span>
                 <div>
-                  <div className="text-[13px] font-bold tracking-tight text-gray-900">Your knowledge universe</div>
-                  <div className="text-[11px] font-medium text-gray-500">Every subject you&apos;ll master</div>
+                  <div className="text-[13px] font-bold tracking-tight text-gray-900">Try a real lesson — free</div>
+                  <div className="text-[11px] font-medium text-gray-500">Buddhism &amp; Jainism · no signup</div>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-600 ring-1 ring-emerald-200/70">
@@ -194,31 +194,28 @@ export default function Hero() {
               </span>
             </div>
 
-            {/* 3D neural constellation */}
-            <div className="relative h-[300px] w-full sm:h-[360px]">
-              <NeuralMap />
+            {/* Interactive live demo — click-to-load keeps the landing fast */}
+            <div className="relative h-[320px] w-full overflow-hidden rounded-xl border border-gray-200/70 sm:h-[360px]"
+              style={{ background: 'linear-gradient(150deg, #0f172a 0%, #1e1b4b 100%)' }}>
+              {showDemo ? (
+                <iframe src="/demo/buddhism-jainism.html" title="Sample lesson — Buddhism & Jainism"
+                  className="block h-full w-full" style={{ border: 0 }} />
+              ) : (
+                <button type="button" onClick={() => setShowDemo(true)}
+                  className="group flex h-full w-full flex-col items-center justify-center gap-2.5 px-6 text-center">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform group-hover:scale-110">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#0284c7"><polygon points="8 5 19 12 8 19 8 5" /></svg>
+                  </span>
+                  <span className="text-[14.5px] font-bold text-white">Play the live lesson</span>
+                  <span className="max-w-[16rem] text-[11.5px] leading-relaxed text-white/70">Flashcards, an interactive map &amp; scored MCQs — running right here, no signup.</span>
+                </button>
+              )}
             </div>
 
-            {/* Legend — subject families */}
-            <div className="mt-1 flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1.5">
-              {[
-                ['General Studies', '#0284c7'],
-                ['Aptitude', '#6366f1'],
-                ['Reasoning', '#059669'],
-                ['English', '#d97706'],
-                ['Tamil', '#e11d48'],
-                ['Current Affairs', '#7c3aed'],
-              ].map(([label, color]) => (
-                <span key={label} className="inline-flex items-center gap-1.5 text-[11px] font-medium text-gray-600">
-                  <span className="h-2 w-2 rounded-full" style={{ background: color }} />
-                  {label}
-                </span>
-              ))}
-            </div>
-            <p className="mt-2.5 border-t border-gray-100 pt-2.5 text-center text-[11px] font-medium text-gray-500">
-              One disciplined syllabus for{' '}
-              <span className="font-semibold text-indigo-600">SSC, RRB, Banking &amp; TN exams</span>
-            </p>
+            <Link href="/demo"
+              className="mt-2.5 flex items-center justify-center gap-1.5 rounded-xl border border-gray-200 bg-white py-2.5 text-[13px] font-bold text-gray-800 transition-colors hover:bg-gray-50">
+              Open the full lesson <ArrowRight size={15} />
+            </Link>
           </div>
         </Reveal>
       </div>
