@@ -127,9 +127,49 @@ const MATHS: Course = {
   ],
 }
 
-// Every subject is live. Maths (video course) lives here; the rest are authored
-// from their interactive modules in classroom.authored.ts.
-export const COURSES: Course[] = [MATHS, ...AUTHORED].sort((a, b) => a.order - b.order)
+// ── Reasoning course (the second video subject, alongside Maths) ─────────────
+// Video slots ready for the founder's links; each topic has a written method now.
+const REASONING: Course = {
+  subject: 'Reasoning',
+  slug: 'reasoning',
+  title: 'Logical & Verbal Reasoning',
+  blurb: 'Every reasoning type on the exam — a short video, then the method that cracks it.',
+  emoji: '🧩',
+  accent: '#4F46E5',
+  order: 4,
+  status: 'live',
+  hasVideo: true,
+  lessons: [
+    { id: 'reasoning-analogy', title: 'Analogy & Classification', blurb: 'Spot the relationship, then apply or odd-one-out.', order: 1,
+      explanation: `<h3>Analogy & Classification</h3><p>Both test one skill: identifying the <em>relationship</em> inside a pair or group, then extending it (analogy) or breaking it (odd-one-out).</p><ul><li>Name the exact link — cause–effect, worker–tool, synonym, part–whole — before you look at options.</li><li>Apply the <strong>same</strong> relationship in the same order to the second pair.</li><li>For classification, four share a property and one doesn't — find the shared rule first.</li></ul>` },
+    { id: 'reasoning-series', title: 'Number & Letter Series', blurb: 'Find the pattern in numbers, letters and mixed series.', order: 2,
+      explanation: `<h3>Number & Letter Series</h3><p>Test the gaps between terms first — a constant difference, a ratio, squares/cubes, or an alternating pattern.</p><ul><li>Check <strong>differences</strong>, then <strong>second differences</strong>, then ratios.</li><li>Watch for two interleaved series (alternate terms).</li><li>For letters, convert to position numbers (A=1…Z=26) and treat it as a number series.</li></ul>` },
+    { id: 'reasoning-coding-decoding', title: 'Coding–Decoding', blurb: 'Letter-shift, substitution and number codes.', order: 3,
+      explanation: `<h3>Coding–Decoding</h3><p>A rule hides the message — most often a fixed letter shift, a substitution, or a position/number code.</p><ul><li>Compare the word and its code letter-by-letter to find the shift.</li><li>Common types: <strong>letter-shift</strong> (+1, −2), <strong>substitution</strong>, and <strong>number coding</strong>.</li><li>Write the alphabet with positions to spot ±k shifts instantly.</li></ul>` },
+    { id: 'reasoning-blood-relations', title: 'Blood Relations', blurb: 'Family trees, pointing puzzles and coded relations.', order: 4,
+      explanation: `<h3>Blood Relations</h3><p>Draw a small <em>family tree</em> instead of holding relations in your head — use symbols for male/female and lines for generations.</p><ul><li>Break "pointing" statements (<em>that man's father is my son's father</em>) from the end backwards.</li><li>Mark <strong>+ / −</strong> or ♂/♀ so gender never trips you.</li><li>In coded relations, decode one link at a time.</li></ul>` },
+    { id: 'reasoning-direction', title: 'Direction Sense', blurb: 'Track turns and find distance/direction.', order: 5,
+      explanation: `<h3>Direction Sense</h3><p>Draw every move on paper with N up; each left/right turn is 90°. The answer is usually a straight-line distance or a final direction.</p><ul><li>Use the <strong>Pythagoras</strong> shortcut for net displacement.</li><li>Left/right depends on the direction you are <em>facing</em>, not the page.</li><li>Watch shadow/sunrise questions (sun in east at dawn, west at dusk).</li></ul>` },
+    { id: 'reasoning-ranking', title: 'Ranking & Order', blurb: 'Positions from top/bottom, left/right.', order: 6,
+      explanation: `<h3>Ranking & Order</h3><p>Convert "from the left" and "from the right" into one line, and use the identity <strong>Total = left + right − 1</strong>.</p><ul><li>Rank from top = (Total − rank from bottom) + 1.</li><li>When two ranks overlap, the overlap gives the total.</li><li>Draw the row; don't compute blind.</li></ul>` },
+    { id: 'reasoning-syllogism', title: 'Syllogism', blurb: 'All/Some/No statements and valid conclusions.', order: 7,
+      explanation: `<h3>Syllogism</h3><p>Test conclusions with <em>Venn diagrams</em> — a conclusion is valid only if it holds in <strong>every</strong> possible diagram.</p><ul><li>Draw the least-overlapping case first; if the conclusion fails there, it's false.</li><li>"Some A are B" always allows "Some B are A".</li><li>Check "either–or" pairs when neither single conclusion always holds.</li></ul>` },
+    { id: 'reasoning-seating', title: 'Seating Arrangement & Puzzles', blurb: 'Linear, circular and floor/box puzzles.', order: 8,
+      explanation: `<h3>Seating Arrangement & Puzzles</h3><p>Start from the <em>most definite</em> clue and build outward; track facing direction carefully in circular puzzles.</p><ul><li>In a circle facing centre, left/right are <strong>reversed</strong> vs a line.</li><li>Pencil in fixed positions first, then relative clues.</li><li>For floors/boxes, a top-to-bottom grid beats mental juggling.</li></ul>` },
+    { id: 'reasoning-clock-calendar', title: 'Clock & Calendar', blurb: 'Angles, coincidences and finding the day.', order: 9,
+      explanation: `<h3>Clock & Calendar</h3><p>For clocks, the minute hand gains 5.5° per minute on the hour hand; for calendars, work in <em>odd days</em>.</p><ul><li>Angle between hands = |30H − 5.5M|.</li><li>Hands coincide 11 times every 12 hours.</li><li>Calendar: use odd-days and the leap-year rule (÷4, century ÷400).</li></ul>` },
+    { id: 'reasoning-cubes-dice', title: 'Cubes, Dice & Figures', blurb: 'Painted cubes, dice faces and paper folding.', order: 10,
+      explanation: `<h3>Cubes, Dice & Figures</h3><p>For a painted cube cut into n³ pieces, memorise the corner/edge/face/inner counts; for dice, use the opposite-face rule.</p><ul><li>Corners (3 faces) = 8; edges (2) = 12(n−2); one face = 6(n−2)²; inner (0) = (n−2)³.</li><li>Opposite faces of a standard die sum to 7.</li><li>For folding, track one marked edge through each fold.</li></ul>` },
+    { id: 'reasoning-venn', title: 'Venn Diagrams', blurb: 'Relate groups and read set overlaps.', order: 11,
+      explanation: `<h3>Venn Diagrams</h3><p>Pick the diagram whose overlaps match how the groups relate in the real world (e.g. dog–animal–pet).</p><ul><li>Fully-contained sets nest inside; partly-overlapping sets intersect.</li><li>Disjoint groups (men, women, doctors → careful: doctors overlaps both).</li><li>Read the question's exact wording — "some" vs "all" changes the picture.</li></ul>` },
+    { id: 'reasoning-statement-conclusion', title: 'Statement & Conclusion', blurb: 'Assumptions, inferences and courses of action.', order: 12,
+      explanation: `<h3>Statement & Conclusion</h3><p>Accept only what <em>must</em> follow from the statement — never add outside knowledge.</p><ul><li>An <strong>assumption</strong> is something taken for granted for the statement to make sense.</li><li>A <strong>conclusion</strong> must be directly supported; reject "too strong" options.</li><li>For course-of-action, the action must be practical and clearly address the problem.</li></ul>` },
+  ],
+}
+
+// Every subject is live. Maths & Reasoning are video courses (defined here); the
+// rest are authored from their interactive modules in classroom.authored.ts.
+export const COURSES: Course[] = [MATHS, REASONING, ...AUTHORED].sort((a, b) => a.order - b.order)
 
 export function getCourse(slug: string): Course | undefined {
   return COURSES.find(c => c.slug === slug)

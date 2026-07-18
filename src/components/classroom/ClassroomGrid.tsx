@@ -94,11 +94,11 @@ export default function ClassroomGrid() {
             CentuMania · Classroom
           </p>
           <h1 className="text-[28px] font-extrabold leading-tight" style={{ color: CT.INK_SOFT, letterSpacing: '-0.02em' }}>
-            Video Classroom
+            Classroom
           </h1>
           <p className="text-[13.5px] mt-2 leading-relaxed max-w-[54ch]" style={{ color: CT.MUTED }}>
-            Pick a subject. Each topic has a short <span className="font-semibold" style={{ color: CT.INK_SOFT }}>video</span> and
-            a clear <span className="font-semibold" style={{ color: CT.INK_SOFT }}>explanation</span> — mark each one complete as you go.
+            Pick a subject. Each topic has a clear <span className="font-semibold" style={{ color: CT.INK_SOFT }}>explanation</span> and
+            hands-on <span className="font-semibold" style={{ color: CT.INK_SOFT }}>practice</span> — mark each one complete as you go.
           </p>
         </div>
 
