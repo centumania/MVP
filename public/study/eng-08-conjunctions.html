@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>SSC English · Articles (A / An / The)</title>
+<title>SSC English · Conjunctions & Sentence Correction</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -189,7 +189,7 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <body>
 <div class="shell">
 <nav class="topbar">
-  <div class="logo"><span class="logo-dot"></span>SSC English — Articles (A / An / The)</div>
+  <div class="logo"><span class="logo-dot"></span>SSC English — Conjunctions & Sentence Correction</div>
   <div class="nav-stats">
     <div class="stat xp">XP <b id="hXP">0</b></div>
     <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
@@ -220,263 +220,205 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <script>
 
 const DIAGRAMS = {
-"articles-map": `<svg viewBox="0 0 760 170" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
-<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(61,214,140,.08)" stroke="#3dd68c" stroke-width="1"/>
-<text x="380" y="22" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">ARTICLE DECISION MAP — A / AN / THE / ZERO</text>
-<rect x="4" y="36" width="246" height="128" rx="8" fill="rgba(34,211,200,.06)" stroke="#22d3c8" stroke-width="1.2"/>
-<text x="127" y="56" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">A / AN</text>
-<text x="127" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Singular · first mention</text>
-<text x="127" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">AN = vowel SOUND</text>
-<text x="127" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">an hour · an MBA · an heir</text>
-<text x="127" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">A = consonant SOUND</text>
-<text x="127" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">a university · a one-rupee</text>
-<rect x="258" y="36" width="246" height="128" rx="8" fill="rgba(61,214,140,.06)" stroke="#3dd68c" stroke-width="1.2"/>
-<text x="381" y="56" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">THE</text>
-<text x="381" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Second mention · unique</text>
-<text x="381" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Superlatives · ordinals</text>
-<text x="381" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Rivers · ranges · instruments</text>
-<text x="381" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">the sun · the best · the Ganga</text>
-<text x="381" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">the USA · the Himalayas</text>
-<rect x="512" y="36" width="244" height="128" rx="8" fill="rgba(240,107,107,.06)" stroke="#f06b6b" stroke-width="1.2"/>
-<text x="634" y="56" fill="#f06b6b" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">ZERO (no article)</text>
-<text x="634" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Languages · meals · subjects</text>
-<text x="634" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Countries · abstract nouns</text>
-<text x="634" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">After elected / appointed</text>
-<text x="634" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">by bus · go to bed</text>
-<text x="634" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Honesty · English · lunch</text>
+"con-map": `<svg viewBox="0 0 760 140" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(240,188,69,.08)" stroke="#f0bc45" stroke-width="1"/>
+<text x="380" y="22" fill="#f0bc45" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">CORRELATIVE PAIRS — MATCH THEM EXACTLY</text>
+<rect x="4" y="36" width="185" height="96" rx="8" fill="rgba(61,214,140,.06)" stroke="#3dd68c" stroke-width="1"/>
+<text x="96" y="58" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Either … or</text>
+<text x="96" y="78" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Neither … nor</text>
+<text x="96" y="98" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">verb with B</text>
+<text x="96" y="118" fill="#f06b6b" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT neither…or</text>
+<rect x="197" y="36" width="185" height="96" rx="8" fill="rgba(34,211,200,.06)" stroke="#22d3c8" stroke-width="1"/>
+<text x="289" y="58" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">No sooner … than</text>
+<text x="289" y="78" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Hardly … when</text>
+<text x="289" y="98" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Past Perfect + inversion</text>
+<text x="289" y="118" fill="#f06b6b" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">had he entered…</text>
+<rect x="390" y="36" width="185" height="96" rx="8" fill="rgba(240,188,69,.06)" stroke="#f0bc45" stroke-width="1"/>
+<text x="482" y="58" fill="#f0bc45" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Both … and</text>
+<text x="482" y="78" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Not only … but also</text>
+<text x="482" y="98" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">plural / parallel</text>
+<text x="482" y="118" fill="#f06b6b" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">sings…dances</text>
+<rect x="583" y="36" width="173" height="96" rx="8" fill="rgba(167,139,250,.06)" stroke="#a78bfa" stroke-width="1"/>
+<text x="669" y="58" fill="#a78bfa" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Lest … should</text>
+<text x="669" y="78" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Although … yet</text>
+<text x="669" y="98" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">no 'not' · no 'but'</text>
+<text x="669" y="118" fill="#f06b6b" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">lest you should fall</text>
 </svg>`
 };
 
 const CHAPTERS = [
 
-{id:"art-foundations",title:"Foundations",icon:"📰",nodes:[
+{id:"con-core",title:"Conjunction Rules",icon:"🧷",nodes:[
 
- {id:"art-aan",title:"A vs AN — The Sound Rule",xp:20,type:"regular",diag:"articles-map",
+ {id:"con-correlative",title:"Correlative Pairs",xp:20,type:"regular",diag:"con-map",
   facts:[
-   "<b>A / AN depends on SOUND, not spelling</b> — this is the single most tested article rule in SSC",
-   "<b>AN</b> before a vowel SOUND: <code>an</code> apple, <code>an</code> hour, <code>an</code> honest man, <code>an</code> heir (silent h)",
-   "<b>AN</b> before letters pronounced with a vowel sound: <code>an</code> MBA, <code>an</code> MP, <code>an</code> MLA, <code>an</code> X-ray, <code>an</code> SSC exam",
-   "<b>A</b> before a consonant SOUND even if the word starts with a vowel LETTER: <code>a</code> university, <code>a</code> European, <code>a</code> union, <code>a</code> useful book (all 'yu' sound)",
-   "<b>A</b> before 'one-' words: <code>a</code> one-rupee note, <code>a</code> one-eyed man (the 'w/won' sound)",
-   "<b>A / AN + adjective + noun</b> → decide by the ADJECTIVE's sound: <b>an</b> old man, <b>a</b> beautiful actress, <b>an</b> honest officer"
+   "<b>Either … or / Neither … nor</b> → verb agrees with the closer (B) subject; 'neither' pairs with 'nor' (not 'or')",
+   "<b>Both … and</b> → always a PLURAL verb: 'Both Ram and Sita ARE present'",
+   "<b>Not only … but also</b> → parallel structure (same part of speech on both sides)",
+   "<b>Whether … or</b> → two alternatives: 'Tell me whether you agree or not'",
+   "<b>So … that / Such … that</b> → result: 'He was so tired that he slept'; 'It was such a hot day that we stayed in'",
+   "<b>As … as</b> (equal) / <b>So … as</b> (negative comparison): 'She is not so tall as her sister'"
   ],
-  table:{h:["USE A (consonant sound)","USE AN (vowel sound)"],r:[
-   ["a university (yu-)","an umbrella (u-)"],
-   ["a European (yu-)","an honest man (silent h)"],
-   ["a one-rupee note (w-)","an hour (silent h)"],
-   ["a useful book (yu-)","an MBA / an MP (em-)"],
-   ["a unicorn (yu-)","an heir (silent h)"],
-   ["a historic event (h pronounced)","an X-ray (ex-)"]
+  table:{h:["Pair","Rule","Example"],r:[
+   ["Either…or","verb with B","Either he or they ARE right"],
+   ["Neither…nor","'nor' not 'or'","Neither Ram nor Shyam was there"],
+   ["Both…and","plural verb","Both Ram and Sita ARE here"],
+   ["Not only…but also","parallel structure","not only sings but also dances"],
+   ["So…that / Such…that","result","so tired that he slept"],
+   ["Whether…or","alternatives","whether you agree or not"]
   ]},
   mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"'Honest' has a silent H → vowel sound → AN."},
-   {q:"She is ___ European working in India.",o:["a","an","the","✗ (no article)"],a:0,e:"'European' begins with a 'yu' consonant sound → A."},
-   {q:"He has ___ MBA degree from IIM.",o:["a","an","the","✗ (no article)"],a:1,e:"'MBA' = 'em-bee-ay' → begins with a vowel sound → AN."},
-   {q:"Please give me ___ one-rupee coin.",o:["a","an","the","✗ (no article)"],a:0,e:"'One' begins with a 'w' (won) sound = consonant sound → A."},
-   {q:"It is ___ useful book for beginners.",o:["a","an","the","✗ (no article)"],a:0,e:"'Useful' = 'yu-' consonant sound → A."},
-   {q:"He is ___ heir to a large fortune.",o:["a","an","the","✗ (no article)"],a:1,e:"'Heir' has a silent H → vowel sound → AN."},
-   {q:"They lived through ___ historic event.",o:["a","an","the","✗ (no article)"],a:0,e:"In 'historic' the H is pronounced → consonant sound → A."}
+   {q:"Which is CORRECT?",o:["Neither Ram or Shyam came","Neither Ram nor Shyam came","Either Ram nor Shyam came","Neither Ram and Shyam came"],a:1,e:"'Neither' pairs with 'nor'."},
+   {q:"Both Ram and Shyam ___ my friends.",o:["is","was","are","has"],a:2,e:"'Both…and' takes a plural verb → ARE."},
+   {q:"Which shows correct parallel structure?",o:["She not only sings but also dancing","She not only sings but also dances","She sings not only but also dances","She not only sing but also dance"],a:1,e:"Parallel: sings / dances."},
+   {q:"He was ___ tired ___ he fell asleep instantly.",o:["so / that","such / that","as / as","too / to"],a:0,e:"'So + adjective + that' → result."},
+   {q:"It was ___ a hot day ___ we stayed indoors.",o:["so / that","such / that","as / that","too / that"],a:1,e:"'Such + (a) noun + that' → result."}
   ]},
 
- {id:"art-the",title:"THE — The Definite Article",xp:20,type:"regular",
+ {id:"con-nosooner",title:"No sooner / Hardly / Lest / Although",xp:20,type:"trap",
   facts:[
-   "<b>Second mention</b> of a noun: 'I saw a dog. THE dog was black.'",
-   "<b>Unique things</b>: the sun, the moon, the sky, the earth, the world, the universe",
-   "<b>Superlatives &amp; ordinals</b>: the best, the tallest, the first, the second, the last",
-   "<b>Rivers, oceans, seas</b>: the Ganga, the Nile, the Pacific, the Arabian Sea · <b>ranges</b>: the Himalayas, the Alps (NOT single peaks)",
-   "<b>Holy books</b>: the Gita, the Bible, the Quran · <b>newspapers</b>: the Hindu, the Times of India · <b>named ships/trains</b>: the Rajdhani, the Titanic",
-   "<b>Musical instruments</b>: play the violin, the piano · <b>directions</b>: the North, the East · <b>parallel comparatives</b>: THE more you read, THE better"
+   "<b>No sooner … than</b> — Past Perfect + inversion: 'No sooner HAD he entered THAN the phone rang'",
+   "<b>Hardly / Scarcely … when/before</b> — Past Perfect + inversion, but with 'when' (NOT 'than'): 'Hardly HAD he sat down WHEN she called'",
+   "<b>Lest … should</b> — 'lest' means 'for fear that'; always followed by 'should', NEVER 'not': 'Walk carefully lest you SHOULD fall'",
+   "<b>Although / Though</b> → NO 'but' (use 'yet' or nothing): 'Although he is rich, (yet) he is not happy'",
+   "The inversion trap: after 'No sooner / Hardly / Scarcely', the auxiliary comes BEFORE the subject",
+   "'No sooner did he enter than…' is also acceptable (do-inversion), but 'No sooner he entered' is wrong"
   ],
-  table:{h:["Use THE for","Example"],r:[
-   ["Second mention","I saw a dog. THE dog barked."],
-   ["Unique in the world","the sun, the moon, the earth"],
-   ["Superlatives / ordinals","the best, the first, the last"],
-   ["Musical instruments","He plays THE violin"],
-   ["Rivers / ranges / seas","the Ganga, the Himalayas, the Pacific"],
-   ["Holy books / newspapers","the Gita, the Hindu"],
-   ["Political / govt bodies","the Parliament, the Cabinet"]
+  table:{h:["Structure","Correct form"],r:[
+   ["No sooner…than","No sooner had he come than it rained"],
+   ["Hardly…when","Hardly had she left when it rained"],
+   ["Scarcely…when","Scarcely had I slept when he called"],
+   ["Lest…should","lest you should fall"],
+   ["Although…(yet)","Although tired, yet he worked"]
   ]},
   mcqs:[
-   {q:"She plays ___ piano beautifully.",o:["a","an","the","✗ (no article)"],a:2,e:"Musical instruments always take THE."},
-   {q:"___ Himalayas are in the north of India.",o:["A","An","The","✗ (no article)"],a:2,e:"Mountain RANGES take THE (single peaks take none)."},
-   {q:"It is ___ most difficult question in the paper.",o:["a","an","the","✗ (no article)"],a:2,e:"Superlatives take THE → 'the most difficult'."},
-   {q:"___ Ganga is a holy river.",o:["A","An","The","✗ (no article)"],a:2,e:"Names of rivers take THE."},
-   {q:"The sun rises in ___ east.",o:["a","an","the","✗ (no article)"],a:2,e:"Cardinal directions take THE → 'the east'."},
-   {q:"I read ___ Times of India every morning.",o:["a","an","the","✗ (no article)"],a:2,e:"Newspapers take THE."},
-   {q:"___ more you practise, ___ better you become.",o:["The / the","A / a","No article / the","The / a"],a:0,e:"Parallel comparatives take THE...THE."}
-  ]},
-
- {id:"art-zero",title:"Zero Article — When to Use Nothing",xp:20,type:"regular",
-  facts:[
-   "<b>NO article</b> with proper nouns (Ram), countries (India, France), cities (Delhi), single mountains (Mount Everest), single lakes (Dal Lake)",
-   "<b>NO article</b> with languages (English), subjects (Mathematics), meals (breakfast, lunch), diseases (malaria, diabetes)",
-   "<b>NO article</b> with abstract/general nouns: 'Honesty is the best policy', 'Knowledge is power', 'Love is blind'",
-   "<b>NO article</b> with plural general nouns: 'Dogs are loyal', 'Man is mortal'",
-   "<b>THE + adjective = class of people</b>: the poor, the rich, the blind, the young, the dead",
-   "<b>Institution for its purpose</b> → no article: in hospital (as patient), in school, in prison, go to bed, go to work"
-  ],
-  table:{h:["No article with","Example"],r:[
-   ["Languages","She speaks English & French"],
-   ["Subjects","I study Mathematics"],
-   ["Meals","Have lunch, eat breakfast"],
-   ["Diseases","He has malaria / diabetes"],
-   ["Single mountains / lakes","Mount Everest, Dal Lake"],
-   ["Abstract nouns (general)","Knowledge is power"],
-   ["by + transport","by bus, by train, by air"]
-  ]},
-  mcqs:[
-   {q:"She speaks ___ French and German fluently.",o:["a","the","✗ (no article)","an"],a:2,e:"Languages take no article."},
-   {q:"He had ___ lunch at noon.",o:["a","the","✗ (no article)","an"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"He travelled ___ train to Mumbai.",o:["by (no article)","in the","on a","with the"],a:0,e:"'By + transport' takes no article → 'by train'."},
-   {q:"___ knowledge is ___ power.",o:["The / the","A / a","✗ / ✗ (no article)","The / a"],a:2,e:"Abstract nouns used generally take no article."},
-   {q:"___ Mount Everest is the highest peak.",o:["The","A","An","✗ (no article)"],a:3,e:"Single mountains take no article (ranges take THE)."},
-   {q:"He suffers from ___ malaria.",o:["a","the","an","✗ (no article)"],a:3,e:"Names of diseases take no article."},
-   {q:"___ poor need our help.",o:["A","An","The","✗ (no article)"],a:2,e:"THE + adjective = a whole class of people → 'The poor'."}
+   {q:"___ had he entered the hall ___ the lights went out.",o:["No sooner / when","No sooner / than","Hardly / than","Scarcely / than"],a:1,e:"'No sooner' pairs with 'than'."},
+   {q:"Hardly had she finished speaking ___ the audience applauded.",o:["than","when","then","but"],a:1,e:"'Hardly/Scarcely' pairs with 'when'."},
+   {q:"Walk carefully lest you ___ fall.",o:["will","should","would","may"],a:1,e:"'Lest' is always followed by 'should'."},
+   {q:"Which is CORRECT?",o:["Although he is rich, but he is unhappy","Although he is rich, yet he is unhappy","Although he is rich but unhappy","Though rich, but unhappy"],a:1,e:"'Although' takes no 'but'; 'yet' or nothing is fine."},
+   {q:"Choose the correct form:",o:["No sooner he entered than it rained","No sooner had he entered than it rained","No sooner he had entered when it rained","No sooner he entered when it rained"],a:1,e:"Inversion + past perfect + 'than'."}
   ]}
 ]},
 
-{id:"art-special",title:"Special Rules & Traps",icon:"⚠️",nodes:[
+{id:"con-correction",title:"Sentence Correction",icon:"✂️",nodes:[
 
- {id:"art-specialrules",title:"Special Rules 5A–5G",xp:20,type:"regular",
+ {id:"con-redundancy",title:"Redundancy, Double Negatives & Comparatives",xp:20,type:"regular",
   facts:[
-   "<b>5A</b> — A/AN + adjective + noun → decide by the adjective's sound: 'an old man', 'a beautiful actress'",
-   "<b>5B</b> — Double article NEVER used: 'the a book' ✗, 'a the book' ✗",
-   "<b>5C</b> — Predicative use after elected/appointed/made/chosen → no article: 'He was elected President', 'She became captain'",
-   "<b>5D</b> — 'Kind of / Sort of / Type of' → no article after: 'What kind of man is he?' (not 'a man')",
-   "<b>5E</b> — By + transport → no article: by bus / by train / by air (BUT 'in the car / on the bus' when specific)",
-   "<b>5F</b> — In + institution for its purpose → no article: 'He is in hospital' (patient) vs 'in the hospital' (visiting); same for school/church/prison",
-   "<b>5G</b> — Fixed phrases: go to bed, go to school, go to work, at home, at night, in fact"
+   "<b>Double negatives</b>: two negatives = positive → use the 'any' series: 'I don't know NOTHING' → 'I don't know ANYTHING'",
+   "<b>Redundancy</b>: returned BACK → returned; descended DOWN → descended; advanced FORWARD → advanced; MORE superior → superior; END result → result",
+   "<b>Absolute adjectives</b> take no degree: 'very unique' → unique; 'very excellent' → excellent; 'more perfect' → perfect",
+   "<b>No double comparative</b>: 'more smarter' → smarter; 'more better' → better",
+   "<b>No double superlative</b>: 'most tallest' → tallest; 'most best' → best",
+   "<b>Of the two</b> = comparative: 'the better of the two' (NOT 'the best of the two')"
   ],
-  table:{h:["Rule","Wrong","Correct"],r:[
-   ["Elected + post","the President (after elected)","elected President"],
-   ["Kind of","kind of a man","kind of man"],
-   ["By transport","by the train","by train"],
-   ["Institution (purpose)","in the prison (as inmate)","in prison"],
-   ["Fixed phrase","go to the bed","go to bed"],
-   ["Double article","a the book","a book / the book"]
+  table:{h:["Wrong","Correct"],r:[
+   ["returned back","returned"],
+   ["more superior","superior"],
+   ["very unique","unique"],
+   ["more smarter","smarter"],
+   ["most tallest","tallest"],
+   ["best of the two","better of the two"]
   ]},
   mcqs:[
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After 'elected/appointed', the post takes no article."},
-   {q:"What kind of ___ man is he?",o:["a","an","the","✗ (no article)"],a:3,e:"'Kind of' takes no article after it."},
-   {q:"He is ___ hospital recovering from surgery. (as patient)",o:["in (no article)","in the","in a","at the"],a:0,e:"Institution for its purpose → 'in hospital' (no article)."},
-   {q:"She became ___ captain of the team.",o:["a","an","the","✗ (no article)"],a:3,e:"Predicative post after 'became' → no article."},
-   {q:"Children go to ___ bed early.",o:["a","the","✗ (no article)","an"],a:2,e:"Fixed phrase 'go to bed' → no article."},
-   {q:"He was old ___ man with grey hair. Choose the correct article.",o:["a","an","the","✗"],a:1,e:"A/AN + adjective → decide by adjective sound; 'old' = vowel sound → 'an old man'."}
+   {q:"Correct: 'She is more wiser than her colleague.'",o:["more wise","wiser","most wiser","more wisely"],a:1,e:"No double comparative → 'wiser'."},
+   {q:"Correct: 'He returned back to his hometown.'",o:["returned back","returned","return back","returned again"],a:1,e:"'Returned' already means 'back'."},
+   {q:"Correct: 'This is a very unique design.'",o:["very unique","unique","more unique","most unique"],a:1,e:"'Unique' is absolute — no degree word."},
+   {q:"Correct: 'He is the best player of the two.'",o:["best","better","more good","goodest"],a:1,e:"Of two → comparative → 'the better'."},
+   {q:"Correct: 'I don't know nothing about it.'",o:["don't know nothing","don't know anything","know nothing not","not know nothing"],a:1,e:"Avoid double negative → 'don't know anything'."},
+   {q:"Correct: 'He is more superior to all his colleagues.'",o:["more superior","superior","most superior","superiors"],a:1,e:"'Superior' is already comparative."}
   ]},
 
- {id:"art-country",title:"THE with Countries & Groups",xp:20,type:"regular",
+ {id:"con-adjadv",title:"Adjective/Adverb, Modifiers & Infinitives",xp:20,type:"regular",
   facts:[
-   "<b>Most countries → NO article</b>: India, France, Japan, China, Brazil, Russia",
-   "<b>Plural / union names → THE</b>: the USA, the UK, the UAE, the Netherlands, the Philippines",
-   "<b>Reason</b>: these are plural words or abbreviated union names (United States, United Kingdom)",
-   "<b>Groups of islands → THE</b>: the Andamans, the Maldives, the West Indies",
-   "<b>Mountain ranges → THE</b>: the Himalayas, the Alps, the Andes (single peaks → none)",
-   "<b>Deserts, seas, oceans, canals → THE</b>: the Sahara, the Pacific, the Suez Canal"
+   "<b>Adverb after a verb</b>: 'sings very good' → 'sings very well'; 'speaks fluent' → 'speaks fluently'",
+   "<b>Adjective after a linking verb</b> (look/seem/feel/become): 'She looks beautifully' → 'She looks beautiful'",
+   "<b>Dangling/misplaced modifier</b>: the participle phrase must refer to the SUBJECT of the main clause",
+   "'Walking down the road, the trees looked beautiful' → 'Walking down the road, I found the trees beautiful'",
+   "<b>Causatives (make/let)</b> + bare infinitive: 'made me to wait' → 'made me wait'; 'let me to go' → 'let me go'",
+   "<b>had better / would rather</b> + bare infinitive: 'had better to go' → 'had better go'; 'would rather to sleep' → 'would rather sleep'"
   ],
-  table:{h:["THE with","Reason / Example"],r:[
-   ["the USA","Plural (United States)"],
-   ["the UK","Union name"],
-   ["the Netherlands","Plural word"],
-   ["the Philippines","Plural word"],
-   ["the Maldives","Group of islands"],
-   ["the Sahara / the Pacific","Deserts, oceans"]
+  table:{h:["Wrong","Correct"],r:[
+   ["sings very good","sings very well"],
+   ["speaks English fluent","speaks English fluently"],
+   ["She looks beautifully","She looks beautiful"],
+   ["made me to wait","made me wait"],
+   ["let me to go","let me go"],
+   ["had better to go","had better go"]
   ]},
   mcqs:[
-   {q:"___ Netherlands is a beautiful country.",o:["A","An","The","✗ (no article)"],a:2,e:"'Netherlands' is a plural name → THE."},
-   {q:"He works in ___ USA.",o:["a","an","the","✗ (no article)"],a:2,e:"'USA' (United States, plural) → THE."},
-   {q:"She visited ___ India last year.",o:["the","a","an","✗ (no article)"],a:3,e:"Most countries take no article → 'India'."},
-   {q:"They sailed to ___ Maldives.",o:["a","an","the","✗ (no article)"],a:2,e:"Groups of islands take THE."},
-   {q:"___ Sahara is the largest hot desert.",o:["A","An","The","✗ (no article)"],a:2,e:"Deserts take THE."},
-   {q:"He climbed ___ Mount Fuji.",o:["the","a","an","✗ (no article)"],a:3,e:"Single mountains take no article."}
-  ]},
+   {q:"Correct: 'She speaks very fluent English.'",o:["fluent","fluently","more fluent","fluentness"],a:1,e:"Adverb modifies the verb → 'fluently'."},
+   {q:"Correct: 'She looks very beautifully today.'",o:["beautifully","beautiful","more beautifully","beauty"],a:1,e:"Linking verb 'looks' + adjective → 'beautiful'."},
+   {q:"Correct: 'She made him to apologise in public.'",o:["to apologise","apologise","apologising","apologised"],a:1,e:"Causative 'make' + bare infinitive → 'made him apologise'."},
+   {q:"Correct: 'He would rather to stay at home.'",o:["to stay","stay","staying","stayed"],a:1,e:"'Would rather' + bare infinitive → 'rather stay'."},
+   {q:"Correct: 'Walking down the street, the houses were old.'",o:["the houses were old","I found the houses old","houses looked old","the houses are old"],a:1,e:"The participle must refer to the subject → 'I found the houses old'."},
+   {q:"Correct: 'Having finished the exam, the paper was submitted.'",o:["the paper was submitted","he submitted the paper","the paper submitted","paper is submitted"],a:1,e:"Dangling modifier → 'he submitted the paper'."}
+  ]}
+]},
 
- {id:"art-traps",title:"Trap Sheet — SSC Favourites",xp:20,type:"trap",
+{id:"con-pyq",title:"Traps & PYQ",icon:"🎯",nodes:[
+
+ {id:"con-traps",title:"Trap Sheet — Conjunctions & Correction",xp:20,type:"trap",
   traps:[
-   "<b>a honest man</b> → <b>an honest man</b> (H silent = vowel sound)",
-   "<b>a MBA degree</b> → <b>an MBA degree</b> (em = vowel sound)",
-   "<b>an uniform</b> → <b>a uniform</b> (yu = consonant sound)",
-   "<b>an European</b> → <b>a European</b> (yu = consonant sound)",
-   "<b>an one-time offer</b> → <b>a one-time offer</b> (w sound)",
-   "<b>The gold is precious</b> → <b>Gold is precious</b> (general abstract = no article)",
-   "<b>I play violin</b> → <b>I play the violin</b> (instruments need THE)",
-   "<b>The Mount Everest</b> → <b>Mount Everest</b> (single mountain = no article)",
-   "<b>He was the elected President</b> → <b>He was elected President</b> (after elected = no article)",
-   "<b>I had the lunch</b> → <b>I had lunch</b> (meals = no article)",
-   "<b>The Sun rises in East</b> → <b>in the East</b> (cardinal directions need THE)",
-   "<b>The more harder you try</b> → <b>The harder you try</b> (no double comparative)"
+   "<b>No sooner he entered than</b> → <b>No sooner had he entered than</b>",
+   "<b>Hardly … than</b> → <b>Hardly … when</b>",
+   "<b>Lest he should not forget</b> → <b>lest he should forget</b>",
+   "<b>Although … but</b> → drop 'but' (use 'yet' or nothing)",
+   "<b>Both … as well as</b> → <b>Both … and</b>",
+   "<b>Neither he or she</b> → <b>neither he nor she</b>",
+   "<b>She not only sings but also dancing</b> → <b>but also dances</b>",
+   "<b>He is more superior</b> → <b>superior</b>",
+   "<b>She sings very good</b> → <b>very well</b>",
+   "<b>He is the best of the two</b> → <b>the better of the two</b>"
   ],
   mcqs:[
-   {q:"Which sentence is CORRECT?",o:["He is a honest man","She plays violin well","Mount Everest is the highest peak in the world","He speaks the English"],a:2,e:"Superlative + unique world → 'the highest peak in the world'. Others: an honest, the violin, English."},
-   {q:"Spot the error: 'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE → 'the violin'."},
-   {q:"Spot the error: 'He is (A) a best (B) student in (C) the class.'",o:["A → the best","B","C","No error"],a:0,e:"Superlatives need THE → 'the best student'."},
-   {q:"Which is WRONG?",o:["The Ganga is a holy river","Honesty is the best policy","He had the lunch at noon","The USA is powerful"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"Spot the error: 'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = yu (consonant) sound → 'A European'."},
-   {q:"Which is CORRECT?",o:["He was the elected chairman","The gold is a precious metal","I saw a unique painting","He plays cricket with the bat"],a:2,e:"'Unique' = yu sound → 'a unique painting'. Others: elected chairman (no 'the'), Gold (no 'the'), cricket with a bat."}
-  ]}
-]},
-
-{id:"art-pyq",title:"PYQ Practice",icon:"🎯",nodes:[
-
- {id:"art-fill",title:"Fill in the Blank — 25 PYQ",xp:20,type:"regular",
-  facts:[
-   "Practice from the 25-question SSC CGL exercise. For each blank pick a / an / the / ✗ (no article).",
-   "Apply the checklist: vowel SOUND? · second mention? · unique? · superlative? · language/meal/subject? · after elected?",
-   "Do all questions in the Test tab, then review the explanations tied to each rule."
-  ],
-  mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H = vowel sound → AN."},
-   {q:"I go to ___ school every day.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → no article."},
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After elected → no article."},
-   {q:"She is ___ heir to the throne.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H → vowel sound → AN."},
-   {q:"He went to ___ hospital to visit his friend.",o:["a","an","the","✗ (no article)"],a:2,e:"Visiting (not as patient) → 'the hospital'."},
-   {q:"He travelled by ___ train to Mumbai.",o:["a","an","the","✗ (no article)"],a:3,e:"By + transport → no article."},
-   {q:"He was sent to ___ prison for theft.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"I saw ___ dog. ___ dog was barking loudly.",o:["a / The","the / a","an / The","a / a"],a:0,e:"First mention → A; second mention → THE."},
-   {q:"He is ___ unique artist.",o:["a","an","the","✗ (no article)"],a:0,e:"'Unique' = yu sound → A."},
-   {q:"Mount Everest is ___ highest peak in ___ world.",o:["the / the","a / the","the / a","a / a"],a:0,e:"Superlative → THE; unique world → THE."},
-   {q:"He is ___ IAS officer from Kerala.",o:["a","an","the","✗ (no article)"],a:1,e:"'IAS' = 'eye-ay-es' → vowel sound → AN."},
-   {q:"___ Gita is ___ holy book of Hindus.",o:["The / a","A / the","The / the","A / a"],a:0,e:"Holy book name → THE Gita; first mention 'a holy book'."}
+   {q:"Spot the error: 'No sooner (A) he entered (B) than the phone (C) rang.'",o:["A","he entered → had he entered","C","No error"],a:1,e:"Inversion + past perfect."},
+   {q:"Spot the error: 'Lest you (A) should not (B) fall, (C) walk slowly.'",o:["A","should not → should","C","No error"],a:1,e:"'Lest' takes no 'not'."},
+   {q:"Spot the error: 'Both Ram (A) as well as (B) Shyam (C) are here.'",o:["A","as well as → and","C","No error"],a:1,e:"'Both … and' (not 'as well as')."},
+   {q:"Spot the error: 'Hardly (A) had she (B) sat down (C) than the bell rang.'",o:["A","B","than → when","No error"],a:2,e:"'Hardly … when' (not 'than')."},
+   {q:"Spot the error: 'Although (A) he tried hard, (B) but he (C) failed.'",o:["A","B","but → (drop it)","No error"],a:2,e:"'Although' takes no 'but'."},
+   {q:"Spot the error: 'This is (A) a very (B) unique (C) design.'",o:["A","very unique → unique","C","No error"],a:1,e:"'Unique' is absolute."}
   ]},
 
- {id:"art-error",title:"Find the Error — Articles",xp:20,type:"trap",
+ {id:"con-fix",title:"Identify & Correct — 30 PYQ",xp:20,type:"regular",
   facts:[
-   "SSC error-spotting: the sentence is split into parts (A)(B)(C); find the part with the article error.",
-   "Article errors are ~20% of all SSC error-spotting questions — always scan articles first.",
-   "Check: A/AN by sound · THE for superlatives/instruments/rivers/ranges · zero article for meals/languages/after elected."
+   "From the 30-question SSC exercise. Identify and correct the error in each sentence.",
+   "Scan for: correlative pairs, redundancy, double comparatives, adjective/adverb, causatives.",
+   "'No improvement'-style: some sentences may already be correct."
   ],
   mcqs:[
-   {q:"'He is (A) a best student (B) in (C) the class.'",o:["A → the best student","B","C","No error"],a:0,e:"Superlative needs THE."},
-   {q:"'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE."},
-   {q:"'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = consonant (yu) sound → A."},
-   {q:"'The Nile (A) is in (B) the Africa. (C)'",o:["A","B","C → in Africa","No error"],a:2,e:"Country/continent names take no article → 'in Africa'."},
-   {q:"'He was (A) sent to (B) the prison (C) for theft.'",o:["A","B","C → to prison","No error"],a:2,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"'I had (A) the lunch (B) with (C) my friends.'",o:["A","B → had lunch","C","No error"],a:1,e:"Meals take no article → 'had lunch'."},
-   {q:"'She speaks (A) the English (B) and (C) French.'",o:["A","B → English","C","No error"],a:1,e:"Languages take no article → 'English'."}
+   {q:"Correct: 'Neither the teacher or the students were present.'",o:["or → nor","were → was","students → student","No error"],a:0,e:"'Neither … nor'."},
+   {q:"Correct: 'He is more superior to all his colleagues.'",o:["more superior → superior","to → than","all → every","No error"],a:0,e:"'Superior' is already comparative."},
+   {q:"Correct: 'She looks very beautifully today.'",o:["looks → is looking","beautifully → beautiful","very → too","No error"],a:1,e:"Linking verb + adjective."},
+   {q:"Correct: 'He would rather to stay at home.'",o:["rather → sooner","to stay → stay","home → house","No error"],a:1,e:"'Would rather' + bare infinitive."},
+   {q:"Correct: 'Lest he should not forget, I reminded him.'",o:["should not → should","reminded → remind","Lest → Unless","No error"],a:0,e:"No 'not' after 'lest'."},
+   {q:"Correct: 'She not only sings but also she dances.'",o:["not only → only not","but also she dances → but also dances","sings → sang","No error"],a:1,e:"Parallel structure → 'but also dances'."},
+   {q:"Correct: 'He is the best player of the two.'",o:["best → better","player → players","of → between","No error"],a:0,e:"Of two → 'better'."},
+   {q:"Correct: 'He returned back to his hometown.'",o:["returned back → returned","to → at","hometown → home town","No error"],a:0,e:"'Back' is redundant."}
   ]}
 ]},
 
-{id:"art-golden",title:"Golden",icon:"🏹",nodes:[
- {id:"art-gold",title:"Articles — Golden Node",xp:30,type:"gold",requires_pct:70,
+{id:"con-golden",title:"Golden",icon:"🏹",nodes:[
+ {id:"con-gold",title:"Conjunctions — Golden Node",xp:30,type:"gold",requires_pct:70,
   golden:[
-   "A/AN = <b>SOUND not spelling</b>: an hour, an MBA, an honest man; a university, a European, a one-rupee note",
-   "THE = second mention, unique (the sun), superlatives, ordinals, instruments, rivers, ranges, holy books, newspapers",
-   "ZERO = languages, subjects, meals, diseases, single mountains/lakes, abstract nouns, after elected/appointed",
-   "THE + adjective = class of people (the poor, the rich, the blind)",
-   "THE with plural-name countries (the USA, the Netherlands), island groups (the Maldives), ranges (the Himalayas)",
-   "By + transport = no article; in hospital/school/prison (purpose) = no article; go to bed/school/work = no article"
+   "No sooner HAD + THAN; Hardly/Scarcely HAD + WHEN (inversion + past perfect)",
+   "Although/Though → no 'but' (yet or nothing); Lest → always 'should', never 'not'",
+   "Both…and = plural &amp; parallel; Neither…nor (not 'or'); Either/Neither = verb with the closer subject",
+   "No double comparative/superlative; absolute adjectives (unique/perfect/excellent) take no degree",
+   "Redundancy: returned back / more superior / end result / very unique — drop the extra word",
+   "Causatives (make/let) + bare infinitive; dangling modifier must refer to the main subject"
   ]}
 ]}
 
 ];
 
-const SKEY="ssc_eng_01_articles";
+const SKEY="ssc_eng_08_conjunctions";
 let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
 try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
 function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
 
 let _ns={nodeId:null,openedAt:null,answered:0,correct:0,totalQ:0};
 function trackEvent(ev,payload){
-  const body=Object.assign({event:ev,mapId:"ssc_eng_01_articles",ts:new Date().toISOString()},payload);
+  const body=Object.assign({event:ev,mapId:"ssc_eng_08_conjunctions",ts:new Date().toISOString()},payload);
   try{fetch('/api/progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(()=>flashSync()).catch(()=>{});}catch(e){}
 }
 function flashSync(){const d=document.getElementById('syncDot');if(!d)return;d.classList.add('show');setTimeout(()=>d.classList.remove('show'),900);}
@@ -659,7 +601,7 @@ function showDash(){
   S.curNode=null;save();buildSidebar();
   const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
   document.getElementById("viewWrap").innerHTML=`<div class="dash">
-    <div class="dash-t">Articles (A / An / The)</div>
+    <div class="dash-t">Conjunctions & Sentence Correction</div>
     <div class="dash-s">SSC CGL / CHSL / MTS / CPO · RULES · TRAPS · PYQ PRACTICE</div>
     <div class="dash-grid">
       <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
@@ -699,7 +641,7 @@ buildSidebar();updateHeader();showDash();
 /* ===== CentuMania metrics (injected — additive; module content unchanged) ===== */
 (function(){
   if(window.__cmTrackInit)return; window.__cmTrackInit=1;
-  var CM_DEFAULT='eng-01-articles';
+  var CM_DEFAULT='eng-08-conjunctions';
   var CM_T0=Date.now(),CM_ACTIVE=0,_cmVisT=Date.now();
   function cmToken(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
   function cmMat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}

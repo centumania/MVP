@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>SSC English · Articles (A / An / The)</title>
+<title>SSC English · Para Jumbles & Fill-Blanks</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -189,7 +189,7 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <body>
 <div class="shell">
 <nav class="topbar">
-  <div class="logo"><span class="logo-dot"></span>SSC English — Articles (A / An / The)</div>
+  <div class="logo"><span class="logo-dot"></span>SSC English — Para Jumbles & Fill-Blanks</div>
   <div class="nav-stats">
     <div class="stat xp">XP <b id="hXP">0</b></div>
     <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
@@ -219,264 +219,159 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 
 <script>
 
-const DIAGRAMS = {
-"articles-map": `<svg viewBox="0 0 760 170" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
-<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(61,214,140,.08)" stroke="#3dd68c" stroke-width="1"/>
-<text x="380" y="22" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">ARTICLE DECISION MAP — A / AN / THE / ZERO</text>
-<rect x="4" y="36" width="246" height="128" rx="8" fill="rgba(34,211,200,.06)" stroke="#22d3c8" stroke-width="1.2"/>
-<text x="127" y="56" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">A / AN</text>
-<text x="127" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Singular · first mention</text>
-<text x="127" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">AN = vowel SOUND</text>
-<text x="127" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">an hour · an MBA · an heir</text>
-<text x="127" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">A = consonant SOUND</text>
-<text x="127" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">a university · a one-rupee</text>
-<rect x="258" y="36" width="246" height="128" rx="8" fill="rgba(61,214,140,.06)" stroke="#3dd68c" stroke-width="1.2"/>
-<text x="381" y="56" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">THE</text>
-<text x="381" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Second mention · unique</text>
-<text x="381" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Superlatives · ordinals</text>
-<text x="381" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Rivers · ranges · instruments</text>
-<text x="381" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">the sun · the best · the Ganga</text>
-<text x="381" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">the USA · the Himalayas</text>
-<rect x="512" y="36" width="244" height="128" rx="8" fill="rgba(240,107,107,.06)" stroke="#f06b6b" stroke-width="1.2"/>
-<text x="634" y="56" fill="#f06b6b" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">ZERO (no article)</text>
-<text x="634" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Languages · meals · subjects</text>
-<text x="634" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Countries · abstract nouns</text>
-<text x="634" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">After elected / appointed</text>
-<text x="634" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">by bus · go to bed</text>
-<text x="634" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Honesty · English · lunch</text>
-</svg>`
-};
+const DIAGRAMS = {};
 
 const CHAPTERS = [
 
-{id:"art-foundations",title:"Foundations",icon:"📰",nodes:[
+{id:"pj-strategy-ch",title:"Strategy",icon:"🧩",nodes:[
 
- {id:"art-aan",title:"A vs AN — The Sound Rule",xp:20,type:"regular",diag:"articles-map",
+ {id:"pj-strategy",title:"Para Jumble — Strategy",xp:20,type:"regular",
   facts:[
-   "<b>A / AN depends on SOUND, not spelling</b> — this is the single most tested article rule in SSC",
-   "<b>AN</b> before a vowel SOUND: <code>an</code> apple, <code>an</code> hour, <code>an</code> honest man, <code>an</code> heir (silent h)",
-   "<b>AN</b> before letters pronounced with a vowel sound: <code>an</code> MBA, <code>an</code> MP, <code>an</code> MLA, <code>an</code> X-ray, <code>an</code> SSC exam",
-   "<b>A</b> before a consonant SOUND even if the word starts with a vowel LETTER: <code>a</code> university, <code>a</code> European, <code>a</code> union, <code>a</code> useful book (all 'yu' sound)",
-   "<b>A</b> before 'one-' words: <code>a</code> one-rupee note, <code>a</code> one-eyed man (the 'w/won' sound)",
-   "<b>A / AN + adjective + noun</b> → decide by the ADJECTIVE's sound: <b>an</b> old man, <b>a</b> beautiful actress, <b>an</b> honest officer"
+   "Format: 4–6 sentences (P, Q, R, S) in random order; often S1 and S6 are fixed and you arrange the middle",
+   "<b>Opening sentence clues</b>: introduces a topic, NO back-referring pronoun, no 'however/but/therefore' at the start, a general statement, first mention (no 'the')",
+   "<b>Closing sentence clues</b>: has 'thus/therefore/hence/finally', summarises, gives the final result — nothing logically follows it",
+   "<b>Pronoun links</b>: he/she/they/it and this/that/these refer BACK to a noun in the previous sentence",
+   "<b>Connectors</b>: however/but = contrast · therefore/thus = consequence · moreover/also = addition · for example = illustration · on the other hand = contrast",
+   "<b>Topic chain</b>: track the subject; if P mentions 'scientists', Q likely continues with 'they'"
   ],
-  table:{h:["USE A (consonant sound)","USE AN (vowel sound)"],r:[
-   ["a university (yu-)","an umbrella (u-)"],
-   ["a European (yu-)","an honest man (silent h)"],
-   ["a one-rupee note (w-)","an hour (silent h)"],
-   ["a useful book (yu-)","an MBA / an MP (em-)"],
-   ["a unicorn (yu-)","an heir (silent h)"],
-   ["a historic event (h pronounced)","an X-ray (ex-)"]
+  table:{h:["Signal","Meaning"],r:[
+   ["however / but / yet","contrast with previous"],
+   ["therefore / thus / hence","consequence of previous"],
+   ["moreover / also / furthermore","adds to previous"],
+   ["for example / for instance","illustrates previous"],
+   ["this / that / they / it","refers back → not first"]
   ]},
   mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"'Honest' has a silent H → vowel sound → AN."},
-   {q:"She is ___ European working in India.",o:["a","an","the","✗ (no article)"],a:0,e:"'European' begins with a 'yu' consonant sound → A."},
-   {q:"He has ___ MBA degree from IIM.",o:["a","an","the","✗ (no article)"],a:1,e:"'MBA' = 'em-bee-ay' → begins with a vowel sound → AN."},
-   {q:"Please give me ___ one-rupee coin.",o:["a","an","the","✗ (no article)"],a:0,e:"'One' begins with a 'w' (won) sound = consonant sound → A."},
-   {q:"It is ___ useful book for beginners.",o:["a","an","the","✗ (no article)"],a:0,e:"'Useful' = 'yu-' consonant sound → A."},
-   {q:"He is ___ heir to a large fortune.",o:["a","an","the","✗ (no article)"],a:1,e:"'Heir' has a silent H → vowel sound → AN."},
-   {q:"They lived through ___ historic event.",o:["a","an","the","✗ (no article)"],a:0,e:"In 'historic' the H is pronounced → consonant sound → A."}
+   {q:"Which usually signals the CLOSING sentence?",o:["A new person is introduced","It begins with 'Therefore/Thus'","It has no pronouns","It asks a question"],a:1,e:"Conclusion words mark the closing sentence."},
+   {q:"A sentence starting with 'However' most likely:",o:["opens the paragraph","contrasts with the previous sentence","concludes it","is unrelated"],a:1,e:"'However' signals contrast — it can't open."},
+   {q:"A back-referring pronoun like 'they' tells you the sentence:",o:["must be first","follows a sentence naming that noun","is the conclusion","is irrelevant"],a:1,e:"'They/it/this' refer back, so the naming sentence comes first."},
+   {q:"The OPENING sentence usually:",o:["starts with 'but'","introduces the topic generally","uses 'the' for first mention","has a pronoun"],a:1,e:"It introduces the topic with a general statement, first mention."},
+   {q:"'Therefore' at the start of a sentence signals a:",o:["contrast","consequence of the previous idea","new topic","question"],a:1,e:"'Therefore' = consequence/result."}
   ]},
 
- {id:"art-the",title:"THE — The Definite Article",xp:20,type:"regular",
+ {id:"pj-patterns",title:"Common Ordering Patterns",xp:20,type:"regular",
   facts:[
-   "<b>Second mention</b> of a noun: 'I saw a dog. THE dog was black.'",
-   "<b>Unique things</b>: the sun, the moon, the sky, the earth, the world, the universe",
-   "<b>Superlatives &amp; ordinals</b>: the best, the tallest, the first, the second, the last",
-   "<b>Rivers, oceans, seas</b>: the Ganga, the Nile, the Pacific, the Arabian Sea · <b>ranges</b>: the Himalayas, the Alps (NOT single peaks)",
-   "<b>Holy books</b>: the Gita, the Bible, the Quran · <b>newspapers</b>: the Hindu, the Times of India · <b>named ships/trains</b>: the Rajdhani, the Titanic",
-   "<b>Musical instruments</b>: play the violin, the piano · <b>directions</b>: the North, the East · <b>parallel comparatives</b>: THE more you read, THE better"
+   "<b>Pattern 1</b>: Problem → Cause → Effect → Solution → Conclusion",
+   "<b>Pattern 2</b>: Introduction → Example → Analysis → Further analysis → Conclusion",
+   "<b>Pattern 3</b>: Historical → Present → Current challenges → Recent developments → Future implications",
+   "Time order: earlier events before later ones; 'first/then/finally' mark sequence",
+   "Cause–effect chains: the cause sentence precedes the effect sentence",
+   "Definite article 'the X' usually refers back to an 'a X' introduced earlier — so 'a X' comes first"
   ],
-  table:{h:["Use THE for","Example"],r:[
-   ["Second mention","I saw a dog. THE dog barked."],
-   ["Unique in the world","the sun, the moon, the earth"],
-   ["Superlatives / ordinals","the best, the first, the last"],
-   ["Musical instruments","He plays THE violin"],
-   ["Rivers / ranges / seas","the Ganga, the Himalayas, the Pacific"],
-   ["Holy books / newspapers","the Gita, the Hindu"],
-   ["Political / govt bodies","the Parliament, the Cabinet"]
+  table:{h:["Pattern","Flow"],r:[
+   ["Problem-solution","Problem → Cause → Effect → Solution"],
+   ["Argument","Intro → Example → Analysis → Conclusion"],
+   ["Timeline","Past → Present → Future"],
+   ["a/the link","'a dog'… then 'the dog'"]
   ]},
   mcqs:[
-   {q:"She plays ___ piano beautifully.",o:["a","an","the","✗ (no article)"],a:2,e:"Musical instruments always take THE."},
-   {q:"___ Himalayas are in the north of India.",o:["A","An","The","✗ (no article)"],a:2,e:"Mountain RANGES take THE (single peaks take none)."},
-   {q:"It is ___ most difficult question in the paper.",o:["a","an","the","✗ (no article)"],a:2,e:"Superlatives take THE → 'the most difficult'."},
-   {q:"___ Ganga is a holy river.",o:["A","An","The","✗ (no article)"],a:2,e:"Names of rivers take THE."},
-   {q:"The sun rises in ___ east.",o:["a","an","the","✗ (no article)"],a:2,e:"Cardinal directions take THE → 'the east'."},
-   {q:"I read ___ Times of India every morning.",o:["a","an","the","✗ (no article)"],a:2,e:"Newspapers take THE."},
-   {q:"___ more you practise, ___ better you become.",o:["The / the","A / a","No article / the","The / a"],a:0,e:"Parallel comparatives take THE...THE."}
-  ]},
-
- {id:"art-zero",title:"Zero Article — When to Use Nothing",xp:20,type:"regular",
-  facts:[
-   "<b>NO article</b> with proper nouns (Ram), countries (India, France), cities (Delhi), single mountains (Mount Everest), single lakes (Dal Lake)",
-   "<b>NO article</b> with languages (English), subjects (Mathematics), meals (breakfast, lunch), diseases (malaria, diabetes)",
-   "<b>NO article</b> with abstract/general nouns: 'Honesty is the best policy', 'Knowledge is power', 'Love is blind'",
-   "<b>NO article</b> with plural general nouns: 'Dogs are loyal', 'Man is mortal'",
-   "<b>THE + adjective = class of people</b>: the poor, the rich, the blind, the young, the dead",
-   "<b>Institution for its purpose</b> → no article: in hospital (as patient), in school, in prison, go to bed, go to work"
-  ],
-  table:{h:["No article with","Example"],r:[
-   ["Languages","She speaks English & French"],
-   ["Subjects","I study Mathematics"],
-   ["Meals","Have lunch, eat breakfast"],
-   ["Diseases","He has malaria / diabetes"],
-   ["Single mountains / lakes","Mount Everest, Dal Lake"],
-   ["Abstract nouns (general)","Knowledge is power"],
-   ["by + transport","by bus, by train, by air"]
-  ]},
-  mcqs:[
-   {q:"She speaks ___ French and German fluently.",o:["a","the","✗ (no article)","an"],a:2,e:"Languages take no article."},
-   {q:"He had ___ lunch at noon.",o:["a","the","✗ (no article)","an"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"He travelled ___ train to Mumbai.",o:["by (no article)","in the","on a","with the"],a:0,e:"'By + transport' takes no article → 'by train'."},
-   {q:"___ knowledge is ___ power.",o:["The / the","A / a","✗ / ✗ (no article)","The / a"],a:2,e:"Abstract nouns used generally take no article."},
-   {q:"___ Mount Everest is the highest peak.",o:["The","A","An","✗ (no article)"],a:3,e:"Single mountains take no article (ranges take THE)."},
-   {q:"He suffers from ___ malaria.",o:["a","the","an","✗ (no article)"],a:3,e:"Names of diseases take no article."},
-   {q:"___ poor need our help.",o:["A","An","The","✗ (no article)"],a:2,e:"THE + adjective = a whole class of people → 'The poor'."}
+   {q:"In a problem–solution paragraph, the SOLUTION usually comes:",o:["first","after the problem and its effects","before the problem","never"],a:1,e:"Solution follows the problem/effects."},
+   {q:"'a scientist' in one sentence and 'the scientist' in another — which comes first?",o:["'the scientist'","'a scientist'","either","neither"],a:1,e:"First mention 'a scientist' precedes the back-reference 'the scientist'."},
+   {q:"Words like 'first… then… finally' indicate:",o:["contrast","time/sequence order","cause","doubt"],a:1,e:"They mark chronological sequence."},
+   {q:"In a cause–effect pair, which sentence comes first?",o:["the effect","the cause","either","the conclusion"],a:1,e:"Cause precedes effect."},
+   {q:"A concluding sentence often contains:",o:["a new example","'thus/therefore/finally'","a fresh name","a question"],a:1,e:"Conclusion markers."}
   ]}
 ]},
 
-{id:"art-special",title:"Special Rules & Traps",icon:"⚠️",nodes:[
+{id:"pj-practice",title:"Practice",icon:"🎯",nodes:[
 
- {id:"art-specialrules",title:"Special Rules 5A–5G",xp:20,type:"regular",
+ {id:"pj-sets1",title:"Arrange the Paragraph — Set 1",xp:20,type:"regular",
   facts:[
-   "<b>5A</b> — A/AN + adjective + noun → decide by the adjective's sound: 'an old man', 'a beautiful actress'",
-   "<b>5B</b> — Double article NEVER used: 'the a book' ✗, 'a the book' ✗",
-   "<b>5C</b> — Predicative use after elected/appointed/made/chosen → no article: 'He was elected President', 'She became captain'",
-   "<b>5D</b> — 'Kind of / Sort of / Type of' → no article after: 'What kind of man is he?' (not 'a man')",
-   "<b>5E</b> — By + transport → no article: by bus / by train / by air (BUT 'in the car / on the bus' when specific)",
-   "<b>5F</b> — In + institution for its purpose → no article: 'He is in hospital' (patient) vs 'in the hospital' (visiting); same for school/church/prison",
-   "<b>5G</b> — Fixed phrases: go to bed, go to school, go to work, at home, at night, in fact"
+   "For each set, S1 and S6 are fixed. Arrange P, Q, R using opening/closing logic and connectors.",
+   "Track pronouns and connectors ('however' = contrast, 'this' = back-reference).",
+   "Read your final order S1→…→S6 to confirm it flows."
   ],
-  table:{h:["Rule","Wrong","Correct"],r:[
-   ["Elected + post","the President (after elected)","elected President"],
-   ["Kind of","kind of a man","kind of man"],
-   ["By transport","by the train","by train"],
-   ["Institution (purpose)","in the prison (as inmate)","in prison"],
-   ["Fixed phrase","go to the bed","go to bed"],
-   ["Double article","a the book","a book / the book"]
-  ]},
   mcqs:[
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After 'elected/appointed', the post takes no article."},
-   {q:"What kind of ___ man is he?",o:["a","an","the","✗ (no article)"],a:3,e:"'Kind of' takes no article after it."},
-   {q:"He is ___ hospital recovering from surgery. (as patient)",o:["in (no article)","in the","in a","at the"],a:0,e:"Institution for its purpose → 'in hospital' (no article)."},
-   {q:"She became ___ captain of the team.",o:["a","an","the","✗ (no article)"],a:3,e:"Predicative post after 'became' → no article."},
-   {q:"Children go to ___ bed early.",o:["a","the","✗ (no article)","an"],a:2,e:"Fixed phrase 'go to bed' → no article."},
-   {q:"He was old ___ man with grey hair. Choose the correct article.",o:["a","an","the","✗"],a:1,e:"A/AN + adjective → decide by adjective sound; 'old' = vowel sound → 'an old man'."}
+   {q:"S1: The internet has transformed communication. P: Social media allows instant sharing of information. Q: However, this has given rise to misinformation. R: Traditional media had editorial checks. S6: Therefore media literacy matters. Order of P,Q,R:",o:["Q → R → P","P → Q → R","R → P → Q","Q → P → R"],a:1,e:"P (how) → Q (contrast 'however') → R (why misinformation is new)."},
+   {q:"S1: Climate change is the defining challenge of our era. P: Rising sea levels threaten coastal communities. Q: This is driven by greenhouse gas emissions. R: Scientists have warned about this for decades. S6: Urgent cooperation is the solution. Order:",o:["R → Q → P","P → Q → R","Q → P → R","R → P → Q"],a:0,e:"R (warned) → Q (what drives it) → P (specific effect)."},
+   {q:"S1: Exercise is essential for good health. P: Even 30 minutes of walking helps. Q: Despite this, most lead sedentary lives. R: Stress and long hours are cited as reasons. S6: Finding time must be a priority. Order:",o:["R → Q → P","P → Q → R","Q → P → R","P → R → Q"],a:1,e:"P (benefit) → Q (contrast 'despite') → R (reason)."},
+   {q:"S1: A young boy found a wounded bird. P: He took it home and fed it. Q: The bird slowly recovered. R: One morning it flew away. S6: The boy smiled, glad it was free. Order:",o:["Q → P → R","P → Q → R","R → Q → P","P → R → Q"],a:1,e:"Chronological: took home → recovered → flew away → P→Q→R."},
+   {q:"S1: Plastic pollution has become a global crisis. P: Millions of tonnes enter the oceans yearly. Q: This harms marine life and enters our food. R: Governments are now banning single-use plastics. S6: Yet individual action remains vital. Order:",o:["R → Q → P","P → Q → R","Q → P → R","R → P → Q"],a:1,e:"P (scale) → Q (effect 'this') → R (response) → P→Q→R."}
   ]},
 
- {id:"art-country",title:"THE with Countries & Groups",xp:20,type:"regular",
+ {id:"pj-sets2",title:"Arrange the Paragraph — Set 2",xp:20,type:"trap",
   facts:[
-   "<b>Most countries → NO article</b>: India, France, Japan, China, Brazil, Russia",
-   "<b>Plural / union names → THE</b>: the USA, the UK, the UAE, the Netherlands, the Philippines",
-   "<b>Reason</b>: these are plural words or abbreviated union names (United States, United Kingdom)",
-   "<b>Groups of islands → THE</b>: the Andamans, the Maldives, the West Indies",
-   "<b>Mountain ranges → THE</b>: the Himalayas, the Alps, the Andes (single peaks → none)",
-   "<b>Deserts, seas, oceans, canals → THE</b>: the Sahara, the Pacific, the Suez Canal"
-  ],
-  table:{h:["THE with","Reason / Example"],r:[
-   ["the USA","Plural (United States)"],
-   ["the UK","Union name"],
-   ["the Netherlands","Plural word"],
-   ["the Philippines","Plural word"],
-   ["the Maldives","Group of islands"],
-   ["the Sahara / the Pacific","Deserts, oceans"]
-  ]},
-  mcqs:[
-   {q:"___ Netherlands is a beautiful country.",o:["A","An","The","✗ (no article)"],a:2,e:"'Netherlands' is a plural name → THE."},
-   {q:"He works in ___ USA.",o:["a","an","the","✗ (no article)"],a:2,e:"'USA' (United States, plural) → THE."},
-   {q:"She visited ___ India last year.",o:["the","a","an","✗ (no article)"],a:3,e:"Most countries take no article → 'India'."},
-   {q:"They sailed to ___ Maldives.",o:["a","an","the","✗ (no article)"],a:2,e:"Groups of islands take THE."},
-   {q:"___ Sahara is the largest hot desert.",o:["A","An","The","✗ (no article)"],a:2,e:"Deserts take THE."},
-   {q:"He climbed ___ Mount Fuji.",o:["the","a","an","✗ (no article)"],a:3,e:"Single mountains take no article."}
-  ]},
-
- {id:"art-traps",title:"Trap Sheet — SSC Favourites",xp:20,type:"trap",
-  traps:[
-   "<b>a honest man</b> → <b>an honest man</b> (H silent = vowel sound)",
-   "<b>a MBA degree</b> → <b>an MBA degree</b> (em = vowel sound)",
-   "<b>an uniform</b> → <b>a uniform</b> (yu = consonant sound)",
-   "<b>an European</b> → <b>a European</b> (yu = consonant sound)",
-   "<b>an one-time offer</b> → <b>a one-time offer</b> (w sound)",
-   "<b>The gold is precious</b> → <b>Gold is precious</b> (general abstract = no article)",
-   "<b>I play violin</b> → <b>I play the violin</b> (instruments need THE)",
-   "<b>The Mount Everest</b> → <b>Mount Everest</b> (single mountain = no article)",
-   "<b>He was the elected President</b> → <b>He was elected President</b> (after elected = no article)",
-   "<b>I had the lunch</b> → <b>I had lunch</b> (meals = no article)",
-   "<b>The Sun rises in East</b> → <b>in the East</b> (cardinal directions need THE)",
-   "<b>The more harder you try</b> → <b>The harder you try</b> (no double comparative)"
+   "Harder sets — watch subtle pronoun and connector links.",
+   "The sentence with 'the X' or 'it' cannot open; the one with 'thus/finally' cannot be in the middle.",
+   "Build the chain from the most obvious link outward."
   ],
   mcqs:[
-   {q:"Which sentence is CORRECT?",o:["He is a honest man","She plays violin well","Mount Everest is the highest peak in the world","He speaks the English"],a:2,e:"Superlative + unique world → 'the highest peak in the world'. Others: an honest, the violin, English."},
-   {q:"Spot the error: 'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE → 'the violin'."},
-   {q:"Spot the error: 'He is (A) a best (B) student in (C) the class.'",o:["A → the best","B","C","No error"],a:0,e:"Superlatives need THE → 'the best student'."},
-   {q:"Which is WRONG?",o:["The Ganga is a holy river","Honesty is the best policy","He had the lunch at noon","The USA is powerful"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"Spot the error: 'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = yu (consonant) sound → 'A European'."},
-   {q:"Which is CORRECT?",o:["He was the elected chairman","The gold is a precious metal","I saw a unique painting","He plays cricket with the bat"],a:2,e:"'Unique' = yu sound → 'a unique painting'. Others: elected chairman (no 'the'), Gold (no 'the'), cricket with a bat."}
+   {q:"S1: The printing press was a turning point in history. P: Before it, books were copied by hand. Q: Gutenberg's invention changed that in the 15th century. R: Suddenly, books could be produced quickly and cheaply. S6: Knowledge spread as never before. Order:",o:["Q → P → R","P → Q → R","R → P → Q","P → R → Q"],a:1,e:"P (before) → Q (invention) → R (result) → P→Q→R."},
+   {q:"S1: Sleep is vital for the brain. P: During sleep, memories are consolidated. Q: Lack of it impairs concentration and mood. R: Yet many people sacrifice sleep for work. S6: Prioritising rest improves performance. Order:",o:["R → Q → P","P → Q → R","Q → P → R","P → R → Q"],a:1,e:"P (benefit) → Q (effect of lack) → R (contrast 'yet') → P→Q→R."},
+   {q:"S1: Renewable energy is growing worldwide. P: Solar and wind now rival fossil fuels on cost. Q: As a result, investment has surged. R: However, storage remains a challenge. S6: Research aims to solve it. Order:",o:["Q → R → P","P → Q → R","R → P → Q","Q → P → R"],a:1,e:"P (cost) → Q (result 'as a result') → R (challenge 'however') → P→Q→R."},
+   {q:"S1: The city introduced a new metro line. P: Commuters welcomed the faster travel. Q: Traffic on the roads dropped noticeably. R: Air quality also began to improve. S6: Officials called it a major success. Order:",o:["R → Q → P","P → Q → R","Q → P → R","P → R → Q"],a:1,e:"P (welcomed) → Q (traffic dropped) → R (air improved) → P→Q→R."},
+   {q:"S1: Reading builds vocabulary naturally. P: Readers meet new words in context. Q: This makes the meanings easier to remember. R: Over time, their language becomes richer. S6: Thus, regular reading is the best word-builder. Order:",o:["Q → P → R","P → Q → R","R → Q → P","P → R → Q"],a:1,e:"P (meet words) → Q (easier 'this') → R (over time) → P→Q→R."}
   ]}
 ]},
 
-{id:"art-pyq",title:"PYQ Practice",icon:"🎯",nodes:[
+{id:"pj-fill",title:"Fill in the Blanks",icon:"🔤",nodes:[
 
- {id:"art-fill",title:"Fill in the Blank — 25 PYQ",xp:20,type:"regular",
+ {id:"pj-collocation",title:"Collocations — Make/Take/Pay/Do",xp:20,type:"regular",
   facts:[
-   "Practice from the 25-question SSC CGL exercise. For each blank pick a / an / the / ✗ (no article).",
-   "Apply the checklist: vowel SOUND? · second mention? · unique? · superlative? · language/meal/subject? · after elected?",
-   "Do all questions in the Test tab, then review the explanations tied to each rule."
+   "<b>Make</b>: a decision, a mistake, an effort, progress, a discovery · <b>Take</b>: action, care, part, responsibility, a risk",
+   "<b>Do</b>: work, research, homework, justice, damage · <b>Pay</b>: attention, tribute, a fine, a compliment, a visit",
+   "<b>Keep</b>: a promise, a record, a secret, track · <b>Break</b>: a record, the law, a promise, the news · <b>Give</b>: advice, permission, support",
+   "<b>Deliver</b> a speech · <b>Come</b> into effect/force · <b>Play</b> havoc · <b>Fall</b> flat · <b>Raise</b> a question, funds, awareness",
+   "<b>Hit</b> the nail on the head · <b>Turn</b> a blind eye · <b>Hold</b> a meeting, an opinion, one's breath",
+   "Choose the verb that naturally partners the noun — collocations are fixed"
   ],
+  table:{h:["Verb","Common noun partner"],r:[
+   ["Make","decision, mistake, effort, progress"],
+   ["Take","action, care, part, risk"],
+   ["Pay","attention, tribute, a visit"],
+   ["Keep","promise, record, track"],
+   ["Break","record, law, promise, news"],
+   ["Deliver","a speech, a lecture"]
+  ]},
   mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H = vowel sound → AN."},
-   {q:"I go to ___ school every day.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → no article."},
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After elected → no article."},
-   {q:"She is ___ heir to the throne.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H → vowel sound → AN."},
-   {q:"He went to ___ hospital to visit his friend.",o:["a","an","the","✗ (no article)"],a:2,e:"Visiting (not as patient) → 'the hospital'."},
-   {q:"He travelled by ___ train to Mumbai.",o:["a","an","the","✗ (no article)"],a:3,e:"By + transport → no article."},
-   {q:"He was sent to ___ prison for theft.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"I saw ___ dog. ___ dog was barking loudly.",o:["a / The","the / a","an / The","a / a"],a:0,e:"First mention → A; second mention → THE."},
-   {q:"He is ___ unique artist.",o:["a","an","the","✗ (no article)"],a:0,e:"'Unique' = yu sound → A."},
-   {q:"Mount Everest is ___ highest peak in ___ world.",o:["the / the","a / the","the / a","a / a"],a:0,e:"Superlative → THE; unique world → THE."},
-   {q:"He is ___ IAS officer from Kerala.",o:["a","an","the","✗ (no article)"],a:1,e:"'IAS' = 'eye-ay-es' → vowel sound → AN."},
-   {q:"___ Gita is ___ holy book of Hindus.",o:["The / a","A / the","The / the","A / a"],a:0,e:"Holy book name → THE Gita; first mention 'a holy book'."}
+   {q:"The committee ___ a decision after long debate.",o:["did","made","took","had"],a:1,e:"'make a decision'."},
+   {q:"The minister ___ tribute to the soldiers.",o:["paid","gave","made","offered"],a:0,e:"'pay tribute'."},
+   {q:"She ___ great effort to finish on time.",o:["did","gave","made","put"],a:2,e:"'make an effort'."},
+   {q:"The government ___ action against corruption.",o:["made","did","took","gave"],a:2,e:"'take action'."},
+   {q:"He ___ a speech at the conference.",o:["told","spoke","delivered","said"],a:2,e:"'deliver a speech'."},
+   {q:"She ___ track of all her expenses.",o:["made","took","kept","held"],a:2,e:"'keep track'."},
+   {q:"The scientist ___ a major discovery.",o:["did","made","found","got"],a:1,e:"'make a discovery'."}
   ]},
 
- {id:"art-error",title:"Find the Error — Articles",xp:20,type:"trap",
+ {id:"pj-fill2",title:"Collocations & Phrasal Fill — PYQ",xp:20,type:"regular",
   facts:[
-   "SSC error-spotting: the sentence is split into parts (A)(B)(C); find the part with the article error.",
-   "Article errors are ~20% of all SSC error-spotting questions — always scan articles first.",
-   "Check: A/AN by sound · THE for superlatives/instruments/rivers/ranges · zero article for meals/languages/after elected."
+   "From the 25-question SSC fill exercise. Pick the word that completes the fixed phrase.",
+   "Many blanks are idiomatic collocations (come into effect, play havoc, fall flat).",
+   "Read the whole sentence for tone before choosing."
   ],
   mcqs:[
-   {q:"'He is (A) a best student (B) in (C) the class.'",o:["A → the best student","B","C","No error"],a:0,e:"Superlative needs THE."},
-   {q:"'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE."},
-   {q:"'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = consonant (yu) sound → A."},
-   {q:"'The Nile (A) is in (B) the Africa. (C)'",o:["A","B","C → in Africa","No error"],a:2,e:"Country/continent names take no article → 'in Africa'."},
-   {q:"'He was (A) sent to (B) the prison (C) for theft.'",o:["A","B","C → to prison","No error"],a:2,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"'I had (A) the lunch (B) with (C) my friends.'",o:["A","B → had lunch","C","No error"],a:1,e:"Meals take no article → 'had lunch'."},
-   {q:"'She speaks (A) the English (B) and (C) French.'",o:["A","B → English","C","No error"],a:1,e:"Languages take no article → 'English'."}
+   {q:"The new policy ___ into effect from January.",o:["came","went","got","made"],a:0,e:"'come into effect'."},
+   {q:"Despite his efforts, his plan ___ flat.",o:["fell","came","got","went"],a:0,e:"'fall flat'."},
+   {q:"He ___ a blind eye to the misconduct.",o:["gave","turned","made","kept"],a:1,e:"'turn a blind eye'."},
+   {q:"The heavy rain ___ havoc on the event.",o:["made","played","created","did"],a:1,e:"'play havoc'."},
+   {q:"He ___ the nail on the head with his analysis.",o:["beat","hit","struck","touched"],a:1,e:"'hit the nail on the head'."},
+   {q:"The court ___ the accused not guilty.",o:["announced","found","told","said"],a:1,e:"'find (someone) guilty/not guilty'."},
+   {q:"The new manager ___ a lasting impression on the team.",o:["did","gave","made","left"],a:2,e:"'make an impression' (also 'leave an impression')."}
   ]}
 ]},
 
-{id:"art-golden",title:"Golden",icon:"🏹",nodes:[
- {id:"art-gold",title:"Articles — Golden Node",xp:30,type:"gold",requires_pct:70,
+{id:"pj-golden",title:"Golden",icon:"🏹",nodes:[
+ {id:"pj-gold",title:"Para Jumbles — Golden Node",xp:30,type:"gold",requires_pct:60,
   golden:[
-   "A/AN = <b>SOUND not spelling</b>: an hour, an MBA, an honest man; a university, a European, a one-rupee note",
-   "THE = second mention, unique (the sun), superlatives, ordinals, instruments, rivers, ranges, holy books, newspapers",
-   "ZERO = languages, subjects, meals, diseases, single mountains/lakes, abstract nouns, after elected/appointed",
-   "THE + adjective = class of people (the poor, the rich, the blind)",
-   "THE with plural-name countries (the USA, the Netherlands), island groups (the Maldives), ranges (the Himalayas)",
-   "By + transport = no article; in hospital/school/prison (purpose) = no article; go to bed/school/work = no article"
+   "Opening: introduces topic, no back-pronoun, no 'however/therefore' at the start, first mention",
+   "Closing: 'thus/therefore/finally', summarises or gives the result",
+   "Link with pronouns (he/it/this) and connectors (however=contrast, thus=consequence, also=addition)",
+   "'a X' (first mention) precedes 'the X' (back-reference); cause precedes effect; earlier time first",
+   "Common flow: Problem → Cause → Effect → Solution → Conclusion",
+   "Collocations: make a decision, take action, pay tribute, deliver a speech, come into effect, play havoc"
   ]}
 ]}
 
 ];
 
-const SKEY="ssc_eng_01_articles";
+const SKEY="ssc_eng_14_parajumbles";
 let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
 try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
 function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
 
 let _ns={nodeId:null,openedAt:null,answered:0,correct:0,totalQ:0};
 function trackEvent(ev,payload){
-  const body=Object.assign({event:ev,mapId:"ssc_eng_01_articles",ts:new Date().toISOString()},payload);
+  const body=Object.assign({event:ev,mapId:"ssc_eng_14_parajumbles",ts:new Date().toISOString()},payload);
   try{fetch('/api/progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(()=>flashSync()).catch(()=>{});}catch(e){}
 }
 function flashSync(){const d=document.getElementById('syncDot');if(!d)return;d.classList.add('show');setTimeout(()=>d.classList.remove('show'),900);}
@@ -659,7 +554,7 @@ function showDash(){
   S.curNode=null;save();buildSidebar();
   const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
   document.getElementById("viewWrap").innerHTML=`<div class="dash">
-    <div class="dash-t">Articles (A / An / The)</div>
+    <div class="dash-t">Para Jumbles & Fill-Blanks</div>
     <div class="dash-s">SSC CGL / CHSL / MTS / CPO · RULES · TRAPS · PYQ PRACTICE</div>
     <div class="dash-grid">
       <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
@@ -699,7 +594,7 @@ buildSidebar();updateHeader();showDash();
 /* ===== CentuMania metrics (injected — additive; module content unchanged) ===== */
 (function(){
   if(window.__cmTrackInit)return; window.__cmTrackInit=1;
-  var CM_DEFAULT='eng-01-articles';
+  var CM_DEFAULT='eng-14-parajumbles';
   var CM_T0=Date.now(),CM_ACTIVE=0,_cmVisT=Date.now();
   function cmToken(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
   function cmMat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}

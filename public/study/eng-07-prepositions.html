@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>SSC English · Articles (A / An / The)</title>
+<title>SSC English · Prepositions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -189,7 +189,7 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <body>
 <div class="shell">
 <nav class="topbar">
-  <div class="logo"><span class="logo-dot"></span>SSC English — Articles (A / An / The)</div>
+  <div class="logo"><span class="logo-dot"></span>SSC English — Prepositions</div>
   <div class="nav-stats">
     <div class="stat xp">XP <b id="hXP">0</b></div>
     <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
@@ -220,263 +220,222 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <script>
 
 const DIAGRAMS = {
-"articles-map": `<svg viewBox="0 0 760 170" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
-<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(61,214,140,.08)" stroke="#3dd68c" stroke-width="1"/>
-<text x="380" y="22" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">ARTICLE DECISION MAP — A / AN / THE / ZERO</text>
-<rect x="4" y="36" width="246" height="128" rx="8" fill="rgba(34,211,200,.06)" stroke="#22d3c8" stroke-width="1.2"/>
-<text x="127" y="56" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">A / AN</text>
-<text x="127" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Singular · first mention</text>
-<text x="127" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">AN = vowel SOUND</text>
-<text x="127" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">an hour · an MBA · an heir</text>
-<text x="127" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">A = consonant SOUND</text>
-<text x="127" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">a university · a one-rupee</text>
-<rect x="258" y="36" width="246" height="128" rx="8" fill="rgba(61,214,140,.06)" stroke="#3dd68c" stroke-width="1.2"/>
-<text x="381" y="56" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">THE</text>
-<text x="381" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Second mention · unique</text>
-<text x="381" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Superlatives · ordinals</text>
-<text x="381" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Rivers · ranges · instruments</text>
-<text x="381" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">the sun · the best · the Ganga</text>
-<text x="381" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">the USA · the Himalayas</text>
-<rect x="512" y="36" width="244" height="128" rx="8" fill="rgba(240,107,107,.06)" stroke="#f06b6b" stroke-width="1.2"/>
-<text x="634" y="56" fill="#f06b6b" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">ZERO (no article)</text>
-<text x="634" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Languages · meals · subjects</text>
-<text x="634" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Countries · abstract nouns</text>
-<text x="634" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">After elected / appointed</text>
-<text x="634" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">by bus · go to bed</text>
-<text x="634" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Honesty · English · lunch</text>
+"prep-time": `<svg viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(79,142,247,.08)" stroke="#4f8ef7" stroke-width="1"/>
+<text x="380" y="22" fill="#4f8ef7" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">AT · IN · ON — TIME &amp; PLACE</text>
+<rect x="4" y="36" width="246" height="108" rx="8" fill="rgba(240,188,69,.06)" stroke="#f0bc45" stroke-width="1.2"/>
+<text x="127" y="56" fill="#f0bc45" font-size="12" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">AT</text>
+<text x="127" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Exact time · clock</text>
+<text x="127" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">at 5 PM · at noon · at night</text>
+<text x="127" y="112" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Point / address</text>
+<text x="127" y="128" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">at the door · at Rampur</text>
+<rect x="258" y="36" width="246" height="108" rx="8" fill="rgba(61,214,140,.06)" stroke="#3dd68c" stroke-width="1.2"/>
+<text x="381" y="56" fill="#3dd68c" font-size="12" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">IN</text>
+<text x="381" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Months · years · seasons</text>
+<text x="381" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">in May · in 2024 · in winter</text>
+<text x="381" y="112" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Enclosed · cities · countries</text>
+<text x="381" y="128" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">in the room · in Delhi</text>
+<rect x="512" y="36" width="244" height="108" rx="8" fill="rgba(167,139,250,.06)" stroke="#a78bfa" stroke-width="1.2"/>
+<text x="634" y="56" fill="#a78bfa" font-size="12" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">ON</text>
+<text x="634" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Days · dates</text>
+<text x="634" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">on Monday · on 15 August</text>
+<text x="634" y="112" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Surfaces</text>
+<text x="634" y="128" fill="#a78bfa" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">on the table · on the wall</text>
 </svg>`
 };
 
 const CHAPTERS = [
 
-{id:"art-foundations",title:"Foundations",icon:"📰",nodes:[
+{id:"prep-core",title:"Core Rules",icon:"📍",nodes:[
 
- {id:"art-aan",title:"A vs AN — The Sound Rule",xp:20,type:"regular",diag:"articles-map",
+ {id:"prep-time",title:"AT / IN / ON — Time",xp:20,type:"regular",diag:"prep-time",
   facts:[
-   "<b>A / AN depends on SOUND, not spelling</b> — this is the single most tested article rule in SSC",
-   "<b>AN</b> before a vowel SOUND: <code>an</code> apple, <code>an</code> hour, <code>an</code> honest man, <code>an</code> heir (silent h)",
-   "<b>AN</b> before letters pronounced with a vowel sound: <code>an</code> MBA, <code>an</code> MP, <code>an</code> MLA, <code>an</code> X-ray, <code>an</code> SSC exam",
-   "<b>A</b> before a consonant SOUND even if the word starts with a vowel LETTER: <code>a</code> university, <code>a</code> European, <code>a</code> union, <code>a</code> useful book (all 'yu' sound)",
-   "<b>A</b> before 'one-' words: <code>a</code> one-rupee note, <code>a</code> one-eyed man (the 'w/won' sound)",
-   "<b>A / AN + adjective + noun</b> → decide by the ADJECTIVE's sound: <b>an</b> old man, <b>a</b> beautiful actress, <b>an</b> honest officer"
+   "<b>AT</b> — exact/clock time (at 5 PM, at noon, at midnight, at dawn), short holidays (at Christmas, at Diwali), 'at the age of'",
+   "<b>IN</b> — months (in January), years (in 2024), seasons (in summer), centuries, parts of day (in the morning), duration within (in 2 hours)",
+   "<b>ON</b> — specific dates (on 15 August), days (on Monday), special days (on Republic Day), day + part (on Monday morning)",
+   "<b>at night</b> (NOT 'in night') · <b>in the morning/afternoon/evening</b> (NOT 'on morning')",
+   "<b>on Monday morning</b> (a specific day beats the 'part of day' rule)",
+   "<b>at the weekend</b> (British) / <b>on the weekend</b> (American)"
   ],
-  table:{h:["USE A (consonant sound)","USE AN (vowel sound)"],r:[
-   ["a university (yu-)","an umbrella (u-)"],
-   ["a European (yu-)","an honest man (silent h)"],
-   ["a one-rupee note (w-)","an hour (silent h)"],
-   ["a useful book (yu-)","an MBA / an MP (em-)"],
-   ["a unicorn (yu-)","an heir (silent h)"],
-   ["a historic event (h pronounced)","an X-ray (ex-)"]
+  table:{h:["Prep","Use","Examples"],r:[
+   ["AT","exact time","at 5 PM, at noon, at night"],
+   ["AT","short holidays","at Christmas, at Diwali"],
+   ["IN","months / years / seasons","in May, in 2024, in winter"],
+   ["IN","parts of day","in the morning, in the evening"],
+   ["ON","days / dates","on Monday, on 15 August"],
+   ["ON","day + part","on Monday morning"]
   ]},
   mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"'Honest' has a silent H → vowel sound → AN."},
-   {q:"She is ___ European working in India.",o:["a","an","the","✗ (no article)"],a:0,e:"'European' begins with a 'yu' consonant sound → A."},
-   {q:"He has ___ MBA degree from IIM.",o:["a","an","the","✗ (no article)"],a:1,e:"'MBA' = 'em-bee-ay' → begins with a vowel sound → AN."},
-   {q:"Please give me ___ one-rupee coin.",o:["a","an","the","✗ (no article)"],a:0,e:"'One' begins with a 'w' (won) sound = consonant sound → A."},
-   {q:"It is ___ useful book for beginners.",o:["a","an","the","✗ (no article)"],a:0,e:"'Useful' = 'yu-' consonant sound → A."},
-   {q:"He is ___ heir to a large fortune.",o:["a","an","the","✗ (no article)"],a:1,e:"'Heir' has a silent H → vowel sound → AN."},
-   {q:"They lived through ___ historic event.",o:["a","an","the","✗ (no article)"],a:0,e:"In 'historic' the H is pronounced → consonant sound → A."}
+   {q:"The meeting is ___ Monday morning.",o:["in","at","on","by"],a:2,e:"Days (even 'Monday morning') take ON."},
+   {q:"He retired ___ the age of 60.",o:["in","at","on","by"],a:1,e:"'at the age of' → AT."},
+   {q:"I will return ___ a week.",o:["in","at","on","since"],a:0,e:"Duration within → IN → 'in a week'."},
+   {q:"We celebrate Diwali ___ autumn.",o:["on","at","in","by"],a:2,e:"Seasons take IN → 'in autumn'."},
+   {q:"The train leaves ___ 6 o'clock.",o:["in","on","at","by"],a:2,e:"Clock time → AT."},
+   {q:"He was born ___ 1999.",o:["on","in","at","by"],a:1,e:"Years take IN → 'in 1999'."},
+   {q:"Owls hunt ___ night.",o:["in","on","at","by"],a:2,e:"'at night' (fixed) — not 'in night'."}
   ]},
 
- {id:"art-the",title:"THE — The Definite Article",xp:20,type:"regular",
+ {id:"prep-place",title:"AT / IN / ON — Place",xp:20,type:"regular",
   facts:[
-   "<b>Second mention</b> of a noun: 'I saw a dog. THE dog was black.'",
-   "<b>Unique things</b>: the sun, the moon, the sky, the earth, the world, the universe",
-   "<b>Superlatives &amp; ordinals</b>: the best, the tallest, the first, the second, the last",
-   "<b>Rivers, oceans, seas</b>: the Ganga, the Nile, the Pacific, the Arabian Sea · <b>ranges</b>: the Himalayas, the Alps (NOT single peaks)",
-   "<b>Holy books</b>: the Gita, the Bible, the Quran · <b>newspapers</b>: the Hindu, the Times of India · <b>named ships/trains</b>: the Rajdhani, the Titanic",
-   "<b>Musical instruments</b>: play the violin, the piano · <b>directions</b>: the North, the East · <b>parallel comparatives</b>: THE more you read, THE better"
+   "<b>AT</b> — a specific point/address (at the door, at 10 Park Street), events/gatherings (at the party, at the station), small villages (at Rampur)",
+   "<b>IN</b> — enclosed spaces (in the room, in the box), cities/countries (in Delhi, in India), large areas (in the park, in the world)",
+   "<b>ON</b> — surfaces (on the table, on the wall, on the floor), open/flat transport (on a bus, on a train, on a plane)",
+   "<b>IN</b> — enclosed transport (in a car, in a taxi, in a lift)",
+   "'The train arrived AT platform 3' · 'He lives AT Baker Street' (address) vs 'IN London' (city)",
+   "Rule of thumb: point = AT · inside/enclosed = IN · surface = ON"
   ],
-  table:{h:["Use THE for","Example"],r:[
-   ["Second mention","I saw a dog. THE dog barked."],
-   ["Unique in the world","the sun, the moon, the earth"],
-   ["Superlatives / ordinals","the best, the first, the last"],
-   ["Musical instruments","He plays THE violin"],
-   ["Rivers / ranges / seas","the Ganga, the Himalayas, the Pacific"],
-   ["Holy books / newspapers","the Gita, the Hindu"],
-   ["Political / govt bodies","the Parliament, the Cabinet"]
+  table:{h:["Prep","Use","Examples"],r:[
+   ["AT","point / address / event","at the door, at the party"],
+   ["IN","enclosed / cities / countries","in the room, in Delhi"],
+   ["ON","surfaces","on the table, on the wall"],
+   ["ON","open transport","on a bus, on a train"],
+   ["IN","enclosed transport","in a car, in a taxi"]
   ]},
   mcqs:[
-   {q:"She plays ___ piano beautifully.",o:["a","an","the","✗ (no article)"],a:2,e:"Musical instruments always take THE."},
-   {q:"___ Himalayas are in the north of India.",o:["A","An","The","✗ (no article)"],a:2,e:"Mountain RANGES take THE (single peaks take none)."},
-   {q:"It is ___ most difficult question in the paper.",o:["a","an","the","✗ (no article)"],a:2,e:"Superlatives take THE → 'the most difficult'."},
-   {q:"___ Ganga is a holy river.",o:["A","An","The","✗ (no article)"],a:2,e:"Names of rivers take THE."},
-   {q:"The sun rises in ___ east.",o:["a","an","the","✗ (no article)"],a:2,e:"Cardinal directions take THE → 'the east'."},
-   {q:"I read ___ Times of India every morning.",o:["a","an","the","✗ (no article)"],a:2,e:"Newspapers take THE."},
-   {q:"___ more you practise, ___ better you become.",o:["The / the","A / a","No article / the","The / a"],a:0,e:"Parallel comparatives take THE...THE."}
+   {q:"She lives ___ Park Street. (address)",o:["in","on","at","by"],a:2,e:"A specific address → AT."},
+   {q:"The book is ___ the table.",o:["in","at","on","into"],a:2,e:"Surface → ON."},
+   {q:"He was born ___ Delhi.",o:["at","on","in","by"],a:2,e:"Cities take IN → 'in Delhi'."},
+   {q:"The keys are ___ the drawer.",o:["on","at","in","by"],a:2,e:"Enclosed space → IN → 'in the drawer'."},
+   {q:"We travelled ___ a bus to the hills.",o:["in","on","at","into"],a:1,e:"Open/flat transport → ON → 'on a bus'."},
+   {q:"The train arrived ___ platform 3.",o:["in","on","at","by"],a:2,e:"A specific point → AT → 'at platform 3'."}
   ]},
 
- {id:"art-zero",title:"Zero Article — When to Use Nothing",xp:20,type:"regular",
+ {id:"prep-confused",title:"Commonly Confused Prepositions",xp:20,type:"regular",
   facts:[
-   "<b>NO article</b> with proper nouns (Ram), countries (India, France), cities (Delhi), single mountains (Mount Everest), single lakes (Dal Lake)",
-   "<b>NO article</b> with languages (English), subjects (Mathematics), meals (breakfast, lunch), diseases (malaria, diabetes)",
-   "<b>NO article</b> with abstract/general nouns: 'Honesty is the best policy', 'Knowledge is power', 'Love is blind'",
-   "<b>NO article</b> with plural general nouns: 'Dogs are loyal', 'Man is mortal'",
-   "<b>THE + adjective = class of people</b>: the poor, the rich, the blind, the young, the dead",
-   "<b>Institution for its purpose</b> → no article: in hospital (as patient), in school, in prison, go to bed, go to work"
+   "<b>BY</b> = not later than (deadline): 'Submit it by 5 PM' · <b>UNTIL/TILL</b> = up to a point (duration): 'Wait until 5 PM'",
+   "<b>SINCE</b> = point of time (since 2019) · <b>FOR</b> = period of time (for 5 years)",
+   "<b>BETWEEN</b> = two (or a defined few): 'between you and me' · <b>AMONG</b> = three or more: 'among the students'",
+   "<b>BESIDE</b> = next to (place): 'sat beside me' · <b>BESIDES</b> = in addition to: 'Besides English, she knows French'",
+   "<b>IN</b> = position/static: 'the cat is in the box' · <b>INTO</b> = motion/entering: 'jumped into the box'",
+   "<b>ON</b> = position/contact · <b>UPON</b> = formal/literary, implies motion ('once upon a time')"
   ],
-  table:{h:["No article with","Example"],r:[
-   ["Languages","She speaks English & French"],
-   ["Subjects","I study Mathematics"],
-   ["Meals","Have lunch, eat breakfast"],
-   ["Diseases","He has malaria / diabetes"],
-   ["Single mountains / lakes","Mount Everest, Dal Lake"],
-   ["Abstract nouns (general)","Knowledge is power"],
-   ["by + transport","by bus, by train, by air"]
+  table:{h:["Pair","Meaning","Example"],r:[
+   ["BY","deadline","Submit by Friday"],
+   ["UNTIL","duration up to","Wait until Friday"],
+   ["BETWEEN","two","between you and me"],
+   ["AMONG","three or more","among the students"],
+   ["BESIDE","next to","sat beside me"],
+   ["BESIDES","in addition to","Besides English..."]
   ]},
   mcqs:[
-   {q:"She speaks ___ French and German fluently.",o:["a","the","✗ (no article)","an"],a:2,e:"Languages take no article."},
-   {q:"He had ___ lunch at noon.",o:["a","the","✗ (no article)","an"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"He travelled ___ train to Mumbai.",o:["by (no article)","in the","on a","with the"],a:0,e:"'By + transport' takes no article → 'by train'."},
-   {q:"___ knowledge is ___ power.",o:["The / the","A / a","✗ / ✗ (no article)","The / a"],a:2,e:"Abstract nouns used generally take no article."},
-   {q:"___ Mount Everest is the highest peak.",o:["The","A","An","✗ (no article)"],a:3,e:"Single mountains take no article (ranges take THE)."},
-   {q:"He suffers from ___ malaria.",o:["a","the","an","✗ (no article)"],a:3,e:"Names of diseases take no article."},
-   {q:"___ poor need our help.",o:["A","An","The","✗ (no article)"],a:2,e:"THE + adjective = a whole class of people → 'The poor'."}
+   {q:"Submit your application ___ Friday. (deadline)",o:["until","till","by","since"],a:2,e:"Deadline (not later than) → BY."},
+   {q:"They divided the prize ___ the three winners.",o:["between","among","in","for"],a:1,e:"Three or more → AMONG."},
+   {q:"She jumped ___ the swimming pool.",o:["in","on","into","at"],a:2,e:"Motion/entering → INTO."},
+   {q:"___ English, she also knows French. (in addition to)",o:["Beside","Besides","Between","By"],a:1,e:"'Besides' = in addition to."},
+   {q:"He sat ___ me during the exam. (next to)",o:["besides","beside","between","among"],a:1,e:"'Beside' = next to."},
+   {q:"Please wait ___ I return. (duration)",o:["by","until","for","since"],a:1,e:"Duration up to a point → UNTIL."}
+  ]},
+
+ {id:"prep-fixed",title:"Fixed Prepositions — Verbs & Adjectives",xp:20,type:"regular",
+  facts:[
+   "<b>Verbs</b>: die OF (disease) / die IN (accident) / die BY (suicide); suffer FROM; look AT/FOR/AFTER/INTO; agree WITH (person)/TO (plan)/ON (point)",
+   "prevent/prohibit FROM; accuse OF; acquit OF; congratulate ON; interfere IN (matter)/WITH (action); enquire ABOUT (thing)/OF (person)",
+   "<b>Adjectives</b>: good/bad AT; afraid/proud/fond OF; interested IN; famous FOR; responsible FOR; guilty OF; satisfied/pleased WITH",
+   "<b>angry WITH</b> (a person) / <b>angry AT/ABOUT</b> (a thing); <b>married TO</b>; <b>engaged TO</b>",
+   "<b>differ FROM</b> (things) / <b>differ WITH</b> (a person's opinion)",
+   "<b>blind OF</b> one eye / <b>blind IN</b> both eyes / <b>blind TO</b> (unaware of)"
+  ],
+  table:{h:["Word","Prep","Example"],r:[
+   ["die (disease)","of","died of cancer"],
+   ["suffer","from","suffers from malaria"],
+   ["congratulate","on","congratulate on success"],
+   ["good / bad","at","good at maths"],
+   ["married / engaged","to","married to a doctor"],
+   ["accused","of","accused of theft"]
+  ]},
+  mcqs:[
+   {q:"She died ___ a heart attack.",o:["by","of","from","with"],a:1,e:"Die OF a disease/condition."},
+   {q:"She is married ___ a lawyer.",o:["with","to","for","of"],a:1,e:"'Married to' (never 'with')."},
+   {q:"I congratulate you ___ your promotion.",o:["for","on","about","with"],a:1,e:"'Congratulate on'."},
+   {q:"He was accused ___ cheating.",o:["for","of","with","on"],a:1,e:"'Accused of'."},
+   {q:"He is good ___ mathematics.",o:["in","at","on","for"],a:1,e:"'Good at' a skill."},
+   {q:"India is famous ___ its festivals.",o:["of","for","in","with"],a:1,e:"'Famous for'."},
+   {q:"He is blind ___ his own faults. (unaware)",o:["of","in","to","at"],a:2,e:"'Blind to' = unaware of."}
   ]}
 ]},
 
-{id:"art-special",title:"Special Rules & Traps",icon:"⚠️",nodes:[
-
- {id:"art-specialrules",title:"Special Rules 5A–5G",xp:20,type:"regular",
-  facts:[
-   "<b>5A</b> — A/AN + adjective + noun → decide by the adjective's sound: 'an old man', 'a beautiful actress'",
-   "<b>5B</b> — Double article NEVER used: 'the a book' ✗, 'a the book' ✗",
-   "<b>5C</b> — Predicative use after elected/appointed/made/chosen → no article: 'He was elected President', 'She became captain'",
-   "<b>5D</b> — 'Kind of / Sort of / Type of' → no article after: 'What kind of man is he?' (not 'a man')",
-   "<b>5E</b> — By + transport → no article: by bus / by train / by air (BUT 'in the car / on the bus' when specific)",
-   "<b>5F</b> — In + institution for its purpose → no article: 'He is in hospital' (patient) vs 'in the hospital' (visiting); same for school/church/prison",
-   "<b>5G</b> — Fixed phrases: go to bed, go to school, go to work, at home, at night, in fact"
-  ],
-  table:{h:["Rule","Wrong","Correct"],r:[
-   ["Elected + post","the President (after elected)","elected President"],
-   ["Kind of","kind of a man","kind of man"],
-   ["By transport","by the train","by train"],
-   ["Institution (purpose)","in the prison (as inmate)","in prison"],
-   ["Fixed phrase","go to the bed","go to bed"],
-   ["Double article","a the book","a book / the book"]
-  ]},
-  mcqs:[
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After 'elected/appointed', the post takes no article."},
-   {q:"What kind of ___ man is he?",o:["a","an","the","✗ (no article)"],a:3,e:"'Kind of' takes no article after it."},
-   {q:"He is ___ hospital recovering from surgery. (as patient)",o:["in (no article)","in the","in a","at the"],a:0,e:"Institution for its purpose → 'in hospital' (no article)."},
-   {q:"She became ___ captain of the team.",o:["a","an","the","✗ (no article)"],a:3,e:"Predicative post after 'became' → no article."},
-   {q:"Children go to ___ bed early.",o:["a","the","✗ (no article)","an"],a:2,e:"Fixed phrase 'go to bed' → no article."},
-   {q:"He was old ___ man with grey hair. Choose the correct article.",o:["a","an","the","✗"],a:1,e:"A/AN + adjective → decide by adjective sound; 'old' = vowel sound → 'an old man'."}
-  ]},
-
- {id:"art-country",title:"THE with Countries & Groups",xp:20,type:"regular",
-  facts:[
-   "<b>Most countries → NO article</b>: India, France, Japan, China, Brazil, Russia",
-   "<b>Plural / union names → THE</b>: the USA, the UK, the UAE, the Netherlands, the Philippines",
-   "<b>Reason</b>: these are plural words or abbreviated union names (United States, United Kingdom)",
-   "<b>Groups of islands → THE</b>: the Andamans, the Maldives, the West Indies",
-   "<b>Mountain ranges → THE</b>: the Himalayas, the Alps, the Andes (single peaks → none)",
-   "<b>Deserts, seas, oceans, canals → THE</b>: the Sahara, the Pacific, the Suez Canal"
-  ],
-  table:{h:["THE with","Reason / Example"],r:[
-   ["the USA","Plural (United States)"],
-   ["the UK","Union name"],
-   ["the Netherlands","Plural word"],
-   ["the Philippines","Plural word"],
-   ["the Maldives","Group of islands"],
-   ["the Sahara / the Pacific","Deserts, oceans"]
-  ]},
-  mcqs:[
-   {q:"___ Netherlands is a beautiful country.",o:["A","An","The","✗ (no article)"],a:2,e:"'Netherlands' is a plural name → THE."},
-   {q:"He works in ___ USA.",o:["a","an","the","✗ (no article)"],a:2,e:"'USA' (United States, plural) → THE."},
-   {q:"She visited ___ India last year.",o:["the","a","an","✗ (no article)"],a:3,e:"Most countries take no article → 'India'."},
-   {q:"They sailed to ___ Maldives.",o:["a","an","the","✗ (no article)"],a:2,e:"Groups of islands take THE."},
-   {q:"___ Sahara is the largest hot desert.",o:["A","An","The","✗ (no article)"],a:2,e:"Deserts take THE."},
-   {q:"He climbed ___ Mount Fuji.",o:["the","a","an","✗ (no article)"],a:3,e:"Single mountains take no article."}
-  ]},
-
- {id:"art-traps",title:"Trap Sheet — SSC Favourites",xp:20,type:"trap",
+{id:"prep-special",title:"Traps",icon:"⚠️",nodes:[
+ {id:"prep-traps",title:"Trap Sheet — Prepositions",xp:20,type:"trap",
   traps:[
-   "<b>a honest man</b> → <b>an honest man</b> (H silent = vowel sound)",
-   "<b>a MBA degree</b> → <b>an MBA degree</b> (em = vowel sound)",
-   "<b>an uniform</b> → <b>a uniform</b> (yu = consonant sound)",
-   "<b>an European</b> → <b>a European</b> (yu = consonant sound)",
-   "<b>an one-time offer</b> → <b>a one-time offer</b> (w sound)",
-   "<b>The gold is precious</b> → <b>Gold is precious</b> (general abstract = no article)",
-   "<b>I play violin</b> → <b>I play the violin</b> (instruments need THE)",
-   "<b>The Mount Everest</b> → <b>Mount Everest</b> (single mountain = no article)",
-   "<b>He was the elected President</b> → <b>He was elected President</b> (after elected = no article)",
-   "<b>I had the lunch</b> → <b>I had lunch</b> (meals = no article)",
-   "<b>The Sun rises in East</b> → <b>in the East</b> (cardinal directions need THE)",
-   "<b>The more harder you try</b> → <b>The harder you try</b> (no double comparative)"
+   "<b>He died by cancer</b> → <b>died of cancer</b>",
+   "<b>He is married with her</b> → <b>married to her</b>",
+   "<b>She is good in maths</b> → <b>good at maths</b>",
+   "<b>Congratulate you for success</b> → <b>congratulate you on success</b>",
+   "<b>Sit besides me</b> → <b>sit beside me</b>",
+   "<b>He waited until I come</b> → <b>He waited for me to come</b>",
+   "<b>She jumped in the pool</b> → <b>jumped into the pool</b> (motion)",
+   "<b>Between the five of us</b> → <b>among the five of us</b>",
+   "<b>She suffers with headaches</b> → <b>suffers from headaches</b>",
+   "<b>I agree to you</b> → <b>I agree with you</b>",
+   "<b>The train arrived in platform 3</b> → <b>at platform 3</b>",
+   "<b>Submit it until Friday</b> → <b>by Friday</b> (deadline)"
   ],
   mcqs:[
-   {q:"Which sentence is CORRECT?",o:["He is a honest man","She plays violin well","Mount Everest is the highest peak in the world","He speaks the English"],a:2,e:"Superlative + unique world → 'the highest peak in the world'. Others: an honest, the violin, English."},
-   {q:"Spot the error: 'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE → 'the violin'."},
-   {q:"Spot the error: 'He is (A) a best (B) student in (C) the class.'",o:["A → the best","B","C","No error"],a:0,e:"Superlatives need THE → 'the best student'."},
-   {q:"Which is WRONG?",o:["The Ganga is a holy river","Honesty is the best policy","He had the lunch at noon","The USA is powerful"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"Spot the error: 'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = yu (consonant) sound → 'A European'."},
-   {q:"Which is CORRECT?",o:["He was the elected chairman","The gold is a precious metal","I saw a unique painting","He plays cricket with the bat"],a:2,e:"'Unique' = yu sound → 'a unique painting'. Others: elected chairman (no 'the'), Gold (no 'the'), cricket with a bat."}
+   {q:"Which is CORRECT?",o:["He died by cancer","She is good in maths","He congratulated me on my success","Sit besides me"],a:2,e:"'Congratulate on' is correct. Others: of cancer, good at, beside."},
+   {q:"Spot the error: 'She suffers (A) with (B) severe (C) headaches.'",o:["A","with → from","C","No error"],a:1,e:"'Suffer from'."},
+   {q:"Spot the error: 'Divide it (A) between (B) all the (C) students.'",o:["A","between → among","C","No error"],a:1,e:"More than two → 'among'."},
+   {q:"Spot the error: 'He is (A) angry (B) with the (C) delay.'",o:["A","with → at/about","C","No error"],a:1,e:"Angry WITH a person; angry AT/ABOUT a thing → 'angry at/about the delay'."},
+   {q:"Spot the error: 'He lives (A) in (B) Baker (C) Street.'",o:["in → at","B","C","No error"],a:0,e:"A specific address → 'at Baker Street'."},
+   {q:"Spot the error: 'She jumped (A) in (B) the swimming (C) pool.'",o:["in → into","B","C","No error"],a:0,e:"Motion/entering → 'into the pool'."}
   ]}
 ]},
 
-{id:"art-pyq",title:"PYQ Practice",icon:"🎯",nodes:[
-
- {id:"art-fill",title:"Fill in the Blank — 25 PYQ",xp:20,type:"regular",
+{id:"prep-pyq",title:"PYQ Practice",icon:"🎯",nodes:[
+ {id:"prep-fill",title:"Fill the Preposition — 25 PYQ",xp:20,type:"regular",
   facts:[
-   "Practice from the 25-question SSC CGL exercise. For each blank pick a / an / the / ✗ (no article).",
-   "Apply the checklist: vowel SOUND? · second mention? · unique? · superlative? · language/meal/subject? · after elected?",
-   "Do all questions in the Test tab, then review the explanations tied to each rule."
+   "From the 25-question SSC exercise. Pick the exact preposition.",
+   "Recall the fixed collocations (die of, married to, congratulate on, suffer from, accused of).",
+   "For at/in/on: point = AT · enclosed/city/month = IN · surface/day/date = ON."
   ],
   mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H = vowel sound → AN."},
-   {q:"I go to ___ school every day.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → no article."},
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After elected → no article."},
-   {q:"She is ___ heir to the throne.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H → vowel sound → AN."},
-   {q:"He went to ___ hospital to visit his friend.",o:["a","an","the","✗ (no article)"],a:2,e:"Visiting (not as patient) → 'the hospital'."},
-   {q:"He travelled by ___ train to Mumbai.",o:["a","an","the","✗ (no article)"],a:3,e:"By + transport → no article."},
-   {q:"He was sent to ___ prison for theft.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"I saw ___ dog. ___ dog was barking loudly.",o:["a / The","the / a","an / The","a / a"],a:0,e:"First mention → A; second mention → THE."},
-   {q:"He is ___ unique artist.",o:["a","an","the","✗ (no article)"],a:0,e:"'Unique' = yu sound → A."},
-   {q:"Mount Everest is ___ highest peak in ___ world.",o:["the / the","a / the","the / a","a / a"],a:0,e:"Superlative → THE; unique world → THE."},
-   {q:"He is ___ IAS officer from Kerala.",o:["a","an","the","✗ (no article)"],a:1,e:"'IAS' = 'eye-ay-es' → vowel sound → AN."},
-   {q:"___ Gita is ___ holy book of Hindus.",o:["The / a","A / the","The / the","A / a"],a:0,e:"Holy book name → THE Gita; first mention 'a holy book'."}
+   {q:"He is angry ___ his brother for not calling.",o:["on","with","about","for"],a:1,e:"Angry WITH a person → 'with his brother'."},
+   {q:"She has been working here ___ 2018.",o:["for","from","since","by"],a:2,e:"A point in time → SINCE."},
+   {q:"He differs ___ his brother in temperament.",o:["with","from","to","in"],a:1,e:"Differ FROM (things/people being unlike)."},
+   {q:"Please don't interfere ___ my personal matters.",o:["with","in","at","on"],a:1,e:"Interfere IN a matter."},
+   {q:"He is responsible ___ this mistake.",o:["of","for","to","with"],a:1,e:"'Responsible for'."},
+   {q:"She is interested ___ classical music.",o:["on","in","at","for"],a:1,e:"'Interested in'."},
+   {q:"He was acquitted ___ all charges.",o:["from","of","for","with"],a:1,e:"'Acquitted of'."},
+   {q:"Please listen ___ what I am saying.",o:["at","to","for","on"],a:1,e:"'Listen to'."},
+   {q:"The cat crept ___ the box quietly. (motion)",o:["in","on","into","at"],a:2,e:"Motion → INTO."},
+   {q:"I have been waiting ___ two hours.",o:["since","from","for","by"],a:2,e:"A period → FOR."}
   ]},
-
- {id:"art-error",title:"Find the Error — Articles",xp:20,type:"trap",
+ {id:"prep-error",title:"Find the Error — Prepositions",xp:20,type:"trap",
   facts:[
-   "SSC error-spotting: the sentence is split into parts (A)(B)(C); find the part with the article error.",
-   "Article errors are ~20% of all SSC error-spotting questions — always scan articles first.",
-   "Check: A/AN by sound · THE for superlatives/instruments/rivers/ranges · zero article for meals/languages/after elected."
+   "Prepositions are ~15% of SSC error-spotting.",
+   "Test the fixed collocation first (verb/adjective + preposition).",
+   "Then test at/in/on and confused pairs (by/until, between/among, beside/besides, in/into)."
   ],
   mcqs:[
-   {q:"'He is (A) a best student (B) in (C) the class.'",o:["A → the best student","B","C","No error"],a:0,e:"Superlative needs THE."},
-   {q:"'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE."},
-   {q:"'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = consonant (yu) sound → A."},
-   {q:"'The Nile (A) is in (B) the Africa. (C)'",o:["A","B","C → in Africa","No error"],a:2,e:"Country/continent names take no article → 'in Africa'."},
-   {q:"'He was (A) sent to (B) the prison (C) for theft.'",o:["A","B","C → to prison","No error"],a:2,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"'I had (A) the lunch (B) with (C) my friends.'",o:["A","B → had lunch","C","No error"],a:1,e:"Meals take no article → 'had lunch'."},
-   {q:"'She speaks (A) the English (B) and (C) French.'",o:["A","B → English","C","No error"],a:1,e:"Languages take no article → 'English'."}
+   {q:"'He is married (A) with (B) a (C) doctor.'",o:["A","with → to","C","No error"],a:1,e:"'Married to'."},
+   {q:"'She is good (A) in (B) painting (C) and music.'",o:["in → at","B","C","No error"],a:0,e:"'Good at' a skill."},
+   {q:"'Submit the form (A) until (B) Friday (C) evening.'",o:["until → by","B","C","No error"],a:0,e:"Deadline → 'by Friday'."},
+   {q:"'He congratulated (A) me (B) for my (C) success.'",o:["A","B","for → on","No error"],a:2,e:"'Congratulate on'."},
+   {q:"'I agree (A) to (B) you (C) on this point.'",o:["A","to → with","C","No error"],a:1,e:"Agree WITH a person."},
+   {q:"'He died (A) by (B) a heart (C) attack.'",o:["A","by → of","C","No error"],a:1,e:"Die OF a condition."}
   ]}
 ]},
 
-{id:"art-golden",title:"Golden",icon:"🏹",nodes:[
- {id:"art-gold",title:"Articles — Golden Node",xp:30,type:"gold",requires_pct:70,
+{id:"prep-golden",title:"Golden",icon:"🏹",nodes:[
+ {id:"prep-gold",title:"Prepositions — Golden Node",xp:30,type:"gold",requires_pct:70,
   golden:[
-   "A/AN = <b>SOUND not spelling</b>: an hour, an MBA, an honest man; a university, a European, a one-rupee note",
-   "THE = second mention, unique (the sun), superlatives, ordinals, instruments, rivers, ranges, holy books, newspapers",
-   "ZERO = languages, subjects, meals, diseases, single mountains/lakes, abstract nouns, after elected/appointed",
-   "THE + adjective = class of people (the poor, the rich, the blind)",
-   "THE with plural-name countries (the USA, the Netherlands), island groups (the Maldives), ranges (the Himalayas)",
-   "By + transport = no article; in hospital/school/prison (purpose) = no article; go to bed/school/work = no article"
+   "AT = point/exact time/address · IN = enclosed/city/month/year · ON = surface/day/date",
+   "BY = deadline · UNTIL = duration up to a point · SINCE = point · FOR = period",
+   "BETWEEN = 2 · AMONG = 3+ · BESIDE = next to · BESIDES = in addition to · IN = static · INTO = motion",
+   "Die OF disease · Married TO · Good AT · Congratulate ON · Suffer FROM · Accused OF · Responsible FOR",
+   "Angry WITH a person / AT-ABOUT a thing · Differ FROM things / WITH a person · Blind TO = unaware"
   ]}
 ]}
 
 ];
 
-const SKEY="ssc_eng_01_articles";
+const SKEY="ssc_eng_07_prepositions";
 let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
 try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
 function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
 
 let _ns={nodeId:null,openedAt:null,answered:0,correct:0,totalQ:0};
 function trackEvent(ev,payload){
-  const body=Object.assign({event:ev,mapId:"ssc_eng_01_articles",ts:new Date().toISOString()},payload);
+  const body=Object.assign({event:ev,mapId:"ssc_eng_07_prepositions",ts:new Date().toISOString()},payload);
   try{fetch('/api/progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(()=>flashSync()).catch(()=>{});}catch(e){}
 }
 function flashSync(){const d=document.getElementById('syncDot');if(!d)return;d.classList.add('show');setTimeout(()=>d.classList.remove('show'),900);}
@@ -659,7 +618,7 @@ function showDash(){
   S.curNode=null;save();buildSidebar();
   const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
   document.getElementById("viewWrap").innerHTML=`<div class="dash">
-    <div class="dash-t">Articles (A / An / The)</div>
+    <div class="dash-t">Prepositions</div>
     <div class="dash-s">SSC CGL / CHSL / MTS / CPO · RULES · TRAPS · PYQ PRACTICE</div>
     <div class="dash-grid">
       <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
@@ -699,7 +658,7 @@ buildSidebar();updateHeader();showDash();
 /* ===== CentuMania metrics (injected — additive; module content unchanged) ===== */
 (function(){
   if(window.__cmTrackInit)return; window.__cmTrackInit=1;
-  var CM_DEFAULT='eng-01-articles';
+  var CM_DEFAULT='eng-07-prepositions';
   var CM_T0=Date.now(),CM_ACTIVE=0,_cmVisT=Date.now();
   function cmToken(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
   function cmMat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}

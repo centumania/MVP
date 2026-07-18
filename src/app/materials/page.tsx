@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { AppLayout } from '@/src/components/layout/AppLayout'
 import { SkeletonCard } from '@/src/components/ui/Skeleton'
-import { getUniqueDays, getMaterialsByDay } from '@/src/data/materials'
+import { getUniqueDays, getMaterialsByDay, getProgramMeta } from '@/src/data/materials'
 import type { Material } from '@/src/data/materials'
 
 type Status = {
@@ -280,8 +280,16 @@ export default function MaterialsPage() {
   const [loading,    setLoading]   = useState(true)
   const [fetchErr,   setFetchErr]  = useState(false)
   const [paymentErr, setPaymentErr]= useState(false)
+  const [programId,  setProgramId] = useState<string>('LDC')
 
   useEffect(() => {
+    // The student's program comes from onboarding (/welcome) → their plan.
+    try {
+      const onb = JSON.parse(localStorage.getItem('cm_onboarding') || '{}')
+      const map: Record<string, string> = { SSC: 'SSC', LDC: 'LDC', Banking: 'Banking' }
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is client-only
+      if (onb?.exam && map[onb.exam]) setProgramId(map[onb.exam])
+    } catch { /* default LDC */ }
     getSupabaseBrowserClient().auth.getSession().then(async ({ data: { session } }) => {
       if (!session) { router.replace('/auth/login'); return }
       setUserName(session.user.user_metadata?.name ?? session.user.email?.split('@')[0] ?? '')
@@ -300,7 +308,8 @@ export default function MaterialsPage() {
     })
   }, [router])
 
-  const days   = getUniqueDays()
+  const program = getProgramMeta(programId)
+  const days   = getUniqueDays(programId)
   const maxDay = days.length ? Math.max(...days) : 0
 
   if (loading) {
@@ -320,7 +329,7 @@ export default function MaterialsPage() {
         {/* ── Page header ── */}
         <div className="mb-2">
           <p className="text-[10px] font-extrabold uppercase mb-2" style={{ color: AMBER, letterSpacing: '0.22em' }}>
-            CentuMania · The 30-Day Programme
+            CentuMania · {program.name} · {program.days}-Day Plan
           </p>
           <h1 className="text-[28px] font-extrabold leading-tight" style={{ color: INK_SOFT, letterSpacing: '-0.02em' }}>
             Study Modules
@@ -356,7 +365,7 @@ export default function MaterialsPage() {
         )}
 
         {status && days.map(day => {
-          const dayMaterials   = getMaterialsByDay(day)
+          const dayMaterials   = getMaterialsByDay(day, programId)
           const isStaticLocked = dayMaterials.every(m => m.isStaticLocked)
 
           if (isStaticLocked) {

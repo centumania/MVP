@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>SSC English · Articles (A / An / The)</title>
+<title>SSC English · One Word Substitution</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -189,7 +189,7 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <body>
 <div class="shell">
 <nav class="topbar">
-  <div class="logo"><span class="logo-dot"></span>SSC English — Articles (A / An / The)</div>
+  <div class="logo"><span class="logo-dot"></span>SSC English — One Word Substitution</div>
   <div class="nav-stats">
     <div class="stat xp">XP <b id="hXP">0</b></div>
     <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
@@ -219,264 +219,205 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 
 <script>
 
-const DIAGRAMS = {
-"articles-map": `<svg viewBox="0 0 760 170" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
-<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(61,214,140,.08)" stroke="#3dd68c" stroke-width="1"/>
-<text x="380" y="22" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">ARTICLE DECISION MAP — A / AN / THE / ZERO</text>
-<rect x="4" y="36" width="246" height="128" rx="8" fill="rgba(34,211,200,.06)" stroke="#22d3c8" stroke-width="1.2"/>
-<text x="127" y="56" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">A / AN</text>
-<text x="127" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Singular · first mention</text>
-<text x="127" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">AN = vowel SOUND</text>
-<text x="127" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">an hour · an MBA · an heir</text>
-<text x="127" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">A = consonant SOUND</text>
-<text x="127" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">a university · a one-rupee</text>
-<rect x="258" y="36" width="246" height="128" rx="8" fill="rgba(61,214,140,.06)" stroke="#3dd68c" stroke-width="1.2"/>
-<text x="381" y="56" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">THE</text>
-<text x="381" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Second mention · unique</text>
-<text x="381" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Superlatives · ordinals</text>
-<text x="381" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Rivers · ranges · instruments</text>
-<text x="381" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">the sun · the best · the Ganga</text>
-<text x="381" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">the USA · the Himalayas</text>
-<rect x="512" y="36" width="244" height="128" rx="8" fill="rgba(240,107,107,.06)" stroke="#f06b6b" stroke-width="1.2"/>
-<text x="634" y="56" fill="#f06b6b" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">ZERO (no article)</text>
-<text x="634" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Languages · meals · subjects</text>
-<text x="634" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Countries · abstract nouns</text>
-<text x="634" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">After elected / appointed</text>
-<text x="634" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">by bus · go to bed</text>
-<text x="634" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Honesty · English · lunch</text>
-</svg>`
-};
+const DIAGRAMS = {};
 
 const CHAPTERS = [
 
-{id:"art-foundations",title:"Foundations",icon:"📰",nodes:[
+{id:"ow-sets",title:"Word Banks",icon:"🎯",nodes:[
 
- {id:"art-aan",title:"A vs AN — The Sound Rule",xp:20,type:"regular",diag:"articles-map",
+ {id:"ow-persons",title:"Persons",xp:20,type:"regular",
   facts:[
-   "<b>A / AN depends on SOUND, not spelling</b> — this is the single most tested article rule in SSC",
-   "<b>AN</b> before a vowel SOUND: <code>an</code> apple, <code>an</code> hour, <code>an</code> honest man, <code>an</code> heir (silent h)",
-   "<b>AN</b> before letters pronounced with a vowel sound: <code>an</code> MBA, <code>an</code> MP, <code>an</code> MLA, <code>an</code> X-ray, <code>an</code> SSC exam",
-   "<b>A</b> before a consonant SOUND even if the word starts with a vowel LETTER: <code>a</code> university, <code>a</code> European, <code>a</code> union, <code>a</code> useful book (all 'yu' sound)",
-   "<b>A</b> before 'one-' words: <code>a</code> one-rupee note, <code>a</code> one-eyed man (the 'w/won' sound)",
-   "<b>A / AN + adjective + noun</b> → decide by the ADJECTIVE's sound: <b>an</b> old man, <b>a</b> beautiful actress, <b>an</b> honest officer"
+   "<b>Haters</b>: Misanthrope (mankind), Misogynist (women), Misogamist (marriage) · <b>Lovers</b>: Philanthropist (mankind), Bibliophile (books)",
+   "<b>Collectors</b>: Numismatist (coins), Philatelist (stamps) · <b>Speaks</b>: Polyglot (many languages), Linguist (studies languages)",
+   "<b>Belief</b>: Atheist (no God), Theist (God), Agnostic (unknowable), Deist (God not religion), Pacifist (anti-war)",
+   "<b>Diet</b>: Omnivore (both), Herbivore (plants), Carnivore (meat) · <b>Gourmand</b> (eats a lot) vs <b>Gourmet</b> (fine food)",
+   "<b>Traits</b>: Altruist (others first), Egoist (self), Ascetic (self-denial), Epicure (pleasure), Stoic (endures pain), Connoisseur (expert)",
+   "<b>Others</b>: Plagiarist (copies work), Novice/Neophyte (beginner), Prodigy (gifted child), Iconoclast (attacks beliefs), Demagogue (exploits passions)"
   ],
-  table:{h:["USE A (consonant sound)","USE AN (vowel sound)"],r:[
-   ["a university (yu-)","an umbrella (u-)"],
-   ["a European (yu-)","an honest man (silent h)"],
-   ["a one-rupee note (w-)","an hour (silent h)"],
-   ["a useful book (yu-)","an MBA / an MP (em-)"],
-   ["a unicorn (yu-)","an heir (silent h)"],
-   ["a historic event (h pronounced)","an X-ray (ex-)"]
+  table:{h:["Definition","One Word"],r:[
+   ["One who hates women","Misogynist"],
+   ["One who hates mankind","Misanthrope"],
+   ["One who collects coins","Numismatist"],
+   ["One who loves books","Bibliophile"],
+   ["One who speaks many languages","Polyglot"],
+   ["One who eats too much","Gourmand"]
   ]},
   mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"'Honest' has a silent H → vowel sound → AN."},
-   {q:"She is ___ European working in India.",o:["a","an","the","✗ (no article)"],a:0,e:"'European' begins with a 'yu' consonant sound → A."},
-   {q:"He has ___ MBA degree from IIM.",o:["a","an","the","✗ (no article)"],a:1,e:"'MBA' = 'em-bee-ay' → begins with a vowel sound → AN."},
-   {q:"Please give me ___ one-rupee coin.",o:["a","an","the","✗ (no article)"],a:0,e:"'One' begins with a 'w' (won) sound = consonant sound → A."},
-   {q:"It is ___ useful book for beginners.",o:["a","an","the","✗ (no article)"],a:0,e:"'Useful' = 'yu-' consonant sound → A."},
-   {q:"He is ___ heir to a large fortune.",o:["a","an","the","✗ (no article)"],a:1,e:"'Heir' has a silent H → vowel sound → AN."},
-   {q:"They lived through ___ historic event.",o:["a","an","the","✗ (no article)"],a:0,e:"In 'historic' the H is pronounced → consonant sound → A."}
+   {q:"One who hates women:",o:["Misanthrope","Misogynist","Misogamist","Philanthropist"],a:1,e:"Miso-gyn (woman) → Misogynist."},
+   {q:"One who eats too much:",o:["Gourmet","Gourmand","Ascetic","Epicure"],a:1,e:"Gourmand = eats excessively (Gourmet = fine food)."},
+   {q:"One who does not believe in God:",o:["Theist","Deist","Atheist","Agnostic"],a:2,e:"Atheist = one who denies God's existence."},
+   {q:"One who collects stamps:",o:["Numismatist","Philatelist","Bibliophile","Philanthropist"],a:1,e:"Philatelist = stamp collector."},
+   {q:"One who leads a life of self-denial:",o:["Epicure","Ascetic","Stoic","Egoist"],a:1,e:"Ascetic = simple life of self-denial."},
+   {q:"A child with exceptional ability:",o:["Novice","Prodigy","Neophyte","Amateur"],a:1,e:"Prodigy = exceptionally gifted child."},
+   {q:"One who speaks many languages:",o:["Linguist","Polyglot","Orator","Lexicographer"],a:1,e:"Polyglot = speaks many languages."}
   ]},
 
- {id:"art-the",title:"THE — The Definite Article",xp:20,type:"regular",
+ {id:"ow-places",title:"Places & Shelters",xp:20,type:"regular",
   facts:[
-   "<b>Second mention</b> of a noun: 'I saw a dog. THE dog was black.'",
-   "<b>Unique things</b>: the sun, the moon, the sky, the earth, the world, the universe",
-   "<b>Superlatives &amp; ordinals</b>: the best, the tallest, the first, the second, the last",
-   "<b>Rivers, oceans, seas</b>: the Ganga, the Nile, the Pacific, the Arabian Sea · <b>ranges</b>: the Himalayas, the Alps (NOT single peaks)",
-   "<b>Holy books</b>: the Gita, the Bible, the Quran · <b>newspapers</b>: the Hindu, the Times of India · <b>named ships/trains</b>: the Rajdhani, the Titanic",
-   "<b>Musical instruments</b>: play the violin, the piano · <b>directions</b>: the North, the East · <b>parallel comparatives</b>: THE more you read, THE better"
+   "<b>Animal shelters</b>: Kennel (dogs), Stable (horses), Sty (pigs), Hutch (rabbits), Hive (bees), Nest (birds), Den/Lair (wild animals), Burrow (underground)",
+   "<b>Keeping places</b>: Aquarium (fish), Aviary (birds), Apiary (bees), Vivarium (study)",
+   "<b>Storage/making</b>: Granary (grain), Armoury (weapons), Mint (coins made), Pantry (food), Distillery (alcohol), Brewery (beer), Tannery (leather), Refinery (oil)",
+   "<b>Dead/sick</b>: Mortuary (bodies kept), Crematorium (bodies burned), Abattoir (slaughter), Infirmary (clinic)",
+   "<b>Gatherings</b>: Dormitory (large bedroom), Auditorium (performances), Amphitheatre (open circular theatre), Observatory (astronomy)",
+   "<b>Sanctuary</b> = place of safety/refuge"
   ],
-  table:{h:["Use THE for","Example"],r:[
-   ["Second mention","I saw a dog. THE dog barked."],
-   ["Unique in the world","the sun, the moon, the earth"],
-   ["Superlatives / ordinals","the best, the first, the last"],
-   ["Musical instruments","He plays THE violin"],
-   ["Rivers / ranges / seas","the Ganga, the Himalayas, the Pacific"],
-   ["Holy books / newspapers","the Gita, the Hindu"],
-   ["Political / govt bodies","the Parliament, the Cabinet"]
+  table:{h:["Definition","One Word"],r:[
+   ["Place where coins are made","Mint"],
+   ["Place where bees are kept","Apiary"],
+   ["Place where birds are kept","Aviary"],
+   ["Shelter for horses","Stable"],
+   ["Place where bodies are burned","Crematorium"],
+   ["Place where animals are slaughtered","Abattoir"]
   ]},
   mcqs:[
-   {q:"She plays ___ piano beautifully.",o:["a","an","the","✗ (no article)"],a:2,e:"Musical instruments always take THE."},
-   {q:"___ Himalayas are in the north of India.",o:["A","An","The","✗ (no article)"],a:2,e:"Mountain RANGES take THE (single peaks take none)."},
-   {q:"It is ___ most difficult question in the paper.",o:["a","an","the","✗ (no article)"],a:2,e:"Superlatives take THE → 'the most difficult'."},
-   {q:"___ Ganga is a holy river.",o:["A","An","The","✗ (no article)"],a:2,e:"Names of rivers take THE."},
-   {q:"The sun rises in ___ east.",o:["a","an","the","✗ (no article)"],a:2,e:"Cardinal directions take THE → 'the east'."},
-   {q:"I read ___ Times of India every morning.",o:["a","an","the","✗ (no article)"],a:2,e:"Newspapers take THE."},
-   {q:"___ more you practise, ___ better you become.",o:["The / the","A / a","No article / the","The / a"],a:0,e:"Parallel comparatives take THE...THE."}
+   {q:"Place where coins are made:",o:["Mint","Refinery","Tannery","Brewery"],a:0,e:"Coins are made at a Mint."},
+   {q:"A place where birds are kept:",o:["Apiary","Aviary","Aquarium","Vivarium"],a:1,e:"Aviary = birds (Apiary = bees)."},
+   {q:"A place where grain is stored:",o:["Pantry","Granary","Armoury","Cellar"],a:1,e:"Granary stores grain."},
+   {q:"A shelter for pigs:",o:["Kennel","Sty","Hutch","Stable"],a:1,e:"Sty = shelter for pigs."},
+   {q:"A place where leather is made:",o:["Distillery","Tannery","Brewery","Refinery"],a:1,e:"Tannery = where leather is made."},
+   {q:"A large bedroom for many people:",o:["Infirmary","Dormitory","Auditorium","Pantry"],a:1,e:"Dormitory = large shared bedroom."},
+   {q:"A place for astronomical study:",o:["Observatory","Laboratory","Sanctuary","Amphitheatre"],a:0,e:"Observatory = for observing stars."}
   ]},
 
- {id:"art-zero",title:"Zero Article — When to Use Nothing",xp:20,type:"regular",
+ {id:"ow-actions",title:"Actions, Conditions & Phobias",xp:20,type:"regular",
   facts:[
-   "<b>NO article</b> with proper nouns (Ram), countries (India, France), cities (Delhi), single mountains (Mount Everest), single lakes (Dal Lake)",
-   "<b>NO article</b> with languages (English), subjects (Mathematics), meals (breakfast, lunch), diseases (malaria, diabetes)",
-   "<b>NO article</b> with abstract/general nouns: 'Honesty is the best policy', 'Knowledge is power', 'Love is blind'",
-   "<b>NO article</b> with plural general nouns: 'Dogs are loyal', 'Man is mortal'",
-   "<b>THE + adjective = class of people</b>: the poor, the rich, the blind, the young, the dead",
-   "<b>Institution for its purpose</b> → no article: in hospital (as patient), in school, in prison, go to bed, go to work"
+   "<b>Actions</b>: Amnesty (general pardon), Armistice/Truce (stop fighting), Abdicate (give up throne), Embezzle (misuse money), Extradite (hand over criminal)",
+   "<b>Legal</b>: Incarcerate (imprison), Exonerate/Acquit (free from blame), Indict (charge), Corroborate (confirm), Fabricate (invent falsely)",
+   "<b>Favouritism</b>: Nepotism (relatives), Cronyism (friends), Sycophancy (flattery)",
+   "<b>Conditions</b>: Insomnia (no sleep), Amnesia (memory loss), Nostalgia (longing for past), Euphoria (intense joy), Paranoia (unreasonable distrust)",
+   "<b>Phobias</b>: Claustrophobia (enclosed), Agoraphobia (open spaces), Xenophobia (foreigners), Acrophobia (heights), Hydrophobia (water), Pyrophobia (fire)",
+   "Armistice = temporary stoppage of war; Amnesty = government pardon"
   ],
-  table:{h:["No article with","Example"],r:[
-   ["Languages","She speaks English & French"],
-   ["Subjects","I study Mathematics"],
-   ["Meals","Have lunch, eat breakfast"],
-   ["Diseases","He has malaria / diabetes"],
-   ["Single mountains / lakes","Mount Everest, Dal Lake"],
-   ["Abstract nouns (general)","Knowledge is power"],
-   ["by + transport","by bus, by train, by air"]
+  table:{h:["Definition","One Word"],r:[
+   ["General pardon by government","Amnesty"],
+   ["To give up the throne voluntarily","Abdicate"],
+   ["Fear of enclosed spaces","Claustrophobia"],
+   ["Fear of heights","Acrophobia"],
+   ["Fear of foreigners","Xenophobia"],
+   ["Inability to sleep","Insomnia"]
   ]},
   mcqs:[
-   {q:"She speaks ___ French and German fluently.",o:["a","the","✗ (no article)","an"],a:2,e:"Languages take no article."},
-   {q:"He had ___ lunch at noon.",o:["a","the","✗ (no article)","an"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"He travelled ___ train to Mumbai.",o:["by (no article)","in the","on a","with the"],a:0,e:"'By + transport' takes no article → 'by train'."},
-   {q:"___ knowledge is ___ power.",o:["The / the","A / a","✗ / ✗ (no article)","The / a"],a:2,e:"Abstract nouns used generally take no article."},
-   {q:"___ Mount Everest is the highest peak.",o:["The","A","An","✗ (no article)"],a:3,e:"Single mountains take no article (ranges take THE)."},
-   {q:"He suffers from ___ malaria.",o:["a","the","an","✗ (no article)"],a:3,e:"Names of diseases take no article."},
-   {q:"___ poor need our help.",o:["A","An","The","✗ (no article)"],a:2,e:"THE + adjective = a whole class of people → 'The poor'."}
+   {q:"Fear of heights:",o:["Claustrophobia","Agoraphobia","Acrophobia","Xenophobia"],a:2,e:"Acro (height) → Acrophobia."},
+   {q:"To give up the throne voluntarily:",o:["Abdicate","Delegate","Extradite","Embezzle"],a:0,e:"Abdicate = renounce the throne."},
+   {q:"A general pardon granted by government:",o:["Armistice","Amnesty","Truce","Acquittal"],a:1,e:"Amnesty = general government pardon."},
+   {q:"Loss of memory:",o:["Insomnia","Amnesia","Nostalgia","Paranoia"],a:1,e:"Amnesia = memory loss."},
+   {q:"Fear of enclosed spaces:",o:["Agoraphobia","Claustrophobia","Xenophobia","Acrophobia"],a:1,e:"Claustrophobia = fear of enclosed spaces."},
+   {q:"To misuse money entrusted to you:",o:["Extradite","Embezzle","Exonerate","Indict"],a:1,e:"Embezzle = misappropriate entrusted funds."},
+   {q:"To free someone from blame:",o:["Indict","Incarcerate","Exonerate","Fabricate"],a:2,e:"Exonerate = free from blame/guilt."}
+  ]},
+
+ {id:"ow-writing",title:"Writing, Speech & Government",xp:20,type:"regular",
+  facts:[
+   "<b>Life stories</b>: Autobiography (self-written), Biography (by another), Obituary (death notice), Epitaph (on a tomb)",
+   "<b>Book parts</b>: Prologue (intro), Epilogue (conclusion), Preamble (introductory statement), Addendum (added), Codicil (added to a will)",
+   "<b>Documents</b>: Affidavit (sworn statement), Manifesto (policy declaration), Agenda (items to discuss), Memorandum (internal note), Thesis/Monograph (study)",
+   "<b>Literary</b>: Anthology (collection), Elegy (mourning poem), Satire (humorous criticism), Parody (comic imitation), Soliloquy (talking to oneself on stage)",
+   "<b>Speech</b>: Rhetoric (effective speaking), Eulogy (praise of the dead), Panegyric (public praise), Extempore (without preparation)",
+   "<b>Government</b>: Democracy (people), Monarchy (king), Oligarchy (few), Plutocracy (rich), Autocracy (one), Stratocracy (military), Matriarchy (women)"
+  ],
+  table:{h:["Definition","One Word"],r:[
+   ["Life story written by oneself","Autobiography"],
+   ["Words written on a tomb","Epitaph"],
+   ["An addition to a will","Codicil"],
+   ["Speech without preparation","Extempore"],
+   ["A poem of mourning","Elegy"],
+   ["Government by the few","Oligarchy"]
+  ]},
+  mcqs:[
+   {q:"A speech given without preparation:",o:["Soliloquy","Extempore","Panegyric","Eulogy"],a:1,e:"Extempore = impromptu."},
+   {q:"Words written on a tomb:",o:["Elegy","Obituary","Epitaph","Eulogy"],a:2,e:"Epitaph = inscription on a tomb."},
+   {q:"An addition to a will:",o:["Addendum","Codicil","Affidavit","Manifesto"],a:1,e:"Codicil = supplement to a will."},
+   {q:"A government run by women:",o:["Oligarchy","Matriarchy","Patriarchy","Democracy"],a:1,e:"Matriarchy = rule by women."},
+   {q:"A written statement made on oath:",o:["Agenda","Affidavit","Memorandum","Manifesto"],a:1,e:"Affidavit = sworn written statement."},
+   {q:"Talking to oneself on stage:",o:["Dialogue","Soliloquy","Monologue","Pantomime"],a:1,e:"Soliloquy = speaking one's thoughts aloud alone."},
+   {q:"Government by the rich:",o:["Autocracy","Plutocracy","Oligarchy","Monarchy"],a:1,e:"Plutocracy = rule by the wealthy."}
   ]}
 ]},
 
-{id:"art-special",title:"Special Rules & Traps",icon:"⚠️",nodes:[
+{id:"ow-pyq",title:"PYQ Practice",icon:"🏆",nodes:[
 
- {id:"art-specialrules",title:"Special Rules 5A–5G",xp:20,type:"regular",
+ {id:"ow-cannotbe",title:"'Cannot Be' & High-Yield Words",xp:20,type:"trap",
   facts:[
-   "<b>5A</b> — A/AN + adjective + noun → decide by the adjective's sound: 'an old man', 'a beautiful actress'",
-   "<b>5B</b> — Double article NEVER used: 'the a book' ✗, 'a the book' ✗",
-   "<b>5C</b> — Predicative use after elected/appointed/made/chosen → no article: 'He was elected President', 'She became captain'",
-   "<b>5D</b> — 'Kind of / Sort of / Type of' → no article after: 'What kind of man is he?' (not 'a man')",
-   "<b>5E</b> — By + transport → no article: by bus / by train / by air (BUT 'in the car / on the bus' when specific)",
-   "<b>5F</b> — In + institution for its purpose → no article: 'He is in hospital' (patient) vs 'in the hospital' (visiting); same for school/church/prison",
-   "<b>5G</b> — Fixed phrases: go to bed, go to school, go to work, at home, at night, in fact"
+   "<b>Cannot be corrected</b> → Incorrigible · <b>cannot be satisfied</b> → Insatiable · <b>cannot be bribed</b> → Incorruptible · <b>cannot be appeased</b> → Implacable",
+   "<b>Too old to work</b> → Superannuated · <b>lives in another country</b> → Expatriate · <b>living at the same time</b> → Contemporary",
+   "<b>100 years old</b> → Centenarian · <b>pretends illness</b> → Malingerer · <b>changes sides</b> → Renegade/Turncoat",
+   "<b>Both male and female organs</b> → Hermaphrodite · <b>lives on land and water</b> → Amphibian",
+   "<b>A story where characters represent ideas</b> → Allegory · <b>giving too much importance to formality</b> → Pedant",
+   "<b>Does something for free</b> → Honorary · <b>no fixed home/job</b> → Vagabond"
   ],
-  table:{h:["Rule","Wrong","Correct"],r:[
-   ["Elected + post","the President (after elected)","elected President"],
-   ["Kind of","kind of a man","kind of man"],
-   ["By transport","by the train","by train"],
-   ["Institution (purpose)","in the prison (as inmate)","in prison"],
-   ["Fixed phrase","go to the bed","go to bed"],
-   ["Double article","a the book","a book / the book"]
+  table:{h:["Definition","One Word"],r:[
+   ["Cannot be corrected","Incorrigible"],
+   ["Cannot be satisfied","Insatiable"],
+   ["Cannot be bribed","Incorruptible"],
+   ["Too old to work","Superannuated"],
+   ["A person who pretends illness","Malingerer"],
+   ["One who changes sides","Renegade / Turncoat"]
   ]},
   mcqs:[
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After 'elected/appointed', the post takes no article."},
-   {q:"What kind of ___ man is he?",o:["a","an","the","✗ (no article)"],a:3,e:"'Kind of' takes no article after it."},
-   {q:"He is ___ hospital recovering from surgery. (as patient)",o:["in (no article)","in the","in a","at the"],a:0,e:"Institution for its purpose → 'in hospital' (no article)."},
-   {q:"She became ___ captain of the team.",o:["a","an","the","✗ (no article)"],a:3,e:"Predicative post after 'became' → no article."},
-   {q:"Children go to ___ bed early.",o:["a","the","✗ (no article)","an"],a:2,e:"Fixed phrase 'go to bed' → no article."},
-   {q:"He was old ___ man with grey hair. Choose the correct article.",o:["a","an","the","✗"],a:1,e:"A/AN + adjective → decide by adjective sound; 'old' = vowel sound → 'an old man'."}
+   {q:"One who cannot be corrected:",o:["Incorrigible","Insatiable","Implacable","Incorruptible"],a:0,e:"Incorrigible = beyond correction."},
+   {q:"One who cannot be bribed:",o:["Incorrigible","Incorruptible","Insatiable","Implacable"],a:1,e:"Incorruptible = cannot be bribed."},
+   {q:"A person who is 100 years old:",o:["Octogenarian","Nonagenarian","Centenarian","Septuagenarian"],a:2,e:"Centenarian = 100 years old."},
+   {q:"One who pretends to be ill:",o:["Malingerer","Hypochondriac","Invalid","Convalescent"],a:0,e:"Malingerer = fakes illness (to avoid work)."},
+   {q:"An animal that lives on land and in water:",o:["Amphibian","Reptile","Mammal","Aquatic"],a:0,e:"Amphibian = lives on land and water."},
+   {q:"A person living in a foreign country:",o:["Immigrant","Expatriate","Refugee","Alien"],a:1,e:"Expatriate = lives outside one's native country."},
+   {q:"One who cannot be satisfied:",o:["Insatiable","Implacable","Incorrigible","Insoluble"],a:0,e:"Insatiable = cannot be satisfied."}
   ]},
 
- {id:"art-country",title:"THE with Countries & Groups",xp:20,type:"regular",
+ {id:"ow-practice1",title:"Mixed Practice — Set 1",xp:20,type:"regular",
   facts:[
-   "<b>Most countries → NO article</b>: India, France, Japan, China, Brazil, Russia",
-   "<b>Plural / union names → THE</b>: the USA, the UK, the UAE, the Netherlands, the Philippines",
-   "<b>Reason</b>: these are plural words or abbreviated union names (United States, United Kingdom)",
-   "<b>Groups of islands → THE</b>: the Andamans, the Maldives, the West Indies",
-   "<b>Mountain ranges → THE</b>: the Himalayas, the Alps, the Andes (single peaks → none)",
-   "<b>Deserts, seas, oceans, canals → THE</b>: the Sahara, the Pacific, the Suez Canal"
+   "Choose the exact one-word substitution.",
+   "Use prefixes/roots: miso-(hate), phil-(love), -phobia(fear), -cracy/-archy(rule), -cide(killing).",
+   "Eliminate near-synonyms that don't fit the precise definition."
   ],
-  table:{h:["THE with","Reason / Example"],r:[
-   ["the USA","Plural (United States)"],
-   ["the UK","Union name"],
-   ["the Netherlands","Plural word"],
-   ["the Philippines","Plural word"],
-   ["the Maldives","Group of islands"],
-   ["the Sahara / the Pacific","Deserts, oceans"]
-  ]},
   mcqs:[
-   {q:"___ Netherlands is a beautiful country.",o:["A","An","The","✗ (no article)"],a:2,e:"'Netherlands' is a plural name → THE."},
-   {q:"He works in ___ USA.",o:["a","an","the","✗ (no article)"],a:2,e:"'USA' (United States, plural) → THE."},
-   {q:"She visited ___ India last year.",o:["the","a","an","✗ (no article)"],a:3,e:"Most countries take no article → 'India'."},
-   {q:"They sailed to ___ Maldives.",o:["a","an","the","✗ (no article)"],a:2,e:"Groups of islands take THE."},
-   {q:"___ Sahara is the largest hot desert.",o:["A","An","The","✗ (no article)"],a:2,e:"Deserts take THE."},
-   {q:"He climbed ___ Mount Fuji.",o:["the","a","an","✗ (no article)"],a:3,e:"Single mountains take no article."}
+   {q:"One who studies stars scientifically:",o:["Astronaut","Astrologer","Astronomer","Astrophysicist"],a:2,e:"Astronomer studies stars (Astrologer = horoscopes)."},
+   {q:"A place where fish are kept:",o:["Aviary","Aquarium","Apiary","Vivarium"],a:1,e:"Aquarium = for fish."},
+   {q:"One who loves mankind:",o:["Misanthrope","Philanthropist","Egoist","Cynic"],a:1,e:"Philanthropist = loves/helps mankind."},
+   {q:"A speech in praise of a dead person:",o:["Elegy","Eulogy","Epitaph","Obituary"],a:1,e:"Eulogy = speech praising the dead."},
+   {q:"Fear of water:",o:["Acrophobia","Hydrophobia","Xenophobia","Claustrophobia"],a:1,e:"Hydro (water) → Hydrophobia."},
+   {q:"One who compiles dictionaries:",o:["Linguist","Lexicographer","Calligrapher","Polyglot"],a:1,e:"Lexicographer = dictionary compiler."},
+   {q:"A collection of poems:",o:["Anthology","Thesis","Monograph","Lexicon"],a:0,e:"Anthology = a collection of literary pieces."}
   ]},
 
- {id:"art-traps",title:"Trap Sheet — SSC Favourites",xp:20,type:"trap",
-  traps:[
-   "<b>a honest man</b> → <b>an honest man</b> (H silent = vowel sound)",
-   "<b>a MBA degree</b> → <b>an MBA degree</b> (em = vowel sound)",
-   "<b>an uniform</b> → <b>a uniform</b> (yu = consonant sound)",
-   "<b>an European</b> → <b>a European</b> (yu = consonant sound)",
-   "<b>an one-time offer</b> → <b>a one-time offer</b> (w sound)",
-   "<b>The gold is precious</b> → <b>Gold is precious</b> (general abstract = no article)",
-   "<b>I play violin</b> → <b>I play the violin</b> (instruments need THE)",
-   "<b>The Mount Everest</b> → <b>Mount Everest</b> (single mountain = no article)",
-   "<b>He was the elected President</b> → <b>He was elected President</b> (after elected = no article)",
-   "<b>I had the lunch</b> → <b>I had lunch</b> (meals = no article)",
-   "<b>The Sun rises in East</b> → <b>in the East</b> (cardinal directions need THE)",
-   "<b>The more harder you try</b> → <b>The harder you try</b> (no double comparative)"
+ {id:"ow-practice2",title:"Mixed Practice — Set 2",xp:20,type:"regular",
+  facts:[
+   "Second practice set drawn from SSC PYQs.",
+   "Watch confusable persons: Gourmand/Gourmet, Misanthrope/Misogynist, Ascetic/Epicure.",
+   "Government types and phobias appear almost every year."
   ],
   mcqs:[
-   {q:"Which sentence is CORRECT?",o:["He is a honest man","She plays violin well","Mount Everest is the highest peak in the world","He speaks the English"],a:2,e:"Superlative + unique world → 'the highest peak in the world'. Others: an honest, the violin, English."},
-   {q:"Spot the error: 'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE → 'the violin'."},
-   {q:"Spot the error: 'He is (A) a best (B) student in (C) the class.'",o:["A → the best","B","C","No error"],a:0,e:"Superlatives need THE → 'the best student'."},
-   {q:"Which is WRONG?",o:["The Ganga is a holy river","Honesty is the best policy","He had the lunch at noon","The USA is powerful"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"Spot the error: 'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = yu (consonant) sound → 'A European'."},
-   {q:"Which is CORRECT?",o:["He was the elected chairman","The gold is a precious metal","I saw a unique painting","He plays cricket with the bat"],a:2,e:"'Unique' = yu sound → 'a unique painting'. Others: elected chairman (no 'the'), Gold (no 'the'), cricket with a bat."}
+   {q:"One who hates marriage:",o:["Misogynist","Misanthrope","Misogamist","Bachelor"],a:2,e:"Miso-gam (marriage) → Misogamist."},
+   {q:"A government by one person:",o:["Democracy","Autocracy","Oligarchy","Plutocracy"],a:1,e:"Autocracy = rule by one with absolute power."},
+   {q:"One who derives pleasure from others' pain:",o:["Masochist","Sadist","Stoic","Cynic"],a:1,e:"Sadist = enjoys inflicting pain."},
+   {q:"A shelter for dogs:",o:["Stable","Sty","Kennel","Hutch"],a:2,e:"Kennel = shelter for dogs."},
+   {q:"Unable to read and write:",o:["Illegible","Illiterate","Ignorant","Illogical"],a:1,e:"Illiterate = cannot read or write."},
+   {q:"A person who attacks established beliefs:",o:["Iconoclast","Demagogue","Bureaucrat","Aristocrat"],a:0,e:"Iconoclast = attacks cherished beliefs/institutions."},
+   {q:"One who talks excessively:",o:["Laconic","Reticent","Loquacious","Taciturn"],a:2,e:"Loquacious/Garrulous = talks a lot."}
   ]}
 ]},
 
-{id:"art-pyq",title:"PYQ Practice",icon:"🎯",nodes:[
-
- {id:"art-fill",title:"Fill in the Blank — 25 PYQ",xp:20,type:"regular",
-  facts:[
-   "Practice from the 25-question SSC CGL exercise. For each blank pick a / an / the / ✗ (no article).",
-   "Apply the checklist: vowel SOUND? · second mention? · unique? · superlative? · language/meal/subject? · after elected?",
-   "Do all questions in the Test tab, then review the explanations tied to each rule."
-  ],
-  mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H = vowel sound → AN."},
-   {q:"I go to ___ school every day.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → no article."},
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After elected → no article."},
-   {q:"She is ___ heir to the throne.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H → vowel sound → AN."},
-   {q:"He went to ___ hospital to visit his friend.",o:["a","an","the","✗ (no article)"],a:2,e:"Visiting (not as patient) → 'the hospital'."},
-   {q:"He travelled by ___ train to Mumbai.",o:["a","an","the","✗ (no article)"],a:3,e:"By + transport → no article."},
-   {q:"He was sent to ___ prison for theft.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"I saw ___ dog. ___ dog was barking loudly.",o:["a / The","the / a","an / The","a / a"],a:0,e:"First mention → A; second mention → THE."},
-   {q:"He is ___ unique artist.",o:["a","an","the","✗ (no article)"],a:0,e:"'Unique' = yu sound → A."},
-   {q:"Mount Everest is ___ highest peak in ___ world.",o:["the / the","a / the","the / a","a / a"],a:0,e:"Superlative → THE; unique world → THE."},
-   {q:"He is ___ IAS officer from Kerala.",o:["a","an","the","✗ (no article)"],a:1,e:"'IAS' = 'eye-ay-es' → vowel sound → AN."},
-   {q:"___ Gita is ___ holy book of Hindus.",o:["The / a","A / the","The / the","A / a"],a:0,e:"Holy book name → THE Gita; first mention 'a holy book'."}
-  ]},
-
- {id:"art-error",title:"Find the Error — Articles",xp:20,type:"trap",
-  facts:[
-   "SSC error-spotting: the sentence is split into parts (A)(B)(C); find the part with the article error.",
-   "Article errors are ~20% of all SSC error-spotting questions — always scan articles first.",
-   "Check: A/AN by sound · THE for superlatives/instruments/rivers/ranges · zero article for meals/languages/after elected."
-  ],
-  mcqs:[
-   {q:"'He is (A) a best student (B) in (C) the class.'",o:["A → the best student","B","C","No error"],a:0,e:"Superlative needs THE."},
-   {q:"'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE."},
-   {q:"'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = consonant (yu) sound → A."},
-   {q:"'The Nile (A) is in (B) the Africa. (C)'",o:["A","B","C → in Africa","No error"],a:2,e:"Country/continent names take no article → 'in Africa'."},
-   {q:"'He was (A) sent to (B) the prison (C) for theft.'",o:["A","B","C → to prison","No error"],a:2,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"'I had (A) the lunch (B) with (C) my friends.'",o:["A","B → had lunch","C","No error"],a:1,e:"Meals take no article → 'had lunch'."},
-   {q:"'She speaks (A) the English (B) and (C) French.'",o:["A","B → English","C","No error"],a:1,e:"Languages take no article → 'English'."}
-  ]}
-]},
-
-{id:"art-golden",title:"Golden",icon:"🏹",nodes:[
- {id:"art-gold",title:"Articles — Golden Node",xp:30,type:"gold",requires_pct:70,
+{id:"ow-golden",title:"Golden",icon:"🏹",nodes:[
+ {id:"ow-gold",title:"One Word — Golden Node",xp:30,type:"gold",requires_pct:60,
   golden:[
-   "A/AN = <b>SOUND not spelling</b>: an hour, an MBA, an honest man; a university, a European, a one-rupee note",
-   "THE = second mention, unique (the sun), superlatives, ordinals, instruments, rivers, ranges, holy books, newspapers",
-   "ZERO = languages, subjects, meals, diseases, single mountains/lakes, abstract nouns, after elected/appointed",
-   "THE + adjective = class of people (the poor, the rich, the blind)",
-   "THE with plural-name countries (the USA, the Netherlands), island groups (the Maldives), ranges (the Himalayas)",
-   "By + transport = no article; in hospital/school/prison (purpose) = no article; go to bed/school/work = no article"
+   "Miso- = hate (Misanthrope/Misogynist/Misogamist); Phil- = love (Philanthropist/Bibliophile)",
+   "Shelters: Kennel=dogs, Stable=horses, Sty=pigs, Aviary=birds, Apiary=bees, Aquarium=fish, Mint=coins",
+   "-phobia = fear: Claustro(enclosed), Acro(heights), Xeno(foreigners), Hydro(water), Agora(open)",
+   "-cracy/-archy = rule: Demo(people), Auto(one), Olig(few), Pluto(rich), Matri(women), Strato(military)",
+   "Cannot be: Incorrigible(corrected), Insatiable(satisfied), Incorruptible(bribed), Implacable(appeased)",
+   "Autobiography=self · Biography=other · Obituary=death notice · Epitaph=tomb · Extempore=unprepared"
   ]}
 ]}
 
 ];
 
-const SKEY="ssc_eng_01_articles";
+const SKEY="ssc_eng_10_oneword";
 let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
 try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
 function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
 
 let _ns={nodeId:null,openedAt:null,answered:0,correct:0,totalQ:0};
 function trackEvent(ev,payload){
-  const body=Object.assign({event:ev,mapId:"ssc_eng_01_articles",ts:new Date().toISOString()},payload);
+  const body=Object.assign({event:ev,mapId:"ssc_eng_10_oneword",ts:new Date().toISOString()},payload);
   try{fetch('/api/progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(()=>flashSync()).catch(()=>{});}catch(e){}
 }
 function flashSync(){const d=document.getElementById('syncDot');if(!d)return;d.classList.add('show');setTimeout(()=>d.classList.remove('show'),900);}
@@ -659,7 +600,7 @@ function showDash(){
   S.curNode=null;save();buildSidebar();
   const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
   document.getElementById("viewWrap").innerHTML=`<div class="dash">
-    <div class="dash-t">Articles (A / An / The)</div>
+    <div class="dash-t">One Word Substitution</div>
     <div class="dash-s">SSC CGL / CHSL / MTS / CPO · RULES · TRAPS · PYQ PRACTICE</div>
     <div class="dash-grid">
       <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
@@ -699,7 +640,7 @@ buildSidebar();updateHeader();showDash();
 /* ===== CentuMania metrics (injected — additive; module content unchanged) ===== */
 (function(){
   if(window.__cmTrackInit)return; window.__cmTrackInit=1;
-  var CM_DEFAULT='eng-01-articles';
+  var CM_DEFAULT='eng-10-oneword';
   var CM_T0=Date.now(),CM_ACTIVE=0,_cmVisT=Date.now();
   function cmToken(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
   function cmMat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}

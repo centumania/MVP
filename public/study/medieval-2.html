@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>CentuMania · Medieval History Part 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0a12;--bg2:#0a0810;--panel:#1a1523;--panel2:#201b2c;--line:#2d2640;
+  --ink:#f0e8ff;--ink2:#b89fd4;--ink3:#6b5a8a;
+  --gold:#c084fc;--gold2:#9333ea;--gold-glow:rgba(192,132,252,.13);
+  --amber:#f59e0b;--gold-bg:rgba(192,132,252,.12);
+  --red:#f87171;--red-bg:rgba(248,113,113,.10);
+  --blue:#60a5fa;--green:#34d399;
+  --mono:"JetBrains Mono",monospace;--serif:"Instrument Serif",serif;--sans:"DM Sans",sans-serif;
+  --nav:56px;--aside:268px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px}
+.shell{display:grid;grid-template-rows:var(--nav) 1fr;height:100vh;overflow:hidden}
+.topbar{display:flex;align-items:center;padding:0 18px;gap:12px;border-bottom:1px solid var(--line);background:rgba(10,8,16,.97);backdrop-filter:blur(14px);z-index:60}
+.logo{font-family:var(--serif);font-size:19px;font-style:italic;color:var(--gold);display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);flex-shrink:0}
+.nav-stats{display:flex;gap:16px;margin-left:auto;align-items:center}
+.stat{font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.stat b{font-size:13px}.stat.xp b{color:var(--gold)}.stat.nd b{color:var(--amber)}.stat.tp b{color:var(--red)}
+.body-wrap{display:grid;grid-template-columns:var(--aside) 1fr;overflow:hidden;height:calc(100vh - var(--nav))}
+aside{background:var(--bg2);border-right:1px solid var(--line);overflow-y:auto}
+aside::-webkit-scrollbar{width:3px}aside::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+main{overflow-y:auto;background:var(--bg)}
+main::-webkit-scrollbar{width:4px}main::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+#sidebar-inner{padding:10px 8px 60px}
+.ch-group{margin-bottom:3px}
+.ch-toggle{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink2);padding:9px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:.13s;font-family:var(--sans)}
+.ch-toggle:hover{background:var(--panel);color:var(--ink)}
+.ch-icon{font-size:15px}.ch-label{flex:1}.ch-prog{font-family:var(--mono);font-size:10px;color:var(--ink3)}.ch-arr{font-size:11px;color:var(--ink3);flex-shrink:0}
+.node-items{padding:3px 4px 3px 10px}
+.ni-btn{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink3);padding:7px 9px;border-radius:8px;cursor:pointer;font-size:13px;transition:.12s;font-family:var(--sans);margin-bottom:1px;min-height:44px}
+.ni-btn:hover:not(.locked){background:var(--panel);color:var(--ink)}
+.ni-btn.active{background:var(--gold-glow);border-color:var(--gold2);color:var(--gold)}
+.ni-btn.passed:not(.active){color:var(--ink)}
+.ni-btn.locked{cursor:default;opacity:.4}
+.ni-title{flex:1;line-height:1.3}.ni-xp{font-family:var(--mono);font-size:10px;color:var(--ink3);flex-shrink:0}
+.ni-tag{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:4px;flex-shrink:0}
+.ni-tag.lock{color:var(--ink3)}.ni-tag.done{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.25)}.ni-tag.vis{color:var(--amber)}
+.view{padding:28px clamp(16px,3.5vw,52px) 80px;max-width:900px;margin:0 auto}
+.tabs{display:flex;gap:3px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:22px;width:fit-content}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:8px;cursor:pointer;border:0;background:none;color:var(--ink2);transition:.14s}
+.tab:hover:not(.active){color:var(--ink)}.tab.active{background:var(--gold2);color:#fff;font-weight:700}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.node-hd-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.node-type-tag{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px}
+.node-type-tag.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.node-type-tag.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(192,132,252,.3)}
+.xp-pill{font-family:var(--mono);font-size:11px;color:var(--gold);background:var(--gold-bg);border:1px solid rgba(192,132,252,.2);border-radius:6px;padding:3px 8px;margin-left:auto}
+.node-title{font-family:var(--serif);font-size:clamp(22px,4vw,34px);font-style:italic;line-height:1.1;margin-bottom:12px}
+.node-stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.ns-item{display:flex;flex-direction:column;gap:3px}
+.ns-label{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:1px}
+.ns-val{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink)}
+.ns-val.faa-col{color:var(--amber)}.ns-val.pass-col{color:var(--green)}.ns-val.pend-col{color:var(--ink2)}
+.fact-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
+.fact-block.gold-block{background:linear-gradient(135deg,rgba(192,132,252,.07),rgba(147,51,234,.04));border-color:rgba(192,132,252,.3)}
+.fb-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink2);border-bottom:1px solid var(--line);background:var(--panel2)}
+.fb-body{padding:14px 16px}
+ul.facts{list-style:none;padding:0}
+ul.facts li{padding:7px 0 7px 22px;border-bottom:1px dashed var(--line);font-size:14px;position:relative;line-height:1.55}
+ul.facts li:last-child{border-bottom:0}
+ul.facts li::before{content:"▸";position:absolute;left:3px;top:9px;color:var(--amber);font-size:11px}
+ul.facts b{color:var(--gold)}
+.trap-block{background:var(--red-bg);border:1px solid rgba(248,113,113,.35);border-radius:12px;overflow:hidden;margin:12px 0}
+.trap-block .fb-head{background:rgba(248,113,113,.08);color:var(--red);border-color:rgba(248,113,113,.35)}
+.trap-block ul.facts li::before{content:"⚠";color:var(--red)}
+.mnemonic-block{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.3);border-radius:12px;overflow:hidden;margin:12px 0}
+.mnemonic-block .fb-head{background:rgba(96,165,250,.07);color:var(--blue);border-color:rgba(96,165,250,.3)}
+.revision-block{background:rgba(96,165,250,.05);border:1px solid rgba(96,165,250,.2);border-radius:12px;overflow:hidden;margin:12px 0}
+.revision-block .fb-head{background:rgba(96,165,250,.06);color:var(--blue);border-color:rgba(96,165,250,.2)}
+.revision-block ul.facts li::before{content:"⚡";color:var(--blue);font-size:10px}
+.oneliner-block{background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.18);border-radius:12px;overflow:hidden;margin:12px 0}
+.oneliner-block .fb-head{background:rgba(52,211,153,.06);color:var(--green);border-color:rgba(52,211,153,.18)}
+.oneliner-block ul.facts li::before{content:"🎯";color:var(--green);font-size:10px}
+.flash-hint{font-family:var(--mono);font-size:11px;color:var(--ink3);text-align:center;margin-bottom:12px;letter-spacing:.5px}
+.flash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:14px}
+.flash-card{perspective:900px;cursor:pointer;height:140px}
+.flash-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+.flash-front,.flash-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;line-height:1.45;border:1px solid var(--line)}
+.flash-front{background:var(--panel);color:var(--ink)}
+.flash-back{background:rgba(240,188,69,.1);border-color:rgba(240,188,69,.3);color:var(--gold);transform:rotateY(180deg)}
+.flash-reset-row{text-align:center;margin-top:4px}
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--line);margin:12px 0}
+table.dt{width:100%;border-collapse:collapse;font-size:13px}
+table.dt th{padding:9px 13px;text-align:left;background:var(--gold2);color:#fff;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+table.dt td{padding:9px 13px;border-bottom:1px solid var(--line);color:var(--ink)}
+table.dt tr:last-child td{border-bottom:0}
+table.dt td:first-child{color:var(--amber);font-weight:600;font-family:var(--mono);font-size:12px}
+table.dt b{color:var(--gold)}
+.mcq-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.mcq-q{font-size:15px;font-weight:600;margin-bottom:12px;line-height:1.45}
+.q-num{font-family:var(--mono);font-size:12px;color:var(--amber);margin-right:4px}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mopt{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);font-size:13px;cursor:pointer;text-align:left;font-family:var(--sans);transition:.13s;width:100%}
+.mopt:hover:not([disabled]){border-color:var(--gold2);background:var(--gold-glow)}
+.mopt.correct{background:rgba(52,211,153,.12);border-color:var(--green);color:var(--green)}
+.mopt.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.mcq-fb{margin-top:10px;font-size:13px;padding:9px 12px;border-radius:8px;background:var(--panel2);color:var(--ink2);line-height:1.5;border:1px solid var(--line)}
+.mcq-faa{margin-top:7px}
+.faa-chip{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:6px}
+.faa-chip.faa-ok{background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.25)}
+.faa-chip.faa-err{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,113,113,.25)}
+.retry-btn{margin-top:4px;padding:6px 16px;background:var(--panel2);border:1px solid var(--gold2);color:var(--gold);border-radius:8px;cursor:pointer;font-family:var(--mono);font-size:11px}
+.retry-btn:hover{background:var(--gold-glow)}
+.unlock-banner{border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:14px;line-height:1.5}
+.pass-banner{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.35);color:var(--green)}
+.fail-banner{background:var(--red-bg);border:1px solid rgba(248,113,113,.35);color:var(--ink)}
+.node-nav{display:flex;gap:10px;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+.nav-btn{font-family:var(--sans);font-weight:600;font-size:13px;border-radius:9px;padding:9px 15px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:.14s;flex:1;text-align:center}
+.nav-btn:hover:not([disabled]){border-color:var(--gold2)}.nav-btn[disabled]{opacity:.35;cursor:default}
+.nav-btn.home-btn{flex:0 0 auto;background:var(--panel2)}
+.dash-hero{background:linear-gradient(135deg,rgba(192,132,252,.08),rgba(147,51,234,.05));border:1px solid rgba(192,132,252,.2);border-radius:16px;padding:28px;margin-bottom:22px;text-align:center}
+.dh-title{font-family:var(--serif);font-size:clamp(26px,5vw,42px);font-style:italic;margin-bottom:4px}
+.dh-sub{font-family:var(--mono);font-size:12px;color:var(--ink3);letter-spacing:1px}
+.dh-xp{font-family:var(--mono);font-size:30px;font-weight:700;color:var(--gold);margin:12px 0 4px}
+.dh-bar-wrap{height:8px;background:var(--line);border-radius:4px;overflow:hidden;max-width:400px;margin:0 auto 8px}
+.dh-bar{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:4px;transition:.6s}
+.dh-label{font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.dash-chapters{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:22px}
+.dc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.dc-icon{font-size:22px;margin-bottom:6px}
+.dc-label{font-size:13px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.dc-prog-bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.dc-bar{height:100%;background:var(--gold);border-radius:3px;transition:.5s}
+.dc-nums{font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.cta-btn{padding:12px 24px;border-radius:12px;font-size:14px;font-weight:700;font-family:var(--sans);cursor:pointer;border:0;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#fff;transition:.15s}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(192,132,252,.3)}
+.cta-btn.sec{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+.cta-btn[disabled]{opacity:.4;cursor:default;transform:none;box-shadow:none}
+.toast{position:fixed;top:64px;right:18px;background:var(--panel2);border:1px solid var(--gold);border-radius:12px;padding:10px 16px;z-index:500;opacity:0;transform:translateY(-8px);transition:.3s;pointer-events:none;font-size:13px;max-width:340px;line-height:1.4}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.err{border-color:var(--red)}.toast.warn{border-color:var(--amber);color:var(--ink)}
+.mob-bar{display:none}
+@media(max-width:720px){
+  .shell{grid-template-rows:var(--nav) 1fr 56px;height:100dvh}
+  .body-wrap{grid-template-columns:1fr;height:calc(100dvh - var(--nav) - 56px)}
+  aside{display:none}
+  .mob-bar{display:flex;background:rgba(10,8,16,.98);backdrop-filter:blur(16px);border-top:1px solid var(--line);align-items:stretch}
+  .mob-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;color:var(--ink3);cursor:pointer;padding:8px 4px;font-family:var(--mono);font-size:9px;transition:.13s}
+  .mob-tab .mt-ico{font-size:20px}.mob-tab.act{color:var(--gold)}
+  .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;opacity:0;pointer-events:none;transition:.2s}
+  .mob-overlay.show{opacity:1;pointer-events:all}
+  .mob-drawer{position:fixed;left:-100%;top:0;bottom:0;width:min(300px,88vw);background:var(--bg2);border-right:1px solid var(--line);z-index:200;transition:.28s;overflow-y:auto}
+  .mob-drawer.open{left:0}
+  .mob-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px;border-bottom:1px solid var(--line)}
+  .mob-close{background:none;border:1px solid var(--line);color:var(--ink2);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px}
+  .nav-stats{display:none}
+  .view{padding:16px 14px 100px}
+  .node-title{font-size:22px}
+  .mcq-opts{grid-template-columns:1fr}
+  .tabs{overflow-x:auto;width:100%;scrollbar-width:none}
+  .toast{top:auto;bottom:68px;left:14px;right:14px}
+}
+@media(min-width:721px){.mob-drawer,.mob-overlay{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar">
+    <div class="logo"><span class="logo-dot"></span>CentuMania</div>
+    <div class="nav-stats">
+      <div class="stat xp">XP <b id="h-xp">0</b></div>
+      <div class="stat nd">Nodes <b id="h-nd">0/0</b></div>
+      <div class="stat tp">Traps <b id="h-tp">0/0</b></div>
+    </div>
+  </nav>
+  <div class="body-wrap">
+    <aside><div id="sidebar-inner"></div></aside>
+    <main id="main-area">
+      <div class="dash-view view" id="dash-view"><div id="dash-content"></div></div>
+      <div class="node-view view" id="node-view" style="display:none">
+        <div id="node-content"></div>
+        <div class="node-nav" id="node-nav"></div>
+      </div>
+    </main>
+  </div>
+  <nav class="mob-bar">
+    <button class="mob-tab act" id="mob-home"><span class="mt-ico">◈</span>Home</button>
+    <button class="mob-tab" id="mob-menu"><span class="mt-ico">☰</span>Topics</button>
+  </nav>
+</div>
+<div class="mob-overlay" id="mob-overlay"></div>
+<div class="mob-drawer" id="mob-drawer">
+  <div class="mob-drawer-head">
+    <div class="logo"><span class="logo-dot"></span>Topics</div>
+    <button class="mob-close" id="mob-close">✕</button>
+  </div>
+  <div id="mob-sidebar-inner"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CHAPTERS=[
+
+/* ─────────────────────── CHAPTER 1: MUGHALS ─────────────────────── */
+{id:"mughals",title:"Mughal Empire",icon:"👑",nodes:[
+
+{id:"mg1",title:"Babur, Humayun & Sher Shah Suri",xp:60,type:"regular",seqIdx:0,
+facts:[
+"<b>Mughal Empire (1526–1857):</b> Official language = Persian (Delhi Sultanate = Turkish)",
+"<b>Babur (1526–1530):</b> Related to Timur (father's side) + Chengiz Khan (mother's side) | Autobiography: <b>Baburnama / Tuzuk-i-Baburi</b> (in Turkish)",
+"Babur's key battles: Panipat-I (1526, defeated Ibrahim Lodhi) | Khanwa (1527, defeated <b>Rana Sanga</b> → assumed title <b>Ghazi</b>) | Chanderi (1528, defeated Medini Rai) | Ghagra (1529, vs Bengal army)",
+"Babur won using: <b>Tulughma</b> (flanking tactic) + <b>Araba</b> (carts as artillery shield) | Gunners: <b>Ustad Ali & Mustafa</b> (Ottoman masters) | Introduced <b>Charbagh</b> (symmetrical gardens)",
+"<b>Humayun (1530–56):</b> Built <b>Dinpanah</b> city | Lost at Chausa (1539) + Kannauj (1540) to <b>Sher Shah Suri</b> → fled India | Returned 1555; died falling from library (<b>Sher-e-Mandal</b>) 1556",
+"Humayun: laid foundation of Mughal painting in Persia; brought painters <b>Mir Sayyid Ali & Abdal Samad</b> | Sister <b>Gul Badan Begum</b> wrote <b>Humayun-Nama</b> | Widow <b>Hamida Banu Begum</b> built <b>Humayun's Tomb (UNESCO)</b>",
+"<b>Sher Shah Suri (1540–1545):</b> Real name Fared Khan | Founded <b>Sur dynasty</b> (2nd Afghan Empire) | Introduced <b>Rupaya</b> (1 Re = 178 grain silver) | Died in <b>Battle of Kalinjer</b> | Tomb: <b>Sasaram, Bihar</b>",
+"Sher Shah's admin: Empire → <b>Sarkars</b> → <b>Parganas</b> → <b>Mauza (village)</b> | Land system: <b>Patta</b> (each peasant's payable amount) + <b>Qabooliyat</b> (deed of agreement) | State share = <b>1/3 of average produce</b>",
+"Sher Shah built <b>GT Road (Sadak-e-Azam/Uttarpath)</b> from Bengal to Indus | Built <b>Sarais</b> (lodging + post offices) | Followed Alauddin's <b>Daag (branding horses)</b>",
+"<b>Malik Muhammad Jaisi</b> wrote <b>Padmavat</b> during Sher Shah's time"
+],
+table:{h:["Ruler","Key Battle","Outcome"],r:[
+["Babur","Panipat-I (1526)","Ibrahim Lodhi defeated → Mughal Empire begins"],
+["Babur","Khanwa (1527)","Rana Sanga defeated → Babur assumes title 'Ghazi'"],
+["Humayun","Chausa (1539)","Sher Shah WON → Humayun fled India"],
+["Humayun","Kannauj (1540)","Sher Shah WON → Humayun fled to Iran"],
+["Humayun","Sirhind (1555)","Humayun recaptured Delhi; died 1556"],
+["Sher Shah","Battle of Kalinjer","Sher Shah DIED here (not at Chausa)"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"Babur's tactics: <b>T-A-G</b> = Tulughma + Araba + Gunpowder<br>Sher Shah admin: <b>S-P-M</b> = Sarkar → Pargana → Mauza (village) = '<b>Sher Played Music</b>'<br>Babur lineage: <b>T+C</b> = Timur (father) + Chengiz (mother)"},
+traps:[
+"Baburnama written in TURKISH (NOT Persian — Persian is official Mughal language)",
+"Humayun's Tomb built by widow HAMIDA BANU BEGUM (NOT by Humayun or Akbar)",
+"Sher Shah died at Battle of KALINJER (NOT Chausa — Chausa is where he WON against Humayun)",
+"Sher Shah's tomb is at SASARAM, Bihar (NOT Delhi, NOT Agra)",
+"Rupaya = Sher Shah's coin | Babur did NOT introduce Rupaya"
+],
+revision:["Mughal Empire(1526-1857), official language=Persian(Sultanate was Turkish)","Babur(1526-30): related to Timur(father)+Chengiz Khan(mother), wrote Baburnama","Key battles: Panipat-I(1526,Ibrahim Lodhi),Khanwa(1527,Rana Sanga,title Ghazi),Chanderi(1528),Ghagra(1529)","Babur's tactics: Tulughma(flanking)+Araba(cart artillery shield)","Sher Shah Suri: introduced Rupiya, Grand Trunk Road, Sarai system"],
+oneliners:["The Mughal Empire (1526-1857) used Persian as its official language","The Delhi Sultanate, by contrast, used Turkish as its official language","Babur (1526-1530) was related to Timur on his father's side and Chengiz Khan on his mother's side","Babur wrote his autobiography, the Baburnama (Tuzuk-i-Baburi), in Turkish","Babur won the First Battle of Panipat (1526) against Ibrahim Lodhi","Babur defeated Rana Sanga at the Battle of Khanwa (1527) and assumed the title Ghazi","Babur defeated Medini Rai at Chanderi (1528)","Babur used Tulughma (flanking tactics) and Araba (carts as artillery shields)","Sher Shah Suri introduced the Rupiya currency","Sher Shah Suri built the Grand Trunk Road and the Sarai (rest house) system"],
+flashcards:[{q:"What was the Mughal Empire's official language?",a:"Persian"},{q:"Who was Babur related to on each side of his family?",a:"Timur (father's side), Chengiz Khan (mother's side)"},{q:"What is Babur's autobiography called?",a:"Baburnama (Tuzuk-i-Baburi)"},{q:"What battle did Babur win in 1526, and against whom?",a:"First Battle of Panipat, against Ibrahim Lodhi"},{q:"What title did Babur assume after defeating Rana Sanga?",a:"Ghazi"},{q:"Name Babur's two key tactics.",a:"Tulughma (flanking) and Araba (cart artillery shield)"},{q:"What currency and infrastructure did Sher Shah Suri introduce?",a:"The Rupiya; the Grand Trunk Road and Sarai system"}],
+mcqs:[
+{q:"Babur's autobiography 'Baburnama' was written in which language?",o:["Persian","Arabic","Turkish","Hindi"],a:2,e:"Baburnama (also called Tuzuk-i-Baburi) was written in Turkish — Babur's mother tongue. It was later translated into Persian by Abdul Rahim Khan-e-Khana. Persian was the official language of the Mughal court, but Babur wrote personally in Turkish."},
+{q:"Babur defeated Rana Sanga in which battle and assumed the title 'Ghazi'?",o:["Battle of Panipat-I","Battle of Chanderi","Battle of Khanwa","Battle of Ghagra"],a:2,e:"In the Battle of Khanwa (1527), Babur defeated Rana Sanga of Mewar. After this victory, he assumed the title 'Ghazi' (Champion of Islam). This is distinct from Panipat-I where he defeated Ibrahim Lodhi."},
+{q:"Babur's flanking cavalry tactic used in Indian battles was called:",o:["Araba","Tulughma","Charbagh","Daag"],a:1,e:"Tulughma was Babur's flanking cavalry tactic — dividing the army into centre and flanking wings, allowing the flanks to encircle the enemy. Araba was the use of carts linked together as an artillery shield. Together, these tactics won Panipat-I."},
+{q:"Sher Shah Suri died in the:",o:["Battle of Chausa","Battle of Kannauj","Battle of Sirhind","Battle of Kalinjer"],a:3,e:"Sher Shah Suri died at the Battle of Kalinjer (1545) when a cannon misfired and exploded, killing him. He did NOT die at Chausa (he won there) or at Kannauj (he won there too). His tomb is at Sasaram, Bihar."},
+{q:"Who built Humayun's Tomb (UNESCO World Heritage Site)?",o:["Akbar","Humayun himself","Hamida Banu Begum (his widow)","Jahangir"],a:2,e:"Humayun's Tomb was built by his widow Hamida Banu Begum. It is located in Delhi and was completed in 1570. It is a UNESCO World Heritage Site and is considered the precursor of the Taj Mahal."},
+{q:"The 'Grand Trunk Road' built by Sher Shah Suri was originally called:",o:["Shahi Road","Sadak-e-Azam/Uttarpath","Dakshinapatha","Peruvazhis"],a:1,e:"The GT Road built by Sher Shah was called Sadak-e-Azam or Uttarpath — the royal road. It ran from Bengal (Sonargaon) to the Indus Valley (near Peshawar). The sarais (rest houses) built along it also served as post offices."},
+{q:"The Rupaya (silver coin of 178 grains) was introduced by:",o:["Babur","Humayun","Akbar","Sher Shah Suri"],a:3,e:"Sher Shah Suri introduced the Rupaya — the silver coin (178 grains of silver) that became the foundation of India's currency system. It was also called 'Dam' in smaller denominations. The modern 'Rupee' traces its name to Sher Shah's Rupaya."},
+{q:"Humayun's sister who wrote 'Humayun-Nama' was:",o:["Gulbarg Begum","Gul Badan Begum","Hamida Banu","Maham Begum"],a:1,e:"Gul Badan Begum, Humayun's sister, wrote Humayun-Nama — one of the few historical works written by a woman in the Mughal period. It gives valuable personal accounts of the Mughal court."},
+{q:"In Sher Shah's revenue system, the agreement deed signed by the peasant was called:",o:["Patta","Qabooliyat","Zabti","Dahsala"],a:1,e:"Qabooliyat was the deed of agreement signed by the peasant acknowledging the revenue terms. Patta was the document given to the peasant stating the amount they had to pay. Together they formed the basis of Sher Shah's land revenue system."},
+{q:"'Padmavat' was written by Malik Muhammad Jaisi during the reign of:",o:["Akbar","Babur","Sher Shah Suri","Humayun"],a:2,e:"Malik Muhammad Jaisi wrote Padmavat (a famous Sufi allegorical poem in Awadhi about the legendary Rani Padmini of Chittorgarh) during Sher Shah Suri's time. It is one of the most celebrated works of Hindi/Awadhi literature."}
+]},
+
+{id:"mg2",title:"Akbar — The Great Emperor",xp:80,type:"regular",seqIdx:1,
+facts:[
+"<b>Akbar (1556–1605):</b> Born 15 Oct 1542, Amarkot | Mother: Hamida Banu | Wife: Jodha Bai (Heer Kunwari/Harka Bai) | Regent 1556–60: <b>Bairam Khan</b> (Shia Muslim)",
+"<b>Key acts:</b> 1563 = abolished Pilgrim Tax | 1564 = <b>abolished Jaziya</b> | 1579 = <b>Mazharnama (Infallibility Decree)</b> drafted by Sheikh Mubarak & Abul Fazl | 1582 = <b>Din-e-Ilahi</b> (Divine Faith; only 15 followers including Birbal) | Introduced <b>Ilahi Calendar</b>",
+"<b>Ibadat Khana</b> (House of Worship at Fatehpur Sikri, 1575) = opened to all religions 1578 — 'Parliament of Religion'",
+"<b>Fatehpur Sikri</b> = Akbar's capital for only 14 years (1571–1585); abandoned due to water scarcity + NW campaigns",
+"<b>Land Revenue — Dahsala System:</b> Revenue fixed on average yield of previous 10 years | Land types: Polaj (every year) | Parati (once in 2 yrs) | Chachar (3–4 yrs) | Banjar (5+ yrs)",
+"<b>Mansabdari System:</b> Two ranks — Zat (salary/personal rank) + Sawar (cavalry to maintain) | Rank NOT hereditary | Mansabdars paid via Jagir | Introduced by <b>Todar Mal</b>",
+"<b>Sulh-i-Kul</b> = universal peace / tolerance — Akbar's core governance philosophy",
+"<b>Battle of Haldighati (1576):</b> Mughal army led by <b>Man Singh</b> vs Maharana Pratap — Pratap escaped",
+"<b>Navratnas:</b> Abul Fazl (Akbarnama + Ain-i-Akbari) | Birbal | Todar Mal (Finance Minister) | Tansen (musician, title Mian) | Abdul Rahim Khan-i-Khana | Raja Man Singh | Faizi | Mirza Aziz Koka | Fakir Aziao-Din",
+"<b>Ain-i-Akbari</b> = encyclopaedia of Akbar's administration (prices, revenues, statistics of each province) | <b>Akbarnama</b> = biography — both written by Abul Fazl",
+"<b>Buland Darwaza</b> at Fatehpur Sikri built to commemorate Gujarat victory (1573) | Tomb at <b>Sikandra, UP</b> (built by Jahangir)"
+],
+table:{h:["Year","Event","Significance"],r:[
+["1563","Abolished Pilgrim Tax","Removed tax on Hindu pilgrims — tolerance policy"],
+["1564","Abolished Jaziya","Historic — first reversal of religious tax since Firoz Shah"],
+["1575","Ibadat Khana built","House of Worship at Fatehpur Sikri"],
+["1578","Ibadat Khana opened to all","Parliament of Religion — Hindus, Jains, Christians invited"],
+["1579","Mazharnama","Infallibility Decree — Akbar declared supreme in religious matters"],
+["1580–81","Todar Mal's Bandobast","Systematic land survey — most comprehensive in Mughal history"],
+["1582","Din-e-Ilahi","Divine Faith — only 15 followers; Birbal only Hindu to join"]
+]},
+mn:{h:"🧠 MNEMONIC — Akbar's Key Dates",b:"<b>63-64-79-82</b> = Pilgrim Tax abolished · Jaziya abolished · Mazharnama · Din-e-Ilahi<br>'<b>63 Pilgrims Journeyed Away; in 64 Jaziya Abolished; 79 Manifesto; 82 Divine</b>'<br>Navratnas: <b>ABFTMRFMF</b> — Abul Fazl, Birbal, Faizi, Todar Mal, Man Singh, Rahim, Fakir, Mirza, Tansen"},
+traps:[
+"Mansabdari System introduced by TODAR MAL (often wrongly attributed to Akbar directly)",
+"Din-e-Ilahi had only 15 followers — NOT a mass movement | BIRBAL was the only Hindu to join",
+"Battle of Haldighati: Mughal army led by MAN SINGH (NOT Akbar personally)",
+"Fatehpur Sikri was capital for only 14 YEARS (NOT entire reign)",
+"Mazharnama drafted by SHEIKH MUBARAK + ABUL FAZL (NOT by Akbar's ministers generally)"
+],
+revision:["Akbar(1556-1605): regent Bairam Khan(1556-60), wife Jodha Bai","1564 abolished Jaziya | 1579 Mazharnama(Infallibility Decree) | 1582 Din-e-Ilahi","Ibadat Khana(1575,Fatehpur Sikri)=House of Worship,opened to all religions 1578","Fatehpur Sikri=Akbar's capital for only 14 years","Akbar's Navaratnas included Abul Fazl,Birbal,Tansen"],
+oneliners:["Akbar ruled 1556-1605, with Bairam Khan as regent from 1556-1560","Akbar's wife Jodha Bai was also known as Heer Kunwari or Harka Bai","Akbar abolished the Pilgrim Tax in 1563 and the Jaziya tax in 1564","Akbar's Mazharnama (Infallibility Decree, 1579) was drafted by Sheikh Mubarak and Abul Fazl","Akbar introduced Din-e-Ilahi in 1582, a syncretic faith with only about 15 followers","Akbar also introduced the Ilahi Calendar","Akbar's Ibadat Khana (House of Worship) at Fatehpur Sikri opened to all religions in 1578","Fatehpur Sikri served as Akbar's capital for only 14 years","Akbar's court included the Navaratnas (Nine Gems), including Abul Fazl, Birbal, and Tansen"],
+flashcards:[{q:"Who was Akbar's regent from 1556-1560?",a:"Bairam Khan"},{q:"What taxes did Akbar abolish, and when?",a:"Pilgrim Tax (1563) and Jaziya (1564)"},{q:"What was the Mazharnama, and who drafted it?",a:"The Infallibility Decree (1579); drafted by Sheikh Mubarak and Abul Fazl"},{q:"What was Din-e-Ilahi, and how many followers did it have?",a:"Akbar's syncretic faith (1582); only about 15 followers"},{q:"What was the Ibadat Khana, and when did it open to all religions?",a:"House of Worship at Fatehpur Sikri; opened to all religions in 1578"},{q:"How long was Fatehpur Sikri Akbar's capital?",a:"Only 14 years"},{q:"Name two of Akbar's Navaratnas.",a:"Abul Fazl and Birbal (also Tansen)"}],
+mcqs:[
+{q:"Akbar abolished the Jaziya tax in which year?",o:["1563","1564","1575","1579"],a:1,e:"Akbar abolished Jaziya (the religious tax on non-Muslims) in 1564. He had abolished the Pilgrim Tax in 1563. These acts were part of his Sulh-i-Kul (universal tolerance) policy."},
+{q:"The Mansabdari System was introduced by:",o:["Akbar","Babur","Raja Todar Mal","Birbal"],a:2,e:"The Mansabdari System was introduced by Raja Todar Mal (Akbar's Finance Minister, titled Diwan-i-Ashraf). The system had two ranks: Zat (personal rank/salary) and Sawar (cavalry to maintain). Ranks were NOT hereditary."},
+{q:"Din-e-Ilahi (1582) promoted by Akbar had approximately how many followers?",o:["100","50","15","500"],a:2,e:"Din-e-Ilahi had only 15 followers — it was a personal spiritual path, NOT a mass religion. Birbal was the only Hindu to join. Abul Fazl also joined. It emphasised monotheism and drew from multiple religions."},
+{q:"The Battle of Haldighati (1576) against Maharana Pratap was led on the Mughal side by:",o:["Akbar himself","Bairam Khan","Birbal","Man Singh"],a:3,e:"The Mughal army at the Battle of Haldighati was led by Raja Man Singh (one of Akbar's Navratnas). Akbar was not present personally. Maharana Pratap escaped and continued resistance from the forests."},
+{q:"'Ain-i-Akbari' and 'Akbarnama' were written by:",o:["Birbal","Raja Todar Mal","Abul Fazl","Faizi"],a:2,e:"Both Ain-i-Akbari (encyclopaedia of Akbar's administration — revenues, prices, provincial statistics) and Akbarnama (biography of Akbar) were written by Abul Fazl. Faizi was Abul Fazl's brother and a poet."},
+{q:"The Ibadat Khana (House of Worship) was opened to ALL religions in which year?",o:["1575","1578","1579","1582"],a:1,e:"Ibadat Khana was built in 1575 initially for Muslim scholars only. In 1578, Akbar opened it to representatives of all religions — Hindus, Jains, Zoroastrians, Christians — making it a 'Parliament of Religion.'"},
+{q:"The 'Mazharnama' (Infallibility Decree) of 1579 was drafted by:",o:["Birbal and Tansen","Sheikh Mubarak and Abul Fazl","Raja Todar Mal and Man Singh","Faizi and Rahim"],a:1,e:"The Mazharnama (declaring Akbar's infallibility in religious matters) was drafted by Sheikh Mubarak and Abul Fazl in 1579. This declared Akbar the supreme arbiter of religious disputes — a controversial step."},
+{q:"In Akbar's land classification, 'Banjar' referred to land that was:",o:["Cultivated every year","Cultivated once in 2 years","Cultivated once in 3-4 years","Cultivated once in 5 or more years"],a:3,e:"Banjar = land cultivated once in 5 or more years. Polaj = cultivated every year | Parati = once in 2 years | Chachar = once in 3-4 years | Banjar = 5+ years. This four-fold classification was part of Todar Mal's systematic land survey."},
+{q:"Fatehpur Sikri was Akbar's capital for approximately how many years before being abandoned?",o:["4 years","14 years","24 years","34 years"],a:1,e:"Fatehpur Sikri was Akbar's capital for only 14 years (1571–1585). It was abandoned due to water scarcity and the need to shift focus to the northwest (Kashmir, Sindh campaigns). Akbar then moved to Lahore before returning to Agra."},
+{q:"Which Navratna of Akbar was given the title 'Mian' by Akbar for his music?",o:["Birbal","Rahim","Abul Fazl","Tansen"],a:3,e:"Tansen (originally from Gwalior; given the title 'Tansen' by King Ramachandra) was given the title 'Mian' by Akbar — a mark of great respect. He is one of the greatest musicians in Indian history and is revered for creating multiple classical ragas."}
+]},
+
+{id:"mg3",title:"Jahangir & Shah Jahan",xp:65,type:"regular",seqIdx:2,
+facts:[
+"<b>Jahangir (1605–1627):</b> Childhood name Salim (Shekhu Baba) | Title: Jahangir (Conqueror of World)",
+"Executed <b>Guru Arjan Dev Ji</b> (5th Sikh Guru) because Guru blessed rebel Prince Khusrau",
+"Wife <b>Nur Jahan</b> (née Mehrunnisa, married 1611) = only Mughal empress to have <b>coins struck in her name</b> and issue farmans | Father = <b>Itimad-ud-Daula</b> (Pillar of State)",
+"<b>Nur Jahan's Junta:</b> Nur Jahan + Itimad-ud-Daula + brother Asaf Khan + Prince Khurram (Shah Jahan) — effectively ran the empire",
+"<b>Zanjir-i-Adal</b> (Chain of Justice) = 60 bells on gold chain outside Agra Fort — anyone could pull for royal justice",
+"<b>Itimad-ud-Daula's tomb (Agra):</b> First Mughal building entirely in WHITE MARBLE | First use of <b>Pietra Dura</b> (inlaid semi-precious stones) — predates Taj Mahal ⚠️",
+"Autobiography: <b>Tuzuk-i-Jahangiri / Jahangirnama</b> | Keen naturalist — described species with remarkable accuracy | Introduced Du-Aspah-Sih-Aspah (modified Mansabdari) | Tomb: Lahore",
+"<b>Shah Jahan (1628–1658):</b> Childhood name Khurram | Wife: Arjumand Bano (Mumtaj Mahal) — died 1631",
+"Built <b>Shahjahanabad</b> (Old Delhi) with Red Fort + Jama Masjid + Chandni Chowk",
+"<b>Taj Mahal:</b> Built 1631–1653 | 22 years | 50,000 workers | Built by <b>Ustad Ahmed Lahori + Ustad Isha Khan</b> | UNESCO 1983 | Calligraphy by <b>Amanat Khan Shirazi</b>",
+"<b>Peacock Throne (Takht-e-Taus)</b> had Koh-i-Noor diamond — looted by <b>Nadir Shah (1739)</b>",
+"<b>Two Moti Masjids:</b> Shah Jahan built in Agra Fort (white marble) | Aurangzeb built in Red Fort Delhi",
+"Son <b>Dara Shikoh</b> translated <b>52 Upanishads</b> as <b>Sirr-i-Akbar (The Great Secret)</b> ⚠️ NOT just Bhagavad Gita",
+"Shah Jahan imprisoned by Aurangzeb in <b>Agra Fort (Musamman Burj)</b> — could see Taj Mahal from his window; died 1666"
+],
+table:{h:["Ruler","Key Fact","Common Trap"],r:[
+["Jahangir","Itimad-ud-Daula's tomb = first white marble + first Pietra Dura","Pietra Dura NOT introduced at Taj Mahal — it came EARLIER"],
+["Jahangir","Nur Jahan = only empress with coins in her name","Coins were of Nur Jahan NOT Mumtaj Mahal"],
+["Shah Jahan","Taj Mahal built by Ustad Ahmed Lahori + Ustad Isha Khan","NOT built by Shah Jahan himself; UNESCO 1983"],
+["Shah Jahan","Two Moti Masjids: Agra Fort (SJ) + Red Fort Delhi (Aurangzeb)","Often confused — TWO different mosques"],
+["Shah Jahan","Dara Shikoh translated 52 Upanishads as Sirr-i-Akbar","NOT just Bhagavad Gita — 52 Upanishads"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"Pietra Dura timeline: <b>I before T</b> = Itimad-ud-Daula (Jahangir) BEFORE Taj Mahal (Shah Jahan)<br>Taj builders: <b>A+I</b> = Ahmed Lahori + Isha Khan → 'AI built the Taj'<br>Dara Shikoh: '<b>52 Upanishads = Sirr-i-Akbar</b>' — 52 Up = Secret"},
+traps:[
+"Pietra Dura first used at ITIMAD-UD-DAULA'S TOMB (Jahangir) — NOT at Taj Mahal which came later",
+"Taj Mahal UNESCO = 1983 (NOT 1987 — that is Brihadeshwara temple)",
+"Dara Shikoh translated 52 UPANISHADS (NOT only Bhagavad Gita) as Sirr-i-Akbar",
+"TWO Moti Masjids exist — Shah Jahan's in Agra Fort | Aurangzeb's in Red Fort Delhi",
+"Nadir Shah looted Peacock Throne AND Koh-i-Noor — both in 1739"
+],
+revision:["Jahangir(1605-27): childhood name Salim, title='Conqueror of World'","Executed Guru Arjan Dev Ji(5th Sikh Guru) for blessing rebel Prince Khusrau","Wife Nur Jahan=ONLY Mughal empress with coins struck in her name","Zanjir-i-Adal(Chain of Justice)=60 bells outside Agra Fort for royal justice","Shah Jahan(1628-58)='Architect King', built Taj Mahal(1632-53) for Mumtaz Mahal"],
+oneliners:["Jahangir's childhood name was Salim (Shekhu Baba); 'Jahangir' means Conqueror of World","Jahangir executed Guru Arjan Dev Ji, the 5th Sikh Guru, for blessing rebel Prince Khusrau","Jahangir's wife Nur Jahan was the only Mughal empress to have coins struck in her name","Nur Jahan's father was Itimad-ud-Daula (Pillar of State)","The 'Nur Jahan Junta' included Nur Jahan, Itimad-ud-Daula, Asaf Khan, and Prince Khurram (Shah Jahan)","Jahangir's Zanjir-i-Adal (Chain of Justice) had 60 bells outside Agra Fort for anyone seeking justice","Shah Jahan is called the 'Architect King'","Shah Jahan built the Taj Mahal (1632-1653) for his wife Mumtaz Mahal"],
+flashcards:[{q:"What does 'Jahangir' mean, and what was his childhood name?",a:"'Conqueror of World'; childhood name Salim"},{q:"Why did Jahangir execute Guru Arjan Dev Ji?",a:"For blessing the rebel Prince Khusrau"},{q:"What was unique about Nur Jahan among Mughal empresses?",a:"She was the only one to have coins struck in her name"},{q:"Who was Nur Jahan's father?",a:"Itimad-ud-Daula"},{q:"What was the Zanjir-i-Adal?",a:"The Chain of Justice — 60 bells outside Agra Fort for royal justice"},{q:"What is Shah Jahan called, and why?",a:"'Architect King', for his architectural achievements"},{q:"What did Shah Jahan build, and for whom?",a:"The Taj Mahal (1632-53), for Mumtaz Mahal"}],
+mcqs:[
+{q:"The FIRST Mughal building made entirely of white marble, using Pietra Dura for the first time, was:",o:["Taj Mahal","Humayun's Tomb","Itimad-ud-Daula's Tomb","Jama Masjid"],a:2,e:"Itimad-ud-Daula's Tomb (built by Nur Jahan in Agra for her father) was the FIRST Mughal building entirely in white marble and the FIRST to use Pietra Dura (inlaid semi-precious stones). This technique was later used on a grander scale in the Taj Mahal — a very common SSC trap."},
+{q:"Nur Jahan was the only Mughal empress to:",o:["Build a mosque","Have coins struck in her name and issue royal farmans","Fight a battle","Translate Sanskrit texts"],a:1,e:"Nur Jahan (Jahangir's wife) was the only Mughal empress to have coins struck in her own name and to issue farmans (royal decrees). She, along with her father Itimad-ud-Daula, brother Asaf Khan, and Shah Jahan, formed the 'Nur Jahan Junta' that effectively ran the empire."},
+{q:"The Taj Mahal was built by Ustad Ahmed Lahori and Ustad Isha Khan. When was it designated a UNESCO World Heritage Site?",o:["1978","1983","1987","2003"],a:1,e:"Taj Mahal was designated a UNESCO World Heritage Site in 1983. It was built between 1631–1653 (22 years) using 50,000 workers. The calligraphy was done by Amanat Khan Shirazi (imported from Iran)."},
+{q:"'Sirr-i-Akbar' (The Great Secret) was Dara Shikoh's Persian translation of:",o:["The Bhagavad Gita","The Ramayana","52 Upanishads","Vedas"],a:2,e:"Dara Shikoh translated 52 Upanishads into Persian as Sirr-i-Akbar (The Great Secret). He also wrote Majma-ul-Bahrain (Confluence of Two Seas) comparing Sufism and Vedanta. Common trap: students often say only Bhagavad Gita."},
+{q:"The 'Zanjir-i-Adal' (Chain of Justice) was installed by which Mughal emperor?",o:["Akbar","Shah Jahan","Aurangzeb","Jahangir"],a:3,e:"Jahangir installed the Zanjir-i-Adal (Chain of Justice) — 60 bells on a golden chain outside Agra Fort. Anyone could pull it to get royal justice directly, bypassing officials. It symbolised Jahangir's commitment to accessible justice."},
+{q:"Shah Jahan was imprisoned by Aurangzeb in which part of Agra Fort?",o:["Diwan-i-Khas","Sheesh Mahal","Musamman Burj","Jahangiri Mahal"],a:2,e:"Shah Jahan was imprisoned in the Musamman Burj (an octagonal tower) of Agra Fort. From his window, he could see the Taj Mahal — where his beloved wife Mumtaj Mahal was buried. He died there in 1666."},
+{q:"There are TWO 'Moti Masjids' in India. Which emperor built which?",o:["Both by Shah Jahan","Both by Aurangzeb","Shah Jahan in Agra Fort; Aurangzeb in Red Fort Delhi","Akbar in Agra; Shah Jahan in Delhi"],a:2,e:"Two Moti Masjids exist: Shah Jahan built the Moti Masjid (Pearl Mosque) in Agra Fort in white marble (1648). Aurangzeb built another Moti Masjid inside the Red Fort in Delhi. This is one of the most frequently asked SSC traps."},
+{q:"The Peacock Throne (Takht-e-Taus) was looted along with the Koh-i-Noor diamond by:",o:["Timur Lang in 1398","Ahmad Shah Abdali in 1761","Nadir Shah in 1739","Muhammad Ghori in 1193"],a:2,e:"Nadir Shah (Iranian ruler) invaded Delhi in 1739, looting it for 57 days. He took both the Peacock Throne (Takht-e-Taus) and the Koh-i-Noor diamond. He defeated Muhammad Shah Rangeela at the Battle of Karnal."},
+{q:"Guru Arjan Dev Ji (5th Sikh Guru) was executed by Jahangir because:",o:["He refused to pay taxes","He blessed Prince Khusrau (Jahangir's rebel son)","He converted Muslims to Sikhism","He built a temple without permission"],a:1,e:"Guru Arjan Dev Ji blessed Prince Khusrau (Jahangir's rebel son who had fought against his father). Jahangir considered this treasonous and had the Guru executed in 1606. The Guru Granth Sahib had been compiled by Guru Arjan Dev just two years earlier (1604)."},
+{q:"Jahangir's autobiography 'Tuzuk-i-Jahangiri' reveals he was notably:",o:["A military genius","A keen naturalist who described species accurately","An expert mathematician","A religious reformer"],a:1,e:"Jahangir's autobiography (Tuzuk-i-Jahangiri / Jahangirnama) is celebrated for his remarkably accurate observations on nature — he described birds, animals, and plants with scientific precision. He is considered one of the most observant naturalists among Mughal emperors."}
+]},
+
+{id:"mg4",title:"Aurangzeb & Mughal Decline",xp:65,type:"trap",seqIdx:3,
+facts:[
+"<b>Aurangzeb (1658–1707):</b> Title = Alamgir (World Conqueror) / ZindaPeer / Shahi Darvesh | Longest reigning Mughal (49 years) | Last effective Mughal emperor",
+"<b>What Aurangzeb ABOLISHED:</b> Nauroz Festival (1659) | Jharokha Darshan (1669) | Musicians from court | Tuladan System (1670) | Dasara celebrations | Royal astrologers",
+"<b>What Aurangzeb REIMPOSED:</b> Jaziya Tax (1679) | Pilgrim Tax (1679) | Temple construction ban",
+"<b>Guru Tegh Bahadur</b> (9th Sikh Guru) executed 1675 at <b>Chandni Chowk, Delhi</b> | Site now = <b>Gurudwara Sis Ganj Sahib</b>",
+"<b>Shivaji escaped from Agra (1666)</b> hidden in baskets — most embarrassing episode for Aurangzeb",
+"<b>Deccan policy = biggest cause of Mughal decline</b> | Spent 25 years (1682–1707) in Deccan campaigns draining treasury",
+"<b>Compiled Fatawa-i-Alamgiri</b> = comprehensive digest of Islamic law in India",
+"<b>Bibi Ka Maqbara</b> (Aurangabad) = replica of Taj Mahal | built by <b>Azam Shah</b> (Aurangzeb's SON — NOT Aurangzeb)",
+"<b>Late Mughals:</b> Muhammad Shah Rangeela (1719–48) — Nadir Shah invaded | Bahadur Shah-II = last Mughal emperor; Urdu poet pen name <b>Zafar</b>; deported to Rangoon after 1857 revolt",
+"<b>Nadir Shah (1739):</b> Looted Delhi for 57 days | Took Koh-i-Noor + Peacock Throne | Defeated Muhammad Shah at <b>Battle of Karnal</b>",
+"<b>Farrukh Siyar (1713–19):</b> Puppet of Sayyid Brothers (Abdala Khan + Hussain Ali) | Gave British Farman (1717) — key step in British trade expansion",
+"<b>Shah Alam-II:</b> Treaty of Allahabad (1765) — granted <b>Diwani of Bengal, Bihar & Orissa</b> to East India Company"
+],
+table:{h:["Act","Year","Impact"],r:[
+["Abolished Jaziya (Akbar)","1564","Tolerance; Hindu goodwill"],
+["Reimposed Jaziya (Aurangzeb)","1679","Alienated Hindus, Rajputs, Marathas"],
+["Guru Tegh Bahadur executed","1675","Sikhs became permanent enemies of Mughals"],
+["Shivaji escaped Agra","1666","Maratha resistance resumed; humiliation for Aurangzeb"],
+["Deccan campaigns","1682–1707","Treasury drained; empire weakened beyond recovery"],
+["Nadir Shah invasion","1739","Looted Delhi 57 days; took Koh-i-Noor + Peacock Throne"]
+]},
+mn:{h:"🧠 MNEMONIC — Aurangzeb's Abolitions",b:"<b>N-J-T-D-A</b> = Nauroz · Jharokha Darshan · Tuladan · Dasara · Astrologers abolished<br>'<b>No Joyful Times During Aurangzeb</b>'<br>Bibi ka Maqbara: Built by AZAM (Aurangzeb's SON) — not Aurangzeb himself"},
+traps:[
+"Bibi Ka Maqbara built by AZAM SHAH (Aurangzeb's son) — NOT by Aurangzeb himself",
+"Guru TEGH BAHADUR = 9th Guru executed 1675 | Guru ARJAN DEV = 5th Guru executed 1606 by Jahangir",
+"Bahadur Shah-II = LAST Mughal | pen name = ZAFAR | deported to Rangoon",
+"Treaty of Allahabad (1765) = DIWANI of Bengal+Bihar+Orissa given to Company under SHAH ALAM-II",
+"Farrukh Siyar gave British Farman 1717 — this was the key British commercial privilege"
+],
+revision:["Aurangzeb(1658-1707)=Alamgir,longest-reigning Mughal(49 yrs),last effective emperor","Abolished: Nauroz,Jharokha Darshan,musicians,Tuladan | Reimposed: Jaziya(1679),Pilgrim Tax(1679)","Guru Tegh Bahadur(9th Sikh Guru) executed 1675 at Chandni Chowk","Shivaji escaped from Agra(1666) hidden in baskets","Aurangzeb's Deccan wars drained the treasury, contributed to Mughal decline"],
+oneliners:["Aurangzeb (1658-1707) held the title Alamgir (World Conqueror)","Aurangzeb was the longest-reigning Mughal emperor, ruling 49 years","Aurangzeb is considered the last effective Mughal emperor","Aurangzeb abolished the Nauroz festival (1659) and Jharokha Darshan (1669)","Aurangzeb reimposed the Jaziya tax and Pilgrim Tax in 1679","Aurangzeb banned new temple construction","Aurangzeb executed Guru Tegh Bahadur, the 9th Sikh Guru, in 1675 at Chandni Chowk, Delhi","The execution site is now the Gurudwara Sis Ganj Sahib","Shivaji famously escaped from Agra in 1666, hidden in baskets","Aurangzeb's prolonged Deccan wars drained the Mughal treasury and hastened decline"],
+flashcards:[{q:"What title did Aurangzeb hold?",a:"Alamgir (World Conqueror)"},{q:"How long did Aurangzeb reign?",a:"49 years — the longest of any Mughal"},{q:"Name two festivals/practices Aurangzeb abolished.",a:"Nauroz festival and Jharokha Darshan"},{q:"What taxes did Aurangzeb reimpose, and when?",a:"Jaziya and Pilgrim Tax, in 1679"},{q:"Who was Guru Tegh Bahadur, and how did he die?",a:"9th Sikh Guru; executed by Aurangzeb in 1675 at Chandni Chowk"},{q:"How did Shivaji escape captivity in 1666?",a:"Hidden in baskets, escaping from Agra"},{q:"What contributed to Mughal decline under Aurangzeb?",a:"Prolonged, costly Deccan wars draining the treasury"}],
+mcqs:[
+{q:"Bibi Ka Maqbara (replica of Taj Mahal at Aurangabad) was built by:",o:["Aurangzeb himself","Aurangzeb's son Azam Shah","Shah Jahan","Aurangzeb's daughter"],a:1,e:"Bibi Ka Maqbara was built by Azam Shah (Aurangzeb's son) in 1668–69 in memory of his mother Rabia-ul-Daurani (Dilras Banu). Aurangzeb himself did NOT build it. This is a classic SSC trap where students attribute it to Aurangzeb."},
+{q:"Aurangzeb reimposed Jaziya in 1679. This action is historically significant because:",o:["It generated enormous revenue","It ended a 115-year break in religious taxation — alienating Rajputs, Marathas, Hindus","It punished only rich Hindus","It was praised by Guru Tegh Bahadur"],a:1,e:"Akbar had abolished Jaziya in 1564. Aurangzeb reimposed it in 1679 after a 115-year gap. This single act alienated Rajputs, Marathas, Jats, Sikhs, and Hindus — contributing significantly to the empire's decline."},
+{q:"Guru Tegh Bahadur (9th Sikh Guru) was executed in 1675 at:",o:["Amritsar","Anandpur Sahib","Chandni Chowk, Delhi","Lahore"],a:2,e:"Guru Tegh Bahadur was executed at Chandni Chowk, Delhi in 1675 for refusing to convert to Islam. The site is now Gurudwara Sis Ganj Sahib. This is distinct from Guru Arjan Dev (5th Guru) who was executed by Jahangir in 1606."},
+{q:"Shivaji's escape from Aurangzeb's custody in Agra (1666) is historically notable because:",o:["It led to the Battle of Salher","He escaped hidden in baskets — the most embarrassing episode for Aurangzeb","He defeated the Mughal guards openly","He was let go by Aurangzeb voluntarily"],a:1,e:"Shivaji was confined in Agra after the Treaty of Purandar (1665). In 1666, he escaped hidden in large baskets (used to carry sweets/fruits for workers). This was the most embarrassing episode for Aurangzeb and allowed Maratha resistance to resume."},
+{q:"The Treaty of Allahabad (1765) granted which territories' Diwani (revenue rights) to the East India Company?",o:["Awadh, Punjab, Delhi","Madras, Bombay, Surat","Bengal, Bihar, Orissa","Maharashtra, Gujarat, Deccan"],a:2,e:"The Treaty of Allahabad (1765) was signed by Shah Alam-II (Mughal emperor) with the East India Company after the Battle of Buxar (1764). It granted the Diwani (revenue collection rights) of Bengal, Bihar, and Orissa to the Company — a turning point in British India."},
+{q:"The LAST Mughal emperor was Bahadur Shah-II, whose poetry pen name was:",o:["Rangeen","Mir","Ghalib","Zafar"],a:3,e:"Bahadur Shah-II (1837–1857) was the last Mughal emperor. He was a renowned Urdu poet with the pen name 'Zafar' (meaning victory). After the 1857 revolt, he was deported to Rangoon (Burma) where he died in 1862."},
+{q:"Aurangzeb's single biggest policy failure leading to Mughal decline was:",o:["Reimposing Jaziya","His Deccan policy — 25 years of costly campaigns 1682–1707","Executing Guru Tegh Bahadur","Abolishing Jharokha Darshan"],a:1,e:"Aurangzeb's Deccan policy is considered the single biggest cause of Mughal decline. He spent 25 years (1682–1707) fighting in the Deccan, draining the treasury, losing lakhs of soldiers, and weakening the empire while the north was left ungoverned."},
+{q:"'Fatawa-i-Alamgiri' compiled by Aurangzeb was:",o:["A military manual","A collection of his personal poetry","A comprehensive digest of Islamic law in India","A historical account of his reign"],a:2,e:"Fatawa-i-Alamgiri is the most comprehensive digest of Islamic (Hanafi) law compiled in India — assembled by Aurangzeb and a team of Islamic scholars. It is still referenced in Islamic jurisprudence. It was one of Aurangzeb's major intellectual contributions."},
+{q:"Nadir Shah invaded India in 1739 and looted Delhi for:",o:["7 days","20 days","57 days","100 days"],a:2,e:"Nadir Shah looted Delhi for 57 days in 1739. He took the Peacock Throne (Takht-e-Taus) and the Koh-i-Noor diamond. He had defeated Muhammad Shah Rangeela at the Battle of Karnal. Delhi's population was massacred in the 'Nadir Shah's massacre (Qatl-e-Aam).'"},
+{q:"Which late Mughal emperor gave the British a commercial Farman in 1717 enabling English trade?",o:["Muhammad Shah Rangeela","Bahadur Shah-I","Farrukh Siyar","Alamgir-II"],a:2,e:"Farrukh Siyar (1713–1719) gave the British a Farman in 1717 enabling free trade in Bengal. He was a puppet of the Sayyid Brothers (Abdullah Khan and Hussain Ali — the 'kingmakers'). This Farman was crucial for subsequent British commercial dominance in India."}
+]}
+]},
+
+/* ─────────────────────── CHAPTER 2: SHIVAJI & MARATHAS ─────────────────────── */
+{id:"marathas",title:"Shivaji & Marathas",icon:"🐯",nodes:[
+
+{id:"mv1",title:"Shivaji Maharaj & Maratha Rise",xp:70,type:"regular",seqIdx:4,
+facts:[
+"<b>Shivaji (1627–1680):</b> Born at <b>Shivneri fort</b> | Mother: <b>Jija Bai</b> | Father: Shahaji Bhosle | Inherited jagir of Poona 1637 | Mentor: <b>Dadaji Kondadeo</b>",
+"Age 16: captured <b>Torna fort</b> | 1656: captured Javali from Chandrarao More | Created independent Maratha kingdom with <b>Raigad as capital</b>",
+"<b>Battle of Pratapgarh (1659):</b> Killed <b>Afzal Khan</b> (Adil Shah's general) | <b>Battle of Pavankhind (1660):</b> Baji Prabhu Deshpande held back enemy → Shivaji escaped",
+"<b>Treaty of Purandar (1665):</b> Signed between <b>Raja Jai Singh</b> (Aurangzeb's commander) & Shivaji — Shivaji ceded some forts to Mughals",
+"<b>Shivaji's escape from Agra (1666):</b> Hidden in baskets — most embarrassing episode for Aurangzeb",
+"Defeated Mughals at <b>Battle of Salher (1672)</b> | Crowned <b>Maharaja Chhatrapati (1674)</b> at <b>Raigad fort</b> | Coronation by <b>Gaga Bhatt</b> (Brahmin from Varanasi)",
+"<b>Ashtapradhan Mandal:</b> Peshwa (Finance+Admin) | Senapati (Military) | Majumdar/Amatya (Accountant General) | Sachiv (Correspondence) | Dabir/Sumant (Foreign Minister) | Wagenavis/Mantri (Intelligence) | Nyayadhish (Justice) | Panditrao/Sadar (High Priest)",
+"<b>Revenue system:</b> Chauth = 1/4 of land revenue | Sardeshmukhi = additional 1/10th levy | Land measured using rod called <b>Kathi</b>",
+"Created <b>Indian naval tradition</b> to check Portuguese and Siddis of Janjira | Died 1680 at age 52",
+"<b>Sambhaji (1680–89):</b> Son of Shivaji | Captured, tortured & executed by Mughals (1689)"
+],
+table:{h:["Post","Ashtapradhan Role"],r:[
+["Peshwa (Mukhya Pradhan)","Finance & general administration → later became hereditary Prime Minister"],
+["Senapati (Sar-i-Naubat)","Military commander"],
+["Majumdar (Amatya)","Accountant General"],
+["Wagenavis (Mantri)","Intelligence, posts, household affairs"],
+["Sachiv (Surnavis)","Correspondence"],
+["Dabir (Sumant)","Foreign minister & Master of ceremonies"],
+["Nyayadhish","Justice"],
+["Panditrao (Sadar)","High Priest — internal religious matters"]
+]},
+mn:{h:"🧠 MNEMONIC — Ashtapradhan",b:"<b>P-S-M-W-S-D-N-P</b> = Peshwa, Senapati, Majumdar, Wagenavis, Sachiv, Dabir, Nyayadhish, Panditrao<br>'<b>Peshwa's Strong Maratha Warriors Served Deccan Nobles Proudly</b>'<br>Chauth = <b>1/4</b> | Sardeshmukhi = <b>1/10</b> — remember C before S = smaller fraction"},
+traps:[
+"Shivaji born at SHIVNERI FORT (NOT Raigad — Raigad is his capital)",
+"Chauth = 1/4 | Sardeshmukhi = 1/10 — do NOT confuse fractions",
+"Treaty of Purandar (1665): signed with RAJA JAI SINGH (NOT Aurangzeb directly)",
+"Gaga Bhatt performed coronation — LOCAL Brahmins refused to recognise Shivaji's Kshatriya status",
+"Sambhaji was EXECUTED by Mughals (1689) — NOT killed in battle"
+],
+revision:["Shivaji(1627-80): born Shivneri fort,mother Jija Bai,mentor Dadaji Kondadeo","Age 16 captured Torna fort | Raigad=capital of independent Maratha kingdom","Battle of Pratapgarh(1659): killed Afzal Khan | Battle of Pavankhind(1660): Baji Prabhu's sacrifice","Treaty of Purandar(1665) with Raja Jai Singh(Aurangzeb's commander)","Shivaji crowned Chhatrapati 1674 at Raigad"],
+oneliners:["Shivaji (1627-1680) was born at Shivneri fort; his mother was Jija Bai","Shivaji's mentor was Dadaji Kondadeo","At age 16, Shivaji captured Torna fort","Shivaji made Raigad the capital of his independent Maratha kingdom","At the Battle of Pratapgarh (1659), Shivaji killed Afzal Khan, Adil Shah's general","At the Battle of Pavankhind (1660), Baji Prabhu Deshpande sacrificed himself so Shivaji could escape","The Treaty of Purandar (1665) was signed between Shivaji and Raja Jai Singh, Aurangzeb's commander","Shivaji ceded some forts to the Mughals under the Treaty of Purandar","Shivaji was crowned Chhatrapati in 1674 at Raigad"],
+flashcards:[{q:"Where was Shivaji born, and who was his mother?",a:"Shivneri fort; mother Jija Bai"},{q:"Who was Shivaji's mentor?",a:"Dadaji Kondadeo"},{q:"What fort did Shivaji capture at age 16?",a:"Torna fort"},{q:"What happened at the Battle of Pratapgarh (1659)?",a:"Shivaji killed Afzal Khan"},{q:"What happened at the Battle of Pavankhind (1660)?",a:"Baji Prabhu Deshpande sacrificed himself so Shivaji could escape"},{q:"What was the Treaty of Purandar (1665)?",a:"A treaty between Shivaji and Raja Jai Singh, where Shivaji ceded some forts"},{q:"When and where was Shivaji crowned Chhatrapati?",a:"1674, at Raigad"}],
+mcqs:[
+{q:"Shivaji was born at which fort?",o:["Raigad fort","Torna fort","Shivneri fort","Pratapgarh fort"],a:2,e:"Shivaji was born at Shivneri fort (in 1627 or 1630). Raigad was his capital where he was crowned Chhatrapati in 1674. Torna was the first fort he captured at age 16. Pratapgarh is where he killed Afzal Khan in 1659."},
+{q:"The 'Chauth' in Maratha revenue system was:",o:["1/10th of produce","1/4th of land revenue paid to avoid Maratha raids","1/6th of produce","1/3rd of produce"],a:1,e:"Chauth = 1/4th of land revenue paid by non-Maratha territories to avoid Maratha raids. Sardeshmukhi = additional 1/10th levy on lands where Marathas claimed hereditary rights as village headmen. These two formed the core of Maratha revenue from outside territories."},
+{q:"The Treaty of Purandar (1665) was signed between Shivaji and:",o:["Aurangzeb personally","Mir Jumla","Raja Jai Singh (under Aurangzeb)","Shaista Khan"],a:2,e:"The Treaty of Purandar (1665) was signed between Shivaji and Raja Jai Singh (Aurangzeb's general/commander). Shivaji ceded some forts to the Mughals and agreed to visit Aurangzeb's court at Agra — which led to his famous escape."},
+{q:"Shivaji's coronation as 'Maharaja Chhatrapati' at Raigad (1674) was performed by:",o:["Local Maharashtrian Brahmins","Gaga Bhatt (Brahmin scholar from Varanasi)","Aurangzeb's ambassador","Samarth Ramdas"],a:1,e:"Gaga Bhatt (a Brahmin scholar from Varanasi) performed Shivaji's coronation because local Maharashtrian Brahmins refused to recognise his Kshatriya status. Gaga Bhatt traced Shivaji's lineage to the Sisodia Rajputs of Mewar."},
+{q:"In the Ashtapradhan Mandal, the minister responsible for INTELLIGENCE was called:",o:["Sachiv","Senapati","Wagenavis/Mantri","Panditrao"],a:2,e:"Wagenavis (also called Mantri) was responsible for intelligence, posts, and household affairs in Shivaji's Ashtapradhan Mandal. Sachiv handled correspondence. Senapati was the military commander. Each minister was directly responsible to Shivaji — no collective responsibility."},
+{q:"The 'Sardeshmukhi' levy of the Marathas was:",o:["1/4 of produce — main war tax","An additional 1/10th levy on lands where Marathas claimed hereditary rights","1/6th revenue for Hindu temples","1/3rd for Maratha army"],a:1,e:"Sardeshmukhi was an additional 1/10th (10%) levy on lands outside Maratha territory where Marathas claimed hereditary rights as 'deshmukhs' (village headmen). It was separate from Chauth (1/4th). Together they funded the Maratha military expansion."},
+{q:"Shivaji killed Afzal Khan (Bijapur's general) at:",o:["Battle of Pavankhind","Battle of Salher","Battle of Pratapgarh","Siege of Surat"],a:2,e:"At the Battle of Pratapgarh (1659), Shivaji killed Afzal Khan in a personal meeting. Khan came with a concealed dagger to kill Shivaji, but Shivaji was protected by armour and killed Khan with his 'wagh nakh' (tiger claws). This was his first major victory against the Bijapur Sultanate."},
+{q:"The Maratha naval tradition was created by Shivaji primarily to counter:",o:["Mughals at sea","Dutch and French traders","Portuguese and Siddis of Janjira","British East India Company"],a:2,e:"Shivaji created India's naval tradition to counter the Portuguese (who dominated western coast trade) and the Siddis of Janjira (Abyssinian naval power at Janjira island). He built war galleys and established fortified harbours along the Konkan coast."},
+{q:"Baji Prabhu Deshpande is remembered for:",o:["Defeating Afzal Khan","Helping Shivaji escape from Agra","Holding back enemy forces at Pavankhind so Shivaji could escape","Signing the Treaty of Purandar"],a:2,e:"Baji Prabhu Deshpande held back enemy forces at the Battle of Pavankhind (1660), sacrificing his life so that Shivaji could escape to safety. He continued fighting until he heard the cannon shot signalling Shivaji's safe arrival at Vishalgad fort."},
+{q:"Which post in the Ashtapradhan was responsible for FOREIGN AFFAIRS and master of ceremonies?",o:["Sachiv","Panditrao","Dabir/Sumant","Nyayadhish"],a:2,e:"Dabir (also called Sumant) was the Foreign Minister and Master of Ceremonies in Shivaji's Ashtapradhan Mandal. Sachiv handled correspondence. Nyayadhish was the justice minister. Panditrao was the High Priest for internal religious matters."},
+{q:"Sambhaji (son of Shivaji) met his end in 1689 by:",o:["Dying in battle against the Mughals","Being captured, tortured, and executed by Aurangzeb's forces","Suicide rather than capture","A disease during the Deccan campaign"],a:1,e:"Sambhaji was captured by Aurangzeb's forces in 1689. He was tortured brutally and then executed. His death temporarily weakened Maratha resistance but Rajaram (his brother) and later the Peshwas continued the struggle. Sambhaji had defeated Mughal forces at the Battle of Wai in 1687."}
+]},
+
+{id:"mv2",title:"Peshwas & Anglo-Maratha Wars",xp:55,type:"trap",seqIdx:5,
+facts:[
+"<b>Balaji Vishwanath (1713–20)</b> = FIRST hereditary Peshwa | secured release of Shahu from Mughal captivity | obtained formal rights of Sardeshmukhi + Chauth",
+"<b>Baji Rao-I (1720–1740)</b> = GREATEST PESHWA (militarily) | Maratha power reached ZENITH | Won 39 battles | Said: 'Strike at the trunk, branches will fall' | Captured <b>Salsette & Bassein</b> from Portuguese (<b>Battle of Vasai, 1733</b>) | Defeated Nizam-ul-Mulk (1737)",
+"<b>Balaji Baji Rao / Nana Sahib-I (1740–61)</b> = defeated Nawab of Bengal Alivardi Khan (1751) → 1/3rd of India under Marathas",
+"<b>3rd Battle of Panipat (1761)</b>: Marathas vs Ahmad Shah Abdali | Maratha losses: Balaji Baji Rao's son <b>Vishwas Rao</b> + <b>Baji Rao-I's family</b> killed | Abdali WON | Checked Maratha expansion northward",
+"<b>Madhav Rao-I</b> = GREATEST PESHWA overall | Revived Maratha power after Panipat | Died young at 27 — his early death fragmented Maratha power",
+"<b>Maratha Chieftains:</b> Scindia (Gwalior) | Holkar (Indore) | Pawar (Dhar) | Gaekwad (Baroda) | Bhosale (Nagpur) | Peshwa (Poona)",
+"<b>Anglo-Maratha Wars:</b> 1st (1775–82): Treaty of Salbai | 2nd (1803–05): Treaty of Bassein (1802) — subsidiary alliance | 3rd (1817–18): Pindari issue; Maratha chiefs defeated separately → END of Maratha Empire",
+"Peshwa (after 3rd war) placed on estate at <b>Bithur near Kanpur</b> | 1848: Satara annexed by Dalhousie (Doctrine of Lapse)"
+],
+table:{h:["Peshwa","Period","Key Achievement"],r:[
+["Balaji Vishwanath","1713–1720","FIRST hereditary Peshwa; formalised Sardeshmukhi+Chauth"],
+["Baji Rao-I","1720–1740","GREATEST military; won 39 battles; Battle of Vasai 1733"],
+["Balaji Baji Rao (Nana Sahib-I)","1740–1761","1/3rd India under Marathas; 3rd Panipat disaster"],
+["Madhav Rao-I","Post Panipat","GREATEST Peshwa overall; revived power; died at 27"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"Maratha Chieftains: <b>S-H-P-G-B-P</b> = Scindia · Holkar · Pawar · Gaekwad · Bhosale · Peshwa<br>'<b>Some Heroes Play Great Ball Professionally</b>'<br>Baji Rao-I: '<b>39 battles, 0 lost</b>' — militarily undefeated Peshwa"},
+traps:[
+"Baji Rao-I = GREATEST PESHWA militarily (won 39 battles) | Madhav Rao-I = GREATEST overall (revived after Panipat)",
+"3rd Battle of Panipat (1761): MARATHAS vs ABDALI (not British)",
+"Treaty of BASSEIN (1802) = 2nd Anglo-Maratha War (subsidiary alliance)",
+"3rd Anglo-Maratha War (1817–18) ended Maratha Empire — NOT the 2nd war"
+],
+revision:["Balaji Vishwanath(1713-20)=FIRST hereditary Peshwa, secured Shahu's release","Baji Rao-I(1720-40)=GREATEST PESHWA, won 39 battles, captured Salsette&Bassein(1733)","Balaji Baji Rao/Nana Sahib-I(1740-61): defeated Bengal Nawab(1751), Marathas controlled 1/3rd India","3rd Battle of Panipat(1761): Marathas vs Ahmad Shah Abdali — Maratha defeat, power declined","Anglo-Maratha Wars(3 total) ended Maratha independence, last war 1817-18"],
+oneliners:["Balaji Vishwanath (1713-1720) was the first hereditary Peshwa","Balaji Vishwanath secured the release of Shahu from Mughal captivity","Baji Rao-I (1720-1740) was the greatest Peshwa militarily, winning 39 battles","Baji Rao-I's famous saying was 'Strike at the trunk, branches will fall'","Baji Rao-I captured Salsette and Bassein from the Portuguese at the Battle of Vasai (1733)","Balaji Baji Rao (Nana Sahib-I) defeated the Nawab of Bengal in 1751","Under Nana Sahib-I, about 1/3rd of India came under Maratha influence","The Third Battle of Panipat (1761) was fought between the Marathas and Ahmad Shah Abdali","The Marathas suffered a major defeat at the Third Battle of Panipat","The Anglo-Maratha Wars (3 in total) eventually ended Maratha independence by 1818"],
+flashcards:[{q:"Who was the first hereditary Peshwa?",a:"Balaji Vishwanath"},{q:"Who is considered the greatest Peshwa militarily, and his win record?",a:"Baji Rao-I, who won 39 battles"},{q:"What did Baji Rao-I capture from the Portuguese, and at which battle?",a:"Salsette and Bassein, at the Battle of Vasai (1733)"},{q:"What did Balaji Baji Rao (Nana Sahib-I) achieve in 1751?",a:"Defeated the Nawab of Bengal"},{q:"Who fought the Marathas at the Third Battle of Panipat (1761)?",a:"Ahmad Shah Abdali"},{q:"What was the outcome of the Third Battle of Panipat?",a:"A major Maratha defeat"},{q:"How many Anglo-Maratha Wars were there, and when did they end Maratha independence?",a:"3 wars; ended by 1817-18"}],
+mcqs:[
+{q:"The FIRST hereditary Peshwa who formalised Maratha revenue rights (Sardeshmukhi+Chauth) from Mughals was:",o:["Baji Rao-I","Madhav Rao-I","Balaji Vishwanath","Balaji Baji Rao"],a:2,e:"Balaji Vishwanath (1713–1720) was the FIRST hereditary Peshwa. He secured the release of Chhatrapati Shahu from Mughal captivity and obtained formal Mughal recognition of the Maratha rights to collect Sardeshmukhi and Chauth."},
+{q:"Baji Rao-I captured Salsette and Bassein from the Portuguese in:",o:["Battle of Vasai (1733)","Battle of Salher (1672)","Battle of Durai Sarai (1737)","Battle of Khandesh (1740)"],a:0,e:"Baji Rao-I captured Salsette and Bassein from the Portuguese at the Battle of Vasai in 1733 — demonstrating Maratha maritime ambition. He also defeated Nizam-ul-Mulk in 1737 (Treaty of Durai Sarai), marking the zenith of Maratha power."},
+{q:"The 3rd Battle of Panipat (1761) was fought between:",o:["Marathas and British","Marathas and Mughals","Marathas and Ahmad Shah Abdali","Marathas and Hyder Ali"],a:2,e:"The 3rd Battle of Panipat (January 14, 1761) was between the Maratha Empire and Ahmad Shah Durrani (Abdali) of Afghanistan. Abdali won. The battle stopped Maratha northward expansion and dealt a devastating blow to the Maratha Confederacy."},
+{q:"The GREATEST Peshwa who revived Maratha power after the 3rd Panipat disaster but died young at 27 was:",o:["Baji Rao-I","Nana Sahib-I","Balaji Vishwanath","Madhav Rao-I"],a:3,e:"Madhav Rao-I is considered the greatest Peshwa overall. He brilliantly revived Maratha power after the catastrophic 3rd Panipat defeat but died at just 27. His early death led to succession disputes and the eventual fragmentation of Maratha power."},
+{q:"The Subsidiary Alliance with the British was accepted by the Marathas under:",o:["Treaty of Salbai (1st war)","Treaty of Bassein (2nd war)","Treaty of Purandar (3rd war)","Treaty of Allahabad"],a:1,e:"The Treaty of Bassein (1802) ended the 2nd Anglo-Maratha War. Peshwa Baji Rao-II accepted the Subsidiary Alliance — placing British troops in Maratha territory and paying for their maintenance. This virtually made the Marathas a British protectorate."},
+{q:"The END of the Maratha Empire was caused by:",o:["1st Anglo-Maratha War","3rd Battle of Panipat","3rd Anglo-Maratha War (1817–18)","2nd Anglo-Maratha War"],a:2,e:"The 3rd Anglo-Maratha War (1817–1818) ended the Maratha Empire. Lord Hastings charged the Marathas with sheltering Pindari plunderers. The Maratha chieftains (Scindia, Holkar, Bhosale) fought separately and were defeated one by one. The Peshwa surrendered."},
+{q:"Which Maratha chieftain controlled Gwalior?",o:["Holkar","Gaekwad","Scindia","Bhosale"],a:2,e:"Scindia (also spelled Shinde) controlled Gwalior. The other Maratha chieftains: Holkar = Indore | Gaekwad = Baroda | Bhosale = Nagpur | Pawar = Dhar | Peshwa = Poona. These five families + Peshwa formed the Maratha Confederacy."},
+{q:"After the 3rd Anglo-Maratha War, the defeated Peshwa was placed on a small estate at:",o:["Pune","Satara","Bithur near Kanpur","Nagpur"],a:2,e:"After the 3rd Anglo-Maratha War (1817–18), the last Peshwa (Baji Rao-II) was given a pension and placed on a small estate at Bithur near Kanpur (UP). His adopted son Nana Sahib (a key leader of the 1857 revolt) was born there."},
+{q:"Baji Rao-I famously said about the weakening Mughal empire: 'Let us strike at the trunk...' He won how many battles in his 20-year career?",o:["27","33","39","45"],a:2,e:"Baji Rao-I won 39 battles during his career (1720–1740) — he never lost a battle. He said: 'Let us strike at the trunk of the withering tree and the branches will fall themselves' — referring to the strategy of attacking the Mughal centre rather than fighting its subordinates."},
+{q:"The Maratha Satara territory was annexed by the British under the 'Doctrine of Lapse' in:",o:["1818","1835","1848","1857"],a:2,e:"Satara was annexed in 1848 by Lord Dalhousie under the Doctrine of Lapse — the first territory to be annexed under this policy. The Doctrine held that adopted sons could not inherit princely states."}
+]}
+]},
+
+/* ─────────────────────── CHAPTER 3: REGIONAL KINGDOMS ─────────────────────── */
+{id:"regional",title:"Vijayanagara & Bahmani",icon:"🏰",nodes:[
+
+{id:"rk1",title:"Vijayanagara Empire",xp:70,type:"regular",seqIdx:6,
+facts:[
+"<b>Vijayanagara Empire (1336–1650):</b> Name = 'City of Victory' | Built on south bank of <b>Tungabhadra</b> river | Capital <b>Hampi = UNESCO World Heritage Site (1986)</b>",
+"<b>Founded 1336 CE by Harihara & Bukka</b> | Originally served Kakatiya rulers of Warangal | CAPTURED by Muhammad bin Tughlaq, converted to Islam, then <b>reconverted to Hinduism</b> under sage <b>Vidyaranya</b>",
+"<b>Four Dynasties:</b> Sangama (1336–1485) | Saluva (1485–1505) | Tuluva (1505–1570) | Aravidu (1570–1650, last Hindu dynasty) | Founded by Tirumala",
+"<b>Proudhadevaraya (Devaraya-II)</b> = most famous of Sangama dynasty | Titles: 'Elephant Hunter' + 'Dakshinapathada Chakravarthi' | Introduced Muslim archers + cavalry — pragmatic military reform",
+"<b>Krishna Deva Raya (1509–1529)</b> = most famous king (Tuluva dynasty) | Also known as <b>Andhra Bhoja</b> | Authored <b>Amuktamalyada</b> (Telugu polity) + <b>Jambavati Kalyanam</b> (Sanskrit drama) | Patronised <b>Ashtadiggajas</b> (8 scholars)",
+"<b>Allasani Peddanna</b> = greatest of Ashtadiggajas | Wrote <b>Manucharitam</b> | Title: <b>Andhra Kavita Pitamaha</b>",
+"<b>Battle of Talikota (1565)</b> = also called <b>Battle of Bannihatti</b> | Combined forces of Bijapur+Ahmednagar+Golkonda+Bidar defeated Rama Raya → END of Vijayanagara",
+"<b>Only empire in Medieval India to employ women in state services</b> (unique fact)",
+"<b>Amara-Nayaka System / Nayankara System:</b> Top officers = Nayaks/Poligars; granted Amaram (land for service) | Similar to Iqta system",
+"Administration: Mandalams → Nadus → Sthalas → Gramas | Land revenue = 1/6th | Tax-free lands = Manyams | 12 village functionaries = Ayangars"
+],
+table:{h:["Dynasty","Period","Key Ruler","Key Fact"],r:[
+["Sangama","1336–1485","Harihara-I, Bukka-I, Devaraya-II","Founders; reconverted from Islam"],
+["Saluva","1485–1505","Narasimha","Ruled almost whole South India"],
+["Tuluva","1505–1570","Krishna Deva Raya","Most famous king; Ashtadiggajas; Amuktamalyada"],
+["Aravidu","1570–1650","Tirumala","Last Hindu dynasty"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"4 Dynasties: <b>S-S-T-A</b> = Sangama · Saluva · Tuluva · Aravidu<br>'<b>Some Soldiers Take Armour</b>'<br>Battle of Talikota = also called '<b>B</b>annihatti' — both B-words<br>Peddanna: '<b>P</b>itamaha of <b>A</b>ndhra <b>K</b>avita' = PAK = father figure"},
+traps:[
+"Hampi UNESCO = 1986 (NOT 2021 — Dholavira is 2021, NOT Hampi)",
+"Harihara & Bukka RECONVERTED to Hinduism from Islam (not just founding as Hindus)",
+"Amuktamalyada written by KRISHNA DEVA RAYA himself (NOT by any of his Ashtadiggajas)",
+"Battle of Talikota (1565) = also called Battle of BANNIHATTI (both names are correct and asked)",
+"ONLY Medieval Indian empire to employ women in state services = Vijayanagara"
+],
+revision:["Vijayanagara(1336-1650): founded by Harihara&Bukka, capital Hampi(UNESCO 1986)","Built on Tungabhadra river bank | 4 dynasties: Sangama,Saluva,Tuluva,Aravidu","Krishnadevaraya(Tuluva)=greatest ruler, wrote Amuktamalyada(Telugu)","Battle of Talikota(1565): defeat by Deccan Sultanates confederacy, empire declined","Foreign travellers Domingo Paes & Abdur Razzaq described the empire's prosperity"],
+oneliners:["The Vijayanagara Empire (1336-1650) means 'City of Victory'","Vijayanagara was founded in 1336 by Harihara and Bukka","Vijayanagara's capital, Hampi, is on the Tungabhadra river and is a UNESCO site (1986)","The empire had 4 dynasties: Sangama, Saluva, Tuluva, and Aravidu","Krishnadevaraya, of the Tuluva dynasty, was the greatest Vijayanagara ruler","Krishnadevaraya wrote Amuktamalyada in Telugu","The Battle of Talikota (1565) saw Vijayanagara defeated by a confederacy of Deccan Sultanates","Vijayanagara's empire declined sharply after the Battle of Talikota","Foreign travellers Domingo Paes and Abdur Razzaq described the empire's prosperity"],
+flashcards:[{q:"Who founded the Vijayanagara Empire, and when?",a:"Harihara and Bukka, in 1336"},{q:"What does 'Vijayanagara' mean, and what is its capital?",a:"'City of Victory'; capital Hampi"},{q:"When did Hampi receive UNESCO status?",a:"1986"},{q:"Name the 4 Vijayanagara dynasties.",a:"Sangama, Saluva, Tuluva, Aravidu"},{q:"Who was the greatest Vijayanagara ruler, and from which dynasty?",a:"Krishnadevaraya, of the Tuluva dynasty"},{q:"What did Krishnadevaraya write?",a:"Amuktamalyada, in Telugu"},{q:"What battle led to Vijayanagara's decline, and when?",a:"Battle of Talikota, 1565"}],
+mcqs:[
+{q:"Hampi (capital of Vijayanagara) was designated a UNESCO World Heritage Site in:",o:["1983","1986","2003","2021"],a:1,e:"Hampi was designated a UNESCO World Heritage Site in 1986. Common traps: Taj Mahal = 1983 | Brihadeshwara = 1987 | Bhimbetka = 2003 | Dholavira = 2021. Hampi's 1986 date is distinctly different from all these."},
+{q:"Harihara and Bukka (founders of Vijayanagara) are notable because they:",o:["Were feudatories of the Cholas","Were converted to Islam by Muhammad bin Tughlaq but reconverted to Hinduism under Vidyaranya","Were Portuguese-supported rulers","Were disciples of Ramanuja"],a:1,e:"Harihara and Bukka were originally captured by Muhammad bin Tughlaq and converted to Islam. Later, under the influence of the sage Vidyaranya, they reconverted to Hinduism and founded the Vijayanagara Empire in 1336. This origin story is frequently asked."},
+{q:"'Amuktamalyada' — a treatise on Telugu polity — was written by:",o:["Allasani Peddanna","Tenali Ramakrishna","Krishna Deva Raya himself","Devaraya-II"],a:2,e:"Amuktamalyada was written by Krishna Deva Raya himself — making him both a great king and a literary figure. He also wrote Jambavati Kalyanam (Sanskrit drama). This is a classic trap — students attribute it to his court poets."},
+{q:"Allasani Peddanna, titled 'Andhra Kavita Pitamaha', wrote which work?",o:["Jambavati Kalyanam","Manucharitam","Vikramasenavijaya","Parijatapaharanam"],a:1,e:"Allasani Peddanna was the greatest among Krishna Deva Raya's Ashtadiggajas (8 court scholars). He wrote Manucharitam and was titled Andhra Kavita Pitamaha (Grandfather of Andhra Poetry)."},
+{q:"The Battle of Talikota (1565) is also known as the Battle of:",o:["Bannihatti","Chanderi","Vasai","Wai"],a:0,e:"The Battle of Talikota (1565) is also called the Battle of Bannihatti, fought on the banks of the Krishna River. The combined forces of Bijapur, Ahmednagar, Golkonda, and Bidar defeated Rama Raya and effectively ended the Vijayanagara Empire."},
+{q:"The Vijayanagara Empire was unique in Medieval India for being the ONLY empire to:",o:["Build stone temples","Use elephants in war","Employ women in state services","Trade with Portuguese"],a:2,e:"Vijayanagara was the ONLY empire in Medieval India to formally employ women in state services — they worked as scribes, ministers, and even in military roles. Foreign travellers like Abdur Razzaq and Domingo Paes noted this practice."},
+{q:"The 'Amara-Nayaka System' (Nayankara System) of Vijayanagara is similar in principle to the Mughal:",o:["Mansabdari System","Iqta System","Dahsala System","Zabti System"],a:1,e:"The Amara-Nayaka System (where Nayaks received Amaram — land grants — in exchange for military service) is similar to the Iqta System of the Delhi Sultanate (where military officers received land revenues in lieu of salary). Both were service-for-land grants."},
+{q:"Krishna Deva Raya's '8 court scholars' were collectively known as:",o:["Navratnas","Nayakas","Ashtadiggajas","Ayangars"],a:2,e:"Krishna Deva Raya's 8 court scholars are called Ashtadiggajas (eight elephants supporting the eight directions). The greatest was Allasani Peddanna (Andhra Kavita Pitamaha). Navratnas were Akbar's 9 scholars — a different court."},
+{q:"'Madhura Vijayam' — describing the recapture of Madurai from the Sultanate — was written by:",o:["Krishna Deva Raya","Allasani Peddanna","Gangadevi (wife of Kumar Kampana)","Devaraya-II"],a:2,e:"Madhura Vijayam is a Sanskrit poem written by Gangadevi (wife of Kumar Kampana, a Vijayanagara prince). It describes the recapture of Madurai from the Delhi Sultanate — a notable work of women's literature in the Vijayanagara period."},
+{q:"Vijayanagara administration divided the empire into units in which order (largest to smallest)?",o:["Gramas → Sthalas → Nadus → Mandalams","Mandalams → Nadus → Sthalas → Gramas","Nadus → Mandalams → Gramas → Sthalas","Sthalas → Mandalams → Nadus → Gramas"],a:1,e:"Vijayanagara administrative hierarchy (largest to smallest): Mandalams (provinces) → Nadus (districts) → Sthalas (sub-districts) → Gramas (villages). Land revenue was 1/6th of produce. Tax-free lands were called Manyams. Village functionaries = 12 Ayangars."}
+]},
+
+{id:"rk2",title:"Bahmani, Deccan Sultanates & Other Kingdoms",xp:55,type:"trap",seqIdx:7,
+facts:[
+"<b>Bahmani Kingdom (1347–1538):</b> Founded by <b>Alauddin Hasan Bahman Shah (Hasan Gangu)</b> — revolted against Muhammad bin Tughlaq | Capital: Gulbarga (1347) → <b>Bidar (1422)</b> shifted by Ahmad Shah Wali",
+"<b>Mahmud Gawan:</b> Iranian trader; title Malik-ul-Tujjar | Dominated ~20 years | Bahmani reached ZENITH | Divided into 8 tarafs (provinces) | Built college at Bidar in Persian style | Introduced gunpowder against Vijayanagara | Executed 1481",
+"<b>Deccan Sultanates (after Bahmani broke up 1538):</b> Nizam Shahis (Ahmednagar) | Adil Shahis (Bijapur) | Qutub Shahis (Golconda) | Imad Shahis (Berar) | Barid Shahis (Bidar)",
+"<b>Gol Gumbaz (Bijapur)</b> = built by Muhammad Adil Shah | <b>2nd largest dome in world</b> (after St. Peter's Basilica, Rome) | Famous <b>Whispering Gallery</b>",
+"<b>Charminar (1591)</b> = built by Muhammad Quli Qutub Shah | Purpose: commemorate <b>end of plague epidemic</b> | Located in Hyderabad (originally called <b>Bhagyanagar</b>)",
+"<b>Zainul Abedeen (Bud Shah)</b> = greatest Kashmir ruler | 'Akbar of Kashmir' | Translated Rajatarangini + Mahabharata into Persian | Built artificial island Zaina Lanka",
+"<b>Rana Kumbha of Mewar (1433–68)</b> = most famous Mewar ruler | Title: Sangeet Shiromani | Erected Kirti Stambh (Victory Tower) at Chittor",
+"<b>Kalhana's Rajatarangini</b> = history of Kashmir written in Sanskrit (1148 CE) = first true historical text in Indian tradition",
+"<b>Jaunpur Sharagi dynasty:</b> Jaunpur = 'Shiraz of India' | Malik Muhammad Jaisi (Padmavat) in this tradition | Shargi architecture: Atala Masjid, Lal Darwaja Masjid",
+"<b>Ahoms of Assam:</b> Mongoloid from N. Burma | Name 'Assam' derived from Ahoms | Historical chronicles = <b>Buranjis</b> | Forced labour system = Paiks"
+],
+table:{h:["Deccan Sultanate","Key Monument/Fact","Fate"],r:[
+["Nizam Shahis (Ahmednagar)","Founded by Ahmad Nizam Shah","Annexed by Shah Jahan (1633)"],
+["Adil Shahis (Bijapur)","Gol Gumbaz — 2nd largest dome; Whispering Gallery","Annexed by Aurangzeb (1686)"],
+["Qutub Shahis (Golconda)","Charminar (1591) — plague memorial; founded Hyderabad","Annexed by Aurangzeb (1687)"],
+["Imad Shahis (Berar)","Capital: Daulatabad","Annexed by Ahmednagar"],
+["Barid Shahis (Bidar)","Famous for Bidri work (zinc+silver craft)","Annexed by Bijapur"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"5 Deccan Sultanates: <b>N-A-Q-I-B</b> = Nizam · Adil · Qutub · Imad · Barid<br>'<b>Nanak's Apostles Quit India Behind</b>'<br>Gol Gumbaz: '<b>G</b>olconda? No — <b>B</b>ijapur!' + 2nd DOME in world<br>Charminar = '<b>Char</b> = plague <b>char</b>med away (1591)'"},
+traps:[
+"Gol Gumbaz = BIJAPUR (Adil Shahis) — NOT Golconda (Qutub Shahis)",
+"Charminar built to commemorate END OF PLAGUE epidemic (NOT to mark city founding)",
+"Hyderabad was originally called BHAGYANAGAR (NOT Golconda — Golconda is the fort)",
+"Kalhana's Rajatarangini = 1148 CE in Sanskrit = FIRST TRUE HISTORICAL TEXT in Indian tradition",
+"Bidri work = associated with BIDAR (Barid Shahis) — zinc alloy inlaid with silver"
+],
+revision:["Bahmani Kingdom(1347-1538), founder Alauddin Hasan Bahman Shah(Hasan Gangu)","Capital Gulbarga(1347)->Bidar(1422,shifted by Ahmad Shah Wali)","Mahmud Gawan(Iranian,title Malik-ul-Tujjar): dominated 20 yrs, divided into 8 tarafs, executed 1481","Deccan Sultanates after 1538 split: Nizam Shahis,Adil Shahis,Qutub Shahis,Imad Shahis,Barid Shahis","Bahmani vs Vijayanagara = constant rivalry over Raichur Doab region"],
+oneliners:["The Bahmani Kingdom (1347-1538) was founded by Alauddin Hasan Bahman Shah (Hasan Gangu)","Hasan Gangu revolted against Muhammad bin Tughlaq to found the Bahmani Kingdom","The Bahmani capital moved from Gulbarga (1347) to Bidar (1422)","Mahmud Gawan, an Iranian trader, held the title Malik-ul-Tujjar and dominated Bahmani affairs for ~20 years","Mahmud Gawan divided the kingdom into 8 tarafs (provinces)","Mahmud Gawan was executed in 1481","The Bahmani Kingdom broke up in 1538 into 5 Deccan Sultanates","The 5 Deccan Sultanates were: Nizam Shahis (Ahmednagar), Adil Shahis (Bijapur), Qutub Shahis (Golconda), Imad Shahis (Berar), Barid Shahis (Bidar)","The Bahmanis and Vijayanagara had constant rivalry over the Raichur Doab region"],
+flashcards:[{q:"Who founded the Bahmani Kingdom, and against whom did he revolt?",a:"Alauddin Hasan Bahman Shah (Hasan Gangu); revolted against Muhammad bin Tughlaq"},{q:"Where did the Bahmani capital move to, and when?",a:"From Gulbarga to Bidar, in 1422"},{q:"Who was Mahmud Gawan, and his title?",a:"An Iranian trader; titled Malik-ul-Tujjar"},{q:"Into how many provinces did Mahmud Gawan divide the kingdom?",a:"8 tarafs"},{q:"When did the Bahmani Kingdom break up, and into how many Sultanates?",a:"1538, into 5 Deccan Sultanates"},{q:"Name 3 of the 5 Deccan Sultanates.",a:"Nizam Shahis (Ahmednagar), Adil Shahis (Bijapur), Qutub Shahis (Golconda)"},{q:"What region did Bahmanis and Vijayanagara fight over?",a:"The Raichur Doab"}],
+mcqs:[
+{q:"The Gol Gumbaz — the 2nd largest dome in the world — is in:",o:["Golconda (Hyderabad)","Bijapur (Karnataka)","Bidar (Karnataka)","Ahmednagar"],a:1,e:"Gol Gumbaz is in Bijapur (Karnataka), built by Muhammad Adil Shah of the Adil Shahi dynasty. It has the famous Whispering Gallery. The 2nd largest dome in the world (after St. Peter's Basilica, Rome). Common trap: students confuse it with Golconda."},
+{q:"The Charminar (1591) was built by Muhammad Quli Qutub Shah to commemorate:",o:["The founding of Hyderabad","Victory over Vijayanagara","End of plague epidemic","Victory over the Portuguese"],a:2,e:"Charminar was built in 1591 to commemorate the end of a plague epidemic in the region. It is located in Hyderabad (originally called Bhagyanagar). The name 'Char Minar' means 'four minarets.'"},
+{q:"Hyderabad was originally called:",o:["Golconda","Warangal","Bhagyanagar","Bidar"],a:2,e:"Hyderabad was founded as Bhagyanagar by Muhammad Quli Qutub Shah. It was later renamed Hyderabad. Golconda is the fort near Hyderabad — a separate entity. The Qutub Shahis built the Golconda fort and Charminar."},
+{q:"The Bahmani kingdom's founder was:",o:["Mahmud Gawan","Ahmad Nizam Shah","Alauddin Hasan Bahman Shah (Hasan Gangu)","Firoz Shah Bahmani"],a:2,e:"The Bahmani kingdom was founded by Alauddin Hasan Bahman Shah (also known as Hasan Gangu) in 1347. He was a general who revolted against Muhammad bin Tughlaq and established the first major independent Muslim kingdom of the Deccan."},
+{q:"Kalhana's 'Rajatarangini' is historically significant as:",o:["The first Sanskrit grammar book","The first true historical text in Indian tradition (1148 CE)","A religious text on Kashmir Shaivism","A diplomatic account of Mughal-Kashmir relations"],a:1,e:"Kalhana's Rajatarangini (written in Sanskrit in 1148 CE) is the first true historical text in the Indian tradition — following chronological order and citing sources. It is a history of Kashmir. UPSC frequently asks: 'Who wrote Rajatarangini?'"},
+{q:"The historical chronicles of the Ahom kingdom of Assam are called:",o:["Buranjis","Rajatarangini","Vamsavalis","Sangeet Shiromani"],a:0,e:"Buranjis are the historical chronicles of the Ahom kingdom of Assam. The name 'Assam' itself is derived from 'Ahoms' — the Mongoloid tribe from northern Burma (Myanmar) who established the kingdom in the 13th century."},
+{q:"The Adil Shahis of Bijapur were annexed by:",o:["Akbar","Shah Jahan","Aurangzeb in 1686","British in 1818"],a:2,e:"Aurangzeb annexed Bijapur (Adil Shahis) in 1686 and Golconda (Qutub Shahis) in 1687 — completing the Mughal conquest of the Deccan Sultanates. Ahmednagar (Nizam Shahis) had been annexed earlier by Shah Jahan in 1633."},
+{q:"Zainul Abedeen, called 'Bud Shah' and 'Akbar of Kashmir', was famous for:",o:["Building the Gol Gumbaz","Translating Rajatarangini and Mahabharata into Persian and building artificial island Zaina Lanka","Founding the Bahmani kingdom","Composing classical music treatises"],a:1,e:"Zainul Abedeen (Bud Shah) was the greatest Kashmir ruler. He translated Kalhana's Rajatarangini and the Mahabharata into Persian. He built the artificial island Zaina Lanka on Wullur Lake. He is called 'Akbar of Kashmir' for his tolerance and scholarship."},
+{q:"The 'Bidri work' craft tradition (blackened zinc alloy inlaid with silver) originated from which Deccan region?",o:["Bijapur","Golconda","Bidar","Ahmednagar"],a:2,e:"Bidri work is the famous craft from Bidar — a zinc alloy with blackened surface inlaid with silver designs. The name itself comes from Bidar (Karnataka). It flourished under the Barid Shahi dynasty of Bidar and the Bahmani sultanate's patronage."},
+{q:"Rana Kumbha (1433–68) of Mewar is remembered for the title 'Sangeet Shiromani' and building:",o:["Dilwara Jain temples","Kirti Stambh (Victory Tower) at Chittor","Bibi Ka Maqbara","Gol Gumbaz"],a:1,e:"Rana Kumbha of Mewar erected the Kirti Stambh (Victory Tower) at Chittor to commemorate his military victories. He had the title 'Sangeet Shiromani' (crown jewel of music) and wrote music treatise Sangeet-Raj. He was the most famous Mewar ruler before Rana Sanga."}
+]}
+]},
+
+/* ─────────────────────── CHAPTER 4: SUFI & BHAKTI ─────────────────────── */
+{id:"sufibhakti",title:"Sufi & Bhakti Movements",icon:"🌸",nodes:[
+
+{id:"sb1",title:"Sufi Movement",xp:55,type:"regular",seqIdx:8,
+facts:[
+"<b>Sufism (tasawwuf)</b> = mysticism in Islam | Sufi = wool (people in long woolen clothes) | Began in Persia (12th cent) → India 1300 AD",
+"<b>Al-Hujwiri</b> = FIRST Sufi to settle in India (died 1089 AD) | Known as <b>Data Ganj</b> | Wrote <b>Kashf-ul-Mahjub</b> (Revelation of the Veiled) = oldest Sufi treatise in Persian",
+"Core beliefs: <b>Fana</b> (spiritual merger with Allah) | <b>Wahdatul-wajood</b> (one God) | <b>Sama</b> (spiritual music/dance) | <b>Zikr</b> (remembrance of God) | Pir-Murid relationship",
+"Two types: <b>Ba-sharia</b> (followed Islamic law) | <b>Be-sharia</b> (did NOT follow Islamic law)",
+"<b>4 Main Silsilas (Orders):</b> Chisti | Suhrawardi | Naqshbandi | Qadri",
+"<b>Chisti Order:</b> Moinuddin Chishti introduced in India <b>1192</b> (same year as Battle of Tarain-II) | Dargah at Ajmer | <b>Baba Farid</b> (disciple) — poetry in <b>Punjabi = earliest Punjabi literature</b> | poems in Guru Granth Sahib | Nizamuddin Auliya — refused to meet Sultans; contemporary of 7 Delhi Sultans | Sama mostly Chisti",
+"<b>Nizamuddin Auliya's dargah</b> = burial place of <b>Amir Khusrau, Jahanara Begum, Muhammad Shah Rangeela</b>",
+"<b>Amir Khusrau:</b> Father of Qawwali | Disciple of Nizamuddin Auliya | Title: Tuti-i-Hind | Invented Sitar + Tabla | First to use <b>Hindavi (early Hindi)</b> in poetry | Developed Khayal + Tarana styles",
+"<b>Suhrawardi Order:</b> Main centre = Multan | Saints held government positions | Famous saint: Bahauddin Zakaria",
+"<b>Naqshbandi Order:</b> Orthodox sect | Introduced in India during Akbar's reign | Known for opposing Akbar's liberal policies",
+"<b>Dara Shikoh</b> wrote <b>Safinat-ul-Auliya</b> = biographies of Sufi saints; also wrote <b>Majma-ul-Bahrain</b> (Confluence of Two Seas)"
+],
+table:{h:["Order","Key Saint","Key Fact"],r:[
+["Chisti","Moinuddin Chishti, Nizamuddin Auliya, Baba Farid","Came to India 1192; Sama music; Baba Farid's Punjabi = earliest Punjabi literature"],
+["Suhrawardi","Bahauddin Zakaria","Multan; saints held govt positions; Ba-sharia"],
+["Naqshbandi","Baha-ud-Din Naqshband Bukhari","Orthodox; introduced in India during Akbar's reign"],
+["Qadri","Shaikh Abdul Qadir Jilani","Famous in Punjab; founder in Baghdad"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"4 Silsilas: <b>C-S-N-Q</b> = Chisti · Suhrawardi · Naqshbandi · Qadri<br>'<b>Chisti Saints Never Quit</b>'<br>Al-Hujwiri: '<b>Data Ganj</b>' = <b>D</b>ata Ganj → <b>D</b>ata = first Sufi in India<br>Moinuddin Chishti: 1192 = same year as Tarain-II (easy to link)"},
+traps:[
+"FIRST Sufi in India = AL-HUJWIRI (NOT Moinuddin Chishti — Chishti introduced the ORDER in India)",
+"Baba Farid's poetry = PUNJABI = earliest known Punjabi literature (NOT Hindi, NOT Urdu)",
+"Moinuddin Chishti came to India in 1192 = SAME YEAR as Battle of Tarain-II",
+"Nizamuddin Auliya refused to meet Sultans — contemporary of 7 Delhi Sultans",
+"Amir Khusrau invented BOTH Sitar AND Tabla (not just one)"
+],
+revision:["Sufism(tasawwuf)=Islamic mysticism, began Persia(12th c)->India 1300AD","Al-Hujwiri=FIRST Sufi to settle in India(died 1089AD), wrote Kashf-ul-Mahjub","Core beliefs: Fana(merger with Allah),Wahdatul-wajood(one God),Sama(music/dance),Zikr","2 types: Ba-sharia(followed Islamic law) vs Be-sharia(did not)","4 main Silsilas in India: Chishti,Suhrawardi,Qadiriyya,Naqshbandi"],
+oneliners:["Sufism (tasawwuf) is Islamic mysticism, beginning in Persia in the 12th century","Sufism arrived in India around 1300 AD","Al-Hujwiri was the first Sufi to settle in India, dying in 1089 AD","Al-Hujwiri was known as Data Ganj and wrote Kashf-ul-Mahjub, the oldest Sufi treatise in Persian","Core Sufi beliefs include Fana (spiritual merger with Allah) and Wahdatul-wajood (one God)","Sama (spiritual music/dance) and Zikr (remembrance of God) are key Sufi practices","Sufi orders are divided into Ba-sharia (followed Islamic law) and Be-sharia (did not)","There were 4 main Sufi Silsilas in India: Chishti, Suhrawardi, Qadiriyya, Naqshbandi"],
+flashcards:[{q:"Who was the first Sufi to settle in India, and when did he die?",a:"Al-Hujwiri, died 1089 AD"},{q:"What did Al-Hujwiri write?",a:"Kashf-ul-Mahjub, the oldest Sufi treatise in Persian"},{q:"What is 'Fana' in Sufi belief?",a:"Spiritual merger with Allah"},{q:"What is 'Sama'?",a:"Spiritual music/dance"},{q:"Differentiate Ba-sharia and Be-sharia Sufis.",a:"Ba-sharia followed Islamic law; Be-sharia did not"},{q:"Name the 4 main Sufi Silsilas in India.",a:"Chishti, Suhrawardi, Qadiriyya, Naqshbandi"}],
+mcqs:[
+{q:"The FIRST Sufi saint to settle in India was:",o:["Moinuddin Chishti","Baba Farid","Al-Hujwiri (Data Ganj)","Nizamuddin Auliya"],a:2,e:"Al-Hujwiri (died 1089 AD) was the FIRST Sufi to settle in India. He is popularly known as Data Ganj Baksh. He wrote Kashf-ul-Mahjub (Revelation of the Veiled) — the oldest Sufi treatise in Persian. Moinuddin Chishti introduced the Chishti ORDER in India in 1192."},
+{q:"'Kashf-ul-Mahjub' (Revelation of the Veiled) — the oldest Sufi treatise in Persian — was written by:",o:["Moinuddin Chishti","Nizamuddin Auliya","Baba Farid","Al-Hujwiri"],a:3,e:"Kashf-ul-Mahjub was written by Al-Hujwiri (Data Ganj) — the first Sufi to settle in India (died 1089 AD). It is the oldest Sufi treatise in Persian and a foundational text of Islamic mysticism."},
+{q:"Baba Farid (Fariduddin Ganjshakar) is significant because he wrote in Punjabi, making his work:",o:["The first Urdu poetry","The earliest known Punjabi literature","The first Hindi devotional poetry","A translation of the Quran"],a:1,e:"Baba Farid wrote in Punjabi — his compositions represent the earliest known Punjabi literature. His poems are also included in the Guru Granth Sahib (compiled by Guru Arjan Dev in 1604), alongside Kabir, Ravidas, and Namdev."},
+{q:"Moinuddin Chishti came to India in 1192 — the same year as:",o:["Battle of Panipat-I","Battle of Tarain-I","Battle of Tarain-II","Ghori's death"],a:2,e:"Moinuddin Chishti introduced the Chishti Sufi order in India in 1192 — the same year as the Battle of Tarain-II (Ghori's decisive victory over Prithviraj Chauhan). His dargah at Ajmer is one of India's most important pilgrimage sites for both Muslims and Hindus."},
+{q:"Amir Khusrau was the disciple of Nizamuddin Auliya and is called 'Father of Qawwali.' He also created which literary first?",o:["First to translate the Quran into Hindi","First to use Hindavi (early Hindi) in poetry","First to write Persian poetry in India","First to compose Sanskrit-Persian mixed verse"],a:1,e:"Amir Khusrau was the FIRST to use Hindavi (early Hindi/Urdu) in poetry — a revolutionary step that helped bridge Persian literary tradition with the Indian vernacular. He also invented Sitar and Tabla, developed Khayal and Tarana styles, and was the Father of Qawwali."},
+{q:"The Suhrawardi Sufi order was distinctive because its saints:",o:["Refused government positions","Lived in extreme poverty","Held important government positions and were wealthy","Opposed all forms of music"],a:2,e:"The Suhrawardi Sufi saints (main centre: Multan) were notable for holding important government positions and were generally wealthy — unlike Chishti saints who kept distance from the state. Famous Suhrawardi saint: Bahauddin Zakaria."},
+{q:"'Sama' (mystical music and dance) is most associated with which Sufi order?",o:["Naqshbandi","Suhrawardi","Chisti","Qadri"],a:2,e:"Sama (spiritual music and dance) is most associated with the Chishti order. The Naqshbandi order is orthodox and typically opposes music. The Chishti saints believed Sama was a pathway to spiritual experience and divine love."},
+{q:"Nizamuddin Auliya's dargah in Delhi is the burial place of (among others):",o:["Babur and Humayun","Amir Khusrau, Jahanara Begum, and Muhammad Shah Rangeela","Aurangzeb and Dara Shikoh","Iltutmish and Razia Sultan"],a:1,e:"Nizamuddin Auliya's dargah in Delhi is the burial place of Amir Khusrau (his disciple), Jahanara Begum (Shah Jahan's daughter), and Muhammad Shah Rangeela (the Mughal emperor). It remains one of Delhi's most important spiritual sites."},
+{q:"The Naqshbandi Sufi order is known for being introduced into India during whose reign?",o:["Babur","Humayun","Akbar","Aurangzeb"],a:2,e:"The Naqshbandi order was introduced into India during Akbar's reign by Khwaja Baqi Billah. It is an orthodox Sufi order. Sheikh Ahmad Sirhindi (a leading Naqshbandi) opposed Akbar's Din-e-Ilahi and Jahangir's liberalism."},
+{q:"'Majma-ul-Bahrain' (Confluence of Two Seas) was written by Dara Shikoh comparing:",o:["Vedanta and Buddhism","Sufism and Vedanta","Islam and Christianity","Bhakti movement and Sufism"],a:1,e:"Dara Shikoh wrote Majma-ul-Bahrain (Confluence of Two Seas) comparing Sufi concepts with Vedantic philosophy. He found deep similarities between Islamic mysticism and Hindu Vedanta. He also wrote Safinat-ul-Auliya (biographies of Sufi saints) and translated 52 Upanishads as Sirr-i-Akbar."}
+]},
+
+{id:"sb2",title:"Bhakti Movement — Saints & Impact",xp:65,type:"regular",seqIdx:9,
+facts:[
+"<b>Bhakti Movement:</b> Single-minded intense devotion to God | Relationship via love and worship, not ritual | Initiated by <b>Shaiva Nayanars</b> (devotees of Shiva) + <b>Vaishnavite Alvars</b> (devotees of Vishnu) in South India",
+"<b>Nayanars:</b> Most important 3 = Appar, Sundarar, Thirugnana Sambandar | Literature: Thirumarai (Tevaram = Dravida Veda) | 63 Nayanars total",
+"<b>Alvars:</b> Literature: Divya Prabandham (4000 verses = Tamil Veda) | <b>Andal</b> = ONLY female Alwar | Composed <b>Thiruppavai</b> (30 verses) | Called '<b>Meera of the South</b>' | Shrine at Srirangam",
+"<b>Nirgun saints:</b> Formless God (knowledge-based) — Guru Nanak, Ravidas, Kabir",
+"<b>Sagun saints:</b> God with form (love-based) — Tulsidas, Surdas, Meerabai",
+"<b>Ramananda</b> = Founder of Sant-Parampara in North India | Substituted Rama worship for Krishna | 12 disciples including <b>Kabir</b> (Muslim weaver) + <b>Ravidas</b> (cobbler)",
+"<b>Kabir Das (1440–1510):</b> Disciple of Ramananda | Nirguna saint | First to reconcile Hinduism & Islam | Poems compiled in <b>Bijak</b> (3 parts: Ramaini, Sabda, Sakhi) | 'Ram Rahim is the same'",
+"<b>Guru Nanak Dev (1469–1538):</b> Born Talwandi, died Kartarpur | FOUNDER of Sikh religion + 1st Guru | Performed 4 Udasis (journeys): East, South, North, West | Spread Ik Onkar (One God) | Played Rabab with attendant Mardana | Started Guru-Ka-Langar",
+"<b>Chaitanya Mahaprabhu (1486–1533):</b> Founder of modern Vaishnavism in Bengal | Saguna saint | Popularised Kirtans | Philosophy: Achintya Bheda-Abheda | Inspiration for ISKCON | Wrote Siksastakam",
+"<b>Tulsidas (1532–1623):</b> Wrote Ramcharitmanas in <b>Awadhi</b> | Depicted Rama as incarnation",
+"<b>Surdas (1483–1563):</b> Disciple of Vallabhacharya | Blind from birth | Wrote Sursagar | Outstanding poet in Brajbhasha",
+"<b>Mirabai (1498–1546):</b> Queen of Chittorgarh | Wife of Bhoj Raj (son of Rana Sanga) | Devotee of Krishna",
+"<b>Tukaram (1598–1650):</b> Contemporary of Shivaji | Founded Varkari sect | 'Man behind Maratha Nationalism' | Teachings in Abhangas",
+"<b>Dnyaneshwar (1275–1296):</b> FOUNDER of Bhakti Movement in Maharashtra | Wrote Dnyaneswari (commentary on Bhagavad Gita) + Amrutanubhav",
+"<b>Basavanna:</b> Virashaivism/Sharana Movement (Karnataka, 12th cent) | Established <b>Anubhava Mantapa</b> = '1st democratic parliament of the world'",
+"<b>Guru Arjan Dev (5th Guru)</b> compiled Guru Granth Sahib (1604) + built Golden Temple | <b>Guru Ram Das (4th Guru)</b> founded Amritsar | <b>Guru Gobind Singh (10th Guru)</b> established Khalsa Panth (1699)"
+],
+table:{h:["Saint","Period","Key Contribution"],r:[
+["Ramananda","14–15th cent","Founder of Sant-Parampara N.India; Kabir & Ravidas among disciples"],
+["Kabir Das","1440–1510","First Nirguna; reconciled Hindu-Islam; Bijak (Ramaini+Sabda+Sakhi)"],
+["Guru Nanak","1469–1538","Founded Sikh religion; 1st Guru; 4 Udasis; Ik Onkar; Guru-Ka-Langar"],
+["Chaitanya","1486–1533","Founded modern Vaishnavism in Bengal; ISKCON inspiration; Siksastakam"],
+["Tulsidas","1532–1623","Ramcharitmanas in Awadhi; Rama as incarnation"],
+["Surdas","1483–1563","Blind from birth; Sursagar in Brajbhasha; disciple of Vallabhacharya"],
+["Tukaram","1598–1650","Founded Varkari sect; man behind Maratha Nationalism; Abhangas"],
+["Dnyaneshwar","1275–1296","FOUNDER Bhakti Movement Maharashtra; Dnyaneswari"],
+["Andal","—","Only female Alwar; Thiruppavai 30 verses; Meera of the South"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"Nirgun saints: <b>G-R-K</b> = Guru Nanak · Ravidas · Kabir → '<b>God Really Knows</b>'<br>Sagun saints: <b>T-S-M</b> = Tulsidas · Surdas · Meerabai → '<b>Together Singing Miracles</b>'<br>Sikh Gurus: Amritsar = Ram Das (4th) | Granth = Arjan Dev (5th) | Khalsa = Gobind Singh (10th)"},
+traps:[
+"Dnyaneshwar = FOUNDER of Bhakti Movement in MAHARASHTRA (NOT for all of India)",
+"NAMDEVA = only NIRGUNA saint in Maharashtra (NOT Dnyaneshwar)",
+"Tukaram = FOUNDED Varkari sect (NOT Dnyaneshwar) | Man behind Maratha Nationalism",
+"Guru Granth Sahib compiled by ARJAN DEV (5th Guru) — NOT Guru Nanak (1st Guru)",
+"Guru GOBIND SINGH established Khalsa Panth in 1699 (NOT Guru Nanak)",
+"Andal = only female ALWAR (devotee of Vishnu) — 'Meera of the South'"
+],
+revision:["Bhakti Movement initiated by Nayanars(Shiva)+Alvars(Vishnu) in South India","Nayanars: 3 most important=Appar,Sundarar,Thirugnana Sambandar | literature=Tevaram","Alvars: literature=Divya Prabandham | Andal=ONLY female Alwar, wrote Thiruppavai","Nirgun saints=formless God(Kabir,Nanak) vs Sagun saints=form-based(Tulsidas,Surdas)","Andal called 'Meera of the South'"],
+oneliners:["The Bhakti Movement emphasized single-minded devotion to God over ritual","The Bhakti Movement was initiated in South India by the Shaiva Nayanars and Vaishnavite Alvars","The 3 most important Nayanars were Appar, Sundarar, and Thirugnana Sambandar","Nayanar literature is called the Tevaram (Dravida Veda)","There were 63 Nayanars in total","Alvar literature is called the Divya Prabandham (4000 verses, Tamil Veda)","Andal was the only female Alvar, composing the Thiruppavai","Andal is called the 'Meera of the South'","Nirgun saints (like Kabir and Nanak) believed in a formless God; Sagun saints (like Tulsidas, Surdas) believed in God with form"],
+flashcards:[{q:"Who initiated the Bhakti Movement in South India?",a:"Shaiva Nayanars and Vaishnavite Alvars"},{q:"Name the 3 most important Nayanars.",a:"Appar, Sundarar, Thirugnana Sambandar"},{q:"What is Nayanar literature called?",a:"The Tevaram (Dravida Veda)"},{q:"Who was the only female Alvar, and what did she compose?",a:"Andal; composed the Thiruppavai"},{q:"What is Andal also called?",a:"The 'Meera of the South'"},{q:"Differentiate Nirgun and Sagun saints.",a:"Nirgun = formless God (Kabir, Nanak); Sagun = God with form (Tulsidas, Surdas)"}],
+mcqs:[
+{q:"Who is called the 'Meera of the South' and is the ONLY female Alwar?",o:["Karaikkal Ammaiyar","Akka Mahadevi","Andal","Mirabai"],a:2,e:"Andal is the ONLY female Alwar (devotees of Vishnu). She composed Thiruppavai (30 verses sung during the Margazhi month) and is enshrined at Srirangam. She is called the 'Meera of the South.' Karaikkal Ammaiyar was a Nayanar (Shiva devotee), not an Alwar."},
+{q:"The FOUNDER of the Bhakti Movement in Maharashtra was:",o:["Tukaram","Namdeva","Eknath","Dnyaneshwar"],a:3,e:"Dnyaneshwar (1275–1296) is the FOUNDER of the Bhakti Movement in Maharashtra. He wrote Dnyaneswari (commentary on Bhagavad Gita in Marathi) and Amrutanubhav. He followed the Nath Yogi tradition. Tukaram founded the Varkari sect later."},
+{q:"The ONLY Nirguna saint in Maharashtra was:",o:["Tukaram","Dnyaneshwar","Namdeva","Eknath"],a:2,e:"Namdeva (1270–1350) was the ONLY Nirguna saint in Maharashtra. He was a devotee of Vithoba (Vishnu) and opposed the caste system. All other major Maharashtra Bhakti saints (Dnyaneshwar, Tukaram, Eknath) are classified as Sagun saints."},
+{q:"The Guru Granth Sahib was compiled by which Sikh Guru in 1604?",o:["Guru Nanak (1st Guru)","Guru Ram Das (4th Guru)","Guru Arjan Dev (5th Guru)","Guru Gobind Singh (10th Guru)"],a:2,e:"Guru Arjan Dev (5th Guru) compiled the Guru Granth Sahib in 1604 at Amritsar. It includes compositions of Kabir, Baba Farid, Namdev, Ravidas, and other Bhakti saints — not just Sikh Gurus. Guru Arjan Dev also built the Golden Temple (Harmandir Sahib)."},
+{q:"The city of Amritsar was founded by:",o:["Guru Nanak","Guru Arjan Dev","Guru Ram Das","Guru Gobind Singh"],a:2,e:"Amritsar was founded by Guru Ram Das (4th Guru). Guru Arjan Dev (5th Guru) then built the Harmandir Sahib (Golden Temple) there. Guru Gobind Singh (10th Guru) established the Khalsa Panth in 1699. These three Gurus and their contributions are frequently tested."},
+{q:"Khalsa Panth was established in 1699 by:",o:["Guru Nanak","Guru Tegh Bahadur","Guru Arjan Dev","Guru Gobind Singh"],a:3,e:"Guru Gobind Singh (10th and last human Sikh Guru) established the Khalsa Panth on Vaisakhi, April 13, 1699, at Anandpur Sahib. This formalised Sikhism as a distinct religion with the Panj Pyaras (Five Beloved Ones). He also declared the Guru Granth Sahib as the eternal Guru."},
+{q:"Kabir Das's poetic compositions are collected in 'Bijak' which has THREE parts. They are:",o:["Ramaini, Sabda, Sakhi","Abhangas, Dohe, Banis","Padas, Bhaivans, Chaupais","Kirtans, Bhajans, Ragas"],a:0,e:"Kabir's Bijak has three parts: Ramaini (verses on Rama/spiritual themes), Sabda (songs/pads), and Sakhi (couplets/dohe for daily wisdom). Bijak is his most important compilation. Kabir preached that 'Ram Rahim is the same' — reconciling Hindu and Islamic traditions."},
+{q:"Chaitanya Mahaprabhu's philosophy 'Achintya Bheda-Abheda' means:",o:["Complete non-dualism (all is one)","Complete dualism (God separate from soul)","Simultaneous inconceivable difference and non-difference","God is formless and unattainable"],a:2,e:"Achintya Bheda-Abheda means 'inconceivable simultaneous difference and non-difference' between God and the individual soul. Chaitanya's philosophy inspired ISKCON (International Society for Krishna Consciousness). His Sanskrit work was Siksastakam."},
+{q:"Basavanna's 'Anubhava Mantapa' (established in 12th century Karnataka) is historically described as:",o:["First Sufi monastery in India","First democratic parliament of the world","First Sanskrit academy in South India","First all-religion council of medieval India"],a:1,e:"Basavanna established the Anubhava Mantapa in 12th century Karnataka — called the 'first democratic parliament of the world' by historians. It was an open forum for the Virashaiva/Lingayat community to discuss spiritual and social matters. Basavanna also spread Virashaivism through Vachanas (poetry)."},
+{q:"Guru Nanak performed FOUR Udasis (spiritual journeys). Which direction sequence is correct?",o:["North→South→East→West","East→South→North→West","West→East→South→North","South→North→West→East"],a:1,e:"Guru Nanak's four Udasis: East (Bengal/Assam), South (Sri Lanka), North (Tibet/Kashmir), West (Mecca/Baghdad/Persia). He spread 'Ik Onkar' (One God) message across these journeys. He played the Rabab with his attendant Mardana."}
+]},
+
+{id:"sb3",title:"Sikh Gurus, Foreigners & Master Traps",xp:50,type:"trap",seqIdx:10,
+facts:[
+"<b>10 Sikh Gurus in sequence:</b> Nanak (1st) → Angad → Amar Das → <b>Ram Das</b> (4th, founded Amritsar) → <b>Arjan Dev</b> (5th, Guru Granth Sahib + Golden Temple; executed by Jahangir) → Hargobind → Har Rai → Har Krishan → <b>Tegh Bahadur</b> (9th, executed by Aurangzeb 1675) → <b>Gobind Singh</b> (10th, Khalsa Panth 1699)",
+"<b>Key Bhakti Traps:</b> Namdeva = only Nirguna saint in Maharashtra | Dnyaneshwar = founder of Maharashtra Bhakti | Tukaram = founded Varkari sect | Purandar Das = Karnataka Sangeeta Pitamaha (Carnatic Music)",
+"<b>Foreign arrivals:</b> Vasco da Gama (1498, Calicut, Kerala) — discovered sea route via Cape of Good Hope | Portuguese captured Goa under <b>Afonso de Albuquerque (1510)</b> | British came on <b>Red Dragon Ship (1600)</b> | Sir Thomas Roe (1615) = first official British diplomatic mission to Mughal court (Jahangir's court)",
+"<b>Nadir Shah (1739):</b> Looted Delhi 57 days | Took Koh-i-Noor + Peacock Throne | Battle of Karnal (defeated Muhammad Shah Rangeela)",
+"<b>Vedanta sub-schools:</b> Advaita (Shankaracharya, 8th cent) — Non-Dualism | Vishishtadvaita (Ramanuja, 11th cent) — Qualified Monism | Dvaita (Madhvacharya, 13th cent) — Dualism",
+"<b>Madhvacharya:</b> Established Udupi Krishna temple + 8 Mathas still active | Book: Anuvyakhyana",
+"<b>Vallabhacharya (1479–1531):</b> Pushti Marg = path of grace | Worshipped Krishna as Srinathji",
+"<b>Sankaradeva (1499–1569):</b> Spread Bhakti in Assam | Ekasarana movement (Neo-Vaishnavite) | Most famous work: Kirtana Ghosha | Wrote in Assamese + Brajavali"
+],
+table:{h:["Sikh Guru","Number","Key Achievement"],r:[
+["Guru Nanak","1st","Founded Sikh religion; 4 Udasis; Ik Onkar; Guru-Ka-Langar"],
+["Guru Ram Das","4th","Founded Amritsar"],
+["Guru Arjan Dev","5th","Compiled Guru Granth Sahib (1604); built Golden Temple; executed by Jahangir"],
+["Guru Tegh Bahadur","9th","Executed by Aurangzeb (1675) at Chandni Chowk → Gurudwara Sis Ganj Sahib"],
+["Guru Gobind Singh","10th","Established Khalsa Panth (1699); declared Guru Granth Sahib as eternal Guru"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"5 Key Sikh Gurus: <b>N-R-A-T-G</b> (1st, 4th, 5th, 9th, 10th)<br>'<b>Nanak Ran All Ten Games</b>'<br>Vedanta 3: <b>A-V-D</b> = Advaita(Shankara) · Vishishtadvaita(Ramanuja) · Dvaita(Madhva)<br>'<b>AVD</b> = All Very Different philosophies'"},
+traps:[
+"Guru Arjan Dev (5th) executed by JAHANGIR | Guru Tegh Bahadur (9th) executed by AURANGZEB — different Gurus, different emperors",
+"Golden Temple builder = ARJAN DEV (5th) | Amritsar founder = RAM DAS (4th) — both same location, different Gurus",
+"Vasco da Gama = CALICUT, Kerala (NOT Goa) | Goa captured by ALBUQUERQUE (NOT Vasco da Gama)",
+"Charminar built in 1591 to commemorate END OF PLAGUE (NOT city founding, NOT victory)",
+"Madhvacharya = Dvaita (Dualism) | Ramanuja = Vishishtadvaita | Shankara = Advaita — always distinguish"
+],
+revision:["10 Sikh Gurus: Nanak(1st)->Angad->Amar Das->Ram Das(4th,founded Amritsar)->Arjan Dev(5th,Guru Granth Sahib)","->Hargobind->Har Rai->Har Krishan->Tegh Bahadur(9th,executed 1675)->Gobind Singh(10th,Khalsa Panth 1699)","Bhakti traps: Namdeva=only Nirguna saint in Maharashtra,Dnyaneshwar=founded Maharashtra Bhakti","Tukaram founded Varkari sect | Purandar Das=Karnataka Sangeeta Pitamaha","Vasco da Gama(1498,Calicut)=discovered sea route via Cape of Good Hope"],
+oneliners:["There were 10 Sikh Gurus in sequence, starting with Guru Nanak","Guru Ram Das, the 4th Guru, founded Amritsar","Guru Arjan Dev, the 5th Guru, compiled the Guru Granth Sahib and built the Golden Temple","Guru Arjan Dev was executed by Jahangir","Guru Tegh Bahadur, the 9th Guru, was executed by Aurangzeb in 1675","Guru Gobind Singh, the 10th Guru, founded the Khalsa Panth in 1699","Namdeva was the only Nirguna saint from Maharashtra","Dnyaneshwar is considered the founder of Maharashtra's Bhakti tradition","Tukaram founded the Varkari sect","Purandar Das is called the Sangeeta Pitamaha (Father of Music) of Karnataka/Carnatic music","Vasco da Gama discovered the sea route to India via the Cape of Good Hope, reaching Calicut in 1498"],
+flashcards:[{q:"List the 10 Sikh Gurus in order (first 3 and last 3).",a:"Nanak, Angad, Amar Das ... Tegh Bahadur (9th), Gobind Singh (10th)"},{q:"Which Guru founded Amritsar?",a:"Guru Ram Das (4th)"},{q:"Which Guru compiled the Guru Granth Sahib, and who executed him?",a:"Guru Arjan Dev (5th); executed by Jahangir"},{q:"Which Guru founded the Khalsa Panth, and when?",a:"Guru Gobind Singh (10th), in 1699"},{q:"Who was the only Nirguna saint from Maharashtra?",a:"Namdeva"},{q:"Who founded the Varkari sect?",a:"Tukaram"},{q:"Who discovered the sea route to India, and when did he reach Calicut?",a:"Vasco da Gama, in 1498"}],
+mcqs:[
+{q:"Guru Arjan Dev (5th Sikh Guru) was executed by which Mughal emperor?",o:["Akbar","Aurangzeb","Shah Jahan","Jahangir"],a:3,e:"Guru Arjan Dev (5th Guru) was executed by Jahangir in 1606 because he had blessed Jahangir's rebel son Prince Khusrau. He had compiled the Guru Granth Sahib (1604) and built the Golden Temple. Guru Tegh Bahadur (9th Guru) was executed by Aurangzeb in 1675."},
+{q:"The Golden Temple (Harmandir Sahib) at Amritsar was built by which Sikh Guru?",o:["Guru Nanak (1st)","Guru Ram Das (4th)","Guru Arjan Dev (5th)","Guru Gobind Singh (10th)"],a:2,e:"Guru Arjan Dev (5th Guru) built the Harmandir Sahib (Golden Temple) at Amritsar. Guru Ram Das (4th Guru) had earlier founded the city of Amritsar and the sacred pool (Amrit Sarovar). These two are frequently confused."},
+{q:"Vasco da Gama landed in India for the first time in 1498 at:",o:["Goa","Calicut (Kerala)","Bombay","Diu"],a:1,e:"Vasco da Gama landed at Calicut (Kozhikode, Kerala) in 1498 — becoming the first European to discover the sea route to India via the Cape of Good Hope. Goa was captured by the Portuguese under Afonso de Albuquerque in 1510 — a different event."},
+{q:"Madhvacharya's philosophical school of 'Dvaita' (Dualism) teaches that:",o:["God and world are one (non-dualism)","God has qualities but soul is distinct (qualified monism)","Divinity is completely separate from the human soul — liberation only through God's grace","Soul and God alternate between same and different"],a:2,e:"Madhvacharya (1238–1319) preached Dvaita (Dualism) — God (Brahman) and the individual soul (Atman) are completely separate entities. Liberation comes only through God's grace, not self-knowledge. He established the Udupi Krishna temple and 8 Mathas still active today."},
+{q:"'Karnataka Sangeeta Pitamaha' (Grandfather of Carnatic Music) is the title of:",o:["Tansen","Amir Khusrau","Purandar Das","Raja Man Singh Tomar"],a:2,e:"Purandar Das (1483–1564) is called Karnataka Sangeeta Pitamaha — the Grandfather/Father of Carnatic Music. He systematised Carnatic music education. Tansen was a Hindustani classical musician (Mughal court). Raja Man Singh Tomar patronised music at Gwalior."},
+{q:"Sir Thomas Roe's significance in Mughal history is that he was:",o:["The first Portuguese envoy","The first official British diplomatic mission to Jahangir's Mughal court (1615)","A general who fought Aurangzeb","The person who got the Farman in 1717"],a:1,e:"Sir Thomas Roe (1615) was the first official British diplomatic mission to the Mughal court of Jahangir. He stayed 3 years and got a Farman for English trade at Surat. Captain Hawkins had visited in 1608 but unofficially. The 1717 Farman for Bengal trade was given by Farrukh Siyar."},
+{q:"Which Vedanta philosopher established the Udupi Krishna temple and 8 Mathas?",o:["Shankaracharya","Ramanuja","Vallabhacharya","Madhvacharya"],a:3,e:"Madhvacharya (1238–1319) established the Udupi Krishna temple in Karnataka and 8 Mathas (monasteries) that are still active today. He preached Dvaita (Dualism). His key work is Anuvyakhyana."},
+{q:"Sankaradeva spread the Bhakti movement in Assam and started which movement?",o:["Varkari movement","Ekasarana movement (Neo-Vaishnavite)","Virashaiva movement","Sharana movement"],a:1,e:"Sankaradeva (1499–1569) started the Ekasarana movement (Neo-Vaishnavite) in Assam. His most famous work is Kirtana Ghosha. He translated the Ramayana and Mahabharata into Assamese and wrote in Assamese and Brajavali (a mixture of Maithili and Assamese)."},
+{q:"The Varkari pilgrimage to Pandharpur (Vitthal temple) happens twice a year on:",o:["Diwali and Holi","Ashadhi and Kartiki Ekadashi","Ram Navami and Janmashtami","Vaisakhi and Pongal"],a:1,e:"The Varkari pilgrimage tradition to Pandharpur (Vitthal/Vithoba temple) happens twice a year — on Ashadhi Ekadashi (June-July) and Kartiki Ekadashi (October-November). This is one of India's largest pilgrimage traditions, associated with saints Dnyaneshwar, Namdev, Eknath, and Tukaram."},
+{q:"Which is the CORRECT match: Guru → Achievement?",o:["Guru Ram Das → Compiled Guru Granth Sahib","Guru Gobind Singh → Founded Amritsar","Guru Arjan Dev → Established Khalsa Panth","Guru Tegh Bahadur → Executed at Chandni Chowk by Aurangzeb (1675)"],a:3,e:"Guru Tegh Bahadur (9th Guru) was executed at Chandni Chowk, Delhi in 1675 by Aurangzeb for refusing to convert to Islam. Correct matches: Guru Ram Das = founded Amritsar (4th) | Guru Arjan Dev = Guru Granth Sahib + Golden Temple (5th) | Guru Gobind Singh = Khalsa Panth (10th)."}
+]}
+]},
+
+/* ─────────────────────── CHAPTER 5: GOLDEN NODE ─────────────────────── */
+{id:"golden_med2",title:"Golden Revision",icon:"🏹",nodes:[
+{id:"gn_med2",title:"🏹 Golden Node — High-Yield Revision",xp:100,type:"gold",seqIdx:11,requires_pct:80,
+golden:[
+"<b>Baburnama written in TURKISH</b> (NOT Persian) | Babur's lineage: Timur (father) + Chengiz Khan (mother)",
+"<b>Humayun's Tomb built by HAMIDA BANU BEGUM (his widow)</b> — NOT Akbar or Humayun",
+"<b>Sher Shah died at Battle of KALINJER</b> (NOT Chausa — he WON at Chausa) | Tomb: Sasaram, Bihar",
+"<b>Rupaya (silver coin) = Sher Shah Suri</b> | GT Road = Sadak-e-Azam/Uttarpath",
+"<b>Mansabdari System = introduced by TODAR MAL</b> (NOT Akbar directly)",
+"<b>Din-e-Ilahi = only 15 followers; Birbal only Hindu to join</b>",
+"<b>Battle of Haldighati Mughal side led by MAN SINGH</b> (NOT Akbar personally)",
+"<b>Fatehpur Sikri = capital for only 14 YEARS (1571–1585)</b>",
+"<b>Pietra Dura FIRST USED at Itimad-ud-Daula's Tomb (Jahangir period)</b> — NOT Taj Mahal",
+"<b>Taj Mahal UNESCO = 1983</b> | Built by Ustad Ahmed Lahori + Ustad Isha Khan | 22 years",
+"<b>Dara Shikoh translated 52 UPANISHADS as Sirr-i-Akbar</b> (NOT just Bhagavad Gita)",
+"<b>TWO Moti Masjids:</b> Shah Jahan in Agra Fort | Aurangzeb in Red Fort Delhi",
+"<b>Bibi Ka Maqbara built by AZAM SHAH</b> (Aurangzeb's son — NOT Aurangzeb himself)",
+"<b>Nadir Shah looted Delhi for 57 DAYS (1739)</b> | Took Koh-i-Noor + Peacock Throne",
+"<b>Treaty of Allahabad (1765) = Diwani of Bengal+Bihar+Orissa to EIC under Shah Alam-II</b>",
+"<b>Bahadur Shah-II = LAST Mughal Emperor | pen name ZAFAR | deported to Rangoon</b>",
+"<b>Shivaji born at SHIVNERI FORT</b> (NOT Raigad — Raigad is his capital)",
+"<b>Chauth = 1/4 | Sardeshmukhi = 1/10</b> (revenue system — do NOT confuse fractions)",
+"<b>Hampi UNESCO = 1986</b> | Harihara-Bukka reconverted from Islam to Hinduism",
+"<b>Amuktamalyada written by KRISHNA DEVA RAYA himself</b> (NOT his court poets)",
+"<b>Battle of Talikota (1565) = Battle of BANNIHATTI</b> | Ended Vijayanagara Empire",
+"<b>Gol Gumbaz = BIJAPUR (Adil Shahis)</b> — NOT Golconda | 2nd largest dome | Whispering Gallery",
+"<b>Charminar built to commemorate END OF PLAGUE epidemic (1591)</b> (NOT city founding)",
+"<b>FIRST Sufi in India = AL-HUJWIRI (Data Ganj)</b> | Kashf-ul-Mahjub = oldest Sufi treatise",
+"<b>Baba Farid's poetry = EARLIEST KNOWN PUNJABI LITERATURE</b> | Poems in Guru Granth Sahib",
+"<b>Guru Arjan Dev (5th) = Guru Granth Sahib + Golden Temple | Executed by JAHANGIR</b>",
+"<b>Guru Gobind Singh (10th) = Khalsa Panth (1699) | Guru Ram Das (4th) = founded Amritsar</b>",
+"<b>Dnyaneshwar = FOUNDER of Bhakti Movement in Maharashtra</b>",
+"<b>Namdeva = ONLY Nirguna saint in Maharashtra</b>",
+"<b>Tukaram = FOUNDED Varkari sect + Man behind Maratha Nationalism</b>",
+"<b>Andal = ONLY female Alwar = 'Meera of the South'</b> | Thiruppavai = 30 verses"
+]}
+]}
+];
+
+/* ─── ENGINE (same as Part 1) ─── */
+const SK='centumania_med2_v1';
+let S={xp:0,visited:{},mcq:{},faa:{},curNode:null,chOpen:{}};
+function loadS(){try{const r=localStorage.getItem(SK);if(r)S=Object.assign({xp:0,visited:{},mcq:{},faa:{},curNode:null,chOpen:{}},JSON.parse(r));}catch(e){}}
+function saveS(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
+/* ── METRICS ── */
+let _mToken=null, _mSid=null;
+
+function initMetrics(){
+  // Supabase stores the session under a key like `sb-<ref>-auth-token`
+  // in either localStorage or sessionStorage depending on the user's "keep me
+  // signed in" choice (see centumania-mvp/src/lib/supabase/client.ts).
+  try {
+    const stores=[localStorage,sessionStorage];
+    for(const store of stores){
+      if(_mToken)break;
+      for(let i=0;i<store.length;i++){
+        const k=store.key(i);
+        if(k&&k.startsWith('sb-')&&k.endsWith('-auth-token')){
+          const d=JSON.parse(store.getItem(k)||'{}');
+          _mToken=d?.access_token||null;
+          break;
+        }
+      }
+    }
+  } catch(e){}
+  _mSid='med2-'+(Date.now().toString(36));
+}
+
+function track(name,meta={}){
+  if(!_mToken)return;
+  fetch('/api/events',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},
+    body:JSON.stringify({event_name:name,session_id:_mSid,event_timestamp:new Date().toISOString(),metadata:meta})
+  }).catch(()=>{});
+}
+
+function allNodes(){return CHAPTERS.flatMap(c=>c.nodes);}
+function findNode(id){return allNodes().find(n=>n.id===id);}
+function seqNodes(){return allNodes().slice().sort((a,b)=>a.seqIdx-b.seqIdx);}
+function isUnlocked(node){
+  if(node.seqIdx===0)return true;
+  if(node.type==='gold'){const all=seqNodes().filter(n=>n.type!=='gold');const passed=all.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;return(passed/all.length)>=0.8;}
+  const prev=seqNodes().find(n=>n.seqIdx===node.seqIdx-1);
+  if(!prev)return true;
+  return !!(S.mcq[prev.id]&&S.mcq[prev.id].passed);
+}
+function totalXP(){return allNodes().reduce((s,n)=>s+((S.mcq[n.id]&&S.mcq[n.id].passed)?n.xp:0),0);}
+function overallPct(){const nodes=allNodes().filter(n=>n.type!=='gold');const passed=nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;return nodes.length?Math.round(100*passed/nodes.length):0;}
+function showToast(msg,type='ok'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type==='err'?' err':type==='warn'?' warn':'');clearTimeout(t._to);t._to=setTimeout(()=>t.classList.remove('show'),2800);}
+function updateTopbar(){const nodes=allNodes().filter(n=>n.type!=='gold');const passed=nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;const traps=allNodes().filter(n=>n.type==='trap');const trapsPassed=traps.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;document.getElementById('h-xp').textContent=totalXP();document.getElementById('h-nd').textContent=passed+'/'+nodes.length;document.getElementById('h-tp').textContent=trapsPassed+'/'+traps.length;}
+function buildSidebar(){['sidebar-inner','mob-sidebar-inner'].forEach(sid=>{const sb=document.getElementById(sid);if(!sb)return;sb.innerHTML='';sb.style.padding='10px 8px 60px';CHAPTERS.forEach(ch=>{const grp=document.createElement('div');grp.className='ch-group';const passedCount=ch.nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;const isOpen=S.chOpen[ch.id]!==false;const tog=document.createElement('button');tog.className='ch-toggle';tog.innerHTML=`<span class="ch-icon">${ch.icon}</span><span class="ch-label">${ch.title}</span><span class="ch-prog">${passedCount}/${ch.nodes.length}</span><span class="ch-arr">${isOpen?'▾':'▸'}</span>`;tog.onclick=()=>{S.chOpen[ch.id]=!isOpen;saveS();buildSidebar();};grp.appendChild(tog);const items=document.createElement('div');items.className='node-items';items.style.display=isOpen?'block':'none';ch.nodes.forEach(node=>{const unlocked=isUnlocked(node);const m=S.mcq[node.id];const passed=m&&m.passed;const btn=document.createElement('button');btn.className='ni-btn'+(S.curNode===node.id?' active':'')+(passed?' passed':'')+(unlocked?'':' locked');let tag='';if(!unlocked)tag='<span class="ni-tag lock">🔒</span>';else if(passed)tag='<span class="ni-tag done">✓</span>';else if(S.visited[node.id])tag='<span class="ni-tag vis">●</span>';btn.innerHTML=`${tag}<span class="ni-title">${node.title}</span><span class="ni-xp">+${node.xp}</span>`;btn.onclick=()=>openNode(node.id);items.appendChild(btn);});grp.appendChild(items);sb.appendChild(grp);});});updateTopbar();}
+function openNode(id){const node=findNode(id);if(!node)return;if(!isUnlocked(node)){const prev=seqNodes().find(n=>n.seqIdx===node.seqIdx-1);showToast(`🔒 Complete "${prev?prev.title:'previous node'}" with 10/10 first!`,'warn');return;}S.curNode=id;S.visited[id]=true;saveS();buildSidebar();track('node_opened',{node_id:id,node_title:node.title,node_type:node.type,xp:node.xp});document.getElementById('dash-view').style.display='none';document.getElementById('node-view').style.display='block';renderNode(node);document.getElementById('mob-drawer').classList.remove('open');document.getElementById('mob-overlay').classList.remove('show');window.scrollTo(0,0);document.getElementById('main-area').scrollTop=0;}
+function renderNode(node){const m=S.mcq[node.id]||{};const faaStr=m.faa!=null?Math.round(m.faa)+'%':'—';const bestStr=m.best!=null?Math.round(m.best)+'%':'—';let typTag='';if(node.type==='trap')typTag='<span class="node-type-tag trap">⚠ Trap Node</span>';if(node.type==='gold')typTag='<span class="node-type-tag gold">★ Golden Node</span>';const testLabel=m.passed?`🎯 Test (10/10 ✓)`:`🎯 Test (10 MCQs)`;const retryBtn=(m.attempts&&!m.passed&&node.type!=='gold')?`<button class="retry-btn" style="margin-left:auto" onclick="retryNode('${node.id}')">↺ Retry</button>`:'';document.getElementById('node-content').innerHTML=`<div class="node-hd"><div class="node-hd-top">${typTag}<div class="xp-pill">+${node.xp} XP</div></div><h2 class="node-title">${node.title}</h2><div class="node-stats"><div class="ns-item"><div class="ns-label">FAA</div><div class="ns-val faa-col">${faaStr}</div></div><div class="ns-item"><div class="ns-label">Best</div><div class="ns-val">${bestStr}</div></div><div class="ns-item"><div class="ns-label">Attempts</div><div class="ns-val">${m.attempts||0}</div></div><div class="ns-item"><div class="ns-label">Status</div><div class="ns-val ${m.passed?'pass-col':'pend-col'}">${m.passed?'✓ Passed':'Pending'}</div></div>${retryBtn}</div></div><div class="tabs"><button class="tab active" onclick="switchTab(this,'learn')">📖 Learn</button><button class="tab" onclick="switchTab(this,'flash')">🗂 Flashcards</button><button class="tab" onclick="switchTab(this,'test')">${testLabel}</button></div><div id="tab-learn" class="tab-pane active">${buildLearnPane(node)}</div><div id="tab-flash" class="tab-pane">${buildFlashPane(node)}</div><div id="tab-test" class="tab-pane">${buildTestPane(node)}</div>`;bindMCQ(node);buildNodeNav(node);}
+function switchTab(btn,tab){document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById('tab-'+tab).classList.add('active');}
+function buildLearnPane(node){let h='';if(node.type==='gold'&&node.golden){h+='<div class="fact-block gold-block"><div class="fb-head">★ HIGH-YIELD REVISION FACTS</div><div class="fb-body"><ul class="facts">';node.golden.forEach(f=>h+=`<li>${f}</li>`);h+='</ul></div></div>';return h;}if(node.facts&&node.facts.length){h+='<div class="fact-block"><div class="fb-head">📌 KEY FACTS</div><div class="fb-body"><ul class="facts">';node.facts.forEach(f=>h+=`<li>${f}</li>`);h+='</ul></div></div>';}if(node.table){h+='<div class="tbl-wrap"><table class="dt"><thead><tr>';node.table.h.forEach(c=>h+=`<th>${c}</th>`);h+='</tr></thead><tbody>';node.table.r.forEach(row=>{h+='<tr>';row.forEach(c=>h+=`<td>${c}</td>`);h+='</tr>';});h+='</tbody></table></div>';}if(node.mn){h+=`<div class="mnemonic-block"><div class="fb-head">${node.mn.h}</div><div class="fb-body">${node.mn.b}</div></div>`;}if(node.traps&&node.traps.length){h+='<div class="trap-block"><div class="fb-head">⚠ EXAM TRAPS — HIGH FREQUENCY</div><div class="fb-body"><ul class="facts">';node.traps.forEach(t=>h+=`<li>${t}</li>`);h+='</ul></div></div>';}if(node.revision&&node.revision.length){h+='<div class="revision-block"><div class="fb-head">⚡ 30 SECOND REVISION</div><div class="fb-body"><ul class="facts">';node.revision.forEach(r=>h+=`<li>${r}</li>`);h+='</ul></div></div>';}if(node.oneliners&&node.oneliners.length){h+='<div class="oneliner-block"><div class="fb-head">🎯 20 EXAM ONE-LINERS</div><div class="fb-body"><ul class="facts">';node.oneliners.forEach(o=>h+=`<li>${o}</li>`);h+='</ul></div></div>';}return h;}
+function buildFlashPane(node){const cards=node.flashcards||[];if(!cards.length)return '<div class="fact-block"><div class="fb-body" style="padding:2rem;text-align:center;color:var(--ink2)">No flashcards for this node yet.</div></div>';let h=`<p class="flash-hint">TAP A CARD TO FLIP • ${cards.length} CARDS</p><div class="flash-grid">`;cards.forEach((c,i)=>{h+=`<div class="flash-card" id="fc-${node.id}-${i}" onclick="this.classList.toggle('flipped')"><div class="flash-inner"><div class="flash-front">${c.q}</div><div class="flash-back">${c.a}</div></div></div>`;});h+=`</div><div class="flash-reset-row"><button class="retry-btn" onclick="resetFlash('${node.id}')">↺ Reset All Cards</button></div>`;return h;}
+function resetFlash(nid){document.querySelectorAll(`[id^="fc-${nid}-"]`).forEach(c=>c.classList.remove('flipped'));}
+let _sess={};
+function buildTestPane(node){if(node.type==='gold'){return '<div class="fact-block"><div class="fb-body" style="padding:2rem;text-align:center"><p style="font-size:1.1rem;color:var(--ink2)">🏹 Golden Revision Node — master all 31 high-yield facts before your exam!</p></div></div>';}if(!_sess[node.id])_sess[node.id]={};const m=S.mcq[node.id]||{};const mcqs=node.mcqs||[];let h='';if(m.passed){h+=`<div class="unlock-banner pass-banner">🎉 Passed! FAA: ${Math.round(m.faa||0)}% | Best: ${Math.round(m.best||0)}% | Attempts: ${m.attempts||1}</div>`;}else if(m.lastScore!==undefined){h+=`<div class="unlock-banner fail-banner">${m.lastScore}/10 — Need 10/10. FAA: ${Math.round(m.faa||0)}%. <button class="retry-btn" onclick="retryNode('${node.id}')">↺ Retry</button></div>`;}mcqs.forEach((q,i)=>{const sessAns=_sess[node.id][i];const answered=sessAns!==undefined||m.passed;const displayAns=sessAns!==undefined?sessAns:(m.passed?q.a:undefined);const faaCorrect=S.faa[node.id]&&S.faa[node.id][i]===true;const faaSet=S.faa[node.id]&&S.faa[node.id][i]!==undefined;h+=`<div class="mcq-card${answered?' done':''}" data-qi="${i}" data-nid="${node.id}">`;h+=`<div class="mcq-q"><span class="q-num">${i+1}.</span> ${q.q}</div>`;h+='<div class="mcq-opts">';q.o.forEach((opt,oi)=>{let cls='mopt';if(answered){if(oi===q.a)cls+=' correct';else if(oi===displayAns&&displayAns!==q.a)cls+=' wrong';}h+=`<button class="${cls}" data-oi="${oi}"${answered?' disabled':''}>${String.fromCharCode(65+oi)}. ${opt}</button>`;});h+='</div>';if(answered){const wasCorrect=displayAns===q.a;h+=`<div class="mcq-fb">${wasCorrect?'✅':'❌'} ${q.e}</div>`;if(faaSet){h+=`<div class="mcq-faa"><span class="faa-chip ${faaCorrect?'faa-ok':'faa-err'}">${faaCorrect?'FAA ✓':'FAA ✗'} (first attempt)</span></div>`;}}h+='</div>';});if(!m.passed&&m.attempts){h+=`<div style="margin-top:20px;padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;"><span style="font-family:var(--mono);font-size:13px;color:var(--ink2)">Best: <b style="color:var(--gold)">${Math.round(m.best||0)}%</b> &nbsp;|&nbsp; FAA: <b style="color:var(--amber)">${Math.round(m.faa||0)}%</b> &nbsp;|&nbsp; Need <b style="color:var(--green)">10/10</b> to unlock next</span><button class="retry-btn" style="font-size:13px;padding:9px 22px" onclick="retryNode('${node.id}')">↺ Retry</button></div>`;}return h;}
+function bindMCQ(node){const mcqs=node.mcqs||[];const pane=document.getElementById('tab-test');if(!pane)return;pane.querySelectorAll('.mcq-card:not(.done)').forEach(card=>{const qi=parseInt(card.dataset.qi);card.querySelectorAll('.mopt').forEach(btn=>{btn.addEventListener('click',function(){if(card.classList.contains('done'))return;const chosen=parseInt(btn.dataset.oi);const correct=chosen===mcqs[qi].a;if(!_sess[node.id])_sess[node.id]={};_sess[node.id][qi]=chosen;if(!S.faa[node.id])S.faa[node.id]={};if(S.faa[node.id][qi]===undefined)S.faa[node.id][qi]=correct;card.classList.add('done');card.querySelectorAll('.mopt').forEach((b,oi)=>{b.disabled=true;if(oi===mcqs[qi].a)b.classList.add('correct');else if(oi===chosen&&!correct)b.classList.add('wrong');});const fb=document.createElement('div');fb.className='mcq-fb';fb.innerHTML=`${correct?'✅':'❌'} ${mcqs[qi].e}`;card.appendChild(fb);const faaEl=document.createElement('div');faaEl.className='mcq-faa';faaEl.innerHTML=`<span class="faa-chip ${S.faa[node.id][qi]?'faa-ok':'faa-err'}">${S.faa[node.id][qi]?'FAA ✓':'FAA ✗'} (first attempt)</span>`;card.appendChild(faaEl);saveS();if(Object.keys(_sess[node.id]).length===mcqs.length)finishAttempt(node);});});});}
+function retryNode(nid){_sess[nid]={};if(S.mcq[nid])delete S.mcq[nid].lastScore;saveS();const node=findNode(nid);document.getElementById('tab-test').innerHTML=buildTestPane(node);bindMCQ(node);document.getElementById('main-area').scrollTop=0;}
+function finishAttempt(node){const mcqs=node.mcqs||[];const sess=_sess[node.id]||{};const correct=mcqs.filter((q,i)=>sess[i]===q.a).length;const pct=Math.round(100*correct/mcqs.length);const passed=correct===mcqs.length;const faaCorrect=mcqs.filter((q,i)=>S.faa[node.id]&&S.faa[node.id][i]===true).length;const faaPct=Math.round(100*faaCorrect/mcqs.length);if(!S.mcq[node.id])S.mcq[node.id]={faa:faaPct,best:0,passed:false,attempts:0};S.mcq[node.id].attempts=(S.mcq[node.id].attempts||0)+1;S.mcq[node.id].faa=faaPct;if(pct>(S.mcq[node.id].best||0))S.mcq[node.id].best=pct;if(passed){S.mcq[node.id].passed=true;if(S.mcq[node.id].lastScore!==undefined)delete S.mcq[node.id].lastScore;S.xp=(S.xp||0)+node.xp;track('node_completed',{node_id:node.id,node_title:node.title,xp_earned:node.xp,faa_pct:faaPct,attempts:S.mcq[node.id].attempts});saveS();buildSidebar();showToast(`🎉 10/10! +${node.xp} XP earned!`,'ok');setTimeout(()=>renderNode(node),400);}else{S.mcq[node.id].lastScore=correct;track('mcq_completed',{node_id:node.id,node_title:node.title,score:correct,total:mcqs.length,pct,faa_pct:faaPct,passed:false,attempts:S.mcq[node.id].attempts});saveS();buildSidebar();const pane=document.getElementById('tab-test');if(pane){pane.innerHTML=buildTestPane(node);bindMCQ(node);}showToast(`${correct}/10 — Need 10/10. Retry to unlock next node.`,'warn');}}
+function buildNodeNav(node){const all=seqNodes();const idx=all.findIndex(n=>n.id===node.id);const prev=idx>0?all[idx-1]:null;const next=idx<all.length-1?all[idx+1]:null;const nextOk=next&&isUnlocked(next);document.getElementById('node-nav').innerHTML=`<button class="nav-btn" ${prev?'':"disabled"} onclick="${prev?`openNode('${prev.id}')`:'void(0)'}">← ${prev?prev.title:'Start'}</button><button class="nav-btn home-btn" onclick="showDash()">⊞ Dashboard</button><button class="nav-btn" ${nextOk?'':"disabled"} onclick="${nextOk?`openNode('${next.id}')`:'void(0)'}">→ ${next?next.title:'End'}</button>`;}
+function showDash(){S.curNode=null;saveS();buildSidebar();document.getElementById('node-view').style.display='none';document.getElementById('dash-view').style.display='block';document.getElementById('mob-home').classList.add('act');document.getElementById('mob-menu').classList.remove('act');const allN=allNodes().filter(n=>n.type!=='gold');const passedN=allN.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;const pct=overallPct();const xp=totalXP();let chapCards='';CHAPTERS.forEach(ch=>{const nodes=ch.nodes;const p=nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;const pPct=nodes.length?Math.round(100*p/nodes.length):0;chapCards+=`<div class="dc"><div class="dc-icon">${ch.icon}</div><div class="dc-label">${ch.title}</div><div class="dc-prog-bar"><div class="dc-bar" style="width:${pPct}%"></div></div><div class="dc-nums">${p}/${nodes.length} passed</div></div>`;});const goldenOk=pct>=80;document.getElementById('dash-content').innerHTML=`<div class="dash-hero"><div class="dh-title">CentuMania <span style="font-family:var(--mono);font-size:12px;color:var(--ink3);font-style:normal;letter-spacing:1px;display:block;margin-top:4px">MEDIEVAL HISTORY · PART 2</span></div><div class="dh-xp">${xp} XP</div><div class="dh-bar-wrap"><div class="dh-bar" style="width:${pct}%"></div></div><div class="dh-label">${passedN} of ${allN.length} nodes passed (${pct}%)</div></div><div class="dash-chapters">${chapCards}</div><div class="cta-row"><button class="cta-btn" onclick="startNext()">▶ Continue Learning</button><button class="cta-btn sec" ${goldenOk?'':"disabled"} onclick="openNode('gn_med2')">🏹 Golden Node ${goldenOk?'':' (need 80%)'}</button></div>`;}
+function startNext(){const next=seqNodes().find(n=>isUnlocked(n)&&!(S.mcq[n.id]&&S.mcq[n.id].passed));if(next)openNode(next.id);else showToast('All nodes complete! 🏆 Medieval History Part 2 mastered!');}
+function initMobile(){document.getElementById('mob-home').addEventListener('click',()=>{showDash();});document.getElementById("mob-menu").addEventListener("click",()=>{document.getElementById("mob-drawer").classList.toggle("open");document.getElementById("mob-overlay").classList.toggle("show");document.getElementById("mob-menu").classList.toggle("act");});document.getElementById("mob-close").addEventListener("click",closeDrawer);document.getElementById("mob-overlay").addEventListener("click",closeDrawer);}
+function closeDrawer(){document.getElementById("mob-drawer").classList.remove("open");document.getElementById("mob-overlay").classList.remove("show");document.getElementById("mob-menu").classList.remove("act");}
+function init(){loadS();initMetrics();track('material_opened',{material:'medieval_history_part2'});buildSidebar();initMobile();if(S.curNode){const n=findNode(S.curNode);if(n&&isUnlocked(n)){openNode(S.curNode);return;}}showDash();}
+document.addEventListener("DOMContentLoaded",init);
+
+
+/* ===== CentuMania metrics (injected — additive; module content unchanged) ===== */
+(function(){
+  if(window.__cmTrackInit)return; window.__cmTrackInit=1;
+  var CM_DEFAULT='medieval-2';
+  var CM_T0=Date.now(),CM_ACTIVE=0,_cmVisT=Date.now();
+  function cmToken(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function cmMat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function cmSid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'anon-'+Math.random().toString(36).slice(2);}}
+  function cmInteract(itype,nodeId,meta){try{var t=cmToken();if(!t||!nodeId)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify({interaction_type:itype,node_id:String(nodeId),material_id:cmMat(),session_id:cmSid(),timestamp:new Date().toISOString(),metadata:meta||{}})}).catch(function(){});}catch(e){}}
+  function cmEvent(name,meta){try{var t=cmToken();if(!t)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify({event_name:name,session_id:cmSid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:cmMat()},meta||{})})}).catch(function(){});}catch(e){}}
+  function cmBeacon(name,meta){try{var t=cmToken();if(!t)return;var p=JSON.stringify({_token:t,event_name:name,session_id:cmSid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:cmMat()},meta||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_cmVisT;cmBeacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_cmVisT=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_cmVisT;cmBeacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  cmEvent('material_opened',{});cmEvent('session_start',{});
+  var _cmNodeT={},_cmLastQ=0;
+  function _cmNode(id){try{if(typeof CHAPTERS!=='undefined')for(var c=0;c<CHAPTERS.length;c++){var ns=CHAPTERS[c].nodes||[];for(var n=0;n<ns.length;n++)if(ns[n].id===id)return ns[n];}}catch(e){}return null;}
+  if(typeof openNode==='function'){var _o=openNode;openNode=function(id){_o(id);try{_cmNodeT[id]=Date.now();_cmLastQ=Date.now();var nd=_cmNode(id);cmInteract('node_opened',id,{total_questions:(nd&&nd.mcqs?nd.mcqs.length:0)});cmEvent('node_open',{node_id:id});}catch(e){}};}
+  if(typeof finishAttempt==='function'){var _f=finishAttempt;finishAttempt=function(node){_f(node);try{var faa=(typeof S!=='undefined'&&S.faa&&S.faa[node.id])||{},total=(node.mcqs||[]).length,ok=0,k;for(k in faa)if(faa[k])ok++;var pct=total?Math.round(ok/total*100):0;cmInteract('node_completed',node.id,{total_questions:total,correct_first_attempt:ok,accuracy_pct:pct,time_spent_seconds:Math.round((Date.now()-(_cmNodeT[node.id]||Date.now()))/1000)});cmEvent('node_completed',{node_id:node.id,pct:pct});}catch(e){}};}
+  try{new MutationObserver(function(ms){ms.forEach(function(m){var el=m.target;if(el&&el.classList&&el.classList.contains('mcq-card')&&el.classList.contains('done')&&!el._cmS){el._cmS=1;var qi=parseInt(el.dataset.qi),nid=el.dataset.nid;var fac=!!(typeof S!=='undefined'&&S.faa&&S.faa[nid]&&S.faa[nid][qi]===true);var now=Date.now(),dt=_cmLastQ?now-_cmLastQ:0;_cmLastQ=now;if(nid!=null){cmInteract('mcq_attempt',nid,{question_index:qi,is_correct:fac});cmEvent('answer',{node_id:nid,question_index:qi,is_correct:fac,time_spent_ms:dt});}}});}).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});}catch(e){}
+})();
+
+</script>
+</body>
+</html>

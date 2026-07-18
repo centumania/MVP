@@ -1,0 +1,1218 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Light — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"💡";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:38px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+/* FAA star */
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+/* opened map node marker handled in canvas */
+
+/* TAB NAV */
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* GENERIC BLOCKS */
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+
+/* WHY-BEFORE-WHAT ladder */
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+
+/* callouts */
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+
+/* flow */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+
+/* diagram */
+.dia{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;text-align:center}
+.dia svg{max-width:100%;height:auto}
+.dia .cap{font-size:11px;color:var(--mut);font-weight:600;margin-top:7px}
+
+/* examples grid */
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+
+/* memory cards */
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+
+/* one-liners */
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+
+/* MCQ */
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+
+/* flashcards — robust display-swap flip (works in all webviews) */
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+
+/* MIND MAP */
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+
+/* PROBLEMS */
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+
+/* PROGRESS DASHBOARD */
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Physics · Mastery Pack</div>
+  <h1>Light</h1>
+  <p>Reflection → Mirrors → Refraction → Total Internal Reflection → Dispersion → Lenses → The Human Eye. Taught the way examiners <em>ask</em>, not the way textbooks list.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/35</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/42</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+
+  <h2 class="sec"><span class="em">🌐</span>How Light Behaves — The Big Map</h2>
+  <div class="sec-sub">Every question in this chapter is one of four behaviours. Fix this map first; the rest are details.</div>
+  <div class="flow">
+    <span class="step">Straight line (rectilinear)</span><span class="arw">→</span>
+    <span class="step">Bounces = Reflection</span><span class="arw">→</span>
+    <span class="step">Bends = Refraction</span><span class="arw">→</span>
+    <span class="step">Splits = Dispersion</span>
+  </div>
+  <div class="note"><span class="t">Anchor fact</span>Light is an <b>electromagnetic wave</b>, needs <b>no medium</b> (travels through vacuum), and moves at <b>c = 3×10⁸ m/s</b> in vacuum — the universe's speed limit. In any material it slows down; that slowing is the single cause of <b>every</b> bending effect in this chapter.</div>
+
+  <!-- ========== 1. REFLECTION ========== -->
+  <h2 class="sec"><span class="em">🪞</span>1 · Reflection & Plane Mirrors</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Reflection is light <b>bouncing off</b> a surface. Two laws govern it (angles always measured from the <b>normal</b> — the perpendicular to the surface, never from the surface itself).</div></div>
+      <div class="row"><div class="lab l-why">Why</div><div class="txt">Light hits atoms in the surface and is re-emitted. On a <b>smooth</b> surface all rays keep the same tilt → a clear image (regular reflection). On a <b>rough</b> surface each tiny facet faces a different way → rays scatter (diffuse reflection). <b>Both obey ∠i = ∠r</b> — the surface roughness, not the law, decides whether you see an image.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Law 1:</b> incident ray, reflected ray and normal lie in one plane. <b>Law 2:</b> ∠i = ∠r.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Mirrors, periscopes, kaleidoscopes, why you can read this screen, why paper (rough) doesn't act like a mirror.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Angles are measured from the ___" → <b>normal</b>. "A ray hits a mirror at 30° to the surface, find ∠r" → angle from normal = 90−30 = <b>60°</b>. This surface-vs-normal switch is the #1 trap.</div></div>
+    </div>
+    <div class="dia"><svg viewBox="0 0 300 140" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="115" x2="280" y2="115" stroke="#94A3B8" stroke-width="3"/>
+      <line x1="150" y1="115" x2="150" y2="18" stroke="#94A3B8" stroke-dasharray="5 3" stroke-width="1.5"/>
+      <line x1="55" y1="30" x2="150" y2="115" stroke="#1D4ED8" stroke-width="2.5"/>
+      <line x1="150" y1="115" x2="245" y2="30" stroke="#DC2626" stroke-width="2.5"/>
+      <path d="M150 75 A40 40 0 0 0 135 88" fill="none" stroke="#1D4ED8" stroke-width="1.3"/>
+      <path d="M150 75 A40 40 0 0 1 165 88" fill="none" stroke="#DC2626" stroke-width="1.3"/>
+      <text x="70" y="42" font-size="11" fill="#1D4ED8" font-weight="800">incident</text>
+      <text x="196" y="42" font-size="11" fill="#DC2626" font-weight="800">reflected</text>
+      <text x="128" y="100" font-size="11" fill="#1D4ED8" font-weight="800">i</text>
+      <text x="163" y="100" font-size="11" fill="#DC2626" font-weight="800">r</text>
+      <text x="155" y="30" font-size="10" fill="#64748B" font-weight="700">normal</text>
+    </svg><div class="cap">∠i = ∠r, both from the normal (dashed). All three lie in one plane.</div></div>
+    <div class="note why"><span class="t">Why does a plane-mirror image look reversed?</span>It isn't up-down flipped — it is <b>front-back</b> reversed, which your brain reads as left-right. That is <b>lateral inversion</b>: your right hand looks like the image's left. This is why <b>AMBULANCE</b> is written mirrored on the front of the vehicle so a driver reading it in their rear-view mirror sees it correctly.</div>
+    <div class="note life"><span class="t">Everyday</span>Plane-mirror image is <b>virtual, erect, same size</b>, and stands <b>as far behind</b> the mirror as you are in front. Step back 1 m and your image moves back 1 m — so the gap grows by <b>2 m</b>. That "×2" is a favourite numerical.</div>
+  </div>
+
+  <!-- ========== 2. SPHERICAL MIRRORS ========== -->
+  <h2 class="sec"><span class="em">🥄</span>2 · Spherical Mirrors (Concave &amp; Convex)</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A curved mirror cut from a sphere. <b>Concave</b> = reflecting inner surface (converging). <b>Convex</b> = reflecting outer surface (diverging).</div></div>
+      <div class="row"><div class="lab l-why">Why</div><div class="txt">A concave mirror's shape makes every parallel ray tilt <b>inward</b> and cross at one point — the <b>focus (F)</b>. A convex mirror tilts them <b>outward</b>, so they only <i>appear</i> to come from a focus behind the mirror. This single geometric fact decides every image they form.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>f = R/2</b> — focal length is half the radius of curvature. Image type depends only on where the object sits relative to F and C.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt"><b>Concave:</b> shaving/make-up mirror (magnified erect image when close), dentist's mirror, torch &amp; headlight reflectors, solar cookers, telescopes. <b>Convex:</b> vehicle rear-view &amp; blind-spot mirrors, shop security mirrors, street corners.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Which mirror is used as a rear-view mirror?" → <b>convex</b> (wider field, always small erect image). "Which is used by dentists / in solar cookers?" → <b>concave</b>. "f = ?" → <b>R/2</b>.</div></div>
+    </div>
+    <div class="note why"><span class="t">Why convex for rear-view?</span>A convex mirror <b>always</b> gives a small, erect, virtual image → it squeezes a <b>wide area</b> into a small glass, giving the driver a large field of view. The trade-off: objects look farther than they are — hence "objects in mirror are closer than they appear."</div>
+    <div class="note why"><span class="t">Why concave for a torch/headlight?</span>Put the bulb <b>at the focus</b> of a concave reflector and every ray comes out <b>parallel</b> → a strong, straight beam that travels far without spreading. Run it backwards (parallel Sun rays in) and they all meet at F → intense heat → solar cooker.</div>
+    <div class="dia"><svg viewBox="0 0 320 130" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40 20 Q10 65 40 110" fill="none" stroke="#7C3AED" stroke-width="3"/>
+      <line x1="40" y1="65" x2="300" y2="65" stroke="#CBD5E1" stroke-dasharray="4 3"/>
+      <line x1="300" y1="30" x2="115" y2="65" stroke="#0EA5E9" stroke-width="2"/>
+      <line x1="300" y1="65" x2="115" y2="65" stroke="#0EA5E9" stroke-width="2"/>
+      <line x1="300" y1="100" x2="115" y2="65" stroke="#0EA5E9" stroke-width="2"/>
+      <circle cx="115" cy="65" r="3.5" fill="#DC2626"/>
+      <text x="103" y="82" font-size="11" fill="#DC2626" font-weight="800">F</text>
+      <text x="150" y="18" font-size="10" fill="#0EA5E9" font-weight="700">parallel rays</text>
+      <text x="20" y="15" font-size="10" fill="#7C3AED" font-weight="800">concave</text>
+    </svg><div class="cap">Concave mirror: parallel rays converge at the focus F, midway to the centre C.</div></div>
+    <div class="note mem"><span class="t">Memory</span><b>Con<u>ca</u>ve = <u>CA</u>ve</b> — curves inward like a cave, and <b>collects/converges</b> light. Con<b>vex</b> bulges out and <b>diverges</b> (v for "vehicle" mirror).</div>
+  </div>
+
+  <!-- ========== 3. MIRROR FORMULA ========== -->
+  <h2 class="sec"><span class="em">🧮</span>3 · Mirror Formula &amp; Sign Convention</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>1/v + 1/u = 1/f</b> links image distance (v), object distance (u) and focal length (f). Magnification <b>m = −v/u = h′/h</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why signs matter</div><div class="txt">The formula only works with the <b>New Cartesian sign convention</b>: pole is the origin, distances measured <b>against</b> the incoming light are negative. Get a sign wrong and a real image comes out virtual. The sign of the answer <i>tells you the physics</i> — that is why examiners love it.</div></div>
+      <div class="row"><div class="lab l-how">How to read the answer</div><div class="txt"><b>v negative</b> → image in front → <b>real &amp; inverted</b>. <b>v positive</b> → behind mirror → <b>virtual &amp; erect</b>. <b>m negative</b> → inverted (real). <b>m positive</b> → erect (virtual). |m|&gt;1 magnified, &lt;1 diminished.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Numerical questions in every exam; designing camera/telescope optics.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">Sign rules: for a <b>concave</b> mirror f is <b>negative</b>; for a <b>convex</b> mirror f is <b>positive</b>. Object distance u is <b>always negative</b> (object is in front). Forgetting the minus in <b>m = −v/u</b> is the classic slip.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Object position (concave)</th><th>Image</th><th>Use</th></tr>
+      <tr><td class="h">Beyond C</td><td>Real, inverted, diminished</td><td>—</td></tr>
+      <tr><td class="h">At C</td><td>Real, inverted, same size</td><td>—</td></tr>
+      <tr><td class="h">Between C &amp; F</td><td>Real, inverted, magnified</td><td>Projectors</td></tr>
+      <tr><td class="h">At F</td><td>Image at infinity</td><td>Searchlight</td></tr>
+      <tr><td class="h">Between F &amp; Pole</td><td><b>Virtual, erect, magnified</b></td><td>Shaving/make-up, dentist</td></tr>
+    </table>
+    <div class="note trap"><span class="t">Convex mirror — memorise once</span>A convex mirror gives <b>only ONE kind of image</b> for every object position: <b>virtual, erect, diminished</b>. No cases to learn. Same is true of a plane mirror (virtual, erect, same size).</div>
+  </div>
+
+  <!-- ========== 4. REFRACTION ========== -->
+  <h2 class="sec"><span class="em">🌈</span>4 · Refraction — Why Light Bends</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Refraction is the <b>bending of light</b> as it passes from one medium into another because its <b>speed changes</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why does it bend?</div><div class="txt">Picture a marching band walking from a road onto mud at an angle: the wheel that hits the mud first slows first, so the whole line pivots. Light is the same — the edge entering the denser (slower) medium first makes the beam <b>turn toward the normal</b>. <b>No speed change ⇒ no bend</b> (that's why a ray hitting at 90°/along the normal goes straight through).</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Snell's law:</b> n₁sinθ₁ = n₂sinθ₂. <b>Refractive index n = c/v</b> (speed in vacuum ÷ speed in medium). Rule: entering a <b>denser</b> medium → bends <b>toward</b> normal; into a <b>rarer</b> medium → bends <b>away</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">A straw looks bent/broken in water; a pool looks shallower than it is; a coin in a bowl reappears when water is poured; stars twinkle; the Sun is visible a few minutes before it actually rises.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"n = c/v", "diamond has the highest n (2.42) → most sparkle", "which bends more, red or violet? → <b>violet</b> (slower in glass)". Refractive index has <b>no unit</b> (ratio of two speeds) — frequently asked.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Medium</th><th>Refractive index (n)</th><th>Meaning</th></tr>
+      <tr><td class="h">Vacuum / Air</td><td>1.00 (air ≈1.0003)</td><td>Reference</td></tr>
+      <tr><td class="h">Water</td><td>1.33</td><td>Light slows to c/1.33</td></tr>
+      <tr><td class="h">Glass (crown)</td><td>1.5</td><td>Standard lenses</td></tr>
+      <tr><td class="h">Diamond</td><td><b>2.42 (highest common)</b></td><td>Max bending &amp; sparkle</td></tr>
+    </table>
+    <div class="note why"><span class="t">Why does a straw look broken?</span>Light from the underwater part bends <b>away from the normal</b> as it leaves water into air, so your eye traces it back along a straighter line — the submerged part appears <b>raised and shifted</b>. Same reason a pond looks shallower (real depth = apparent depth × n).</div>
+  </div>
+
+  <!-- ========== 5. TIR ========== -->
+  <h2 class="sec"><span class="em">✨</span>5 · Total Internal Reflection (TIR)</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">When light in a <b>denser</b> medium hits the boundary with a <b>rarer</b> medium at an angle beyond the <b>critical angle</b>, it is <b>100% reflected back</b> — no light escapes.</div></div>
+      <div class="row"><div class="lab l-why">Why</div><div class="txt">Going denser→rarer, light bends <b>away</b> from the normal. Increase the angle and the refracted ray tilts more and more until, at the <b>critical angle (θc)</b>, it grazes the surface at 90°. Push past θc and refraction is impossible — the surface acts as a perfect mirror.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Two conditions: (1) light travels <b>denser → rarer</b>, (2) angle of incidence <b>&gt; critical angle</b>. For water θc ≈ 48°, glass ≈ 42°, diamond ≈ 24° (small θc → easy TIR → brilliance).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt"><b>Optical fibres</b> (internet, endoscopy), <b>diamond's sparkle</b>, a <b>mirage</b> on hot roads, sparkle of a <b>prism binocular</b>, shining of a crack in glass.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Optical fibre works on ___" → <b>total internal reflection</b>. "Mirage is due to ___" → refraction + <b>TIR</b> in layers of hot air. "Diamond sparkles because of ___" → TIR (small critical angle).</div></div>
+    </div>
+    <div class="note life"><span class="t">Everyday — mirage</span>On a hot day, air near the road is hotter (rarer) than air above. Light from the sky bends progressively, undergoes TIR, and reaches your eye as if reflected off water — you "see" a puddle that vanishes as you approach.</div>
+  </div>
+
+  <!-- ========== 6. DISPERSION & ATMOSPHERIC OPTICS ========== -->
+  <h2 class="sec"><span class="em">🌈</span>6 · Dispersion &amp; Sky Colours</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Dispersion</b> = splitting of white light into its seven colours (<b>VIBGYOR</b>) by a prism.</div></div>
+      <div class="row"><div class="lab l-why">Why</div><div class="txt">White light is a mix of colours. In glass each colour travels at a slightly different speed, so each bends by a different amount. <b>Violet slows most → bends most; red slows least → bends least.</b> They fan out into a spectrum.</div></div>
+      <div class="row"><div class="lab l-how">How a rainbow forms</div><div class="txt">Raindrops act as tiny prisms: sunlight <b>refracts in → reflects (TIR) inside → refracts out</b>, dispersing into a bow. The Sun must be <b>behind</b> you. <b>Red on top, violet on the bottom</b> of a primary rainbow.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Rainbow, CD/soap-bubble colours, blue sky, red sunrise/sunset, prism experiments.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Colour bending most?" → <b>Violet</b>. "Colour with longest wavelength / bends least?" → <b>Red</b>. "Order of spectrum?" → <b>VIBGYOR</b>. Newton did the prism experiment (1666).</div></div>
+    </div>
+    <div class="note why"><span class="t">Why is the sky blue but sunset red? (Rayleigh scattering)</span>Air molecules <b>scatter short wavelengths (blue/violet) far more</b> than long ones (∝ 1/λ⁴). By day we see scattered <b>blue</b> from all over the sky (violet is scattered even more but our eyes are less sensitive to it and much is absorbed high up). At sunset light skims a <b>long path</b> through the atmosphere; blue is scattered away, leaving the transmitted <b>red/orange</b> to reach us. Same reason <b>danger signals are red</b> — red scatters least, so it penetrates fog and is seen from farthest.</div>
+    <div class="note why"><span class="t">Why do stars twinkle but planets don't?</span>Stars are point sources; their light passes through shifting air layers of varying density → constant tiny refractions → <b>twinkling</b>. Planets are nearer and appear as small discs (many points), whose flickers average out → steady light.</div>
+  </div>
+
+  <!-- ========== 7. LENSES ========== -->
+  <h2 class="sec"><span class="em">🔍</span>7 · Lenses &amp; Lens Formula</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A lens bends light using refraction at two curved surfaces. <b>Convex (converging)</b> is thick in the middle; <b>concave (diverging)</b> is thin in the middle.</div></div>
+      <div class="row"><div class="lab l-why">Why</div><div class="txt">A convex lens bends every ray <b>toward a focus</b> because the thicker centre slows light more than the thin edges, curving the wavefront inward. A concave lens does the reverse and spreads light out.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Lens formula: 1/v − 1/u = 1/f</b> (note the minus, unlike mirrors). <b>Power P = 1/f (in metres)</b>, unit <b>dioptre (D)</b>. Convex power is <b>positive</b>, concave <b>negative</b>. Powers of lenses in contact simply <b>add</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Spectacles, camera, microscope, telescope, magnifying glass, projector, the eye's own lens.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Unit of power of a lens?" → <b>dioptre</b>. "A +2 D and −3 D lens in contact → net power?" → <b>−1 D</b>. "Magnifying glass is a ___" → convex lens (object within focus → virtual, erect, magnified).</div></div>
+    </div>
+    <div class="note trap"><span class="t">Mirror vs Lens formula — don't mix them</span>Mirror: <b>1/v + 1/u = 1/f</b> (PLUS). Lens: <b>1/v − 1/u = 1/f</b> (MINUS). Swapping the sign is the most common exam mistake.</div>
+  </div>
+
+  <!-- ========== 8. THE EYE ========== -->
+  <h2 class="sec"><span class="em">👁️</span>8 · The Human Eye &amp; Its Defects</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A living convex-lens camera. The <b>cornea</b> does most bending; the <b>lens</b> fine-tunes focus; the image falls on the <b>retina</b> — <b>real, inverted, diminished</b> (the brain flips it upright).</div></div>
+      <div class="row"><div class="lab l-why">Why we can focus near &amp; far</div><div class="txt"><b>Accommodation:</b> ciliary muscles change the lens's <b>focal length</b> — fatter for near objects, thinner for distant ones. <b>Iris</b> adjusts the pupil to control light entering, like a camera aperture.</div></div>
+      <div class="row"><div class="lab l-how">How defects arise</div><div class="txt">If the image forms <b>in front of</b> the retina → <b>myopia</b> (short-sight). <b>Behind</b> the retina → <b>hypermetropia</b> (long-sight). Correct by adding the right lens power.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Spectacle prescriptions, night-blindness (vitamin A), cataract surgery.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">Near point = <b>25 cm</b>; far point = <b>infinity</b>. Retina has <b>rods</b> (dim light, B/W) &amp; <b>cones</b> (bright light, colour). <b>Persistence of vision ≈ 1/16 s</b> → cinema. Blind spot = no receptors.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Defect</th><th>Problem</th><th>Image forms</th><th>Corrective lens</th></tr>
+      <tr><td class="h">Myopia (near-sight)</td><td>Can't see <b>far</b></td><td>In front of retina</td><td><b>Concave</b> (−)</td></tr>
+      <tr><td class="h">Hypermetropia (far-sight)</td><td>Can't see <b>near</b></td><td>Behind retina</td><td><b>Convex</b> (+)</td></tr>
+      <tr><td class="h">Presbyopia (age)</td><td>Both, lens stiffens</td><td>—</td><td>Bifocal</td></tr>
+      <tr><td class="h">Astigmatism</td><td>Uneven cornea</td><td>Blurred</td><td>Cylindrical</td></tr>
+    </table>
+    <div class="note mem"><span class="t">Memory</span><b>MyopiaConcave, Distant fails</b> → "My-o-pia, Minus lens." Hypermetropia = <b>H</b>ard to see near, needs <b>H</b>elp of a convex (plus) lens. Vitamin <b>A</b> deficiency → night blindness (<b>A</b> for "After dark").</div>
+  </div>
+
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 7 branches bloom outward. Tap a branch → its concepts unfold. Tap again to fold. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+  <h2 class="sec"><span class="em">📊</span>Comparison Tables</h2>
+  <div class="sec-sub">Look-alike pairs are where marks are won or lost. Differentiate, don't memorise blindly.</div>
+
+  <div class="card"><h3>Reflection vs Refraction</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Reflection</th><th>Refraction</th></tr>
+    <tr><td class="h">What happens</td><td>Light bounces back</td><td>Light bends & passes through</td></tr>
+    <tr><td class="h">Speed of light</td><td>Unchanged</td><td>Changes (cause of bending)</td></tr>
+    <tr><td class="h">Medium</td><td>Same medium</td><td>New medium</td></tr>
+    <tr><td class="h">Governing law</td><td>∠i = ∠r</td><td>Snell: n₁sinθ₁=n₂sinθ₂</td></tr>
+    <tr><td class="h">Example</td><td>Mirror image</td><td>Bent straw, lens</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Concave vs Convex Mirror</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Concave</th><th>Convex</th></tr>
+    <tr><td class="h">Reflecting side</td><td>Inner (caved in)</td><td>Outer (bulged out)</td></tr>
+    <tr><td class="h">Action</td><td>Converging</td><td>Diverging</td></tr>
+    <tr><td class="h">Image</td><td>Real or virtual (varies)</td><td>Always virtual, erect, small</td></tr>
+    <tr><td class="h">Field of view</td><td>Narrow</td><td>Wide</td></tr>
+    <tr><td class="h">Uses</td><td>Torch, shaving, solar cooker, dentist</td><td>Rear-view, security mirror</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Convex vs Concave Lens</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Convex</th><th>Concave</th></tr>
+    <tr><td class="h">Shape</td><td>Thick middle</td><td>Thin middle</td></tr>
+    <tr><td class="h">Action</td><td>Converging</td><td>Diverging</td></tr>
+    <tr><td class="h">Power sign</td><td>Positive (+)</td><td>Negative (−)</td></tr>
+    <tr><td class="h">Corrects</td><td>Hypermetropia (far-sight)</td><td>Myopia (near-sight)</td></tr>
+    <tr><td class="h">Uses</td><td>Magnifier, camera, projector</td><td>Peephole, myopia glasses</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Real vs Virtual Image</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Real image</th><th>Virtual image</th></tr>
+    <tr><td class="h">Formed by</td><td>Rays actually meeting</td><td>Rays only appearing to meet</td></tr>
+    <tr><td class="h">Screen?</td><td>Can be caught on a screen</td><td>Cannot be caught</td></tr>
+    <tr><td class="h">Orientation</td><td>Inverted</td><td>Erect</td></tr>
+    <tr><td class="h">Example</td><td>Cinema screen, camera</td><td>Plane mirror, magnifier</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Myopia vs Hypermetropia</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Myopia</th><th>Hypermetropia</th></tr>
+    <tr><td class="h">Also called</td><td>Short/near-sight</td><td>Long/far-sight</td></tr>
+    <tr><td class="h">Cannot see</td><td>Distant objects</td><td>Near objects</td></tr>
+    <tr><td class="h">Image forms</td><td>In front of retina</td><td>Behind retina</td></tr>
+    <tr><td class="h">Eyeball</td><td>Too long</td><td>Too short</td></tr>
+    <tr><td class="h">Corrective lens</td><td>Concave (−)</td><td>Convex (+)</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Mirror Formula vs Lens Formula</h3>
+  <table class="tbl">
+    <tr><th></th><th>Mirror</th><th>Lens</th></tr>
+    <tr><td class="h">Formula</td><td><b>1/v + 1/u = 1/f</b></td><td><b>1/v − 1/u = 1/f</b></td></tr>
+    <tr><td class="h">Sign of f (converging)</td><td>Concave: − </td><td>Convex: +</td></tr>
+    <tr><td class="h">Magnification</td><td>m = −v/u</td><td>m = v/u</td></tr>
+    <tr><td class="h">Power</td><td>—</td><td>P = 1/f (dioptre)</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Rods vs Cones (Retina)</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Rods</th><th>Cones</th></tr>
+    <tr><td class="h">Light level</td><td>Dim / night</td><td>Bright / day</td></tr>
+    <tr><td class="h">Vision</td><td>Black & white</td><td>Colour</td></tr>
+    <tr><td class="h">Pigment</td><td>Rhodopsin (needs vit A)</td><td>Photopsin</td></tr>
+    <tr><td class="h">Deficiency effect</td><td>Night blindness</td><td>Colour blindness</td></tr>
+  </table></div>
+</div>
+<div class="panel" id="p-memory">
+  <h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+  <div class="sec-sub">One hook per recall-worthy fact. Read the concept, then the hook, then answer the recall question.</div>
+
+  <div class="mem-card"><div class="cn">Spectrum order <span class="tag">mnemonic</span></div>
+    <div class="hk"><b>VIBGYOR</b> — "<b>V</b>ery <b>I</b>ntelligent <b>B</b>oys <b>G</b>ive <b>Y</b>ou <b>O</b>range <b>R</b>oses." Read it as wavelength <i>increasing</i> (V shortest → R longest).</div>
+    <div class="rq">Q: Which colour bends most in a prism? → Violet (shortest λ, slowest in glass).</div></div>
+
+  <div class="mem-card"><div class="cn">Concave = collects <span class="tag">association</span></div>
+    <div class="hk"><b>Con-CAVE</b> curves inward like a <b>cave</b> and <b>C</b>ollects/<b>C</b>onverges light. Con-<b>VE</b>x bulges out (think <b>VE</b>hicle rear-view) and diverges.</div>
+    <div class="rq">Q: Which mirror converges parallel light? → Concave.</div></div>
+
+  <div class="mem-card"><div class="cn">Myopia correction <span class="tag">mnemonic</span></div>
+    <div class="hk"><b>My</b>opia → <b>M</b>inus lens (concave). "<b>My</b> distance is <b>M</b>inus." Hypermetropia → needs <b>H</b>elp of a plus (convex) lens.</div>
+    <div class="rq">Q: Lens to correct short-sight? → Concave (−).</div></div>
+
+  <div class="mem-card"><div class="cn">Mirror vs Lens formula <span class="tag">visual peg</span></div>
+    <div class="hk">Mirror reflects → rays "add up" on one side → <b>PLUS</b> (1/v <b>+</b> 1/u). Lens splits sides → <b>MINUS</b> (1/v <b>−</b> 1/u). "Mirror = More (+), Lens = Less (−)."</div>
+    <div class="rq">Q: Sign between 1/v and 1/u in the lens formula? → Minus.</div></div>
+
+  <div class="mem-card"><div class="cn">Danger signals & sunset are red <span class="tag">why-hook</span></div>
+    <div class="hk"><b>Red Runs the longest</b> — longest wavelength → scattered the least → travels farthest through fog/atmosphere. That's why STOP signs, sunsets and brake lights are red.</div>
+    <div class="rq">Q: Why is a stop signal red? → Least scattered, seen from farthest.</div></div>
+
+  <div class="mem-card"><div class="cn">Refractive index values <span class="tag">mnemonic</span></div>
+    <div class="hk"><b>"Water 1.33, Glass 1.5, Diamond 2.42"</b> — remember "<b>1-3-3 / 1-5 / Diamond is the King (2.42)</b>." Higher n → slower light → more bending → more sparkle.</div>
+    <div class="rq">Q: Which common material has the highest refractive index? → Diamond.</div></div>
+
+  <div class="mem-card"><div class="cn">Plane-mirror image properties <span class="tag">acronym</span></div>
+    <div class="hk"><b>"V-E-S-L"</b> — <b>V</b>irtual, <b>E</b>rect, <b>S</b>ame size, <b>L</b>aterally inverted (and equidistant behind). "Very Easy Simple Lateral."</div>
+    <div class="rq">Q: Is a plane-mirror image real or virtual? → Virtual.</div></div>
+
+  <div class="mem-card"><div class="cn">Ambulance writing <span class="tag">funny</span></div>
+    <div class="hk">ƎƆᴎA˥UᙠMA is printed reversed so the driver ahead reads "AMBULANCE" correctly in their rear-view mirror — a real-world proof of <b>lateral inversion</b>.</div>
+    <div class="rq">Q: Why is AMBULANCE mirror-written? → Lateral inversion corrects it in the mirror.</div></div>
+
+  <div class="mem-card"><div class="cn">Two conditions for TIR <span class="tag">mnemonic</span></div>
+    <div class="hk"><b>"Dense → Rare, and go Big"</b> — light must travel Dense-to-Rare AND the angle must exceed the critical angle. Miss either and TIR fails.</div>
+    <div class="rq">Q: Optical fibre works on? → Total internal reflection.</div></div>
+
+  <div class="mem-card"><div class="cn">Eye near point <span class="tag">number peg</span></div>
+    <div class="hk"><b>25 cm</b> is the least distance of distinct vision — "hold a book about a <b>ruler-length</b> away." Far point = infinity.</div>
+    <div class="rq">Q: Near point of a normal eye? → 25 cm.</div></div>
+
+  <div class="mem-card"><div class="cn">f = R/2 <span class="tag">visual</span></div>
+    <div class="hk">Focus sits <b>halfway</b> between the mirror and its centre of curvature. "<b>F</b>ocus is the <b>halF</b> point." So R = 2f.</div>
+    <div class="rq">Q: Radius of curvature if f = 15 cm? → 30 cm.</div></div>
+
+  <div class="mem-card"><div class="cn">Rainbow colour order <span class="tag">visual peg</span></div>
+    <div class="hk">Primary rainbow: <b>Red on top, Violet at bottom</b>. "Red <b>Rises</b>, Violet <b>Val</b>leys." Sun always behind the viewer.</div>
+    <div class="rq">Q: Which colour is at the top of a rainbow? → Red.</div></div>
+</div>
+<div class="panel" id="p-traps">
+  <h2 class="sec"><span class="em">⚠️</span>Exam Traps &amp; Confusion Pairs</h2>
+  <div class="sec-sub">Every trap below has been set in real papers. Read the "reality" line and the trap dies.</div>
+
+  <div class="note trap"><span class="t">Trap 1 · Surface vs Normal</span>Angles of incidence & reflection are measured from the <b>NORMAL</b>, never from the mirror surface. "Ray hits at 30° to the surface" → angle of reflection (from normal) = 90−30 = <b>60°</b>, not 30°.</div>
+
+  <div class="note trap"><span class="t">Trap 2 · Mirror "+" vs Lens "−"</span>Mirror formula uses <b>plus</b> (1/v + 1/u = 1/f); lens formula uses <b>minus</b> (1/v − 1/u = 1/f). Swapping them is the most common numerical error.</div>
+
+  <div class="note trap"><span class="t">Trap 3 · Rear-view mirror</span>It is a <b>convex</b> mirror (wide view, erect image) — <b>not</b> concave. Concave is for shaving, dentists and solar cookers.</div>
+
+  <div class="note trap"><span class="t">Trap 4 · Lens for myopia</span>Myopia (short-sight) is corrected by a <b>concave</b> (diverging) lens. Convex is for hypermetropia. The words "myopia" and "convex" together = wrong option.</div>
+
+  <div class="note trap"><span class="t">Trap 5 · Refractive index has no unit</span>n = c/v is a ratio of two speeds → <b>dimensionless, no unit</b>. Any option giving it a unit (m/s, etc.) is a distractor.</div>
+
+  <div class="note trap"><span class="t">Trap 6 · Sky blue but Sun red</span>Both are the <b>same</b> phenomenon — Rayleigh scattering. Sky is blue (scattered short λ); sunset is red (blue scattered away over a long path). Don't call one "reflection."</div>
+
+  <div class="note trap"><span class="t">Trap 7 · Which bends more — red or violet?</span><b>Violet</b> bends most (shortest wavelength, slowest in glass); red bends least. Reverse for wavelength: red has the <b>longest</b> wavelength.</div>
+
+  <div class="note trap"><span class="t">Trap 8 · Speed of light in a medium</span>Light is <b>fastest in vacuum/air</b> and <b>slows</b> in denser media. "Light speeds up entering glass" is false. Frequency stays constant; speed & wavelength change.</div>
+
+  <div class="note trap"><span class="t">Trap 9 · Real image is always inverted; virtual is erect</span>A real image can be caught on a screen and is inverted. A magnifier/plane mirror gives a virtual, erect image that can't be projected.</div>
+
+  <div class="note trap"><span class="t">Trap 10 · TIR direction</span>Total internal reflection happens only <b>denser → rarer</b> (e.g. glass to air), never rarer → denser. Also requires angle &gt; critical angle.</div>
+
+  <div class="note trap"><span class="t">Trap 11 · Mirage vs Rainbow cause</span>Mirage = refraction + <b>TIR</b> in hot air. Rainbow = <b>dispersion</b> + internal reflection in raindrops. Don't swap the mechanisms.</div>
+
+  <div class="note trap"><span class="t">Trap 12 · Twinkling</span><b>Stars twinkle, planets don't.</b> Cause is atmospheric refraction, not the star "blinking." Planets are discs, so flicker averages out.</div>
+
+  <div class="note trap"><span class="t">Trap 13 · Power sign & addition</span>Convex lens = <b>+</b> power, concave = <b>−</b>. Lenses in contact: powers <b>add</b> (+2D & −3D → −1D), focal lengths do NOT add directly.</div>
+
+  <div class="note trap"><span class="t">Trap 14 · Focal length relation</span><b>f = R/2</b> for mirrors. A common distractor states f = 2R or f = R — both wrong.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason style</span><b>A:</b> A convex mirror is used as a rear-view mirror. <b>R:</b> It always forms an erect, diminished image with a wide field of view. → Both true, <b>R correctly explains A</b>.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason style</span><b>A:</b> The sky appears blue. <b>R:</b> Blue light has the longest wavelength. → A true, <b>R false</b> (blue has a <i>short</i> wavelength; it is scattered more).</div>
+</div>
+<div class="panel" id="p-rapid">
+  <h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-Liners</h2>
+  <div class="sec-sub"><span class="star">★</span> = highest-frequency in exams. Read top-to-bottom the night before the paper.</div>
+  <div class="ol">
+    <div><span class="n">1</span><span><span class="star">★</span> Speed of light in vacuum = 3×10⁸ m/s; nothing travels faster.</span></div>
+    <div><span class="n">2</span><span><span class="star">★</span> Laws of reflection: rays + normal coplanar; ∠i = ∠r (from the normal).</span></div>
+    <div><span class="n">3</span><span>Plane-mirror image: virtual, erect, same size, laterally inverted, equidistant behind.</span></div>
+    <div><span class="n">4</span><span>Lateral inversion → why AMBULANCE is printed reversed.</span></div>
+    <div><span class="n">5</span><span><span class="star">★</span> Concave mirror = converging; convex mirror = diverging.</span></div>
+    <div><span class="n">6</span><span><span class="star">★</span> Rear-view / security mirror = convex (wide field, erect diminished image).</span></div>
+    <div><span class="n">7</span><span>Concave uses: shaving, dentist, torch/headlight, solar cooker, telescope.</span></div>
+    <div><span class="n">8</span><span><span class="star">★</span> Mirror formula: 1/v + 1/u = 1/f; magnification m = −v/u.</span></div>
+    <div><span class="n">9</span><span><span class="star">★</span> f = R/2 (focal length = half the radius of curvature).</span></div>
+    <div><span class="n">10</span><span>Concave mirror between F and pole → virtual, erect, magnified (shaving mirror).</span></div>
+    <div><span class="n">11</span><span><span class="star">★</span> Refraction = bending of light due to change in speed.</span></div>
+    <div><span class="n">12</span><span><span class="star">★</span> Snell's law: n₁ sinθ₁ = n₂ sinθ₂.</span></div>
+    <div><span class="n">13</span><span><span class="star">★</span> Refractive index n = c/v; has NO unit.</span></div>
+    <div><span class="n">14</span><span>n values: air 1.0, water 1.33, glass 1.5, diamond 2.42 (highest).</span></div>
+    <div><span class="n">15</span><span>Denser medium → bends toward normal; rarer → away from normal.</span></div>
+    <div><span class="n">16</span><span>Bent-straw & shallow-pool illusions = refraction. Real depth = apparent depth × n.</span></div>
+    <div><span class="n">17</span><span><span class="star">★</span> TIR needs: denser→rarer AND angle &gt; critical angle.</span></div>
+    <div><span class="n">18</span><span>Critical angle: water 48°, glass 42°, diamond 24°.</span></div>
+    <div><span class="n">19</span><span><span class="star">★</span> Optical fibre works on total internal reflection (data & endoscopy).</span></div>
+    <div><span class="n">20</span><span>Mirage = refraction + TIR through hot air layers.</span></div>
+    <div><span class="n">21</span><span>Diamond sparkles due to TIR (small critical angle).</span></div>
+    <div><span class="n">22</span><span><span class="star">★</span> Dispersion order = VIBGYOR; violet bends most, red least.</span></div>
+    <div><span class="n">23</span><span>Newton first split white light with a prism (1666).</span></div>
+    <div><span class="n">24</span><span><span class="star">★</span> Rainbow: dispersion + internal reflection in raindrops; red on top.</span></div>
+    <div><span class="n">25</span><span><span class="star">★</span> Sky is blue & sunset red → Rayleigh scattering (∝ 1/λ⁴).</span></div>
+    <div><span class="n">26</span><span>Red is used for danger signals (longest λ, least scattered).</span></div>
+    <div><span class="n">27</span><span>Stars twinkle (atmospheric refraction); planets don't.</span></div>
+    <div><span class="n">28</span><span><span class="star">★</span> Convex lens = converging (+ power); concave lens = diverging (− power).</span></div>
+    <div><span class="n">29</span><span><span class="star">★</span> Lens formula: 1/v − 1/u = 1/f (minus).</span></div>
+    <div><span class="n">30</span><span><span class="star">★</span> Power P = 1/f (metres); unit = dioptre (D); powers in contact add.</span></div>
+    <div><span class="n">31</span><span>Magnifying glass = convex lens (object within focus → virtual, erect, magnified).</span></div>
+    <div><span class="n">32</span><span><span class="star">★</span> Eye forms a real, inverted image on the retina.</span></div>
+    <div><span class="n">33</span><span>Accommodation = ciliary muscles change the lens's focal length.</span></div>
+    <div><span class="n">34</span><span><span class="star">★</span> Near point = 25 cm; far point = infinity.</span></div>
+    <div><span class="n">35</span><span>Rods → dim-light/B&W (need vitamin A); cones → bright-light/colour.</span></div>
+    <div><span class="n">36</span><span>Vitamin A deficiency → night blindness.</span></div>
+    <div><span class="n">37</span><span><span class="star">★</span> Myopia → concave (−) lens; hypermetropia → convex (+) lens.</span></div>
+    <div><span class="n">38</span><span>Presbyopia (ageing) → bifocal lens; astigmatism → cylindrical lens.</span></div>
+    <div><span class="n">39</span><span>Persistence of vision ≈ 1/16 s → basis of cinema.</span></div>
+    <div><span class="n">40</span><span>Cataract = clouding of the eye lens; corrected by surgery (IOL).</span></div>
+  </div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Light Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+/* ===================== TAB SWITCHING ===================== */
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+});
+
+/* ===================== PROGRESS STORE (XP · FAA · opened) ===================== */
+/* Matches CentuMania convention: localStorage keyed by topic. */
+var LSKEY="sci_phys_light_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+/* award XP once per unique key; bucket = opened/solved/flipped */
+function award(bucket,key,xp){
+  if(P[bucket][key]) return false;      // already counted
+  P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true;
+}
+function toggleFAA(key,el){
+  if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');}
+  saveP(); refreshHUD(false);
+}
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){
+  var e=function(id){return document.getElementById(id);};
+  if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:35;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:54;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp;
+  e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa);
+  e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');}
+}
+loadP();
+
+/* ===================== MIND-MAP DATA (Light) ===================== */
+/* root id 0 (cat null) · hubs cat:0 · leaves cat:hubId */
+var MAP=[
+ {id:0,cat:null,icon:"💡",label:"Light",fact:"Light is an electromagnetic wave that travels in straight lines at 3×10⁸ m/s in vacuum. It reflects, refracts and disperses — the four behaviours that build this whole chapter."},
+ /* hubs */
+ {id:1,cat:0,icon:"🪞",label:"Reflection",fact:"Bouncing of light off a surface. Two laws: rays + normal lie in one plane, and ∠i = ∠r (both measured from the normal)."},
+ {id:2,cat:0,icon:"🥄",label:"Mirrors",fact:"Curved mirrors from a sphere. Concave converges, convex diverges. f = R/2. Image type depends on object position."},
+ {id:3,cat:0,icon:"🌈",label:"Refraction",fact:"Bending of light when its speed changes between media. n = c/v = sinθ₁/sinθ₂ (Snell's law)."},
+ {id:4,cat:0,icon:"✨",label:"Total Internal\nReflection",fact:"Beyond the critical angle, light in a denser medium is fully reflected. Powers optical fibres, mirages and diamond sparkle."},
+ {id:5,cat:0,icon:"🎨",label:"Dispersion",fact:"White light splits into VIBGYOR because each colour bends by a different amount. Violet bends most, red least."},
+ {id:6,cat:0,icon:"🔍",label:"Lenses",fact:"Refract light at two curved surfaces. Convex converges (+ power), concave diverges (− power). Power in dioptres."},
+ {id:7,cat:0,icon:"👁️",label:"The Eye",fact:"A living convex-lens camera forming a real, inverted image on the retina. Focuses by accommodation."},
+ /* leaves — Reflection */
+ {id:101,cat:1,icon:"📐",label:"Laws:\n∠i = ∠r",fact:"Angle of incidence equals angle of reflection, both measured from the NORMAL (not the surface). This is the #1 exam trap."},
+ {id:102,cat:1,icon:"🪞",label:"Plane-mirror\nimage",fact:"Virtual, erect, same size, laterally inverted, and as far behind the mirror as the object is in front."},
+ {id:103,cat:1,icon:"🚑",label:"Lateral\ninversion",fact:"Left–right reversal (really front–back). Why AMBULANCE is printed mirror-reversed on the front of the vehicle."},
+ {id:104,cat:1,icon:"📄",label:"Regular vs\ndiffuse",fact:"Smooth surface → parallel rays → clear image (regular). Rough surface → scattered rays → no image (diffuse). Both obey ∠i=∠r."},
+ /* leaves — Mirrors */
+ {id:201,cat:2,icon:"🥄",label:"Concave",fact:"Converging. Used in torches, headlights, shaving/make-up mirrors, dentist's mirror, solar cookers, telescopes."},
+ {id:202,cat:2,icon:"🚗",label:"Convex",fact:"Diverging. ALWAYS gives a small, erect, virtual image → wide field of view. Vehicle rear-view & shop security mirrors."},
+ {id:203,cat:2,icon:"🧮",label:"f = R/2",fact:"Focal length is half the radius of curvature. Mirror formula 1/v + 1/u = 1/f, magnification m = −v/u."},
+ {id:204,cat:2,icon:"🔦",label:"Uses",fact:"Bulb at focus of a concave reflector → parallel beam (torch). Sun's parallel rays into concave → meet at F → solar cooker."},
+ /* leaves — Refraction */
+ {id:301,cat:3,icon:"📏",label:"Snell's\nlaw",fact:"n₁sinθ₁ = n₂sinθ₂. Into a denser medium → bends toward normal; into a rarer medium → bends away."},
+ {id:302,cat:3,icon:"💎",label:"Refractive\nindex",fact:"n = c/v, no unit. Air ≈1.0, water 1.33, glass 1.5, diamond 2.42 (highest → most bending & sparkle)."},
+ {id:303,cat:3,icon:"🥤",label:"Bent straw /\napparent depth",fact:"A straw looks broken and a pool looks shallower because light bends leaving water. Real depth = apparent depth × n."},
+ {id:304,cat:3,icon:"⭐",label:"Twinkling\nstars",fact:"Star light passes through shifting air layers → continuous tiny refractions → twinkling. Planets (discs) don't twinkle."},
+ /* leaves — TIR */
+ {id:401,cat:4,icon:"📐",label:"Critical\nangle",fact:"The incidence angle (denser→rarer) at which the refracted ray grazes at 90°. Water ≈48°, glass ≈42°, diamond ≈24°."},
+ {id:402,cat:4,icon:"🌐",label:"Optical\nfibre",fact:"Light zig-zags down a glass fibre by repeated TIR — carries internet data and lets doctors see inside the body (endoscopy)."},
+ {id:403,cat:4,icon:"🏜️",label:"Mirage",fact:"Hot rarer air near a road bends skylight upward via TIR → a shimmering 'puddle' that vanishes as you approach."},
+ {id:404,cat:4,icon:"💎",label:"Diamond\nsparkle",fact:"Tiny critical angle (24°) means light entering a cut diamond bounces by TIR many times before escaping → brilliance."},
+ /* leaves — Dispersion */
+ {id:501,cat:5,icon:"🌈",label:"VIBGYOR",fact:"Violet-Indigo-Blue-Green-Yellow-Orange-Red. Violet has the shortest wavelength & bends most; red the longest & bends least."},
+ {id:502,cat:5,icon:"🌦️",label:"Rainbow",fact:"Raindrops refract → internally reflect → refract sunlight. Sun behind you; red on top, violet at the bottom of the bow."},
+ {id:503,cat:5,icon:"🔵",label:"Blue sky",fact:"Rayleigh scattering: air scatters short (blue) wavelengths far more than long ones (∝1/λ⁴), so the daytime sky looks blue."},
+ {id:504,cat:5,icon:"🌇",label:"Red sunset",fact:"At sunset light skims a long path; blue is scattered away, leaving red/orange. Same reason danger signals are red."},
+ /* leaves — Lenses */
+ {id:601,cat:6,icon:"🔎",label:"Convex\n(converging)",fact:"Thick centre; bends rays to a focus. A magnifying glass (object inside focus → virtual, erect, magnified). Power is +."},
+ {id:602,cat:6,icon:"🕳️",label:"Concave\n(diverging)",fact:"Thin centre; spreads rays out. Always a small, erect, virtual image. Corrects myopia. Power is −."},
+ {id:603,cat:6,icon:"🧮",label:"Lens\nformula",fact:"1/v − 1/u = 1/f (MINUS — unlike the mirror's plus). Don't mix the two formulas up."},
+ {id:604,cat:6,icon:"⚡",label:"Power\n(dioptre)",fact:"P = 1/f (metres), unit dioptre (D). Lenses in contact: powers simply add. +2D and −3D → net −1D."},
+ /* leaves — Eye */
+ {id:701,cat:7,icon:"🎞️",label:"Retina\n(rods/cones)",fact:"Screen of the eye. Rods work in dim light (B/W); cones in bright light (colour). Image formed is real & inverted."},
+ {id:702,cat:7,icon:"🔧",label:"Accommo-\ndation",fact:"Ciliary muscles change the lens's focal length to focus near & far. Near point = 25 cm, far point = infinity."},
+ {id:703,cat:7,icon:"➖",label:"Myopia",fact:"Short-sight: can't see far; image forms in FRONT of the retina. Corrected by a CONCAVE (minus) lens."},
+ {id:704,cat:7,icon:"➕",label:"Hyper-\nmetropia",fact:"Long-sight: can't see near; image forms BEHIND the retina. Corrected by a CONVEX (plus) lens."}
+];
+
+/* ===================== PROGRESSIVE RADIAL MAP ENGINE ===================== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+
+function lighten(hex,amt){ // mix toward white
+  var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')';
+}
+function childrenOf(id){return mNodes.filter(n=>n.cat===id);}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+
+/* ---- LOCK / PROGRESSION ---- */
+var HUB_ORDER=[1,2,3,4,5,6,7];
+function hubName(id){var h=MAP.find(x=>x.id===id);return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(n=>n.cat===hubId);return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  // build node objects with colours + anim state
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(x=>x.id===d.cat); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(n=>mById[n.id]=n);
+  mExp={0:false}; mSel=null;
+  mapResize();
+  layout(); fitView(true);
+  bindMap();
+  mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){
+  if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr;
+}
+/* symmetric radial positions for currently-relevant nodes */
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K);
+    h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; }
+    else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1);
+      var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; }
+      else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  // targets for alpha/scale based on visibility
+  mNodes.forEach(function(n){
+    var vis=isVisible(n);
+    n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } }
+  });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){
+    n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16;
+  });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap();
+  mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  // edges
+  mNodes.forEach(function(n){
+    if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a);
+    if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6/mView.s*mDpr*0+1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke();
+  });
+  mCtx.globalAlpha=1;
+  // nodes (draw hidden-ish first, selected last)
+  mNodes.slice().sort((a,b)=>a.r-b.r).forEach(function(n){
+    if(n.a<0.02) return;
+    var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    // glow
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    // body
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    // affordance ring: has children, not yet expanded
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke();
+    }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    // locked node: dim + padlock
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y);
+    }
+    // visited marker (persisted): amber tick dot top-right
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke();
+    }
+    // label
+    if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      // icon in node
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y);
+    }
+  });
+  mCtx.globalAlpha=1;
+}
+/* input */
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){
+  var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best;
+}
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  // pinch
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }   // +5 XP first open
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    // opening: seed children at parent
+    if(mExp[n.id]) childrenOf(n.id).forEach(c=>{c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){
+      award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); }
+  else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===================== MCQ BANK ===================== */
+var MCQ=[
+ {t:"Recall · SSC",q:"The angle of incidence is always equal to the angle of:",o:["Refraction","Reflection","Deviation","Dispersion"],a:1,e:"Second law of reflection: ∠i = ∠r, both measured from the normal."},
+ {t:"Trap · SSC",q:"A ray strikes a plane mirror making 30° with the mirror surface. The angle of reflection (from the normal) is:",o:["30°","60°","90°","15°"],a:1,e:"From surface = 30° → from normal = 90−30 = 60°, and ∠r = ∠i = 60°."},
+ {t:"Recall · TNPSC",q:"The image formed by a plane mirror is:",o:["Real & inverted","Virtual & erect","Real & magnified","Virtual & inverted"],a:1,e:"Plane mirrors give a virtual, erect, same-size, laterally inverted image."},
+ {t:"Conceptual · RRB",q:"'AMBULANCE' is written in reverse on the vehicle's front because of:",o:["Dispersion","Lateral inversion","Refraction","Total internal reflection"],a:1,e:"A mirror laterally inverts, so a reversed word reads correctly in a driver's rear-view mirror."},
+ {t:"Recall · SSC",q:"A convex mirror is preferred as a rear-view mirror because it:",o:["Forms a real image","Gives a wide field of view","Magnifies objects","Inverts the image"],a:1,e:"Convex mirrors always give small, erect, virtual images → wide field of view."},
+ {t:"Application · TNPSC",q:"Which mirror is used in a solar cooker?",o:["Plane","Convex","Concave","Cylindrical"],a:2,e:"A concave mirror converges the Sun's parallel rays to its focus, concentrating heat."},
+ {t:"Recall · Banking",q:"The relationship between focal length (f) and radius of curvature (R) of a spherical mirror is:",o:["f = R","f = 2R","f = R/2","f = R/4"],a:2,e:"f = R/2 — the focus lies midway between the pole and the centre of curvature."},
+ {t:"Numerical · SSC",q:"If the radius of curvature of a concave mirror is 40 cm, its focal length is:",o:["10 cm","20 cm","40 cm","80 cm"],a:1,e:"f = R/2 = 40/2 = 20 cm."},
+ {t:"Conceptual · RRB",q:"A concave mirror forms a virtual, erect and magnified image when the object is placed:",o:["Beyond C","At C","Between F and pole","At F"],a:2,e:"Only when the object is between the focus and the pole (as in a shaving mirror)."},
+ {t:"Trap · SSC",q:"The mirror formula is:",o:["1/v − 1/u = 1/f","1/v + 1/u = 1/f","v + u = f","1/f = 1/u − 1/v"],a:1,e:"Mirror uses PLUS; the lens formula uses minus. Don't mix them."},
+ {t:"Recall · TNPSC",q:"Refraction of light is caused by a change in its:",o:["Colour","Frequency","Speed","Intensity"],a:2,e:"Light bends because its speed changes on entering a new medium."},
+ {t:"Recall · SSC",q:"The refractive index of a medium is given by:",o:["v/c","c/v","c×v","c−v"],a:1,e:"n = c/v (speed in vacuum ÷ speed in medium). It is a dimensionless ratio."},
+ {t:"Trap · Banking",q:"The unit of refractive index is:",o:["metre/second","dioptre","It has no unit","hertz"],a:2,e:"Being a ratio of two speeds, refractive index is dimensionless."},
+ {t:"Recall · RRB",q:"Which of the following has the highest refractive index?",o:["Water","Glass","Diamond","Air"],a:2,e:"Diamond ≈ 2.42 — the highest among common materials, giving maximum sparkle."},
+ {t:"Conceptual · SSC",q:"When light passes from air into water, it bends:",o:["Away from the normal","Toward the normal","Along the surface","Not at all"],a:1,e:"Entering a denser medium (water), light slows and bends toward the normal."},
+ {t:"Application · TNPSC",q:"A straw in a glass of water appears bent due to:",o:["Reflection","Refraction","Dispersion","Diffraction"],a:1,e:"Light from the submerged part refracts on leaving water, shifting its apparent position."},
+ {t:"Recall · SSC",q:"Optical fibres work on the principle of:",o:["Refraction","Dispersion","Total internal reflection","Interference"],a:2,e:"Light zig-zags along the fibre by repeated total internal reflection."},
+ {t:"Conceptual · RRB",q:"Total internal reflection occurs when light travels from:",o:["Rarer to denser medium","Denser to rarer medium beyond critical angle","Any medium to vacuum","Air to glass"],a:1,e:"TIR needs denser→rarer travel AND incidence beyond the critical angle."},
+ {t:"Application · SSC",q:"A mirage on a hot road is caused by:",o:["Reflection only","Refraction and total internal reflection","Dispersion","Scattering"],a:1,e:"Light bends through hot rarer air and undergoes TIR, mimicking a water reflection."},
+ {t:"Conceptual · TNPSC",q:"A diamond sparkles brilliantly mainly because of its:",o:["High density","Small critical angle causing repeated TIR","Colour","Hardness"],a:1,e:"Its 24° critical angle traps light by repeated total internal reflection."},
+ {t:"Recall · SSC",q:"The splitting of white light into seven colours is called:",o:["Reflection","Refraction","Dispersion","Scattering"],a:2,e:"Dispersion — each colour bends by a different amount in the prism."},
+ {t:"Recall · Banking",q:"In the visible spectrum, the colour that bends the most through a prism is:",o:["Red","Yellow","Green","Violet"],a:3,e:"Violet has the shortest wavelength, slows most in glass, and bends most."},
+ {t:"Recall · RRB",q:"Which colour of light has the longest wavelength?",o:["Violet","Blue","Green","Red"],a:3,e:"Red has the longest wavelength and bends the least."},
+ {t:"Conceptual · SSC",q:"The blue colour of the sky is due to:",o:["Reflection of sea water","Scattering of light by air molecules","Refraction in clouds","Absorption of red light"],a:1,e:"Rayleigh scattering: short (blue) wavelengths scatter far more than long ones."},
+ {t:"Conceptual · TNPSC",q:"The Sun appears red at sunset because:",o:["It cools down","Blue light is scattered away over a long path","Of reflection by clouds","It moves farther"],a:1,e:"Over a long atmospheric path, blue is scattered out, leaving red/orange to reach us."},
+ {t:"Application · SSC",q:"Danger signals are red because red light:",o:["Is brightest","Has the least scattering and travels farthest","Is cheapest","Reflects best"],a:1,e:"Longest wavelength → least scattered → visible from the greatest distance in fog."},
+ {t:"Conceptual · RRB",q:"Stars twinkle but planets do not because:",o:["Stars are hotter","Planets are bigger discs, averaging out flicker","Stars are closer","Planets emit light"],a:1,e:"Atmospheric refraction flickers point-like stars; planets appear as discs, so it averages out."},
+ {t:"Recall · SSC",q:"The power of a lens is measured in:",o:["Watt","Dioptre","Joule","Newton"],a:1,e:"Power P = 1/f (in metres); its unit is the dioptre (D)."},
+ {t:"Numerical · Banking",q:"A convex lens of focal length 50 cm has a power of:",o:["+0.5 D","+2 D","+5 D","−2 D"],a:1,e:"P = 1/f = 1/0.5 m = +2 D (convex → positive)."},
+ {t:"Numerical · SSC",q:"Two lenses of power +3 D and −1 D are in contact. Net power is:",o:["+4 D","+2 D","−2 D","+3 D"],a:1,e:"Powers add: +3 + (−1) = +2 D."},
+ {t:"Application · TNPSC",q:"A magnifying glass is a:",o:["Concave lens","Convex lens","Plane mirror","Concave mirror"],a:1,e:"A convex lens with the object within its focus gives a virtual, erect, magnified image."},
+ {t:"Trap · RRB",q:"The lens formula is:",o:["1/v + 1/u = 1/f","1/v − 1/u = 1/f","1/u − 1/v = 1/f","v − u = f"],a:1,e:"Lens uses MINUS (1/v − 1/u = 1/f); the mirror formula uses plus."},
+ {t:"Recall · SSC",q:"The image formed on the retina of the human eye is:",o:["Virtual and erect","Real and inverted","Virtual and inverted","Real and erect"],a:1,e:"The eye's convex lens forms a real, inverted, diminished image; the brain re-orients it."},
+ {t:"Recall · TNPSC",q:"The least distance of distinct vision (near point) for a normal eye is:",o:["10 cm","25 cm","50 cm","1 m"],a:1,e:"About 25 cm; the far point is infinity."},
+ {t:"Conceptual · SSC",q:"The ability of the eye lens to adjust its focal length is called:",o:["Persistence","Accommodation","Adaptation","Refraction"],a:1,e:"Ciliary muscles change the lens curvature — accommodation."},
+ {t:"Recall · RRB",q:"Myopia (short-sightedness) is corrected using a:",o:["Convex lens","Concave lens","Cylindrical lens","Bifocal lens"],a:1,e:"A concave (diverging, −) lens moves the image back onto the retina."},
+ {t:"Conceptual · Banking",q:"In hypermetropia, the image of a near object forms:",o:["On the retina","In front of the retina","Behind the retina","On the blind spot"],a:2,e:"The image falls behind the retina; a convex (+) lens corrects it."},
+ {t:"Recall · SSC",q:"Night blindness is caused by the deficiency of:",o:["Vitamin A","Vitamin C","Vitamin D","Iron"],a:0,e:"Vitamin A is needed to make rhodopsin in the rod cells for dim-light vision."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Rods sense colour. (2) Cones work best in bright light. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"Rods = dim light & B/W; cones = bright light & colour. So only statement 2 is correct."},
+ {t:"Assertion–Reason · SSC",q:"A: The sky appears blue. R: Blue light has the longest wavelength.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:2,e:"A is true, but R is false — blue has a SHORT wavelength and is scattered more."},
+ {t:"Assertion–Reason · RRB",q:"A: A convex mirror is used as a rear-view mirror. R: It gives an erect, diminished image with a wide field of view.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R is the correct reason A holds."},
+ {t:"Diagram · SSC",q:"In a ray diagram, a ray through the focus of a convex lens, after refraction, travels:",o:["Through the optical centre","Parallel to the principal axis","Back along itself","Through 2F"],a:1,e:"A ray passing through F emerges parallel to the principal axis (reverse of a parallel ray)."},
+ {t:"Statement · SSC",q:"Consider: (1) A convex lens always forms a real image. (2) A concave lens always forms a virtual image. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"A convex lens gives a virtual image when the object is within the focus (magnifier); a concave lens always gives a virtual, erect, diminished image. So only 2 is correct."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Refractive index has no unit. (2) Light travels fastest in glass. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true (it is a ratio). 2 is false — light is fastest in vacuum/air and slows in glass."},
+ {t:"Statement · RRB",q:"Consider: (1) A convex mirror always forms a virtual image. (2) A concave mirror always forms a real image. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"A convex mirror always gives a virtual image. A concave mirror gives a virtual image when the object is within the focus, so 2 is false."},
+ {t:"Statement · SSC",q:"Consider: (1) The sky is blue due to scattering. (2) Clouds are white due to scattering of all wavelengths. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both true — small air molecules scatter blue (Rayleigh); large water droplets scatter all colours equally, so clouds look white (Mie scattering)."},
+ {t:"Statement · Banking",q:"Consider: (1) Violet has the highest frequency in the visible spectrum. (2) Red is deviated most by a prism. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — violet (not red) is deviated most."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Optical fibres use total internal reflection. (2) A mirage is formed by dispersion. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — a mirage is refraction + TIR, not dispersion."},
+ {t:"Statement · SSC",q:"Consider: (1) The human eye lens is convex. (2) The retinal image is virtual and erect. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — the retinal image is real and inverted."},
+ {t:"Assertion–Reason · SSC",q:"A: A pencil half-dipped in water appears bent. R: Light bends on passing from water to air (refraction).",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R correctly explains A — refraction shifts the apparent position of the submerged part."},
+ {t:"Assertion–Reason · Banking",q:"A: Diamond sparkles brilliantly. R: Diamond has a very large critical angle.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:2,e:"A is true, but R is false — diamond has a SMALL critical angle (~24°), which causes repeated TIR."},
+ {t:"Assertion–Reason · TNPSC",q:"A: A convex lens is used to correct hypermetropia. R: Hypermetropia forms the image behind the retina.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A — a converging (convex) lens brings the image forward onto the retina."},
+ {t:"Statement · RRB",q:"Consider: (1) Power of a lens is measured in dioptres. (2) A lens of focal length 25 cm has a power of 4 D. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both true — P = 1/f = 1/0.25 m = 4 D."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, application, statement, assertion–reason, diagram & numerical. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }   // +10 XP first correct
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===================== FLASHCARDS ===================== */
+var FC=[
+ {q:"State the two laws of reflection.",a:"(1) Incident ray, reflected ray & normal lie in one plane. (2) ∠i = ∠r."},
+ {q:"From where are angles measured in reflection?",a:"From the normal (perpendicular), never from the surface."},
+ {q:"Properties of a plane-mirror image?",a:"Virtual, erect, same size, laterally inverted, equidistant behind."},
+ {q:"What is lateral inversion?",a:"Left–right (front–back) reversal of a mirror image."},
+ {q:"Regular vs diffuse reflection?",a:"Smooth surface → clear image; rough surface → scattered rays, no image. Both obey ∠i=∠r."},
+ {q:"Concave mirror — action & one use?",a:"Converging; used in torches, shaving mirrors, dentist's mirror, solar cookers."},
+ {q:"Convex mirror — image & main use?",a:"Always virtual, erect, diminished; used as a rear-view / security mirror."},
+ {q:"Relation between f and R for a mirror?",a:"f = R/2."},
+ {q:"Mirror formula and magnification?",a:"1/v + 1/u = 1/f; m = −v/u = h′/h."},
+ {q:"Where must an object be for a concave mirror to magnify (erect)?",a:"Between the focus and the pole."},
+ {q:"What causes refraction?",a:"A change in the speed of light between media."},
+ {q:"State Snell's law.",a:"n₁ sinθ₁ = n₂ sinθ₂."},
+ {q:"Define refractive index and its unit.",a:"n = c/v; it has no unit (a ratio of speeds)."},
+ {q:"Refractive indices: water, glass, diamond?",a:"Water 1.33, glass 1.5, diamond 2.42 (highest)."},
+ {q:"Two conditions for total internal reflection?",a:"Denser→rarer travel AND angle of incidence > critical angle."},
+ {q:"Critical angles of water, glass, diamond?",a:"≈48°, ≈42°, ≈24°."},
+ {q:"Principle behind optical fibres?",a:"Total internal reflection."},
+ {q:"What causes a mirage?",a:"Refraction + TIR through layers of hot (rarer) air."},
+ {q:"Order of the spectrum?",a:"VIBGYOR — violet bends most, red least."},
+ {q:"Which colour has the longest wavelength?",a:"Red (bends least, scattered least)."},
+ {q:"Why is the sky blue?",a:"Rayleigh scattering — blue (short λ) scatters more than red."},
+ {q:"Why is the sunset red / danger signals red?",a:"Red has the longest wavelength → least scattered → travels farthest."},
+ {q:"Why do stars twinkle but not planets?",a:"Atmospheric refraction flickers point-like stars; planets are discs and average out."},
+ {q:"Lens formula?",a:"1/v − 1/u = 1/f (minus, unlike mirrors)."},
+ {q:"Power of a lens — formula and unit?",a:"P = 1/f (metres); unit = dioptre (D). Convex +, concave −."},
+ {q:"Net power of lenses in contact?",a:"Powers simply add (e.g. +2D and −3D → −1D)."},
+ {q:"A magnifying glass is which lens?",a:"A convex lens (object within focus → virtual, erect, magnified)."},
+ {q:"Nature of the image on the retina?",a:"Real, inverted and diminished."},
+ {q:"Near point and far point of a normal eye?",a:"25 cm and infinity."},
+ {q:"What is accommodation?",a:"Ciliary muscles changing the eye lens's focal length to focus near/far."},
+ {q:"Rods vs cones?",a:"Rods → dim light & B/W (need vitamin A); cones → bright light & colour."},
+ {q:"Myopia — defect and correction?",a:"Can't see far; image in front of retina; corrected by a concave (−) lens."},
+ {q:"Hypermetropia — defect and correction?",a:"Can't see near; image behind retina; corrected by a convex (+) lens."},
+ {q:"Night blindness is due to deficiency of?",a:"Vitamin A."},
+ {q:"Persistence of vision and its use?",a:"≈1/16 second; the basis of motion pictures (cinema)."},
+ {q:"Speed of light in vacuum?",a:"3 × 10⁸ m/s."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });   // +2 XP first flip
+})();
+
+/* ===================== FAA STARS ON RAPID ONE-LINERS + HUD INIT ===================== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===================== PROBLEMS (expected numericals) ===================== */
+var PROB=[
+ {lvl:"e",tag:"Reflection",q:"A ray strikes a plane mirror at an angle of incidence of 35°. Find the angle of reflection.",given:"∠i = 35°",find:"∠r",steps:["Law of reflection: ∠r = ∠i","∠r = 35°"],ans:"35°"},
+ {lvl:"e",tag:"Reflection",q:"An object is 40 cm in front of a plane mirror. How far apart are the object and its image?",given:"object 40 cm in front",find:"object–image distance",steps:["Image is as far behind as object is in front → 40 cm behind","Distance = 40 + 40"],ans:"80 cm"},
+ {lvl:"m",tag:"Reflection",q:"A ray makes 25° with a mirror surface. Find the angle of reflection (from the normal).",given:"25° from the surface",find:"∠r from normal",steps:["Angle from normal = 90 − 25 = 65°","∠r = ∠i = 65°"],ans:"65°"},
+ {lvl:"e",tag:"Mirrors",q:"A concave mirror has a radius of curvature of 30 cm. Find its focal length.",given:"R = 30 cm",find:"f",steps:["f = R/2","f = 30/2"],ans:"15 cm"},
+ {lvl:"m",tag:"Mirrors",q:"An object is placed 30 cm from a concave mirror of focal length 15 cm. Find the image distance. (f = −15, u = −30)",given:"f = −15 cm, u = −30 cm",find:"v",steps:["1/v + 1/u = 1/f → 1/v = 1/f − 1/u","1/v = 1/(−15) − 1/(−30) = −2/30 + 1/30 = −1/30","v = −30 cm (real, in front, same size — object at C)"],ans:"−30 cm"},
+ {lvl:"h",tag:"Mirrors",q:"A 4 cm object is 20 cm from a concave mirror of f = 10 cm. Find the image height. (f=−10, u=−20)",given:"h = 4 cm, f = −10, u = −20",find:"h′",steps:["1/v = 1/f − 1/u = 1/(−10) − 1/(−20) = −1/20 → v = −20 cm","m = −v/u = −(−20)/(−20) = −1","h′ = m·h = −1 × 4 = −4 cm (inverted, same size)"],ans:"−4 cm (inverted)"},
+ {lvl:"m",tag:"Refraction",q:"The speed of light in a medium is 2×10⁸ m/s. Find its refractive index. (c = 3×10⁸ m/s)",given:"v = 2×10⁸, c = 3×10⁸ m/s",find:"n",steps:["n = c/v","n = 3×10⁸ / 2×10⁸"],ans:"1.5"},
+ {lvl:"m",tag:"Refraction",q:"A pond appears 3 m deep. If water's refractive index is 1.33, find its real depth.",given:"apparent depth = 3 m, n = 1.33",find:"real depth",steps:["Real depth = apparent depth × n","= 3 × 1.33"],ans:"≈ 4 m"},
+ {lvl:"e",tag:"Lenses",q:"A convex lens has a focal length of 25 cm. Find its power.",given:"f = 25 cm = 0.25 m",find:"P",steps:["P = 1/f (in metres)","P = 1/0.25"],ans:"+4 D"},
+ {lvl:"m",tag:"Lenses",q:"Two thin lenses of power +5 D and −2 D are placed in contact. Find the net power and focal length.",given:"P₁=+5 D, P₂=−2 D",find:"P, f",steps:["P = P₁ + P₂ = +5 − 2 = +3 D","f = 1/P = 1/3 m ≈ 33.3 cm"],ans:"+3 D, f ≈ 33.3 cm"},
+ {lvl:"m",tag:"Lenses",q:"An object is 15 cm from a convex lens of f = 10 cm. Find the image distance. (f=+10, u=−15)",given:"f = +10 cm, u = −15 cm",find:"v",steps:["1/v − 1/u = 1/f → 1/v = 1/f + 1/u","1/v = 1/10 + 1/(−15) = 3/30 − 2/30 = 1/30","v = +30 cm (real, on the other side)"],ans:"+30 cm"},
+ {lvl:"h",tag:"Eye",q:"A myopic person cannot see beyond 50 cm (far point). Find the power of the correcting lens.",given:"far point = 50 cm = 0.5 m; image of ∞ must form at 0.5 m",find:"P of concave lens",steps:["Required focal length = −(far point) = −0.5 m","P = 1/f = 1/(−0.5)"],ans:"−2 D"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked numericals graded easy→hard. Try first, then reveal the steps. Mark solved for XP.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }  // +8 XP
+ };});
+})();
+
+/* ===================== PROGRESS DASHBOARD (learning tracker) ===================== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length, faaTotal=FC.length+0;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ // study = nodes opened + flashcards flipped ; testing = mcq + problems
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ // per-branch bars
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ // FAA revisit list
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ // weak areas
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script>
+/* ===== CentuMania metrics — universal (generator-agnostic; additive) ===== */
+(function(){
+  if(window.__cmTrackU||window.__cmTrackInit)return; window.__cmTrackU=1;
+  var CM_DEFAULT='physics-light', CM_T0=Date.now(), CM_ACTIVE=0, _vt=Date.now(), _lastQ=0;
+  function tok(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function mat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function sid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'a'+Date.now();}}
+  function inter(t,n,m){try{var k=tok();if(!k||!n)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({interaction_type:t,node_id:String(n),material_id:mat(),session_id:sid(),timestamp:new Date().toISOString(),metadata:m||{}})}).catch(function(){});}catch(e){}}
+  function ev(name,m){try{var k=tok();if(!k)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})})}).catch(function(){});}catch(e){}}
+  function beacon(name,m){try{var k=tok();if(!k)return;var p=JSON.stringify({_token:k,event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_vt;beacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_vt=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_vt;beacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  ev('material_opened',{});ev('session_start',{});
+  /* node-open: wrap any global opener that exists */
+  ['openNode','selectNode','showNode','goNode','openTopic','loadNode'].forEach(function(fn){
+    if(typeof window[fn]==='function'){var _o=window[fn];window[fn]=function(){var r;try{r=_o.apply(this,arguments);}catch(e){r=undefined;}try{var id=arguments[0];if(id!=null&&(typeof id==='string'||typeof id==='number')){_lastQ=Date.now();inter('node_opened',id,{});ev('node_open',{node_id:String(id)});}}catch(e){}return r;};}
+  });
+  /* per-question: delegated click on any option element; correctness read from the class the module applies */
+  document.addEventListener('click',function(e){
+    var o=e.target&&e.target.closest&&e.target.closest('.mopt,.opt,.option,[data-oi]');if(!o)return;
+    var card=o.closest('.mcq-card,.mcq,[data-nid],[data-qi]')||o.parentElement;if(!card)return;if(card._cmA)return;card._cmA=1;
+    var nid=(card.getAttribute&&(card.getAttribute('data-nid')||card.getAttribute('data-node')))||'q';
+    var qraw=card.getAttribute&&card.getAttribute('data-qi');var qi=qraw!=null?parseInt(qraw):-1;
+    var now=Date.now(),dt=_lastQ?now-_lastQ:0;_lastQ=now;
+    setTimeout(function(){var correct=o.classList.contains('correct')||o.getAttribute('data-correct')==='true';if(!correct&&(o.classList.contains('wrong')||o.classList.contains('incorrect')))correct=false;inter('mcq_attempt',String(nid),{question_index:qi,is_correct:!!correct});ev('answer',{node_id:String(nid),question_index:qi,is_correct:!!correct,time_spent_ms:dt});},70);
+  },true);
+})();
+</script>
+
+</body></html>

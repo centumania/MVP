@@ -3,29 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>English Map · Tenses</title>
+<title>SSC English · Tenses</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0B1020;--bg2:#090e1c;--panel:#111827;--panel2:#161b22;--line:#1f2d42;
-  --ink:#F9FAFB;--ink2:#9CA3AF;--ink3:#6B7280;
-  --green:#F6B300;--green2:#d49b00;--green-glow:rgba(246,179,0,.13);
-  --teal:#0EA5A0;--gold:#2533FF;--gold-bg:rgba(37,51,255,.12);
-  --red:#E3413A;--red-bg:rgba(227,65,58,.10);
-  --blue:#2563EB;--violet:#22C55E;--violet-bg:rgba(34,197,94,.11);
-  --mono:"JetBrains Mono","Courier New",Courier,monospace;
-  --serif:"Bebas Neue",Impact,"Arial Narrow",Arial,sans-serif;
-  --sans:"Inter",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
-  --nav-h:56px;--aside-w:260px;
+  --bg:#141f1c;--bg2:#111a17;--panel:#1a2a25;--panel2:#1e3029;--line:#254033;
+  --ink:#e8f5f0;--ink2:#9dc4b4;--ink3:#5a8070;
+  --green:#3dd68c;--green2:#2ab572;--green-glow:rgba(61,214,140,.13);
+  --teal:#22d3c8;--gold:#f0bc45;--gold-bg:rgba(240,188,69,.12);
+  --red:#f06b6b;--red-bg:rgba(240,107,107,.10);
+  --blue:#4f8ef7;--violet:#a78bfa;--violet-bg:rgba(167,139,250,.11);
+  --mono:"JetBrains Mono",monospace;--serif:"Instrument Serif",serif;--sans:"DM Sans",sans-serif;
+  --nav-h:56px;--aside-w:264px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;-webkit-font-smoothing:antialiased}
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px}
 .shell{display:grid;grid-template-rows:var(--nav-h) 1fr;height:100vh;overflow:hidden}
-.topbar{display:flex;align-items:center;gap:12px;padding:0 18px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.97);backdrop-filter:blur(14px);z-index:60}
-.logo{font-family:var(--serif);font-size:19px;letter-spacing:0.05em;color:var(--green);display:flex;align-items:center;gap:8px}
+.topbar{display:flex;align-items:center;gap:12px;padding:0 18px;border-bottom:1px solid var(--line);background:rgba(17,26,23,.97);backdrop-filter:blur(14px);z-index:60}
+.logo{font-family:var(--serif);font-size:19px;font-style:italic;color:var(--green);display:flex;align-items:center;gap:8px}
 .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0}
 .nav-stats{display:flex;gap:14px;align-items:center;margin-left:auto}
 .stat{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink2)}
@@ -46,24 +43,24 @@ main::-webkit-scrollbar{width:4px}main::-webkit-scrollbar-thumb{background:var(-
 .ch-group.expanded .node-items{display:block}
 .ni-btn{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink3);padding:7px 9px;border-radius:8px;cursor:pointer;font-size:13px;transition:.12s;font-family:var(--sans);margin-bottom:1px;min-height:44px}
 .ni-btn:hover:not(.locked){background:var(--panel);color:var(--ink)}
-.ni-btn.current{background:var(--green-glow);border-color:var(--green);color:var(--green)}
+.ni-btn.current{background:var(--green-glow);border-color:var(--green2);color:var(--green)}
 .ni-btn.done:not(.current){color:var(--ink)}
 .ni-btn.locked{cursor:default;opacity:.4}
 .ni-tag{font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:4px;margin-left:auto;flex-shrink:0}
-.ni-tag.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(227,65,58,.25)}
-.ni-tag.hidden{background:var(--violet-bg);color:var(--violet);border:1px solid rgba(34,197,94,.25)}
-.ni-tag.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(37,51,255,.25)}
+.ni-tag.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.25)}
+.ni-tag.hidden{background:var(--violet-bg);color:var(--violet);border:1px solid rgba(167,139,250,.25)}
+.ni-tag.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(240,188,69,.25)}
 .node-view{padding:28px clamp(16px,3.5vw,52px) 80px;max-width:900px;margin:0 auto}
 .tabs{display:flex;gap:3px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:22px;width:fit-content}
 .tab{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:8px;cursor:pointer;border:0;background:none;color:var(--ink2);transition:.14s}
-.tab:hover:not(.on){color:var(--ink)}.tab.on{background:var(--gold);color:#fff;font-weight:700}
+.tab:hover:not(.on){color:var(--ink)}.tab.on{background:var(--green2);color:#fff;font-weight:700}
 .node-hd{margin-bottom:20px}
 .node-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:10px}
 .node-badge.regular{background:var(--green-glow);color:var(--green);border:1px solid var(--green2)}
-.node-badge.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(227,65,58,.3)}
-.node-badge.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(37,51,255,.3)}
-h1.nt{font-family:var(--serif);font-size:clamp(24px,4vw,38px);letter-spacing:0.04em;line-height:1.05;margin-bottom:6px}
-.xp-pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--gold);background:var(--gold-bg);border:1px solid rgba(37,51,255,.2);border-radius:6px;padding:3px 8px}
+.node-badge.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.3)}
+.node-badge.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(240,188,69,.3)}
+h1.nt{font-family:var(--serif);font-size:clamp(24px,4vw,38px);font-style:italic;line-height:1.05;margin-bottom:6px}
+.xp-pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--gold);background:var(--gold-bg);border:1px solid rgba(240,188,69,.2);border-radius:6px;padding:3px 8px}
 .fact-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
 .fb-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink2);border-bottom:1px solid var(--line);background:var(--panel2);display:flex;align-items:center;gap:7px}
 .fb-body{padding:14px 16px}
@@ -73,10 +70,10 @@ ul.facts li:last-child{border-bottom:0}
 ul.facts li::before{content:"▸";position:absolute;left:3px;top:8px;color:var(--teal);font-size:11px}
 ul.facts b{color:var(--green)}
 ul.facts code{font-family:var(--mono);font-size:12px;background:var(--panel2);padding:1px 5px;border-radius:4px;color:var(--gold)}
-.trap-block{background:var(--red-bg);border:1px solid rgba(227,65,58,.35);border-radius:12px;padding:16px;margin:12px 0}
+.trap-block{background:var(--red-bg);border:1px solid rgba(240,107,107,.35);border-radius:12px;padding:16px;margin:12px 0}
 .trap-block .tb-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--red);margin-bottom:10px}
 .trap-block ul{list-style:none;padding:0}
-.trap-block li{padding:7px 0 7px 20px;position:relative;font-size:14px;border-bottom:1px dashed rgba(227,65,58,.18);line-height:1.5}
+.trap-block li{padding:7px 0 7px 20px;position:relative;font-size:14px;border-bottom:1px dashed rgba(240,107,107,.18);line-height:1.5}
 .trap-block li:last-child{border-bottom:0}
 .trap-block li::before{content:"⚠";position:absolute;left:0;top:7px;font-size:11px;color:var(--red)}
 .trap-block b{color:var(--red)}
@@ -90,10 +87,10 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 .diag-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--green);border-bottom:1px solid var(--line);background:var(--panel2)}
 .diag-body{padding:16px;overflow-x:auto}
 .diag-body svg{display:block;width:100%;height:auto}
-.golden-block{background:linear-gradient(135deg,rgba(37,51,255,.09),rgba(246,179,0,.06));border:1px solid rgba(37,51,255,.3);border-radius:14px;padding:20px;margin:14px 0}
+.golden-block{background:linear-gradient(135deg,rgba(240,188,69,.09),rgba(61,214,140,.06));border:1px solid rgba(240,188,69,.3);border-radius:14px;padding:20px;margin:14px 0}
 .golden-block .gb-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:14px}
 .golden-block ul{list-style:none;padding:0}
-.golden-block li{padding:8px 0 8px 24px;position:relative;font-size:14px;border-bottom:1px dashed rgba(37,51,255,.15);line-height:1.5}
+.golden-block li{padding:8px 0 8px 24px;position:relative;font-size:14px;border-bottom:1px dashed rgba(240,188,69,.15);line-height:1.5}
 .golden-block li:last-child{border-bottom:0}
 .golden-block li::before{content:"→";position:absolute;left:0;color:var(--gold)}
 .golden-block b{color:var(--green)}
@@ -104,26 +101,26 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 .mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .mopt{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);font-size:13px;cursor:pointer;text-align:left;font-family:var(--sans);transition:.13s;line-height:1.35}
 .mopt:hover:not([disabled]){border-color:var(--green2);background:var(--green-glow)}
-.mopt.correct{background:rgba(246,179,0,.12);border-color:var(--green);color:var(--green)}
+.mopt.correct{background:rgba(61,214,140,.12);border-color:var(--green);color:var(--green)}
 .mopt.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
-.mopt.show-correct{background:rgba(246,179,0,.07);border-color:var(--green)}
+.mopt.show-correct{background:rgba(61,214,140,.07);border-color:var(--green)}
 .mcq-fb{margin-top:10px;font-size:13px;padding:9px 12px;border-radius:8px;display:none;line-height:1.5}
 .mcq-fb.show{display:block}
-.mcq-fb.right{background:rgba(246,179,0,.10);color:var(--green);border:1px solid rgba(246,179,0,.25)}
-.mcq-fb.wrong{background:var(--red-bg);color:var(--red);border:1px solid rgba(227,65,58,.25)}
+.mcq-fb.right{background:rgba(61,214,140,.10);color:var(--green);border:1px solid rgba(61,214,140,.25)}
+.mcq-fb.wrong{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.25)}
 .mcq-score{font-family:var(--mono);font-size:12px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 .mcq-score span{color:var(--green)}
 .node-nav{display:flex;gap:10px;margin-top:26px;padding-top:16px;border-top:1px solid var(--line);align-items:center}
 .nnav{font-family:var(--sans);font-weight:600;font-size:14px;border-radius:9px;padding:9px 15px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:.14s}
-.nnav:hover{border-color:var(--gold)}.nnav.primary{background:var(--gold);color:#fff;border-color:var(--gold);margin-left:auto}
+.nnav:hover{border-color:var(--green2)}.nnav.primary{background:var(--green2);color:#fff;border-color:var(--green2);margin-left:auto}
 .locked-view{text-align:center;padding:70px 20px}
 .locked-view .lv-ico{font-size:52px;margin-bottom:14px;opacity:.3}
-.locked-view h2{font-family:var(--serif);font-size:28px;letter-spacing:0.04em;color:var(--ink2);margin-bottom:8px}
+.locked-view h2{font-family:var(--serif);font-style:italic;font-size:28px;color:var(--ink2);margin-bottom:8px}
 .locked-view p{color:var(--ink2);font-size:14px;max-width:320px;margin:0 auto 18px;line-height:1.6}
 .lock-req-list{display:inline-flex;flex-direction:column;gap:8px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
 .lreq{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink3)}
 .lreq.met{color:var(--green)}.lreq::before{content:"○"}.lreq.met::before{content:"✓"}
-.toast{position:fixed;top:64px;right:18px;background:linear-gradient(135deg,rgba(37,51,255,.15),rgba(246,179,0,.10));border:1px solid var(--gold);border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:10px;z-index:300;opacity:0;transform:translateY(-8px);transition:.3s;pointer-events:none}
+.toast{position:fixed;top:64px;right:18px;background:linear-gradient(135deg,rgba(240,188,69,.15),rgba(61,214,140,.10));border:1px solid var(--gold);border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:10px;z-index:300;opacity:0;transform:translateY(-8px);transition:.3s;pointer-events:none}
 .toast.show{opacity:1;transform:translateY(0)}
 .toast-val{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--gold)}
 .toast-msg{font-size:13px;font-weight:600}
@@ -146,7 +143,7 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 .mob-bar{display:none}.mob-overlay{display:none}
 .sync-dot{position:fixed;bottom:16px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--green);opacity:0;transition:.4s;z-index:200}
 .sync-dot.show{opacity:1}
-.node-complete-banner{background:linear-gradient(135deg,rgba(246,179,0,.12),rgba(14,165,160,.08));border:1px solid rgba(246,179,0,.35);border-radius:12px;padding:14px 16px;margin-top:16px;display:flex;align-items:center;gap:10px}
+.node-complete-banner{background:linear-gradient(135deg,rgba(61,214,140,.12),rgba(34,211,200,.08));border:1px solid rgba(61,214,140,.35);border-radius:12px;padding:14px 16px;margin-top:16px;display:flex;align-items:center;gap:10px}
 .ncb-icon{font-size:22px;flex-shrink:0}
 .ncb-title{font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:1px;margin-bottom:3px}
 .ncb-sub{font-size:13px;color:var(--ink2)}
@@ -156,15 +153,15 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 .tl-cell:last-child{border-right:0}
 .tl-cell .tl-label{font-family:var(--mono);font-size:9px;letter-spacing:1px;margin-bottom:5px;text-transform:uppercase}
 .tl-cell .tl-val{font-size:12px;font-weight:600}
-.tl-past{background:rgba(227,65,58,.07)}.tl-past .tl-label{color:var(--red)}
-.tl-pres{background:rgba(246,179,0,.07)}.tl-pres .tl-label{color:var(--green)}
-.tl-fut{background:rgba(37,99,235,.07)}.tl-fut .tl-label{color:var(--blue)}
+.tl-past{background:rgba(240,107,107,.07)}.tl-past .tl-label{color:var(--red)}
+.tl-pres{background:rgba(61,214,140,.07)}.tl-pres .tl-label{color:var(--green)}
+.tl-fut{background:rgba(79,142,247,.07)}.tl-fut .tl-label{color:var(--blue)}
 @media(max-width:720px){
   :root{--nav-h:52px}
   .shell{grid-template-rows:var(--nav-h) 1fr var(--nav-h);height:100dvh}
   .body{grid-template-columns:1fr;grid-row:2;height:calc(100dvh - calc(var(--nav-h)*2))}
   aside{display:none}
-  .mob-bar{display:flex;grid-row:3;background:rgba(11,16,32,.98);backdrop-filter:blur(16px);border-top:1px solid var(--line);align-items:stretch;z-index:50}
+  .mob-bar{display:flex;grid-row:3;background:rgba(17,26,23,.98);backdrop-filter:blur(16px);border-top:1px solid var(--line);align-items:stretch;z-index:50}
   .mob-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;color:var(--ink3);cursor:pointer;padding:8px 4px;font-family:var(--mono);font-size:9px;transition:.13s}
   .mob-tab.active{color:var(--green)}.mob-tab .mt-ico{font-size:18px}
   .mob-overlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;opacity:0;pointer-events:none;transition:.2s}
@@ -192,7 +189,7 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <body>
 <div class="shell">
 <nav class="topbar">
-  <div class="logo"><span class="logo-dot"></span>English Map</div>
+  <div class="logo"><span class="logo-dot"></span>SSC English — Tenses</div>
   <div class="nav-stats">
     <div class="stat xp">XP <b id="hXP">0</b></div>
     <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
@@ -221,207 +218,208 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <div class="toast" id="toast"><div class="toast-val" id="toastVal"></div><div class="toast-msg" id="toastMsg"></div></div>
 
 <script>
+
 const DIAGRAMS = {
 
 "tense-master": `<svg viewBox="0 0 780 310" xmlns="http://www.w3.org/2000/svg" style="max-width:780px;width:100%">
 <!-- Header -->
-<rect x="4" y="4" width="772" height="26" rx="6" fill="rgba(246,179,0,.08)" stroke="#F6B300" stroke-width="1"/>
-<text x="390" y="22" fill="#F6B300" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">12 TENSES — STRUCTURE · SIGNAL WORDS · EXAMPLE</text>
+<rect x="4" y="4" width="772" height="26" rx="6" fill="rgba(61,214,140,.08)" stroke="#3dd68c" stroke-width="1"/>
+<text x="390" y="22" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">12 TENSES — STRUCTURE · SIGNAL WORDS · EXAMPLE</text>
 <!-- Column headers -->
-<rect x="4" y="34" width="772" height="20" rx="0" fill="#d49b00"/>
+<rect x="4" y="34" width="772" height="20" rx="0" fill="#2ab572"/>
 <text x="100" y="48" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" letter-spacing="1">TENSE</text>
 <text x="260" y="48" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" letter-spacing="1">STRUCTURE</text>
 <text x="450" y="48" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" letter-spacing="1">SIGNAL WORDS</text>
 <text x="660" y="48" fill="#fff" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" letter-spacing="1">EXAMPLE</text>
 <!-- PRESENT rows bg -->
-<rect x="4" y="54" width="772" height="96" rx="0" fill="rgba(246,179,0,.05)" stroke="none"/>
+<rect x="4" y="54" width="772" height="96" rx="0" fill="rgba(61,214,140,.05)" stroke="none"/>
 <!-- present label bar -->
-<rect x="4" y="54" width="16" height="96" fill="rgba(246,179,0,.3)"/>
-<text x="12" y="106" fill="#F6B300" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" transform="rotate(-90,12,106)">PRESENT</text>
+<rect x="4" y="54" width="16" height="96" fill="rgba(61,214,140,.3)"/>
+<text x="12" y="106" fill="#3dd68c" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" transform="rotate(-90,12,106)">PRESENT</text>
 <!-- Row 1 -->
-<line x1="4" y1="78" x2="776" y2="78" stroke="#1f2d42" stroke-width="0.5"/>
-<text x="108" y="69" fill="#0EA5A0" font-size="10" font-weight="600" font-family="Inter,sans-serif">Simple Present</text>
-<text x="108" y="82" fill="#9CA3AF" font-size="9" font-family="JetBrains Mono,monospace">V1 / V1+s</text>
-<text x="260" y="69" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">V1 / V1+s/es</text>
-<text x="440" y="69" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">always, usually, often, daily</text>
-<text x="610" y="69" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He reads daily.</text>
+<line x1="4" y1="78" x2="776" y2="78" stroke="#254033" stroke-width="0.5"/>
+<text x="108" y="69" fill="#22d3c8" font-size="10" font-weight="600" font-family="DM Sans,sans-serif">Simple Present</text>
+<text x="108" y="82" fill="#9dc4b4" font-size="9" font-family="JetBrains Mono,monospace">V1 / V1+s</text>
+<text x="260" y="69" fill="#e8f5f0" font-size="10" font-family="JetBrains Mono,monospace">V1 / V1+s/es</text>
+<text x="440" y="69" fill="#f0bc45" font-size="10" font-family="DM Sans,sans-serif">always, usually, often, daily</text>
+<text x="610" y="69" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">He reads daily.</text>
 <!-- Row 2 -->
-<line x1="4" y1="102" x2="776" y2="102" stroke="#1f2d42" stroke-width="0.5"/>
-<text x="108" y="93" fill="#0EA5A0" font-size="10" font-weight="600" font-family="Inter,sans-serif">Present Continuous</text>
-<text x="260" y="93" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">is/am/are + V-ing</text>
-<text x="440" y="93" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">now, currently, at present</text>
-<text x="610" y="93" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He is reading now.</text>
+<line x1="4" y1="102" x2="776" y2="102" stroke="#254033" stroke-width="0.5"/>
+<text x="108" y="93" fill="#22d3c8" font-size="10" font-weight="600" font-family="DM Sans,sans-serif">Present Continuous</text>
+<text x="260" y="93" fill="#e8f5f0" font-size="10" font-family="JetBrains Mono,monospace">is/am/are + V-ing</text>
+<text x="440" y="93" fill="#f0bc45" font-size="10" font-family="DM Sans,sans-serif">now, currently, at present</text>
+<text x="610" y="93" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">He is reading now.</text>
 <!-- Row 3 -->
-<line x1="4" y1="126" x2="776" y2="126" stroke="#1f2d42" stroke-width="0.5"/>
-<text x="108" y="117" fill="#0EA5A0" font-size="10" font-weight="600" font-family="Inter,sans-serif">Present Perfect</text>
-<text x="260" y="117" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">has/have + V3</text>
-<text x="440" y="117" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">just, already, yet, ever, since, for</text>
-<text x="610" y="117" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He has read it.</text>
+<line x1="4" y1="126" x2="776" y2="126" stroke="#254033" stroke-width="0.5"/>
+<text x="108" y="117" fill="#22d3c8" font-size="10" font-weight="600" font-family="DM Sans,sans-serif">Present Perfect</text>
+<text x="260" y="117" fill="#e8f5f0" font-size="10" font-family="JetBrains Mono,monospace">has/have + V3</text>
+<text x="440" y="117" fill="#f0bc45" font-size="10" font-family="DM Sans,sans-serif">just, already, yet, ever, since, for</text>
+<text x="610" y="117" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">He has read it.</text>
 <!-- Row 4 -->
-<text x="108" y="139" fill="#0EA5A0" font-size="10" font-weight="600" font-family="Inter,sans-serif">Present Perfect Cont.</text>
-<text x="260" y="139" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">has/have+been+V-ing</text>
-<text x="440" y="139" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">since, for (ongoing)</text>
-<text x="610" y="139" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He has been reading for 2 hrs.</text>
+<text x="108" y="139" fill="#22d3c8" font-size="10" font-weight="600" font-family="DM Sans,sans-serif">Present Perfect Cont.</text>
+<text x="260" y="139" fill="#e8f5f0" font-size="10" font-family="JetBrains Mono,monospace">has/have+been+V-ing</text>
+<text x="440" y="139" fill="#f0bc45" font-size="10" font-family="DM Sans,sans-serif">since, for (ongoing)</text>
+<text x="610" y="139" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">He has been reading for 2 hrs.</text>
 <!-- PAST rows bg -->
-<rect x="4" y="150" width="772" height="96" rx="0" fill="rgba(227,65,58,.04)"/>
-<rect x="4" y="150" width="16" height="96" fill="rgba(227,65,58,.25)"/>
-<text x="12" y="202" fill="#E3413A" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" transform="rotate(-90,12,202)">PAST</text>
+<rect x="4" y="150" width="772" height="96" rx="0" fill="rgba(240,107,107,.04)"/>
+<rect x="4" y="150" width="16" height="96" fill="rgba(240,107,107,.25)"/>
+<text x="12" y="202" fill="#f06b6b" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" transform="rotate(-90,12,202)">PAST</text>
 <!-- Row 5 -->
-<line x1="4" y1="174" x2="776" y2="174" stroke="#1f2d42" stroke-width="0.5"/>
-<text x="108" y="165" fill="#E3413A" font-size="10" font-weight="600" font-family="Inter,sans-serif">Simple Past</text>
-<text x="260" y="165" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">V2</text>
-<text x="440" y="165" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">yesterday, ago, last, in 1990</text>
-<text x="610" y="165" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He read it yesterday.</text>
+<line x1="4" y1="174" x2="776" y2="174" stroke="#254033" stroke-width="0.5"/>
+<text x="108" y="165" fill="#f06b6b" font-size="10" font-weight="600" font-family="DM Sans,sans-serif">Simple Past</text>
+<text x="260" y="165" fill="#e8f5f0" font-size="10" font-family="JetBrains Mono,monospace">V2</text>
+<text x="440" y="165" fill="#f0bc45" font-size="10" font-family="DM Sans,sans-serif">yesterday, ago, last, in 1990</text>
+<text x="610" y="165" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">He read it yesterday.</text>
 <!-- Row 6 -->
-<line x1="4" y1="198" x2="776" y2="198" stroke="#1f2d42" stroke-width="0.5"/>
-<text x="108" y="189" fill="#E3413A" font-size="10" font-weight="600" font-family="Inter,sans-serif">Past Continuous</text>
-<text x="260" y="189" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">was/were + V-ing</text>
-<text x="440" y="189" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">while, when (ongoing past)</text>
-<text x="610" y="189" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He was reading when I came.</text>
+<line x1="4" y1="198" x2="776" y2="198" stroke="#254033" stroke-width="0.5"/>
+<text x="108" y="189" fill="#f06b6b" font-size="10" font-weight="600" font-family="DM Sans,sans-serif">Past Continuous</text>
+<text x="260" y="189" fill="#e8f5f0" font-size="10" font-family="JetBrains Mono,monospace">was/were + V-ing</text>
+<text x="440" y="189" fill="#f0bc45" font-size="10" font-family="DM Sans,sans-serif">while, when (ongoing past)</text>
+<text x="610" y="189" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">He was reading when I came.</text>
 <!-- Row 7 -->
-<line x1="4" y1="222" x2="776" y2="222" stroke="#1f2d42" stroke-width="0.5"/>
-<text x="108" y="213" fill="#E3413A" font-size="10" font-weight="600" font-family="Inter,sans-serif">Past Perfect</text>
-<text x="260" y="213" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">had + V3</text>
-<text x="440" y="213" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">before, after, by the time</text>
-<text x="610" y="213" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He had read before I came.</text>
+<line x1="4" y1="222" x2="776" y2="222" stroke="#254033" stroke-width="0.5"/>
+<text x="108" y="213" fill="#f06b6b" font-size="10" font-weight="600" font-family="DM Sans,sans-serif">Past Perfect</text>
+<text x="260" y="213" fill="#e8f5f0" font-size="10" font-family="JetBrains Mono,monospace">had + V3</text>
+<text x="440" y="213" fill="#f0bc45" font-size="10" font-family="DM Sans,sans-serif">before, after, by the time</text>
+<text x="610" y="213" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">He had read before I came.</text>
 <!-- Row 8 -->
-<text x="108" y="237" fill="#E3413A" font-size="10" font-weight="600" font-family="Inter,sans-serif">Past Perfect Cont.</text>
-<text x="260" y="237" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">had+been+V-ing</text>
-<text x="440" y="237" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">for, since (before past point)</text>
-<text x="610" y="237" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He had been reading for 2 hrs.</text>
+<text x="108" y="237" fill="#f06b6b" font-size="10" font-weight="600" font-family="DM Sans,sans-serif">Past Perfect Cont.</text>
+<text x="260" y="237" fill="#e8f5f0" font-size="10" font-family="JetBrains Mono,monospace">had+been+V-ing</text>
+<text x="440" y="237" fill="#f0bc45" font-size="10" font-family="DM Sans,sans-serif">for, since (before past point)</text>
+<text x="610" y="237" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">He had been reading for 2 hrs.</text>
 <!-- FUTURE rows bg -->
-<rect x="4" y="246" width="772" height="60" rx="0" fill="rgba(37,99,235,.04)"/>
-<rect x="4" y="246" width="16" height="60" fill="rgba(37,99,235,.25)"/>
-<text x="12" y="280" fill="#2563EB" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" transform="rotate(-90,12,280)">FUTURE</text>
+<rect x="4" y="246" width="772" height="60" rx="0" fill="rgba(79,142,247,.04)"/>
+<rect x="4" y="246" width="16" height="60" fill="rgba(79,142,247,.25)"/>
+<text x="12" y="280" fill="#4f8ef7" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace" transform="rotate(-90,12,280)">FUTURE</text>
 <!-- Row 9 -->
-<line x1="4" y1="246" x2="776" y2="246" stroke="#1f2d42" stroke-width="0.5"/>
-<line x1="4" y1="270" x2="776" y2="270" stroke="#1f2d42" stroke-width="0.5"/>
-<text x="108" y="261" fill="#2563EB" font-size="10" font-weight="600" font-family="Inter,sans-serif">Simple Future</text>
-<text x="260" y="261" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">will/shall + V1</text>
-<text x="440" y="261" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">tomorrow, next, soon</text>
-<text x="610" y="261" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He will read tomorrow.</text>
+<line x1="4" y1="246" x2="776" y2="246" stroke="#254033" stroke-width="0.5"/>
+<line x1="4" y1="270" x2="776" y2="270" stroke="#254033" stroke-width="0.5"/>
+<text x="108" y="261" fill="#4f8ef7" font-size="10" font-weight="600" font-family="DM Sans,sans-serif">Simple Future</text>
+<text x="260" y="261" fill="#e8f5f0" font-size="10" font-family="JetBrains Mono,monospace">will/shall + V1</text>
+<text x="440" y="261" fill="#f0bc45" font-size="10" font-family="DM Sans,sans-serif">tomorrow, next, soon</text>
+<text x="610" y="261" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">He will read tomorrow.</text>
 <!-- Row 10 -->
-<text x="108" y="285" fill="#2563EB" font-size="10" font-weight="600" font-family="Inter,sans-serif">Future Perfect</text>
-<text x="260" y="285" fill="#F9FAFB" font-size="10" font-family="JetBrains Mono,monospace">will + have + V3</text>
-<text x="440" y="285" fill="#2533FF" font-size="10" font-family="Inter,sans-serif">by tomorrow, by next week</text>
-<text x="610" y="285" fill="#F9FAFB" font-size="10" font-family="Inter,sans-serif">He will have read it by then.</text>
+<text x="108" y="285" fill="#4f8ef7" font-size="10" font-weight="600" font-family="DM Sans,sans-serif">Future Perfect</text>
+<text x="260" y="285" fill="#e8f5f0" font-size="10" font-family="JetBrains Mono,monospace">will + have + V3</text>
+<text x="440" y="285" fill="#f0bc45" font-size="10" font-family="DM Sans,sans-serif">by tomorrow, by next week</text>
+<text x="610" y="285" fill="#e8f5f0" font-size="10" font-family="DM Sans,sans-serif">He will have read it by then.</text>
 <!-- outer border -->
-<rect x="4" y="4" width="772" height="302" rx="6" fill="none" stroke="#1f2d42" stroke-width="1"/>
+<rect x="4" y="4" width="772" height="302" rx="6" fill="none" stroke="#254033" stroke-width="1"/>
 <!-- column dividers -->
-<line x1="196" y1="34" x2="196" y2="306" stroke="#1f2d42" stroke-width="0.8"/>
-<line x1="328" y1="34" x2="328" y2="306" stroke="#1f2d42" stroke-width="0.8"/>
-<line x1="580" y1="34" x2="580" y2="306" stroke="#1f2d42" stroke-width="0.8"/>
+<line x1="196" y1="34" x2="196" y2="306" stroke="#254033" stroke-width="0.8"/>
+<line x1="328" y1="34" x2="328" y2="306" stroke="#254033" stroke-width="0.8"/>
+<line x1="580" y1="34" x2="580" y2="306" stroke="#254033" stroke-width="0.8"/>
 </svg>`,
 
 "since-vs-for": `<svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
-<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(37,51,255,.08)" stroke="#2533FF" stroke-width="1"/>
-<text x="380" y="22" fill="#2533FF" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">SINCE vs FOR — Most Repeated SSC Pattern</text>
-<rect x="4" y="36" width="370" height="88" rx="8" fill="rgba(246,179,0,.07)" stroke="#F6B300" stroke-width="1.5"/>
-<text x="189" y="60" fill="#F6B300" font-size="14" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">SINCE = Point of Time</text>
-<text x="189" y="80" fill="#F9FAFB" font-size="12" text-anchor="middle" font-family="Inter,sans-serif">since 2010 · since Monday · since morning</text>
-<text x="189" y="98" fill="#9CA3AF" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">since birth · since childhood · since 5 pm</text>
-<text x="189" y="116" fill="#2533FF" font-size="10" text-anchor="middle" font-family="JetBrains Mono,monospace">→ needs Present/Past Perfect tense</text>
-<rect x="386" y="36" width="370" height="88" rx="8" fill="rgba(227,65,58,.07)" stroke="#E3413A" stroke-width="1.5"/>
-<text x="571" y="60" fill="#E3413A" font-size="14" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">FOR = Period of Time</text>
-<text x="571" y="80" fill="#F9FAFB" font-size="12" text-anchor="middle" font-family="Inter,sans-serif">for 2 hours · for 3 years · for a long time</text>
-<text x="571" y="98" fill="#9CA3AF" font-size="11" text-anchor="middle" font-family="Inter,sans-serif">for centuries · for days · for a week</text>
-<text x="571" y="116" fill="#2533FF" font-size="10" text-anchor="middle" font-family="JetBrains Mono,monospace">→ needs Present/Past Perfect tense</text>
+<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(240,188,69,.08)" stroke="#f0bc45" stroke-width="1"/>
+<text x="380" y="22" fill="#f0bc45" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">SINCE vs FOR — Most Repeated SSC Pattern</text>
+<rect x="4" y="36" width="370" height="88" rx="8" fill="rgba(61,214,140,.07)" stroke="#3dd68c" stroke-width="1.5"/>
+<text x="189" y="60" fill="#3dd68c" font-size="14" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">SINCE = Point of Time</text>
+<text x="189" y="80" fill="#e8f5f0" font-size="12" text-anchor="middle" font-family="DM Sans,sans-serif">since 2010 · since Monday · since morning</text>
+<text x="189" y="98" fill="#9dc4b4" font-size="11" text-anchor="middle" font-family="DM Sans,sans-serif">since birth · since childhood · since 5 pm</text>
+<text x="189" y="116" fill="#f0bc45" font-size="10" text-anchor="middle" font-family="JetBrains Mono,monospace">→ needs Present/Past Perfect tense</text>
+<rect x="386" y="36" width="370" height="88" rx="8" fill="rgba(240,107,107,.07)" stroke="#f06b6b" stroke-width="1.5"/>
+<text x="571" y="60" fill="#f06b6b" font-size="14" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">FOR = Period of Time</text>
+<text x="571" y="80" fill="#e8f5f0" font-size="12" text-anchor="middle" font-family="DM Sans,sans-serif">for 2 hours · for 3 years · for a long time</text>
+<text x="571" y="98" fill="#9dc4b4" font-size="11" text-anchor="middle" font-family="DM Sans,sans-serif">for centuries · for days · for a week</text>
+<text x="571" y="116" fill="#f0bc45" font-size="10" text-anchor="middle" font-family="JetBrains Mono,monospace">→ needs Present/Past Perfect tense</text>
 </svg>`,
 
 "conditional-map": `<svg viewBox="0 0 760 175" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
-<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(34,197,94,.08)" stroke="#22C55E" stroke-width="1"/>
-<text x="380" y="22" fill="#22C55E" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">CONDITIONAL SENTENCES — 4 TYPES</text>
+<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(167,139,250,.08)" stroke="#a78bfa" stroke-width="1"/>
+<text x="380" y="22" fill="#a78bfa" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">CONDITIONAL SENTENCES — 4 TYPES</text>
 <!-- Type 0 -->
-<rect x="4" y="36" width="184" height="130" rx="8" fill="rgba(14,165,160,.06)" stroke="#0EA5A0" stroke-width="1.2"/>
-<text x="96" y="56" fill="#0EA5A0" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 0</text>
-<text x="96" y="70" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Universal Truth</text>
-<text x="96" y="88" fill="#2533FF" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If + Pres → Pres</text>
-<text x="96" y="108" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">If you heat water,</text>
-<text x="96" y="122" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">it boils.</text>
-<text x="96" y="142" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Always true facts</text>
-<text x="96" y="156" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">scientific truths</text>
+<rect x="4" y="36" width="184" height="130" rx="8" fill="rgba(34,211,200,.06)" stroke="#22d3c8" stroke-width="1.2"/>
+<text x="96" y="56" fill="#22d3c8" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 0</text>
+<text x="96" y="70" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Universal Truth</text>
+<text x="96" y="88" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If + Pres → Pres</text>
+<text x="96" y="108" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">If you heat water,</text>
+<text x="96" y="122" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">it boils.</text>
+<text x="96" y="142" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Always true facts</text>
+<text x="96" y="156" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">scientific truths</text>
 <!-- Type 1 -->
-<rect x="196" y="36" width="184" height="130" rx="8" fill="rgba(246,179,0,.06)" stroke="#F6B300" stroke-width="1.2"/>
-<text x="288" y="56" fill="#F6B300" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 1</text>
-<text x="288" y="70" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Real / Possible</text>
-<text x="288" y="88" fill="#2533FF" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If + Pres → will + V1</text>
-<text x="288" y="108" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">If he comes,</text>
-<text x="288" y="122" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">I will go.</text>
-<text x="288" y="142" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Future possible</text>
-<text x="288" y="156" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif">NOT "will come"</text>
+<rect x="196" y="36" width="184" height="130" rx="8" fill="rgba(61,214,140,.06)" stroke="#3dd68c" stroke-width="1.2"/>
+<text x="288" y="56" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 1</text>
+<text x="288" y="70" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Real / Possible</text>
+<text x="288" y="88" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If + Pres → will + V1</text>
+<text x="288" y="108" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">If he comes,</text>
+<text x="288" y="122" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">I will go.</text>
+<text x="288" y="142" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Future possible</text>
+<text x="288" y="156" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">NOT "will come"</text>
 <!-- Type 2 -->
-<rect x="388" y="36" width="184" height="130" rx="8" fill="rgba(37,51,255,.06)" stroke="#2533FF" stroke-width="1.2"/>
-<text x="480" y="56" fill="#2533FF" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 2</text>
-<text x="480" y="70" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Unreal / Present</text>
-<text x="480" y="88" fill="#2533FF" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If + Past → would+V1</text>
-<text x="480" y="108" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">If I had money,</text>
-<text x="480" y="122" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">I would help.</text>
-<text x="480" y="142" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Hypothetical</text>
-<text x="480" y="156" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif">NOT "would have"</text>
+<rect x="388" y="36" width="184" height="130" rx="8" fill="rgba(240,188,69,.06)" stroke="#f0bc45" stroke-width="1.2"/>
+<text x="480" y="56" fill="#f0bc45" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 2</text>
+<text x="480" y="70" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Unreal / Present</text>
+<text x="480" y="88" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If + Past → would+V1</text>
+<text x="480" y="108" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">If I had money,</text>
+<text x="480" y="122" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">I would help.</text>
+<text x="480" y="142" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Hypothetical</text>
+<text x="480" y="156" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">NOT "would have"</text>
 <!-- Type 3 -->
-<rect x="580" y="36" width="176" height="130" rx="8" fill="rgba(227,65,58,.06)" stroke="#E3413A" stroke-width="1.2"/>
-<text x="668" y="56" fill="#E3413A" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 3</text>
-<text x="668" y="70" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Unreal / Past</text>
-<text x="668" y="88" fill="#2533FF" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If+PastPerf → wd+hv+V3</text>
-<text x="668" y="108" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">If he had come,</text>
-<text x="668" y="122" fill="#F9FAFB" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">I would have gone.</text>
-<text x="668" y="142" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Regret / missed</text>
-<text x="668" y="156" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif">NOT "would have had"</text>
+<rect x="580" y="36" width="176" height="130" rx="8" fill="rgba(240,107,107,.06)" stroke="#f06b6b" stroke-width="1.2"/>
+<text x="668" y="56" fill="#f06b6b" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">TYPE 3</text>
+<text x="668" y="70" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Unreal / Past</text>
+<text x="668" y="88" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">If+PastPerf → wd+hv+V3</text>
+<text x="668" y="108" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">If he had come,</text>
+<text x="668" y="122" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">I would have gone.</text>
+<text x="668" y="142" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Regret / missed</text>
+<text x="668" y="156" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">NOT "would have had"</text>
 </svg>`,
 
 "stative-verbs": `<svg viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
-<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(227,65,58,.08)" stroke="#E3413A" stroke-width="1"/>
-<text x="380" y="22" fill="#E3413A" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">STATIVE VERBS — NEVER USE -ING FORM</text>
-<rect x="4" y="36" width="183" height="116" rx="8" fill="rgba(246,179,0,.05)" stroke="#F6B300" stroke-width="1"/>
-<text x="95" y="54" fill="#F6B300" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">THINKING / KNOWING</text>
-<text x="95" y="70" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">believe · know · understand</text>
-<text x="95" y="86" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">remember · forget · think</text>
-<text x="95" y="102" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">realise · mean · doubt</text>
-<text x="95" y="118" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "I am knowing"</text>
-<text x="95" y="134" fill="#F6B300" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "I know"</text>
-<rect x="195" y="36" width="183" height="116" rx="8" fill="rgba(14,165,160,.05)" stroke="#0EA5A0" stroke-width="1"/>
-<text x="287" y="54" fill="#0EA5A0" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">FEELINGS / EMOTIONS</text>
-<text x="287" y="70" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">love · hate · like · prefer</text>
-<text x="287" y="86" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">want · need · wish · care</text>
-<text x="287" y="102" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">dislike · adore · mind</text>
-<text x="287" y="118" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "I am wanting"</text>
-<text x="287" y="134" fill="#F6B300" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "I want"</text>
-<rect x="386" y="36" width="183" height="116" rx="8" fill="rgba(37,51,255,.05)" stroke="#2533FF" stroke-width="1"/>
-<text x="477" y="54" fill="#2533FF" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">SENSES / PERCEPTION</text>
-<text x="477" y="70" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">see · hear · smell · taste</text>
-<text x="477" y="86" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">feel (mental) · notice</text>
-<text x="477" y="102" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">seem · appear · look (=seem)</text>
-<text x="477" y="118" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "She is seeing him"</text>
-<text x="477" y="134" fill="#F6B300" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "She sees him"</text>
-<rect x="577" y="36" width="179" height="116" rx="8" fill="rgba(34,197,94,.05)" stroke="#22C55E" stroke-width="1"/>
-<text x="667" y="54" fill="#22C55E" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">POSSESSION / STATE</text>
-<text x="667" y="70" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">have (=own) · own · belong</text>
-<text x="667" y="86" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">consist · contain · include</text>
-<text x="667" y="102" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">resemble · matter · owe</text>
-<text x="667" y="118" fill="#E3413A" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "She is having a car"</text>
-<text x="667" y="134" fill="#F6B300" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "She has a car"</text>
+<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(240,107,107,.08)" stroke="#f06b6b" stroke-width="1"/>
+<text x="380" y="22" fill="#f06b6b" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">STATIVE VERBS — NEVER USE -ING FORM</text>
+<rect x="4" y="36" width="183" height="116" rx="8" fill="rgba(61,214,140,.05)" stroke="#3dd68c" stroke-width="1"/>
+<text x="95" y="54" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">THINKING / KNOWING</text>
+<text x="95" y="70" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">believe · know · understand</text>
+<text x="95" y="86" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">remember · forget · think</text>
+<text x="95" y="102" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">realise · mean · doubt</text>
+<text x="95" y="118" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "I am knowing"</text>
+<text x="95" y="134" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "I know"</text>
+<rect x="195" y="36" width="183" height="116" rx="8" fill="rgba(34,211,200,.05)" stroke="#22d3c8" stroke-width="1"/>
+<text x="287" y="54" fill="#22d3c8" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">FEELINGS / EMOTIONS</text>
+<text x="287" y="70" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">love · hate · like · prefer</text>
+<text x="287" y="86" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">want · need · wish · care</text>
+<text x="287" y="102" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">dislike · adore · mind</text>
+<text x="287" y="118" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "I am wanting"</text>
+<text x="287" y="134" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "I want"</text>
+<rect x="386" y="36" width="183" height="116" rx="8" fill="rgba(240,188,69,.05)" stroke="#f0bc45" stroke-width="1"/>
+<text x="477" y="54" fill="#f0bc45" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">SENSES / PERCEPTION</text>
+<text x="477" y="70" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">see · hear · smell · taste</text>
+<text x="477" y="86" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">feel (mental) · notice</text>
+<text x="477" y="102" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">seem · appear · look (=seem)</text>
+<text x="477" y="118" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "She is seeing him"</text>
+<text x="477" y="134" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "She sees him"</text>
+<rect x="577" y="36" width="179" height="116" rx="8" fill="rgba(167,139,250,.05)" stroke="#a78bfa" stroke-width="1"/>
+<text x="667" y="54" fill="#a78bfa" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">POSSESSION / STATE</text>
+<text x="667" y="70" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">have (=own) · own · belong</text>
+<text x="667" y="86" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">consist · contain · include</text>
+<text x="667" y="102" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">resemble · matter · owe</text>
+<text x="667" y="118" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NOT: "She is having a car"</text>
+<text x="667" y="134" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">YES: "She has a car"</text>
 </svg>`,
 
 "reported-speech": `<svg viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
-<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(37,99,235,.08)" stroke="#2563EB" stroke-width="1"/>
-<text x="380" y="22" fill="#2563EB" font-size="10" font-weight="bold" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">REPORTED SPEECH — TENSE BACKSHIFT TABLE</text>
-<rect x="4" y="34" width="375" height="110" rx="8" fill="rgba(227,65,58,.06)" stroke="#E3413A" stroke-width="1"/>
-<text x="191" y="52" fill="#E3413A" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">DIRECT (original)</text>
-<text x="191" y="68" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">is / am / are</text>
-<text x="191" y="84" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">has / have + V3</text>
-<text x="191" y="100" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">Simple Present (V1)</text>
-<text x="191" y="116" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">Simple Past (V2)</text>
-<text x="191" y="132" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">will / can / may</text>
-<rect x="385" y="34" width="371" height="110" rx="8" fill="rgba(246,179,0,.06)" stroke="#F6B300" stroke-width="1"/>
-<text x="570" y="52" fill="#F6B300" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">REPORTED (backshift)</text>
-<text x="570" y="68" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">was / were</text>
-<text x="570" y="84" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">had + V3</text>
-<text x="570" y="100" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">Simple Past (V2)</text>
-<text x="570" y="116" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">Past Perfect (had+V3)</text>
-<text x="570" y="132" fill="#9CA3AF" font-size="10" text-anchor="middle" font-family="Inter,sans-serif">would / could / might</text>
-<text x="380" y="82" fill="#2533FF" font-size="18" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
-<text x="380" y="100" fill="#2533FF" font-size="18" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
-<text x="380" y="118" fill="#2533FF" font-size="18" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
+<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(79,142,247,.08)" stroke="#4f8ef7" stroke-width="1"/>
+<text x="380" y="22" fill="#4f8ef7" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">REPORTED SPEECH — TENSE BACKSHIFT TABLE</text>
+<rect x="4" y="34" width="375" height="110" rx="8" fill="rgba(240,107,107,.06)" stroke="#f06b6b" stroke-width="1"/>
+<text x="191" y="52" fill="#f06b6b" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">DIRECT (original)</text>
+<text x="191" y="68" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">is / am / are</text>
+<text x="191" y="84" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">has / have + V3</text>
+<text x="191" y="100" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Simple Present (V1)</text>
+<text x="191" y="116" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Simple Past (V2)</text>
+<text x="191" y="132" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">will / can / may</text>
+<rect x="385" y="34" width="371" height="110" rx="8" fill="rgba(61,214,140,.06)" stroke="#3dd68c" stroke-width="1"/>
+<text x="570" y="52" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">REPORTED (backshift)</text>
+<text x="570" y="68" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">was / were</text>
+<text x="570" y="84" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">had + V3</text>
+<text x="570" y="100" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Simple Past (V2)</text>
+<text x="570" y="116" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Past Perfect (had+V3)</text>
+<text x="570" y="132" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">would / could / might</text>
+<text x="380" y="82" fill="#f0bc45" font-size="18" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
+<text x="380" y="100" fill="#f0bc45" font-size="18" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
+<text x="380" y="118" fill="#f0bc45" font-size="18" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
 </svg>`
 };
 
@@ -805,22 +803,15 @@ golden:[
 ]}
 ];
 
-const SKEY="eng_ten_v1";
+const SKEY="ssc_eng_03_tenses";
 let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
 try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
 function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
 
-let _mToken='';
-(function initToken(){
-  var ks=Object.keys(localStorage);var k=ks.find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});
-  if(k){try{var d=JSON.parse(localStorage.getItem(k));_mToken=(d&&d.access_token)||'';}catch(e){}}
-  if(!_mToken){var sk=Object.keys(sessionStorage).find(function(x){return x.startsWith('sb-')&&x.endsWith('-auth-token');});if(sk){try{var d2=JSON.parse(sessionStorage.getItem(sk));_mToken=(d2&&d2.access_token)||'';}catch(e){}}}
-})();
 let _ns={nodeId:null,openedAt:null,answered:0,correct:0,totalQ:0};
 function trackEvent(ev,payload){
-  const body=Object.assign({event:ev,mapId:"eng_03_tenses",ts:new Date().toISOString()},payload);
-  const sid='sess_'+(Math.random().toString(36).slice(2,10));
-  try{fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json',...(_mToken?{'Authorization':'Bearer '+_mToken}:{})},body:JSON.stringify({event_name:ev,session_id:sid,event_timestamp:new Date().toISOString(),metadata:body})}).then(()=>flashSync()).catch(()=>{});}catch(e){}
+  const body=Object.assign({event:ev,mapId:"ssc_eng_03_tenses",ts:new Date().toISOString()},payload);
+  try{fetch('/api/progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(()=>flashSync()).catch(()=>{});}catch(e){}
 }
 function flashSync(){const d=document.getElementById('syncDot');if(!d)return;d.classList.add('show');setTimeout(()=>d.classList.remove('show'),900);}
 function startNodeSession(nodeId,totalQ){
@@ -918,7 +909,7 @@ function renderNode(node){
   const [bl,bc]=bm[node.type]||["◇","regular"];
   let content="";
   if(node.type==="gold"){
-    content=`<div class="golden-block"><div class="gb-h">🏹 GOLDEN NODE — Highest Probability Points · Tenses</div><ul>${(node.golden||[]).map(g=>`<li>${g}</li>`).join("")}</ul></div>`;
+    content=`<div class="golden-block"><div class="gb-h">🏹 GOLDEN NODE — Highest Probability Points · ${ch?.title||''}</div><ul>${(node.golden||[]).map(g=>`<li>${g}</li>`).join("")}</ul></div>`;
   } else {
     if(node.diag&&DIAGRAMS[node.diag])content+=`<div class="diag-box"><div class="diag-head">📊 DIAGRAM</div><div class="diag-body">${DIAGRAMS[node.diag]}</div></div>`;
     if(node.facts)content+=`<div class="fact-block"><div class="fb-head">◇ KEY FACTS</div><div class="fb-body"><ul class="facts">${node.facts.map(f=>`<li>${f}</li>`).join("")}</ul></div></div>`;
@@ -1002,8 +993,8 @@ function showDash(){
   S.curNode=null;save();buildSidebar();
   const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
   document.getElementById("viewWrap").innerHTML=`<div class="dash">
-    <div class="dash-t">English Map</div>
-    <div class="dash-s">SSC ENGLISH 03 — TENSES</div>
+    <div class="dash-t">Tenses</div>
+    <div class="dash-s">SSC CGL / CHSL / MTS / CPO · RULES · TRAPS · PYQ PRACTICE</div>
     <div class="dash-grid">
       <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
       <div class="dc g"><div class="dv">${vis}/${tot}</div><div class="dl">Nodes</div></div>
@@ -1016,16 +1007,12 @@ function showDash(){
     </div>
     <button class="start-btn" onclick="startLearning()">${visitedCount()===0?"Start Learning →":"Continue →"}</button>
     <div style="margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px">
-      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);margin-bottom:10px">📘 TOPICS COVERED</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:var(--ink2)">
-        <span>📋 12 Tenses Master Table</span><span>⏱ Since vs For</span>
-        <span>🔢 Past Perfect Sequence</span><span>✅ Present Perfect vs Simple Past</span>
-        <span>🚫 Stative Verbs (No -ing)</span><span>🔀 Conditional Types 0–3</span>
-        <span>📣 Reported Speech Backshift</span><span>⏰ Time Clauses (No Future)</span>
-      </div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);margin-bottom:10px">HOW TO USE</div>
+      <div style="font-size:13px;color:var(--ink2);line-height:1.6"><b style="color:var(--ink)">Learn</b> tab = rules, tables, diagrams. <b style="color:var(--red)">Trap</b> nodes = the mistakes SSC loves to test. Hit <b style="color:var(--ink)">Test</b> for PYQ-style MCQs with instant explanations. Clear a chapter to unlock its <b style="color:var(--gold)">Golden</b> summary. Progress saves on this device.</div>
     </div>
   </div>`;
 }
+
 
 function startLearning(){
   const first=allNodes().find(n=>isUnlocked(n)&&!isVisited(n.id))||allNodes()[0];
@@ -1040,6 +1027,30 @@ function closeDrawer(){document.getElementById("mobDrawer").classList.remove("op
 
 if(!S.chOpen)S.chOpen=CHAPTERS[0].id;
 buildSidebar();updateHeader();showDash();
+
+
+
+/* ===== CentuMania metrics (injected — additive; module content unchanged) ===== */
+(function(){
+  if(window.__cmTrackInit)return; window.__cmTrackInit=1;
+  var CM_DEFAULT='eng-03-tenses';
+  var CM_T0=Date.now(),CM_ACTIVE=0,_cmVisT=Date.now();
+  function cmToken(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function cmMat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function cmSid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'anon-'+Math.random().toString(36).slice(2);}}
+  function cmInteract(itype,nodeId,meta){try{var t=cmToken();if(!t||!nodeId)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify({interaction_type:itype,node_id:String(nodeId),material_id:cmMat(),session_id:cmSid(),timestamp:new Date().toISOString(),metadata:meta||{}})}).catch(function(){});}catch(e){}}
+  function cmEvent(name,meta){try{var t=cmToken();if(!t)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify({event_name:name,session_id:cmSid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:cmMat()},meta||{})})}).catch(function(){});}catch(e){}}
+  function cmBeacon(name,meta){try{var t=cmToken();if(!t)return;var p=JSON.stringify({_token:t,event_name:name,session_id:cmSid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:cmMat()},meta||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_cmVisT;cmBeacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_cmVisT=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_cmVisT;cmBeacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  cmEvent('material_opened',{});cmEvent('session_start',{});
+  var _cmNodeT={},_cmLastQ=0;
+  function _cmNode(id){try{if(typeof CHAPTERS!=='undefined')for(var c=0;c<CHAPTERS.length;c++){var ns=CHAPTERS[c].nodes||[];for(var n=0;n<ns.length;n++)if(ns[n].id===id)return ns[n];}}catch(e){}return null;}
+  if(typeof openNode==='function'){var _o=openNode;openNode=function(id){_o(id);try{_cmNodeT[id]=Date.now();_cmLastQ=Date.now();var nd=_cmNode(id);cmInteract('node_opened',id,{total_questions:(nd&&nd.mcqs?nd.mcqs.length:0)});cmEvent('node_open',{node_id:id});}catch(e){}};}
+  if(typeof finishAttempt==='function'){var _f=finishAttempt;finishAttempt=function(node){_f(node);try{var faa=(typeof S!=='undefined'&&S.faa&&S.faa[node.id])||{},total=(node.mcqs||[]).length,ok=0,k;for(k in faa)if(faa[k])ok++;var pct=total?Math.round(ok/total*100):0;cmInteract('node_completed',node.id,{total_questions:total,correct_first_attempt:ok,accuracy_pct:pct,time_spent_seconds:Math.round((Date.now()-(_cmNodeT[node.id]||Date.now()))/1000)});cmEvent('node_completed',{node_id:node.id,pct:pct});}catch(e){}};}
+  try{new MutationObserver(function(ms){ms.forEach(function(m){var el=m.target;if(el&&el.classList&&el.classList.contains('mcq-card')&&el.classList.contains('done')&&!el._cmS){el._cmS=1;var qi=parseInt(el.dataset.qi),nid=el.dataset.nid;var fac=!!(typeof S!=='undefined'&&S.faa&&S.faa[nid]&&S.faa[nid][qi]===true);var now=Date.now(),dt=_cmLastQ?now-_cmLastQ:0;_cmLastQ=now;if(nid!=null){cmInteract('mcq_attempt',nid,{question_index:qi,is_correct:fac});cmEvent('answer',{node_id:nid,question_index:qi,is_correct:fac,time_spent_ms:dt});}}});}).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});}catch(e){}
+})();
+
 </script>
 </body>
 </html>

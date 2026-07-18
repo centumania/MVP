@@ -1,0 +1,1016 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Modern Physics &amp; Energy — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"☢️";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:30px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.dia{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;text-align:center}
+.dia svg{max-width:100%;height:auto}
+.dia .cap{font-size:11px;color:var(--mut);font-weight:600;margin-top:7px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Physics · Mastery Pack</div>
+  <h1>Modern Physics &amp; Energy</h1>
+  <p>Atom → Radioactivity → Fission &amp; Fusion → Renewable → Non-renewable → Nuclear Power → Environment. Energy from the nucleus and the sources that power our world.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/35</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/40</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+
+  <h2 class="sec"><span class="em">🌐</span>The Big Picture</h2>
+  <div class="sec-sub">The nucleus hides colossal energy. This chapter opens it (radioactivity, fission, fusion) then surveys the energy sources that run our world.</div>
+  <div class="flow">
+    <span class="step">Inside the atom</span><span class="arw">→</span>
+    <span class="step">Nuclear energy (E=mc²)</span><span class="arw">→</span>
+    <span class="step">Energy sources</span><span class="arw">→</span>
+    <span class="step">Environment</span>
+  </div>
+  <div class="note"><span class="t">Anchor idea</span>Einstein's <b>E = mc²</b> is the key to it all: a <b>tiny loss of mass</b> becomes a <b>gigantic release of energy</b>, because c² (the speed of light squared) is a colossal number. Radioactivity, fission and fusion are all just nature converting a whisker of mass into power.</div>
+
+  <!-- 1 ATOM -->
+  <h2 class="sec"><span class="em">⚛️</span>1 · The Atom &amp; Nucleus</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">An atom has a tiny, dense <b>nucleus</b> (protons + neutrons) with electrons around it. <b>E = mc²</b> links mass and energy.</div></div>
+      <div class="row"><div class="lab l-why">Why the nucleus is powerful</div><div class="txt">Packing protons together against their repulsion stores enormous energy in the strong nuclear force. Release even a little of it and you get millions of times more energy than any chemical reaction.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Atomic number Z</b> = protons; <b>mass number A</b> = protons + neutrons. Neutrons = A − Z. <b>Isotopes</b> share Z but differ in A.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">All matter; nuclear energy; carbon dating; medical isotopes.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Nucleus = protons + neutrons." "E = mc²." "Z = protons, A = protons+neutrons." "Isotopes: same Z, different A."</div></div>
+    </div>
+  </div>
+
+  <!-- 2 RADIOACTIVITY -->
+  <h2 class="sec"><span class="em">📡</span>2 · Radioactivity</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Unstable nuclei spontaneously emit radiation — <b>alpha, beta and gamma</b> — discovered by <b>Becquerel</b> and the <b>Curies</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why some atoms decay</div><div class="txt">Nuclei with too many neutrons or protons are unstable. They shed particles/energy to reach a more stable configuration — a random but statistically steady process.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Alpha</b> (He nucleus, least penetrating — paper stops it), <b>beta</b> (electron), <b>gamma</b> (EM wave, most penetrating). <b>Half-life</b> = time for half to decay; it is <b>constant</b> for each isotope.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Carbon dating fossils, cancer therapy (cobalt-60), medical tracers, smoke detectors, pipe-leak detection.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Penetrating power: gamma &gt; beta &gt; alpha." "Alpha = helium nucleus." "Half-life is unaffected by temperature/pressure." Becquerel discovered radioactivity.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Radiation</th><th>Nature</th><th>Charge</th><th>Penetration</th></tr>
+      <tr><td class="h">Alpha (α)</td><td>Helium nucleus</td><td>+2</td><td>Least (stopped by paper)</td></tr>
+      <tr><td class="h">Beta (β)</td><td>Fast electron</td><td>−1</td><td>Medium (aluminium)</td></tr>
+      <tr><td class="h">Gamma (γ)</td><td>EM wave</td><td>0</td><td>Most (needs lead/concrete)</td></tr>
+    </table>
+  </div>
+
+  <!-- 3 FISSION & FUSION -->
+  <h2 class="sec"><span class="em">💥</span>3 · Fission &amp; Fusion</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Fission</b> splits a heavy nucleus into lighter ones; <b>fusion</b> joins light nuclei into a heavier one. Both release huge energy.</div></div>
+      <div class="row"><div class="lab l-why">Why both release energy</div><div class="txt">In each case the products have slightly <b>less mass</b> than the starting nuclei. That missing mass becomes energy via <b>E = mc²</b>. Fusion releases even more per kilogram than fission.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Fission:</b> a neutron splits U-235, releasing more neutrons → a <b>chain reaction</b>. <b>Fusion:</b> hydrogen nuclei merge into helium (needs extreme heat, as in the Sun).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Fission → nuclear reactors &amp; atom bombs. Fusion → the Sun, stars, and the hydrogen bomb.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Sun's energy = FUSION." "Atom bomb = uncontrolled FISSION." "Chain reaction: neutrons trigger more fissions." Fusion needs very high temperature.</div></div>
+    </div>
+    <div class="note trap"><span class="t">Fission vs Fusion — the top trap</span>The <b>Sun runs on fusion</b> (joining hydrogen), NOT fission. A <b>nuclear reactor and atom bomb use fission</b> (splitting uranium). Reversing these is the single most-tested error.</div>
+  </div>
+
+  <!-- 4 RENEWABLE -->
+  <h2 class="sec"><span class="em">♻️</span>4 · Renewable Energy</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Sources that are <b>replenished naturally</b> and won't run out: solar, wind, hydro, biomass, geothermal and tidal.</div></div>
+      <div class="row"><div class="lab l-why">Why we need them</div><div class="txt">Fossil fuels are finite and polluting. Renewables are <b>clean and inexhaustible</b> — most ultimately trace back to the Sun (which drives wind, the water cycle and plant growth).</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Solar cell</b> = light → electricity; <b>wind/hydro</b> spin turbines; <b>biomass/biogas</b> from organic waste; <b>geothermal</b> from Earth's heat; <b>tidal</b> from the sea.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Rooftop solar panels, wind farms, hydro dams, biogas plants, geothermal springs.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Solar cell converts light to electricity." "Geothermal = Earth's heat." "Renewables: solar, wind, hydro, biomass, tidal."</div></div>
+    </div>
+    <div class="eg">
+      <div class="e"><div class="h">☀️ Solar</div><p>Light → electricity (PV cells)</p></div>
+      <div class="e"><div class="h">💨 Wind</div><p>Turbines spun by air</p></div>
+      <div class="e"><div class="h">💧 Hydro</div><p>Falling water → turbines</p></div>
+      <div class="e"><div class="h">🌋 Geothermal</div><p>Earth's internal heat</p></div>
+    </div>
+  </div>
+
+  <!-- 5 NON-RENEWABLE -->
+  <h2 class="sec"><span class="em">🛢️</span>5 · Non-renewable Energy</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Fossil fuels</b> — coal, petroleum and natural gas — formed over millions of years and cannot be replaced on a human timescale.</div></div>
+      <div class="row"><div class="lab l-why">Why they are a problem</div><div class="txt">They are <b>finite</b> (will run out) and burning them releases <b>CO₂ and pollutants</b>, driving global warming and acid rain.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Coal</b> (ancient plants) → thermal power. <b>Petroleum</b> (marine life) → petrol, diesel, LPG. <b>Natural gas</b> (mostly methane) → CNG/PNG, the cleanest of the three.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Power stations, vehicles, cooking gas, industry.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Coal, oil, gas = non-renewable fossil fuels." "Petroleum is refined into petrol/diesel/LPG." "CNG (methane) is the cleanest fossil fuel."</div></div>
+    </div>
+  </div>
+
+  <!-- 6 NUCLEAR POWER -->
+  <h2 class="sec"><span class="em">⚛️</span>6 · Nuclear Power</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A reactor uses <b>controlled fission of uranium</b> to make heat → steam → electricity.</div></div>
+      <div class="row"><div class="lab l-why">Why it needs careful control</div><div class="txt">A fission chain reaction can run away (a bomb). A reactor <b>tames</b> it: a <b>moderator</b> slows neutrons so they cause more fission, and <b>control rods</b> absorb excess neutrons to hold the rate steady.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Fuel = <b>uranium-235</b>/plutonium-239. Moderator = graphite/heavy water. Control rods = boron/cadmium. Heat boils water → turbine-generator.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Nuclear power plants (e.g. Kudankulam, Tarapur in India), submarines.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Reactor fuel = uranium-235." "Moderator slows neutrons; control rods absorb them." "Pros: high energy, low CO₂; cons: radioactive waste, accident risk."</div></div>
+    </div>
+    <div class="note why"><span class="t">Why nuclear power is a double-edged sword</span>It produces <b>vast energy with almost no CO₂</b> — a climate advantage. But it leaves <b>long-lived radioactive waste</b> and carries a small risk of catastrophic accidents (Chernobyl, Fukushima), which is why safety and disposal are central concerns.</div>
+  </div>
+
+  <!-- 7 ENVIRONMENT -->
+  <h2 class="sec"><span class="em">🌍</span>7 · Environment &amp; Energy</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Our energy use drives <b>pollution, the greenhouse effect, global warming and acid rain</b> — the case for conservation and clean energy.</div></div>
+      <div class="row"><div class="lab l-why">Why the planet warms</div><div class="txt"><b>Greenhouse gases</b> (CO₂, methane) let sunlight in but trap the outgoing heat — like glass in a greenhouse. More of these gases → more trapped heat → <b>global warming</b>.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Acid rain:</b> SO₂ + NOₓ dissolve in rain to form acids. <b>Conservation:</b> use less, use efficient appliances, and switch to renewables.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Climate policy, melting glaciers, rising seas, damaged forests and monuments (e.g. acid rain on the Taj Mahal).</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Greenhouse gases: CO₂, methane." "Global warming → melting ice, rising seas." "Acid rain from SO₂ &amp; NOₓ." Conserve energy, shift to renewables.</div></div>
+    </div>
+  </div>
+
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 7 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+  <h2 class="sec"><span class="em">📊</span>Comparison &amp; Reference Tables</h2>
+  <div class="sec-sub">The pairs examiners swap, plus the radiations and energy sources.</div>
+
+  <div class="card"><h3>Fission vs Fusion</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Fission</th><th>Fusion</th></tr>
+    <tr><td class="h">Process</td><td>Heavy nucleus splits</td><td>Light nuclei join</td></tr>
+    <tr><td class="h">Fuel</td><td>Uranium-235, plutonium</td><td>Hydrogen (isotopes)</td></tr>
+    <tr><td class="h">Condition</td><td>A neutron hits the nucleus</td><td>Very high temperature</td></tr>
+    <tr><td class="h">Example</td><td>Reactor, atom bomb</td><td>The Sun, hydrogen bomb</td></tr>
+    <tr><td class="h">Energy per kg</td><td>High</td><td>Even higher</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Alpha vs Beta vs Gamma</h3>
+  <table class="tbl">
+    <tr><th>Radiation</th><th>Nature</th><th>Charge</th><th>Penetration</th></tr>
+    <tr><td class="h">Alpha (α)</td><td>Helium nucleus</td><td>+2</td><td>Least (paper stops it)</td></tr>
+    <tr><td class="h">Beta (β)</td><td>Fast electron</td><td>−1</td><td>Medium (aluminium)</td></tr>
+    <tr><td class="h">Gamma (γ)</td><td>EM wave</td><td>0</td><td>Most (lead/concrete)</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Renewable vs Non-renewable</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Renewable</th><th>Non-renewable</th></tr>
+    <tr><td class="h">Supply</td><td>Inexhaustible</td><td>Finite (will run out)</td></tr>
+    <tr><td class="h">Pollution</td><td>Low/clean</td><td>High (CO₂, pollutants)</td></tr>
+    <tr><td class="h">Examples</td><td>Solar, wind, hydro, tidal</td><td>Coal, petroleum, gas</td></tr>
+    <tr><td class="h">Also called</td><td>Non-conventional</td><td>Conventional / fossil</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Energy Sources at a Glance</h3>
+  <table class="tbl">
+    <tr><th>Source</th><th>Type</th><th>Converts</th></tr>
+    <tr><td class="h">Solar cell</td><td>Renewable</td><td>Light → electricity</td></tr>
+    <tr><td class="h">Wind turbine</td><td>Renewable</td><td>Wind → electricity</td></tr>
+    <tr><td class="h">Hydro dam</td><td>Renewable</td><td>Falling water → electricity</td></tr>
+    <tr><td class="h">Geothermal</td><td>Renewable</td><td>Earth's heat → electricity</td></tr>
+    <tr><td class="h">Thermal (coal)</td><td>Non-renewable</td><td>Chemical → heat → electricity</td></tr>
+    <tr><td class="h">Nuclear</td><td>Non-renewable</td><td>Nuclear → heat → electricity</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Nuclear Reactor Parts</h3>
+  <table class="tbl">
+    <tr><th>Part</th><th>Material</th><th>Job</th></tr>
+    <tr><td class="h">Fuel</td><td>Uranium-235</td><td>Undergoes fission</td></tr>
+    <tr><td class="h">Moderator</td><td>Graphite / heavy water</td><td>Slows neutrons</td></tr>
+    <tr><td class="h">Control rods</td><td>Boron / cadmium</td><td>Absorb neutrons</td></tr>
+    <tr><td class="h">Coolant</td><td>Water / liquid metal</td><td>Carries away heat</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Half-life Decay (fraction remaining)</h3>
+  <table class="tbl">
+    <tr><th>Half-lives passed</th><th>Fraction left</th><th>Percent</th></tr>
+    <tr><td class="h">1</td><td>1/2</td><td>50%</td></tr>
+    <tr><td class="h">2</td><td>1/4</td><td>25%</td></tr>
+    <tr><td class="h">3</td><td>1/8</td><td>12.5%</td></tr>
+    <tr><td class="h">4</td><td>1/16</td><td>6.25%</td></tr>
+  </table></div>
+</div>
+<div class="panel" id="p-memory">
+  <h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+  <div class="sec-sub">One hook per recall-worthy fact. Concept → hook → recall question.</div>
+
+  <div class="mem-card"><div class="cn">E = mc² <span class="tag">chant</span></div>
+    <div class="hk">"<b>Energy = mass × c-squared.</b>" A crumb of mass → a mountain of energy, because c² is huge.</div>
+    <div class="rq">Q: What links mass and nuclear energy? → E = mc².</div></div>
+
+  <div class="mem-card"><div class="cn">Fission vs Fusion <span class="tag">word hook</span></div>
+    <div class="hk">"Fi<b>SS</b>ion = <b>S</b>plit (like <b>sc</b>issors); <b>Fu</b>sion = <b>Fu</b>se together." The Sun FUSES; the bomb/reactor SPLITS.</div>
+    <div class="rq">Q: The Sun's energy comes from? → Fusion.</div></div>
+
+  <div class="mem-card"><div class="cn">Penetrating power order <span class="tag">peg</span></div>
+    <div class="hk">"<b>Gamma Goes furthest</b>; Alpha is Arrested by paper." Order: γ &gt; β &gt; α.</div>
+    <div class="rq">Q: Most penetrating radiation? → Gamma.</div></div>
+
+  <div class="mem-card"><div class="cn">Alpha = Helium <span class="tag">peg</span></div>
+    <div class="hk">"<b>A</b>lpha <b>A</b>te <b>H</b>elium." An alpha particle is a helium nucleus (2p + 2n), charge +2.</div>
+    <div class="rq">Q: What is an alpha particle? → A helium nucleus.</div></div>
+
+  <div class="mem-card"><div class="cn">Half-life halving <span class="tag">visual</span></div>
+    <div class="hk">"Each half-life, <b>cut it in half</b>: 1 → 1/2 → 1/4 → 1/8." 3 half-lives → 1/8 (12.5%).</div>
+    <div class="rq">Q: Fraction left after 3 half-lives? → 1/8.</div></div>
+
+  <div class="mem-card"><div class="cn">Half-life is unshakeable <span class="tag">why-hook</span></div>
+    <div class="hk">"Heat, pressure, chemistry — <b>none change half-life</b>." It's fixed for each isotope; a nuclear clock.</div>
+    <div class="rq">Q: Does temperature change half-life? → No.</div></div>
+
+  <div class="mem-card"><div class="cn">Z and A <span class="tag">letter hook</span></div>
+    <div class="hk">"<b>Z</b> = number of <b>protons</b> (Zeroes in on the element); <b>A</b> = <b>All</b> nucleons (p + n)." Neutrons = A − Z.</div>
+    <div class="rq">Q: A = 40, Z = 20 → neutrons? → 20.</div></div>
+
+  <div class="mem-card"><div class="cn">Reactor parts <span class="tag">roles</span></div>
+    <div class="hk">"<b>Moderator slows, Control rods absorb.</b>" Slow the neutrons to keep fission going; absorb them to calm it down.</div>
+    <div class="rq">Q: What do control rods do? → Absorb neutrons.</div></div>
+
+  <div class="mem-card"><div class="cn">Renewable list <span class="tag">acronym</span></div>
+    <div class="hk">"<b>S-W-H-B-G-T</b>: Solar, Wind, Hydro, Biomass, Geothermal, Tidal." Fossil trio (coal, oil, gas) = non-renewable.</div>
+    <div class="rq">Q: Is geothermal renewable? → Yes.</div></div>
+
+  <div class="mem-card"><div class="cn">Greenhouse &amp; acid rain <span class="tag">peg</span></div>
+    <div class="hk">"<b>CO₂ warms; SO₂/NOₓ sour the rain.</b>" CO₂/methane → global warming; SO₂ &amp; NOₓ → acid rain.</div>
+    <div class="rq">Q: Which gases cause acid rain? → SO₂ and NOₓ.</div></div>
+</div>
+<div class="panel" id="p-traps">
+  <h2 class="sec"><span class="em">⚠️</span>Exam Traps &amp; Confusion Pairs</h2>
+  <div class="sec-sub">Each has been set in real papers. Read the reality line and it dies.</div>
+
+  <div class="note trap"><span class="t">Trap 1 · The Sun uses FUSION</span>The Sun shines by <b>nuclear fusion</b> (hydrogen → helium), not fission and not "burning". This is the most-tested fact here.</div>
+
+  <div class="note trap"><span class="t">Trap 2 · Atom bomb = FISSION</span>An atom bomb and a reactor use <b>fission</b> (splitting uranium). A hydrogen bomb uses fusion.</div>
+
+  <div class="note trap"><span class="t">Trap 3 · Penetration order</span><b>Gamma</b> penetrates most; <b>alpha</b> least (stopped by paper). "Alpha is most penetrating" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 4 · Alpha vs Beta identity</span><b>Alpha</b> = helium nucleus (+2); <b>beta</b> = electron (−1); <b>gamma</b> = EM wave (no charge). Don't mix these up.</div>
+
+  <div class="note trap"><span class="t">Trap 5 · Half-life is constant</span>Half-life does <b>not</b> depend on temperature, pressure or chemical state — it's fixed for each isotope.</div>
+
+  <div class="note trap"><span class="t">Trap 6 · Fraction after n half-lives</span>Amount left = (1/2)ⁿ. After 3 half-lives → 1/8 (not 3/8), so 7/8 has decayed.</div>
+
+  <div class="note trap"><span class="t">Trap 7 · Renewable vs Non-renewable</span>Solar, wind, hydro, tidal, geothermal, biomass = <b>renewable</b>. Coal, oil, gas = <b>non-renewable</b>. Nuclear (uranium) is non-renewable too.</div>
+
+  <div class="note trap"><span class="t">Trap 8 · Solar cell converts light, not heat</span>A <b>solar cell</b> turns <b>light</b> directly into electricity (photovoltaic). A solar heater uses heat — different device.</div>
+
+  <div class="note trap"><span class="t">Trap 9 · Moderator vs Control rods</span><b>Moderator slows</b> neutrons (keeps fission going); <b>control rods absorb</b> neutrons (slow it down). Don't swap their jobs.</div>
+
+  <div class="note trap"><span class="t">Trap 10 · Greenhouse gases</span>The greenhouse effect is due to <b>CO₂ and methane</b>, not oxygen or nitrogen. Ozone depletion is a separate issue (CFCs).</div>
+
+  <div class="note trap"><span class="t">Trap 11 · Acid rain gases</span>Acid rain is caused by <b>SO₂ and NOₓ</b>, not CO₂. CO₂ mainly causes warming.</div>
+
+  <div class="note trap"><span class="t">Trap 12 · Nuclear power &amp; CO₂</span>Nuclear power emits <b>very little CO₂</b> but produces <b>radioactive waste</b>. Both facts are true — a classic statement question.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> The Sun has shone for billions of years. <b>R:</b> Fusion converts a small mass into vast energy via E = mc². → Both true, <b>R explains A</b>.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> Alpha radiation is the least dangerous externally. <b>R:</b> It is stopped even by a sheet of paper. → Both true, <b>R explains A</b>.</div>
+</div>
+<div class="panel" id="p-rapid">
+  <h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-Liners</h2>
+  <div class="sec-sub"><span class="star">★</span> = highest-frequency in exams. Tap ☆ to flag any line for your FAA revisit list.</div>
+  <div class="ol">
+    <div><span class="n">1</span><span><span class="star">★</span> Nucleus = protons + neutrons; electrons orbit outside.</span></div>
+    <div><span class="n">2</span><span>The neutron is electrically neutral.</span></div>
+    <div><span class="n">3</span><span><span class="star">★</span> Einstein: E = mc².</span></div>
+    <div><span class="n">4</span><span><span class="star">★</span> Atomic number Z = protons; mass number A = protons + neutrons.</span></div>
+    <div><span class="n">5</span><span>Neutrons = A − Z. Isotopes: same Z, different A.</span></div>
+    <div><span class="n">6</span><span><span class="star">★</span> Radioactivity was discovered by Becquerel (Curies found radium).</span></div>
+    <div><span class="n">7</span><span><span class="star">★</span> Penetrating power: gamma &gt; beta &gt; alpha.</span></div>
+    <div><span class="n">8</span><span>Alpha = helium nucleus (+2); beta = electron (−1); gamma = EM wave (0).</span></div>
+    <div><span class="n">9</span><span>Alpha is stopped by paper; gamma needs lead/concrete.</span></div>
+    <div><span class="n">10</span><span><span class="star">★</span> Half-life = time for half the sample to decay; constant per isotope.</span></div>
+    <div><span class="n">11</span><span>Half-life is unaffected by temperature or pressure.</span></div>
+    <div><span class="n">12</span><span>Carbon-14 dating estimates the age of fossils.</span></div>
+    <div><span class="n">13</span><span><span class="star">★</span> Fission = splitting a heavy nucleus (uranium-235).</span></div>
+    <div><span class="n">14</span><span><span class="star">★</span> Fusion = joining light nuclei (hydrogen → helium).</span></div>
+    <div><span class="n">15</span><span><span class="star">★</span> The Sun's energy comes from nuclear fusion.</span></div>
+    <div><span class="n">16</span><span><span class="star">★</span> An atom bomb uses an uncontrolled fission chain reaction.</span></div>
+    <div><span class="n">17</span><span>A chain reaction: neutrons from one fission trigger more.</span></div>
+    <div><span class="n">18</span><span><span class="star">★</span> Renewable: solar, wind, hydro, biomass, geothermal, tidal.</span></div>
+    <div><span class="n">19</span><span><span class="star">★</span> Non-renewable: coal, petroleum, natural gas (fossil fuels).</span></div>
+    <div><span class="n">20</span><span>A solar cell converts light into electricity (photovoltaic).</span></div>
+    <div><span class="n">21</span><span>Geothermal energy uses the Earth's internal heat.</span></div>
+    <div><span class="n">22</span><span>Natural gas (CNG) is mostly methane and is the cleanest fossil fuel.</span></div>
+    <div><span class="n">23</span><span>Petroleum is refined into petrol, diesel, kerosene and LPG.</span></div>
+    <div><span class="n">24</span><span><span class="star">★</span> Reactor fuel = uranium-235 (or plutonium-239).</span></div>
+    <div><span class="n">25</span><span><span class="star">★</span> Moderator slows neutrons; control rods absorb them.</span></div>
+    <div><span class="n">26</span><span>Moderator = graphite/heavy water; control rods = boron/cadmium.</span></div>
+    <div><span class="n">27</span><span>Nuclear power: high energy, low CO₂ — but radioactive waste.</span></div>
+    <div><span class="n">28</span><span><span class="star">★</span> Greenhouse gases (CO₂, methane) cause global warming.</span></div>
+    <div><span class="n">29</span><span>Global warming melts glaciers and raises sea levels.</span></div>
+    <div><span class="n">30</span><span><span class="star">★</span> Acid rain is caused by SO₂ and NOₓ.</span></div>
+    <div><span class="n">31</span><span>Energy conservation: use less, use efficient devices, use renewables.</span></div>
+    <div><span class="n">32</span><span>Fraction remaining after n half-lives = (1/2)ⁿ.</span></div>
+    <div><span class="n">33</span><span>After 3 half-lives, 1/8 (12.5%) remains; 7/8 has decayed.</span></div>
+    <div><span class="n">34</span><span>Fusion releases more energy per kg than fission.</span></div>
+    <div><span class="n">35</span><span>Nuclear energy comes from converting mass into energy (E = mc²).</span></div>
+  </div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Modern Physics &amp; Energy Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_phys_modern_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:35;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:40;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA ===== */
+var MAP=[
+ {id:0,cat:null,icon:"☢️",label:"Modern Physics\n& Energy",fact:"Inside the atom lies immense energy. Radioactivity, fission and fusion release it; renewable and non-renewable sources power our world."},
+ {id:1,cat:0,icon:"⚛️",label:"The Atom\n& Nucleus",fact:"Atoms have a tiny dense nucleus (protons + neutrons) with electrons around it. E = mc² links mass and energy."},
+ {id:2,cat:0,icon:"📡",label:"Radioactivity",fact:"Unstable nuclei spontaneously emit alpha, beta and gamma radiation. Discovered by Becquerel and the Curies."},
+ {id:3,cat:0,icon:"💥",label:"Fission &\nFusion",fact:"Fission splits a heavy nucleus; fusion joins light nuclei. Both release enormous energy (E = mc²)."},
+ {id:4,cat:0,icon:"♻️",label:"Renewable\nEnergy",fact:"Inexhaustible, clean sources: solar, wind, hydro, biomass, geothermal and tidal energy."},
+ {id:5,cat:0,icon:"🛢️",label:"Non-renewable\nEnergy",fact:"Finite fossil fuels — coal, petroleum and natural gas — formed over millions of years and cause pollution."},
+ {id:6,cat:0,icon:"⚛️",label:"Nuclear\nPower",fact:"Controlled fission of uranium in a reactor produces heat → steam → electricity, using moderators and control rods."},
+ {id:7,cat:0,icon:"🌍",label:"Environment\n& Energy",fact:"Energy use causes pollution, the greenhouse effect, global warming and acid rain — driving the need for conservation."},
+ /* Atom & Nucleus */
+ {id:101,cat:1,icon:"🔬",label:"Sub-particles",fact:"Proton (+, in nucleus), neutron (neutral, in nucleus), electron (−, outside). Nucleus holds nearly all the mass."},
+ {id:102,cat:1,icon:"⚫",label:"The nucleus",fact:"Tiny (~10⁻¹⁵ m) but extremely dense; held together by the strong nuclear force despite proton repulsion."},
+ {id:103,cat:1,icon:"🧮",label:"E = mc²",fact:"Einstein's mass–energy relation: a tiny mass converts into a huge energy (c² is enormous). Basis of nuclear energy."},
+ {id:104,cat:1,icon:"🔢",label:"Z and A",fact:"Atomic number Z = number of protons; mass number A = protons + neutrons. Isotopes share Z but differ in A."},
+ /* Radioactivity */
+ {id:201,cat:2,icon:"👩‍🔬",label:"Discovery",fact:"Radioactivity was discovered by Henri Becquerel (1896); Marie & Pierre Curie found polonium and radium."},
+ {id:202,cat:2,icon:"➡️",label:"Alpha, beta,\ngamma",fact:"Alpha (He nucleus, +, least penetrating), beta (electron, −), gamma (EM wave, no charge, most penetrating)."},
+ {id:203,cat:2,icon:"⏳",label:"Half-life",fact:"The time for half of a radioactive sample to decay. Constant for each isotope, unaffected by temperature/pressure."},
+ {id:204,cat:2,icon:"🏥",label:"Uses",fact:"Carbon-14 dating, cancer treatment (cobalt-60), tracers in medicine, and detecting leaks in pipes."},
+ /* Fission & Fusion */
+ {id:301,cat:3,icon:"🔨",label:"Nuclear\nfission",fact:"A heavy nucleus (uranium-235) splits into lighter nuclei when hit by a neutron, releasing energy + more neutrons."},
+ {id:302,cat:3,icon:"🌟",label:"Nuclear\nfusion",fact:"Light nuclei (hydrogen) join to form a heavier one (helium), releasing even more energy — powers the Sun & stars."},
+ {id:303,cat:3,icon:"⛓️",label:"Chain\nreaction",fact:"Neutrons from one fission trigger more fissions; uncontrolled → atom bomb, controlled → nuclear reactor."},
+ {id:304,cat:3,icon:"☀️",label:"Sun's energy",fact:"The Sun shines by nuclear FUSION of hydrogen into helium in its core — not by burning or fission."},
+ /* Renewable */
+ {id:401,cat:4,icon:"☀️",label:"Solar",fact:"Energy from the Sun; solar cells (photovoltaic) turn light into electricity; solar cookers/heaters use its heat."},
+ {id:402,cat:4,icon:"💨",label:"Wind",fact:"Moving air spins turbines to generate electricity. Clean but needs steady wind and open land."},
+ {id:403,cat:4,icon:"💧",label:"Hydro",fact:"Falling/flowing water spins turbines in a dam; India's largest renewable electricity source historically."},
+ {id:404,cat:4,icon:"🌱",label:"Biomass,\ngeothermal, tidal",fact:"Biomass/biogas from waste; geothermal from Earth's heat; tidal from sea tides — all renewable."},
+ /* Non-renewable */
+ {id:501,cat:5,icon:"⚫",label:"Coal",fact:"A fossil fuel formed from ancient plants; burnt in thermal power stations but a major polluter."},
+ {id:502,cat:5,icon:"🛢️",label:"Petroleum",fact:"'Crude oil' refined into petrol, diesel, kerosene, LPG. Formed from marine organisms over millions of years."},
+ {id:503,cat:5,icon:"🔥",label:"Natural gas",fact:"Mainly methane; cleaner than coal/oil. CNG (compressed) fuels vehicles; PNG is piped to homes."},
+ {id:504,cat:5,icon:"⏳",label:"Finite &\npolluting",fact:"Fossil fuels take millions of years to form, will run out, and release CO₂ and pollutants when burnt."},
+ /* Nuclear power */
+ {id:601,cat:6,icon:"🏭",label:"Reactor",fact:"Controlled fission generates heat that boils water → steam → spins a turbine-generator → electricity."},
+ {id:602,cat:6,icon:"🟡",label:"Uranium fuel",fact:"Uranium-235 (and plutonium-239) are the common fissile fuels. A little fuel yields huge energy."},
+ {id:603,cat:6,icon:"🎛️",label:"Moderator &\ncontrol rods",fact:"A moderator (graphite/heavy water) slows neutrons; control rods (boron/cadmium) absorb them to control the reaction."},
+ {id:604,cat:6,icon:"⚖️",label:"Pros & hazards",fact:"Huge energy, low CO₂ — but risks: radioactive waste, accidents (Chernobyl, Fukushima) and high cost."},
+ /* Environment */
+ {id:701,cat:7,icon:"🏭",label:"Pollution",fact:"Burning fuels releases CO₂, SO₂, NOₓ and particulates, harming air, water and health."},
+ {id:702,cat:7,icon:"🌡️",label:"Greenhouse\n& warming",fact:"Greenhouse gases (CO₂, methane) trap heat → global warming, melting ice and rising seas."},
+ {id:703,cat:7,icon:"🌧️",label:"Acid rain",fact:"SO₂ and NOₓ dissolve in rain to form acids, damaging buildings, forests and lakes."},
+ {id:704,cat:7,icon:"🔋",label:"Conservation",fact:"Save energy, shift to renewables and use efficient appliances to cut pollution and preserve resources."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"The nucleus of an atom contains:",o:["Protons and electrons","Protons and neutrons","Only neutrons","Electrons only"],a:1,e:"The nucleus holds protons and neutrons; electrons orbit outside."},
+ {t:"Recall · TNPSC",q:"Which particle in the atom carries no charge?",o:["Proton","Electron","Neutron","Positron"],a:2,e:"The neutron is electrically neutral."},
+ {t:"Recall · RRB",q:"Einstein's mass–energy relation is:",o:["E = mc","E = mc²","E = m/c²","E = ½mc²"],a:1,e:"E = mc² — a tiny mass yields enormous energy."},
+ {t:"Recall · SSC",q:"The atomic number of an element is the number of:",o:["Neutrons","Protons","Protons + neutrons","Electrons + neutrons"],a:1,e:"Atomic number Z = number of protons."},
+ {t:"Conceptual · Banking",q:"Isotopes of an element have the same number of ___ but different ___:",o:["neutrons; protons","protons; neutrons","electrons; protons","protons; electrons"],a:1,e:"Isotopes share the atomic number (protons) but differ in neutrons (mass number)."},
+ {t:"Recall · TNPSC",q:"Radioactivity was discovered by:",o:["Rutherford","Becquerel","Einstein","Bohr"],a:1,e:"Henri Becquerel (1896); the Curies discovered polonium and radium."},
+ {t:"Recall · SSC",q:"Which radiation has the greatest penetrating power?",o:["Alpha","Beta","Gamma","All equal"],a:2,e:"Gamma rays penetrate most; alpha the least (stopped by paper)."},
+ {t:"Conceptual · RRB",q:"An alpha particle is essentially a:",o:["Helium nucleus","Electron","Photon","Proton"],a:0,e:"An alpha particle is a helium nucleus (2 protons + 2 neutrons)."},
+ {t:"Recall · SSC",q:"A beta particle is a:",o:["Proton","Helium nucleus","Fast electron","Neutron"],a:2,e:"A beta particle is a high-speed electron emitted from the nucleus."},
+ {t:"Recall · TNPSC",q:"The time taken for half of a radioactive sample to decay is its:",o:["Life time","Half-life","Mean life","Decay rate"],a:1,e:"Half-life is constant for each isotope and unaffected by temperature/pressure."},
+ {t:"Application · Banking",q:"Carbon-14 dating is used to find the age of:",o:["Rocks","Stars","Fossils and ancient objects","Metals"],a:2,e:"Radiocarbon (C-14) dating estimates the age of once-living material."},
+ {t:"Recall · SSC",q:"Splitting a heavy nucleus into lighter ones is called:",o:["Fusion","Fission","Ionisation","Radiation"],a:1,e:"Nuclear fission splits a heavy nucleus (e.g. uranium-235)."},
+ {t:"Recall · RRB",q:"Joining light nuclei to form a heavier nucleus is called:",o:["Fission","Fusion","Decay","Reflection"],a:1,e:"Nuclear fusion joins light nuclei (e.g. hydrogen → helium)."},
+ {t:"Conceptual · SSC",q:"The energy of the Sun is produced by:",o:["Nuclear fission","Nuclear fusion","Burning of coal","Chemical reactions"],a:1,e:"The Sun shines by fusion of hydrogen into helium in its core."},
+ {t:"Conceptual · TNPSC",q:"An atom bomb is based on an uncontrolled:",o:["Fusion reaction","Chemical reaction","Fission chain reaction","Combustion"],a:2,e:"An atom bomb uses an uncontrolled fission chain reaction."},
+ {t:"Recall · Banking",q:"The fuel commonly used in nuclear reactors is:",o:["Coal","Uranium-235","Hydrogen","Petrol"],a:1,e:"Uranium-235 (and plutonium-239) are common fissile fuels."},
+ {t:"Conceptual · SSC",q:"In a nuclear reactor, control rods are used to:",o:["Speed up neutrons","Absorb neutrons and control the reaction","Increase temperature","Produce steam"],a:1,e:"Control rods (boron/cadmium) absorb neutrons to control the chain reaction."},
+ {t:"Conceptual · RRB",q:"A moderator in a reactor is used to:",o:["Absorb all neutrons","Slow down fast neutrons","Cool the water","Store waste"],a:1,e:"A moderator (graphite or heavy water) slows neutrons to sustain fission."},
+ {t:"Recall · SSC",q:"Which of these is a renewable source of energy?",o:["Coal","Petroleum","Solar energy","Natural gas"],a:2,e:"Solar, wind, hydro and biomass are renewable; fossil fuels are not."},
+ {t:"Recall · TNPSC",q:"Which of the following is a non-renewable source of energy?",o:["Wind","Coal","Tidal","Solar"],a:1,e:"Coal (a fossil fuel) is non-renewable."},
+ {t:"Application · Banking",q:"A solar cell converts:",o:["Heat into electricity","Light into electricity","Electricity into light","Sound into electricity"],a:1,e:"A photovoltaic (solar) cell converts sunlight directly into electricity."},
+ {t:"Application · SSC",q:"Which energy source uses the heat inside the Earth?",o:["Tidal","Geothermal","Solar","Wind"],a:1,e:"Geothermal energy comes from the Earth's internal heat."},
+ {t:"Recall · RRB",q:"The main constituent of natural gas (and CNG) is:",o:["Ethane","Methane","Propane","Butane"],a:1,e:"Natural gas is mostly methane; CNG is compressed natural gas."},
+ {t:"Conceptual · SSC",q:"The greenhouse effect is mainly caused by:",o:["Oxygen","Carbon dioxide and other greenhouse gases","Nitrogen","Ozone"],a:1,e:"CO₂, methane and other greenhouse gases trap heat, warming the planet."},
+ {t:"Conceptual · TNPSC",q:"Global warming leads to:",o:["Cooling of the Earth","Melting of glaciers and rising sea levels","More ozone","Lower CO₂"],a:1,e:"Trapped heat melts ice and raises sea levels."},
+ {t:"Conceptual · Banking",q:"Acid rain is caused mainly by:",o:["CO₂ and O₂","SO₂ and NOₓ","Methane","CFCs"],a:1,e:"Sulphur dioxide and nitrogen oxides form acids in rainwater."},
+ {t:"Application · SSC",q:"Which of these is the cleanest fuel among the following?",o:["Coal","Diesel","CNG","Petrol"],a:2,e:"CNG (natural gas) burns cleaner, producing fewer pollutants."},
+ {t:"Recall · RRB",q:"The energy released in a nuclear reaction comes from the conversion of:",o:["Heat into light","Mass into energy (E = mc²)","Sound into heat","Charge into energy"],a:1,e:"A small mass loss becomes a huge energy release (E = mc²)."},
+ {t:"Numerical · SSC",q:"An isotope has a half-life of 5 years. What fraction remains after 10 years?",o:["1/2","1/4","1/8","0"],a:1,e:"10 years = 2 half-lives → (1/2)² = 1/4 remains."},
+ {t:"Numerical · Banking",q:"A radioactive sample of 80 g has a half-life of 3 days. How much remains after 9 days?",o:["40 g","20 g","10 g","5 g"],a:2,e:"9 days = 3 half-lives → 80 → 40 → 20 → 10 g."},
+ {t:"Numerical · RRB",q:"After 3 half-lives, what percentage of a radioactive sample remains?",o:["50%","25%","12.5%","6.25%"],a:2,e:"(1/2)³ = 1/8 = 12.5%."},
+ {t:"Statement · SSC",q:"Consider: (1) The Sun's energy comes from fusion. (2) An atom bomb uses fusion. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true (fusion). 2 is false — an atom bomb uses fission."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Gamma rays are the most penetrating. (2) Alpha particles are the most penetrating. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Gamma is most penetrating; alpha is least. Only 1 is correct."},
+ {t:"Statement · RRB",q:"Consider: (1) Solar energy is renewable. (2) Coal is renewable. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Solar is renewable; coal is non-renewable."},
+ {t:"Statement · Banking",q:"Consider: (1) Half-life depends on temperature. (2) Half-life is constant for an isotope. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"1 is false (half-life is unaffected by temperature); 2 is true."},
+ {t:"Statement · SSC",q:"Consider: (1) A moderator slows neutrons. (2) Control rods speed up the reaction. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — control rods absorb neutrons to slow/stop it."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Nuclear power emits little CO₂. (2) Nuclear power produces radioactive waste. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both are true — a key pro and con of nuclear power."},
+ {t:"Assertion–Reason · SSC",q:"A: The Sun radiates energy for billions of years. R: It fuses hydrogen into helium, releasing energy via E = mc².",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A."},
+ {t:"Assertion–Reason · RRB",q:"A: We are urged to shift to renewable energy. R: Fossil fuels are finite and cause pollution.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, application, statement, assertion–reason & numerical. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS ===== */
+var PROB=[
+ {lvl:"e",tag:"Half-life",q:"An isotope has a half-life of 4 years. What fraction remains after 8 years?",given:"half-life = 4 y, t = 8 y",find:"fraction",steps:["8 y = 2 half-lives","(1/2)² = 1/4"],ans:"1/4"},
+ {lvl:"e",tag:"Half-life",q:"100 g of a substance has a half-life of 2 hours. How much is left after 4 hours?",given:"100 g, half-life = 2 h, t = 4 h",find:"amount",steps:["4 h = 2 half-lives","100 → 50 → 25"],ans:"25 g"},
+ {lvl:"e",tag:"Z and A",q:"An atom has 11 protons and 12 neutrons. Find its atomic number and mass number.",given:"protons = 11, neutrons = 12",find:"Z and A",steps:["Z = protons = 11","A = protons + neutrons = 11 + 12"],ans:"Z = 11, A = 23"},
+ {lvl:"m",tag:"Half-life",q:"A 240 g sample decays with a 6-hour half-life. How much remains after 18 hours?",given:"240 g, half-life = 6 h, t = 18 h",find:"amount",steps:["18 h = 3 half-lives","240 → 120 → 60 → 30"],ans:"30 g"},
+ {lvl:"m",tag:"Percent",q:"What percentage of a radioactive sample remains after 4 half-lives?",given:"4 half-lives",find:"% remaining",steps:["(1/2)⁴ = 1/16","= 6.25%"],ans:"6.25%"},
+ {lvl:"m",tag:"Neutrons",q:"An atom has mass number 40 and atomic number 20. Find the number of neutrons.",given:"A = 40, Z = 20",find:"neutrons",steps:["neutrons = A − Z","= 40 − 20"],ans:"20 neutrons"},
+ {lvl:"m",tag:"Half-life",q:"After how many half-lives does an isotope fall to 1/8 of its original amount?",given:"fraction = 1/8",find:"number of half-lives",steps:["(1/2)ⁿ = 1/8 = (1/2)³","n = 3"],ans:"3 half-lives"},
+ {lvl:"m",tag:"Half-life time",q:"A sample drops to 1/4 in 10 years. Find its half-life.",given:"1/4 after 10 y",find:"half-life",steps:["1/4 = (1/2)² → 2 half-lives in 10 y","half-life = 10/2"],ans:"5 years"},
+ {lvl:"h",tag:"Half-life",q:"A 1 kg sample has a half-life of 5 days. How much remains after 20 days?",given:"1000 g, half-life 5 d, t = 20 d",find:"amount",steps:["20 d = 4 half-lives","1000 → 500 → 250 → 125 → 62.5"],ans:"62.5 g"},
+ {lvl:"h",tag:"E = mc²",q:"Find the energy released when 0.001 kg of mass is fully converted. (c = 3×10⁸ m/s)",given:"m = 0.001 kg, c = 3×10⁸",find:"E",steps:["E = mc²","= 0.001 × (3×10⁸)² = 0.001 × 9×10¹⁶"],ans:"9×10¹³ J"},
+ {lvl:"h",tag:"Fraction decayed",q:"After 3 half-lives, what fraction of the sample has DECAYED?",given:"3 half-lives",find:"fraction decayed",steps:["Remaining = (1/2)³ = 1/8","Decayed = 1 − 1/8 = 7/8"],ans:"7/8 (87.5%)"},
+ {lvl:"h",tag:"Two isotopes",q:"How long for a sample with a 2-year half-life to fall to 1/32 of its amount?",given:"fraction = 1/32, half-life = 2 y",find:"time",steps:["1/32 = (1/2)⁵ → 5 half-lives","time = 5 × 2"],ans:"10 years"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked numericals graded easy→hard. Try first, then reveal the steps. Mark solved for XP.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS ===== */
+var FC=[
+ {q:"What does the nucleus contain?",a:"Protons (+) and neutrons (neutral); electrons orbit outside."},
+ {q:"Which sub-particle is neutral?",a:"The neutron."},
+ {q:"State Einstein's mass–energy relation.",a:"E = mc²."},
+ {q:"What is the atomic number (Z)?",a:"The number of protons in the nucleus."},
+ {q:"What is the mass number (A)?",a:"Protons + neutrons."},
+ {q:"What are isotopes?",a:"Atoms of the same element (same Z) with different numbers of neutrons (different A)."},
+ {q:"Who discovered radioactivity?",a:"Henri Becquerel (1896); the Curies found polonium and radium."},
+ {q:"Name the three radiations in order of penetrating power.",a:"Gamma > beta > alpha (alpha is stopped by paper)."},
+ {q:"What is an alpha particle?",a:"A helium nucleus (2 protons + 2 neutrons), positive charge."},
+ {q:"What is a beta particle?",a:"A fast-moving electron from the nucleus, negative charge."},
+ {q:"What is half-life?",a:"The time for half a radioactive sample to decay; constant for each isotope."},
+ {q:"Does half-life depend on temperature or pressure?",a:"No — it is unaffected by external conditions."},
+ {q:"One important use of carbon-14?",a:"Radiocarbon dating of fossils/ancient objects."},
+ {q:"What is nuclear fission?",a:"Splitting a heavy nucleus (e.g. U-235) into lighter ones, releasing energy."},
+ {q:"What is nuclear fusion?",a:"Joining light nuclei (hydrogen → helium), releasing even more energy."},
+ {q:"How does the Sun produce energy?",a:"By nuclear FUSION of hydrogen into helium."},
+ {q:"What powers an atom bomb?",a:"An uncontrolled fission chain reaction."},
+ {q:"Common fuel in nuclear reactors?",a:"Uranium-235 (also plutonium-239)."},
+ {q:"Job of a moderator in a reactor?",a:"Slows down fast neutrons (graphite or heavy water)."},
+ {q:"Job of control rods?",a:"Absorb neutrons to control/stop the chain reaction (boron/cadmium)."},
+ {q:"Name four renewable energy sources.",a:"Solar, wind, hydro, biomass (also geothermal, tidal)."},
+ {q:"Name the three main fossil fuels.",a:"Coal, petroleum and natural gas."},
+ {q:"What does a solar cell do?",a:"Converts sunlight directly into electricity (photovoltaic)."},
+ {q:"Main constituent of natural gas/CNG?",a:"Methane."},
+ {q:"What causes the greenhouse effect?",a:"Greenhouse gases (CO₂, methane) trapping heat."},
+ {q:"What does global warming cause?",a:"Melting glaciers and rising sea levels."},
+ {q:"What causes acid rain?",a:"SO₂ and NOₓ dissolving in rainwater to form acids."},
+ {q:"Two advantages of nuclear power?",a:"Huge energy output and very low CO₂ emissions."},
+ {q:"Two hazards of nuclear power?",a:"Radioactive waste and accident risk (Chernobyl, Fukushima)."},
+ {q:"Fraction remaining after 3 half-lives?",a:"1/8 (12.5%)."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script>
+/* ===== CentuMania metrics — universal (generator-agnostic; additive) ===== */
+(function(){
+  if(window.__cmTrackU||window.__cmTrackInit)return; window.__cmTrackU=1;
+  var CM_DEFAULT='physics-modern-physics-energy', CM_T0=Date.now(), CM_ACTIVE=0, _vt=Date.now(), _lastQ=0;
+  function tok(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function mat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function sid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'a'+Date.now();}}
+  function inter(t,n,m){try{var k=tok();if(!k||!n)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({interaction_type:t,node_id:String(n),material_id:mat(),session_id:sid(),timestamp:new Date().toISOString(),metadata:m||{}})}).catch(function(){});}catch(e){}}
+  function ev(name,m){try{var k=tok();if(!k)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})})}).catch(function(){});}catch(e){}}
+  function beacon(name,m){try{var k=tok();if(!k)return;var p=JSON.stringify({_token:k,event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_vt;beacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_vt=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_vt;beacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  ev('material_opened',{});ev('session_start',{});
+  /* node-open: wrap any global opener that exists */
+  ['openNode','selectNode','showNode','goNode','openTopic','loadNode'].forEach(function(fn){
+    if(typeof window[fn]==='function'){var _o=window[fn];window[fn]=function(){var r;try{r=_o.apply(this,arguments);}catch(e){r=undefined;}try{var id=arguments[0];if(id!=null&&(typeof id==='string'||typeof id==='number')){_lastQ=Date.now();inter('node_opened',id,{});ev('node_open',{node_id:String(id)});}}catch(e){}return r;};}
+  });
+  /* per-question: delegated click on any option element; correctness read from the class the module applies */
+  document.addEventListener('click',function(e){
+    var o=e.target&&e.target.closest&&e.target.closest('.mopt,.opt,.option,[data-oi]');if(!o)return;
+    var card=o.closest('.mcq-card,.mcq,[data-nid],[data-qi]')||o.parentElement;if(!card)return;if(card._cmA)return;card._cmA=1;
+    var nid=(card.getAttribute&&(card.getAttribute('data-nid')||card.getAttribute('data-node')))||'q';
+    var qraw=card.getAttribute&&card.getAttribute('data-qi');var qi=qraw!=null?parseInt(qraw):-1;
+    var now=Date.now(),dt=_lastQ?now-_lastQ:0;_lastQ=now;
+    setTimeout(function(){var correct=o.classList.contains('correct')||o.getAttribute('data-correct')==='true';if(!correct&&(o.classList.contains('wrong')||o.classList.contains('incorrect')))correct=false;inter('mcq_attempt',String(nid),{question_index:qi,is_correct:!!correct});ev('answer',{node_id:String(nid),question_index:qi,is_correct:!!correct,time_spent_ms:dt});},70);
+  },true);
+})();
+</script>
+
+</body></html>

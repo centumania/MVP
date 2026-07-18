@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>SSC English · Articles (A / An / The)</title>
+<title>SSC English · Voice (Active / Passive)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -189,7 +189,7 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <body>
 <div class="shell">
 <nav class="topbar">
-  <div class="logo"><span class="logo-dot"></span>SSC English — Articles (A / An / The)</div>
+  <div class="logo"><span class="logo-dot"></span>SSC English — Voice (Active / Passive)</div>
   <div class="nav-stats">
     <div class="stat xp">XP <b id="hXP">0</b></div>
     <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
@@ -220,263 +220,203 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <script>
 
 const DIAGRAMS = {
-"articles-map": `<svg viewBox="0 0 760 170" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+"voice-steps": `<svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
 <rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(61,214,140,.08)" stroke="#3dd68c" stroke-width="1"/>
-<text x="380" y="22" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">ARTICLE DECISION MAP — A / AN / THE / ZERO</text>
-<rect x="4" y="36" width="246" height="128" rx="8" fill="rgba(34,211,200,.06)" stroke="#22d3c8" stroke-width="1.2"/>
-<text x="127" y="56" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">A / AN</text>
-<text x="127" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Singular · first mention</text>
-<text x="127" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">AN = vowel SOUND</text>
-<text x="127" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">an hour · an MBA · an heir</text>
-<text x="127" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">A = consonant SOUND</text>
-<text x="127" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">a university · a one-rupee</text>
-<rect x="258" y="36" width="246" height="128" rx="8" fill="rgba(61,214,140,.06)" stroke="#3dd68c" stroke-width="1.2"/>
-<text x="381" y="56" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">THE</text>
-<text x="381" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Second mention · unique</text>
-<text x="381" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Superlatives · ordinals</text>
-<text x="381" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Rivers · ranges · instruments</text>
-<text x="381" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">the sun · the best · the Ganga</text>
-<text x="381" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">the USA · the Himalayas</text>
-<rect x="512" y="36" width="244" height="128" rx="8" fill="rgba(240,107,107,.06)" stroke="#f06b6b" stroke-width="1.2"/>
-<text x="634" y="56" fill="#f06b6b" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">ZERO (no article)</text>
-<text x="634" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Languages · meals · subjects</text>
-<text x="634" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Countries · abstract nouns</text>
-<text x="634" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">After elected / appointed</text>
-<text x="634" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">by bus · go to bed</text>
-<text x="634" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Honesty · English · lunch</text>
+<text x="380" y="22" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">ACTIVE → PASSIVE — 3 STEPS</text>
+<rect x="4" y="38" width="240" height="84" rx="8" fill="rgba(34,211,200,.06)" stroke="#22d3c8" stroke-width="1.2"/>
+<text x="124" y="60" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">STEP 1</text>
+<text x="124" y="82" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Object → Subject</text>
+<text x="124" y="102" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">The apple ...</text>
+<rect x="260" y="38" width="240" height="84" rx="8" fill="rgba(240,188,69,.06)" stroke="#f0bc45" stroke-width="1.2"/>
+<text x="380" y="60" fill="#f0bc45" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">STEP 2</text>
+<text x="380" y="82" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">be + V3 (match tense)</text>
+<text x="380" y="102" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">... is eaten ...</text>
+<rect x="516" y="38" width="240" height="84" rx="8" fill="rgba(167,139,250,.06)" stroke="#a78bfa" stroke-width="1.2"/>
+<text x="636" y="60" fill="#a78bfa" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">STEP 3</text>
+<text x="636" y="82" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Subject → by + object</text>
+<text x="636" y="102" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">... by him.</text>
+<text x="250" y="84" fill="#f0bc45" font-size="16" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
+<text x="506" y="84" fill="#f0bc45" font-size="16" text-anchor="middle" font-family="JetBrains Mono,monospace">→</text>
 </svg>`
 };
 
 const CHAPTERS = [
 
-{id:"art-foundations",title:"Foundations",icon:"📰",nodes:[
+{id:"voi-core",title:"Conversion Rules",icon:"🔄",nodes:[
 
- {id:"art-aan",title:"A vs AN — The Sound Rule",xp:20,type:"regular",diag:"articles-map",
+ {id:"voi-steps",title:"The 3 Conversion Steps",xp:20,type:"regular",diag:"voice-steps",
   facts:[
-   "<b>A / AN depends on SOUND, not spelling</b> — this is the single most tested article rule in SSC",
-   "<b>AN</b> before a vowel SOUND: <code>an</code> apple, <code>an</code> hour, <code>an</code> honest man, <code>an</code> heir (silent h)",
-   "<b>AN</b> before letters pronounced with a vowel sound: <code>an</code> MBA, <code>an</code> MP, <code>an</code> MLA, <code>an</code> X-ray, <code>an</code> SSC exam",
-   "<b>A</b> before a consonant SOUND even if the word starts with a vowel LETTER: <code>a</code> university, <code>a</code> European, <code>a</code> union, <code>a</code> useful book (all 'yu' sound)",
-   "<b>A</b> before 'one-' words: <code>a</code> one-rupee note, <code>a</code> one-eyed man (the 'w/won' sound)",
-   "<b>A / AN + adjective + noun</b> → decide by the ADJECTIVE's sound: <b>an</b> old man, <b>a</b> beautiful actress, <b>an</b> honest officer"
+   "<b>Step 1</b> — Object of Active → Subject of Passive",
+   "<b>Step 2</b> — Change the verb → be-form + V3 (past participle), keeping the ORIGINAL tense",
+   "<b>Step 3</b> — Subject of Active → 'by + object'",
+   "<b>Pronoun changes</b> after 'by': I → by me, he → by him, she → by her, they → by them, we → by us, you → by you",
+   "'He eats the apple' → Step1: The apple → Step2: is eaten → Step3: by him = 'The apple is eaten by him'",
+   "<b>Omit 'by...'</b> when the doer is unknown, unimportant or obvious: 'English is spoken here', 'He was arrested'"
   ],
-  table:{h:["USE A (consonant sound)","USE AN (vowel sound)"],r:[
-   ["a university (yu-)","an umbrella (u-)"],
-   ["a European (yu-)","an honest man (silent h)"],
-   ["a one-rupee note (w-)","an hour (silent h)"],
-   ["a useful book (yu-)","an MBA / an MP (em-)"],
-   ["a unicorn (yu-)","an heir (silent h)"],
-   ["a historic event (h pronounced)","an X-ray (ex-)"]
+  table:{h:["Active pronoun","Passive (after by)"],r:[
+   ["I","by me"],["he","by him"],["she","by her"],
+   ["they","by them"],["we","by us"],["you","by you"]
   ]},
   mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"'Honest' has a silent H → vowel sound → AN."},
-   {q:"She is ___ European working in India.",o:["a","an","the","✗ (no article)"],a:0,e:"'European' begins with a 'yu' consonant sound → A."},
-   {q:"He has ___ MBA degree from IIM.",o:["a","an","the","✗ (no article)"],a:1,e:"'MBA' = 'em-bee-ay' → begins with a vowel sound → AN."},
-   {q:"Please give me ___ one-rupee coin.",o:["a","an","the","✗ (no article)"],a:0,e:"'One' begins with a 'w' (won) sound = consonant sound → A."},
-   {q:"It is ___ useful book for beginners.",o:["a","an","the","✗ (no article)"],a:0,e:"'Useful' = 'yu-' consonant sound → A."},
-   {q:"He is ___ heir to a large fortune.",o:["a","an","the","✗ (no article)"],a:1,e:"'Heir' has a silent H → vowel sound → AN."},
-   {q:"They lived through ___ historic event.",o:["a","an","the","✗ (no article)"],a:0,e:"In 'historic' the H is pronounced → consonant sound → A."}
+   {q:"Passive of: 'Someone has stolen my wallet.'",o:["My wallet is stolen","My wallet was stolen","My wallet has been stolen","My wallet had been stolen"],a:2,e:"Present Perfect passive = has been + V3."},
+   {q:"'The letter was written by ___.'",o:["I","he","me","they"],a:2,e:"After 'by' use the object pronoun → 'by me'."},
+   {q:"Passive of: 'They will announce the results tomorrow.'",o:["The results are announced","The results will announce","The results will be announced tomorrow","The results announced"],a:2,e:"Simple Future passive = will be + V3."},
+   {q:"Which needs NO 'by...' phrase (obvious agent)?",o:["The book was written by Tagore","The thief was arrested (by police)","The cake was baked by mother","The song was sung by her"],a:1,e:"Agent (police) is obvious → omit 'by police'."},
+   {q:"Passive of: 'He teaches us English.'",o:["We are taught English by him","English is teaching by him","We are teaching English","English are taught"],a:0,e:"IO 'us' becomes subject → 'We are taught English by him'."}
   ]},
 
- {id:"art-the",title:"THE — The Definite Article",xp:20,type:"regular",
+ {id:"voi-table",title:"Conversion Across All Tenses",xp:20,type:"regular",
   facts:[
-   "<b>Second mention</b> of a noun: 'I saw a dog. THE dog was black.'",
-   "<b>Unique things</b>: the sun, the moon, the sky, the earth, the world, the universe",
-   "<b>Superlatives &amp; ordinals</b>: the best, the tallest, the first, the second, the last",
-   "<b>Rivers, oceans, seas</b>: the Ganga, the Nile, the Pacific, the Arabian Sea · <b>ranges</b>: the Himalayas, the Alps (NOT single peaks)",
-   "<b>Holy books</b>: the Gita, the Bible, the Quran · <b>newspapers</b>: the Hindu, the Times of India · <b>named ships/trains</b>: the Rajdhani, the Titanic",
-   "<b>Musical instruments</b>: play the violin, the piano · <b>directions</b>: the North, the East · <b>parallel comparatives</b>: THE more you read, THE better"
+   "<b>Simple Present</b>: is/am/are + V3 — 'The apple is eaten by him'",
+   "<b>Present Continuous</b>: is/am/are + being + V3 — 'is being eaten'",
+   "<b>Present Perfect</b>: has/have + been + V3 — 'has been eaten'",
+   "<b>Simple Past</b>: was/were + V3 — 'was eaten'; <b>Past Continuous</b>: was/were + being + V3 — 'was being eaten'",
+   "<b>Past Perfect</b>: had + been + V3 — 'had been eaten'; <b>Simple Future</b>: will be + V3; <b>Future Perfect</b>: will have been + V3",
+   "<b>Future/Present Perfect Continuous have NO common passive</b> — SSC avoids them"
   ],
-  table:{h:["Use THE for","Example"],r:[
-   ["Second mention","I saw a dog. THE dog barked."],
-   ["Unique in the world","the sun, the moon, the earth"],
-   ["Superlatives / ordinals","the best, the first, the last"],
-   ["Musical instruments","He plays THE violin"],
-   ["Rivers / ranges / seas","the Ganga, the Himalayas, the Pacific"],
-   ["Holy books / newspapers","the Gita, the Hindu"],
-   ["Political / govt bodies","the Parliament, the Cabinet"]
+  table:{h:["Tense","Active","Passive"],r:[
+   ["Simple Present","He eats it","It is eaten"],
+   ["Present Cont.","He is eating it","It is being eaten"],
+   ["Present Perfect","He has eaten it","It has been eaten"],
+   ["Simple Past","He ate it","It was eaten"],
+   ["Past Cont.","He was eating it","It was being eaten"],
+   ["Past Perfect","He had eaten it","It had been eaten"],
+   ["Simple Future","He will eat it","It will be eaten"]
   ]},
   mcqs:[
-   {q:"She plays ___ piano beautifully.",o:["a","an","the","✗ (no article)"],a:2,e:"Musical instruments always take THE."},
-   {q:"___ Himalayas are in the north of India.",o:["A","An","The","✗ (no article)"],a:2,e:"Mountain RANGES take THE (single peaks take none)."},
-   {q:"It is ___ most difficult question in the paper.",o:["a","an","the","✗ (no article)"],a:2,e:"Superlatives take THE → 'the most difficult'."},
-   {q:"___ Ganga is a holy river.",o:["A","An","The","✗ (no article)"],a:2,e:"Names of rivers take THE."},
-   {q:"The sun rises in ___ east.",o:["a","an","the","✗ (no article)"],a:2,e:"Cardinal directions take THE → 'the east'."},
-   {q:"I read ___ Times of India every morning.",o:["a","an","the","✗ (no article)"],a:2,e:"Newspapers take THE."},
-   {q:"___ more you practise, ___ better you become.",o:["The / the","A / a","No article / the","The / a"],a:0,e:"Parallel comparatives take THE...THE."}
+   {q:"Passive of: 'The teacher is explaining the lesson.'",o:["is explained","is being explained by the teacher","was being explained","has been explained"],a:1,e:"Present Continuous passive = is + being + V3."},
+   {q:"Passive of: 'He had finished the work.'",o:["The work is finished","The work was finished","The work had been finished by him","The work has been finished"],a:2,e:"Past Perfect passive = had + been + V3."},
+   {q:"Which passive is CORRECT?",o:["The work is been done","The work is being done","The work is doing","The work being done"],a:1,e:"Present Continuous passive = is + being + V3 (never 'is been')."},
+   {q:"Passive of: 'The letter was being written by him when I called.'",o:["He was writing the letter (active given)","was written","is being written","had been written"],a:0,e:"The active form of 'was being written' = 'He was writing the letter'."},
+   {q:"Passive of: 'They have completed the project.'",o:["The project is completed","The project has been completed","The project was completed","The project had completed"],a:1,e:"Present Perfect passive = has/have + been + V3."}
   ]},
 
- {id:"art-zero",title:"Zero Article — When to Use Nothing",xp:20,type:"regular",
+ {id:"voi-modal",title:"Modal & Imperative Passives",xp:20,type:"regular",
   facts:[
-   "<b>NO article</b> with proper nouns (Ram), countries (India, France), cities (Delhi), single mountains (Mount Everest), single lakes (Dal Lake)",
-   "<b>NO article</b> with languages (English), subjects (Mathematics), meals (breakfast, lunch), diseases (malaria, diabetes)",
-   "<b>NO article</b> with abstract/general nouns: 'Honesty is the best policy', 'Knowledge is power', 'Love is blind'",
-   "<b>NO article</b> with plural general nouns: 'Dogs are loyal', 'Man is mortal'",
-   "<b>THE + adjective = class of people</b>: the poor, the rich, the blind, the young, the dead",
-   "<b>Institution for its purpose</b> → no article: in hospital (as patient), in school, in prison, go to bed, go to work"
+   "<b>Modal passive</b>: modal + <b>be</b> + V3 — can be eaten, could be done, may be seen, must be submitted, should be completed, ought to be respected",
+   "'He can eat the apple' → 'The apple can be eaten by him'",
+   "<b>Imperative (command)</b>: 'Open the door' → 'Let the door be opened'",
+   "<b>Imperative (negative)</b>: 'Do not waste time' → 'Let time not be wasted'",
+   "<b>Imperative (request)</b>: 'Please help me' → 'You are requested to help me'",
+   "<b>Let</b>: 'Let him do it' → 'Let it be done by him'"
   ],
-  table:{h:["No article with","Example"],r:[
-   ["Languages","She speaks English & French"],
-   ["Subjects","I study Mathematics"],
-   ["Meals","Have lunch, eat breakfast"],
-   ["Diseases","He has malaria / diabetes"],
-   ["Single mountains / lakes","Mount Everest, Dal Lake"],
-   ["Abstract nouns (general)","Knowledge is power"],
-   ["by + transport","by bus, by train, by air"]
+  table:{h:["Modal","Passive form","Example"],r:[
+   ["can / could","can/could be + V3","can be eaten"],
+   ["may / might","may/might be + V3","may be seen"],
+   ["must","must be + V3","must be submitted"],
+   ["should","should be + V3","should be done"],
+   ["ought to","ought to be + V3","ought to be respected"],
+   ["Imperative","Let + obj + be + V3","Let the door be opened"]
   ]},
   mcqs:[
-   {q:"She speaks ___ French and German fluently.",o:["a","the","✗ (no article)","an"],a:2,e:"Languages take no article."},
-   {q:"He had ___ lunch at noon.",o:["a","the","✗ (no article)","an"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"He travelled ___ train to Mumbai.",o:["by (no article)","in the","on a","with the"],a:0,e:"'By + transport' takes no article → 'by train'."},
-   {q:"___ knowledge is ___ power.",o:["The / the","A / a","✗ / ✗ (no article)","The / a"],a:2,e:"Abstract nouns used generally take no article."},
-   {q:"___ Mount Everest is the highest peak.",o:["The","A","An","✗ (no article)"],a:3,e:"Single mountains take no article (ranges take THE)."},
-   {q:"He suffers from ___ malaria.",o:["a","the","an","✗ (no article)"],a:3,e:"Names of diseases take no article."},
-   {q:"___ poor need our help.",o:["A","An","The","✗ (no article)"],a:2,e:"THE + adjective = a whole class of people → 'The poor'."}
+   {q:"Passive of: 'He can speak three languages.'",o:["Three languages can spoken","Three languages can be spoken by him","Three languages are spoken","Three languages could be spoken"],a:1,e:"Modal passive = modal + be + V3 → 'can be spoken'."},
+   {q:"Passive of: 'Open the window.'",o:["The window is opened","Let the window be opened","The window was opened","You open the window"],a:1,e:"Imperative passive = 'Let + object + be + V3'."},
+   {q:"Passive of: 'Please help the poor.'",o:["The poor are helped","Let the poor help","You are requested to help the poor","The poor is helped"],a:2,e:"Request → 'You are requested to help the poor'."},
+   {q:"Passive of: 'You should complete the project by Friday.'",o:["The project completes","The project should be completed by you by Friday","The project should complete","The project is completed"],a:1,e:"Modal passive = should + be + V3 → 'should be completed'."},
+   {q:"Passive of: 'Do not waste time.'",o:["Time is not wasted","Let time not be wasted","Do not let time waste","Time was not wasted"],a:1,e:"Negative imperative → 'Let time not be wasted'."}
   ]}
 ]},
 
-{id:"art-special",title:"Special Rules & Traps",icon:"⚠️",nodes:[
+{id:"voi-special",title:"Special Cases & Traps",icon:"⚠️",nodes:[
 
- {id:"art-specialrules",title:"Special Rules 5A–5G",xp:20,type:"regular",
+ {id:"voi-specialrules",title:"Two Objects, Questions & No-Passive Verbs",xp:20,type:"regular",
   facts:[
-   "<b>5A</b> — A/AN + adjective + noun → decide by the adjective's sound: 'an old man', 'a beautiful actress'",
-   "<b>5B</b> — Double article NEVER used: 'the a book' ✗, 'a the book' ✗",
-   "<b>5C</b> — Predicative use after elected/appointed/made/chosen → no article: 'He was elected President', 'She became captain'",
-   "<b>5D</b> — 'Kind of / Sort of / Type of' → no article after: 'What kind of man is he?' (not 'a man')",
-   "<b>5E</b> — By + transport → no article: by bus / by train / by air (BUT 'in the car / on the bus' when specific)",
-   "<b>5F</b> — In + institution for its purpose → no article: 'He is in hospital' (patient) vs 'in the hospital' (visiting); same for school/church/prison",
-   "<b>5G</b> — Fixed phrases: go to bed, go to school, go to work, at home, at night, in fact"
+   "<b>Two objects (IO + DO)</b>: 'The teacher gave the students books' → either 'The students were given books' (IO subject, SSC favourite) OR 'Books were given to the students'",
+   "<b>Interrogative (Yes/No)</b>: 'Did he write the letter?' → 'Was the letter written by him?'",
+   "<b>Interrogative (Who)</b>: 'Who broke the window?' → 'By whom was the window broken?'",
+   "<b>Interrogative (Who + object)</b>: 'Who teaches you English?' → 'By whom are you taught English?'",
+   "<b>Intransitive verbs</b> (go, come, sleep, run, arrive, laugh, cry, die, swim) have NO passive — they take no object",
+   "<b>Phrasal verbs keep their preposition</b>: 'laugh at' → 'was laughed at'; 'look after' → 'is looked after'"
   ],
-  table:{h:["Rule","Wrong","Correct"],r:[
-   ["Elected + post","the President (after elected)","elected President"],
-   ["Kind of","kind of a man","kind of man"],
-   ["By transport","by the train","by train"],
-   ["Institution (purpose)","in the prison (as inmate)","in prison"],
-   ["Fixed phrase","go to the bed","go to bed"],
-   ["Double article","a the book","a book / the book"]
+  table:{h:["Type","Active","Passive"],r:[
+   ["Two objects","gave her a prize","She was given a prize"],
+   ["Yes/No Q","Did he write it?","Was it written by him?"],
+   ["Who Q","Who broke it?","By whom was it broken?"],
+   ["Intransitive","He slept","(no passive)"],
+   ["Phrasal","laughed at him","He was laughed at"]
   ]},
   mcqs:[
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After 'elected/appointed', the post takes no article."},
-   {q:"What kind of ___ man is he?",o:["a","an","the","✗ (no article)"],a:3,e:"'Kind of' takes no article after it."},
-   {q:"He is ___ hospital recovering from surgery. (as patient)",o:["in (no article)","in the","in a","at the"],a:0,e:"Institution for its purpose → 'in hospital' (no article)."},
-   {q:"She became ___ captain of the team.",o:["a","an","the","✗ (no article)"],a:3,e:"Predicative post after 'became' → no article."},
-   {q:"Children go to ___ bed early.",o:["a","the","✗ (no article)","an"],a:2,e:"Fixed phrase 'go to bed' → no article."},
-   {q:"He was old ___ man with grey hair. Choose the correct article.",o:["a","an","the","✗"],a:1,e:"A/AN + adjective → decide by adjective sound; 'old' = vowel sound → 'an old man'."}
+   {q:"Passive of: 'Who broke the window?'",o:["Who was the window broken?","By whom was the window broken?","Whom broke the window?","The window broke by whom?"],a:1,e:"'Who' (subject) → 'By whom was...broken?'."},
+   {q:"Passive of: 'They gave her a prize.' (common SSC form)",o:["A prize gave to her","She was given a prize by them","Her was given a prize","A prize was give to her"],a:1,e:"IO 'her' becomes subject → 'She was given a prize'."},
+   {q:"Which verb has NO passive?",o:["eat","write","sleep","break"],a:2,e:"'Sleep' is intransitive (no object) → no passive."},
+   {q:"Passive of: 'Did he write the letter?'",o:["Was the letter written by him?","Did the letter written?","Was the letter wrote?","Is the letter written?"],a:0,e:"Yes/No question passive → 'Was the letter written by him?'."},
+   {q:"Passive of: 'Everyone laughed at him.'",o:["He was laughed by everyone","He was laughed at by everyone","He is laughing","He was laugh at"],a:1,e:"Phrasal verb 'laugh at' keeps 'at' → 'was laughed at by everyone'."}
   ]},
 
- {id:"art-country",title:"THE with Countries & Groups",xp:20,type:"regular",
-  facts:[
-   "<b>Most countries → NO article</b>: India, France, Japan, China, Brazil, Russia",
-   "<b>Plural / union names → THE</b>: the USA, the UK, the UAE, the Netherlands, the Philippines",
-   "<b>Reason</b>: these are plural words or abbreviated union names (United States, United Kingdom)",
-   "<b>Groups of islands → THE</b>: the Andamans, the Maldives, the West Indies",
-   "<b>Mountain ranges → THE</b>: the Himalayas, the Alps, the Andes (single peaks → none)",
-   "<b>Deserts, seas, oceans, canals → THE</b>: the Sahara, the Pacific, the Suez Canal"
-  ],
-  table:{h:["THE with","Reason / Example"],r:[
-   ["the USA","Plural (United States)"],
-   ["the UK","Union name"],
-   ["the Netherlands","Plural word"],
-   ["the Philippines","Plural word"],
-   ["the Maldives","Group of islands"],
-   ["the Sahara / the Pacific","Deserts, oceans"]
-  ]},
-  mcqs:[
-   {q:"___ Netherlands is a beautiful country.",o:["A","An","The","✗ (no article)"],a:2,e:"'Netherlands' is a plural name → THE."},
-   {q:"He works in ___ USA.",o:["a","an","the","✗ (no article)"],a:2,e:"'USA' (United States, plural) → THE."},
-   {q:"She visited ___ India last year.",o:["the","a","an","✗ (no article)"],a:3,e:"Most countries take no article → 'India'."},
-   {q:"They sailed to ___ Maldives.",o:["a","an","the","✗ (no article)"],a:2,e:"Groups of islands take THE."},
-   {q:"___ Sahara is the largest hot desert.",o:["A","An","The","✗ (no article)"],a:2,e:"Deserts take THE."},
-   {q:"He climbed ___ Mount Fuji.",o:["the","a","an","✗ (no article)"],a:3,e:"Single mountains take no article."}
-  ]},
-
- {id:"art-traps",title:"Trap Sheet — SSC Favourites",xp:20,type:"trap",
+ {id:"voi-traps",title:"Trap Sheet — Voice",xp:20,type:"trap",
   traps:[
-   "<b>a honest man</b> → <b>an honest man</b> (H silent = vowel sound)",
-   "<b>a MBA degree</b> → <b>an MBA degree</b> (em = vowel sound)",
-   "<b>an uniform</b> → <b>a uniform</b> (yu = consonant sound)",
-   "<b>an European</b> → <b>a European</b> (yu = consonant sound)",
-   "<b>an one-time offer</b> → <b>a one-time offer</b> (w sound)",
-   "<b>The gold is precious</b> → <b>Gold is precious</b> (general abstract = no article)",
-   "<b>I play violin</b> → <b>I play the violin</b> (instruments need THE)",
-   "<b>The Mount Everest</b> → <b>Mount Everest</b> (single mountain = no article)",
-   "<b>He was the elected President</b> → <b>He was elected President</b> (after elected = no article)",
-   "<b>I had the lunch</b> → <b>I had lunch</b> (meals = no article)",
-   "<b>The Sun rises in East</b> → <b>in the East</b> (cardinal directions need THE)",
-   "<b>The more harder you try</b> → <b>The harder you try</b> (no double comparative)"
+   "<b>The work is been done</b> → <b>is being done</b> (present continuous passive)",
+   "<b>He was laughed</b> → <b>He was laughed at</b> (retain phrasal preposition)",
+   "<b>The letter was written by I</b> → <b>by me</b> (object pronoun after by)",
+   "<b>By whom did the letter wrote</b> → <b>By whom was the letter written</b>",
+   "<b>The match has being won</b> → <b>has been won</b> (present perfect passive)",
+   "<b>She was slept</b> → ✗ not possible (sleep = intransitive)",
+   "<b>The cake has been ate</b> → <b>has been eaten</b> (use V3, not V2)",
+   "<b>The thief has been arrested by police</b> → <b>has been arrested</b> (obvious agent — omit 'by police')"
   ],
   mcqs:[
-   {q:"Which sentence is CORRECT?",o:["He is a honest man","She plays violin well","Mount Everest is the highest peak in the world","He speaks the English"],a:2,e:"Superlative + unique world → 'the highest peak in the world'. Others: an honest, the violin, English."},
-   {q:"Spot the error: 'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE → 'the violin'."},
-   {q:"Spot the error: 'He is (A) a best (B) student in (C) the class.'",o:["A → the best","B","C","No error"],a:0,e:"Superlatives need THE → 'the best student'."},
-   {q:"Which is WRONG?",o:["The Ganga is a holy river","Honesty is the best policy","He had the lunch at noon","The USA is powerful"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"Spot the error: 'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = yu (consonant) sound → 'A European'."},
-   {q:"Which is CORRECT?",o:["He was the elected chairman","The gold is a precious metal","I saw a unique painting","He plays cricket with the bat"],a:2,e:"'Unique' = yu sound → 'a unique painting'. Others: elected chairman (no 'the'), Gold (no 'the'), cricket with a bat."}
+   {q:"Which is CORRECT?",o:["The cake has been ate","The cake has been eaten","The cake has being eaten","The cake is been eaten"],a:1,e:"Perfect passive uses V3 → 'has been eaten'."},
+   {q:"Correct the passive: 'She was laughed by everyone.'",o:["was laugh by","was laughed at by","was laughing by","laughed by"],a:1,e:"Phrasal verb keeps 'at' → 'was laughed at by'."},
+   {q:"Which is CORRECT?",o:["The match has being won","The match has been won","The match is been won","The match had being won"],a:1,e:"Present Perfect passive = has been + V3."},
+   {q:"Which sentence is INVALID (no passive possible)?",o:["The letter was written","The window was broken","He was slept","The song was sung"],a:2,e:"'Sleep' is intransitive → 'He was slept' is impossible."},
+   {q:"Spot the error: 'The work (A) is been (B) done (C) carefully.'",o:["A","is been → is being","C","No error"],a:1,e:"Continuous passive = 'is being', never 'is been'."}
   ]}
 ]},
 
-{id:"art-pyq",title:"PYQ Practice",icon:"🎯",nodes:[
+{id:"voi-pyq",title:"PYQ Practice",icon:"🎯",nodes:[
 
- {id:"art-fill",title:"Fill in the Blank — 25 PYQ",xp:20,type:"regular",
+ {id:"voi-convert",title:"Convert the Voice — Practice",xp:20,type:"regular",
   facts:[
-   "Practice from the 25-question SSC CGL exercise. For each blank pick a / an / the / ✗ (no article).",
-   "Apply the checklist: vowel SOUND? · second mention? · unique? · superlative? · language/meal/subject? · after elected?",
-   "Do all questions in the Test tab, then review the explanations tied to each rule."
+   "Convert Active↔Passive. Keep the tense, change verb to be + V3, and adjust pronouns.",
+   "For two-object sentences, SSC usually makes the indirect object (person) the subject.",
+   "Remember: omit 'by...' when the agent is obvious or unknown."
   ],
   mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H = vowel sound → AN."},
-   {q:"I go to ___ school every day.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → no article."},
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After elected → no article."},
-   {q:"She is ___ heir to the throne.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H → vowel sound → AN."},
-   {q:"He went to ___ hospital to visit his friend.",o:["a","an","the","✗ (no article)"],a:2,e:"Visiting (not as patient) → 'the hospital'."},
-   {q:"He travelled by ___ train to Mumbai.",o:["a","an","the","✗ (no article)"],a:3,e:"By + transport → no article."},
-   {q:"He was sent to ___ prison for theft.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"I saw ___ dog. ___ dog was barking loudly.",o:["a / The","the / a","an / The","a / a"],a:0,e:"First mention → A; second mention → THE."},
-   {q:"He is ___ unique artist.",o:["a","an","the","✗ (no article)"],a:0,e:"'Unique' = yu sound → A."},
-   {q:"Mount Everest is ___ highest peak in ___ world.",o:["the / the","a / the","the / a","a / a"],a:0,e:"Superlative → THE; unique world → THE."},
-   {q:"He is ___ IAS officer from Kerala.",o:["a","an","the","✗ (no article)"],a:1,e:"'IAS' = 'eye-ay-es' → vowel sound → AN."},
-   {q:"___ Gita is ___ holy book of Hindus.",o:["The / a","A / the","The / the","A / a"],a:0,e:"Holy book name → THE Gita; first mention 'a holy book'."}
+   {q:"Passive of: 'Nobody has seen him since Monday.'",o:["He is not seen","He has not been seen since Monday","He was not seen","He had not been seen"],a:1,e:"Present Perfect negative passive → 'has not been seen'."},
+   {q:"Passive of: 'The teacher is explaining the lesson.'",o:["is explained","is being explained by the teacher","was explained","has explained"],a:1,e:"Present Continuous passive → 'is being explained'."},
+   {q:"Active of: 'The work is being done.'",o:["Someone does the work","Someone is doing the work","Someone did the work","Someone has done the work"],a:1,e:"Present continuous passive → active present continuous."},
+   {q:"Passive of: 'He can solve this sum.'",o:["This sum is solved","This sum can be solved by him","This sum could solve","This sum can solved"],a:1,e:"Modal passive → 'can be solved by him'."},
+   {q:"Passive of: 'They are building a new bridge.'",o:["A new bridge is built","A new bridge is being built by them","A new bridge was built","A new bridge has been built"],a:1,e:"Present Continuous passive → 'is being built'."},
+   {q:"Passive of: 'Close the door.'",o:["The door is closed","Let the door be closed","The door was closed","You close the door"],a:1,e:"Imperative passive → 'Let the door be closed'."}
   ]},
 
- {id:"art-error",title:"Find the Error — Articles",xp:20,type:"trap",
+ {id:"voi-error",title:"Find the Error — Voice",xp:20,type:"trap",
   facts:[
-   "SSC error-spotting: the sentence is split into parts (A)(B)(C); find the part with the article error.",
-   "Article errors are ~20% of all SSC error-spotting questions — always scan articles first.",
-   "Check: A/AN by sound · THE for superlatives/instruments/rivers/ranges · zero article for meals/languages/after elected."
+   "Voice errors focus on the auxiliary+participle chain (is being / has been / will be + V3).",
+   "Check: is the participle V3? is the tense preserved? is the phrasal preposition kept?",
+   "Intransitive verbs cannot be passive."
   ],
   mcqs:[
-   {q:"'He is (A) a best student (B) in (C) the class.'",o:["A → the best student","B","C","No error"],a:0,e:"Superlative needs THE."},
-   {q:"'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE."},
-   {q:"'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = consonant (yu) sound → A."},
-   {q:"'The Nile (A) is in (B) the Africa. (C)'",o:["A","B","C → in Africa","No error"],a:2,e:"Country/continent names take no article → 'in Africa'."},
-   {q:"'He was (A) sent to (B) the prison (C) for theft.'",o:["A","B","C → to prison","No error"],a:2,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"'I had (A) the lunch (B) with (C) my friends.'",o:["A","B → had lunch","C","No error"],a:1,e:"Meals take no article → 'had lunch'."},
-   {q:"'She speaks (A) the English (B) and (C) French.'",o:["A","B → English","C","No error"],a:1,e:"Languages take no article → 'English'."}
+   {q:"'The house (A) is being (B) constructed (C) since 2020.'",o:["A","B","since 2020 → for/since with perfect (has been being — avoided)","No error"],a:2,e:"'since 2020' needs a perfect form; 'is being constructed' can't take 'since' — SSC flags the time phrase."},
+   {q:"'The novel (A) was wrote (B) by a (C) famous author.'",o:["A","was wrote → was written","C","No error"],a:1,e:"Passive uses V3 → 'was written', not 'wrote'."},
+   {q:"'He (A) was laughed (B) by the (C) whole class.'",o:["A","was laughed → was laughed at","C","No error"],a:1,e:"Phrasal verb keeps 'at' → 'was laughed at'."},
+   {q:"'The work (A) has being (B) completed (C) already.'",o:["A","has being → has been","C","No error"],a:1,e:"Perfect passive = 'has been', not 'has being'."},
+   {q:"'The letter (A) was written (B) by (C) I.'",o:["A","B","by I → by me","No error"],a:2,e:"After 'by' use the object pronoun → 'by me'."}
   ]}
 ]},
 
-{id:"art-golden",title:"Golden",icon:"🏹",nodes:[
- {id:"art-gold",title:"Articles — Golden Node",xp:30,type:"gold",requires_pct:70,
+{id:"voi-golden",title:"Golden",icon:"🏹",nodes:[
+ {id:"voi-gold",title:"Voice — Golden Node",xp:30,type:"gold",requires_pct:70,
   golden:[
-   "A/AN = <b>SOUND not spelling</b>: an hour, an MBA, an honest man; a university, a European, a one-rupee note",
-   "THE = second mention, unique (the sun), superlatives, ordinals, instruments, rivers, ranges, holy books, newspapers",
-   "ZERO = languages, subjects, meals, diseases, single mountains/lakes, abstract nouns, after elected/appointed",
-   "THE + adjective = class of people (the poor, the rich, the blind)",
-   "THE with plural-name countries (the USA, the Netherlands), island groups (the Maldives), ranges (the Himalayas)",
-   "By + transport = no article; in hospital/school/prison (purpose) = no article; go to bed/school/work = no article"
+   "Object→Subject, verb→be+V3 (keep tense), Subject→'by'+object",
+   "Continuous passive = is/was BEING + V3 (never 'is been')",
+   "Perfect passive = has/had BEEN + V3; always V3, never V2",
+   "Modal passive = modal + BE + V3; Imperative passive = 'Let + object + be + V3'",
+   "Intransitive verbs (go/sleep/die/run) have NO passive",
+   "Phrasal verbs keep their preposition (laughed AT, looked AFTER); omit 'by' when agent is obvious"
   ]}
 ]}
 
 ];
 
-const SKEY="ssc_eng_01_articles";
+const SKEY="ssc_eng_04_voice";
 let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
 try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
 function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
 
 let _ns={nodeId:null,openedAt:null,answered:0,correct:0,totalQ:0};
 function trackEvent(ev,payload){
-  const body=Object.assign({event:ev,mapId:"ssc_eng_01_articles",ts:new Date().toISOString()},payload);
+  const body=Object.assign({event:ev,mapId:"ssc_eng_04_voice",ts:new Date().toISOString()},payload);
   try{fetch('/api/progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(()=>flashSync()).catch(()=>{});}catch(e){}
 }
 function flashSync(){const d=document.getElementById('syncDot');if(!d)return;d.classList.add('show');setTimeout(()=>d.classList.remove('show'),900);}
@@ -659,7 +599,7 @@ function showDash(){
   S.curNode=null;save();buildSidebar();
   const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
   document.getElementById("viewWrap").innerHTML=`<div class="dash">
-    <div class="dash-t">Articles (A / An / The)</div>
+    <div class="dash-t">Voice (Active / Passive)</div>
     <div class="dash-s">SSC CGL / CHSL / MTS / CPO · RULES · TRAPS · PYQ PRACTICE</div>
     <div class="dash-grid">
       <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
@@ -699,7 +639,7 @@ buildSidebar();updateHeader();showDash();
 /* ===== CentuMania metrics (injected — additive; module content unchanged) ===== */
 (function(){
   if(window.__cmTrackInit)return; window.__cmTrackInit=1;
-  var CM_DEFAULT='eng-01-articles';
+  var CM_DEFAULT='eng-04-voice';
   var CM_T0=Date.now(),CM_ACTIVE=0,_cmVisT=Date.now();
   function cmToken(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
   function cmMat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}

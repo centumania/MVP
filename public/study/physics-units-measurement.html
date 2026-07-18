@@ -1,0 +1,1076 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Units & Measurement — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"📏";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:34px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.dia{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;text-align:center}
+.dia svg{max-width:100%;height:auto}
+.dia .cap{font-size:11px;color:var(--mut);font-weight:600;margin-top:7px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Physics · Mastery Pack</div>
+  <h1>Units &amp; Measurement</h1>
+  <p>Physical Quantities → SI Units → Prefixes → Instruments → Derived Units → Errors → Dimensions. The foundation every other physics topic is built on.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/35</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/40</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+
+  <h2 class="sec"><span class="em">🌐</span>Why Measurement Comes First</h2>
+  <div class="sec-sub">Physics is the science of measurable quantities. Before any law makes sense, you must fix WHAT you measure and in WHAT unit.</div>
+  <div class="flow">
+    <span class="step">Physical quantity</span><span class="arw">→</span>
+    <span class="step">Number × Unit</span><span class="arw">→</span>
+    <span class="step">Compare & calculate</span><span class="arw">→</span>
+    <span class="step">Laws of physics</span>
+  </div>
+  <div class="note"><span class="t">Anchor idea</span>A measurement is always <b>a number multiplied by a unit</b> — "5 metres", never just "5". Change the unit and the number changes (5 m = 500 cm) but the <b>physical length is the same</b>. That single idea drives unit conversion, prefixes and dimensions.</div>
+
+  <!-- 1 PHYSICAL QUANTITIES -->
+  <h2 class="sec"><span class="em">🔢</span>1 · Physical Quantities</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A physical quantity is anything that can be <b>measured</b>. Two splits matter: <b>fundamental vs derived</b>, and <b>scalar vs vector</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why the split</div><div class="txt">You can't define everything from scratch — so scientists chose <b>7 independent base quantities</b> and <b>build all others</b> from them (speed = length ÷ time). Separately, some quantities need a <b>direction</b> to be meaningful ("50 km/h north"), others don't ("50 kg").</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Fundamental (7):</b> length, mass, time, current, temperature, amount of substance, luminous intensity. <b>Derived:</b> area, volume, speed, force… <b>Scalar:</b> magnitude only. <b>Vector:</b> magnitude + direction.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Every formula. Recognising a vector (velocity, force, displacement) vs a scalar (speed, distance, mass, energy) is tested directly.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Which is a vector?" → velocity/force/displacement. "Which is a scalar?" → speed/mass/energy/distance. "How many fundamental quantities?" → <b>7</b>.</div></div>
+    </div>
+    <div class="note trap"><span class="t">Classic confusion</span><b>Distance vs displacement</b> and <b>speed vs velocity</b>: the first of each pair is a scalar, the second a vector. Same number, different category — examiners exploit this constantly.</div>
+  </div>
+
+  <!-- 2 SI UNITS -->
+  <h2 class="sec"><span class="em">📐</span>2 · SI Base Units</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">The <b>SI system</b> (Système International, 1960) defines <b>7 base units</b> that the whole world agrees on.</div></div>
+      <div class="row"><div class="lab l-why">Why one system</div><div class="txt">Before SI, every region used its own units (feet, seers, cubits) — trade and science were chaotic. A single agreed set makes results <b>reproducible and comparable</b> anywhere on Earth.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">The seven: <b>metre</b> (length), <b>kilogram</b> (mass), <b>second</b> (time), <b>ampere</b> (current), <b>kelvin</b> (temperature), <b>mole</b> (amount), <b>candela</b> (luminous intensity).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Science, engineering, medicine, commerce — the base for every derived unit.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">Match unit ↔ quantity (ampere→current, kelvin→temperature, candela→luminous intensity, mole→amount). Symbols after a person's name are <b>capitalised</b> (N, K, A, Pa) but the word is lowercase (newton, kelvin).</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Base quantity</th><th>SI unit</th><th>Symbol</th></tr>
+      <tr><td class="h">Length</td><td>metre</td><td>m</td></tr>
+      <tr><td class="h">Mass</td><td>kilogram</td><td>kg</td></tr>
+      <tr><td class="h">Time</td><td>second</td><td>s</td></tr>
+      <tr><td class="h">Electric current</td><td>ampere</td><td>A</td></tr>
+      <tr><td class="h">Temperature</td><td>kelvin</td><td>K</td></tr>
+      <tr><td class="h">Amount of substance</td><td>mole</td><td>mol</td></tr>
+      <tr><td class="h">Luminous intensity</td><td>candela</td><td>cd</td></tr>
+    </table>
+    <div class="note mem"><span class="t">Memory</span>"<b>M</b>ary's <b>K</b>itten <b>S</b>ips <b>A</b> <b>K</b>ind <b>M</b>ug of <b>C</b>ream" → Metre, Kilogram, Second, Ampere, Kelvin, Mole, Candela.</div>
+  </div>
+
+  <!-- 3 PREFIXES -->
+  <h2 class="sec"><span class="em">🔠</span>3 · Prefixes (Powers of Ten)</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Prefixes are shorthand for <b>powers of ten</b> attached to a unit — kilometre, milligram, nanosecond.</div></div>
+      <div class="row"><div class="lab l-why">Why</div><div class="txt">Writing 0.000000001 s is error-prone. A prefix (1 ns) keeps numbers <b>readable and comparable</b> across the huge range of physics (atoms to galaxies).</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Multiples: <b>kilo 10³, mega 10⁶, giga 10⁹, tera 10¹²</b>. Sub-multiples: <b>milli 10⁻³, micro 10⁻⁶, nano 10⁻⁹, pico 10⁻¹²</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Data sizes (GB), wavelengths (nm), chip features (nm), medicine doses (mg, µg), distances (km).</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"nano = ?" → 10⁻⁹. "giga = ?" → 10⁹. "1 µm = ? m" → 10⁻⁶. Watch micro (10⁻⁶) vs milli (10⁻³).</div></div>
+    </div>
+    <div class="note life"><span class="t">Everyday scale</span>Atom ≈ 0.1 nm · virus ≈ 100 nm · human hair ≈ 50–100 µm · this text ≈ mm · a walk ≈ km · Earth–Sun ≈ 150 Gm. Prefixes let one system span all of it.</div>
+  </div>
+
+  <!-- 4 INSTRUMENTS -->
+  <h2 class="sec"><span class="em">🛠️</span>4 · Measuring Instruments &amp; Least Count</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Vernier calipers</b> (to 0.1 mm) and the <b>screw gauge / micrometer</b> (to 0.01 mm) measure small lengths precisely. <b>Least count</b> = the smallest value an instrument can read.</div></div>
+      <div class="row"><div class="lab l-why">Why least count matters</div><div class="txt">No instrument is infinitely fine. The least count sets the <b>precision limit</b> — you can never report a reading finer than it. A smaller least count means a more precise instrument.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Vernier LC</b> = 1 main-scale division − 1 vernier-scale division. <b>Screw gauge LC</b> = pitch ÷ number of circular-scale divisions. Reading = main scale + (coinciding division × LC), corrected for zero error.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Measuring a wire's diameter, a ball bearing, sheet thickness; lab experiments; workshop tools.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"LC of screw gauge = pitch/divisions." "Which is more precise, vernier or screw gauge?" → <b>screw gauge</b>. "Best tool for a wire's diameter?" → screw gauge.</div></div>
+    </div>
+    <div class="note trap"><span class="t">Zero error</span>If an instrument doesn't read zero when closed, every reading is off by a fixed amount — a <b>systematic (zero) error</b>. It must be added/subtracted, and it is the classic example of a systematic (not random) error.</div>
+  </div>
+
+  <!-- 5 DERIVED UNITS -->
+  <h2 class="sec"><span class="em">⚙️</span>5 · Derived Units</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Units built by <b>combining base units</b> — area (m²), speed (m/s), force (N), energy (J), power (W).</div></div>
+      <div class="row"><div class="lab l-why">Why</div><div class="txt">Most quantities aren't fundamental. Defining them <b>from the 7 base units</b> keeps the system consistent — a newton is just kg·m/s², nothing new to agree on.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Follow the physics: speed = distance/time → m/s. Force = mass × acceleration → kg·m/s² = <b>newton</b>. Work = force × distance → N·m = <b>joule</b>. Power = work/time → J/s = <b>watt</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Electricity bills (kWh), engine power (hp/kW), tyre pressure (Pa/psi), nutrition (kcal/J).</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">Named units ↔ quantity: newton→force, pascal→pressure, joule→energy, watt→power, hertz→frequency. "1 kWh = ?" → 3.6×10⁶ J.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Quantity</th><th>Derived unit</th><th>In base units</th></tr>
+      <tr><td class="h">Force</td><td>newton (N)</td><td>kg·m·s⁻²</td></tr>
+      <tr><td class="h">Pressure</td><td>pascal (Pa)</td><td>kg·m⁻¹·s⁻²</td></tr>
+      <tr><td class="h">Energy / Work</td><td>joule (J)</td><td>kg·m²·s⁻²</td></tr>
+      <tr><td class="h">Power</td><td>watt (W)</td><td>kg·m²·s⁻³</td></tr>
+      <tr><td class="h">Frequency</td><td>hertz (Hz)</td><td>s⁻¹</td></tr>
+    </table>
+  </div>
+
+  <!-- 6 ERRORS -->
+  <h2 class="sec"><span class="em">🎯</span>6 · Errors &amp; Significant Figures</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Every measurement has <b>uncertainty</b>. Errors are <b>systematic</b> (constant bias) or <b>random</b> (unpredictable scatter). <b>Significant figures</b> show how many digits are trustworthy.</div></div>
+      <div class="row"><div class="lab l-why">Why</div><div class="txt">Reporting "2.4000000 m" from a ruler is dishonest — the ruler can't justify those digits. Sig figs and error analysis communicate <b>how sure</b> you are, which is as important as the value itself.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Accuracy</b> = closeness to the true value; <b>precision</b> = closeness of repeated readings. Systematic errors (zero error, wrong calibration) can be corrected; random errors are reduced by <b>averaging many readings</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Lab reports, engineering tolerances, medical tests, quality control.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Accuracy vs precision" definition swap. "Zero error is a ___ error" → systematic. "Sig figs in 0.00230" → 3 (leading zeros don't count; trailing zero after a decimal does).</div></div>
+    </div>
+    <div class="note life"><span class="t">Accuracy vs precision — the target</span>Darts all in one tight cluster but far from the bull's-eye = <b>precise but not accurate</b> (a systematic error). Scattered around the bull's-eye = <b>accurate but not precise</b> (random error). Tight cluster on the bull's-eye = both.</div>
+  </div>
+
+  <!-- 7 DIMENSIONS -->
+  <h2 class="sec"><span class="em">🧮</span>7 · Dimensions &amp; Dimensional Analysis</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">The <b>dimensional formula</b> expresses any quantity in the base dimensions <b>[M] mass, [L] length, [T] time</b>. Force = [M L T⁻²]; energy = [M L² T⁻²].</div></div>
+      <div class="row"><div class="lab l-why">Why it's powerful</div><div class="txt">If an equation is physically correct, <b>both sides must have identical dimensions</b> (you can't add metres to seconds). This lets you <b>check equations, convert units, and derive relationships</b> without doing the full physics.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Write each quantity in [M][L][T], substitute, and compare both sides (<b>principle of homogeneity</b>). To convert units, multiply by ratios equal to 1 so units cancel.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Verifying formulas in exams, converting between unit systems, catching algebra mistakes.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">Dimensional formulas of force [M L T⁻²], work/energy [M L² T⁻²], pressure [M L⁻¹ T⁻²], power [M L² T⁻³]. Dimensionless: <b>strain, refractive index, angle, relative density</b>.</div></div>
+    </div>
+    <div class="note trap"><span class="t">Limitations (often asked)</span>Dimensional analysis <b>cannot</b> find pure-number constants (like ½ in ½mv² or 2π), cannot handle trig/log/exponential terms, and cannot prove an equation is fully correct — only that it is dimensionally consistent.</div>
+  </div>
+
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 7 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+  <h2 class="sec"><span class="em">📊</span>Comparison Tables</h2>
+  <div class="sec-sub">The look-alike pairs examiners love to swap.</div>
+
+  <div class="card"><h3>Fundamental vs Derived Quantity</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Fundamental</th><th>Derived</th></tr>
+    <tr><td class="h">Definition</td><td>Independent, base</td><td>Built from base quantities</td></tr>
+    <tr><td class="h">Count</td><td>7</td><td>Unlimited</td></tr>
+    <tr><td class="h">Examples</td><td>Length, mass, time, current</td><td>Area, speed, force, energy</td></tr>
+    <tr><td class="h">Unit example</td><td>metre, kilogram</td><td>m², newton, joule</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Scalar vs Vector</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Scalar</th><th>Vector</th></tr>
+    <tr><td class="h">Has</td><td>Magnitude only</td><td>Magnitude + direction</td></tr>
+    <tr><td class="h">Add by</td><td>Ordinary arithmetic</td><td>Vector (triangle/parallelogram) law</td></tr>
+    <tr><td class="h">Examples</td><td>Distance, speed, mass, energy, time</td><td>Displacement, velocity, force, momentum</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Accuracy vs Precision</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Accuracy</th><th>Precision</th></tr>
+    <tr><td class="h">Means</td><td>Closeness to true value</td><td>Closeness of repeated readings</td></tr>
+    <tr><td class="h">Poor when</td><td>Systematic error present</td><td>Random error present</td></tr>
+    <tr><td class="h">Improved by</td><td>Calibration, removing bias</td><td>Averaging many readings</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Systematic vs Random Error</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Systematic</th><th>Random</th></tr>
+    <tr><td class="h">Nature</td><td>Constant, same direction</td><td>Unpredictable, both directions</td></tr>
+    <tr><td class="h">Example</td><td>Zero error, wrong calibration</td><td>Reaction-time, fluctuations</td></tr>
+    <tr><td class="h">Reduced by</td><td>Correcting the instrument</td><td>Repeating & averaging</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Vernier Calipers vs Screw Gauge</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Vernier calipers</th><th>Screw gauge</th></tr>
+    <tr><td class="h">Least count</td><td>0.1 mm (0.01 cm)</td><td>0.01 mm</td></tr>
+    <tr><td class="h">Precision</td><td>Lower</td><td>Higher</td></tr>
+    <tr><td class="h">Best for</td><td>Length, internal/external diameter</td><td>Wire diameter, sheet thickness</td></tr>
+    <tr><td class="h">Principle</td><td>Vernier scale</td><td>Screw pitch + circular scale</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Key Non-SI / Special Units</h3>
+  <table class="tbl">
+    <tr><th>Unit</th><th>Measures</th><th>Value</th></tr>
+    <tr><td class="h">Ångström (Å)</td><td>Length (atoms)</td><td>10⁻¹⁰ m</td></tr>
+    <tr><td class="h">Light-year</td><td>Distance (astronomy)</td><td>≈ 9.46×10¹⁵ m</td></tr>
+    <tr><td class="h">Astronomical unit (AU)</td><td>Distance (Earth–Sun)</td><td>≈ 1.5×10¹¹ m</td></tr>
+    <tr><td class="h">kWh</td><td>Energy (electricity bill)</td><td>3.6×10⁶ J</td></tr>
+  </table></div>
+
+  <h2 class="sec"><span class="em">📋</span>Master Reference: Units &amp; Dimensions</h2>
+  <div class="sec-sub">The single most exam-useful table in this chapter — every common quantity with its SI unit, symbol and dimensional formula. Learn one row a day.</div>
+  <div class="card"><h3>Physical Quantities — Unit &amp; Dimensional Formula</h3>
+  <table class="tbl">
+    <tr><th>Quantity</th><th>SI unit</th><th>Symbol</th><th>Dimensional formula</th></tr>
+    <tr><td class="h">Length</td><td>metre</td><td>m</td><td>[L]</td></tr>
+    <tr><td class="h">Mass</td><td>kilogram</td><td>kg</td><td>[M]</td></tr>
+    <tr><td class="h">Time</td><td>second</td><td>s</td><td>[T]</td></tr>
+    <tr><td class="h">Area</td><td>square metre</td><td>m²</td><td>[L²]</td></tr>
+    <tr><td class="h">Volume</td><td>cubic metre</td><td>m³</td><td>[L³]</td></tr>
+    <tr><td class="h">Density</td><td>kg per cubic metre</td><td>kg m⁻³</td><td>[M L⁻³]</td></tr>
+    <tr><td class="h">Velocity</td><td>metre per second</td><td>m s⁻¹</td><td>[L T⁻¹]</td></tr>
+    <tr><td class="h">Acceleration</td><td>metre per second²</td><td>m s⁻²</td><td>[L T⁻²]</td></tr>
+    <tr><td class="h">Momentum</td><td>kilogram·metre/s</td><td>kg m s⁻¹</td><td>[M L T⁻¹]</td></tr>
+    <tr><td class="h">Force</td><td>newton</td><td>N</td><td>[M L T⁻²]</td></tr>
+    <tr><td class="h">Impulse</td><td>newton·second</td><td>N s</td><td>[M L T⁻¹]</td></tr>
+    <tr><td class="h">Work / Energy</td><td>joule</td><td>J</td><td>[M L² T⁻²]</td></tr>
+    <tr><td class="h">Power</td><td>watt</td><td>W</td><td>[M L² T⁻³]</td></tr>
+    <tr><td class="h">Pressure / Stress</td><td>pascal</td><td>Pa</td><td>[M L⁻¹ T⁻²]</td></tr>
+    <tr><td class="h">Frequency</td><td>hertz</td><td>Hz</td><td>[T⁻¹]</td></tr>
+    <tr><td class="h">Charge</td><td>coulomb</td><td>C</td><td>[A T]</td></tr>
+    <tr><td class="h">Electric potential</td><td>volt</td><td>V</td><td>[M L² T⁻³ A⁻¹]</td></tr>
+    <tr><td class="h">Resistance</td><td>ohm</td><td>Ω</td><td>[M L² T⁻³ A⁻²]</td></tr>
+  </table></div>
+
+  <div class="card"><h3>SI Prefixes — Quick Reference</h3>
+  <table class="tbl">
+    <tr><th>Prefix</th><th>Symbol</th><th>Power</th><th>Prefix</th><th>Symbol</th><th>Power</th></tr>
+    <tr><td class="h">tera</td><td>T</td><td>10¹²</td><td class="h">milli</td><td>m</td><td>10⁻³</td></tr>
+    <tr><td class="h">giga</td><td>G</td><td>10⁹</td><td class="h">micro</td><td>µ</td><td>10⁻⁶</td></tr>
+    <tr><td class="h">mega</td><td>M</td><td>10⁶</td><td class="h">nano</td><td>n</td><td>10⁻⁹</td></tr>
+    <tr><td class="h">kilo</td><td>k</td><td>10³</td><td class="h">pico</td><td>p</td><td>10⁻¹²</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Dimensionless Quantities (no unit, no dimension)</h3>
+  <table class="tbl">
+    <tr><th>Quantity</th><th>Why dimensionless</th></tr>
+    <tr><td class="h">Strain</td><td>Change in length ÷ length (ratio)</td></tr>
+    <tr><td class="h">Refractive index</td><td>Speed ÷ speed (ratio)</td></tr>
+    <tr><td class="h">Relative density / Specific gravity</td><td>Density ÷ density (ratio)</td></tr>
+    <tr><td class="h">Angle (radian) &amp; solid angle (steradian)</td><td>Arc ÷ radius (ratio)</td></tr>
+    <tr><td class="h">Poisson's ratio</td><td>Strain ÷ strain (ratio)</td></tr>
+  </table></div>
+</div>
+<div class="panel" id="p-memory">
+  <h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+  <div class="sec-sub">One hook per recall-worthy fact. Concept → hook → recall question.</div>
+
+  <div class="mem-card"><div class="cn">The 7 SI base units <span class="tag">mnemonic</span></div>
+    <div class="hk">"<b>M</b>ary's <b>K</b>itten <b>S</b>ips <b>A</b> <b>K</b>ind <b>M</b>ug of <b>C</b>ream" → Metre, Kilogram, Second, Ampere, Kelvin, Mole, Candela.</div>
+    <div class="rq">Q: Name all seven SI base units.</div></div>
+
+  <div class="mem-card"><div class="cn">Multiple prefixes <span class="tag">mnemonic</span></div>
+    <div class="hk">"<b>K</b>ing <b>M</b>ega <b>G</b>ave <b>T</b>ea" → Kilo(10³), Mega(10⁶), Giga(10⁹), Tera(10¹²) — each step is ×1000.</div>
+    <div class="rq">Q: giga = ? → 10⁹.</div></div>
+
+  <div class="mem-card"><div class="cn">Sub-multiple prefixes <span class="tag">mnemonic</span></div>
+    <div class="hk">"<b>M</b>ilk <b>M</b>akes <b>N</b>ice <b>P</b>uddings" → Milli(10⁻³), Micro(10⁻⁶), Nano(10⁻⁹), Pico(10⁻¹²) — each step is ÷1000.</div>
+    <div class="rq">Q: nano = ? → 10⁻⁹.</div></div>
+
+  <div class="mem-card"><div class="cn">Concave-of-precision: screw gauge is finer <span class="tag">association</span></div>
+    <div class="hk">A <b>screw</b> turns slowly and finely → the <b>screw gauge</b> is the <b>finer</b> tool (0.01 mm) vs vernier (0.1 mm). "Screw = super-fine."</div>
+    <div class="rq">Q: Which reads smaller, vernier or screw gauge? → Screw gauge.</div></div>
+
+  <div class="mem-card"><div class="cn">Accuracy vs Precision <span class="tag">visual peg</span></div>
+    <div class="hk"><b>A</b>ccuracy = <b>A</b>t the true value (bull's-eye). <b>P</b>recision = <b>P</b>acked together (tight cluster, maybe off-target).</div>
+    <div class="rq">Q: Tight cluster far from target = ? → precise but not accurate.</div></div>
+
+  <div class="mem-card"><div class="cn">Light-year is DISTANCE <span class="tag">funny</span></div>
+    <div class="hk">"Light-<b>year</b> sounds like time, but it's how <b>far</b> light runs in a year." The word 'year' is the trap — it measures <b>distance</b>.</div>
+    <div class="rq">Q: Light-year measures ___ → distance.</div></div>
+
+  <div class="mem-card"><div class="cn">1 kWh in joules <span class="tag">number peg</span></div>
+    <div class="hk">1000 W × 3600 s = <b>3.6 × 10⁶ J</b>. "One unit of electricity = 3.6 million joules."</div>
+    <div class="rq">Q: 1 kWh = ? J → 3.6×10⁶ J.</div></div>
+
+  <div class="mem-card"><div class="cn">Dimensional formulas <span class="tag">build-up</span></div>
+    <div class="hk">Force = mass×accel = <b>[M L T⁻²]</b>. Multiply by distance (L) for <b>work</b> = [M L² T⁻²]. Divide force by area (L²) for <b>pressure</b> = [M L⁻¹ T⁻²].</div>
+    <div class="rq">Q: Dimensional formula of energy? → [M L² T⁻²].</div></div>
+
+  <div class="mem-card"><div class="cn">Dimensionless quantities <span class="tag">acronym</span></div>
+    <div class="hk">"<b>S</b>illy <b>R</b>abbits <b>A</b>void <b>R</b>ulers" → Strain, Refractive index, Angle, Relative density — all pure ratios, no dimensions.</div>
+    <div class="rq">Q: Is strain dimensionless? → Yes (length/length).</div></div>
+
+  <div class="mem-card"><div class="cn">Named units ↔ quantity <span class="tag">chain</span></div>
+    <div class="hk">"<b>N</b>ewton <b>P</b>ushes, <b>P</b>ascal <b>P</b>resses, <b>J</b>oule <b>W</b>orks, <b>W</b>att <b>P</b>owers, <b>H</b>ertz <b>R</b>epeats" → force, pressure, energy, power, frequency.</div>
+    <div class="rq">Q: Pascal measures? → pressure.</div></div>
+</div>
+<div class="panel" id="p-traps">
+  <h2 class="sec"><span class="em">⚠️</span>Exam Traps &amp; Confusion Pairs</h2>
+  <div class="sec-sub">Each trap has been set in real papers. Read the reality line and it dies.</div>
+
+  <div class="note trap"><span class="t">Trap 1 · kilogram is base, newton is not</span>The <b>kilogram</b> is a base SI unit; the <b>newton</b> is <b>derived</b> (kg·m/s²). A common wrong option calls the newton "fundamental."</div>
+
+  <div class="note trap"><span class="t">Trap 2 · micro vs milli</span><b>milli = 10⁻³</b>, <b>micro = 10⁻⁶</b>. "1 micron = 10⁻³ m" is false — a micron (micrometre) is 10⁻⁶ m.</div>
+
+  <div class="note trap"><span class="t">Trap 3 · Light-year & parsec are DISTANCE</span>Both measure <b>distance</b>, not time, despite "year" in the name. Parsec ≈ 3.26 light-years.</div>
+
+  <div class="note trap"><span class="t">Trap 4 · Smaller least count = MORE precise</span>A smaller least count means <b>higher</b> precision. Options claiming "smaller LC → lower precision" are wrong.</div>
+
+  <div class="note trap"><span class="t">Trap 5 · Zero error is SYSTEMATIC</span>Zero error is a constant bias → a <b>systematic</b> error, never random.</div>
+
+  <div class="note trap"><span class="t">Trap 6 · Accuracy ≠ Precision</span>They are not synonyms. Accuracy = closeness to true value; precision = repeatability. You can be precise yet inaccurate.</div>
+
+  <div class="note trap"><span class="t">Trap 7 · Weight vs Mass</span><b>Mass</b> (kg) is the amount of matter, constant everywhere. <b>Weight</b> (newton) is the force of gravity and changes with location. A "spring balance" measures weight; a "beam balance" compares mass.</div>
+
+  <div class="note trap"><span class="t">Trap 8 · Sig figs — leading vs trailing zeros</span>In 0.00230, leading zeros are <b>not</b> significant but the trailing zero <b>is</b> → 3 sig figs. In 100.0, all four count (decimal shown).</div>
+
+  <div class="note trap"><span class="t">Trap 9 · Which is a vector?</span>Displacement, velocity, force, momentum, acceleration are vectors. Distance, speed, mass, energy, work, time are scalars. "Work is a vector" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 10 · Dimensionless quantities</span>Strain, refractive index, angle (radian), relative density and specific gravity have <b>no dimensions</b>. Being asked "which is dimensionless" is common.</div>
+
+  <div class="note trap"><span class="t">Trap 11 · Dimensional analysis limits</span>It cannot yield numerical constants (½, 2π) and cannot verify equations with trig/exponential terms. "Dimensional analysis proves an equation fully correct" is false.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> The light-year is a unit of time. <b>R:</b> Light takes a year to travel it. → <b>A is false</b> (it's distance), R is true.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> A screw gauge is more precise than vernier calipers. <b>R:</b> Its least count (0.01 mm) is smaller. → Both true, <b>R explains A</b>.</div>
+</div>
+<div class="panel" id="p-rapid">
+  <h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-Liners</h2>
+  <div class="sec-sub"><span class="star">★</span> = highest-frequency in exams. Tap ☆ to flag any line for your FAA revisit list.</div>
+  <div class="ol">
+    <div><span class="n">1</span><span><span class="star">★</span> A measurement = numerical value × unit.</span></div>
+    <div><span class="n">2</span><span><span class="star">★</span> There are 7 SI base units.</span></div>
+    <div><span class="n">3</span><span>Base units: metre, kilogram, second, ampere, kelvin, mole, candela.</span></div>
+    <div><span class="n">4</span><span><span class="star">★</span> Ampere = current, Kelvin = temperature, Mole = amount, Candela = luminous intensity.</span></div>
+    <div><span class="n">5</span><span>SI system was adopted in 1960 (Système International).</span></div>
+    <div><span class="n">6</span><span><span class="star">★</span> Scalars: distance, speed, mass, energy, time (magnitude only).</span></div>
+    <div><span class="n">7</span><span><span class="star">★</span> Vectors: displacement, velocity, force, momentum, acceleration.</span></div>
+    <div><span class="n">8</span><span>kilo 10³, mega 10⁶, giga 10⁹, tera 10¹².</span></div>
+    <div><span class="n">9</span><span><span class="star">★</span> milli 10⁻³, micro 10⁻⁶, nano 10⁻⁹, pico 10⁻¹².</span></div>
+    <div><span class="n">10</span><span>1 Ångström = 10⁻¹⁰ m (atomic sizes).</span></div>
+    <div><span class="n">11</span><span><span class="star">★</span> Light-year & parsec are units of DISTANCE (not time).</span></div>
+    <div><span class="n">12</span><span>1 light-year ≈ 9.46×10¹⁵ m; 1 parsec ≈ 3.26 ly.</span></div>
+    <div><span class="n">13</span><span>1 AU ≈ 1.5×10¹¹ m (Earth–Sun distance).</span></div>
+    <div><span class="n">14</span><span><span class="star">★</span> Least count = smallest value an instrument can measure.</span></div>
+    <div><span class="n">15</span><span>Vernier calipers LC ≈ 0.1 mm; screw gauge LC ≈ 0.01 mm.</span></div>
+    <div><span class="n">16</span><span><span class="star">★</span> Screw gauge LC = pitch ÷ number of circular divisions.</span></div>
+    <div><span class="n">17</span><span>Atomic clock = most accurate timekeeper (defines the second).</span></div>
+    <div><span class="n">18</span><span>Spring balance measures weight; beam balance compares mass.</span></div>
+    <div><span class="n">19</span><span><span class="star">★</span> Force = newton (N) = kg·m/s².</span></div>
+    <div><span class="n">20</span><span><span class="star">★</span> Pressure = pascal (Pa) = N/m².</span></div>
+    <div><span class="n">21</span><span><span class="star">★</span> Energy/Work = joule (J) = N·m; Power = watt (W) = J/s.</span></div>
+    <div><span class="n">22</span><span>Frequency = hertz (Hz) = s⁻¹.</span></div>
+    <div><span class="n">23</span><span><span class="star">★</span> 1 kWh = 3.6×10⁶ J (commercial unit of electricity).</span></div>
+    <div><span class="n">24</span><span>1 litre = 1000 cm³ = 10⁻³ m³; 1 tonne = 1000 kg.</span></div>
+    <div><span class="n">25</span><span><span class="star">★</span> Accuracy = closeness to true value; precision = repeatability.</span></div>
+    <div><span class="n">26</span><span><span class="star">★</span> Zero error is a systematic error.</span></div>
+    <div><span class="n">27</span><span>Random error is reduced by averaging many readings.</span></div>
+    <div><span class="n">28</span><span><span class="star">★</span> 0.00230 has 3 significant figures.</span></div>
+    <div><span class="n">29</span><span><span class="star">★</span> Dimensional formula of force = [M L T⁻²].</span></div>
+    <div><span class="n">30</span><span><span class="star">★</span> Work/energy = [M L² T⁻²]; pressure = [M L⁻¹ T⁻²]; power = [M L² T⁻³].</span></div>
+    <div><span class="n">31</span><span>Principle of homogeneity: both sides of an equation share the same dimensions.</span></div>
+    <div><span class="n">32</span><span><span class="star">★</span> Dimensionless: strain, refractive index, angle, relative density.</span></div>
+    <div><span class="n">33</span><span>Dimensional analysis can't find pure constants (½, 2π) or check trig/log terms.</span></div>
+    <div><span class="n">34</span><span>Mass is constant everywhere; weight changes with gravity.</span></div>
+    <div><span class="n">35</span><span>Unit symbols after a person's name are capitalised (N, Pa, K, A), the word is not.</span></div>
+  </div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Units &amp; Measurement Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_phys_units_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:35;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:40;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA ===== */
+var MAP=[
+ {id:0,cat:null,icon:"📏",label:"Units &\nMeasurement",fact:"Measurement expresses a physical quantity as a number × a unit. Physics is built on 7 base SI units; everything else is derived from them."},
+ {id:1,cat:0,icon:"🔢",label:"Physical\nQuantities",fact:"Anything measurable. Fundamental (7 base) vs derived; scalars (magnitude only) vs vectors (magnitude + direction)."},
+ {id:2,cat:0,icon:"📐",label:"SI Base\nUnits",fact:"Seven base units agreed worldwide (1960): metre, kilogram, second, ampere, kelvin, mole, candela."},
+ {id:3,cat:0,icon:"🔠",label:"Prefixes",fact:"Powers-of-ten shorthand: kilo (10³), milli (10⁻³), micro (10⁻⁶), nano (10⁻⁹), mega, giga."},
+ {id:4,cat:0,icon:"🛠️",label:"Measuring\nInstruments",fact:"Vernier calipers & screw gauge measure tiny lengths. Least count = smallest measurable value."},
+ {id:5,cat:0,icon:"⚙️",label:"Derived\nUnits",fact:"Built from base units: area (m²), speed (m/s), force (newton), energy (joule), power (watt)."},
+ {id:6,cat:0,icon:"🎯",label:"Errors &\nSig. Figures",fact:"Every measurement has uncertainty. Accuracy = closeness to true value; precision = repeatability."},
+ {id:7,cat:0,icon:"🧮",label:"Dimensions",fact:"Every quantity has a dimensional formula in [M][L][T]. Used to check equations and convert units."},
+ /* Physical Quantities */
+ {id:101,cat:1,icon:"7️⃣",label:"Fundamental\nquantities",fact:"The 7 base quantities: length, mass, time, electric current, temperature, amount of substance, luminous intensity."},
+ {id:102,cat:1,icon:"⚙️",label:"Derived\nquantities",fact:"Formed by combining base quantities — e.g. area = length², speed = length/time, density = mass/volume."},
+ {id:103,cat:1,icon:"🧭",label:"Scalars vs\nVectors",fact:"Scalar = magnitude only (mass, speed, distance, energy). Vector = magnitude + direction (velocity, force, displacement)."},
+ {id:104,cat:1,icon:"📊",label:"Measurement\nbasics",fact:"A measurement = numerical value × unit. Same quantity, bigger unit → smaller number."},
+ /* SI Units */
+ {id:201,cat:2,icon:"📏",label:"Metre · kg ·\nsecond",fact:"Length = metre (m), mass = kilogram (kg), time = second (s) — the MKS core of the SI system."},
+ {id:202,cat:2,icon:"⚡",label:"Ampere ·\nKelvin",fact:"Electric current = ampere (A); thermodynamic temperature = kelvin (K). 0 K = absolute zero = −273.15°C."},
+ {id:203,cat:2,icon:"🧪",label:"Mole ·\nCandela",fact:"Amount of substance = mole (mol); luminous intensity = candela (cd)."},
+ {id:204,cat:2,icon:"🌍",label:"SI system\nrules",fact:"SI (Système International, 1960) is the modern metric standard. Unit symbols after a person's name are capital (N, K, A) but the word is lowercase (newton)."},
+ /* Prefixes */
+ {id:301,cat:3,icon:"⬆️",label:"Multiples\n(kilo…giga)",fact:"kilo=10³, mega=10⁶, giga=10⁹, tera=10¹². 1 km = 1000 m."},
+ {id:302,cat:3,icon:"⬇️",label:"Sub-multiples\n(milli…nano)",fact:"milli=10⁻³, micro=10⁻⁶, nano=10⁻⁹, pico=10⁻¹². 1 mm = 0.001 m."},
+ {id:303,cat:3,icon:"🔁",label:"Common\nconversions",fact:"1 m = 100 cm = 1000 mm; 1 kg = 1000 g; 1 hour = 3600 s; 1 tonne = 1000 kg."},
+ {id:304,cat:3,icon:"🔬",label:"Special\nlength units",fact:"1 Ångström = 10⁻¹⁰ m (atoms); 1 light-year ≈ 9.46×10¹⁵ m (astronomy); 1 nanometre = 10⁻⁹ m."},
+ /* Instruments */
+ {id:401,cat:4,icon:"📏",label:"Vernier\ncalipers",fact:"Measures to 0.1 mm (0.01 cm). Reading = main scale + (vernier coincidence × least count)."},
+ {id:402,cat:4,icon:"🔩",label:"Screw gauge\n(micrometer)",fact:"Measures to 0.01 mm — finer than vernier. Uses a screw's pitch and a circular scale."},
+ {id:403,cat:4,icon:"📐",label:"Least\ncount",fact:"Smallest value an instrument can read. Vernier LC = 1 MSD − 1 VSD = pitch/divisions. Smaller LC → more precise."},
+ {id:404,cat:4,icon:"⏱️",label:"Time & mass\ntools",fact:"Time: pendulum clock, stopwatch, atomic clock (most accurate). Mass: beam/common balance, spring balance (measures weight)."},
+ /* Derived Units */
+ {id:501,cat:5,icon:"⬜",label:"Area &\nvolume",fact:"Area = m² (2 length dimensions); volume = m³. 1 litre = 1000 cm³ = 10⁻³ m³."},
+ {id:502,cat:5,icon:"🏃",label:"Speed &\nacceleration",fact:"Speed = m/s; acceleration = m/s². Velocity is speed with direction (a vector)."},
+ {id:503,cat:5,icon:"🧲",label:"Force (N) &\npressure (Pa)",fact:"1 newton = 1 kg·m/s²; 1 pascal = 1 N/m². Named units honour scientists."},
+ {id:504,cat:5,icon:"⚡",label:"Energy (J) &\npower (W)",fact:"1 joule = 1 N·m; 1 watt = 1 J/s. Horsepower ≈ 746 W; 1 kWh = 3.6×10⁶ J (electricity unit)."},
+ /* Errors */
+ {id:601,cat:6,icon:"❌",label:"Types of\nerror",fact:"Systematic (constant bias, e.g. zero error) vs random (unpredictable). Zero error is a systematic error."},
+ {id:602,cat:6,icon:"🎯",label:"Accuracy vs\nprecision",fact:"Accuracy = closeness to the true value. Precision = closeness of repeated readings to each other. A gun can be precise but inaccurate."},
+ {id:603,cat:6,icon:"🔢",label:"Significant\nfigures",fact:"Digits that carry meaning. 0.00230 has 3 sig figs; trailing zeros after a decimal count, leading zeros don't."},
+ {id:604,cat:6,icon:"➗",label:"Rounding\nrules",fact:"In addition, round to the least decimal places; in multiplication, to the least sig figs of the inputs."},
+ /* Dimensions */
+ {id:701,cat:7,icon:"🧮",label:"Dimensional\nformula",fact:"Expresses a quantity in base dimensions [M][L][T]. Force = [M L T⁻²]; energy = [M L² T⁻²]."},
+ {id:702,cat:7,icon:"✅",label:"Dimensional\nanalysis",fact:"Both sides of a correct physical equation must have the same dimensions — the principle of homogeneity."},
+ {id:703,cat:7,icon:"🔁",label:"Unit\nconversion",fact:"Multiply by 1 in the form of a ratio of equal quantities (e.g. ×1000 mm/m) so units cancel."},
+ {id:704,cat:7,icon:"⚠️",label:"Limits of\ndimensions",fact:"Dimensional analysis can't find pure numbers/constants (like ½ or 2π) and fails for equations with + of unlike-looking terms."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"How many base (fundamental) units are there in the SI system?",o:["5","6","7","9"],a:2,e:"Seven: metre, kilogram, second, ampere, kelvin, mole, candela."},
+ {t:"Recall · TNPSC",q:"The SI unit of electric current is the:",o:["Volt","Ampere","Ohm","Coulomb"],a:1,e:"Ampere (A) is one of the 7 base units; the coulomb is derived."},
+ {t:"Recall · RRB",q:"The SI unit of temperature is the:",o:["Celsius","Fahrenheit","Kelvin","Joule"],a:2,e:"Kelvin (K) is the base unit; 0 K is absolute zero (−273.15 °C)."},
+ {t:"Recall · SSC",q:"Which of these is a fundamental (base) quantity?",o:["Force","Velocity","Luminous intensity","Pressure"],a:2,e:"Luminous intensity (candela) is a base quantity; the others are derived."},
+ {t:"Conceptual · Banking",q:"Which of the following is a vector quantity?",o:["Speed","Mass","Velocity","Energy"],a:2,e:"Velocity has magnitude and direction. Speed, mass and energy are scalars."},
+ {t:"Conceptual · SSC",q:"Which pair are both scalar quantities?",o:["Force and velocity","Distance and speed","Displacement and acceleration","Momentum and weight"],a:1,e:"Distance and speed have magnitude only; the others are vectors."},
+ {t:"Recall · TNPSC",q:"The mole is the SI unit of:",o:["Mass","Amount of substance","Luminous intensity","Current"],a:1,e:"Mole (mol) measures amount of substance."},
+ {t:"Recall · RRB",q:"The candela is the SI unit of:",o:["Sound","Luminous intensity","Heat","Pressure"],a:1,e:"Candela (cd) measures luminous intensity (brightness of a light source)."},
+ {t:"Recall · SSC",q:"The prefix 'nano' represents:",o:["10⁻⁶","10⁻⁹","10⁻³","10⁻¹²"],a:1,e:"nano = 10⁻⁹. milli=10⁻³, micro=10⁻⁶, pico=10⁻¹²."},
+ {t:"Recall · Banking",q:"The prefix 'giga' stands for:",o:["10⁶","10⁹","10¹²","10³"],a:1,e:"giga = 10⁹. mega=10⁶, tera=10¹², kilo=10³."},
+ {t:"Numerical · SSC",q:"1 micrometre (µm) equals how many metres?",o:["10⁻³ m","10⁻⁶ m","10⁻⁹ m","10⁻¹² m"],a:1,e:"micro = 10⁻⁶, so 1 µm = 10⁻⁶ m."},
+ {t:"Application · TNPSC",q:"One light-year is a unit of:",o:["Time","Distance","Speed","Brightness"],a:1,e:"A light-year is the distance light travels in one year (≈ 9.46×10¹⁵ m)."},
+ {t:"Recall · RRB",q:"One Ångström (Å) equals:",o:["10⁻⁸ m","10⁻¹⁰ m","10⁻⁶ m","10⁻¹² m"],a:1,e:"1 Å = 10⁻¹⁰ m — used for atomic and molecular sizes."},
+ {t:"Conceptual · SSC",q:"The least count of a measuring instrument is:",o:["Its largest reading","The smallest value it can measure","Its total range","Its zero error"],a:1,e:"Least count = the smallest value the instrument can measure. Smaller LC → more precise."},
+ {t:"Recall · Banking",q:"The least count of an ordinary vernier calipers is usually:",o:["1 mm","0.1 mm","0.01 mm","1 cm"],a:1,e:"A standard vernier reads to 0.1 mm (0.01 cm)."},
+ {t:"Conceptual · RRB",q:"Which instrument measures length most precisely?",o:["Metre scale","Vernier calipers","Screw gauge","Measuring tape"],a:2,e:"A screw gauge (micrometer) reads to 0.01 mm — finer than the vernier's 0.1 mm."},
+ {t:"Application · SSC",q:"To measure the diameter of a thin wire, the best instrument is a:",o:["Metre scale","Screw gauge","Measuring tape","Beam balance"],a:1,e:"A screw gauge measures very small thicknesses/diameters to 0.01 mm."},
+ {t:"Recall · TNPSC",q:"The most accurate device for measuring time is a(n):",o:["Pendulum clock","Stopwatch","Atomic clock","Sundial"],a:2,e:"Atomic clocks (caesium) define the second and are the most accurate timekeepers."},
+ {t:"Recall · SSC",q:"The SI unit of force is the:",o:["Joule","Newton","Pascal","Watt"],a:1,e:"1 newton = 1 kg·m/s². Named after Isaac Newton."},
+ {t:"Recall · Banking",q:"The SI unit of pressure is the:",o:["Newton","Pascal","Bar","Joule"],a:1,e:"1 pascal = 1 N/m²."},
+ {t:"Recall · RRB",q:"The SI unit of energy (and work) is the:",o:["Watt","Newton","Joule","Volt"],a:2,e:"1 joule = 1 N·m. Power (rate of energy) is the watt."},
+ {t:"Recall · SSC",q:"The SI unit of power is the:",o:["Joule","Watt","Newton","Pascal"],a:1,e:"1 watt = 1 joule/second."},
+ {t:"Numerical · Banking",q:"1 kilowatt-hour (the commercial unit of electricity) equals:",o:["1000 J","3.6×10⁶ J","3600 J","10⁶ J"],a:1,e:"1 kWh = 1000 W × 3600 s = 3.6×10⁶ J."},
+ {t:"Numerical · SSC",q:"How many cubic centimetres are there in 1 litre?",o:["100","1000","10","10000"],a:1,e:"1 litre = 1000 cm³ = 10⁻³ m³."},
+ {t:"Conceptual · TNPSC",q:"Accuracy of a measurement refers to how close it is to the:",o:["Previous reading","True value","Average reading","Zero mark"],a:1,e:"Accuracy = closeness to the true value; precision = repeatability of readings."},
+ {t:"Conceptual · RRB",q:"A zero error in an instrument is an example of a:",o:["Random error","Systematic error","Human error","Least count error"],a:1,e:"Zero error is a constant bias present in every reading → systematic error."},
+ {t:"Recall · SSC",q:"The number of significant figures in 0.00230 is:",o:["2","3","5","6"],a:1,e:"Leading zeros don't count; 2, 3 and the trailing 0 do → 3 significant figures."},
+ {t:"Numerical · Banking",q:"The number of significant figures in 100.0 is:",o:["1","2","3","4"],a:3,e:"With the decimal point shown, all four digits are significant."},
+ {t:"Recall · RRB",q:"The dimensional formula of force is:",o:["[M L T⁻¹]","[M L T⁻²]","[M L² T⁻²]","[M L⁻¹ T⁻²]"],a:1,e:"Force = mass × acceleration = [M][L T⁻²] = [M L T⁻²]."},
+ {t:"Recall · SSC",q:"The dimensional formula of work/energy is:",o:["[M L T⁻²]","[M L² T⁻²]","[M L² T⁻¹]","[M L T⁻¹]"],a:1,e:"Work = force × distance = [M L T⁻²][L] = [M L² T⁻²]."},
+ {t:"Conceptual · TNPSC",q:"The principle of homogeneity of dimensions states that:",o:["All terms must be numbers","Both sides of an equation have the same dimensions","Units must be SI","Errors cancel out"],a:1,e:"A physically correct equation has identical dimensions on both sides."},
+ {t:"Conceptual · SSC",q:"Which quantity is dimensionless?",o:["Force","Strain","Velocity","Density"],a:1,e:"Strain = change in length / original length → a ratio, hence dimensionless (also: refractive index, angle)."},
+ {t:"Statement · TNPSC",q:"Consider: (1) The kilogram is a base SI unit. (2) The newton is a base SI unit. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"The kilogram is a base unit; the newton is a derived unit (kg·m/s²)."},
+ {t:"Statement · SSC",q:"Consider: (1) Speed is a scalar. (2) Velocity is a vector. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both correct — speed has magnitude only; velocity has magnitude and direction."},
+ {t:"Statement · RRB",q:"Consider: (1) A screw gauge is more precise than a vernier calipers. (2) Smaller least count means lower precision. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true (0.01 mm vs 0.1 mm). 2 is false — smaller least count means HIGHER precision."},
+ {t:"Statement · Banking",q:"Consider: (1) 1 nanometre = 10⁻⁹ m. (2) 1 micron = 10⁻³ m. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — 1 micron (micrometre) = 10⁻⁶ m."},
+ {t:"Statement · SSC",q:"Consider: (1) Accuracy and precision mean the same thing. (2) Zero error is a random error. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:3,e:"Both false — accuracy ≠ precision, and zero error is systematic, not random."},
+ {t:"Assertion–Reason · SSC",q:"A: Dimensional analysis can check whether an equation is correct. R: Both sides of a valid physical equation have the same dimensions.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R correctly explains A (principle of homogeneity)."},
+ {t:"Assertion–Reason · TNPSC",q:"A: The light-year is a unit of time. R: Light takes one year to cover it.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:3,e:"A is false — a light-year is a unit of distance, not time; R (the reason) is true."},
+ {t:"Assertion–Reason · RRB",q:"A: Dimensional analysis cannot derive an equation containing a pure number. R: Dimensionless constants have no dimensions to track.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A — constants like ½ or 2π can't be found dimensionally."},
+ {t:"Statement · SSC",q:"Consider: (1) The metre is a base unit. (2) The litre is an SI base unit. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"The metre is base; the litre is a non-SI unit of volume (SI volume unit is m³)."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Work and energy have the same unit. (2) Force and momentum have the same dimensions. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true (both joule). 2 is false — force = [M L T⁻²], momentum = [M L T⁻¹]."},
+ {t:"Statement · RRB",q:"Consider: (1) Impulse and momentum have the same dimensions. (2) Power and energy have the same dimensions. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true (both [M L T⁻¹]). 2 is false — power = [M L² T⁻³], energy = [M L² T⁻²]."},
+ {t:"Statement · Banking",q:"Consider: (1) The ampere is a base unit. (2) The coulomb is a base unit. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Ampere is base; coulomb (= A·s) is derived."},
+ {t:"Statement · SSC",q:"Consider: (1) Mass is a scalar. (2) Weight is a scalar. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Mass is a scalar; weight is a force → a vector. So only 1 is correct."},
+ {t:"Statement · TNPSC",q:"Consider: (1) 1 kWh = 3.6×10⁶ J. (2) 1 horsepower ≈ 746 W. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both are correct standard conversions."},
+ {t:"Statement · RRB",q:"Consider: (1) Pressure has dimensions [M L⁻¹ T⁻²]. (2) Density has dimensions [M L⁻³]. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both correct — pressure = force/area, density = mass/volume."},
+ {t:"Statement · SSC",q:"Consider: (1) An atomic clock is more accurate than a pendulum clock. (2) A spring balance measures mass. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — a spring balance measures WEIGHT (force), not mass."},
+ {t:"Statement · Banking",q:"Consider: (1) Trailing zeros after a decimal are significant. (2) Leading zeros are significant. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — leading zeros (as in 0.0025) are not significant."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Frequency has the dimension [T⁻¹]. (2) Velocity has the dimension [L T⁻¹]. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both correct — frequency = 1/time, velocity = distance/time."},
+ {t:"Statement · SSC",q:"Consider: (1) The mole measures the number of particles. (2) The candela measures loudness. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true (amount of substance). 2 is false — candela measures luminous intensity (light), not sound."},
+ {t:"Statement · RRB",q:"Consider: (1) Astronomical unit measures distance. (2) Parsec measures time. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"AU is a distance; parsec is ALSO a distance (≈3.26 light-years), not time."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, application, statement, assertion–reason & numerical. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS ===== */
+var PROB=[
+ {lvl:"e",tag:"Conversion",q:"Convert 2.5 km into metres.",given:"2.5 km",find:"metres",steps:["1 km = 1000 m","2.5 × 1000"],ans:"2500 m"},
+ {lvl:"e",tag:"Conversion",q:"Convert 5000 grams into kilograms.",given:"5000 g",find:"kg",steps:["1 kg = 1000 g","5000 ÷ 1000"],ans:"5 kg"},
+ {lvl:"e",tag:"Time",q:"How many seconds are there in 2 hours?",given:"2 h",find:"seconds",steps:["1 h = 3600 s","2 × 3600"],ans:"7200 s"},
+ {lvl:"m",tag:"Prefixes",q:"Express 0.000045 m using a suitable prefix.",given:"0.000045 m",find:"in µm",steps:["0.000045 = 45 × 10⁻⁶ m","1 µm = 10⁻⁶ m"],ans:"45 µm"},
+ {lvl:"m",tag:"Volume",q:"A tank holds 0.75 m³ of water. How many litres is that?",given:"0.75 m³",find:"litres",steps:["1 m³ = 1000 litres","0.75 × 1000"],ans:"750 litres"},
+ {lvl:"m",tag:"Least count",q:"A vernier scale has 10 divisions coinciding with 9 mm of the main scale (1 MSD = 1 mm). Find the least count.",given:"1 MSD = 1 mm, 10 VSD = 9 mm",find:"least count",steps:["1 VSD = 9/10 = 0.9 mm","LC = 1 MSD − 1 VSD = 1 − 0.9"],ans:"0.1 mm"},
+ {lvl:"m",tag:"Screw gauge",q:"A screw gauge has a pitch of 1 mm and 100 divisions on its circular scale. Find its least count.",given:"pitch = 1 mm, 100 divisions",find:"least count",steps:["LC = pitch ÷ number of divisions","LC = 1 ÷ 100"],ans:"0.01 mm"},
+ {lvl:"m",tag:"Sig figs",q:"Round 3.14159 to 3 significant figures.",given:"3.14159",find:"3 sig figs",steps:["Keep first 3 significant digits: 3, 1, 4","Next digit is 1 → round down"],ans:"3.14"},
+ {lvl:"h",tag:"Dimensions",q:"Find the dimensional formula of pressure.",given:"Pressure = Force / Area",find:"dimensions",steps:["Force = [M L T⁻²]","Area = [L²]","Pressure = [M L T⁻²] / [L²]"],ans:"[M L⁻¹ T⁻²]"},
+ {lvl:"h",tag:"Dimensions",q:"Check if the equation v = u + at is dimensionally correct. (v,u = velocity, a = acceleration, t = time)",given:"v=u+at",find:"consistency",steps:["v, u = [L T⁻¹]","at = [L T⁻²][T] = [L T⁻¹]","All terms = [L T⁻¹] → homogeneous"],ans:"Dimensionally correct"},
+ {lvl:"h",tag:"Conversion",q:"The density of water is 1000 kg/m³. Express it in g/cm³.",given:"1000 kg/m³",find:"g/cm³",steps:["1 kg = 1000 g; 1 m³ = 10⁶ cm³","1000 × 1000 g ÷ 10⁶ cm³ = 10⁶/10⁶"],ans:"1 g/cm³"},
+ {lvl:"h",tag:"Astronomy",q:"Light travels at 3×10⁸ m/s. Approximately how far is one light-year in metres? (1 year ≈ 3.15×10⁷ s)",given:"c = 3×10⁸ m/s, t = 3.15×10⁷ s",find:"distance",steps:["distance = speed × time","= 3×10⁸ × 3.15×10⁷"],ans:"≈ 9.46×10¹⁵ m"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked numericals graded easy→hard. Try first, then reveal the steps. Mark solved for XP.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS ===== */
+var FC=[
+ {q:"How many SI base units are there?",a:"Seven: metre, kilogram, second, ampere, kelvin, mole, candela."},
+ {q:"SI unit of length, mass, time?",a:"Metre (m), kilogram (kg), second (s)."},
+ {q:"SI unit of electric current?",a:"Ampere (A)."},
+ {q:"SI unit of temperature?",a:"Kelvin (K); 0 K = −273.15 °C = absolute zero."},
+ {q:"SI unit of amount of substance & luminous intensity?",a:"Mole (mol) and candela (cd)."},
+ {q:"Fundamental vs derived quantity?",a:"Fundamental = 7 base quantities; derived = combinations (area, speed, force...)."},
+ {q:"Scalar vs vector — give examples.",a:"Scalar (magnitude only): mass, speed, distance, energy. Vector (magnitude+direction): velocity, force, displacement."},
+ {q:"Value of prefixes kilo, mega, giga?",a:"10³, 10⁶, 10⁹."},
+ {q:"Value of prefixes milli, micro, nano, pico?",a:"10⁻³, 10⁻⁶, 10⁻⁹, 10⁻¹²."},
+ {q:"1 Ångström = ? metres",a:"10⁻¹⁰ m (used for atomic sizes)."},
+ {q:"What is a light-year?",a:"A unit of DISTANCE — how far light travels in one year (≈ 9.46×10¹⁵ m)."},
+ {q:"Define least count.",a:"The smallest value an instrument can measure. Smaller LC → more precise."},
+ {q:"Least count of vernier calipers vs screw gauge?",a:"Vernier ≈ 0.1 mm; screw gauge ≈ 0.01 mm (finer)."},
+ {q:"Formula for a screw gauge's least count?",a:"LC = pitch ÷ number of circular-scale divisions."},
+ {q:"Most accurate time-measuring device?",a:"Atomic clock (caesium)."},
+ {q:"SI unit of force and its definition?",a:"Newton (N); 1 N = 1 kg·m/s²."},
+ {q:"SI unit of pressure?",a:"Pascal (Pa); 1 Pa = 1 N/m²."},
+ {q:"SI unit of energy/work and power?",a:"Joule (J) = N·m; power = watt (W) = J/s."},
+ {q:"1 kilowatt-hour = ? joules",a:"3.6×10⁶ J (the commercial unit of electricity)."},
+ {q:"1 litre = ? cm³ = ? m³",a:"1000 cm³ = 10⁻³ m³."},
+ {q:"Accuracy vs precision?",a:"Accuracy = closeness to true value; precision = repeatability of readings."},
+ {q:"Systematic vs random error?",a:"Systematic = constant bias (e.g. zero error); random = unpredictable scatter."},
+ {q:"Significant figures in 0.00230?",a:"Three (leading zeros don't count; the trailing zero does)."},
+ {q:"Dimensional formula of force?",a:"[M L T⁻²]."},
+ {q:"Dimensional formula of work/energy?",a:"[M L² T⁻²]."},
+ {q:"Dimensional formula of pressure?",a:"[M L⁻¹ T⁻²]."},
+ {q:"State the principle of homogeneity.",a:"Both sides of a correct physical equation must have the same dimensions."},
+ {q:"Name a dimensionless quantity.",a:"Strain, refractive index, angle, relative density."},
+ {q:"Two limitations of dimensional analysis?",a:"Can't find pure-number constants (½, 2π), and can't handle equations with sums of unlike terms."},
+ {q:"1 tonne = ? kg",a:"1000 kg."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script>
+/* ===== CentuMania metrics — universal (generator-agnostic; additive) ===== */
+(function(){
+  if(window.__cmTrackU||window.__cmTrackInit)return; window.__cmTrackU=1;
+  var CM_DEFAULT='physics-units-measurement', CM_T0=Date.now(), CM_ACTIVE=0, _vt=Date.now(), _lastQ=0;
+  function tok(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function mat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function sid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'a'+Date.now();}}
+  function inter(t,n,m){try{var k=tok();if(!k||!n)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({interaction_type:t,node_id:String(n),material_id:mat(),session_id:sid(),timestamp:new Date().toISOString(),metadata:m||{}})}).catch(function(){});}catch(e){}}
+  function ev(name,m){try{var k=tok();if(!k)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})})}).catch(function(){});}catch(e){}}
+  function beacon(name,m){try{var k=tok();if(!k)return;var p=JSON.stringify({_token:k,event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_vt;beacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_vt=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_vt;beacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  ev('material_opened',{});ev('session_start',{});
+  /* node-open: wrap any global opener that exists */
+  ['openNode','selectNode','showNode','goNode','openTopic','loadNode'].forEach(function(fn){
+    if(typeof window[fn]==='function'){var _o=window[fn];window[fn]=function(){var r;try{r=_o.apply(this,arguments);}catch(e){r=undefined;}try{var id=arguments[0];if(id!=null&&(typeof id==='string'||typeof id==='number')){_lastQ=Date.now();inter('node_opened',id,{});ev('node_open',{node_id:String(id)});}}catch(e){}return r;};}
+  });
+  /* per-question: delegated click on any option element; correctness read from the class the module applies */
+  document.addEventListener('click',function(e){
+    var o=e.target&&e.target.closest&&e.target.closest('.mopt,.opt,.option,[data-oi]');if(!o)return;
+    var card=o.closest('.mcq-card,.mcq,[data-nid],[data-qi]')||o.parentElement;if(!card)return;if(card._cmA)return;card._cmA=1;
+    var nid=(card.getAttribute&&(card.getAttribute('data-nid')||card.getAttribute('data-node')))||'q';
+    var qraw=card.getAttribute&&card.getAttribute('data-qi');var qi=qraw!=null?parseInt(qraw):-1;
+    var now=Date.now(),dt=_lastQ?now-_lastQ:0;_lastQ=now;
+    setTimeout(function(){var correct=o.classList.contains('correct')||o.getAttribute('data-correct')==='true';if(!correct&&(o.classList.contains('wrong')||o.classList.contains('incorrect')))correct=false;inter('mcq_attempt',String(nid),{question_index:qi,is_correct:!!correct});ev('answer',{node_id:String(nid),question_index:qi,is_correct:!!correct,time_spent_ms:dt});},70);
+  },true);
+})();
+</script>
+
+</body></html>

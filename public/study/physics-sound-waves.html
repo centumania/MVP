@@ -1,0 +1,1010 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sound &amp; Waves — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"🔊";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:32px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.dia{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;text-align:center}
+.dia svg{max-width:100%;height:auto}
+.dia .cap{font-size:11px;color:var(--mut);font-weight:600;margin-top:7px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Physics · Mastery Pack</div>
+  <h1>Sound &amp; Waves</h1>
+  <p>Production → Medium → Wave Properties → v = fλ → Speed &amp; Echo → Reflection → Hearing &amp; Ultrasound. Why sound needs matter and how it travels.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/35</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/40</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+
+  <h2 class="sec"><span class="em">🌐</span>The Big Picture</h2>
+  <div class="sec-sub">Sound is a vibration that needs matter to travel. Follow it: from a vibrating body, through a medium, described by wave properties, reflecting as echoes, into your ear.</div>
+  <div class="flow">
+    <span class="step">Vibration makes sound</span><span class="arw">→</span>
+    <span class="step">Travels through a medium</span><span class="arw">→</span>
+    <span class="step">v = fλ describes it</span><span class="arw">→</span>
+    <span class="step">Reflects (echo) → hearing</span>
+  </div>
+  <div class="note"><span class="t">Anchor idea</span>Sound is a <b>mechanical, longitudinal wave</b>. "Mechanical" means it needs a <b>medium</b> — no air, no sound. "Longitudinal" means the medium's particles vibrate <b>back and forth along</b> the wave (not across it like light). Every trap in this chapter comes back to these two words.</div>
+
+  <!-- 1 PRODUCTION -->
+  <h2 class="sec"><span class="em">🎵</span>1 · Production of Sound</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Sound is produced by a <b>vibrating body</b>. Its vibrations create a longitudinal wave of <b>compressions and rarefactions</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why longitudinal</div><div class="txt">As the object vibrates, it pushes nearby particles together (compression) then lets them spread apart (rarefaction). Those particles vibrate <b>along</b> the travel direction, passing the disturbance forward.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Compression = high-pressure region; rarefaction = low-pressure region. The wave carries <b>energy</b>, not matter.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Vocal cords, drum skins, guitar strings, tuning forks, a ringing bell.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Sound is produced by vibration." "Sound is a longitudinal/mechanical wave." "Compression = high pressure, rarefaction = low pressure."</div></div>
+    </div>
+    <div class="note trap"><span class="t">Longitudinal vs Transverse</span>Sound is <b>longitudinal</b> (particles vibrate along the wave). Light and water ripples are <b>transverse</b> (vibration is perpendicular). Don't call sound "transverse".</div>
+  </div>
+
+  <!-- 2 MEDIUM -->
+  <h2 class="sec"><span class="em">🌫️</span>2 · Medium &amp; Propagation</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Sound needs a <b>material medium</b> (solid, liquid or gas) to travel. It <b>cannot travel through a vacuum</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why solids are fastest</div><div class="txt">Particles in a solid are packed tightly and strongly bonded, so they pass a vibration to their neighbours almost instantly. In gases the particles are far apart, so sound is slow.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Speed order: <b>solid &gt; liquid &gt; gas</b> (steel ~5000 m/s, water ~1500, air ~340). Warmer air → faster sound (~0.6 m/s per °C).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Hearing a train by ear on the rail before through air, whale songs travelling far in water, silent space.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Sound cannot travel in a vacuum." "Fastest in solids." "Astronauts use radios on the Moon." Speed rises with temperature.</div></div>
+    </div>
+    <div class="note why"><span class="t">Why space is silent</span>Space is a near-perfect <b>vacuum</b> — almost no particles. With nothing to pass the vibration along, sound simply cannot travel. Light (an electromagnetic wave) needs no medium, so we can see the stars but never hear them.</div>
+  </div>
+
+  <!-- 3 WAVE PROPERTIES -->
+  <h2 class="sec"><span class="em">📶</span>3 · Wave Properties</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A sound wave is described by <b>frequency</b> (pitch), <b>amplitude</b> (loudness), <b>wavelength</b>, <b>time period</b> and <b>speed</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why pitch ≠ loudness</div><div class="txt">Pitch is about <b>how fast</b> it vibrates (frequency); loudness is about <b>how big</b> the vibration is (amplitude). A soft high note and a loud low note prove they're independent.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Frequency</b> (Hz) → pitch; <b>amplitude</b> → loudness (in decibels); <b>wavelength</b> = distance between compressions; <b>T = 1/f</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Male vs female voices (pitch), whisper vs shout (loudness), telling a flute from a violin (timbre).</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Pitch depends on frequency." "Loudness depends on amplitude." "Timbre distinguishes instruments." Loudness unit = decibel (dB).</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Property</th><th>Depends on</th><th>We perceive it as</th></tr>
+      <tr><td class="h">Frequency</td><td>Vibrations per second</td><td>Pitch (shrillness)</td></tr>
+      <tr><td class="h">Amplitude</td><td>Size of vibration</td><td>Loudness</td></tr>
+      <tr><td class="h">Waveform</td><td>Mix of frequencies</td><td>Timbre (quality)</td></tr>
+    </table>
+  </div>
+
+  <!-- 4 WAVE EQUATION -->
+  <h2 class="sec"><span class="em">🧮</span>4 · The Wave Equation (v = fλ)</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">The one equation linking a wave's speed, frequency and wavelength: <b>v = f × λ</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why it holds</div><div class="txt">In one second, <b>f</b> whole waves pass a point, each of length <b>λ</b> — so the wave advances f×λ metres per second. That distance per second is exactly the speed.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Rearrange as needed: f = v/λ, λ = v/f. <b>Time period T = 1/f.</b> When sound moves to a new medium its <b>speed and wavelength change but frequency stays the same</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Tuning instruments, radio &amp; musical acoustics, calculating any wave quantity from the other two.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"v = fλ." "T = 1/f." "Frequency is unchanged when a wave enters a new medium." Numerical staple.</div></div>
+    </div>
+  </div>
+
+  <!-- 5 SPEED & ECHO -->
+  <h2 class="sec"><span class="em">📢</span>5 · Speed of Sound &amp; Echo</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Sound travels at about <b>343 m/s</b> in air. An <b>echo</b> is a reflected sound heard as a separate sound after at least <b>0.1 s</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why 17 m minimum</div><div class="txt">Our ears separate two sounds only if they're ≥0.1 s apart. In 0.1 s sound travels ~34 m — there and back — so the obstacle must be at least <b>~17 m</b> away for a distinct echo.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">For echo/SONAR: the sound travels <b>to the obstacle and back</b>, so distance = <b>½ × speed × time</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Echoes in valleys &amp; empty halls, SONAR mapping the sea floor, bats/dolphins locating prey.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Speed of sound in air ~340 m/s." "Echo needs ≥17 m." "SONAR: distance = ½vt." "See lightning before thunder (light faster)."</div></div>
+    </div>
+    <div class="note why"><span class="t">Why lightning then thunder</span>Both start together, but light travels at 3×10⁸ m/s (nearly instant) while sound crawls at ~340 m/s. The gap in seconds × 340 gives the storm's distance — count "one-one-thousand" and multiply.</div>
+  </div>
+
+  <!-- 6 REFLECTION -->
+  <h2 class="sec"><span class="em">🪞</span>6 · Reflection of Sound</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Sound <b>reflects</b> off surfaces obeying the laws of reflection. Multiple reflections give <b>echoes</b> and <b>reverberation</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why halls echo</div><div class="txt">Hard walls reflect sound many times, so it lingers as <b>reverberation</b>. Soft materials (curtains, carpets, foam) <b>absorb</b> it, which is why studios and cinemas are padded.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Angle of incidence = angle of reflection. Megaphones, horns, soundboards and whispering galleries all use <b>multiple reflection</b> to direct or focus sound.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Megaphone, stethoscope, bulldog-horn speakers, concert-hall curved ceilings, whispering galleries.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Megaphone/stethoscope → multiple reflection." "Reverberation reduced by soft absorbers." Echo is a single distinct reflection; reverberation is many overlapping ones.</div></div>
+    </div>
+    <div class="note trap"><span class="t">Echo vs Reverberation</span><b>Echo</b> = one clearly separated reflected sound (needs ≥17 m). <b>Reverberation</b> = many quick overlapping reflections that make sound persist in a hall. Don't confuse them.</div>
+  </div>
+
+  <!-- 7 HEARING & ULTRASOUND -->
+  <h2 class="sec"><span class="em">👂</span>7 · Hearing &amp; Ultrasound</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Humans hear roughly <b>20 Hz to 20,000 Hz</b>. Below is <b>infrasound</b>; above is <b>ultrasound</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why ultrasound is so useful</div><div class="txt">Its very short wavelength lets it travel in straight beams and reflect off small objects — perfect for <b>imaging and detection</b> without harmful radiation.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Infrasound (&lt;20 Hz):</b> whales, elephants, earthquakes. <b>Ultrasound (&gt;20,000 Hz):</b> bats, dolphins, and human technology.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Medical scans (foetus, heart, organs), SONAR, cleaning jewellery/instruments, detecting cracks in metal, breaking kidney stones.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Audible range 20 Hz–20 kHz." "Ultrasound &gt; 20 kHz." "Bats/dolphins use ultrasound." "Ultrasound used in scans &amp; SONAR."</div></div>
+    </div>
+    <div class="note life"><span class="t">Everyday — the ultrasound scan</span>A probe sends ultrasonic pulses into the body; different tissues reflect them differently, and a computer builds an image from the echoes. Because it uses sound, not X-rays, it's safe for scanning a baby.</div>
+  </div>
+
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 7 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+  <h2 class="sec"><span class="em">📊</span>Comparison &amp; Reference Tables</h2>
+  <div class="sec-sub">The pairs examiners swap, plus formulas and the frequency ranges.</div>
+
+  <div class="card"><h3>Formula Sheet</h3>
+  <table class="tbl">
+    <tr><th>Quantity</th><th>Formula</th></tr>
+    <tr><td class="h">Wave speed</td><td>v = fλ</td></tr>
+    <tr><td class="h">Frequency</td><td>f = v/λ = 1/T</td></tr>
+    <tr><td class="h">Wavelength</td><td>λ = v/f</td></tr>
+    <tr><td class="h">Time period</td><td>T = 1/f</td></tr>
+    <tr><td class="h">Echo / SONAR distance</td><td>d = ½ × v × t</td></tr>
+    <tr><td class="h">Speed of sound in air</td><td>≈ 343 m/s (20°C)</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Sound vs Light</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Sound</th><th>Light</th></tr>
+    <tr><td class="h">Wave type</td><td>Longitudinal, mechanical</td><td>Transverse, electromagnetic</td></tr>
+    <tr><td class="h">Needs a medium?</td><td>Yes</td><td>No</td></tr>
+    <tr><td class="h">Speed</td><td>~340 m/s in air</td><td>3×10⁸ m/s</td></tr>
+    <tr><td class="h">Fastest in</td><td>Solids</td><td>Vacuum</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Pitch vs Loudness</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Pitch</th><th>Loudness</th></tr>
+    <tr><td class="h">Depends on</td><td>Frequency</td><td>Amplitude</td></tr>
+    <tr><td class="h">High value</td><td>Shrill (whistle)</td><td>Loud (shout)</td></tr>
+    <tr><td class="h">Unit</td><td>hertz (Hz)</td><td>decibel (dB)</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Speed of Sound in Media</h3>
+  <table class="tbl">
+    <tr><th>Medium</th><th>Approx. speed</th></tr>
+    <tr><td class="h">Steel (solid)</td><td>~5000 m/s</td></tr>
+    <tr><td class="h">Water (liquid)</td><td>~1500 m/s</td></tr>
+    <tr><td class="h">Air at 20°C (gas)</td><td>~343 m/s</td></tr>
+    <tr><td class="h">Vacuum</td><td>0 (no sound)</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Frequency Ranges</h3>
+  <table class="tbl">
+    <tr><th>Range</th><th>Frequency</th><th>Examples</th></tr>
+    <tr><td class="h">Infrasound</td><td>Below 20 Hz</td><td>Whales, elephants, earthquakes</td></tr>
+    <tr><td class="h">Audible</td><td>20 Hz – 20,000 Hz</td><td>Human hearing</td></tr>
+    <tr><td class="h">Ultrasound</td><td>Above 20,000 Hz</td><td>Bats, dolphins, medical scans</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Echo vs Reverberation</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Echo</th><th>Reverberation</th></tr>
+    <tr><td class="h">Reflections</td><td>Single, distinct</td><td>Many, overlapping</td></tr>
+    <tr><td class="h">Heard as</td><td>A separate repeat</td><td>Prolonged/persisting sound</td></tr>
+    <tr><td class="h">Condition</td><td>Obstacle ≥ 17 m away</td><td>Enclosed hard-walled space</td></tr>
+  </table></div>
+</div>
+<div class="panel" id="p-memory">
+  <h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+  <div class="sec-sub">One hook per recall-worthy fact. Concept → hook → recall question.</div>
+
+  <div class="mem-card"><div class="cn">Sound needs matter <span class="tag">funny</span></div>
+    <div class="hk">"In space, <b>no one hears you scream</b>." Sound is mechanical — no medium, no sound. Light doesn't care.</div>
+    <div class="rq">Q: Can sound travel in a vacuum? → No.</div></div>
+
+  <div class="mem-card"><div class="cn">Longitudinal = aLONG <span class="tag">word hook</span></div>
+    <div class="hk">"<b>Longitudinal</b> = particles move a-<b>long</b> the wave." Sound is longitudinal; light is transverse (across).</div>
+    <div class="rq">Q: What kind of wave is sound? → Longitudinal.</div></div>
+
+  <div class="mem-card"><div class="cn">Speed order in media <span class="tag">chant</span></div>
+    <div class="hk">"<b>Solid, Liquid, Gas — fast to slow.</b>" Tight-packed solids pass sound fastest; spread-out gases slowest.</div>
+    <div class="rq">Q: Where is sound fastest? → In solids.</div></div>
+
+  <div class="mem-card"><div class="cn">Pitch vs Loudness <span class="tag">peg</span></div>
+    <div class="hk">"<b>Fast = high pitch; Big = loud.</b>" Pitch rides on frequency; loudness rides on amplitude.</div>
+    <div class="rq">Q: Loudness depends on? → Amplitude.</div></div>
+
+  <div class="mem-card"><div class="cn">v = fλ <span class="tag">chant</span></div>
+    <div class="hk">"<b>Velocity = frequency × wavelength.</b>" One tidy equation gives any of the three from the other two.</div>
+    <div class="rq">Q: f=500 Hz, λ=0.66 m → v? → 330 m/s.</div></div>
+
+  <div class="mem-card"><div class="cn">Echo needs 17 m <span class="tag">number peg</span></div>
+    <div class="hk">"<b>Seventeen for a clean echo.</b>" 0.1 s of hearing gap → ~34 m round trip → ~17 m one way.</div>
+    <div class="rq">Q: Minimum distance for a distinct echo? → 17 m.</div></div>
+
+  <div class="mem-card"><div class="cn">SONAR halves it <span class="tag">why-hook</span></div>
+    <div class="hk">"Down and back = <b>halve the time</b>." distance = ½ × v × t, because the echo makes a round trip.</div>
+    <div class="rq">Q: SONAR distance formula? → ½ × v × t.</div></div>
+
+  <div class="mem-card"><div class="cn">Lightning then thunder <span class="tag">everyday</span></div>
+    <div class="hk">"See the flash, count to the boom." Light is instant, sound ~340 m/s — the delay × 340 = distance.</div>
+    <div class="rq">Q: Why do we see lightning first? → Light is much faster.</div></div>
+
+  <div class="mem-card"><div class="cn">Audible range <span class="tag">number peg</span></div>
+    <div class="hk">"<b>20 to 20,000.</b>" Below = infra (elephants), above = ultra (bats).</div>
+    <div class="rq">Q: Human audible range? → 20 Hz to 20,000 Hz.</div></div>
+
+  <div class="mem-card"><div class="cn">Infra vs Ultra <span class="tag">word hook</span></div>
+    <div class="hk">"<b>Infra = under</b> (below 20 Hz); <b>Ultra = over</b> (above 20 kHz)." Bats use ultra, whales use infra.</div>
+    <div class="rq">Q: Sound above 20 kHz is? → Ultrasound.</div></div>
+</div>
+<div class="panel" id="p-traps">
+  <h2 class="sec"><span class="em">⚠️</span>Exam Traps &amp; Confusion Pairs</h2>
+  <div class="sec-sub">Each has been set in real papers. Read the reality line and it dies.</div>
+
+  <div class="note trap"><span class="t">Trap 1 · Sound is longitudinal, not transverse</span>In sound the particles vibrate <b>along</b> the wave. Only light and ripples are transverse.</div>
+
+  <div class="note trap"><span class="t">Trap 2 · Sound needs a medium</span>Sound <b>cannot travel through a vacuum</b>. Light can. This is why space is silent.</div>
+
+  <div class="note trap"><span class="t">Trap 3 · Fastest in solids, slowest in gases</span>Speed order is <b>solid &gt; liquid &gt; gas</b>. "Sound is fastest in air/gas" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 4 · Pitch vs Loudness</span>Pitch depends on <b>frequency</b>; loudness depends on <b>amplitude</b>. Swapping these is the top trap here.</div>
+
+  <div class="note trap"><span class="t">Trap 5 · Frequency stays constant across media</span>When sound enters a new medium, its <b>speed and wavelength change</b> but its <b>frequency is unchanged</b>.</div>
+
+  <div class="note trap"><span class="t">Trap 6 · Speed of sound rises with temperature</span>Sound travels <b>faster in warmer air</b> (~0.6 m/s per °C), not slower.</div>
+
+  <div class="note trap"><span class="t">Trap 7 · Echo vs Reverberation</span>An <b>echo</b> is one distinct reflection (needs ≥17 m). <b>Reverberation</b> is many overlapping reflections in a hall.</div>
+
+  <div class="note trap"><span class="t">Trap 8 · Echo distance formula</span>Because sound goes to the obstacle and back, distance = <b>½ × v × t</b>, not v × t.</div>
+
+  <div class="note trap"><span class="t">Trap 9 · Infrasound vs Ultrasound</span><b>Infrasound &lt; 20 Hz</b>; <b>ultrasound &gt; 20,000 Hz</b>. Don't reverse them.</div>
+
+  <div class="note trap"><span class="t">Trap 10 · Bats use ultrasound</span>Bats and dolphins navigate with <b>ultrasound</b> (echolocation), not infrasound.</div>
+
+  <div class="note trap"><span class="t">Trap 11 · Ultrasound ≠ power source</span>Ultrasound is used for scans, SONAR, cleaning and flaw detection — <b>not</b> to generate electricity.</div>
+
+  <div class="note trap"><span class="t">Trap 12 · Particles don't travel with the wave</span>The medium's particles only <b>vibrate about fixed positions</b>; they pass on energy but don't move along with the sound.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> We hear a distant train sooner by pressing an ear to the rail. <b>R:</b> Sound travels faster in solids than in air. → Both true, <b>R explains A</b>.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> Sound cannot be heard on the Moon. <b>R:</b> The Moon has no atmosphere to carry sound. → Both true, <b>R explains A</b>.</div>
+</div>
+<div class="panel" id="p-rapid">
+  <h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-Liners</h2>
+  <div class="sec-sub"><span class="star">★</span> = highest-frequency in exams. Tap ☆ to flag any line for your FAA revisit list.</div>
+  <div class="ol">
+    <div><span class="n">1</span><span><span class="star">★</span> Sound is produced by a vibrating body.</span></div>
+    <div><span class="n">2</span><span><span class="star">★</span> Sound is a longitudinal, mechanical wave.</span></div>
+    <div><span class="n">3</span><span>Particles vibrate along (parallel to) the wave direction.</span></div>
+    <div><span class="n">4</span><span>Compression = high pressure; rarefaction = low pressure.</span></div>
+    <div><span class="n">5</span><span><span class="star">★</span> Sound cannot travel through a vacuum.</span></div>
+    <div><span class="n">6</span><span><span class="star">★</span> Speed of sound: solid &gt; liquid &gt; gas.</span></div>
+    <div><span class="n">7</span><span>Speed of sound in air ≈ 343 m/s at 20°C.</span></div>
+    <div><span class="n">8</span><span>Sound travels faster in warmer air (~0.6 m/s per °C).</span></div>
+    <div><span class="n">9</span><span>Steel ~5000 m/s; water ~1500 m/s; air ~340 m/s.</span></div>
+    <div><span class="n">10</span><span><span class="star">★</span> Frequency (Hz) = vibrations per second → decides pitch.</span></div>
+    <div><span class="n">11</span><span><span class="star">★</span> Loudness depends on amplitude (measured in decibels).</span></div>
+    <div><span class="n">12</span><span>Timbre (quality) distinguishes a flute from a violin.</span></div>
+    <div><span class="n">13</span><span><span class="star">★</span> Wave equation: v = fλ.</span></div>
+    <div><span class="n">14</span><span>Time period T = 1/f.</span></div>
+    <div><span class="n">15</span><span>Frequency is unchanged when sound enters a new medium.</span></div>
+    <div><span class="n">16</span><span><span class="star">★</span> Echo = reflected sound heard after ≥ 0.1 s.</span></div>
+    <div><span class="n">17</span><span><span class="star">★</span> Minimum distance for a distinct echo ≈ 17 m.</span></div>
+    <div><span class="n">18</span><span><span class="star">★</span> Echo/SONAR distance = ½ × speed × time.</span></div>
+    <div><span class="n">19</span><span>SONAR uses ultrasound to measure sea depth.</span></div>
+    <div><span class="n">20</span><span>Reverberation = persistence of sound from many reflections.</span></div>
+    <div><span class="n">21</span><span>Reverberation is reduced by soft absorbers (curtains, foam).</span></div>
+    <div><span class="n">22</span><span>Megaphone &amp; stethoscope work by multiple reflection of sound.</span></div>
+    <div><span class="n">23</span><span>Sound reflects: angle of incidence = angle of reflection.</span></div>
+    <div><span class="n">24</span><span><span class="star">★</span> Human audible range: 20 Hz to 20,000 Hz.</span></div>
+    <div><span class="n">25</span><span><span class="star">★</span> Infrasound &lt; 20 Hz (whales, elephants, earthquakes).</span></div>
+    <div><span class="n">26</span><span><span class="star">★</span> Ultrasound &gt; 20,000 Hz (bats, dolphins, scans).</span></div>
+    <div><span class="n">27</span><span>Bats and dolphins navigate by ultrasonic echolocation.</span></div>
+    <div><span class="n">28</span><span>Ultrasound uses: medical scans, SONAR, cleaning, flaw detection, kidney stones.</span></div>
+    <div><span class="n">29</span><span><span class="star">★</span> Light (3×10⁸ m/s) travels far faster than sound (~340 m/s).</span></div>
+    <div><span class="n">30</span><span>We see lightning before we hear thunder.</span></div>
+    <div><span class="n">31</span><span>Astronauts on the Moon use radios — no air to carry sound.</span></div>
+    <div><span class="n">32</span><span>The medium's particles vibrate about fixed points; they don't travel.</span></div>
+    <div><span class="n">33</span><span>Light is transverse &amp; electromagnetic; sound is longitudinal &amp; mechanical.</span></div>
+    <div><span class="n">34</span><span>Loudness unit = decibel (dB); pitch/frequency unit = hertz (Hz).</span></div>
+    <div><span class="n">35</span><span>Pressing an ear to a rail hears a train sooner (sound fast in steel).</span></div>
+  </div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Sound &amp; Waves Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_phys_sound_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:35;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:40;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA ===== */
+var MAP=[
+ {id:0,cat:null,icon:"🔊",label:"Sound &\nWaves",fact:"Sound is a longitudinal mechanical wave produced by vibration. It needs a medium, travels as compressions and rarefactions, reflects (echo), and lets us hear."},
+ {id:1,cat:0,icon:"🎵",label:"Production\nof Sound",fact:"Sound is made by a vibrating body. Vibrations create a longitudinal wave of compressions and rarefactions."},
+ {id:2,cat:0,icon:"🌫️",label:"Medium &\nPropagation",fact:"Sound needs a material medium (solid, liquid or gas). It travels fastest in solids and cannot travel in a vacuum."},
+ {id:3,cat:0,icon:"📶",label:"Wave\nProperties",fact:"Frequency (pitch), amplitude (loudness), wavelength, time period and speed describe a sound wave."},
+ {id:4,cat:0,icon:"🧮",label:"Wave Equation\nv = fλ",fact:"Wave speed = frequency × wavelength. Links how fast, how often and how long each wave is."},
+ {id:5,cat:0,icon:"📢",label:"Speed of Sound\n& Echo",fact:"Sound travels ~343 m/s in air at room temperature. An echo is a reflected sound heard after 0.1 s."},
+ {id:6,cat:0,icon:"🪞",label:"Reflection\nof Sound",fact:"Sound obeys laws of reflection. Multiple reflections cause echoes and reverberation, used in megaphones and stethoscopes."},
+ {id:7,cat:0,icon:"👂",label:"Hearing &\nUltrasound",fact:"Humans hear 20 Hz–20,000 Hz. Below is infrasound, above is ultrasound (used in medicine and SONAR)."},
+ /* Production */
+ {id:101,cat:1,icon:"〰️",label:"Vibration",fact:"Every sound starts with a vibrating object — vocal cords, a drum skin, a tuning fork or a guitar string."},
+ {id:102,cat:1,icon:"📈",label:"Longitudinal\nwave",fact:"In sound, particles vibrate back and forth ALONG the direction the wave travels (parallel), not across it."},
+ {id:103,cat:1,icon:"🎯",label:"Compression &\nrarefaction",fact:"A sound wave is a series of compressions (high pressure) and rarefactions (low pressure) moving through the medium."},
+ {id:104,cat:1,icon:"⚙️",label:"Mechanical\nwave",fact:"Sound is a mechanical wave: it needs matter to carry it and cannot exist in empty space."},
+ /* Medium */
+ {id:201,cat:2,icon:"🚫",label:"No sound in\nvacuum",fact:"With no particles to pass the vibration along, sound cannot travel through a vacuum (unlike light)."},
+ {id:202,cat:2,icon:"🧱",label:"Fastest in\nsolids",fact:"Speed of sound: solid > liquid > gas (particles are closer and pass vibrations faster). In steel ~5000 m/s."},
+ {id:203,cat:2,icon:"🌡️",label:"Effect of\ntemperature",fact:"Sound travels faster in warmer air (~0.6 m/s faster per °C). Humidity also increases speed slightly."},
+ {id:204,cat:2,icon:"👥",label:"Particles\nvibrate",fact:"The medium's particles vibrate about fixed positions and pass energy on; they do not travel with the wave."},
+ /* Wave Properties */
+ {id:301,cat:3,icon:"🔁",label:"Frequency\n(pitch)",fact:"Frequency = vibrations per second (hertz). Higher frequency → higher pitch (shrill). Women's voices are higher-pitched."},
+ {id:302,cat:3,icon:"📏",label:"Wavelength",fact:"Distance between two consecutive compressions (or rarefactions). Measured in metres."},
+ {id:303,cat:3,icon:"📊",label:"Amplitude\n(loudness)",fact:"The maximum displacement of particles. Larger amplitude → louder sound. Measured in decibels (dB)."},
+ {id:304,cat:3,icon:"🎻",label:"Timbre &\ntime period",fact:"Timbre (quality) lets us tell a flute from a violin at the same pitch. Time period T = 1/frequency."},
+ /* Wave Equation */
+ {id:401,cat:4,icon:"🧮",label:"v = f × λ",fact:"Wave speed = frequency × wavelength. The single equation linking speed, frequency and wavelength."},
+ {id:402,cat:4,icon:"🎚️",label:"Pitch = f",fact:"Pitch depends on frequency: high frequency → high pitch (a whistle); low frequency → low pitch (a drum)."},
+ {id:403,cat:4,icon:"🔊",label:"Loudness =\namplitude",fact:"Loudness depends on amplitude (and intensity). Bigger vibrations → louder sound, more energy."},
+ {id:404,cat:4,icon:"⏱️",label:"Time period",fact:"T = 1/f. A 500 Hz wave has a period of 1/500 = 0.002 s."},
+ /* Speed & Echo */
+ {id:501,cat:5,icon:"💨",label:"Speed in air",fact:"About 343 m/s at 20°C (often taken as 330–340 m/s). Roughly a million times slower than light."},
+ {id:502,cat:5,icon:"🔁",label:"Echo",fact:"A reflected sound heard separately after ≥ 0.1 s. The reflecting surface must be far enough away."},
+ {id:503,cat:5,icon:"📐",label:"Minimum\ndistance 17 m",fact:"For a distinct echo, the obstacle must be at least ~17 m away (sound travels there and back in 0.1 s)."},
+ {id:504,cat:5,icon:"🚢",label:"SONAR &\nranging",fact:"SONAR sends ultrasound and times the echo to measure sea depth or find objects: distance = ½ × v × t."},
+ /* Reflection */
+ {id:601,cat:6,icon:"📜",label:"Laws of\nreflection",fact:"Sound reflects like light — angle of incidence = angle of reflection, in the same plane."},
+ {id:602,cat:6,icon:"🏛️",label:"Reverberation",fact:"Repeated reflections in a hall make sound persist. Curtains and soft materials absorb it to reduce reverberation."},
+ {id:603,cat:6,icon:"📣",label:"Megaphone &\nstethoscope",fact:"Megaphones, horns and speaking tubes channel sound by repeated reflection; a stethoscope guides heartbeat sounds."},
+ {id:604,cat:6,icon:"🔄",label:"Multiple\nreflection",fact:"Curved ceilings (whispering galleries) and soundboards use multiple reflections to focus sound."},
+ /* Hearing & Ultrasound */
+ {id:701,cat:7,icon:"👂",label:"Audible range",fact:"Humans hear roughly 20 Hz to 20,000 Hz. The range narrows with age."},
+ {id:702,cat:7,icon:"🐘",label:"Infrasound",fact:"Below 20 Hz. Produced by whales, elephants and earthquakes; some animals sense it before quakes."},
+ {id:703,cat:7,icon:"🦇",label:"Ultrasound",fact:"Above 20,000 Hz. Bats and dolphins use it to navigate (echolocation); humans can't hear it."},
+ {id:704,cat:7,icon:"🏥",label:"Ultrasound\nuses",fact:"Medical scans (pregnancy, organs), SONAR, cleaning jewellery, detecting cracks in metals, breaking kidney stones."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"Sound is produced by a body that is:",o:["At rest","Vibrating","Heated","Charged"],a:1,e:"All sound originates from a vibrating object (vocal cords, drum, string)."},
+ {t:"Recall · TNPSC",q:"Sound waves are:",o:["Transverse","Longitudinal","Electromagnetic","Stationary"],a:1,e:"In sound, particles vibrate along the direction of travel → longitudinal (mechanical)."},
+ {t:"Conceptual · RRB",q:"Sound cannot travel through:",o:["Water","Steel","Air","A vacuum"],a:3,e:"Sound needs a material medium; a vacuum has no particles to carry it."},
+ {t:"Recall · SSC",q:"Sound travels fastest in:",o:["Gases","Liquids","Solids","Vacuum"],a:2,e:"Speed: solid > liquid > gas (closer particles pass vibrations faster)."},
+ {t:"Conceptual · Banking",q:"On a hot day, the speed of sound in air:",o:["Decreases","Increases","Is unchanged","Becomes zero"],a:1,e:"Sound travels faster in warmer air (about 0.6 m/s faster per °C)."},
+ {t:"Recall · TNPSC",q:"The approximate speed of sound in air at room temperature is:",o:["343 m/s","3×10⁸ m/s","1500 m/s","30 m/s"],a:0,e:"About 343 m/s at 20°C (light is ~3×10⁸ m/s)."},
+ {t:"Recall · SSC",q:"A region of high pressure in a sound wave is called a:",o:["Rarefaction","Compression","Crest","Trough"],a:1,e:"Compression = high-pressure region; rarefaction = low-pressure region."},
+ {t:"Recall · RRB",q:"The number of vibrations per second is the:",o:["Amplitude","Wavelength","Frequency","Time period"],a:2,e:"Frequency (in hertz) = vibrations per second."},
+ {t:"Conceptual · SSC",q:"The pitch (shrillness) of a sound depends on its:",o:["Amplitude","Frequency","Speed","Wavelength only"],a:1,e:"Higher frequency → higher pitch."},
+ {t:"Conceptual · TNPSC",q:"The loudness of a sound depends on its:",o:["Frequency","Amplitude","Wavelength","Speed"],a:1,e:"Larger amplitude → louder sound (measured in decibels)."},
+ {t:"Recall · Banking",q:"The quality that distinguishes a violin from a flute at the same pitch is:",o:["Amplitude","Timbre","Speed","Wavelength"],a:1,e:"Timbre (tone quality) lets us tell instruments apart."},
+ {t:"Recall · SSC",q:"The wave equation relating speed, frequency and wavelength is:",o:["v = f/λ","v = fλ","v = λ/f","v = f + λ"],a:1,e:"Wave speed = frequency × wavelength (v = fλ)."},
+ {t:"Numerical · RRB",q:"A wave of frequency 500 Hz and wavelength 0.66 m has a speed of:",o:["330 m/s","500 m/s","0.66 m/s","165 m/s"],a:0,e:"v = fλ = 500 × 0.66 = 330 m/s."},
+ {t:"Numerical · SSC",q:"The time period of a 250 Hz sound wave is:",o:["250 s","0.004 s","0.4 s","4 s"],a:1,e:"T = 1/f = 1/250 = 0.004 s."},
+ {t:"Recall · TNPSC",q:"The repetition of sound due to reflection is called:",o:["Refraction","An echo","Diffraction","Resonance"],a:1,e:"An echo is a reflected sound heard distinctly after 0.1 s."},
+ {t:"Conceptual · SSC",q:"For an echo to be heard distinctly, the reflecting surface must be at least about:",o:["1 m away","17 m away","100 m away","1 km away"],a:1,e:"Sound must travel there and back in ≥0.1 s → about 17 m minimum (at ~340 m/s)."},
+ {t:"Application · RRB",q:"SONAR uses which type of wave to measure ocean depth?",o:["Infrasound","Ultrasound","Light","Radio"],a:1,e:"SONAR sends ultrasound and times the echo."},
+ {t:"Numerical · Banking",q:"A SONAR pulse returns in 2 s. If sound speed in water is 1500 m/s, the depth is:",o:["3000 m","1500 m","750 m","6000 m"],a:1,e:"Depth = ½ × v × t = ½ × 1500 × 2 = 1500 m."},
+ {t:"Recall · SSC",q:"The persistence of sound in a hall due to repeated reflections is called:",o:["Echo","Reverberation","Resonance","Refraction"],a:1,e:"Reverberation is prolonged sound from multiple reflections; reduced by soft absorbers."},
+ {t:"Application · TNPSC",q:"A megaphone works on the principle of:",o:["Refraction","Multiple reflection of sound","Resonance","Diffraction"],a:1,e:"It channels sound forward by repeated reflection inside the cone."},
+ {t:"Application · RRB",q:"A stethoscope works on the principle of:",o:["Reflection of sound","Refraction","Interference","Dispersion"],a:0,e:"It guides heart/lung sounds to the ear through multiple reflections in the tube."},
+ {t:"Recall · SSC",q:"The audible range of frequency for humans is about:",o:["2–200 Hz","20 Hz–20,000 Hz","20–200 Hz","200 Hz–2 MHz"],a:1,e:"Humans hear from ~20 Hz to ~20,000 Hz."},
+ {t:"Recall · Banking",q:"Sound of frequency below 20 Hz is called:",o:["Ultrasound","Infrasound","Audible","Supersonic"],a:1,e:"Below the audible range = infrasound (whales, elephants, earthquakes)."},
+ {t:"Recall · TNPSC",q:"Sound of frequency above 20,000 Hz is called:",o:["Infrasound","Ultrasound","Audible sound","Noise"],a:1,e:"Above the audible range = ultrasound (bats, medical scans, SONAR)."},
+ {t:"Application · SSC",q:"Which animal uses ultrasound (echolocation) to navigate?",o:["Elephant","Bat","Dog","Cow"],a:1,e:"Bats and dolphins use ultrasonic echolocation."},
+ {t:"Application · RRB",q:"Ultrasound is used in medicine to:",o:["X-ray bones","Scan a foetus and organs","Measure temperature","Kill germs by heat"],a:1,e:"Ultrasound imaging (sonography) scans a foetus, heart and other organs safely."},
+ {t:"Conceptual · SSC",q:"Which of these is NOT an application of ultrasound?",o:["SONAR","Cleaning jewellery","Detecting cracks in metal","Generating electricity"],a:3,e:"Ultrasound is used in SONAR, cleaning, and flaw detection — not power generation."},
+ {t:"Conceptual · TNPSC",q:"Compared with sound, light travels through a vacuum:",o:["Not at all","At the same speed","Much faster","Slower"],a:2,e:"Light travels through vacuum at 3×10⁸ m/s; sound cannot travel through vacuum at all."},
+ {t:"Conceptual · RRB",q:"We see lightning before we hear thunder because:",o:["Light is louder","Light travels much faster than sound","Sound bends","Thunder starts later"],a:1,e:"Light (3×10⁸ m/s) reaches us almost instantly; sound (~340 m/s) arrives later."},
+ {t:"Numerical · SSC",q:"Thunder is heard 5 s after lightning. How far is the storm? (v = 340 m/s)",o:["68 m","1700 m","340 m","5 m"],a:1,e:"Distance = v × t = 340 × 5 = 1700 m."},
+ {t:"Conceptual · Banking",q:"In a longitudinal wave, particles vibrate:",o:["Perpendicular to the wave","Parallel to the wave","In circles","They don't move"],a:1,e:"Particles vibrate parallel to (along) the direction of wave travel."},
+ {t:"Statement · SSC",q:"Consider: (1) Sound is a longitudinal wave. (2) Sound can travel through a vacuum. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — sound needs a medium."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Pitch depends on frequency. (2) Loudness depends on wavelength. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — loudness depends on amplitude."},
+ {t:"Statement · RRB",q:"Consider: (1) Sound travels fastest in solids. (2) Sound travels fastest in gases. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true; 2 is false (order: solid > liquid > gas)."},
+ {t:"Statement · Banking",q:"Consider: (1) Ultrasound is above 20,000 Hz. (2) Infrasound is above 20,000 Hz. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — infrasound is BELOW 20 Hz."},
+ {t:"Statement · SSC",q:"Consider: (1) An echo needs the obstacle at least ~17 m away. (2) v = fλ. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both correct."},
+ {t:"Statement · TNPSC",q:"Consider: (1) A megaphone works by multiple reflection. (2) Reverberation is a single echo. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — reverberation is prolonged sound from MANY reflections."},
+ {t:"Assertion–Reason · SSC",q:"A: Astronauts on the Moon cannot talk to each other directly. R: Sound cannot travel through a vacuum.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A — the Moon has no air to carry sound."},
+ {t:"Assertion–Reason · RRB",q:"A: We hear thunder after seeing lightning. R: Sound travels much slower than light.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, application, statement, assertion–reason & numerical. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS ===== */
+var PROB=[
+ {lvl:"e",tag:"Wave equation",q:"A wave has frequency 200 Hz and wavelength 1.5 m. Find its speed.",given:"f = 200 Hz, λ = 1.5 m",find:"v",steps:["v = fλ","= 200 × 1.5"],ans:"300 m/s"},
+ {lvl:"e",tag:"Time period",q:"Find the time period of a 400 Hz sound.",given:"f = 400 Hz",find:"T",steps:["T = 1/f","= 1/400"],ans:"0.0025 s"},
+ {lvl:"e",tag:"Wavelength",q:"Sound travels at 340 m/s. Find the wavelength of a 170 Hz note.",given:"v = 340 m/s, f = 170 Hz",find:"λ",steps:["λ = v/f","= 340/170"],ans:"2 m"},
+ {lvl:"m",tag:"Frequency",q:"A wave of speed 330 m/s has a wavelength of 0.5 m. Find its frequency.",given:"v = 330 m/s, λ = 0.5 m",find:"f",steps:["f = v/λ","= 330/0.5"],ans:"660 Hz"},
+ {lvl:"m",tag:"Echo",q:"An echo is heard 2 s after a shout near a cliff. How far is the cliff? (v = 340 m/s)",given:"t = 2 s, v = 340 m/s",find:"distance",steps:["Sound travels to the cliff and back: 2d = v × t","d = (340 × 2)/2"],ans:"340 m"},
+ {lvl:"m",tag:"Lightning",q:"Thunder is heard 3 s after lightning. How far is the storm? (v = 340 m/s)",given:"t = 3 s, v = 340 m/s",find:"distance",steps:["distance = v × t (light is instant)","= 340 × 3"],ans:"1020 m"},
+ {lvl:"m",tag:"SONAR",q:"A SONAR pulse returns from the sea floor in 4 s. If v = 1500 m/s, find the depth.",given:"t = 4 s, v = 1500 m/s",find:"depth",steps:["depth = ½ × v × t","= ½ × 1500 × 4"],ans:"3000 m"},
+ {lvl:"m",tag:"Frequency",q:"20 vibrations occur in 0.5 s. Find the frequency.",given:"20 vibrations in 0.5 s",find:"f",steps:["f = number of vibrations / time","= 20 / 0.5"],ans:"40 Hz"},
+ {lvl:"h",tag:"Echo distance",q:"A person claps and hears the echo after 0.6 s from a wall. Find the wall's distance. (v = 340 m/s)",given:"t = 0.6 s, v = 340 m/s",find:"distance",steps:["2d = v × t = 340 × 0.6 = 204 m","d = 204/2"],ans:"102 m"},
+ {lvl:"h",tag:"Two mediums",q:"A sound of wavelength 2 m in air (v = 340 m/s) enters water where v = 1500 m/s. Find its new wavelength (frequency unchanged).",given:"λ_air = 2 m, v_air = 340, v_water = 1500",find:"λ_water",steps:["f = v_air/λ_air = 340/2 = 170 Hz","λ_water = v_water/f = 1500/170"],ans:"≈ 8.8 m"},
+ {lvl:"h",tag:"Distance by echo",q:"A ship sends a SONAR signal; the echo returns in 0.8 s (v = 1500 m/s). Find the object's distance.",given:"t = 0.8 s, v = 1500 m/s",find:"distance",steps:["distance = ½ × v × t","= ½ × 1500 × 0.8"],ans:"600 m"},
+ {lvl:"h",tag:"Speed & temperature",q:"If sound is 331 m/s at 0°C and rises 0.6 m/s per °C, find its speed at 25°C.",given:"v₀ = 331 m/s, +0.6 per °C, 25°C",find:"v",steps:["Increase = 0.6 × 25 = 15 m/s","v = 331 + 15"],ans:"346 m/s"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked numericals graded easy→hard. Try first, then reveal the steps. Mark solved for XP.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS ===== */
+var FC=[
+ {q:"How is sound produced?",a:"By a vibrating body (vocal cords, drum, string, tuning fork)."},
+ {q:"What kind of wave is sound?",a:"A longitudinal, mechanical wave."},
+ {q:"In a longitudinal wave, how do particles vibrate?",a:"Parallel to (along) the direction of travel."},
+ {q:"What are compressions and rarefactions?",a:"High-pressure (compression) and low-pressure (rarefaction) regions of a sound wave."},
+ {q:"Can sound travel through a vacuum?",a:"No — it needs a material medium."},
+ {q:"In which medium does sound travel fastest?",a:"Solids (order: solid > liquid > gas)."},
+ {q:"How does temperature affect sound speed in air?",a:"Speed increases with temperature (~0.6 m/s per °C)."},
+ {q:"Speed of sound in air at room temperature?",a:"About 343 m/s (~330–340 m/s)."},
+ {q:"What is frequency and its unit?",a:"Vibrations per second; unit hertz (Hz)."},
+ {q:"Pitch depends on what?",a:"Frequency — higher frequency, higher pitch."},
+ {q:"Loudness depends on what?",a:"Amplitude — larger amplitude, louder sound (measured in decibels)."},
+ {q:"What is timbre?",a:"Sound quality that distinguishes instruments at the same pitch."},
+ {q:"State the wave equation.",a:"v = fλ (speed = frequency × wavelength)."},
+ {q:"Relation between time period and frequency?",a:"T = 1/f."},
+ {q:"What is an echo?",a:"A reflected sound heard distinctly after at least 0.1 s."},
+ {q:"Minimum distance for a distinct echo?",a:"About 17 m (sound goes there and back in 0.1 s)."},
+ {q:"What is reverberation?",a:"Persistence of sound in a hall due to repeated reflections."},
+ {q:"How does a megaphone work?",a:"By multiple reflection of sound, channelling it forward."},
+ {q:"How does a stethoscope work?",a:"By reflection of sound through its tube to the ear."},
+ {q:"What is SONAR used for?",a:"Measuring sea depth / finding objects using ultrasound echoes."},
+ {q:"SONAR distance formula?",a:"distance = ½ × speed × time (echo return time)."},
+ {q:"Audible range for humans?",a:"About 20 Hz to 20,000 Hz."},
+ {q:"What is infrasound?",a:"Sound below 20 Hz (whales, elephants, earthquakes)."},
+ {q:"What is ultrasound?",a:"Sound above 20,000 Hz (bats, dolphins, medical scans)."},
+ {q:"Which animals use ultrasonic echolocation?",a:"Bats and dolphins."},
+ {q:"Name two medical/industrial uses of ultrasound.",a:"Foetal/organ scans; detecting cracks in metals; cleaning; breaking kidney stones."},
+ {q:"Why do astronauts on the Moon use radios to talk?",a:"There is no air (vacuum), so sound can't travel."},
+ {q:"Why do we see lightning before hearing thunder?",a:"Light is far faster (3×10⁸ m/s) than sound (~340 m/s)."},
+ {q:"Speed of sound vs speed of light?",a:"Sound ~340 m/s; light 3×10⁸ m/s (about a million times faster)."},
+ {q:"Does the medium's particles travel with a sound wave?",a:"No — they vibrate about fixed positions and pass on the energy."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script>
+/* ===== CentuMania metrics — universal (generator-agnostic; additive) ===== */
+(function(){
+  if(window.__cmTrackU||window.__cmTrackInit)return; window.__cmTrackU=1;
+  var CM_DEFAULT='physics-sound-waves', CM_T0=Date.now(), CM_ACTIVE=0, _vt=Date.now(), _lastQ=0;
+  function tok(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function mat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function sid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'a'+Date.now();}}
+  function inter(t,n,m){try{var k=tok();if(!k||!n)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({interaction_type:t,node_id:String(n),material_id:mat(),session_id:sid(),timestamp:new Date().toISOString(),metadata:m||{}})}).catch(function(){});}catch(e){}}
+  function ev(name,m){try{var k=tok();if(!k)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})})}).catch(function(){});}catch(e){}}
+  function beacon(name,m){try{var k=tok();if(!k)return;var p=JSON.stringify({_token:k,event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_vt;beacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_vt=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_vt;beacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  ev('material_opened',{});ev('session_start',{});
+  /* node-open: wrap any global opener that exists */
+  ['openNode','selectNode','showNode','goNode','openTopic','loadNode'].forEach(function(fn){
+    if(typeof window[fn]==='function'){var _o=window[fn];window[fn]=function(){var r;try{r=_o.apply(this,arguments);}catch(e){r=undefined;}try{var id=arguments[0];if(id!=null&&(typeof id==='string'||typeof id==='number')){_lastQ=Date.now();inter('node_opened',id,{});ev('node_open',{node_id:String(id)});}}catch(e){}return r;};}
+  });
+  /* per-question: delegated click on any option element; correctness read from the class the module applies */
+  document.addEventListener('click',function(e){
+    var o=e.target&&e.target.closest&&e.target.closest('.mopt,.opt,.option,[data-oi]');if(!o)return;
+    var card=o.closest('.mcq-card,.mcq,[data-nid],[data-qi]')||o.parentElement;if(!card)return;if(card._cmA)return;card._cmA=1;
+    var nid=(card.getAttribute&&(card.getAttribute('data-nid')||card.getAttribute('data-node')))||'q';
+    var qraw=card.getAttribute&&card.getAttribute('data-qi');var qi=qraw!=null?parseInt(qraw):-1;
+    var now=Date.now(),dt=_lastQ?now-_lastQ:0;_lastQ=now;
+    setTimeout(function(){var correct=o.classList.contains('correct')||o.getAttribute('data-correct')==='true';if(!correct&&(o.classList.contains('wrong')||o.classList.contains('incorrect')))correct=false;inter('mcq_attempt',String(nid),{question_index:qi,is_correct:!!correct});ev('answer',{node_id:String(nid),question_index:qi,is_correct:!!correct,time_spent_ms:dt});},70);
+  },true);
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,997 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Magnetism &amp; EM Effects — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"🧲";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:30px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.dia{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;text-align:center}
+.dia svg{max-width:100%;height:auto}
+.dia .cap{font-size:11px;color:var(--mut);font-weight:600;margin-top:7px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Physics · Mastery Pack</div>
+  <h1>Magnetism &amp; EM Effects</h1>
+  <p>Magnets → Field of a Current → Solenoid → Force on a Wire → Motor → Induction → Generator. How electricity and magnetism power motors and generators.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/35</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/40</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+
+  <h2 class="sec"><span class="em">🌐</span>The Big Picture</h2>
+  <div class="sec-sub">Electricity and magnetism are two sides of one coin. Trace the loop: current makes magnetism (motor), and magnetism makes current (generator).</div>
+  <div class="flow">
+    <span class="step">Current → magnetic field</span><span class="arw">→</span>
+    <span class="step">Field pushes a wire (motor)</span><span class="arw">→</span>
+    <span class="step">Moving field → current (induction)</span><span class="arw">→</span>
+    <span class="step">Generator</span>
+  </div>
+  <div class="note"><span class="t">Anchor idea</span>Two experiments unlock this whole chapter. <b>Oersted:</b> a current creates a magnetic field. <b>Faraday:</b> a changing magnetic field creates a current. A <b>motor</b> uses the first (electricity → motion); a <b>generator</b> uses the second (motion → electricity). They are mirror images.</div>
+
+  <!-- 1 MAGNETS -->
+  <h2 class="sec"><span class="em">🧲</span>1 · Magnets</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A magnet has two <b>poles (N &amp; S)</b>. <b>Like poles repel, unlike attract.</b> It has a magnetic field shown by field lines.</div></div>
+      <div class="row"><div class="lab l-why">Why poles come in pairs</div><div class="txt">Magnetism arises from tiny atomic current loops, each with its own N and S. Break a magnet and each piece grows a new pair — you can <b>never isolate a single pole</b>.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Field lines run <b>N → S outside</b> the magnet (S → N inside), <b>never cross</b>, and are closer where the field is stronger.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Compasses, fridge magnets, the Earth's own magnetic field, magnetic door catches.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Like poles repel." "Field lines N→S outside." "Field lines never cross." Magnetic materials: iron, cobalt, nickel. Earth = a giant magnet.</div></div>
+    </div>
+    <div class="note trap"><span class="t">Field-line rules</span>Lines go <b>N→S outside</b>, they <b>never intersect</b>, and <b>denser lines mean a stronger field</b>. A compass needle sits along a field line.</div>
+  </div>
+
+  <!-- 2 FIELD OF A CURRENT -->
+  <h2 class="sec"><span class="em">🔄</span>2 · Magnetic Field of a Current</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A <b>current-carrying wire produces a magnetic field</b> around it — discovered by <b>Oersted (1820)</b> when a compass deflected near a wire.</div></div>
+      <div class="row"><div class="lab l-why">Why it mattered</div><div class="txt">It was the <b>first proof</b> that electricity and magnetism are connected — the seed of motors, generators and all modern electrical technology.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Right-hand thumb rule:</b> grip the wire with the right hand, thumb pointing along the current — the curled fingers show the field direction (concentric circles).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Every wire; the basis of electromagnets, relays and solenoids.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Oersted linked electricity &amp; magnetism." "Field around a straight wire = concentric circles." "Right-hand thumb rule gives the field direction."</div></div>
+    </div>
+  </div>
+
+  <!-- 3 SOLENOID -->
+  <h2 class="sec"><span class="em">🌀</span>3 · Solenoid &amp; Electromagnet</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A <b>solenoid</b> is a long current-carrying coil. Its field is like a <b>bar magnet</b>. Add a soft-iron core → a strong <b>electromagnet</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why soft iron</div><div class="txt">Soft iron magnetises strongly with the current but <b>loses its magnetism the instant the current stops</b> — perfect for a switchable magnet. Steel would stay magnetised (used for permanent magnets).</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Strength increases with more turns, more current, and a soft-iron core. The field <b>inside</b> a solenoid is strong and uniform.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Scrapyard cranes, electric bells, relays, loudspeakers, MRI machines, maglev trains.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Solenoid acts like a bar magnet." "Electromagnet core = soft iron (temporary)." Strength ↑ with turns &amp; current.</div></div>
+    </div>
+    <div class="note why"><span class="t">Why a scrapyard crane uses an electromagnet</span>Switch the current <b>on</b> and it grips tonnes of scrap iron; switch it <b>off</b> and the load drops instantly. A permanent magnet could never release its load on command — that's the power of a soft-iron electromagnet.</div>
+  </div>
+
+  <!-- 4 FORCE -->
+  <h2 class="sec"><span class="em">➡️</span>4 · Force on a Current-carrying Conductor</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A current-carrying wire placed in a magnetic field feels a <b>force: F = BIL</b> (maximum when the wire is perpendicular to the field).</div></div>
+      <div class="row"><div class="lab l-why">Why there's a force</div><div class="txt">The wire's own magnetic field interacts with the external field — the two add on one side and cancel on the other, giving a net <b>sideways push</b>.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Fleming's left-hand rule:</b> thu<b>M</b>b = <b>M</b>otion/force, <b>F</b>irst finger = <b>F</b>ield, se<b>C</b>ond finger = <b>C</b>urrent. Force is perpendicular to both field and current.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Electric motors, loudspeakers, moving-coil galvanometers and analogue ammeters.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"F = BIL." "Fleming's LEFT-hand rule = motor (force)." "Force is zero when the wire is parallel to the field."</div></div>
+    </div>
+    <div class="note trap"><span class="t">Left vs Right hand</span><b>Left</b>-hand rule → force in a <b>motor</b> (Motor = LM: Left-hand, Motion). <b>Right</b>-hand rule → induced current in a <b>generator</b>. Mixing them is the top trap here.</div>
+  </div>
+
+  <!-- 5 MOTOR -->
+  <h2 class="sec"><span class="em">⚙️</span>5 · Electric Motor</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A motor turns <b>electrical energy into mechanical (rotation)</b> using the force on a current-carrying coil in a magnetic field.</div></div>
+      <div class="row"><div class="lab l-why">Why it keeps spinning</div><div class="txt">After each half turn the coil's sides swap sides of the field, which would reverse the force and stop it. The <b>split-ring commutator</b> reverses the current at that instant, so the turning force always acts the same way.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Parts: armature coil, field magnets, <b>split-ring commutator</b> and carbon <b>brushes</b>. Force on the two sides forms a couple → rotation.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Fans, pumps, mixers, washing machines, drills, electric vehicles.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Motor: electrical → mechanical." "Commutator reverses current every half turn." Uses Fleming's left-hand rule.</div></div>
+    </div>
+  </div>
+
+  <!-- 6 INDUCTION -->
+  <h2 class="sec"><span class="em">🔋</span>6 · Electromagnetic Induction</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Faraday's law:</b> a <b>changing magnetic field</b> (flux) through a coil induces an EMF/current. Faster change → larger EMF.</div></div>
+      <div class="row"><div class="lab l-why">Why motion is essential</div><div class="txt">A <b>steady</b> field induces nothing — only a <b>change</b> does. Moving a magnet in or out, or spinning a coil, keeps the flux changing and the current flowing.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Fleming's right-hand rule</b> gives the induced-current direction. <b>Lenz's law:</b> the induced current always <b>opposes the change</b> that made it (energy conservation).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Generators, transformers, induction cooktops, bicycle dynamos, wireless charging.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Faraday: changing flux induces EMF." "Right-hand rule = generator." "Lenz's law: opposes the change (energy conservation)." No motion → no current.</div></div>
+    </div>
+  </div>
+
+  <!-- 7 GENERATOR -->
+  <h2 class="sec"><span class="em">🔌</span>7 · Generator (Dynamo)</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A generator turns <b>mechanical energy into electrical</b> using electromagnetic induction — the exact reverse of a motor.</div></div>
+      <div class="row"><div class="lab l-why">Why AC vs DC differ only in the contacts</div><div class="txt">The coil naturally produces alternating current. Two <b>slip rings</b> pass it out as <b>AC</b>; a <b>split-ring commutator</b> flips it every half turn to give one-way <b>DC</b>.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Rotate a coil in a magnetic field → changing flux → induced EMF. Faster rotation, more turns or a stronger field → more voltage.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">All power stations (hydro, thermal, nuclear, wind), bicycle dynamos, portable generators.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Generator: mechanical → electrical." "AC generator = slip rings; DC = commutator." Reverse of a motor.</div></div>
+    </div>
+    <div class="note life"><span class="t">Everyday — where your electricity comes from</span>Almost all mains electricity is made this way: coal, water, wind or nuclear heat spins a turbine, the turbine spins a generator coil in a magnetic field, and induction produces the current that reaches your home.</div>
+  </div>
+
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 7 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+  <h2 class="sec"><span class="em">📊</span>Comparison &amp; Reference Tables</h2>
+  <div class="sec-sub">The pairs examiners swap, plus the rules and key discoverers.</div>
+
+  <div class="card"><h3>The Two Fleming Rules</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Left-hand rule</th><th>Right-hand rule</th></tr>
+    <tr><td class="h">Used for</td><td>Motor (force/motion)</td><td>Generator (induced current)</td></tr>
+    <tr><td class="h">Thumb</td><td>Force / motion</td><td>Motion</td></tr>
+    <tr><td class="h">Forefinger</td><td>Field</td><td>Field</td></tr>
+    <tr><td class="h">Centre finger</td><td>Current</td><td>Induced current</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Motor vs Generator</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Motor</th><th>Generator</th></tr>
+    <tr><td class="h">Converts</td><td>Electrical → mechanical</td><td>Mechanical → electrical</td></tr>
+    <tr><td class="h">Principle</td><td>Force on current (F=BIL)</td><td>Electromagnetic induction</td></tr>
+    <tr><td class="h">Rule used</td><td>Fleming's left hand</td><td>Fleming's right hand</td></tr>
+    <tr><td class="h">DC part</td><td>Split-ring commutator</td><td>Split-ring commutator</td></tr>
+    <tr><td class="h">AC part</td><td>—</td><td>Two slip rings</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Formula Sheet</h3>
+  <table class="tbl">
+    <tr><th>Quantity</th><th>Formula</th></tr>
+    <tr><td class="h">Force on a conductor</td><td>F = BIL (max) ; F = BIL sinθ</td></tr>
+    <tr><td class="h">Induced EMF</td><td>EMF = N × ΔΦ/Δt (Faraday)</td></tr>
+    <tr><td class="h">Force is zero when</td><td>wire ∥ field (θ = 0)</td></tr>
+    <tr><td class="h">Force is maximum when</td><td>wire ⟂ field (θ = 90°)</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Key Discoverers &amp; Rules</h3>
+  <table class="tbl">
+    <tr><th>Discovery / Rule</th><th>Scientist / Use</th></tr>
+    <tr><td class="h">Current makes a magnetic field</td><td>Oersted (1820)</td></tr>
+    <tr><td class="h">Electromagnetic induction</td><td>Faraday</td></tr>
+    <tr><td class="h">Induced current opposes change</td><td>Lenz's law</td></tr>
+    <tr><td class="h">Field around a wire</td><td>Right-hand thumb rule</td></tr>
+    <tr><td class="h">Force in a motor</td><td>Fleming's left-hand rule</td></tr>
+    <tr><td class="h">Induced current in a generator</td><td>Fleming's right-hand rule</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Soft Iron vs Steel</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Soft iron</th><th>Steel</th></tr>
+    <tr><td class="h">Magnetism</td><td>Temporary (strong, then lost)</td><td>Permanent</td></tr>
+    <tr><td class="h">Used in</td><td>Electromagnets</td><td>Permanent magnets</td></tr>
+  </table></div>
+</div>
+<div class="panel" id="p-memory">
+  <h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+  <div class="sec-sub">One hook per recall-worthy fact. Concept → hook → recall question.</div>
+
+  <div class="mem-card"><div class="cn">Poles rule <span class="tag">peg</span></div>
+    <div class="hk">"<b>Like</b> pole <b>flee</b>, <b>unlike</b> pole <b>meet</b>." Like repel, unlike attract. Opposites attract, same as with people.</div>
+    <div class="rq">Q: Do N and N attract or repel? → Repel.</div></div>
+
+  <div class="mem-card"><div class="cn">Field lines N to S <span class="tag">visual</span></div>
+    <div class="hk">"<b>N</b>orth is the e<b>N</b>trance to the outside." Outside a magnet, lines flow N→S; they never cross.</div>
+    <div class="rq">Q: Direction of field lines outside a magnet? → N to S.</div></div>
+
+  <div class="mem-card"><div class="cn">Oersted vs Faraday <span class="tag">chain</span></div>
+    <div class="hk">"<b>O</b>ersted: current → magnet. <b>F</b>araday: magnet (moving) → current." O before F, current before generator.</div>
+    <div class="rq">Q: Who linked electricity &amp; magnetism first? → Oersted.</div></div>
+
+  <div class="mem-card"><div class="cn">Right-hand thumb rule <span class="tag">gesture</span></div>
+    <div class="hk">"Thumbs-up along the current; fingers <b>curl</b> the field." Grip the wire with your right hand.</div>
+    <div class="rq">Q: Rule for field direction around a wire? → Right-hand thumb rule.</div></div>
+
+  <div class="mem-card"><div class="cn">Soft iron = switchable <span class="tag">why-hook</span></div>
+    <div class="hk">"<b>Soft</b> iron <b>softens off</b> instantly." It magnetises then loses it fast — perfect for a crane you can switch off.</div>
+    <div class="rq">Q: Core of an electromagnet? → Soft iron.</div></div>
+
+  <div class="mem-card"><div class="cn">F = BIL <span class="tag">chant</span></div>
+    <div class="hk">"<b>Force = B-I-L</b>, biggest when perpendi-<b>kill</b>." Max force when the wire is ⟂ to the field; zero when parallel.</div>
+    <div class="rq">Q: 2 T, 4 A, 0.5 m ⟂ → force? → 4 N.</div></div>
+
+  <div class="mem-card"><div class="cn">Left = Motor <span class="tag">letter hook</span></div>
+    <div class="hk">"<b>L</b>eft-hand for the <b>M</b>otor" — think 'LM'. Fingers: thu<b>M</b>b=Motion, <b>F</b>ore=Field, <b>C</b>entre=Current.</div>
+    <div class="rq">Q: Which hand for a motor's force? → Left.</div></div>
+
+  <div class="mem-card"><div class="cn">Right = Generator <span class="tag">letter hook</span></div>
+    <div class="hk">"<b>R</b>ight-hand for the <b>G</b>enerator's induced current." Left builds motion, right harvests current.</div>
+    <div class="rq">Q: Which hand for a generator? → Right.</div></div>
+
+  <div class="mem-card"><div class="cn">Lenz opposes <span class="tag">word hook</span></div>
+    <div class="hk">"<b>Lenz</b> is <b>lazy/rebellious</b> — it always <b>opposes</b> the change." That's energy conservation in action.</div>
+    <div class="rq">Q: Lenz's law is due to conservation of? → Energy.</div></div>
+
+  <div class="mem-card"><div class="cn">Motor vs Generator <span class="tag">mirror</span></div>
+    <div class="hk">"<b>Motor eats electricity, makes motion; Generator eats motion, makes electricity.</b>" Perfect mirror images.</div>
+    <div class="rq">Q: A generator converts? → Mechanical to electrical.</div></div>
+</div>
+<div class="panel" id="p-traps">
+  <h2 class="sec"><span class="em">⚠️</span>Exam Traps &amp; Confusion Pairs</h2>
+  <div class="sec-sub">Each has been set in real papers. Read the reality line and it dies.</div>
+
+  <div class="note trap"><span class="t">Trap 1 · Like poles repel</span>Like poles <b>repel</b>, unlike poles attract. "Like poles attract" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 2 · Field lines never cross</span>Magnetic field lines <b>never intersect</b> and run <b>N→S outside</b> the magnet. Options saying they cross or go S→N outside are wrong.</div>
+
+  <div class="note trap"><span class="t">Trap 3 · Oersted vs Faraday</span><b>Oersted</b> = current makes a magnetic field. <b>Faraday</b> = changing field makes a current. Don't swap the discoverers.</div>
+
+  <div class="note trap"><span class="t">Trap 4 · Left = motor, Right = generator</span>Fleming's <b>left</b>-hand rule → force in a <b>motor</b>; <b>right</b>-hand rule → induced current in a <b>generator</b>. The most-swapped pair here.</div>
+
+  <div class="note trap"><span class="t">Trap 5 · Soft iron, not steel, for electromagnets</span>Electromagnets use <b>soft iron</b> (temporary). Steel is for <b>permanent</b> magnets.</div>
+
+  <div class="note trap"><span class="t">Trap 6 · A steady current induces nothing</span>Only a <b>changing</b> magnetic flux induces an EMF. A steady current or a stationary magnet induces <b>zero</b>.</div>
+
+  <div class="note trap"><span class="t">Trap 7 · Motor vs Generator conversion</span><b>Motor:</b> electrical → mechanical. <b>Generator:</b> mechanical → electrical. Reversing the direction is a classic error.</div>
+
+  <div class="note trap"><span class="t">Trap 8 · Slip rings vs commutator</span><b>AC generator = two slip rings</b>; <b>DC generator/motor = split-ring commutator</b>. Don't mix them.</div>
+
+  <div class="note trap"><span class="t">Trap 9 · Force direction</span>The force on a wire is <b>perpendicular</b> to both the current and the field — and is <b>zero when the wire is parallel</b> to the field.</div>
+
+  <div class="note trap"><span class="t">Trap 10 · Copper is not magnetic</span>Only iron, cobalt and nickel are strongly attracted. Copper, aluminium and brass are <b>not</b> magnetic.</div>
+
+  <div class="note trap"><span class="t">Trap 11 · Lenz's law = energy conservation</span>The induced current <b>opposes</b> the change producing it. This is a consequence of the conservation of <b>energy</b>.</div>
+
+  <div class="note trap"><span class="t">Trap 12 · Commutator's job</span>The split-ring commutator <b>reverses the current every half turn</b> — it does not increase voltage or store charge.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> A scrapyard crane uses an electromagnet, not a permanent magnet. <b>R:</b> An electromagnet can be switched off to release the load. → Both true, <b>R explains A</b>.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> Moving a magnet into a coil produces a current. <b>R:</b> A changing magnetic flux induces an EMF. → Both true, <b>R explains A</b>.</div>
+</div>
+<div class="panel" id="p-rapid">
+  <h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-Liners</h2>
+  <div class="sec-sub"><span class="star">★</span> = highest-frequency in exams. Tap ☆ to flag any line for your FAA revisit list.</div>
+  <div class="ol">
+    <div><span class="n">1</span><span><span class="star">★</span> Like poles repel; unlike poles attract.</span></div>
+    <div><span class="n">2</span><span><span class="star">★</span> Field lines run N→S outside a magnet and never cross.</span></div>
+    <div><span class="n">3</span><span>A freely suspended magnet points north–south.</span></div>
+    <div><span class="n">4</span><span>Magnetic materials: iron, cobalt, nickel (not copper).</span></div>
+    <div><span class="n">5</span><span>The Earth behaves like a giant bar magnet.</span></div>
+    <div><span class="n">6</span><span><span class="star">★</span> Oersted (1820): a current produces a magnetic field.</span></div>
+    <div><span class="n">7</span><span>Field around a straight wire = concentric circles.</span></div>
+    <div><span class="n">8</span><span><span class="star">★</span> Right-hand thumb rule gives the field direction around a wire.</span></div>
+    <div><span class="n">9</span><span><span class="star">★</span> A solenoid behaves like a bar magnet.</span></div>
+    <div><span class="n">10</span><span><span class="star">★</span> Electromagnet core = soft iron (temporary magnet).</span></div>
+    <div><span class="n">11</span><span>Steel is used for permanent magnets; soft iron for electromagnets.</span></div>
+    <div><span class="n">12</span><span>Electromagnets: cranes, bells, relays, loudspeakers, MRI, maglev.</span></div>
+    <div><span class="n">13</span><span><span class="star">★</span> Force on a current-carrying conductor: F = BIL.</span></div>
+    <div><span class="n">14</span><span>Force is maximum when the wire is ⟂ to the field, zero when parallel.</span></div>
+    <div><span class="n">15</span><span><span class="star">★</span> Fleming's LEFT-hand rule → force in a motor.</span></div>
+    <div><span class="n">16</span><span>Left-hand fingers: thumb=motion, fore=field, centre=current.</span></div>
+    <div><span class="n">17</span><span><span class="star">★</span> A motor converts electrical energy to mechanical.</span></div>
+    <div><span class="n">18</span><span>The split-ring commutator reverses current every half turn.</span></div>
+    <div><span class="n">19</span><span>Motors: fans, pumps, mixers, drills, EVs.</span></div>
+    <div><span class="n">20</span><span><span class="star">★</span> Faraday: a changing magnetic flux induces an EMF/current.</span></div>
+    <div><span class="n">21</span><span>No change in flux → no induced current (motion is essential).</span></div>
+    <div><span class="n">22</span><span><span class="star">★</span> Fleming's RIGHT-hand rule → induced current in a generator.</span></div>
+    <div><span class="n">23</span><span><span class="star">★</span> Lenz's law: induced current opposes the change (energy conservation).</span></div>
+    <div><span class="n">24</span><span><span class="star">★</span> A generator converts mechanical energy to electrical.</span></div>
+    <div><span class="n">25</span><span><span class="star">★</span> AC generator = two slip rings; DC = split-ring commutator.</span></div>
+    <div><span class="n">26</span><span>A bicycle dynamo is a small generator.</span></div>
+    <div><span class="n">27</span><span>Faster rotation / more turns / stronger field → larger induced EMF.</span></div>
+    <div><span class="n">28</span><span>Induced EMF (Faraday): EMF = N × ΔΦ/Δt.</span></div>
+    <div><span class="n">29</span><span>A moving-coil ammeter works on the force on a current in a field.</span></div>
+    <div><span class="n">30</span><span>Motor uses left hand; generator uses right hand.</span></div>
+    <div><span class="n">31</span><span>Motor and generator are reverse processes.</span></div>
+    <div><span class="n">32</span><span>Power stations spin generator coils to make electricity.</span></div>
+    <div><span class="n">33</span><span>Denser field lines mean a stronger magnetic field.</span></div>
+    <div><span class="n">34</span><span>You cannot isolate a single magnetic pole.</span></div>
+    <div><span class="n">35</span><span>Magnets lose magnetism on strong heating or hammering.</span></div>
+  </div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Magnetism &amp; EM Effects Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_phys_magnetism_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:35;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:40;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA ===== */
+var MAP=[
+ {id:0,cat:null,icon:"🧲",label:"Magnetism &\nEM Effects",fact:"A magnet has a field; a current makes a magnetic field (Oersted); a field exerts a force on a current (motor); and a changing field makes a current (generator)."},
+ {id:1,cat:0,icon:"🧲",label:"Magnets",fact:"A magnet has two poles (N & S). Like poles repel, unlike attract. Field lines run N→S outside the magnet."},
+ {id:2,cat:0,icon:"🔄",label:"Field of a\nCurrent",fact:"Oersted: a current-carrying wire produces a magnetic field around it (right-hand thumb rule gives its direction)."},
+ {id:3,cat:0,icon:"🌀",label:"Solenoid &\nElectromagnet",fact:"A current-carrying coil (solenoid) acts like a bar magnet; with a soft-iron core it becomes a strong electromagnet."},
+ {id:4,cat:0,icon:"➡️",label:"Force on a\nConductor",fact:"A current-carrying wire in a magnetic field feels a force (F = BIL). Fleming's left-hand rule gives its direction."},
+ {id:5,cat:0,icon:"⚙️",label:"Electric\nMotor",fact:"Converts electrical energy to mechanical (rotation) using the force on a current-carrying coil in a field."},
+ {id:6,cat:0,icon:"🔋",label:"Electromagnetic\nInduction",fact:"A changing magnetic field induces a current/EMF in a coil (Faraday's law). Fleming's right-hand rule gives its direction."},
+ {id:7,cat:0,icon:"🔌",label:"Generator\n(Dynamo)",fact:"Converts mechanical energy to electrical using induction. AC generators use slip rings; DC use a commutator."},
+ /* Magnets */
+ {id:101,cat:1,icon:"🔴",label:"Poles\n(N & S)",fact:"Every magnet has a north and a south pole; poles always come in pairs — you can't isolate a single pole."},
+ {id:102,cat:1,icon:"🔁",label:"Like repel,\nunlike attract",fact:"Like poles (N-N, S-S) repel; unlike poles (N-S) attract. A freely suspended magnet points north-south."},
+ {id:103,cat:1,icon:"➰",label:"Field lines",fact:"Magnetic field lines run from N to S OUTSIDE the magnet (S to N inside). They never cross; closer lines = stronger field."},
+ {id:104,cat:1,icon:"⭐",label:"Properties",fact:"Magnets attract iron, cobalt, nickel; lose magnetism on heating/hammering; the Earth itself is a giant magnet."},
+ /* Field of a current */
+ {id:201,cat:2,icon:"🧭",label:"Oersted's\ndiscovery",fact:"In 1820 Oersted saw a compass needle deflect near a current-carrying wire — the first link between electricity and magnetism."},
+ {id:202,cat:2,icon:"👍",label:"Right-hand\nthumb rule",fact:"Grip the wire with the right hand, thumb along the current — the curled fingers show the field direction."},
+ {id:203,cat:2,icon:"➖",label:"Straight\nwire field",fact:"Concentric circles around the wire; the field is stronger nearer the wire and with larger current."},
+ {id:204,cat:2,icon:"⭕",label:"Circular loop",fact:"A loop's field is like a tiny bar magnet — one face acts as N, the other as S."},
+ /* Solenoid */
+ {id:301,cat:3,icon:"🌀",label:"Solenoid\nfield",fact:"A long current-carrying coil has a uniform field inside and behaves exactly like a bar magnet."},
+ {id:302,cat:3,icon:"🔩",label:"Electromagnet",fact:"A solenoid wound on a soft-iron core makes a strong, temporary magnet controllable by the current."},
+ {id:303,cat:3,icon:"🏗️",label:"Uses",fact:"Cranes lifting scrap iron, electric bells, relays, loudspeakers, MRI machines and maglev trains."},
+ {id:304,cat:3,icon:"⚙️",label:"Soft iron\ncore",fact:"Soft iron is used because it magnetises strongly but loses magnetism instantly when the current stops (temporary)."},
+ /* Force on conductor */
+ {id:401,cat:4,icon:"🧮",label:"F = BIL",fact:"Force = magnetic field × current × length. Maximum when the wire is perpendicular to the field."},
+ {id:402,cat:4,icon:"✋",label:"Fleming's\nleft-hand rule",fact:"Thumb = Force (motion), First finger = Field, seCond finger = Current. Used for MOTORS."},
+ {id:403,cat:4,icon:"↕️",label:"Direction\nfactors",fact:"The force is perpendicular to both the current and the field; reversing either reverses the force."},
+ {id:404,cat:4,icon:"🔊",label:"Applications",fact:"Electric motors, loudspeakers, moving-coil galvanometers and ammeters."},
+ /* Motor */
+ {id:501,cat:5,icon:"⚙️",label:"Principle",fact:"A current-carrying coil in a magnetic field experiences a force that makes it rotate."},
+ {id:502,cat:5,icon:"🔧",label:"Parts",fact:"Armature coil, field magnets, a split-ring commutator and carbon brushes."},
+ {id:503,cat:5,icon:"🔁",label:"Commutator",fact:"The split-ring commutator reverses the current every half turn so the coil keeps rotating in the same direction."},
+ {id:504,cat:5,icon:"🔌",label:"Energy\nconversion",fact:"A motor converts ELECTRICAL energy into MECHANICAL (rotation). Used in fans, pumps, mixers, drills, EVs."},
+ /* Induction */
+ {id:601,cat:6,icon:"📜",label:"Faraday's\nlaw",fact:"A changing magnetic field (flux) through a coil induces an EMF/current. Faster change → larger EMF."},
+ {id:602,cat:6,icon:"🧲",label:"Moving magnet\n& coil",fact:"Moving a magnet into or out of a coil induces a current; no motion → no induced current."},
+ {id:603,cat:6,icon:"🤚",label:"Fleming's\nright-hand rule",fact:"Thumb = motion, First finger = Field, seCond finger = induced Current. Used for GENERATORS."},
+ {id:604,cat:6,icon:"↩️",label:"Lenz's law",fact:"The induced current opposes the change that produced it (conservation of energy)."},
+ /* Generator */
+ {id:701,cat:7,icon:"⚡",label:"Principle",fact:"A coil rotated in a magnetic field induces an EMF (electromagnetic induction) — the reverse of a motor."},
+ {id:702,cat:7,icon:"🔄",label:"AC vs DC\ngenerator",fact:"AC generator uses two slip rings; a DC generator uses a split-ring commutator to give one-way current."},
+ {id:703,cat:7,icon:"🔌",label:"Energy\nconversion",fact:"A generator converts MECHANICAL energy into ELECTRICAL — the basis of all power stations."},
+ {id:704,cat:7,icon:"🏭",label:"Uses",fact:"Power plants (hydro, thermal, nuclear), bicycle dynamos, and portable generators all use this principle."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"Like magnetic poles:",o:["Attract","Repel","Do nothing","Cancel"],a:1,e:"Like poles repel; unlike poles attract."},
+ {t:"Conceptual · TNPSC",q:"Magnetic field lines outside a bar magnet run from:",o:["S to N","N to S","N to N","They don't have direction"],a:1,e:"Outside a magnet, field lines go from north to south (S to N inside)."},
+ {t:"Recall · RRB",q:"A freely suspended magnet always comes to rest pointing:",o:["East–west","North–south","Up–down","Randomly"],a:1,e:"It aligns with Earth's magnetic field, pointing roughly north–south."},
+ {t:"Conceptual · SSC",q:"Which of these is NOT attracted by a magnet?",o:["Iron","Cobalt","Nickel","Copper"],a:3,e:"Iron, cobalt and nickel are magnetic; copper is not."},
+ {t:"Recall · Banking",q:"The scientist who discovered that a current produces a magnetic field was:",o:["Faraday","Oersted","Fleming","Newton"],a:1,e:"Hans Christian Oersted (1820) saw a compass deflect near a current."},
+ {t:"Conceptual · TNPSC",q:"The magnetic field around a straight current-carrying wire is:",o:["Straight lines","Concentric circles","Elliptical","Square"],a:1,e:"Circular field lines encircle the wire (right-hand thumb rule)."},
+ {t:"Recall · SSC",q:"The direction of the magnetic field around a wire is given by the:",o:["Left-hand rule","Right-hand thumb rule","Lenz's law","Ohm's law"],a:1,e:"The right-hand thumb (grip) rule gives the field direction."},
+ {t:"Conceptual · RRB",q:"A current-carrying solenoid behaves like a:",o:["Capacitor","Bar magnet","Resistor","Battery"],a:1,e:"A solenoid has a field like a bar magnet, with N and S ends."},
+ {t:"Application · SSC",q:"The core of a strong electromagnet is made of:",o:["Steel","Soft iron","Copper","Aluminium"],a:1,e:"Soft iron magnetises strongly but loses magnetism when current stops (temporary)."},
+ {t:"Conceptual · TNPSC",q:"Why is soft iron (not steel) used in an electromagnet?",o:["It is cheaper","It keeps magnetism permanently","It loses magnetism when current stops","It is lighter"],a:2,e:"A temporary magnet is needed; soft iron demagnetises instantly."},
+ {t:"Application · Banking",q:"Which device uses an electromagnet?",o:["Electric bell","Solar cell","Barometer","Thermometer"],a:0,e:"Electric bells, cranes, relays and loudspeakers use electromagnets."},
+ {t:"Recall · SSC",q:"The force on a current-carrying conductor in a magnetic field is given by:",o:["F = BIL","F = IR","F = mv","F = qE"],a:0,e:"F = BIL (field × current × length); maximum when perpendicular."},
+ {t:"Conceptual · RRB",q:"Fleming's LEFT-hand rule is used to find the direction of the:",o:["Induced current","Force/motion in a motor","Magnetic field of a wire","Voltage"],a:1,e:"Left-hand rule → force (motion) in a motor (thumb=force, fore=field, centre=current)."},
+ {t:"Recall · TNPSC",q:"In Fleming's left-hand rule, the thumb points in the direction of:",o:["Current","Field","Force (motion)","Voltage"],a:2,e:"Thumb = Force/motion, forefinger = Field, centre finger = Current."},
+ {t:"Recall · SSC",q:"An electric motor converts:",o:["Electrical to mechanical energy","Mechanical to electrical","Heat to light","Chemical to electrical"],a:0,e:"A motor turns electrical energy into rotational (mechanical) energy."},
+ {t:"Conceptual · Banking",q:"The split-ring commutator in a DC motor:",o:["Increases voltage","Reverses the current every half rotation","Stores charge","Reduces friction"],a:1,e:"It reverses current each half turn so the coil keeps rotating one way."},
+ {t:"Application · SSC",q:"Which appliance uses an electric motor?",o:["Electric fan","Torch bulb","Fuse","Thermometer"],a:0,e:"Fans, pumps, mixers, washing machines and EVs use motors."},
+ {t:"Recall · RRB",q:"Electromagnetic induction was discovered by:",o:["Oersted","Faraday","Ohm","Volta"],a:1,e:"Michael Faraday discovered that a changing magnetic field induces a current."},
+ {t:"Conceptual · SSC",q:"An EMF is induced in a coil when:",o:["A steady current flows","The magnetic field through it changes","It is heated","It is at rest in a steady field"],a:1,e:"Only a CHANGING magnetic flux induces an EMF (Faraday's law)."},
+ {t:"Conceptual · TNPSC",q:"Fleming's RIGHT-hand rule gives the direction of the:",o:["Force on a motor","Induced current in a generator","Magnetic field","Resistance"],a:1,e:"Right-hand rule → induced current in a generator."},
+ {t:"Recall · Banking",q:"Lenz's law is a consequence of the conservation of:",o:["Charge","Momentum","Energy","Mass"],a:2,e:"The induced current opposes the change causing it, conserving energy."},
+ {t:"Recall · SSC",q:"An electric generator converts:",o:["Electrical to mechanical","Mechanical to electrical","Heat to electrical directly","Light to electrical"],a:1,e:"A generator (dynamo) turns mechanical energy into electrical energy."},
+ {t:"Conceptual · RRB",q:"An AC generator uses ___ to connect the coil to the circuit.",o:["A split-ring commutator","Two slip rings","A single ring","A battery"],a:1,e:"AC generators use two slip rings; DC generators use a split-ring commutator."},
+ {t:"Conceptual · SSC",q:"The essential difference between a motor and a generator is that a motor:",o:["Uses AC only","Converts electrical to mechanical (generator does the reverse)","Has no coil","Needs no magnet"],a:1,e:"Motor: electrical → mechanical; generator: mechanical → electrical."},
+ {t:"Application · TNPSC",q:"A bicycle dynamo is an example of a:",o:["Motor","Generator","Transformer","Battery"],a:1,e:"It generates electricity from the wheel's motion (induction)."},
+ {t:"Conceptual · Banking",q:"Increasing the speed of rotation of a generator coil:",o:["Decreases the EMF","Increases the induced EMF","Has no effect","Stops induction"],a:1,e:"Faster change of flux → larger induced EMF (Faraday's law)."},
+ {t:"Recall · SSC",q:"The magnetic field lines of a magnet:",o:["Cross each other","Never cross each other","Start at S pole outside","Are straight"],a:1,e:"Field lines never intersect; if they did, the field would have two directions at a point."},
+ {t:"Application · RRB",q:"A moving-coil galvanometer/ammeter works on the principle of:",o:["Induction","Force on a current in a magnetic field","Ohm's law","Heating effect"],a:1,e:"A current-carrying coil in a field experiences a torque that deflects the needle."},
+ {t:"Conceptual · SSC",q:"When a magnet is at rest inside a coil, the induced current is:",o:["Maximum","Zero","Constant","Reversed"],a:1,e:"No change in flux → no induced current. Motion is essential."},
+ {t:"Conceptual · TNPSC",q:"The Earth behaves like a huge:",o:["Capacitor","Bar magnet","Resistor","Generator"],a:1,e:"Earth has a magnetic field like a giant bar magnet (geographic N ≈ magnetic S)."},
+ {t:"Numerical · SSC",q:"A 0.5 m wire carrying 4 A lies perpendicular to a 2 T field. Find the force. (F = BIL)",o:["1 N","4 N","8 N","0.25 N"],a:1,e:"F = BIL = 2 × 4 × 0.5 = 4 N."},
+ {t:"Numerical · Banking",q:"A wire of length 1 m carries 3 A in a 0.5 T field (perpendicular). The force is:",o:["1.5 N","3 N","0.5 N","6 N"],a:0,e:"F = BIL = 0.5 × 3 × 1 = 1.5 N."},
+ {t:"Statement · SSC",q:"Consider: (1) Like poles attract. (2) Unlike poles attract. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"Like poles REPEL; unlike poles attract. Only 2 is correct."},
+ {t:"Statement · TNPSC",q:"Consider: (1) A motor converts electrical to mechanical energy. (2) A generator converts electrical to mechanical energy. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true; 2 is false — a generator does the reverse."},
+ {t:"Statement · RRB",q:"Consider: (1) Fleming's left-hand rule is for motors. (2) Fleming's right-hand rule is for generators. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both correct — left for motors, right for generators."},
+ {t:"Statement · Banking",q:"Consider: (1) Field lines run N→S outside a magnet. (2) Field lines can cross each other. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true; 2 is false — field lines never cross."},
+ {t:"Statement · SSC",q:"Consider: (1) A steady current in a coil induces an EMF. (2) A changing magnetic field induces an EMF. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"Only a CHANGING field induces EMF (Faraday's law), so only 2."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Soft iron is used in electromagnets. (2) Steel is used because it stays magnetic. Which is correct for an electromagnet?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Soft iron (temporary) is correct; steel is used for permanent magnets."},
+ {t:"Assertion–Reason · SSC",q:"A: A compass needle deflects near a current-carrying wire. R: A current produces a magnetic field (Oersted's experiment).",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A."},
+ {t:"Assertion–Reason · RRB",q:"A: A generator produces electricity. R: A changing magnetic flux through a coil induces an EMF.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A (electromagnetic induction)."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, application, statement, assertion–reason & numerical. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS ===== */
+var PROB=[
+ {lvl:"e",tag:"Force",q:"A 2 m wire carries 3 A perpendicular to a 0.5 T field. Find the force.",given:"L=2 m, I=3 A, B=0.5 T",find:"F",steps:["F = BIL","= 0.5 × 3 × 2"],ans:"3 N"},
+ {lvl:"e",tag:"Force",q:"Find the force on a 0.2 m wire carrying 5 A in a 2 T field (perpendicular).",given:"L=0.2, I=5, B=2",find:"F",steps:["F = BIL","= 2 × 5 × 0.2"],ans:"2 N"},
+ {lvl:"e",tag:"Field B",q:"A 1 m wire carrying 4 A feels a 8 N force (perpendicular). Find the field strength.",given:"L=1, I=4, F=8",find:"B",steps:["B = F/(IL)","= 8/(4×1)"],ans:"2 T"},
+ {lvl:"m",tag:"Current",q:"A 0.5 m wire in a 0.4 T field feels 2 N (perpendicular). Find the current.",given:"L=0.5, B=0.4, F=2",find:"I",steps:["I = F/(BL)","= 2/(0.4×0.5)"],ans:"10 A"},
+ {lvl:"m",tag:"Length",q:"A wire carrying 2 A in a 0.5 T field feels 3 N. Find its length (perpendicular).",given:"I=2, B=0.5, F=3",find:"L",steps:["L = F/(BI)","= 3/(0.5×2)"],ans:"3 m"},
+ {lvl:"m",tag:"Force",q:"A 1.5 m conductor carries 6 A perpendicular to a 0.2 T field. Find the force.",given:"L=1.5, I=6, B=0.2",find:"F",steps:["F = BIL","= 0.2 × 6 × 1.5"],ans:"1.8 N"},
+ {lvl:"m",tag:"Direction",q:"In a motor, the field points right and the current flows upward. Using Fleming's left-hand rule, which way is the force?",given:"Field → right, current → up",find:"force direction",steps:["Left hand: forefinger=field(right), middle=current(up)","Thumb (force) points out of the page (toward you)"],ans:"Out of the page"},
+ {lvl:"m",tag:"Force",q:"Find the force on a 2.5 m wire carrying 0.8 A in a 0.5 T field (perpendicular).",given:"L=2.5, I=0.8, B=0.5",find:"F",steps:["F = BIL","= 0.5 × 0.8 × 2.5"],ans:"1 N"},
+ {lvl:"h",tag:"Angle",q:"A 1 m wire carries 10 A at 30° to a 0.4 T field. Find the force. (F = BIL sinθ, sin30°=0.5)",given:"L=1, I=10, B=0.4, θ=30°",find:"F",steps:["F = BIL sinθ","= 0.4 × 10 × 1 × 0.5"],ans:"2 N"},
+ {lvl:"h",tag:"EMF",q:"A magnetic flux through a coil changes from 0.02 Wb to 0.06 Wb in 0.2 s (1 turn). Find the induced EMF.",given:"ΔΦ=0.04 Wb, t=0.2 s, N=1",find:"EMF",steps:["EMF = N × ΔΦ/Δt","= 1 × 0.04/0.2"],ans:"0.2 V"},
+ {lvl:"h",tag:"EMF",q:"A 50-turn coil has its flux change by 0.01 Wb in 0.5 s. Find the induced EMF.",given:"N=50, ΔΦ=0.01 Wb, t=0.5 s",find:"EMF",steps:["EMF = N × ΔΦ/Δt","= 50 × 0.01/0.5"],ans:"1 V"},
+ {lvl:"h",tag:"Force zero",q:"A 1 m wire carries 5 A PARALLEL to a 0.3 T field. Find the force.",given:"L=1, I=5, B=0.3, θ=0°",find:"F",steps:["F = BIL sinθ; sin0° = 0","F = 0"],ans:"0 N (parallel → no force)"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked numericals graded easy→hard. Try first, then reveal the steps. Mark solved for XP.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS ===== */
+var FC=[
+ {q:"How do like and unlike magnetic poles behave?",a:"Like poles repel; unlike poles attract."},
+ {q:"Direction of field lines outside a bar magnet?",a:"From north to south (S to N inside)."},
+ {q:"Which metals are attracted by a magnet?",a:"Iron, cobalt and nickel (not copper/aluminium)."},
+ {q:"Which way does a freely suspended magnet point?",a:"Roughly north–south (aligns with Earth's field)."},
+ {q:"Who discovered a current produces a magnetic field?",a:"Oersted (1820)."},
+ {q:"Shape of the magnetic field around a straight wire?",a:"Concentric circles (right-hand thumb rule gives direction)."},
+ {q:"State the right-hand thumb rule.",a:"Grip the wire, thumb along the current; curled fingers show the field direction."},
+ {q:"A current-carrying solenoid acts like a…?",a:"A bar magnet (with N and S ends)."},
+ {q:"Why is soft iron used in an electromagnet?",a:"It magnetises strongly but loses magnetism when the current stops (temporary)."},
+ {q:"Give three uses of electromagnets.",a:"Cranes, electric bells, relays, loudspeakers, MRI, maglev."},
+ {q:"Formula for force on a current-carrying conductor?",a:"F = BIL (maximum when perpendicular)."},
+ {q:"What is Fleming's left-hand rule used for?",a:"Direction of force/motion in a MOTOR."},
+ {q:"Fingers in Fleming's left-hand rule?",a:"Thumb = force/motion, forefinger = field, centre = current."},
+ {q:"Energy conversion in an electric motor?",a:"Electrical → mechanical (rotation)."},
+ {q:"Job of the split-ring commutator in a DC motor?",a:"Reverses the current every half turn to keep rotation one way."},
+ {q:"Who discovered electromagnetic induction?",a:"Michael Faraday."},
+ {q:"When is an EMF induced in a coil?",a:"When the magnetic flux through it changes."},
+ {q:"What is Fleming's right-hand rule used for?",a:"Direction of induced current in a GENERATOR."},
+ {q:"State Lenz's law.",a:"The induced current opposes the change producing it (energy conservation)."},
+ {q:"Energy conversion in a generator?",a:"Mechanical → electrical."},
+ {q:"Difference: AC vs DC generator connection?",a:"AC uses two slip rings; DC uses a split-ring commutator."},
+ {q:"Motor vs generator in one line?",a:"Motor: electrical→mechanical; generator: mechanical→electrical."},
+ {q:"A bicycle dynamo is a…?",a:"A small generator (induction)."},
+ {q:"Do magnetic field lines cross?",a:"Never — that would mean two field directions at one point."},
+ {q:"How to increase a generator's induced EMF?",a:"Rotate the coil faster, use more turns, or a stronger field."},
+ {q:"On what principle does a moving-coil ammeter work?",a:"Force/torque on a current-carrying coil in a magnetic field."},
+ {q:"Induced current when a magnet is still inside a coil?",a:"Zero — no change in flux means no induced current."},
+ {q:"The Earth behaves like a…?",a:"A giant bar magnet."},
+ {q:"When is the force on a wire in a field zero?",a:"When the wire is parallel to the field (θ = 0)."},
+ {q:"Full force formula including angle?",a:"F = BIL sinθ (max at 90°, zero at 0°)."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script>
+/* ===== CentuMania metrics — universal (generator-agnostic; additive) ===== */
+(function(){
+  if(window.__cmTrackU||window.__cmTrackInit)return; window.__cmTrackU=1;
+  var CM_DEFAULT='physics-magnetism-em-effects', CM_T0=Date.now(), CM_ACTIVE=0, _vt=Date.now(), _lastQ=0;
+  function tok(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function mat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function sid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'a'+Date.now();}}
+  function inter(t,n,m){try{var k=tok();if(!k||!n)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({interaction_type:t,node_id:String(n),material_id:mat(),session_id:sid(),timestamp:new Date().toISOString(),metadata:m||{}})}).catch(function(){});}catch(e){}}
+  function ev(name,m){try{var k=tok();if(!k)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})})}).catch(function(){});}catch(e){}}
+  function beacon(name,m){try{var k=tok();if(!k)return;var p=JSON.stringify({_token:k,event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_vt;beacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_vt=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_vt;beacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  ev('material_opened',{});ev('session_start',{});
+  /* node-open: wrap any global opener that exists */
+  ['openNode','selectNode','showNode','goNode','openTopic','loadNode'].forEach(function(fn){
+    if(typeof window[fn]==='function'){var _o=window[fn];window[fn]=function(){var r;try{r=_o.apply(this,arguments);}catch(e){r=undefined;}try{var id=arguments[0];if(id!=null&&(typeof id==='string'||typeof id==='number')){_lastQ=Date.now();inter('node_opened',id,{});ev('node_open',{node_id:String(id)});}}catch(e){}return r;};}
+  });
+  /* per-question: delegated click on any option element; correctness read from the class the module applies */
+  document.addEventListener('click',function(e){
+    var o=e.target&&e.target.closest&&e.target.closest('.mopt,.opt,.option,[data-oi]');if(!o)return;
+    var card=o.closest('.mcq-card,.mcq,[data-nid],[data-qi]')||o.parentElement;if(!card)return;if(card._cmA)return;card._cmA=1;
+    var nid=(card.getAttribute&&(card.getAttribute('data-nid')||card.getAttribute('data-node')))||'q';
+    var qraw=card.getAttribute&&card.getAttribute('data-qi');var qi=qraw!=null?parseInt(qraw):-1;
+    var now=Date.now(),dt=_lastQ?now-_lastQ:0;_lastQ=now;
+    setTimeout(function(){var correct=o.classList.contains('correct')||o.getAttribute('data-correct')==='true';if(!correct&&(o.classList.contains('wrong')||o.classList.contains('incorrect')))correct=false;inter('mcq_attempt',String(nid),{question_index:qi,is_correct:!!correct});ev('answer',{node_id:String(nid),question_index:qi,is_correct:!!correct,time_spent_ms:dt});},70);
+  },true);
+})();
+</script>
+
+</body></html>

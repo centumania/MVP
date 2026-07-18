@@ -19,6 +19,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
 import { rateLimit } from '@/src/lib/rate-limit'
+import { getMaterialById } from '@/src/data/materials'
 
 export const dynamic = 'force-dynamic'
 
@@ -49,6 +50,23 @@ export async function GET(request: NextRequest, { params }: Params) {
         { error: 'Too many requests. Please wait before opening more materials.' },
         { status: 429, headers: { 'Retry-After': String(Math.ceil((limiter.reset - Date.now()) / 1000)) } },
       )
+    }
+
+    // ── Static-catalog modules (programs.ts pool): slug ids served from
+    //    /public/study, never expire. Day-1 preview + the daily test engine are
+    //    free; later days need payment. Checked BEFORE the DB so slug ids never
+    //    fall through to the uuid lookup and 404.
+    const staticMat = getMaterialById(id)
+    if (staticMat) {
+      const alwaysFree = id === 'daily-test-engine'
+      if (!alwaysFree && staticMat.day > FREE_DAYS) {
+        const { data: profile } = await supabase
+          .from('profiles').select('payment_verified').eq('id', user.id).single()
+        if (!profile?.payment_verified) {
+          return NextResponse.json({ error: 'Payment required' }, { status: 402 })
+        }
+      }
+      return NextResponse.json({ url: staticMat.htmlPath, type: 'html' })
     }
 
     const now = new Date().toISOString()

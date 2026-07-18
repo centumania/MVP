@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>CentuMania · Ancient History Part 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#13100a;--bg2:#0f0d07;--panel:#1e1a0f;--panel2:#24200f;--line:#2e2a16;
+  --ink:#f0e8d0;--ink2:#c4a86a;--ink3:#7a6840;
+  --gold:#f0bc45;--gold2:#c8960e;--gold-glow:rgba(240,188,69,.13);
+  --amber:#e67e22;--gold-bg:rgba(240,188,69,.12);
+  --red:#f06b6b;--red-bg:rgba(240,107,107,.10);
+  --blue:#4f8ef7;--green:#3dd68c;
+  --mono:"JetBrains Mono",monospace;--serif:"Instrument Serif",serif;--sans:"DM Sans",sans-serif;
+  --nav:56px;--aside:268px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px}
+/* SHELL */
+.shell{display:grid;grid-template-rows:var(--nav) 1fr;height:100vh;overflow:hidden}
+.topbar{display:flex;align-items:center;padding:0 18px;gap:12px;border-bottom:1px solid var(--line);background:rgba(15,13,7,.97);backdrop-filter:blur(14px);z-index:60}
+.logo{font-family:var(--serif);font-size:19px;font-style:italic;color:var(--gold);display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);flex-shrink:0}
+.nav-stats{display:flex;gap:16px;margin-left:auto;align-items:center}
+.stat{font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.stat b{font-size:13px}.stat.xp b{color:var(--gold)}.stat.nd b{color:var(--amber)}.stat.tp b{color:var(--red)}
+.body-wrap{display:grid;grid-template-columns:var(--aside) 1fr;overflow:hidden;height:calc(100vh - var(--nav))}
+aside{background:var(--bg2);border-right:1px solid var(--line);overflow-y:auto}
+aside::-webkit-scrollbar{width:3px}aside::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+main{overflow-y:auto;background:var(--bg)}
+main::-webkit-scrollbar{width:4px}main::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+/* SIDEBAR */
+#sidebar-inner{padding:10px 8px 60px}
+.ch-group{margin-bottom:3px}
+.ch-toggle{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink2);padding:9px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:.13s;font-family:var(--sans)}
+.ch-toggle:hover{background:var(--panel);color:var(--ink)}
+.ch-icon{font-size:15px}.ch-label{flex:1}.ch-prog{font-family:var(--mono);font-size:10px;color:var(--ink3)}.ch-arr{font-size:11px;color:var(--ink3);flex-shrink:0}
+.node-items{padding:3px 4px 3px 10px}
+.ni-btn{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink3);padding:7px 9px;border-radius:8px;cursor:pointer;font-size:13px;transition:.12s;font-family:var(--sans);margin-bottom:1px;min-height:44px}
+.ni-btn:hover:not(.locked){background:var(--panel);color:var(--ink)}
+.ni-btn.active{background:var(--gold-glow);border-color:var(--gold2);color:var(--gold)}
+.ni-btn.passed:not(.active){color:var(--ink)}
+.ni-btn.locked{cursor:default;opacity:.4}
+.ni-title{flex:1;line-height:1.3}.ni-xp{font-family:var(--mono);font-size:10px;color:var(--ink3);flex-shrink:0}
+.ni-tag{font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:4px;flex-shrink:0}
+.ni-tag.lock{color:var(--ink3)}.ni-tag.done{background:rgba(61,214,140,.1);color:var(--green);border:1px solid rgba(61,214,140,.25)}.ni-tag.vis{color:var(--amber)}
+/* MAIN VIEWS */
+.view{padding:28px clamp(16px,3.5vw,52px) 80px;max-width:900px;margin:0 auto}
+/* TABS */
+.tabs{display:flex;gap:3px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:22px;width:fit-content}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:8px;cursor:pointer;border:0;background:none;color:var(--ink2);transition:.14s}
+.tab:hover:not(.active){color:var(--ink)}.tab.active{background:var(--gold2);color:#fff;font-weight:700}
+.tab-pane{display:none}.tab-pane.active{display:block}
+/* NODE HEADER */
+.node-hd-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.node-type-tag{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:20px}
+.node-type-tag.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.3)}
+.node-type-tag.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(240,188,69,.3)}
+.xp-pill{font-family:var(--mono);font-size:11px;color:var(--gold);background:var(--gold-bg);border:1px solid rgba(240,188,69,.2);border-radius:6px;padding:3px 8px;margin-left:auto}
+.node-title{font-family:var(--serif);font-size:clamp(24px,4vw,36px);font-style:italic;line-height:1.1;margin-bottom:12px}
+.node-stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.ns-item{display:flex;flex-direction:column;gap:3px}
+.ns-label{font-family:var(--mono);font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:1px}
+.ns-val{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--ink)}
+.ns-val.faa-col{color:var(--amber)}.ns-val.pass-col{color:var(--green)}.ns-val.pend-col{color:var(--ink2)}
+/* LEARN PANE */
+.fact-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
+.fact-block.gold-block{background:linear-gradient(135deg,rgba(240,188,69,.07),rgba(230,126,34,.04));border-color:rgba(240,188,69,.3)}
+.fb-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink2);border-bottom:1px solid var(--line);background:var(--panel2)}
+.fb-body{padding:14px 16px}
+ul.facts{list-style:none;padding:0}
+ul.facts li{padding:7px 0 7px 22px;border-bottom:1px dashed var(--line);font-size:14px;position:relative;line-height:1.55}
+ul.facts li:last-child{border-bottom:0}
+ul.facts li::before{content:"▸";position:absolute;left:3px;top:9px;color:var(--amber);font-size:11px}
+ul.facts b{color:var(--gold)}
+.trap-block{background:var(--red-bg);border:1px solid rgba(240,107,107,.35);border-radius:12px;overflow:hidden;margin:12px 0}
+.trap-block .fb-head{background:rgba(240,107,107,.08);color:var(--red);border-color:rgba(240,107,107,.35)}
+.trap-block ul.facts li::before{content:"⚠";color:var(--red)}
+.mnemonic-block{background:rgba(79,142,247,.07);border:1px solid rgba(79,142,247,.3);border-radius:12px;overflow:hidden;margin:12px 0}
+.mnemonic-block .fb-head{background:rgba(79,142,247,.07);color:var(--blue);border-color:rgba(79,142,247,.3)}
+/* REVISION + ONE-LINERS */
+.revision-block{background:rgba(79,142,247,.05);border:1px solid rgba(79,142,247,.2);border-radius:12px;overflow:hidden;margin:12px 0}
+.revision-block .fb-head{background:rgba(79,142,247,.06);color:var(--blue);border-color:rgba(79,142,247,.2)}
+.revision-block ul.facts li::before{content:"⚡";color:var(--blue);font-size:10px}
+.oneliner-block{background:rgba(61,214,140,.05);border:1px solid rgba(61,214,140,.18);border-radius:12px;overflow:hidden;margin:12px 0}
+.oneliner-block .fb-head{background:rgba(61,214,140,.06);color:var(--green);border-color:rgba(61,214,140,.18)}
+.oneliner-block ul.facts li::before{content:"🎯";color:var(--green);font-size:10px}
+/* FLASHCARDS */
+.flash-hint{font-family:var(--mono);font-size:11px;color:var(--ink3);text-align:center;margin-bottom:12px;letter-spacing:.5px}
+.flash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:14px}
+.flash-card{perspective:900px;cursor:pointer;height:150px}
+.flash-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash-card.flipped .flash-inner{transform:rotateY(180deg)}
+.flash-front,.flash-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;line-height:1.45;border:1px solid var(--line)}
+.flash-front{background:var(--panel);color:var(--ink)}
+.flash-back{background:rgba(240,188,69,.1);border-color:rgba(240,188,69,.3);color:var(--gold);transform:rotateY(180deg)}
+.flash-reset-row{text-align:center;margin-top:4px}
+.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--line);margin:12px 0}
+table.dt{width:100%;border-collapse:collapse;font-size:13px}
+table.dt th{padding:9px 13px;text-align:left;background:var(--gold2);color:#fff;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+table.dt td{padding:9px 13px;border-bottom:1px solid var(--line);color:var(--ink)}
+table.dt tr:last-child td{border-bottom:0}
+table.dt td:first-child{color:var(--amber);font-weight:600;font-family:var(--mono);font-size:12px}
+table.dt b{color:var(--gold)}
+/* MCQ */
+.mcq-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.mcq-q{font-size:15px;font-weight:600;margin-bottom:12px;line-height:1.45}
+.q-num{font-family:var(--mono);font-size:12px;color:var(--amber);margin-right:4px}
+.mcq-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0}
+.mopt{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);font-size:13px;cursor:pointer;text-align:left;font-family:var(--sans);transition:.13s;width:100%}
+.mopt:hover:not([disabled]){border-color:var(--gold2);background:var(--gold-glow)}
+.mopt.correct{background:rgba(61,214,140,.12);border-color:var(--green);color:var(--green)}
+.mopt.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.mcq-fb{margin-top:10px;font-size:13px;padding:9px 12px;border-radius:8px;background:var(--panel2);color:var(--ink2);line-height:1.5;border:1px solid var(--line)}
+.mcq-faa{margin-top:7px}
+.faa-chip{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:6px}
+.faa-chip.faa-ok{background:rgba(61,214,140,.1);color:var(--green);border:1px solid rgba(61,214,140,.25)}
+.faa-chip.faa-err{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.25)}
+.retry-btn{margin-top:4px;padding:6px 16px;background:var(--panel2);border:1px solid var(--gold2);color:var(--gold);border-radius:8px;cursor:pointer;font-family:var(--mono);font-size:11px}
+.retry-btn:hover{background:var(--gold-glow)}
+.unlock-banner{border-radius:12px;padding:14px 16px;margin-bottom:14px;font-size:14px;line-height:1.5}
+.pass-banner{background:rgba(61,214,140,.1);border:1px solid rgba(61,214,140,.35);color:var(--green)}
+.fail-banner{background:var(--red-bg);border:1px solid rgba(240,107,107,.35);color:var(--ink)}
+/* NODE NAV */
+.node-nav{display:flex;gap:10px;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+.nav-btn{font-family:var(--sans);font-weight:600;font-size:13px;border-radius:9px;padding:9px 15px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:.14s;flex:1;text-align:center}
+.nav-btn:hover:not([disabled]){border-color:var(--gold2)}.nav-btn[disabled]{opacity:.35;cursor:default}
+.nav-btn.home-btn{flex:0 0 auto;background:var(--panel2)}
+/* DASHBOARD */
+.dash-hero{background:linear-gradient(135deg,rgba(240,188,69,.08),rgba(230,126,34,.05));border:1px solid rgba(240,188,69,.2);border-radius:16px;padding:28px;margin-bottom:22px;text-align:center}
+.dh-title{font-family:var(--serif);font-size:clamp(28px,5vw,44px);font-style:italic;margin-bottom:4px}
+.dh-sub{font-family:var(--mono);font-size:12px;color:var(--ink3);letter-spacing:1px}
+.dh-xp{font-family:var(--mono);font-size:32px;font-weight:700;color:var(--gold);margin:12px 0 4px}
+.dh-bar-wrap{height:8px;background:var(--line);border-radius:4px;overflow:hidden;max-width:400px;margin:0 auto 8px}
+.dh-bar{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:4px;transition:.6s}
+.dh-label{font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.dash-chapters{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:22px}
+.dc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.dc-icon{font-size:22px;margin-bottom:6px}
+.dc-label{font-size:13px;font-weight:600;margin-bottom:8px;color:var(--ink)}
+.dc-prog-bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.dc-bar{height:100%;background:var(--gold);border-radius:3px;transition:.5s}
+.dc-nums{font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.cta-btn{padding:12px 24px;border-radius:12px;font-size:14px;font-weight:700;font-family:var(--sans);cursor:pointer;border:0;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#000;transition:.15s}
+.cta-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(240,188,69,.3)}
+.cta-btn.sec{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+.cta-btn[disabled]{opacity:.4;cursor:default;transform:none;box-shadow:none}
+/* TOAST */
+.toast{position:fixed;top:64px;right:18px;background:var(--panel2);border:1px solid var(--gold);border-radius:12px;padding:10px 16px;z-index:500;opacity:0;transform:translateY(-8px);transition:.3s;pointer-events:none;font-size:13px;max-width:340px;line-height:1.4}
+.toast.show{opacity:1;transform:translateY(0)}
+.toast.err{border-color:var(--red)}.toast.warn{border-color:var(--amber);color:var(--ink)}
+/* MOBILE */
+.mob-bar{display:none}
+@media(max-width:720px){
+  .shell{grid-template-rows:var(--nav) 1fr 56px;height:100dvh}
+  .body-wrap{grid-template-columns:1fr;height:calc(100dvh - var(--nav) - 56px)}
+  aside{display:none}
+  .mob-bar{display:flex;background:rgba(15,13,7,.98);backdrop-filter:blur(16px);border-top:1px solid var(--line);align-items:stretch}
+  .mob-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;color:var(--ink3);cursor:pointer;padding:8px 4px;font-family:var(--mono);font-size:9px;transition:.13s}
+  .mob-tab .mt-ico{font-size:20px}.mob-tab.act{color:var(--gold)}
+  .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;opacity:0;pointer-events:none;transition:.2s}
+  .mob-overlay.show{opacity:1;pointer-events:all}
+  .mob-drawer{position:fixed;left:-100%;top:0;bottom:0;width:min(300px,88vw);background:var(--bg2);border-right:1px solid var(--line);z-index:200;transition:.28s;overflow-y:auto}
+  .mob-drawer.open{left:0}
+  .mob-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px;border-bottom:1px solid var(--line)}
+  .mob-close{background:none;border:1px solid var(--line);color:var(--ink2);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px}
+  .nav-stats{display:none}
+  .view{padding:16px 14px 100px}
+  .node-title{font-size:24px}
+  .mcq-opts{grid-template-columns:1fr}
+  .flash-grid{grid-template-columns:1fr}
+  .tabs{overflow-x:auto;width:100%;scrollbar-width:none}
+  .toast{top:auto;bottom:68px;left:14px;right:14px}
+}
+@media(min-width:721px){.mob-drawer,.mob-overlay{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="topbar">
+    <div class="logo"><span class="logo-dot"></span>CentuMania</div>
+    <div class="nav-stats">
+      <div class="stat xp">XP <b id="h-xp">0</b></div>
+      <div class="stat nd">Nodes <b id="h-nd">0/0</b></div>
+      <div class="stat tp">Traps <b id="h-tp">0/0</b></div>
+    </div>
+  </nav>
+  <div class="body-wrap">
+    <aside><div id="sidebar-inner"></div></aside>
+    <main id="main-area">
+      <div class="dash-view view" id="dash-view">
+        <div id="dash-content"></div>
+      </div>
+      <div class="node-view view" id="node-view" style="display:none">
+        <div id="node-content"></div>
+        <div class="node-nav" id="node-nav"></div>
+      </div>
+    </main>
+  </div>
+  <nav class="mob-bar">
+    <button class="mob-tab act" id="mob-home"><span class="mt-ico">◈</span>Home</button>
+    <button class="mob-tab" id="mob-menu"><span class="mt-ico">☰</span>Topics</button>
+  </nav>
+</div>
+<div class="mob-overlay" id="mob-overlay"></div>
+<div class="mob-drawer" id="mob-drawer">
+  <div class="mob-drawer-head">
+    <div class="logo"><span class="logo-dot"></span>Topics</div>
+    <button class="mob-close" id="mob-close">✕</button>
+  </div>
+  <div id="mob-sidebar-inner"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const CHAPTERS=[
+{id:"prehistoric",title:"Prehistoric Ages",icon:"🪨",nodes:[
+{id:"p1",title:"Stone Age Periods",xp:50,type:"regular",seqIdx:0,
+facts:[
+"<b>Earth formed: 4.8 Billion years ago</b> | Life began: 3.5 Billion years ago | Humans: 42 lakh years ago",
+"<b>Father of History = Herodotus</b> | Homo-Sapiens appeared ~36,000 BC",
+"<b>Robert Bruce Foote</b> — founded 1st Stone Age culture institute in India",
+"<b>Palaeolithic (50,000–10,000 BC):</b> Handaxes, cleavers, choppers | Life: nomadic | Fire: UNKNOWN",
+"<b>Mesolithic (10,000–6,000 BC):</b> Microliths (1–8 cm; triangles, lunates, trapezes) | Fire DISCOVERED | 1st pet = DOG",
+"<b>Neolithic (6,000–1,000 BC):</b> Polished stone tools; axe = CELT | Fire came into USE | Agriculture began | 2nd pet = HORSE",
+"<b>Chalcolithic (3500–1500 BC):</b> Copper + Stone | Most used metal = Copper | Occasional low-grade bronze"
+],
+table:{h:["Feature","Palaeolithic","Mesolithic","Neolithic"],r:[
+["Tools","Handaxes, choppers","Microliths (geometric)","Polished stone, Celt"],
+["Fire","UNKNOWN","DISCOVERED","Came into USE"],
+["Pet","—","Dog (1st)","Horse (2nd)"],
+["Life","Nomadic hunter","Hunter-gatherer","Settled farmer"],
+["Key site","Sohan Valley","Bhimbetka","Mehargarh"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"<b>P-M-N-C</b> (Prehistoric → Mesolithic → Neolithic → Chalcolithic)<br>Fire: <b>D</b>iscovered in Mesolithic, <b>U</b>sed in Neolithic — D before U like alphabet<br>Pets: <b>Dog</b> → Meso | <b>Horse</b> → Neo"},
+traps:["Fire DISCOVERED = Mesolithic | Fire USED = Neolithic — two different answers!","Microliths = Mesolithic (NOT Palaeolithic)","Celt = Neolithic axe — NOT Celtic people!","1st pet = Dog (Mesolithic) | 2nd pet = Horse (Vedic/Neolithic)","Homo-Sapiens = ~36,000 BC (not 3600 BC, not 36 lakh BC)"],
+revision:[
+"Earth: 4.8 Bn yrs | Life: 3.5 Bn yrs | Humans: 42 lakh yrs | Homo-Sapiens: ~36,000 BC",
+"Palaeolithic (50,000–10,000 BC): handaxes/choppers, nomadic, fire UNKNOWN",
+"Mesolithic (10,000–6,000 BC): microliths, fire DISCOVERED, 1st pet = Dog",
+"Neolithic (6,000–1,000 BC): Celt axe, fire USED, agriculture began, 2nd pet = Horse",
+"Chalcolithic (3500–1500 BC): Copper+Stone, most used metal = Copper",
+"Herodotus = Father of History | Robert Bruce Foote = 1st Stone Age institute founder"
+],
+oneliners:[
+"Earth was formed approximately 4.8 billion years ago",
+"Life on Earth began approximately 3.5 billion years ago",
+"Human life began approximately 42 lakh years ago",
+"Homo-Sapiens (modern humans) appeared around 36,000 BC",
+"Herodotus is called the 'Father of History'",
+"Robert Bruce Foote founded the first Stone Age culture institute in India",
+"The Palaeolithic period lasted from 50,000 BC to 10,000 BC",
+"Palaeolithic tools included handaxes, cleavers, and choppers",
+"Fire was UNKNOWN to humans in the Palaeolithic period",
+"Palaeolithic life was nomadic — hunting and gathering",
+"The Mesolithic period lasted from 10,000 BC to 6,000 BC",
+"Microliths (1-8 cm geometric tools) are the defining Mesolithic tool",
+"Fire was DISCOVERED in the Mesolithic period",
+"The Dog was the first animal domesticated by humans, in the Mesolithic period",
+"The Neolithic period lasted from 6,000 BC to 1,000 BC",
+"The polished Neolithic stone axe is called a 'Celt'",
+"Fire came into regular USE (not just discovery) in the Neolithic period",
+"Agriculture began in the Neolithic period",
+"The Horse was the second animal domesticated by humans",
+"The Chalcolithic period (3500-1500 BC) used Copper combined with Stone tools"
+],
+flashcards:[
+{q:"When was fire DISCOVERED, and when did it come into regular USE?",a:"Discovered in the Mesolithic period; came into regular use in the Neolithic period"},
+{q:"What is the first and second pet domesticated by early humans?",a:"1st = Dog (Mesolithic); 2nd = Horse (Neolithic/Vedic)"},
+{q:"What is the Neolithic polished stone axe called?",a:"Celt (not related to the Celtic people)"},
+{q:"What are Microliths, and which period are they from?",a:"Tiny geometric stone tools (1-8 cm: triangles, lunates, trapezes); from the Mesolithic period"},
+{q:"Who founded the first Stone Age culture institute in India?",a:"Robert Bruce Foote"},
+{q:"Who is called the 'Father of History'?",a:"Herodotus"},
+{q:"When did Homo-Sapiens appear?",a:"Approximately 36,000 BC"},
+{q:"What metal defines the Chalcolithic period, and what does the name mean?",a:"Copper (most used metal); 'Chalco' (copper) + 'lithos' (stone)"},
+{q:"What was the lifestyle in the Palaeolithic period?",a:"Nomadic hunting and gathering; no fixed settlements; fire unknown"},
+{q:"Which period saw the beginning of agriculture?",a:"The Neolithic period"}
+],
+mcqs:[
+{q:"Fire was DISCOVERED in which Stone Age period?",o:["Palaeolithic","Mesolithic","Neolithic","Chalcolithic"],a:1,e:"Fire was DISCOVERED in the Mesolithic period. It came into USE only in the Neolithic. This distinction is asked every year in SSC."},
+{q:"Microliths are the characteristic tools of which period?",o:["Palaeolithic","Chalcolithic","Mesolithic","Neolithic"],a:2,e:"Microliths (very small geometric tools: triangles, lunates, trapezes, 1–8 cm) are the defining tools of the Mesolithic (Middle Stone Age)."},
+{q:"The Neolithic stone axe is called:",o:["Microlith","Burin","Cleaver","Celt"],a:3,e:"The polished stone axe of the Neolithic period is called 'Celt'. Note: Celt refers to the axe tool, not Celtic people."},
+{q:"The FIRST pet domesticated by humans was:",o:["Cat","Horse","Cow","Dog"],a:3,e:"The Dog was the first pet domesticated by humans — in the Mesolithic period. The Horse was the second pet (Neolithic/Vedic period)."},
+{q:"Robert Bruce Foote is associated with:",o:["Excavation of Harappa","First stone age culture institute in India","Discovery of IVC","Translation of Rigveda"],a:1,e:"Robert Bruce Foote founded the first Stone Age culture institute in India. He is a key figure in Indian prehistoric archaeology."},
+{q:"Father of History is:",o:["Thucydides","Herodotus","Strabo","Megasthenes"],a:1,e:"Herodotus is called the Father of History. He is not to be confused with Thucydides (Father of Scientific History) or Megasthenes (Greek ambassador to Chandragupta's court)."},
+{q:"Homo-Sapiens (modern humans) appeared approximately:",o:["42 lakh years ago","3.5 billion years ago","36,000 BC","10,000 BC"],a:2,e:"Homo-Sapiens appeared at approximately 36,000 BC. Earth was formed 4.8 billion years ago; life began 3.5 billion years ago; human life began 42 lakh years ago."},
+{q:"Which Stone Age period is associated with the beginning of agriculture?",o:["Palaeolithic","Chalcolithic","Mesolithic","Neolithic"],a:3,e:"Agriculture began in the Neolithic (New Stone Age). Crops: wheat, barley, rice, millet. Animals domesticated: sheep, goat, cattle."},
+{q:"In Palaeolithic period, the life style was:",o:["Settled farming","Nomadic hunting and gathering","Urban and planned","Semi-nomadic herding"],a:1,e:"Palaeolithic people led a nomadic life — they hunted animals and gathered food. They had no fixed settlements. Fire was also unknown in this period."},
+{q:"The Chalcolithic period is also known as:",o:["Bronze Age","Iron Age","Copper Stone Age","Golden Age"],a:2,e:"Chalcolithic comes from 'Chalco' (copper) + 'lithos' (stone). Copper was the most used metal. It is the transition from stone tools to metal tools."}
+]},
+{id:"p2",title:"Bhimbetka & Mehargarh",xp:40,type:"regular",seqIdx:1,
+facts:[
+"<b>Bhimbetka:</b> Raisen District, near Bhopal, MP | Discovered: V.S. Wakankar (1957–58) | UNESCO WHS: 2003",
+"Bhimbetka: 700+ rock shelters across 5 hills | Rock paintings span 30,000 years (Mesolithic to early medieval)",
+"Called: <b>'Prehistoric Art Gallery of India'</b> | Most vivid paintings = Mesolithic period",
+"<b>Mehargarh:</b> Baluchistan, Pakistan (Kachi plain) | Excavated: J.F. Jarrige (French, 1974)",
+"Mehargarh period: 7000–3300 BC (Neolithic to Chalcolithic) | Called <b>'Cradle of South Asian Civilisation'</b>",
+"Mehargarh: Earliest evidence of farming in South Asia (~7000 BC) | Crops: wheat, barley, dates",
+"Extraordinary: <b>Evidence of dentistry</b> (tooth drilling with flint, ~7000–5500 BC) — world's oldest"
+],
+traps:[
+"Bhimbetka UNESCO = 2003 | Dholavira UNESCO = 2021 — completely different years, often confused",
+"Bhimbetka discovered by V.S. Wakankar (NOT D.R. Sahini — he excavated Harappa)",
+"Mehargarh excavated by J.F. Jarrige (French) in 1974 — NOT an Indian archaeologist",
+"Most vivid rock paintings at Bhimbetka = Mesolithic (NOT Palaeolithic)"],
+revision:[
+"Bhimbetka: Raisen Dist (near Bhopal, MP), discovered V.S. Wakankar 1957-58, UNESCO 2003",
+"700+ rock shelters, 5 hills, paintings span 30,000 yrs, most vivid = Mesolithic",
+"Called 'Prehistoric Art Gallery of India'",
+"Mehargarh: Kachi plain, Baluchistan (Pakistan), excavated J.F. Jarrige (French) 1974",
+"Mehargarh period 7000-3300 BC, called 'Cradle of South Asian Civilisation'",
+"Mehargarh = earliest South Asian farming evidence + world's oldest dentistry evidence"
+],
+oneliners:[
+"Bhimbetka is located in Raisen District, near Bhopal, Madhya Pradesh",
+"Bhimbetka was discovered by V.S. Wakankar in 1957-58",
+"Bhimbetka received UNESCO World Heritage Site status in 2003",
+"Bhimbetka has 700+ rock shelters spread across 5 hills",
+"Bhimbetka's rock paintings span approximately 30,000 years",
+"The most vivid Bhimbetka paintings belong to the Mesolithic period",
+"Bhimbetka is called the 'Prehistoric Art Gallery of India'",
+"Bhimbetka paintings depict animals, hunters, dancers, and community scenes",
+"Mehargarh is located in the Kachi plain of Baluchistan, Pakistan",
+"Mehargarh was excavated by J.F. Jarrige, a French archaeologist, in 1974",
+"Mehargarh spans the period 7000-3300 BC (Neolithic to Chalcolithic)",
+"Mehargarh is called the 'Cradle of South Asian Civilisation'",
+"Mehargarh has the earliest evidence of farming in South Asia, around 7000 BC",
+"Crops grown at Mehargarh included wheat, barley, and dates",
+"Mehargarh has the world's oldest evidence of dentistry (tooth drilling with flint)",
+"Dentistry evidence at Mehargarh dates to approximately 7000-5500 BC",
+"Mehargarh is considered a direct precursor to the Harappan Civilisation",
+"Pottery appeared at Mehargarh around 5500 BC",
+"Dholavira (UNESCO 2021) is often confused with Bhimbetka (UNESCO 2003)",
+"D.R. Sahini excavated Harappa — a different person from Bhimbetka's discoverer Wakankar"
+],
+flashcards:[
+{q:"Who discovered Bhimbetka, and when?",a:"V.S. Wakankar, in 1957-58"},
+{q:"When did Bhimbetka receive UNESCO World Heritage status?",a:"2003 (Dholavira received it later, in 2021)"},
+{q:"What is Bhimbetka called, and why?",a:"'Prehistoric Art Gallery of India' — for its 700+ rock shelters with 30,000 years of paintings"},
+{q:"Which period has the most vivid paintings at Bhimbetka?",a:"The Mesolithic period"},
+{q:"Where is Mehargarh located?",a:"Kachi plain, Baluchistan, Pakistan"},
+{q:"Who excavated Mehargarh, and when?",a:"J.F. Jarrige, a French archaeologist, in 1974"},
+{q:"What period does Mehargarh span?",a:"7000-3300 BC (Neolithic to Chalcolithic)"},
+{q:"Why is Mehargarh called the 'Cradle of South Asian Civilisation'?",a:"It has the earliest evidence of farming in South Asia (~7000 BC) and is a precursor to the IVC"},
+{q:"What extraordinary medical evidence was found at Mehargarh?",a:"World's oldest evidence of dentistry — tooth drilling with flint, ~7000-5500 BC"},
+{q:"What crops were grown at Mehargarh?",a:"Wheat, barley, and dates"}
+],
+mcqs:[
+{q:"Bhimbetka was added to UNESCO World Heritage List in:",o:["1998","2003","2014","2021"],a:1,e:"Bhimbetka got UNESCO status in 2003. Dholavira got UNESCO status in 2021. These two years are commonly swapped in MCQs."},
+{q:"Bhimbetka was discovered by:",o:["D.R. Sahini","J.P. Joshi","V.S. Wakankar","R.D. Banerjee"],a:2,e:"V.S. Wakankar discovered Bhimbetka in 1957–58. It is located near Bhopal in Raisen District, Madhya Pradesh."},
+{q:"Bhimbetka is called:",o:["Cradle of South Asian Civilisation","Prehistoric Art Gallery of India","Manchester of IVC","Lancashire of India"],a:1,e:"Bhimbetka is called the 'Prehistoric Art Gallery of India' for its 700+ rock shelters with paintings spanning 30,000 years."},
+{q:"The most vivid rock paintings at Bhimbetka belong to which period?",o:["Palaeolithic","Chalcolithic","Neolithic","Mesolithic"],a:3,e:"The most vivid and significant rock paintings at Bhimbetka are from the Mesolithic period, though paintings span from Lower Palaeolithic to early medieval."},
+{q:"Mehargarh is called the 'Cradle of South Asian Civilisation'. Where is it located?",o:["Kashmir Valley","Kachi plain, Baluchistan, Pakistan","Kutch, Gujarat","Rajasthan"],a:1,e:"Mehargarh is in the Kachi plain of Baluchistan, Pakistan. It shows the earliest evidence of farming in South Asia (~7000 BC)."},
+{q:"Mehargarh was excavated by:",o:["J.P. Joshi","R.S. Bisht","J.F. Jarrige","B.B. Lal"],a:2,e:"J.F. Jarrige, a French archaeologist, excavated Mehargarh in 1974. This is notable because it's a foreign archaeologist, not Indian."},
+{q:"What extraordinary medical evidence was found at Mehargarh?",o:["Earliest surgery","Tooth drilling (dentistry) ~7000 BC","Brain surgery","Eye treatment"],a:1,e:"Mehargarh has evidence of tooth drilling with flint drill bits (~7000–5500 BC) — the world's oldest evidence of dentistry. A unique SSC fact."},
+{q:"Mehargarh period spans:",o:["2500–1750 BC","50,000–10,000 BC","7000–3300 BC","1500–600 BC"],a:2,e:"Mehargarh spans approximately 7000–3300 BC (Neolithic to Chalcolithic). It predates the Harappan civilisation and is considered its precursor."},
+{q:"Bhimbetka has how many rock shelters approximately?",o:["100+","200+","500+","700+"],a:3,e:"Bhimbetka has 700+ rock shelters across 5 hills. The paintings show animals (bison, lion, wild boar), hunters, dancers, and community scenes."},
+{q:"Mehargarh is considered significant because it is a:",o:["Buddhist monastery site","Precursor to Harappan Civilisation","Vedic sacrifice site","Megalithic burial site"],a:1,e:"Mehargarh is considered a direct precursor to the Harappan Civilisation. Pottery appeared there around 5500 BC, and the agricultural practices paved the way for IVC urbanisation."}
+]},
+{id:"p3",title:"Stone Age — Traps & Sequence",xp:35,type:"trap",seqIdx:2,
+facts:[
+"<b>Complete Age Sequence:</b> Palaeolithic → Mesolithic → Neolithic → Chalcolithic → Bronze Age (IVC) → Iron Age (Vedic)",
+"<b>Fire trap:</b> Discovered in Mesolithic | Used in Neolithic — examiners exploit this every year",
+"<b>Bhimbetka (2003) vs Dholavira (2021)</b> — most confused UNESCO dates in Indian history",
+"<b>1st stone age institute = Robert Bruce Foote</b> | Bhimbetka discoverer = V.S. Wakankar — two different people",
+"Mesolithic tools = Microliths | Neolithic tools = Celt (polished stone axe) | Palaeolithic = Handaxes/choppers"
+],
+traps:[
+"Fire DISCOVERED = Mesolithic | Fire USED = Neolithic (2 answers for 2 different questions!)",
+"Bhimbetka UNESCO = 2003 | Dholavira UNESCO = 2021 — do not swap",
+"Celt = axe (Neolithic) — NOT Celtic people",
+"Robert Bruce Foote ≠ V.S. Wakankar — Foote = institute founder; Wakankar = Bhimbetka discoverer",
+"1st pet = Dog (Mesolithic) | 2nd pet = Horse — Horse is mentioned in Vedas, not just Neolithic"],
+revision:[
+"Sequence: Palaeolithic → Mesolithic → Neolithic → Chalcolithic → Bronze Age (IVC) → Iron Age (Vedic)",
+"Fire: DISCOVERED in Mesolithic, USED in Neolithic",
+"Bhimbetka UNESCO 2003 vs Dholavira UNESCO 2021",
+"Robert Bruce Foote (institute founder) ≠ V.S. Wakankar (Bhimbetka discoverer)",
+"Tools: Palaeolithic=handaxes/choppers, Mesolithic=microliths, Neolithic=Celt"
+],
+oneliners:[
+"The correct Stone Age sequence is Palaeolithic, Mesolithic, Neolithic, Chalcolithic",
+"Bronze Age in India corresponds to the IVC period",
+"Iron Age in India corresponds to the (Later) Vedic period",
+"Fire discovery (Mesolithic) and fire use (Neolithic) are two different exam answers",
+"Bhimbetka = UNESCO 2003; Dholavira = UNESCO 2021 — frequently swapped in MCQs",
+"Robert Bruce Foote founded India's first Stone Age culture institute",
+"V.S. Wakankar discovered Bhimbetka — a different person from Foote",
+"Microliths are tiny geometric Mesolithic tools (triangles, lunates, trapezes)",
+"Celt is the Neolithic polished stone axe, unrelated to the Celtic people",
+"The first domesticated pet was the Dog (Mesolithic); the second was the Horse",
+"Bows and arrows were introduced in the Mesolithic period",
+"Fishing and fowling became important subsistence activities in the Mesolithic",
+"Chalcolithic literally means 'Copper + Stone' (Chalco + lithos)",
+"Palaeolithic tools: handaxes, cleavers, and choppers",
+"Middle Palaeolithic tools: flakes such as scrapers and borers",
+"Upper Palaeolithic tools: blades and burins",
+"The Chalcolithic/Pre-Harappan period (3500-2500 BC) immediately preceded the IVC",
+"Kali Banga has evidence of a pre-Harappan ploughed field",
+"Bhimbetka's rock paintings span approximately 30,000 years",
+"Agriculture and settled life began in the Neolithic period"
+],
+flashcards:[
+{q:"State the correct, complete Stone Age to Iron Age sequence.",a:"Palaeolithic → Mesolithic → Neolithic → Chalcolithic → Bronze Age (IVC) → Iron Age (Vedic)"},
+{q:"What is the classic 'fire trap' tested every year?",a:"Fire was DISCOVERED in Mesolithic but came into regular USE only in Neolithic"},
+{q:"Bhimbetka UNESCO year vs Dholavira UNESCO year?",a:"Bhimbetka = 2003; Dholavira = 2021"},
+{q:"Who founded the first Stone Age institute vs who discovered Bhimbetka?",a:"Robert Bruce Foote founded the institute; V.S. Wakankar discovered Bhimbetka — different people"},
+{q:"What are the defining tools of each Stone Age period?",a:"Palaeolithic = handaxes/choppers; Mesolithic = microliths; Neolithic = Celt (polished axe)"},
+{q:"What period immediately preceded the IVC?",a:"The Chalcolithic / Pre-Harappan period (3500-2500 BC)"},
+{q:"What does the Mesolithic period introduce besides fire and microliths?",a:"Bows & arrows, the first domesticated pet (Dog), and fishing/fowling"},
+{q:"What is the correct pairing of 1st and 2nd domesticated pets?",a:"1st = Dog (Mesolithic); 2nd = Horse (Vedic/Neolithic)"},
+{q:"What does the word 'Chalcolithic' literally mean?",a:"Copper + Stone (from Greek 'chalco' = copper, 'lithos' = stone)"},
+{q:"How many years do Bhimbetka's rock paintings span?",a:"Approximately 30,000 years, from Lower Palaeolithic to early medieval"}
+],
+mcqs:[
+{q:"Which of the following is the CORRECT sequence of Stone Ages?",o:["Neolithic → Mesolithic → Palaeolithic","Palaeolithic → Neolithic → Mesolithic","Mesolithic → Palaeolithic → Neolithic","Palaeolithic → Mesolithic → Neolithic"],a:3,e:"Correct sequence: Palaeolithic (Old) → Mesolithic (Middle) → Neolithic (New). Chronologically from 50,000 BC to 1,000 BC. Chalcolithic follows Neolithic."},
+{q:"In which period did fire come into USE (not discovery)?",o:["Palaeolithic","Mesolithic","Neolithic","Chalcolithic"],a:2,e:"Fire was DISCOVERED in Mesolithic but came into regular USE in the Neolithic period. Two different periods, two different answers."},
+{q:"Dholavira was added to UNESCO World Heritage List in:",o:["2003","2010","2018","2021"],a:3,e:"Dholavira (Kutch, Gujarat) was added to UNESCO WHL in 2021. Bhimbetka was added in 2003. These two years are the most commonly confused UNESCO dates in Ancient Indian history."},
+{q:"Which CORRECTLY matches the discoverer with the find?",o:["Foote → Bhimbetka","Wakankar → 1st Stone Age institute","Wakankar → Bhimbetka","Foote → Mohenjodaro"],a:2,e:"V.S. Wakankar discovered Bhimbetka. Robert Bruce Foote founded the 1st Stone Age culture institute. These are commonly confused."},
+{q:"The correct pair for 1st and 2nd pet of humans:",o:["Horse → Dog","Cat → Dog","Dog → Horse","Dog → Cow"],a:2,e:"1st pet = Dog (Mesolithic) | 2nd pet = Horse (mentioned in Vedas, sometimes associated with Neolithic/Vedic). Dog in Mesolithic, Horse in Vedic."},
+{q:"Which stone age period is associated with BOTH fire discovery AND bows & arrows?",o:["Palaeolithic","Neolithic","Chalcolithic","Mesolithic"],a:3,e:"Mesolithic period: fire was discovered, bows & arrows were introduced, microliths used, dog domesticated, fishing and fowling became important."},
+{q:"The term 'Chalcolithic' means:",o:["Iron and Stone Age","Gold and Stone Age","Copper and Stone Age","Bronze and Stone Age"],a:2,e:"Chalcolithic = Chalco (copper) + lithos (stone). Copper was the most used metal in this period. It is the transition age from stone tools to metal tools."},
+{q:"Palaeolithic tools included which of the following?",o:["Microliths and lunates","Polished stone and celt","Handaxes, cleavers and choppers","Bronze axes and copper tools"],a:2,e:"Palaeolithic tools: Lower = handaxes, cleavers, choppers; Middle = flakes (scrapers, borers); Upper = blades, burins. Microliths are Mesolithic."},
+{q:"Which period immediately preceded the IVC (Harappan Civilisation)?",o:["Mesolithic","Palaeolithic","Chalcolithic / Pre-Harappan","Neolithic"],a:2,e:"The Chalcolithic / Pre-Harappan period (3500–2500 BC) immediately preceded the IVC. Sites like Kali Banga have pre-Harappan ploughed field evidence."},
+{q:"Rock paintings at Bhimbetka span approximately how many years?",o:["1,000 years","5,000 years","15,000 years","30,000 years"],a:3,e:"Bhimbetka rock paintings span approximately 30,000 years — from the Lower Palaeolithic period to the early medieval period."}
+]}
+]},
+{id:"ivc",title:"Indus Valley Civilization",icon:"🏛️",nodes:[
+{id:"ivc1",title:"IVC — Major Sites & Excavators",xp:70,type:"regular",seqIdx:3,
+facts:[
+"Also called <b>Harappan Civilisation</b> | Period: <b>2500–1750 BC</b> (Bronze Age) | First urban civilisation of Indian subcontinent",
+"Extent: Baluchistan → Gujarat; Afghanistan → Western UP | Total sites: <b>over 1400</b>",
+"<b>Harappa</b> (Punjab, Pak) — River: Ravi | Discovered: 1921 | Excavator: <b>D.R. Sahini</b> | 1st IVC site excavated",
+"<b>Mohenjodaro</b> (Sindh, Pak) — River: Indus | Discovered: 1922 | Excavator: <b>R.D. Banerjee</b> | Largest city | 'Mound of the Dead'",
+"<b>Chanhudaro</b> (Sindh) — Excavator: Gopal Mazumdar | 1931 | Bead factory, lipstick | ONLY major site with <b>NO citadel</b> | 'Lancashire of India'",
+"<b>Lothal</b> (Ahmedabad, Guj) — River: Bhogwa | 1955 | Excavator: Rangnath Rao | BIGGEST dockyard | Earliest rice | 'Manchester of IVC'",
+"<b>Dholavira</b> (Kutch, Guj) — River: Luni | 1968 | Excavator: J.P. Joshi | Water harvesting | Rocks used | 3-part town | <b>UNESCO 2021</b>",
+"<b>Kali Banga</b> (Rajasthan) — River: Ghaggar | 1961 | Excavators: B.B. Lal & B.K. Thapar | Black bangles | Fire altars | Pre-Harappan ploughed field",
+"<b>Rakhi Garhi</b> (Hisar, Haryana) — River: Ghaggar | 1963 | <b>LARGEST site of IVC</b> (bigger than Mohenjodaro)",
+"<b>Sutkagendor</b> (Baluchistan) — River: Dasht | Excavator: Aurel Stein (1928) | <b>Westernmost site</b>",
+"<b>Alamgirpur</b> (Meerut, UP) — River: Hindon | <b>Easternmost site</b>"
+],
+table:{h:["Site","River","Year","Excavator","Key Finding"],r:[
+["Harappa (Punjab, Pak)","Ravi","1921","D.R. Sahini","1st excavated; Granaries"],
+["Mohenjodaro (Sindh)","Indus","1922","R.D. Banerjee","Great Bath; Pashupati Seal; Bronze Girl"],
+["Chanhudaro (Sindh)","Indus","1931","Gopal Mazumdar","Bead factory; NO citadel"],
+["Ropad (Punjab, India)","Sutlej","1953","Y.D. Sharma","Dog buried with man"],
+["Dholavira (Kutch, Guj)","Luni","1968","J.P. Joshi","Water harvesting; UNESCO 2021"],
+["Lothal (Ahmedabad)","Bhogwa","1955","Rangnath Rao","Biggest dockyard; Earliest rice"],
+["Kali Banga (Rajasthan)","Ghaggar","1961","B.B. Lal","Black bangles; Fire altars"],
+["Banawali (Haryana)","Ghaggar","1973","R.S. Bisht","Plough terracotta; barley"],
+["Rakhi Garhi (Haryana)","Ghaggar","1963","Prof. Surbhajan","LARGEST site of IVC"],
+["Sutkagendor (Baluchistan)","Dasht","1928","Aurel Stein","Westernmost site"],
+["Alamgirpur (Meerut, UP)","Hindon","—","—","Easternmost site"]
+]},
+mn:{h:"🧠 MNEMONIC — Excavators",b:"<b>H</b>arappa → <b>S</b>ahini | <b>M</b>ohenjodaro → <b>B</b>anerjee<br>H comes before M in alphabet = Sahini before Banerjee<br><b>Lothal = Manchester</b> (cotton/dockyard) | <b>Chanhudaro = Lancashire</b> (bead-making)"},
+traps:["LARGEST site = Rakhi Garhi (NOT Mohenjodaro — Mohenjodaro is largest CITY)","FIRST excavated = Harappa 1921 (NOT Mohenjodaro which was 1922)","Chanhudaro = ONLY major site with NO citadel","Dholavira = rocks used for construction (NOT baked bricks like others)","Easternmost = Alamgirpur (UP) | Westernmost = Sutkagendor (Baluchistan)"],
+revision:[
+"IVC = Harappan Civilisation, 2500-1750 BC, Bronze Age, first urban civilisation",
+"Harappa(1921,Sahini,Ravi) | Mohenjodaro(1922,Banerjee,Indus) — 1st excavated vs largest city",
+"Rakhi Garhi = LARGEST site | Mohenjodaro = largest CITY",
+"Chanhudaro = bead factory, NO citadel | Lothal = biggest dockyard, earliest rice",
+"Dholavira = rocks used, 3-part town, UNESCO 2021",
+"Westernmost = Sutkagendor | Easternmost = Alamgirpur"
+],
+oneliners:[
+"IVC is also called the Harappan Civilisation",
+"IVC period: approximately 2500-1750 BC (Bronze Age)",
+"IVC was the first urban civilisation of the Indian subcontinent",
+"Over 1400 IVC sites have been discovered",
+"Harappa, on the Ravi river, was the first IVC site excavated (1921, by D.R. Sahini)",
+"Mohenjodaro, on the Indus river, was excavated in 1922 by R.D. Banerjee",
+"Mohenjodaro means 'Mound of the Dead' and is the largest IVC city",
+"Rakhi Garhi (Haryana) is the largest IVC site, bigger than Mohenjodaro",
+"Chanhudaro is the only major IVC site with no citadel",
+"Chanhudaro is called the 'Lancashire of India' for its bead-making industry",
+"Lothal had the biggest dockyard in the IVC and the earliest evidence of rice",
+"Lothal is called the 'Manchester of IVC'",
+"Dholavira used rocks (not standardized bricks) and has a unique 3-part town layout",
+"Dholavira received UNESCO World Heritage status in 2021",
+"Kali Banga has evidence of a pre-Harappan ploughed field",
+"Sutkagendor, on the Dasht river, is the westernmost IVC site",
+"Alamgirpur, on the Hindon river near Meerut, is the easternmost IVC site",
+"Ropad has the unique finding of a dog buried with a human",
+"Banawali yielded a terracotta plough and barley remains",
+"IVC extended from Baluchistan to Gujarat, and Afghanistan to western UP"
+],
+flashcards:[
+{q:"Who excavated Harappa, and when?",a:"D.R. Sahini, in 1921 — the first IVC site excavated"},
+{q:"Who excavated Mohenjodaro, and when?",a:"R.D. Banerjee, in 1922"},
+{q:"What does 'Mohenjodaro' mean?",a:"'Mound of the Dead'"},
+{q:"Which is the LARGEST IVC site, and which is the largest CITY?",a:"Largest site = Rakhi Garhi; largest city = Mohenjodaro"},
+{q:"Which major IVC site has NO citadel?",a:"Chanhudaro"},
+{q:"Which IVC site is the 'Manchester of IVC' and why?",a:"Lothal — for its biggest dockyard and earliest rice cultivation"},
+{q:"Which IVC site is the 'Lancashire of India' and why?",a:"Chanhudaro — for its bead-making (and lipstick) factory"},
+{q:"What makes Dholavira architecturally unique?",a:"It used rocks instead of baked bricks, and has a unique 3-part town layout"},
+{q:"Name the westernmost and easternmost IVC sites.",a:"Westernmost = Sutkagendor (Dasht river); Easternmost = Alamgirpur (Hindon river)"},
+{q:"Which two IVC sites are notable for unusual burial/agricultural finds?",a:"Ropad — dog buried with a man; Banawali — terracotta plough and barley"}
+],
+mcqs:[
+{q:"Who excavated Harappa in 1921?",o:["R.D. Banerjee","J.P. Joshi","D.R. Sahini","B.B. Lal"],a:2,e:"D.R. Sahini (Daya Ram Sahini) excavated Harappa in 1921. R.D. Banerjee excavated Mohenjodaro in 1922. H comes before M → Sahini before Banerjee."},
+{q:"The LARGEST site of the Indus Valley Civilization is:",o:["Mohenjodaro","Harappa","Rakhi Garhi","Lothal"],a:2,e:"Rakhi Garhi (Hisar, Haryana) is the LARGEST IVC site — even bigger than Mohenjodaro. Mohenjodaro is the largest CITY but Rakhi Garhi is the largest SITE."},
+{q:"The BIGGEST dockyard of IVC is found at:",o:["Harappa","Mohenjodaro","Sutkagendor","Lothal"],a:3,e:"Lothal (Ahmedabad, Gujarat) has the biggest dockyard in IVC — evidence of sea trade with Mesopotamia. Lothal is called the 'Manchester of IVC'."},
+{q:"Which IVC site is called the 'Lancashire of India'?",o:["Lothal","Harappa","Chanhudaro","Banawali"],a:2,e:"Chanhudaro is called Lancashire of India for its bead making factory. Lothal is Manchester. Both are textile/trade references to English industrial cities."},
+{q:"Which major IVC site has NO citadel?",o:["Harappa","Mohenjodaro","Kali Banga","Chanhudaro"],a:3,e:"Chanhudaro is the ONLY major IVC site without a citadel. All other major sites have the two-part structure (Upper Citadel + Lower Town)."},
+{q:"What does 'Mohenjodaro' mean?",o:["City of Light","Mound of the Dead","Great Bath","City of the Indus"],a:1,e:"Mohenjodaro means 'Mound of the Dead' in Sindhi. It was excavated by R.D. Banerjee in 1922 on the banks of the Indus river in Sindh, Pakistan."},
+{q:"Dholavira (Kutch, Gujarat) is unique because:",o:["It has the biggest dockyard","It used ROCKS for construction (not baked bricks)","It has the most seals","It is the oldest IVC site"],a:1,e:"Dholavira uniquely used rocks (not standardized baked bricks) for construction. It also has a 3-part town (unlike 2-part in most sites) and water harvesting system."},
+{q:"The WESTERNMOST site of IVC is:",o:["Alamgirpur","Ropad","Kali Banga","Sutkagendor"],a:3,e:"Sutkagendor (on the Dasht river, Baluchistan, near Iran border) is the westernmost IVC site. Alamgirpur (Meerut, UP, on Hindon river) is the easternmost."},
+{q:"Kali Banga (Rajasthan) is famous for:",o:["Biggest dockyard","Pre-Harappan ploughed field evidence","Water harvesting","No citadel"],a:1,e:"Kali Banga on the Ghaggar river has evidence of pre-Harappan ploughed field — oldest ploughed field in South Asia. Also known for black bangles and fire altars."},
+{q:"Earliest cultivation of RICE in IVC was found at:",o:["Harappa","Mohenjodaro","Kali Banga","Lothal"],a:3,e:"Lothal (Gujarat) has the earliest evidence of rice cultivation in IVC. Lothal is also known for the biggest dockyard, bead making factory, and chess board remains."}
+]},
+{id:"ivc2",title:"IVC — Features, Religion & Script",xp:60,type:"regular",seqIdx:4,
+facts:[
+"<b>Town Planning:</b> Grid system (roads at 90°) | Underground covered drainage — UNIQUE to IVC | Bricks: 1:2:4 ratio",
+"Two-part: Upper Citadel + Lower Town | Dholavira = 3-part (unique) | Doorways on side lanes (privacy)",
+"<b>NO temples anywhere in IVC</b>",
+"<b>Economy:</b> Agriculture-based | Standard weights: binary system (1,2,4,8,16...) | Trade with Mesopotamia (Sumer)",
+"Bronze tools only — <b>NO iron</b> | Cotton cultivation — Lothal evidence | Bead-making industry",
+"<b>Religion:</b> Mother Goddess (most prominent) | Pashupati Mahadeva (proto-Shiva) | Tree worship (Peepal) | Swastika symbol",
+"<b>Pashupati Seal (Mohenjodaro):</b> Male deity, 3 horned heads, yogi posture | Surrounded by Elephant, Tiger, Rhinoceros | Buffalo below, two deer at feet",
+"<b>Unicorn</b> = most depicted animal on seals | <b>Bull</b> most common on Mohenjodaro seals",
+"<b>Script:</b> Pictographic | Written right-to-left | ~400+ signs | <b>NOT YET DECIPHERED</b>",
+"<b>No horse remains</b> in IVC — horse introduced by Aryans"
+],
+traps:["NO iron in IVC — iron is Later Vedic period (Krishna Ayas)","NO horse in IVC — horse introduced by Aryans","NO temples in IVC","IVC script = pictographic — NOT deciphered yet","Unicorn = most depicted on seals overall | Bull = at Mohenjodaro specifically","Pashupati Seal = Mohenjodaro (NOT Harappa)"],
+revision:[
+"Town planning: grid roads (90°), underground drainage (UNIQUE), bricks 1:2:4 ratio",
+"NO iron, NO horse, NO temples in IVC",
+"Religion: Mother Goddess (most prominent), Pashupati seal (proto-Shiva), Peepal tree, Swastika",
+"Unicorn = most depicted animal overall | Bull = most common at Mohenjodaro",
+"Script: pictographic, right-to-left, 400+ signs, NOT deciphered",
+"Economy: agriculture-based, binary weight system, traded with Mesopotamia (Sumer)"
+],
+oneliners:[
+"IVC towns followed a grid system with roads meeting at right angles",
+"IVC's underground covered drainage system was unique among ancient civilisations",
+"IVC bricks were standardized in a 1:2:4 ratio",
+"Most IVC towns had a two-part layout: Upper Citadel and Lower Town",
+"Dholavira uniquely had a three-part town layout",
+"No temples have been found anywhere in the IVC",
+"IVC's economy was primarily agriculture-based",
+"IVC used a binary system of standard weights (1,2,4,8,16...)",
+"IVC traded with Mesopotamia (Sumer) — seals found in both regions",
+"Only bronze and copper tools were used in IVC; iron was completely absent",
+"Cotton cultivation is evidenced at Lothal",
+"Mother Goddess was the most prominently worshipped IVC deity",
+"The Pashupati Seal shows a proto-Shiva figure and was found at Mohenjodaro",
+"The Pashupati figure is surrounded by an elephant, tiger, and rhinoceros, with a buffalo below",
+"Tree worship (especially the Peepal tree) was practised in IVC",
+"The Swastika symbol has been found on IVC seals",
+"The Unicorn is the most frequently depicted animal on IVC seals overall",
+"The Bull is the most common animal depicted on Mohenjodaro's seals specifically",
+"The IVC script is pictographic, written right-to-left, with 400+ identified signs",
+"The IVC script remains undeciphered to this day"
+],
+flashcards:[
+{q:"What was unique about IVC's drainage system?",a:"It was an underground, covered drainage system — unique among ancient civilisations"},
+{q:"What ratio were IVC bricks standardized in?",a:"1:2:4 (height:width:length)"},
+{q:"Which IVC site has a unique 3-part town layout instead of the usual 2-part?",a:"Dholavira"},
+{q:"Were there any temples in the IVC?",a:"No — no temples have been found anywhere in the IVC"},
+{q:"What does the Pashupati Seal depict, and where was it found?",a:"A male deity (proto-Shiva) in yogi posture with 3 horned heads, surrounded by animals; found at Mohenjodaro"},
+{q:"Which animal is most depicted on IVC seals overall vs at Mohenjodaro specifically?",a:"Overall = Unicorn; at Mohenjodaro specifically = Bull"},
+{q:"Describe the IVC script.",a:"Pictographic, written right-to-left, 400+ signs identified, still NOT deciphered"},
+{q:"Which metal was completely absent in the IVC?",a:"Iron (only copper, bronze, gold, silver were used)"},
+{q:"What evidence shows IVC traded with Mesopotamia?",a:"IVC seals have been found in Mesopotamia (Sumer) and vice versa"},
+{q:"Was the horse present in the IVC?",a:"No — no horse remains found; the horse was introduced later by the Aryans"}
+],
+mcqs:[
+{q:"The Great Bath is located at which IVC site?",o:["Harappa","Lothal","Kali Banga","Mohenjodaro"],a:3,e:"The Great Bath is at Mohenjodaro — evidence of ritual public bathing. It is 12m × 7m and was the largest structure at Mohenjodaro."},
+{q:"The Pashupati Seal was found at:",o:["Harappa","Lothal","Kali Banga","Mohenjodaro"],a:3,e:"The Pashupati Seal was found at Mohenjodaro. It shows a male deity in yogi posture with 3 horned heads, surrounded by Elephant, Tiger, Rhinoceros — proto-Shiva."},
+{q:"The IVC script is:",o:["Brahmi script","Cuneiform","Pictographic — not deciphered","Devanagari"],a:2,e:"IVC script is pictographic (written right-to-left, sometimes boustrophedon). About 400+ signs have been identified. It has NOT been deciphered yet."},
+{q:"The most depicted animal on IVC seals overall is:",o:["Bull","Elephant","Tiger","Unicorn"],a:3,e:"Unicorn is the most depicted animal on IVC seals overall. Bull is most common at Mohenjodaro specifically. Unicorn appears across all major IVC sites."},
+{q:"IVC bricks were in the ratio of:",o:["1:1:2","2:3:4","1:2:4","1:3:6"],a:2,e:"IVC bricks were standardized in the ratio 1:2:4 (height:width:length). This standardization across all IVC sites shows remarkable urban planning coordination."},
+{q:"Which metal was NOT used in IVC?",o:["Copper","Gold","Iron","Bronze"],a:2,e:"Iron was NOT used in IVC. Only copper, bronze (copper + tin), gold, and silver were used. Iron came into use in the Later Vedic period (called 'Krishna Ayas')."},
+{q:"Trade with which civilization is evidenced by IVC seals found abroad?",o:["Egyptian civilization","Chinese civilization","Mesopotamian (Sumer) civilization","Roman civilization"],a:2,e:"IVC seals have been found in Mesopotamia (Sumer/modern Iraq) and vice versa — evidence of trade between IVC and Mesopotamia. Lothal's dockyard supported this sea trade."},
+{q:"Which goddess was MOST prominently worshipped in IVC?",o:["Pashupati (proto-Shiva)","Mother Goddess","Sarasvati","Lakshmi"],a:1,e:"Mother Goddess was the most prominent deity in IVC — evidenced by numerous terracotta female figurines. Pashupati Seal shows a male deity but is less common than Mother Goddess."},
+{q:"IVC's most advanced feature of town planning was:",o:["Grid system of roads","Great Bath","Underground covered drainage","Standardized bricks"],a:2,e:"Underground covered drainage system is considered the most advanced and unique feature of IVC town planning. No other ancient civilization had such a sophisticated drainage system."},
+{q:"Which of the following was ABSENT in IVC?",o:["Bronze tools","Cotton cultivation","Horse domestication","Trade with Mesopotamia"],a:2,e:"Horse was ABSENT in IVC — no horse remains found. Horse was introduced to the Indian subcontinent by the Aryans. This is a key difference between IVC and Vedic civilisation."}
+]},
+{id:"ivc3",title:"IVC — Decline & Master Traps",xp:45,type:"trap",seqIdx:5,
+facts:[
+"<b>6 Decline Theories:</b> 1) Aryan Invasion (Wheeler — largely rejected) | 2) Floods | 3) Ecological change/Sarasvati dried | 4) Tectonic activity | 5) Epidemic | 6) Trade decline",
+"<b>Button Seal at Lothal</b> (others have stamp seals) — often asked",
+"<b>Fire altars</b> found at: Kali Banga AND Lothal — evidence of fire worship",
+"<b>Ropad (Punjab, India):</b> Dog buried with man — unique finding | River: Sutlej | Excavator: Y.D. Sharma",
+"<b>Banawali (Haryana):</b> Terracotta plough | Barley found | River: Ghaggar | Excavator: R.S. Bisht"
+],
+traps:["LARGEST site ≠ LARGEST city: Rakhi Garhi (largest site) vs Mohenjodaro (largest city)","Pashupati Seal → Mohenjodaro | Bronze Dancing Girl → Mohenjodaro | Bearded Priest (steatite statue) → Mohenjodaro","Fire altars at Kali Banga AND Lothal (not only one of them)","Button Seal = Lothal | Stamp Seal = everywhere else in IVC","Aryan Invasion Theory by Wheeler — largely rejected today"],
+revision:[
+"6 decline theories: Aryan Invasion(rejected), Floods, Ecological/Sarasvati drying, Tectonic, Epidemic, Trade decline",
+"Most accepted theory today = Ecological change/Sarasvati drying up",
+"Button Seal = Lothal only | Stamp Seal = rest of IVC",
+"Fire altars: Kali Banga AND Lothal (both, not just one)",
+"Mohenjodaro artefacts: Pashupati Seal, Bronze Dancing Girl, Bearded Priest, Great Bath",
+"Ropad = dog buried with man | Banawali = terracotta plough + barley"
+],
+oneliners:[
+"6 theories explain IVC's decline: Aryan invasion, floods, ecological change, tectonic activity, epidemic, trade decline",
+"The Aryan Invasion Theory was proposed by R.E.M. Wheeler and is now largely rejected",
+"The most widely accepted decline theory today is ecological change/drying of the Sarasvati",
+"Lothal had a 'Button Seal', unlike the stamp seals used elsewhere in the IVC",
+"Fire altars (evidence of fire worship) were found at both Kali Banga and Lothal",
+"Ropad, on the Sutlej river, has the unique finding of a dog buried with a human",
+"Banawali, on the Ghaggar river, yielded a terracotta plough and barley",
+"The Bronze Dancing Girl was found at Mohenjodaro",
+"The Bearded Priest steatite statue was found at Mohenjodaro",
+"Kali Banga and Banawali are both located on the Ghaggar river",
+"The Ghaggar river is identified with the ancient, now-dried Sarasvati river",
+"Rakhi Garhi is the largest IVC SITE; Mohenjodaro is the largest IVC CITY",
+"IVC did not use iron tools — only copper, bronze, gold, and silver",
+"IVC had underground covered drainage, a unique feature of its town planning",
+"IVC's script remains undeciphered despite 400+ identified signs",
+"IVC traded with Mesopotamia, evidenced by seals found in both regions",
+"Y.D. Sharma excavated Ropad; R.S. Bisht excavated Banawali",
+"B.B. Lal and B.K. Thapar excavated Kali Banga",
+"Deforestation is cited as a contributing factor in the ecological decline theory",
+"No single theory fully explains IVC's decline — multiple factors likely combined"
+],
+flashcards:[
+{q:"List the 6 theories for IVC's decline.",a:"Aryan Invasion, Floods, Ecological change/Sarasvati drying, Tectonic activity, Epidemic, Trade decline"},
+{q:"Who proposed the Aryan Invasion Theory, and is it accepted today?",a:"R.E.M. Wheeler proposed it; it is now largely rejected"},
+{q:"Which decline theory is most widely accepted today?",a:"Ecological change — deforestation and the drying up of the Sarasvati river"},
+{q:"Which IVC site uniquely has a 'Button Seal'?",a:"Lothal (all other major sites have stamp seals)"},
+{q:"Where were fire altars found in the IVC?",a:"Both Kali Banga AND Lothal"},
+{q:"Which site has the unique 'dog buried with man' finding?",a:"Ropad, on the Sutlej river"},
+{q:"What was found at Banawali?",a:"A terracotta plough and barley remains"},
+{q:"Name three famous artefacts found at Mohenjodaro.",a:"Pashupati Seal, Bronze Dancing Girl, and the Bearded Priest steatite statue"},
+{q:"Which two IVC sites lie on the Ghaggar river (identified with the ancient Sarasvati)?",a:"Kali Banga and Banawali (also Rakhi Garhi)"},
+{q:"What is the key difference between the largest IVC 'site' and largest 'city'?",a:"Largest site = Rakhi Garhi; largest city = Mohenjodaro — these are different answers"}
+],
+mcqs:[
+{q:"The Aryan Invasion Theory for IVC decline was proposed by:",o:["D.R. Sahini","R.D. Banerjee","R.E.M. Wheeler","J.P. Joshi"],a:2,e:"R.E.M. Wheeler proposed the Aryan Invasion Theory — that Aryans invaded and destroyed IVC. This theory is now largely rejected by archaeologists."},
+{q:"'Button Seal' (as opposed to stamp seal) was found at which IVC site?",o:["Mohenjodaro","Harappa","Kali Banga","Lothal"],a:3,e:"Lothal has Button Seal, unlike the stamp seals found at all other major IVC sites. This is a commonly asked distinction in SSC exams."},
+{q:"Fire altars were found at which IVC sites?",o:["Only Kali Banga","Only Lothal","Kali Banga AND Lothal","Mohenjodaro AND Harappa"],a:2,e:"Fire altars were found at BOTH Kali Banga (Rajasthan) and Lothal (Gujarat) — evidence of fire worship or yajnas. This is asked as 'which sites' showing both are correct."},
+{q:"The 'Dog buried with Man' finding was at which IVC site?",o:["Lothal","Banawali","Kali Banga","Ropad"],a:3,e:"Ropad (on Sutlej river, Punjab, India) has the unique finding of a dog buried alongside a human being — unique in all IVC sites."},
+{q:"Banawali (Haryana) is associated with which finding?",o:["Biggest dockyard","Terracotta plough and barley","Water harvesting","Pre-Harappan ploughed field"],a:1,e:"Banawali (Fatehabad, Haryana) on the Ghaggar river, excavated by R.S. Bisht, is known for terracotta figure of a plough and barley finds."},
+{q:"Which theory of IVC decline involves the drying up of the Sarasvati river?",o:["Aryan Invasion","Tectonic activity","Epidemic","Ecological change"],a:3,e:"Ecological change theory: deforestation and the drying up of the Sarasvati river (Ghaggar-Hakra system) led to IVC decline. This is now the most widely accepted theory."},
+{q:"The 'Bronze Dancing Girl' was found at:",o:["Harappa","Lothal","Mohenjodaro","Kali Banga"],a:2,e:"The Bronze Dancing Girl (a famous IVC artifact showing a nude female dancer) was found at Mohenjodaro. Also found there: Bearded Priest (steatite statue), Pashupati Seal, Great Bath."},
+{q:"Which two IVC sites are on the Ghaggar river?",o:["Harappa and Mohenjodaro","Lothal and Dholavira","Kali Banga and Banawali","Ropad and Alamgirpur"],a:2,e:"Both Kali Banga (Rajasthan) and Banawali (Haryana) are on the Ghaggar river. Rakhi Garhi is also on Ghaggar. This river is identified with the ancient Sarasvati."},
+{q:"Which statement about IVC is INCORRECT?",o:["IVC had underground drainage","IVC script is not deciphered","IVC used iron tools","IVC traded with Mesopotamia"],a:2,e:"IVC did NOT use iron tools. Only copper, bronze, gold, and silver were used. Iron came in the Later Vedic period. The other three statements are correct."},
+{q:"The Bearded Priest statue (steatite) was found at:",o:["Harappa","Lothal","Kali Banga","Mohenjodaro"],a:3,e:"The Bearded Priest steatite statue was found at Mohenjodaro. It shows a figure with a shawl decorated with trefoil patterns. It is an iconic IVC artefact."}
+]}
+]},
+{id:"vedic",title:"Vedic Age",icon:"📖",nodes:[
+{id:"v1",title:"The Four Vedas & Literature",xp:65,type:"regular",seqIdx:6,
+facts:[
+"<b>Veda</b> = Sanskrit root 'vid' = 'to know' | Period: 1500–600 BC | Vedic people = Aryans (from Central Asia)",
+"<b>Rigveda:</b> 1028 Hymns (suktas) | 10 Mandalas | Oldest religious text in world | UNESCO Memory of World | Starts: 'Agnimele Purohitam'",
+"<b>Gayatri Mantra</b> in Rigveda — composed by <b>Vishwamitra</b>",
+"<b>Purusha Sukta</b> (Mandala 10) = theoretical basis of 4 varnas",
+"<b>Samaveda:</b> Musical versions of Rigvedic hymns | Basis of <b>Indian classical music</b>",
+"<b>Yajurveda:</b> Sacrificial formulae + prose rituals",
+"<b>Atharvaveda:</b> Magic spells, charms, medicine, daily life | Last Veda added",
+"Structure: Mantras (4 Vedas) → Brahmanas → Aranyakas → Upanishads (Vedanta)",
+"<b>Upanishads = Vedanta</b> (end/essence of Vedas) | ~108 total; 12–13 principal | Key: Brahman = Atman",
+"<b>6 Vedangas:</b> Shiksha (phonetics), Kalpa (ritual), Vyakarana (grammar — Panini's Ashtadhyayi), Nirukta (etymology), Chhanda (metre), Jyotisha (astronomy)"
+],
+table:{h:["Veda","Content","Key Fact"],r:[
+["Rigveda","1028 hymns, 10 Mandalas","Oldest; Gayatri Mantra; UNESCO Register"],
+["Samaveda","Musical Rigvedic hymns","Basis of Indian classical music"],
+["Yajurveda","Sacrificial formulae + prose","—"],
+["Atharvaveda","Magic spells, charms, medicine","Last Veda added; daily life"]
+]},
+mn:{h:"🧠 MNEMONIC — Vedas",b:"<b>R-S-Y-A</b> → <b>R</b>igveda, <b>S</b>amaveda, <b>Y</b>ajurveda, <b>A</b>tharvaveda<br>'<b>Really Serious Young Adults</b>'<br>Samaveda = <b>S</b>ong | Atharvaveda = <b>A</b>tharva (magic/charms)"},
+traps:["Gayatri Mantra = Rigveda, composed by Vishwamitra (NOT Valmiki, NOT Vyasa)","Samaveda = music basis (NOT Rigveda)","Atharvaveda = magic/charms/medicine (NOT Rigveda)","Upanishads = VEDANTA (NOT Vedanga)","Vedangas = 6 (not 4, not 8)","Panini = Ashtadhyayi | Patanjali = Mahabhashya (commentary on Panini)"],
+revision:[
+"4 Vedas in order: Rigveda, Samaveda, Yajurveda, Atharvaveda (R-S-Y-A)",
+"Rigveda = oldest, 1028 hymns/10 Mandalas, Gayatri Mantra (Vishwamitra)",
+"Samaveda = music basis | Yajurveda = sacrificial formulae | Atharvaveda = magic/medicine, last added",
+"Structure: Mantras → Brahmanas → Aranyakas → Upanishads (Vedanta)",
+"6 Vedangas incl. Vyakarana (Panini's Ashtadhyayi)",
+"Purusha Sukta (Rigveda Mandala 10) = basis of 4 varnas"
+],
+oneliners:[
+"'Veda' comes from the Sanskrit root 'vid', meaning 'to know'",
+"The Vedic period spans approximately 1500-600 BC",
+"Vedic people (Aryans) are believed to have migrated from Central Asia",
+"Rigveda is the oldest religious text in the world",
+"Rigveda has 1028 hymns (suktas) arranged in 10 Mandalas",
+"Rigveda is part of UNESCO's Memory of the World Register",
+"Rigveda begins with the words 'Agnimele Purohitam'",
+"The Gayatri Mantra, found in the Rigveda, was composed by Vishwamitra",
+"The Purusha Sukta (Rigveda, Mandala 10) is the theoretical basis of the 4 varnas",
+"Samaveda contains musical versions of Rigvedic hymns",
+"Samaveda is considered the basis of Indian classical music",
+"Yajurveda contains sacrificial formulae and prose rituals",
+"Atharvaveda contains magic spells, charms, and everyday/medicinal knowledge",
+"Atharvaveda was the last of the four Vedas to be compiled",
+"The Vedic text structure progresses: Mantras → Brahmanas → Aranyakas → Upanishads",
+"Upanishads are also called 'Vedanta' — the end/essence of the Vedas",
+"There are about 108 Upanishads total, with 12-13 considered principal",
+"The core Upanishadic teaching is 'Brahman = Atman' (universal soul = individual soul)",
+"There are 6 Vedangas: Shiksha, Kalpa, Vyakarana, Nirukta, Chhanda, and Jyotisha",
+"Panini's Ashtadhyayi (Sanskrit grammar) falls under the Vyakarana Vedanga"
+],
+flashcards:[
+{q:"Name the 4 Vedas in order.",a:"Rigveda, Samaveda, Yajurveda, Atharvaveda"},
+{q:"Which is the oldest Veda, and what are its key facts?",a:"Rigveda — 1028 hymns, 10 Mandalas, oldest religious text in the world, in UNESCO's Memory of the World Register"},
+{q:"Who composed the Gayatri Mantra, and in which Veda is it found?",a:"Vishwamitra; found in the Rigveda"},
+{q:"Which Veda is the basis of Indian classical music?",a:"Samaveda"},
+{q:"What does the Atharvaveda contain, and what is notable about it?",a:"Magic spells, charms, medicine, daily life — it was the last Veda to be added"},
+{q:"What is the order of Vedic textual layers?",a:"Mantras → Brahmanas → Aranyakas → Upanishads"},
+{q:"What are the Upanishads also called, and what do they teach?",a:"Vedanta; they teach that Brahman (universal soul) = Atman (individual soul)"},
+{q:"Name the 6 Vedangas.",a:"Shiksha, Kalpa, Vyakarana, Nirukta, Chhanda, Jyotisha"},
+{q:"Who wrote the Ashtadhyayi, and who commented on it?",a:"Panini wrote it; Patanjali wrote the Mahabhashya commentary on it"},
+{q:"What is the Purusha Sukta, and where is it found?",a:"The theoretical basis of the 4 varnas; found in Rigveda Mandala 10"}
+],
+mcqs:[
+{q:"Which is the OLDEST Veda?",o:["Samaveda","Atharvaveda","Yajurveda","Rigveda"],a:3,e:"Rigveda is the oldest Veda and the oldest religious text in the world. It contains 1028 hymns in 10 Mandalas. It is also included in UNESCO's Memory of the World Register."},
+{q:"The Gayatri Mantra is found in which Veda?",o:["Samaveda","Yajurveda","Atharvaveda","Rigveda"],a:3,e:"The Gayatri Mantra is in the Rigveda (Mandala 3), composed by Vishwamitra. It is NOT in Samaveda or any other Veda."},
+{q:"Who composed the Gayatri Mantra?",o:["Valmiki","Vyasa","Vishwamitra","Panini"],a:2,e:"The Gayatri Mantra was composed by Vishwamitra (in Rigveda). Valmiki wrote Ramayana, Vyasa wrote Mahabharata/Brahma Sutra, Panini wrote Ashtadhyayi."},
+{q:"Which Veda is the basis of Indian classical music?",o:["Rigveda","Atharvaveda","Yajurveda","Samaveda"],a:3,e:"Samaveda contains musical versions of Rigvedic hymns and is the basis of Indian classical music. Indian musical traditions trace their origin to Samaveda."},
+{q:"Upanishads are also known as:",o:["Vedangas","Brahmanas","Vedanta","Aranyakas"],a:2,e:"Upanishads are called Vedanta — meaning 'end of Vedas' or 'essence of Vedas'. They are philosophical texts dealing with Brahman (universal soul) and Atman (individual soul)."},
+{q:"How many Vedangas are there?",o:["4","6","8","12"],a:1,e:"There are 6 Vedangas (limbs of Vedas): Shiksha (phonetics), Kalpa (ritual), Vyakarana (grammar), Nirukta (etymology), Chhanda (metre), Jyotisha (astronomy)."},
+{q:"The Ashtadhyayi (4000 Sanskrit grammar sutras) was written by:",o:["Patanjali","Yaska","Panini","Vishwamitra"],a:2,e:"Panini wrote the Ashtadhyayi — a treatise on Sanskrit grammar containing 4000 sutras. Patanjali wrote the Mahabhashya (commentary on Ashtadhyayi)."},
+{q:"The Mahabharata was composed by:",o:["Valmiki","Vishwamitra","Panini","Vyasa"],a:3,e:"The Mahabharata (18 parvas, includes Bhagavad Gita) was composed by Vyasa (also called Veda Vyasa). Ramayana (24,000 shlokas, 7 kandas) was written by Valmiki."},
+{q:"The Rigveda starts with the words:",o:["Aum Namah Shivaya","Sarasvati Namaste","Agnimele Purohitam","Gayatri Mahantre"],a:2,e:"Rigveda starts with 'Agnimele Purohitam' — a hymn to Agni (fire god). This is a standard SSC question about Rigveda's opening words."},
+{q:"The Purusha Sukta, which is the theoretical basis of the 4 varnas, is in:",o:["Atharvaveda","Samaveda Mandala 1","Rigveda Mandala 10","Yajurveda"],a:2,e:"Purusha Sukta is in Rigveda Mandala 10. It describes how the 4 varnas (Brahmin, Kshatriya, Vaishya, Shudra) emerged from different parts of the primordial being (Purusha)."}
+]},
+{id:"v2",title:"Early & Later Vedic Period",xp:60,type:"trap",seqIdx:7,
+facts:[
+"<b>Early Vedic (1500–1000 BC):</b> Patriarchal family | Largely egalitarian | No rigid caste | Women equal (Gargi, Lopamudra, Maitreyi)",
+"<b>MOST important Early Vedic god = INDRA</b> (thunder, war) | Weapon: Vajra | Title: Purandara",
+"Agni = 2nd most important | Varuna = cosmic order (Rita) | Soma = intoxicating plant/moon",
+"<b>No temples, no idol worship</b> in Early Vedic | Bali = voluntary gift to king",
+"<b>Cattle = measure of wealth</b> | Gavisthi = battle for cattle | Primary occupation = Pastoralism",
+"<b>Later Vedic (1000–600 BC):</b> Agriculture replaced pastoralism | Iron used = Krishna Ayas",
+"<b>Prajapati replaced Indra</b> as supreme god in Later Vedic",
+"<b>Varna system crystallised</b> into rigid caste in Later Vedic | Shudra excluded from assemblies",
+"<b>Women's status DECLINED</b> in Later Vedic: no sabha, child marriage, difficult widowhood",
+"<b>Ashvamedha Yajna</b> (horse sacrifice) | Rajasuya (royal consecration) | Shatapatha Brahmana = largest Brahmana"
+],
+table:{h:["Feature","Early Vedic","Later Vedic"],r:[
+["Supreme God","Indra","Prajapati"],
+["Metal","Copper/Bronze (Ayas)","Iron (Krishna Ayas)"],
+["Caste system","None","Rigid 4 varnas"],
+["Women's status","Equal","Declined"],
+["Main occupation","Pastoralism","Agriculture"],
+["Taxation","Bali (voluntary)","Compulsory (Bhaga = 1/6)"]
+]},
+traps:["Most important Early Vedic god = Indra (NOT Brahma/Vishnu/Shiva — these rise only in Later Vedic)","Iron = Later Vedic (Krishna Ayas) — NOT Early Vedic, NOT IVC","Varna system = Later Vedic (NOT Early Vedic)","Bali = voluntary gift (Early Vedic) → compulsory (Later Vedic)","Women equal = Early Vedic | Women declined = Later Vedic (opposite!)"],
+revision:[
+"Early Vedic (1500-1000 BC): Indra supreme, pastoralism, no caste, women equal, Bali voluntary",
+"Later Vedic (1000-600 BC): Prajapati supreme, agriculture, rigid varna, women declined, Bali compulsory",
+"Indra: weapon=Vajra, title=Purandara | Iron=Krishna Ayas (Later Vedic only)",
+"Ashvamedha Yajna=horse sacrifice | Rajasuya=royal consecration",
+"Shatapatha Brahmana = largest Brahmana text",
+"Cattle=wealth measure, Gavisthi=cattle battles (Early Vedic)"
+],
+oneliners:[
+"The Early Vedic period spans approximately 1500-1000 BC",
+"The Later Vedic period spans approximately 1000-600 BC",
+"Indra was the most important deity of the Early Vedic period",
+"Indra's weapon was the Vajra (thunderbolt) and his title was Purandara",
+"Agni was the second most important Early Vedic deity",
+"Varuna presided over cosmic order (Rita); Soma was an intoxicating plant/moon deity",
+"Early Vedic society had no temples or idol worship",
+"Cattle were the primary measure of wealth in the Early Vedic period",
+"Gavisthi (desire for cattle) was the most common cause of war in Early Vedic times",
+"Pastoralism was the primary occupation in the Early Vedic period",
+"Prajapati replaced Indra as the supreme deity in the Later Vedic period",
+"Iron, called 'Krishna Ayas', was used in the Later Vedic period",
+"The rigid 4-varna caste system crystallised only in the Later Vedic period",
+"Shudras were excluded from assemblies in the Later Vedic period",
+"Women's status declined sharply in the Later Vedic period",
+"Agriculture replaced pastoralism as the main occupation in the Later Vedic period",
+"Bali was a voluntary gift in Early Vedic times but became compulsory later",
+"Bhaga (1/6th of produce) was a standard Later Vedic tax",
+"Ashvamedha Yajna (horse sacrifice) asserted a king's territorial supremacy",
+"The Shatapatha Brahmana is the largest and most important Brahmana text"
+],
+flashcards:[
+{q:"Who was the supreme deity in Early Vedic vs Later Vedic times?",a:"Early Vedic = Indra; Later Vedic = Prajapati"},
+{q:"What were Indra's weapon and title?",a:"Weapon = Vajra; Title = Purandara"},
+{q:"When was iron first used in the Vedic period, and what was it called?",a:"Later Vedic period; called 'Krishna Ayas' (black metal)"},
+{q:"How did women's status change from Early to Later Vedic?",a:"Declined sharply — from relative equality (sabha access, svayamvara) to exclusion and child marriage"},
+{q:"What was the primary occupation in Early Vedic vs Later Vedic times?",a:"Early Vedic = Pastoralism; Later Vedic = Agriculture"},
+{q:"What was 'Bali', and how did it change over time?",a:"A gift to the king — voluntary in Early Vedic, compulsory in Later Vedic"},
+{q:"What was Gavisthi?",a:"'Desire for cattle' — the most common cause of war in the Early Vedic period"},
+{q:"What is the Ashvamedha Yajna?",a:"A horse sacrifice performed by kings to assert territorial supremacy (Later Vedic)"},
+{q:"When did the rigid 4-varna caste system crystallise?",a:"In the Later Vedic period (not the Early Vedic period)"},
+{q:"Which is the largest Brahmana text?",a:"The Shatapatha Brahmana"}
+],
+mcqs:[
+{q:"The most important deity in the Early Vedic period was:",o:["Brahma","Vishnu","Indra","Prajapati"],a:2,e:"Indra was the most important deity in the Early Vedic period (200 hymns in Rigveda). He is the god of thunder, storm, and war. His weapon is Vajra and title is 'Purandara'."},
+{q:"Indra's weapon and title respectively are:",o:["Trishul — Mahadeva","Vajra — Purandara","Chakra — Vishnu","Danda — Yama"],a:1,e:"Indra's weapon = Vajra (thunderbolt) | Title = Purandara (destroyer of forts/cities). This combination is frequently asked in SSC."},
+{q:"In Later Vedic period, the supreme god became:",o:["Indra","Varuna","Prajapati","Agni"],a:2,e:"Prajapati (creator god) replaced Indra as the supreme god in the Later Vedic period. Brahma, Vishnu, and Shiva (the Trimurti) also rose to prominence in this period."},
+{q:"Iron was used in Vedic period and was called:",o:["Ayas","Loha only","Krishna Ayas","Tamra"],a:2,e:"Iron is called 'Krishna Ayas' (black metal) in Later Vedic texts. 'Ayas' = metal (generic, used for copper in Early Vedic) | 'Krishna Ayas' = iron | 'Loha' = another name for iron."},
+{q:"In the Early Vedic period, the voluntary gift given to the king was called:",o:["Bhaga","Shulka","Bali","Kara"],a:2,e:"In Early Vedic period, 'Bali' was a voluntary gift to the king (not a tax). In Later Vedic period, Bali became compulsory. Bhaga (1/6 of produce) was a standard Later Vedic tax."},
+{q:"The primary occupation in EARLY Vedic period was:",o:["Agriculture","Trade and commerce","Pastoralism (cattle-rearing)","Pottery making"],a:2,e:"Pastoralism (cattle-rearing) was the primary occupation in Early Vedic period. Cattle = measure of wealth. In Later Vedic period, agriculture replaced pastoralism as the main occupation."},
+{q:"Gavisthi (battle for cattle) was the most common cause of war in which period?",o:["IVC period","Later Vedic period","Early Vedic period","Mahajanapada period"],a:2,e:"Gavisthi means 'desire for cattle' and was the most common cause of war in the Early Vedic period. Cattle was the primary measure of wealth in this period."},
+{q:"The Ashvamedha Yajna was a:",o:["Harvest festival","Battle ritual","Horse sacrifice for territorial supremacy","Monsoon prayer"],a:2,e:"Ashvamedha Yajna (horse sacrifice) was performed by kings to assert territorial supremacy in the Later Vedic period. Rajasuya was the royal consecration ceremony."},
+{q:"In Early Vedic period, women could:",o:["Not own property but could study","Attend sabha and choose husband (svayamvara)","Only perform household duties","Not compose Vedic hymns"],a:1,e:"In Early Vedic period, women had a respectable position: they could attend sabha & samiti, choose husband (svayamvara), and there were female sages like Gargi, Lopamudra, and Maitreyi."},
+{q:"The largest and most important Brahmana text is:",o:["Aitareya Brahmana","Shatapatha Brahmana","Rigveda Brahmana","Tandya Brahmana"],a:1,e:"Shatapatha Brahmana is the largest and most important Brahmana text, composed in the Later Vedic period. 'Shatapatha' means 'a hundred paths' and it deals with ritual procedures."}
+]}
+]},
+{id:"maha",title:"Mahajanapadas & Pre-Mauryan",icon:"👑",nodes:[
+{id:"m1",title:"16 Mahajanapadas",xp:75,type:"regular",seqIdx:8,
+facts:[
+"<b>16 Mahajanapadas</b> emerged ~600 BC | Source: <b>Anguttara Nikaya</b> (Buddhist text) + Chulla-Niddesa (Jain)",
+"<b>Vajji (Vaishali)</b> = WORLD'S FIRST REPUBLIC (Lichchavi confederacy)",
+"<b>Assaka</b> = ONLY Mahajanapada south of Vindhyas | Capital: Potana (Maharashtra)",
+"<b>Magadha</b> = most powerful | Capital: Rajgriha → Pataliputra | Rise due to iron ore, elephants, fertile Gangetic plains",
+"<b>Kashi (Varanasi)</b> = cloth manufacturing centre | <b>Kosala (Shravasti)</b> = includes Kapilavastu (Buddha's kingdom)",
+"<b>Malla:</b> Capital = Kushinara + Pawa | Buddha died at Kushinara | Mahavira died at Pawa",
+"<b>Shurasena (Mathura)</b> = junction of Uttarapatha & Dakshinapatha trade routes",
+"<b>Gandhara (Taxila)</b> = Persian/Greek contact zone | Kamboja = regarded as 'uncultured' by Brahmanical texts",
+"<b>Magadha's rise:</b> Iron ore (Chhotanagpur), war elephants, Ganga+Son rivers, Rajgriha (5 hills — naturally fortified)"
+],
+table:{h:["Mahajanapada","Capital","Region","Key Fact"],r:[
+["Kashi","Varanasi","Eastern UP","Cloth manufacturing centre"],
+["Kosala","Shravasti","Eastern UP","Includes Kapilavastu"],
+["Anga","Champa","Bihar","Merged with Magadha by Bimbisara"],
+["Magadha","Rajgriha→Pataliputra","Bihar","Most powerful; Buddhist/Jain centre"],
+["Vajji","Vaishali","Bihar","FIRST REPUBLIC (Lichchavi)"],
+["Malla","Kushinara/Pawa","Bihar/UP","Buddha died at Kushinara"],
+["Vatsa","Kausambi","UP","King Udayana; near Allahabad"],
+["Kuru","Indraprastha","Delhi","Mahabharata heroes' land"],
+["Shurasena","Mathura","UP","Junction Uttarapatha & Dakshinapatha"],
+["Assaka","Potana","Maharashtra","ONLY south of Vindhyas"],
+["Avanti","Ujjain/Mahishmati","MP","Important Buddhist site"],
+["Gandhara","Taxila","NW Pakistan","Persian/Greek contact zone"]
+]},
+traps:["16 Mahajanapadas (NOT 14, NOT 18)","Source = Anguttara Nikaya (Buddhist) — NOT Arthashastra","Vaishali = 1st REPUBLIC (NOT Athens — that's Western history)","Assaka = ONLY south of Vindhyas (Maharashtra)","Buddha died at Kushinara (Malla) — NOT Vaishali"],
+revision:[
+"16 Mahajanapadas, ~600 BC, source = Anguttara Nikaya (Buddhist) + Chulla-Niddesa (Jain)",
+"Vajji (Vaishali) = world's FIRST republic (Lichchavi)",
+"Assaka = ONLY Mahajanapada south of Vindhyas (capital Potana, Maharashtra)",
+"Magadha = most powerful (iron ore, elephants, fertile plains, Rajgriha 5 hills)",
+"Malla: Kushinara(Buddha died) + Pawa(Mahavira died)",
+"Shurasena/Mathura = Uttarapatha-Dakshinapatha trade junction; Gandhara/Taxila = Persian-Greek contact"
+],
+oneliners:[
+"There were 16 Mahajanapadas, emerging around 600 BC",
+"Anguttara Nikaya (Buddhist text) is the primary source listing the 16 Mahajanapadas",
+"Chulla-Niddesa (a Jain text) also mentions the Mahajanapadas",
+"Vaishali (capital of Vajji) is considered the world's first republic",
+"Vajji was governed by the Lichchavi confederacy",
+"Assaka, capital Potana, was the only Mahajanapada south of the Vindhyas",
+"Magadha was the most powerful Mahajanapada",
+"Magadha's capital moved from Rajgriha to Pataliputra",
+"Magadha's rise was aided by iron ore deposits, war elephants, and fertile Gangetic plains",
+"Rajgriha was naturally fortified by 5 hills",
+"Kashi (capital Varanasi) was a cloth manufacturing centre",
+"Kosala (capital Shravasti) included Kapilavastu, Buddha's home region",
+"Malla's twin capitals were Kushinara and Pawa",
+"Buddha died at Kushinara; Mahavira died at Pawa — both in Malla territory",
+"Shurasena (capital Mathura) was the junction of the Uttarapatha and Dakshinapatha trade routes",
+"Gandhara (capital Taxila) was a zone of Persian and Greek contact",
+"Kamboja was regarded as 'uncultured' by Brahmanical texts",
+"Anga (capital Champa) was merged into Magadha by King Bimbisara",
+"Kuru (capital Indraprastha) is associated with the Mahabharata's heroes",
+"Vatsa (capital Kausambi) was ruled by King Udayana"
+],
+flashcards:[
+{q:"How many Mahajanapadas were there, and what is the primary source for them?",a:"16; primary source is the Anguttara Nikaya (Buddhist text)"},
+{q:"Which Mahajanapada is considered the world's first republic?",a:"Vajji (capital Vaishali), governed by the Lichchavi confederacy"},
+{q:"Which Mahajanapada was the only one south of the Vindhyas?",a:"Assaka (capital Potana, in present-day Maharashtra)"},
+{q:"Why did Magadha become the most powerful Mahajanapada?",a:"Iron ore deposits, war elephants, fertile Gangetic plains, and the naturally fortified capital Rajgriha"},
+{q:"Where did Buddha and Mahavira die, respectively?",a:"Buddha died at Kushinara; Mahavira died at Pawa — both in Malla territory"},
+{q:"What made Mathura (Shurasena) significant?",a:"It was the junction of the Uttarapatha and Dakshinapatha trade routes"},
+{q:"Which Mahajanapada's capital was Taxila, and what was it known for?",a:"Gandhara — known as a zone of Persian and Greek contact"},
+{q:"Which Mahajanapada was regarded as 'uncultured' by Brahmanical texts?",a:"Kamboja"},
+{q:"Which Mahajanapada included Kapilavastu, Buddha's home region?",a:"Kosala (capital Shravasti)"},
+{q:"What happened to the Anga Mahajanapada?",a:"It was conquered and merged into Magadha by King Bimbisara"}
+],
+mcqs:[
+{q:"What is the total number of Mahajanapadas?",o:["12","14","16","18"],a:2,e:"There were exactly 16 Mahajanapadas. This is one of the most basic facts — the number is 16, not 12, 14, or 18."},
+{q:"The primary source that mentions the 16 Mahajanapadas is:",o:["Arthashastra","Manusmriti","Anguttara Nikaya","Rigveda"],a:2,e:"Anguttara Nikaya (Buddhist text) is the primary source for 16 Mahajanapadas. Chulla-Niddesa (Jain text) also mentions them. NOT Arthashastra (that's Chanakya, later period)."},
+{q:"World's FIRST republic was at:",o:["Athens, Greece","Vaishali (Vajji/Lichchavi)","Pataliputra (Magadha)","Taxila (Gandhara)"],a:1,e:"Vaishali (capital of Vajji, governed by Lichchavi confederacy) is considered the world's FIRST republic. This is frequently tested in SSC — and students often confuse with Athens (Western history)."},
+{q:"Which Mahajanapada was the ONLY one south of the Vindhya mountains?",o:["Avanti","Assaka","Chedi","Vatsa"],a:1,e:"Assaka (capital: Potana/Potali) was the ONLY Mahajanapada located south of the Vindhyas, in present-day Maharashtra on the Godavari river."},
+{q:"Buddha died at which place in the Malla Mahajanapada?",o:["Pawa","Kausambi","Kushinara","Vaishali"],a:2,e:"Buddha died at Kushinara (Malla). Mahavira died at Pawa (also in Malla). Vaishali is where the 2nd Buddhist Council was held — not where Buddha died."},
+{q:"Mathura (Shurasena Mahajanapada) was the junction of which two ancient trade routes?",o:["Uttarapatha & Dakshinapatha","Silk Route & Spice Route","Royal Road & Persian Road","Grand Trunk Road & Deccan Road"],a:0,e:"Mathura was the junction of Uttarapatha (northern route) and Dakshinapatha (southern route) — making it a critical trade centre and later a cultural hub."},
+{q:"Kapilavastu (Buddha's birthplace kingdom) was part of which Mahajanapada?",o:["Malla","Magadha","Kashi","Kosala"],a:3,e:"Kapilavastu was part of the Kosala Mahajanapada (capital: Shravasti). Buddha called himself a Kosalan. He was born in Lumbini which was in the Kapilavastu region of Kosala."},
+{q:"Which Mahajanapada's capital was at Taxila?",o:["Kamboja","Avanti","Gandhara","Assaka"],a:2,e:"Gandhara's capital was Taxila (in present-day NW Pakistan). Gandhara was the zone of Persian and Greek contact and later became famous for the Gandhara school of art."},
+{q:"Magadha became the most powerful Mahajanapada primarily because of:",o:["Coastal location","Iron ore deposits and war elephants","Greek support","Its location in South India"],a:1,e:"Magadha's rise: iron ore deposits (Chhotanagpur), forest resources for war elephants, fertile Gangetic plains, Ganga+Son rivers confluence, and naturally fortified capital Rajgriha (5 hills)."},
+{q:"Which Mahajanapada was regarded as 'uncultured' by Brahmanical texts?",o:["Assaka","Gandhara","Kamboja","Malla"],a:2,e:"Kamboja (capital: Rajapura, NW Pakistan/Afghanistan) was regarded as 'uncultured' by Brahmanical texts. Gandhara was a Persian/Greek contact zone but not so characterized."}
+]},
+{id:"m2",title:"Pre-Mauryan Dynasties",xp:70,type:"trap",seqIdx:9,
+facts:[
+"<b>Haryanka (544–412 BC):</b> Bimbisara → Ajatashatru → Udayin",
+"<b>Bimbisara:</b> Founded Haryanka | Capital: Rajgriha | Contemporary of BOTH Buddha AND Mahavira | Conquered Anga | Killed by son Ajatashatru",
+"<b>Ajatashatru (492–460 BC):</b> Killed father | Presided over 1st Buddhist Council (Rajgriha, 483 BC) | War weapons: Mahashilakantaka (catapult) + Rathamusala (rotating blade chariot)",
+"<b>Udayin:</b> Founded Pataliputra at confluence of Ganga + Son",
+"<b>Shishunaga (412–344 BC):</b> Destroyed Avanti power | Kalashoka = 2nd Buddhist Council at Vaishali (383 BC)",
+"<b>Nanda (344–321 BC):</b> First NON-KSHATRIYA dynasty | Mahapadma Nanda = founder = 'Ekarat' + 'Destroyer of all Kshatriyas'",
+"Nanda army: 200,000 infantry, 80,000 cavalry, 8,000 chariots, 6,000 elephants",
+"Alexander (326 BC) reached Punjab but <b>army refused to cross Beas</b> (feared Nanda army) | General Coenus voiced this",
+"<b>Dhana Nanda</b> = last Nanda ruler; defeated by Chandragupta Maurya with Chanakya's help"
+],
+table:{h:["Dynasty","Period","Key Rulers","Key Fact"],r:[
+["Haryanka","544–412 BC","Bimbisara, Ajatashatru, Udayin","1st Buddhist Council (Ajatashatru)"],
+["Shishunaga","412–344 BC","Shishunaga, Kalashoka","2nd Buddhist Council (Kalashoka)"],
+["Nanda","344–321 BC","Mahapadma Nanda, Dhana Nanda","First non-Kshatriya dynasty"]
+]},
+traps:["1st Buddhist Council = Rajgriha | King = Ajatashatru (HARYANKA)","2nd Buddhist Council = Vaishali | King = Kalashoka (SHISHUNAGA) — NOT same dynasty","Pataliputra founded by UDAYIN (NOT Bimbisara, NOT Chandragupta Maurya)","Bimbisara killed by AJATASHATRU (his own son)","Nanda = first NON-KSHATRIYA rulers — lower caste origin"],
+revision:[
+"Haryanka(544-412BC): Bimbisara→Ajatashatru→Udayin | Bimbisara=contemporary of Buddha+Mahavira",
+"Ajatashatru: killed father, 1st Buddhist Council (Rajgriha,483BC), Mahashilakantaka+Rathamusala",
+"Udayin founded Pataliputra (Ganga+Son confluence)",
+"Shishunaga(412-344BC): Kalashoka=2nd Buddhist Council (Vaishali,383BC)",
+"Nanda(344-321BC): 1st non-Kshatriya dynasty, Mahapadma Nanda='Ekarat'",
+"Alexander's army refused to cross Beas fearing Nanda army | Chanakya overthrew Dhana Nanda"
+],
+oneliners:[
+"The Haryanka dynasty ruled Magadha from 544-412 BC",
+"Haryanka's key rulers were Bimbisara, Ajatashatru, and Udayin",
+"Bimbisara founded the Haryanka dynasty with capital at Rajgriha",
+"Bimbisara was a contemporary of both Buddha and Mahavira",
+"Bimbisara conquered Anga and was killed by his own son, Ajatashatru",
+"Ajatashatru presided over the 1st Buddhist Council at Rajgriha in 483 BC",
+"Ajatashatru used the weapons Mahashilakantaka (catapult) and Rathamusala (blade chariot)",
+"Udayin, son of Ajatashatru, founded Pataliputra at the Ganga-Son confluence",
+"The Shishunaga dynasty ruled from 412-344 BC",
+"Shishunaga destroyed the power of the Avanti kingdom",
+"King Kalashoka of the Shishunaga dynasty held the 2nd Buddhist Council at Vaishali (383 BC)",
+"The Nanda dynasty ruled from 344-321 BC",
+"The Nanda dynasty was the first non-Kshatriya dynasty to rule Magadha",
+"Mahapadma Nanda, founder of the Nanda dynasty, was called 'Ekarat' (sole sovereign)",
+"Mahapadma Nanda was also called 'Destroyer of all Kshatriyas'",
+"The Nanda army had 200,000 infantry, 80,000 cavalry, and 6,000 elephants",
+"Alexander's army refused to cross the Beas river, fearing the massive Nanda army",
+"General Coenus voiced the army's refusal to advance further",
+"Dhana Nanda was the last Nanda ruler",
+"Chanakya (Kautilya) engineered the overthrow of Dhana Nanda, installing Chandragupta Maurya"
+],
+flashcards:[
+{q:"Who founded the Haryanka dynasty, and who was he contemporary with?",a:"Bimbisara; contemporary of both Buddha and Mahavira"},
+{q:"How did Bimbisara die?",a:"Killed by his own son, Ajatashatru"},
+{q:"Where and under whom was the 1st Buddhist Council held?",a:"Rajgriha, under King Ajatashatru (Haryanka dynasty), 483 BC"},
+{q:"Who founded Pataliputra, and where?",a:"Udayin, at the confluence of the Ganga and Son rivers"},
+{q:"Where and under whom was the 2nd Buddhist Council held?",a:"Vaishali, under King Kalashoka (Shishunaga dynasty), 383 BC"},
+{q:"What was significant about the Nanda dynasty's social origin?",a:"It was the first non-Kshatriya dynasty to rule Magadha"},
+{q:"What were Mahapadma Nanda's two titles?",a:"'Ekarat' (sole sovereign) and 'Destroyer of all Kshatriyas'"},
+{q:"Why didn't Alexander attack the Nanda empire?",a:"His army refused to cross the Beas river, fearing the massive Nanda army"},
+{q:"Who was the last Nanda ruler, and who overthrew him?",a:"Dhana Nanda; overthrown by Chanakya, who installed Chandragupta Maurya"},
+{q:"What weapons did Ajatashatru use against Vaishali?",a:"Mahashilakantaka (stone-throwing catapult) and Rathamusala (rotating-blade chariot)"}
+],
+mcqs:[
+{q:"Bimbisara was contemporary of:",o:["Only Buddha","Only Mahavira","Both Buddha AND Mahavira","Neither"],a:2,e:"Bimbisara was contemporary of BOTH Gautama Buddha and Mahavira (Vardhamana). This is one of the most frequently asked SSC facts about Pre-Mauryan dynasties."},
+{q:"The 1st Buddhist Council was held at which place under which king?",o:["Vaishali under Kalashoka","Pataliputra under Ashoka","Rajgriha under Ajatashatru","Taxila under Bimbisara"],a:2,e:"1st Buddhist Council was held at Rajgriha in 483 BC under King Ajatashatru of the Haryanka dynasty. It was organized to compile Buddha's teachings after his death."},
+{q:"The 2nd Buddhist Council was held at:",o:["Rajgriha (Haryanka)","Pataliputra (Nanda)","Vaishali (Shishunaga)","Taxila (Gandhara)"],a:2,e:"2nd Buddhist Council was held at Vaishali in 383 BC under King Kalashoka (also called Kakavarna) of the Shishunaga dynasty — a different dynasty from the 1st Council."},
+{q:"Pataliputra was founded by:",o:["Bimbisara","Ajatashatru","Udayin","Chandragupta Maurya"],a:2,e:"Pataliputra was founded by Udayin (son of Ajatashatru), at the confluence of the Ganga and Son rivers. Chandragupta Maurya later made it his capital — he didn't found it."},
+{q:"Bimbisara was killed by:",o:["Chandragupta Maurya","Shishunaga","Alexander","Ajatashatru (his own son)"],a:3,e:"Bimbisara was killed by his own son Ajatashatru, who then seized the throne. This patricide is a famous event in Indian history, mentioned in Buddhist and Jain texts."},
+{q:"The Nanda dynasty was the first:",o:["Dynasty with a standing army","Buddhist ruling dynasty","Non-Kshatriya dynasty of Magadha","Dynasty to issue coins"],a:2,e:"The Nanda dynasty was the first non-Kshatriya dynasty to rule Magadha — they were of lower (non-warrior) caste origin. Mahapadma Nanda called himself 'Destroyer of all Kshatriyas.'"},
+{q:"Ajatashatru used which weapon against Vaishali in battle?",o:["Greek catapult only","Mahashilakantaka and Rathamusala","Gunpowder","Elephant cavalry only"],a:1,e:"Ajatashatru used Mahashilakantaka (a stone-throwing catapult) and Rathamusala (a chariot fitted with rotating blades) in his war against Vaishali — the world's first republic."},
+{q:"Why did Alexander NOT attack the Nanda empire?",o:["Chanakya defeated him","Nandas offered a treaty","His army refused to cross the Beas river","Alexander died before reaching Magadha"],a:2,e:"Alexander reached Punjab (326 BC) but his army refused to cross the Beas (Hyphasis) river, fearing the massive Nanda army (200,000 infantry, 6,000 war elephants). General Coenus voiced this."},
+{q:"Mahapadma Nanda was called 'Ekarat' which means:",o:["Destroyer of all Kshatriyas","Sole sovereign","Conqueror of all","Great king of kings"],a:1,e:"'Ekarat' means sole sovereign — one who rules alone without rivals. Mahapadma Nanda was also called 'Destroyer of all Kshatriyas' (Sarva Kshatrantaka) for overthrowing Kshatriya rulers."},
+{q:"Who planned the overthrow of Dhana Nanda (last Nanda ruler)?",o:["Ajatashatru","Alexander","Chanakya (Kautilya)","Ashoka"],a:2,e:"Chanakya (Kautilya) planned and engineered the overthrow of Dhana Nanda (last Nanda ruler), installing Chandragupta Maurya in his place. Chanakya later wrote the Arthashastra."}
+]},
+{id:"m3",title:"Alexander's Invasion & PGW/NBPW",xp:55,type:"trap",seqIdx:10,
+facts:[
+"<b>Alexander (326 BC):</b> Entered India via Khyber Pass | King Ambhi of Taxila welcomed him | Ambhi helped Alexander against Porus",
+"<b>Battle of Hydaspes (326 BC):</b> Hydaspes = Jhelum river (Vitasta) | Alexander vs King Porus (Paurava) of Punjab",
+"Alexander won; restored Porus's kingdom | Founded Nicaea (victory) + Bucephala (after horse) on Jhelum banks",
+"<b>Beas (Hyphasis) river:</b> Army refused to cross | General Coenus voiced soldiers' desire | Nandas never attacked",
+"Alexander died at <b>Babylon (323 BC)</b>, age 32/33 | Power vacuum → exploited by Chandragupta Maurya",
+"Impact: Greek art → Gandhara school | Direct India-Greece contact | Trade routes opened",
+"<b>PGW (Painted Grey Ware, ~1200–600 BC):</b> Grey pottery with black geometric designs | Associated with Later Vedic period",
+"PGW sites: Hastinapur (UP, excavated by B.B. Lal), Kurukshetra, Mathura, Indraprastha | Iron tools first appeared",
+"<b>NBPW (Northern Black Polished Ware, ~700–200 BC):</b> Shiny black polished pottery | Mahajanapada + early Mauryan period",
+"NBPW = 2nd urbanisation of India | Sites: Pataliputra, Rajgriha, Taxila, Kausambi",
+"<b>Persian (Achaemenid) Invasion:</b> Darius I conquered the Indus/Gandhara region ~518 BC — made it the 20th satrapy of the Persian Empire, ~200 years BEFORE Alexander",
+"Persian rule introduced the <b>Kharosthi script</b> (derived from Aramaic, written right-to-left) used in Gandhara/NW India",
+"Persian-controlled NW India paid annual tribute in gold to the Achaemenid Empire",
+"<b>Megalithic Culture (South India, ~1000–300 BC):</b> Iron Age culture of peninsular India | Named for large stone (megalith) burial structures",
+"Megalithic pottery = <b>Black-and-Red Ware (BRW)</b> | Burials: urn, cist, sarcophagus (terracotta) types",
+"Key Megalithic sites: <b>Adichanallur</b> (Tamil Nadu — urn burials, terracotta sarcophagi), <b>Brahmagiri</b> (Karnataka — first systematically excavated, by Mortimer Wheeler), Hallur, Maski",
+"Megalithic culture = widespread IRON tools in peninsular India; laid the foundation for the later Sangam Age"
+],
+traps:["Alexander died at BABYLON (NOT India, NOT Greece, NOT Macedonia)","His horse = Bucephalus | City named Bucephala after the horse (NOT after the battle)","Ambhi WELCOMED Alexander | Porus FOUGHT Alexander (most confused pair)","Battle of Hydaspes = Jhelum river (NOT Beas — Beas is where he STOPPED)","PGW = grey pottery, Later Vedic | NBPW = shiny black, Mahajanapada/Mauryan","Persian (Darius I) invasion ~518 BC came ~200 yrs BEFORE Alexander (326 BC) — don't merge the two invasions","Megalithic culture = SOUTH India Iron Age (BRW pottery) — different from PGW/NBPW which are NORTH Indian pottery cultures","Brahmagiri was excavated by Mortimer Wheeler (NOT R.E.M. Wheeler's Aryan Invasion Theory context — same person, different contribution)"],
+revision:[
+"Persian (Darius I) conquest of Indus/Gandhara ~518 BC — 20th satrapy, ~200 yrs before Alexander",
+"Kharosthi script (from Aramaic) introduced via Persian rule in NW India",
+"Alexander 326 BC: Ambhi welcomed, Porus fought, Battle of Hydaspes (Jhelum)",
+"Beas river = army stopped (feared Nandas) | Alexander died Babylon 323 BC",
+"PGW(grey,Later Vedic) vs NBPW(black,Mahajanapada/Mauryan) — both NORTH India",
+"Megalithic culture = SOUTH India Iron Age, BRW pottery, urn/sarcophagus burials (Adichanallur, Brahmagiri)"
+],
+oneliners:[
+"Darius I of Persia conquered the Indus/Gandhara region around 518 BC",
+"The Indus region became the 20th satrapy (province) of the Achaemenid Persian Empire",
+"Persian conquest of NW India predates Alexander's invasion by about 200 years",
+"The Kharosthi script, derived from Aramaic, was introduced through Persian administrative contact",
+"Kharosthi script was written right-to-left, used mainly in Gandhara and NW India",
+"Alexander entered India via the Khyber Pass in 326 BC",
+"King Ambhi of Taxila welcomed Alexander and helped him against Porus",
+"The Battle of Hydaspes was fought on the Jhelum river between Alexander and King Porus",
+"Alexander founded Nicaea and Bucephala on the banks of the Jhelum after his victory",
+"Alexander's army refused to cross the Beas (Hyphasis) river, fearing the Nanda army",
+"Alexander died at Babylon in 323 BC at age 32/33",
+"The Gandhara school of art emerged from Greek influence following Alexander's invasion",
+"PGW (Painted Grey Ware) is associated with the Later Vedic period in North India",
+"NBPW (Northern Black Polished Ware) is associated with the Mahajanapada/early Mauryan period",
+"NBPW is linked to the second urbanisation of India",
+"Megalithic culture flourished in peninsular/South India from about 1000-300 BC",
+"Megalithic culture is named for the large stone structures built around burials",
+"Black-and-Red Ware (BRW) is the characteristic pottery of the Megalithic culture",
+"Adichanallur (Tamil Nadu) has Megalithic urn burials and terracotta sarcophagi",
+"Brahmagiri (Karnataka) was the first Megalithic site to be systematically excavated, by Mortimer Wheeler"
+],
+flashcards:[
+{q:"Who conquered the Indus/Gandhara region for Persia, and when?",a:"Darius I, around 518 BC — making it the 20th satrapy of the Achaemenid Empire"},
+{q:"How much earlier was the Persian invasion than Alexander's?",a:"About 200 years earlier (518 BC vs 326 BC)"},
+{q:"What script did Persian rule introduce to NW India?",a:"Kharosthi script, derived from Aramaic, written right-to-left"},
+{q:"Who welcomed Alexander at Taxila, and who fought him at the Jhelum?",a:"Ambhi welcomed him; Porus fought him at the Battle of Hydaspes (Jhelum river)"},
+{q:"Why did Alexander's campaign in India end at the Beas river?",a:"His army refused to advance further, fearing the massive Nanda army"},
+{q:"Where and when did Alexander die?",a:"Babylon, 323 BC, at age 32 or 33"},
+{q:"What is Megalithic culture, and where/when did it flourish?",a:"An Iron Age culture of peninsular South India, c. 1000-300 BC, named for large stone burial structures"},
+{q:"What pottery and burial types characterize Megalithic culture?",a:"Black-and-Red Ware (BRW) pottery; urn, cist, and sarcophagus burials"},
+{q:"Which site has Megalithic urn burials and terracotta sarcophagi?",a:"Adichanallur, Tamil Nadu"},
+{q:"Which Megalithic site was first systematically excavated, and by whom?",a:"Brahmagiri, Karnataka — excavated by Mortimer Wheeler"}
+],
+mcqs:[
+{q:"The Battle of Hydaspes (326 BC) was fought on which river?",o:["Indus","Beas (Hyphasis)","Jhelum (Hydaspes/Vitasta)","Chenab"],a:2,e:"Battle of Hydaspes was fought on the Jhelum river (ancient names: Hydaspes / Vitasta). It was between Alexander and King Porus of Punjab. Beas is where Alexander STOPPED later."},
+{q:"Who welcomed Alexander the Great at Taxila?",o:["Porus","Dhana Nanda","Ambhi","Chandragupta"],a:2,e:"Ambhi (also called Omphi), king of Taxila, welcomed Alexander and even helped him against Porus. Porus of Punjab bravely fought Alexander."},
+{q:"Alexander the Great died at:",o:["Taxila","Alexandria, Egypt","Babylon","Macedon"],a:2,e:"Alexander died at Babylon in 323 BC at the age of 32/33. He died of fever (possibly typhoid). He never returned to Macedonia after his eastern campaigns."},
+{q:"Why did Alexander's army refuse to advance beyond the Beas river?",o:["The army was tired and sick","They feared crossing the desert","They feared the massive Nanda army","Alexander ordered retreat"],a:2,e:"Alexander's army refused to cross the Beas (Hyphasis) river because they feared the massive Nanda empire's army (200,000 infantry, 6,000 elephants). General Coenus voiced their desire."},
+{q:"Which city did Alexander name after his horse Bucephalus?",o:["Nicaea","Alexandria","Bucephala","Taxila"],a:2,e:"Alexander founded two cities on the Jhelum river after the Battle of Hydaspes: Nicaea (victory city, west bank) and Bucephala (named after his horse Bucephalus, east bank)."},
+{q:"The Greek art style that developed due to Alexander's invasion and influenced Buddha's depiction in human form is called:",o:["Gupta school","Amaravati school","Gandhara school","Mathura school"],a:2,e:"The Gandhara school of art developed in the NW region due to Greek influence after Alexander. It produced the FIRST depictions of Buddha in human form (earlier only symbols were used)."},
+{q:"Painted Grey Ware (PGW) pottery is associated with which period?",o:["Mahajanapada period","IVC period","Later Vedic period","Early Mauryan period"],a:2,e:"PGW (grey pottery with black geometric designs) is associated with the Later Vedic period (~1200–600 BC). Key sites: Hastinapur, Kurukshetra, Indraprastha."},
+{q:"Northern Black Polished Ware (NBPW) is characteristic of which period?",o:["IVC","Early Vedic","Later Vedic only","Mahajanapada and early Mauryan"],a:3,e:"NBPW (shiny black polished pottery) is the most characteristic pottery of the Mahajanapada and early Mauryan period (~700–200 BC). It is associated with the 2nd urbanisation of India."},
+{q:"Hastinapur (PGW site) was excavated by:",o:["D.R. Sahini","V.S. Wakankar","B.B. Lal","J.P. Joshi"],a:2,e:"Hastinapur was excavated by B.B. Lal in 1950–52. Evidence of flooding at Hastinapur connects to the Mahabharata's story of the Ganga flood. B.B. Lal also excavated Kali Banga."},
+{q:"NBPW represents which phase of Indian history?",o:["First urbanisation (IVC)","Second urbanisation of India","Third urbanisation","Iron Age beginnings"],a:1,e:"NBPW is associated with the SECOND urbanisation of India — the rise of cities during the Mahajanapada period, as opposed to the FIRST urbanisation which was the IVC."},
+{q:"Which Persian (Achaemenid) emperor conquered the Indus/Gandhara region, and around when?",o:["Cyrus the Great, ~550 BC","Darius I, ~518 BC","Xerxes, ~480 BC","Cambyses, ~525 BC"],a:1,e:"Darius I conquered the Indus/Gandhara region around 518 BC, making it the 20th satrapy of the Achaemenid Persian Empire — about 200 years before Alexander's invasion."},
+{q:"The Kharosthi script, used in Gandhara and NW India, was derived from:",o:["Brahmi script","Greek script","Aramaic script","Sanskrit script"],a:2,e:"Kharosthi script was derived from the Aramaic script through Persian administrative influence, and was written right-to-left."},
+{q:"Which of the following correctly orders the foreign invasions of NW India chronologically?",o:["Alexander (326 BC) then Darius I (518 BC)","Darius I (518 BC) then Alexander (326 BC)","Both occurred simultaneously","Alexander invaded before the Achaemenid Empire existed"],a:1,e:"The Persian (Achaemenid) conquest under Darius I (~518 BC) occurred about 200 years BEFORE Alexander's invasion (326 BC)."},
+{q:"The Megalithic Culture of peninsular South India is primarily associated with which period?",o:["Bronze Age (same as IVC)","Iron Age (~1000–300 BC)","Early Vedic Period","Neolithic Period"],a:1,e:"The Megalithic Culture was an Iron Age culture of peninsular/South India, flourishing roughly 1000–300 BC, distinct from the North Indian PGW/NBPW cultures of the same broad era."},
+{q:"The characteristic pottery of the Megalithic Culture is:",o:["Painted Grey Ware","Northern Black Polished Ware","Black-and-Red Ware","Ochre Coloured Pottery"],a:2,e:"Black-and-Red Ware (BRW) is the defining pottery of the Megalithic Culture, found alongside large stone burial structures across peninsular India."},
+{q:"Which Megalithic site is famous for urn burials and terracotta sarcophagi?",o:["Brahmagiri","Adichanallur","Hallur","Maski"],a:1,e:"Adichanallur in Tamil Nadu is well known for Megalithic urn burials and terracotta sarcophagi (coffin-like burial containers)."},
+{q:"The Megalithic site of Brahmagiri (Karnataka) is significant because it was:",o:["The largest Megalithic site","The first Megalithic site systematically excavated, by Mortimer Wheeler","The capital of a Mahajanapada","A PGW pottery site"],a:1,e:"Brahmagiri was the first Megalithic site to be systematically excavated, by the archaeologist Mortimer Wheeler."}
+]}
+]},
+{id:"buddhajain",title:"Buddhism & Jainism",icon:"☸️",nodes:[
+{id:"b1",title:"Buddhism & Jainism — Origins (Preview)",xp:50,type:"regular",seqIdx:11,
+facts:[
+"<b>Buddhism:</b> Founded by Buddha (Siddhartha Gautama) | Born <b>563 BC</b> at Lumbini | Died (Mahaparinirvana) <b>483 BC</b> at Kushinara",
+"<b>Jainism:</b> 24th and LAST Tirthankara = Mahavira (Vardhamana) | Born <b>599 BC</b> at Kundagrama (near Vaishali) | Died (Nirvana) <b>527 BC</b> at Pavapuri",
+"Both arose in the <b>6th century BC</b>, contemporaries of King Bimbisara of Magadha, amid growing questioning of Vedic ritualism",
+"Both are <b>Nastika</b> (heterodox) schools — reject Vedic authority, rigid caste, and animal sacrifice",
+"Buddha preached the <b>Middle/Eightfold Path</b> | Mahavira preached the <b>Triratna</b> and 5 Mahavratas (extreme non-violence)",
+"Buddhism later split into <b>Hinayana</b> and <b>Mahayana</b> | Jainism split into <b>Digambara</b> and <b>Svetambara</b>",
+"Buddhism spread WIDELY outside India (China, Japan, SE Asia) | Jainism remained largely confined to India",
+"📘 <b>Full depth coverage</b> — all 24 Tirthankaras, doctrine, councils, sects, and architecture (Buddhist + Jain) continues in <b>CentuMania Ancient History Part 2</b>"
+],
+table:{h:["Feature","Buddhism","Jainism"],r:[
+["Founder","Buddha (Siddhartha Gautama)","Mahavira (Vardhamana), 24th Tirthankara"],
+["Born","563 BC, Lumbini","599 BC, Kundagrama (near Vaishali)"],
+["Died","483 BC, Kushinara","527 BC, Pavapuri"]
+]},
+mn:{h:"🧠 MNEMONIC",b:"Buddha = <b>563–483 BC</b> (Lumbini→Kushinara) | Mahavira = <b>599–527 BC</b> (Kundagrama→Pavapuri)<br>Schisms: Buddhism = Hinayana/Mahayana | Jainism = Digambara/Svetambara — NEVER swap these two"},
+traps:["Mahavira was born in 599 BC (NOT 540 BC) and died in 527 BC at Pavapuri — the standard Shvetambara/SSC dates","Buddha died at Kushinara; Mahavira died at Pavapuri — different places, often confused","Hinayana-Mahayana split = Buddhism; Digambara-Svetambara split = Jainism — the most commonly swapped fact pair"],
+revision:[
+"Buddha: 563-483 BC, Lumbini→Kushinara",
+"Mahavira: 599-527 BC, Kundagrama→Pavapuri (24th/last Tirthankara)",
+"Both Nastika, 6th century BC, contemporaries of Bimbisara",
+"Buddhism schism=Hinayana/Mahayana | Jainism schism=Digambara/Svetambara",
+"Full depth (Tirthankaras, councils, sects, architecture) = Part 2"
+],
+oneliners:[
+"Buddha (Siddhartha Gautama) founded Buddhism; born 563 BC at Lumbini",
+"Buddha died (Mahaparinirvana) in 483 BC at Kushinara",
+"Mahavira (Vardhamana) was the 24th and last Tirthankara of Jainism",
+"Mahavira was born in 599 BC at Kundagrama, near Vaishali",
+"Mahavira died (Nirvana) in 527 BC at Pavapuri",
+"Both Buddha and Mahavira were contemporaries of King Bimbisara of Magadha",
+"Both Buddhism and Jainism are classified as Nastika (heterodox) schools",
+"Both religions reject Vedic authority, rigid caste, and animal sacrifice",
+"Buddhism's core teaching is the Middle Path (Eightfold Path)",
+"Jainism's core teachings are the Triratna and the 5 Mahavratas",
+"Buddhism later split into Hinayana and Mahayana sects",
+"Jainism later split into Digambara and Svetambara sects",
+"Buddhism spread widely outside India — to China, Japan, Sri Lanka, and SE Asia",
+"Jainism remained largely confined within India",
+"Detailed coverage of Tirthankaras, councils, sects, and architecture continues in Part 2"
+],
+flashcards:[
+{q:"When and where was Buddha born and when did he die?",a:"Born 563 BC at Lumbini; died 483 BC at Kushinara"},
+{q:"When and where was Mahavira born and when did he die?",a:"Born 599 BC at Kundagrama (near Vaishali); died 527 BC at Pavapuri"},
+{q:"Which Tirthankara was Mahavira?",a:"The 24th and last Tirthankara"},
+{q:"Name the major schism in Buddhism and in Jainism respectively.",a:"Buddhism: Hinayana vs Mahayana | Jainism: Digambara vs Svetambara"},
+{q:"What core path did Buddha teach?",a:"The Middle Path / Eightfold Path"},
+{q:"What core vows/jewels did Mahavira teach?",a:"The Triratna (3 Jewels) and the 5 Mahavratas"},
+{q:"Which king were both Buddha and Mahavira contemporaries of?",a:"King Bimbisara of Magadha"},
+{q:"Why are Buddhism and Jainism called 'Nastika' schools?",a:"Because they reject Vedic authority, rigid caste, and animal sacrifice"},
+{q:"How did the geographic spread of Buddhism and Jainism differ?",a:"Buddhism spread worldwide; Jainism remained largely confined to India"},
+{q:"Where can you study Tirthankaras, councils, sects, and architecture in full depth?",a:"CentuMania Ancient History Part 2"}
+],
+mcqs:[
+{q:"Mahavira, the 24th Tirthankara, was born in:",o:["540 BC","563 BC","599 BC","527 BC"],a:2,e:"Mahavira was born in 599 BC (Shvetambara/SSC standard date) at Kundagrama, near Vaishali."},
+{q:"Mahavira attained Nirvana (death) at:",o:["Kushinara","Vaishali","Pavapuri","Rajgriha"],a:2,e:"Mahavira died at Pavapuri in 527 BC. Buddha died at Kushinara — a commonly confused pair."},
+{q:"Buddha was born at Lumbini in:",o:["599 BC","563 BC","540 BC","483 BC"],a:1,e:"Buddha was born in 563 BC at Lumbini and died in 483 BC at Kushinara."},
+{q:"Both Buddha and Mahavira were contemporaries of which Magadhan king?",o:["Ajatashatru","Bimbisara","Kalashoka","Mahapadma Nanda"],a:1,e:"Both Buddha and Mahavira were contemporaries of King Bimbisara of Magadha."},
+{q:"Buddhism and Jainism are both classified as:",o:["Astika (orthodox) schools","Nastika (heterodox) schools","Vedic schools","Tantric schools"],a:1,e:"Both reject Vedic authority and are classified as Nastika (heterodox) schools."},
+{q:"The major schism within Buddhism was between:",o:["Digambara and Svetambara","Hinayana and Mahayana","Sthavira and Lokayata","Vaishnava and Shaiva"],a:1,e:"Buddhism split into Hinayana and Mahayana. (Digambara-Svetambara is the Jain schism — don't swap.)"},
+{q:"The major schism within Jainism was between:",o:["Hinayana and Mahayana","Digambara and Svetambara","Vajrayana and Theravada","Shaiva and Vaishnava"],a:1,e:"Jainism split into Digambara (sky-clad) and Svetambara (white-clad) sects."},
+{q:"Buddha's core teaching is known as the:",o:["Triratna","Middle/Eightfold Path","Panch Mahavrata","Anekantavada"],a:1,e:"Buddha taught the Middle Path, also called the Eightfold Path."},
+{q:"Mahavira's core teachings include the Triratna and:",o:["The Four Noble Truths","The 5 Mahavratas","The Tripitaka","The Bodhisattva path"],a:1,e:"Mahavira taught the Triratna (3 Jewels) and the Panch Mahavrata (5 great vows)."},
+{q:"Which religion spread more widely OUTSIDE India?",o:["Jainism","Buddhism","Both spread equally","Neither spread beyond India"],a:1,e:"Buddhism spread extensively to China, Japan, Sri Lanka, and Southeast Asia. Jainism remained largely confined to India."},
+{q:"For the full list of Tirthankaras, Buddhist/Jain councils, sects, and related architecture, a student should refer to:",o:["This node only","CentuMania Ancient History Part 1, earlier chapters","CentuMania Ancient History Part 2","No further material exists"],a:2,e:"This node is a brief preview — full depth on Tirthankaras, councils, sects, and architecture is covered in CentuMania Ancient History Part 2."},
+{q:"Which of the following pairs is CORRECTLY matched?",o:["Buddha died at Pavapuri","Mahavira died at Kushinara","Buddha died at Kushinara; Mahavira died at Pavapuri","Both died at Vaishali"],a:2,e:"Buddha died at Kushinara (483 BC); Mahavira died at Pavapuri (527 BC) — these are frequently swapped in MCQs."}
+]},
+]},
+{id:"phil",title:"Philosophy & Traps",icon:"🧘",nodes:[
+{id:"ph1",title:"Six Schools of Indian Philosophy",xp:60,type:"regular",seqIdx:12,
+facts:[
+"<b>6 Astika (Orthodox) schools</b> — accept Vedic authority",
+"<b>Samkhya</b> (OLDEST school) — Founder: Kapila | Key: Dualism — Purusha (consciousness) + Prakriti (matter)",
+"<b>Yoga</b> — Founder: Patanjali | Text: Yoga Sutras | Key: Ashtanga Yoga (8 limbs) for liberation",
+"<b>Nyaya</b> — Founder: Gautama/Aksapada | Key: Logic, epistemology, 16 categories",
+"<b>Vaisheshika</b> — Founder: Kanada | Key: ATOMIC THEORY | 6 categories (Padarthas)",
+"<b>Mimamsa (Purva)</b> — Founder: Jaimini | Key: Vedic rituals supreme; Dharma",
+"<b>Vedanta (Uttara Mimamsa)</b> — Founder: Badarayana (Vyasa) | Text: Brahma Sutra | Key: Atman = Brahman",
+"<b>3 Vedanta sub-schools:</b> Advaita (Shankaracharya, 8th cent) | Vishishtadvaita (Ramanuja, 11th cent) | Dvaita (Madhvacharya, 13th cent)",
+"<b>4 Nastika (Heterodox) schools</b> — reject Vedas: Buddhism (Buddha), Jainism (Mahavira), Charvaka (Brihaspati), Ajivika (Makkhali Gosala)"
+],
+table:{h:["School","Founder","Key Concept"],r:[
+["Samkhya (Oldest)","Kapila","Dualism: Purusha + Prakriti"],
+["Yoga","Patanjali","Ashtanga Yoga; 8 limbs"],
+["Nyaya","Gautama (Aksapada)","Logic; 16 categories"],
+["Vaisheshika","Kanada","Atomic theory; 6 Padarthas"],
+["Mimamsa","Jaimini","Vedic rituals supreme"],
+["Vedanta","Badarayana","Atman = Brahman; Brahma Sutra"]
+]},
+mn:{h:"🧠 MNEMONIC — 6 Schools",b:"<b>S-Y-N-V-M-V</b> = Samkhya, Yoga, Nyaya, Vaisheshika, Mimamsa, Vedanta<br>'<b>Sages Yogi Names Very Mysterious Verses</b>'<br>Founders: <b>K</b>apila · <b>P</b>atanjali · <b>G</b>autama · <b>K</b>anada · <b>J</b>aimini · <b>B</b>adarayana"},
+traps:["Samkhya founder = Kapila (NOT Buddha, NOT Patanjali)","Nyaya founder = Gautama/Aksapada ≠ Gautama Buddha (different person!)","Vaisheshika = Atomic theory (Kanada) — India had atomic philosophy 2500 years ago","Patanjali = Yoga Sutras AND Mahabhashya (commentary on Panini's Ashtadhyayi) — same person!"],
+revision:[
+"6 Astika schools: Samkhya(Kapila),Yoga(Patanjali),Nyaya(Gautama),Vaisheshika(Kanada),Mimamsa(Jaimini),Vedanta(Badarayana)",
+"Samkhya = oldest, dualism Purusha+Prakriti | Vaisheshika = atomic theory",
+"3 Vedanta sub-schools: Advaita(Shankara,8th c), Vishishtadvaita(Ramanuja,11th c), Dvaita(Madhva,13th c)",
+"4 Nastika schools: Buddhism, Jainism, Charvaka, Ajivika — reject Vedas",
+"Nyaya's Gautama ≠ Gautama Buddha — different people, same name"
+],
+oneliners:[
+"There are 6 Astika (orthodox) schools of Indian philosophy that accept Vedic authority",
+"Samkhya, founded by Kapila, is the oldest school of Indian philosophy",
+"Samkhya is based on dualism: Purusha (consciousness) and Prakriti (matter)",
+"Yoga school was founded by Patanjali, who wrote the Yoga Sutras",
+"Ashtanga Yoga (8 limbs) is the path to liberation in the Yoga school",
+"Nyaya school was founded by Gautama (also called Aksapada)",
+"Nyaya focuses on logic, epistemology, and 16 categories of knowledge",
+"Vaisheshika, founded by Kanada, propounded an early atomic theory",
+"Vaisheshika has 6 categories called Padarthas",
+"Mimamsa (Purva Mimamsa) was founded by Jaimini and holds Vedic rituals supreme",
+"Vedanta (Uttara Mimamsa) was founded by Badarayana, also identified with Vyasa",
+"Vedanta's key text is the Brahma Sutra; key teaching is Atman = Brahman",
+"Advaita Vedanta (non-dualism) was propounded by Adi Shankaracharya (8th century)",
+"Vishishtadvaita was propounded by Ramanuja (11th century)",
+"Dvaita was propounded by Madhvacharya (13th century)",
+"The 4 Nastika (heterodox) schools reject Vedic authority",
+"Buddhism (founded by Buddha) and Jainism (founded by Mahavira) are Nastika schools",
+"Charvaka (founded by Brihaspati) and Ajivika (founded by Makkhali Gosala) are also Nastika",
+"Patanjali wrote both the Yoga Sutras and the Mahabhashya (commentary on Panini)",
+"The Nyaya school's founder Gautama is a different person from Gautama Buddha"
+],
+flashcards:[
+{q:"Name the 6 Astika (orthodox) schools of Indian philosophy.",a:"Samkhya, Yoga, Nyaya, Vaisheshika, Mimamsa, Vedanta"},
+{q:"Which is the oldest school, and who founded it?",a:"Samkhya, founded by Kapila"},
+{q:"What is Samkhya's core dualism?",a:"Purusha (consciousness) and Prakriti (matter)"},
+{q:"Who founded the Yoga school, and what text did he write?",a:"Patanjali; wrote the Yoga Sutras"},
+{q:"Which school propounded an atomic theory, and who founded it?",a:"Vaisheshika, founded by Kanada"},
+{q:"Who founded the Nyaya school, and what is it famous for?",a:"Gautama (Aksapada); famous for logic and epistemology (16 categories)"},
+{q:"Name the 3 sub-schools of Vedanta and their founders.",a:"Advaita (Shankaracharya), Vishishtadvaita (Ramanuja), Dvaita (Madhvacharya)"},
+{q:"Name the 4 Nastika (heterodox) schools.",a:"Buddhism, Jainism, Charvaka, Ajivika"},
+{q:"Who founded the Mimamsa school, and what does it emphasize?",a:"Jaimini; emphasizes the supremacy of Vedic rituals"},
+{q:"What surprising fact connects Patanjali to Panini?",a:"Patanjali wrote the Mahabhashya, a commentary on Panini's Ashtadhyayi — same Patanjali as the Yoga Sutras author"}
+],
+mcqs:[
+{q:"The OLDEST school of Indian philosophy is:",o:["Yoga","Vedanta","Nyaya","Samkhya"],a:3,e:"Samkhya, founded by Kapila, is the oldest school of Indian philosophy. It is based on dualism: Purusha (consciousness/spirit) and Prakriti (matter/nature)."},
+{q:"The founder of the Samkhya school of philosophy is:",o:["Patanjali","Kapila","Kanada","Jaimini"],a:1,e:"Kapila is the founder of the Samkhya school. Key concept: 25 metaphysical principles; dualism of Purusha (soul) and Prakriti (matter)."},
+{q:"Atomic theory in ancient Indian philosophy is associated with which school?",o:["Samkhya","Yoga","Nyaya","Vaisheshika"],a:3,e:"Vaisheshika school (founded by Kanada) propounded the atomic theory — that matter is made of invisible, indivisible particles (anu). This is remarkable for 600 BC India."},
+{q:"The Nyaya school of Indian philosophy was founded by:",o:["Kapila","Kanada","Badarayana","Gautama (Aksapada)"],a:3,e:"Nyaya school was founded by Gautama (also called Aksapada). It focuses on logic, epistemology, and means of valid knowledge. This Gautama is DIFFERENT from Gautama Buddha."},
+{q:"Yoga Sutras were written by:",o:["Kapila","Jaimini","Patanjali","Kanada"],a:2,e:"Patanjali wrote the Yoga Sutras — the foundational text of the Yoga school. This is the same Patanjali who wrote the Mahabhashya (commentary on Panini's Ashtadhyayi)."},
+{q:"The Vedanta school is based on the Brahma Sutra. Its founder is:",o:["Jaimini","Patanjali","Badarayana (Vyasa)","Shankaracharya"],a:2,e:"Badarayana (also identified with Vyasa) founded the Vedanta school and wrote the Brahma Sutra. Vedanta = Uttara Mimamsa. Key concept: Atman (individual soul) = Brahman (universal soul)."},
+{q:"Advaita (Non-dualism) Vedanta was propounded by:",o:["Ramanuja","Madhvacharya","Adi Shankaracharya","Jaimini"],a:2,e:"Adi Shankaracharya (8th century AD) propounded Advaita Vedanta — the philosophy of non-dualism (all is one, all is Brahman). Ramanuja = Vishishtadvaita; Madhvacharya = Dvaita."},
+{q:"Which schools are classified as 'Nastika' (heterodox — rejecting Vedas)?",o:["Samkhya and Yoga","Nyaya and Vaisheshika","Buddhism and Jainism","Mimamsa and Vedanta"],a:2,e:"Nastika (heterodox) schools reject Vedic authority: Buddhism, Jainism, Charvaka/Lokayata, and Ajivika. The 6 Astika (orthodox) schools accept Vedic authority."},
+{q:"The Mimamsa school was founded by:",o:["Kapila","Jaimini","Kanada","Badarayana"],a:1,e:"Jaimini founded the Purva Mimamsa school. Key concept: Vedic rituals are supreme and essential for dharma. It focuses on the correct interpretation of Vedic rituals."},
+{q:"Which philosopher is associated with BOTH the Yoga Sutras AND a commentary on Panini's grammar?",o:["Kapila","Badarayana","Patanjali","Yaska"],a:2,e:"Patanjali is the same person who wrote both the Yoga Sutras (Yoga school) and the Mahabhashya (commentary on Panini's Ashtadhyayi). Same name, same person — a common SSC surprise."}
+]},
+{id:"ph2",title:"IVC vs Vedic — Master Trap Node",xp:50,type:"trap",seqIdx:13,
+facts:[
+"<b>IVC had:</b> Bronze/copper tools | No iron | No horse | No temples | Mother Goddess worship | Pictographic script (undeciphered) | Urban | Underground drainage",
+"<b>Vedic had:</b> Iron (Later Vedic — Krishna Ayas) | Horse (2nd pet) | No temples (Early Vedic) | Indra supreme (Early) → Prajapati (Later) | Oral tradition (no script)",
+"<b>Common trap:</b> Both had NO temples — IVC never, Early Vedic never (only Later Vedic had them)",
+"<b>Vedic Economy terms:</b> Nishka = gold currency | Krishna Ayas = iron | Bhaga = 1/6 tax | Bali = voluntary → compulsory",
+"<b>Buddhist Councils:</b> 1st = Rajgriha (Ajatashatru, 483 BC) | 2nd = Vaishali (Kalashoka, 383 BC)"
+],
+table:{h:["Feature","IVC","Early Vedic","Later Vedic"],r:[
+["Iron","No","No","Yes (Krishna Ayas)"],
+["Horse","No","Yes","Yes"],
+["Temples","No","No","Yes"],
+["Script","Pictographic (undeciphered)","None","None"],
+["Caste system","No","No","Yes (rigid)"],
+["Urban society","Yes","No","No"],
+["Drainage system","Advanced underground","Unknown","Unknown"]
+]},
+traps:["Both IVC and Early Vedic had NO temples — different reasons, same result","Horse absent in IVC → Vedic period is when horse comes in (Aryans brought it)","Vedic had NO script (oral tradition only) | IVC had script but it's undeciphered","Bali = voluntary (Early Vedic) → compulsory (Later Vedic) → 2 different answers!"],
+revision:[
+"IVC: bronze/copper, no iron, no horse, no temples, pictographic script (undeciphered)",
+"Vedic: iron(Later), horse(both), no temples(Early only), oral tradition (no script)",
+"COMMON to IVC + Early Vedic: NO temples (different reasons)",
+"Nishka=gold currency | Bhaga=1/6 tax | Bali=voluntary→compulsory",
+"1st Buddhist Council=Rajgriha(Ajatashatru) | 2nd=Vaishali(Kalashoka)"
+],
+oneliners:[
+"IVC used only bronze and copper tools — no iron was ever found",
+"Iron appeared in India only in the Later Vedic period, called Krishna Ayas",
+"The horse was absent in the IVC but present throughout the Vedic period",
+"No temples have been found in either the IVC or the Early Vedic period",
+"Temples appeared only in the Later Vedic period, not before",
+"The IVC had a pictographic script that remains undeciphered",
+"The Vedic period had no script at all — knowledge was transmitted orally",
+"Caste (varna) rigidity was absent in both IVC and Early Vedic society",
+"The rigid 4-varna caste system appeared only in the Later Vedic period",
+"IVC was an urban society; both Early and Later Vedic society were largely rural",
+"IVC had an advanced underground drainage system, unmatched in the Vedic period",
+"'Nishka' was a gold ornament used as currency in the Early Vedic period",
+"'Bhaga' (1/6th of produce) was a compulsory tax in the Later Vedic period",
+"'Bali' was a voluntary gift in Early Vedic times, but became compulsory later",
+"The Ajivika school was founded by Makkhali Gosala",
+"The Charvaka/Lokayata school was founded by Brihaspati",
+"The 1st Buddhist Council was held at Rajgriha under King Ajatashatru (483 BC)",
+"The 2nd Buddhist Council was held at Vaishali under King Kalashoka (383 BC)",
+"'Sabha' was a council of elders/nobles; 'Samiti' was the general assembly of all people",
+"'Vidatha' was the oldest Vedic assembly, combining religious and military functions"
+],
+flashcards:[
+{q:"Did the IVC use iron? When did iron first appear in India?",a:"No, IVC never used iron — it first appeared in the Later Vedic period (Krishna Ayas)"},
+{q:"Was the horse present in the IVC?",a:"No — the horse appears only from the Vedic period onward"},
+{q:"What is common to BOTH the IVC and the Early Vedic period regarding religion?",a:"Neither had temples (though for different underlying reasons)"},
+{q:"Compare the scripts of IVC and the Vedic period.",a:"IVC had a pictographic script (undeciphered); the Vedic period had no script at all — purely oral tradition"},
+{q:"When did the rigid 4-varna caste system appear?",a:"Only in the Later Vedic period — not in IVC or Early Vedic times"},
+{q:"What was 'Nishka' in Vedic economy?",a:"A gold ornament used as a form of currency"},
+{q:"What was 'Bhaga', and how much was it?",a:"A tax of 1/6th of agricultural produce, compulsory in the Later Vedic period"},
+{q:"Who founded the Ajivika school?",a:"Makkhali Gosala"},
+{q:"Where and under whom were the 1st and 2nd Buddhist Councils held?",a:"1st: Rajgriha, under Ajatashatru | 2nd: Vaishali, under Kalashoka"},
+{q:"Differentiate 'Sabha' and 'Samiti' in Vedic assemblies.",a:"Sabha = council of elders/nobles (restricted); Samiti = general assembly of all people"}
+],
+mcqs:[
+{q:"Which feature was present in IVC but ABSENT in Early Vedic period?",o:["Horse","Iron tools","Urban planning with drainage","Idol worship of male gods"],a:2,e:"IVC had advanced urban planning with underground covered drainage — absent in Early Vedic (pastoral/rural). Horse was absent in IVC but present in Early Vedic. Iron was absent in both (only Later Vedic)."},
+{q:"Which is COMMON to BOTH IVC and Early Vedic period?",o:["Iron tools","No temples","Horse domestication","Pictographic script"],a:1,e:"NO temples is common to both IVC and Early Vedic period — for different reasons. IVC never had temples. Early Vedic had no temple worship (prayer-based religion, nature gods)."},
+{q:"In which period was iron first used in India?",o:["IVC / Bronze Age","Early Vedic Period","Chalcolithic Period","Later Vedic Period"],a:3,e:"Iron was first used in the Later Vedic Period — it is called 'Krishna Ayas' (black metal) in Later Vedic texts. IVC used only copper and bronze. Early Vedic used copper/bronze too."},
+{q:"The Vedic economy term 'Nishka' refers to:",o:["A type of sacrifice","A unit of time","Gold ornament used as currency","A type of pottery"],a:2,e:"Nishka was a gold ornament used as currency in the Early Vedic period. Other Vedic currency terms: Shatamana, Krishnala (smallest unit). Cattle was the primary measure of wealth."},
+{q:"'Bhaga' in Later Vedic taxation means:",o:["A voluntary gift","1/10th of produce","A festival offering","1/6th of produce given as tax"],a:3,e:"Bhaga = 1/6th of agricultural produce paid as tax in Later Vedic period. This was a regular, compulsory tax. Bali also became compulsory in Later Vedic (it was voluntary in Early Vedic)."},
+{q:"Which statement about IVC script is CORRECT?",o:["It was Brahmi script","It has been fully deciphered","It is pictographic and has NOT been deciphered","It was written left-to-right only"],a:2,e:"IVC script is pictographic (not Brahmi), written right-to-left (sometimes boustrophedon), with ~400+ signs identified. It has NOT been deciphered — a great mystery of ancient history."},
+{q:"In the Early Vedic period, society was:",o:["Rigid caste-based","Largely egalitarian with no rigid caste","Divided into 4 rigid varnas","Urban and industrialised"],a:1,e:"Early Vedic society was largely egalitarian — no rigid caste divisions. Caste (varna) system crystallised only in the Later Vedic period, theoretically based on the Purusha Sukta."},
+{q:"The Ajivika school of philosophy was founded by:",o:["Mahavira","Gautama Buddha","Makkhali Gosala","Brihaspati"],a:2,e:"Ajivika school was founded by Makkhali Gosala (also a contemporary of Buddha and Mahavira). Charvaka/Lokayata was founded by Charvaka/Brihaspati. Both are Nastika schools."},
+{q:"Which correctly matches the Buddhist Council with its location?",o:["1st Council — Vaishali","2nd Council — Rajgriha","1st Council — Rajgriha, 2nd Council — Vaishali","Both Councils — Pataliputra"],a:2,e:"1st Buddhist Council = Rajgriha (483 BC, Ajatashatru/Haryanka) | 2nd Buddhist Council = Vaishali (383 BC, Kalashoka/Shishunaga) | 3rd Buddhist Council = Pataliputra (Ashoka)."},
+{q:"The Vedic assembly 'Sabha' refers to:",o:["General assembly of all people","Council of elders/nobles","Religious war assembly","Republican assembly"],a:1,e:"Sabha = council of elders/nobles (restricted, selective assembly) | Samiti = general assembly of ALL people | Vidatha = oldest assembly (religious + military) | Gana = republican assemblies."}
+]}
+]},
+{id:"golden-ch",title:"Golden Revision",icon:"🏹",nodes:[
+{id:"golden",title:"🏹 Golden Node — High-Yield Revision",xp:100,type:"gold",seqIdx:14,requires_pct:80,
+golden:[
+"<b>Fire DISCOVERED = Mesolithic | Fire USED = Neolithic</b> — two different answers, one question format",
+"<b>1st pet = Dog (Mesolithic) | 2nd pet = Horse (Vedic period)</b>",
+"<b>LARGEST IVC site = Rakhi Garhi</b> (Haryana) | Largest CITY = Mohenjodaro",
+"<b>FIRST excavated = Harappa 1921 (D.R. Sahini)</b> | Mohenjodaro 1922 (R.D. Banerjee)",
+"<b>IVC had: No iron, No horse, No temples, Script undeciphered</b>",
+"<b>Pashupati Seal = Mohenjodaro</b> | Unicorn = most depicted on IVC seals",
+"<b>Dholavira = UNESCO 2021 | Bhimbetka = UNESCO 2003</b>",
+"<b>Gayatri Mantra = Rigveda, by Vishwamitra</b>",
+"<b>Samaveda = Indian classical music</b> | Atharvaveda = magic/charms",
+"<b>Upanishads = Vedanta</b> (NOT Vedanga) | Vedangas = 6",
+"<b>Indra = Early Vedic supreme god | Prajapati = Later Vedic supreme god</b>",
+"<b>Iron = Later Vedic only (Krishna Ayas)</b> — NOT Early Vedic, NOT IVC",
+"<b>16 Mahajanapadas — Source: Anguttara Nikaya</b>",
+"<b>Vaishali (Vajji) = World's 1st Republic</b>",
+"<b>Assaka = ONLY Mahajanapada south of Vindhyas</b>",
+"<b>Bimbisara = contemporary of BOTH Buddha AND Mahavira</b>",
+"<b>1st Buddhist Council = Rajgriha (Ajatashatru) | 2nd = Vaishali (Kalashoka)</b>",
+"<b>Pataliputra founded by UDAYIN</b> (not Bimbisara, not Chandragupta)",
+"<b>Nanda = first non-Kshatriya dynasty</b>",
+"<b>Alexander died at Babylon (323 BC)</b> — NOT India, NOT Greece",
+"<b>Battle of Hydaspes = Jhelum river</b> | Ambhi welcomed | Porus fought",
+"<b>Samkhya (Kapila) = oldest Indian philosophy school</b>",
+"<b>Vaisheshika (Kanada) = Atomic theory</b>",
+"<b>Nyaya founder = Gautama/Aksapada ≠ Gautama Buddha</b>"
+]}
+]}
+];
+
+/* ── STATE ── */
+const SK='centumania_anc1_v2';
+let S={xp:0,visited:{},mcq:{},faa:{},curNode:null,chOpen:{}};
+function loadS(){try{const r=localStorage.getItem(SK);if(r)S=Object.assign({xp:0,visited:{},mcq:{},faa:{},curNode:null,chOpen:{}},JSON.parse(r));}catch(e){}}
+function saveS(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
+
+/* ── HELPERS ── */
+function allNodes(){return CHAPTERS.flatMap(c=>c.nodes);}
+function findNode(id){return allNodes().find(n=>n.id===id);}
+function seqNodes(){return allNodes().slice().sort((a,b)=>a.seqIdx-b.seqIdx);}
+
+function isUnlocked(node){
+  if(node.seqIdx===0)return true;
+  if(node.type==='gold'){
+    const all=seqNodes().filter(n=>n.type!=='gold');
+    const passed=all.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+    return (passed/all.length)>=0.8;
+  }
+  const prev=seqNodes().find(n=>n.seqIdx===node.seqIdx-1);
+  if(!prev)return true;
+  return !!(S.mcq[prev.id]&&S.mcq[prev.id].passed);
+}
+
+function totalXP(){return allNodes().reduce((s,n)=>s+((S.mcq[n.id]&&S.mcq[n.id].passed)?n.xp:0),0);}
+function overallPct(){
+  const nodes=allNodes().filter(n=>n.type!=='gold');
+  const passed=nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  return nodes.length?Math.round(100*passed/nodes.length):0;
+}
+
+/* ── TOAST ── */
+function showToast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show'+(type==='err'?' err':type==='warn'?' warn':'');
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+/* ── UPDATE TOPBAR ── */
+function updateTopbar(){
+  const nodes=allNodes().filter(n=>n.type!=='gold');
+  const passed=nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  const traps=allNodes().filter(n=>n.type==='trap');
+  const trapsPassed=traps.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  document.getElementById('h-xp').textContent=totalXP();
+  document.getElementById('h-nd').textContent=passed+'/'+nodes.length;
+  document.getElementById('h-tp').textContent=trapsPassed+'/'+traps.length;
+}
+
+/* ── SIDEBAR ── */
+function buildSidebar(){
+  ['sidebar-inner','mob-sidebar-inner'].forEach(sid=>{
+    const sb=document.getElementById(sid);
+    if(!sb)return;
+    sb.innerHTML='';
+    sb.style.padding='10px 8px 60px';
+    CHAPTERS.forEach(ch=>{
+      const grp=document.createElement('div');
+      grp.className='ch-group';
+      const passedCount=ch.nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+      const isOpen=S.chOpen[ch.id]!==false;
+      const tog=document.createElement('button');
+      tog.className='ch-toggle';
+      tog.innerHTML=`<span class="ch-icon">${ch.icon}</span><span class="ch-label">${ch.title}</span><span class="ch-prog">${passedCount}/${ch.nodes.length}</span><span class="ch-arr">${isOpen?'▾':'▸'}</span>`;
+      tog.onclick=()=>{S.chOpen[ch.id]=!isOpen;saveS();buildSidebar();};
+      grp.appendChild(tog);
+      const items=document.createElement('div');
+      items.className='node-items';
+      items.style.display=isOpen?'block':'none';
+      ch.nodes.forEach(node=>{
+        const unlocked=isUnlocked(node);
+        const m=S.mcq[node.id];
+        const passed=m&&m.passed;
+        const btn=document.createElement('button');
+        btn.className='ni-btn'+(S.curNode===node.id?' active':'')+(passed?' passed':'')+(unlocked?'':' locked');
+        let tag='';
+        if(!unlocked)tag='<span class="ni-tag lock">🔒</span>';
+        else if(passed)tag='<span class="ni-tag done">✓</span>';
+        else if(S.visited[node.id])tag='<span class="ni-tag vis">●</span>';
+        btn.innerHTML=`${tag}<span class="ni-title">${node.title}</span><span class="ni-xp">+${node.xp}</span>`;
+        btn.onclick=()=>openNode(node.id);
+        items.appendChild(btn);
+      });
+      grp.appendChild(items);
+      sb.appendChild(grp);
+    });
+  });
+  updateTopbar();
+}
+
+/* ── OPEN NODE ── */
+function openNode(id){
+  const node=findNode(id);
+  if(!node)return;
+  if(!isUnlocked(node)){
+    const prev=seqNodes().find(n=>n.seqIdx===node.seqIdx-1);
+    showToast(`🔒 Complete "${prev?prev.title:'previous node'}" with 10/10 first!`,'warn');
+    return;
+  }
+  S.curNode=id;S.visited[id]=true;saveS();buildSidebar();
+  track('node_opened',{node_id:id,node_title:node.title,node_type:node.type,xp:node.xp});
+  document.getElementById('dash-view').style.display='none';
+  document.getElementById('node-view').style.display='block';
+  renderNode(node);
+  document.getElementById('mob-drawer').classList.remove('open');
+  document.getElementById('mob-overlay').classList.remove('show');
+  window.scrollTo(0,0);
+  document.getElementById('main-area').scrollTop=0;
+}
+
+/* ── RENDER NODE ── */
+function renderNode(node){
+  const m=S.mcq[node.id]||{};
+  const faaStr=m.faa!=null?Math.round(m.faa)+'%':'—';
+  const bestStr=m.best!=null?Math.round(m.best)+'%':'—';
+  let typTag='';
+  if(node.type==='trap')typTag='<span class="node-type-tag trap">⚠ Trap Node</span>';
+  if(node.type==='gold')typTag='<span class="node-type-tag gold">★ Golden Node</span>';
+  const mcqs=node.mcqs||[];
+  const testLabel=m.passed?`🎯 Test (10/10 ✓)`:`🎯 Test (10 MCQs)`;
+  const retryBtn=(m.attempts&&!m.passed&&node.type!=='gold')?`<button class="retry-btn" style="margin-left:auto" onclick="retryNode('${node.id}')">↺ Retry</button>`:'';
+
+  document.getElementById('node-content').innerHTML=`
+<div class="node-hd">
+  <div class="node-hd-top">${typTag}<div class="xp-pill">+${node.xp} XP</div></div>
+  <h2 class="node-title">${node.title}</h2>
+  <div class="node-stats">
+    <div class="ns-item"><div class="ns-label">FAA</div><div class="ns-val faa-col">${faaStr}</div></div>
+    <div class="ns-item"><div class="ns-label">Best</div><div class="ns-val">${bestStr}</div></div>
+    <div class="ns-item"><div class="ns-label">Attempts</div><div class="ns-val">${m.attempts||0}</div></div>
+    <div class="ns-item"><div class="ns-label">Status</div><div class="ns-val ${m.passed?'pass-col':'pend-col'}">${m.passed?'✓ Passed':'Pending'}</div></div>
+    ${retryBtn}
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="switchTab(this,'learn')">📖 Learn</button>
+  <button class="tab" onclick="switchTab(this,'flash')">🗂 Flashcards</button>
+  <button class="tab" onclick="switchTab(this,'test')">${testLabel}</button>
+</div>
+<div id="tab-learn" class="tab-pane active">${buildLearnPane(node)}</div>
+<div id="tab-flash" class="tab-pane">${buildFlashPane(node)}</div>
+<div id="tab-test" class="tab-pane">${buildTestPane(node)}</div>
+`;
+  bindMCQ(node);
+  buildNodeNav(node);
+}
+
+function switchTab(btn,tab){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+/* ── LEARN PANE ── */
+function buildLearnPane(node){
+  let h='';
+  if(node.type==='gold'&&node.golden){
+    h+='<div class="fact-block gold-block"><div class="fb-head">★ HIGH-YIELD REVISION FACTS</div><div class="fb-body"><ul class="facts">';
+    node.golden.forEach(f=>h+=`<li>${f}</li>`);
+    h+='</ul></div></div>';
+    return h;
+  }
+  if(node.facts&&node.facts.length){
+    h+='<div class="fact-block"><div class="fb-head">📌 KEY FACTS</div><div class="fb-body"><ul class="facts">';
+    node.facts.forEach(f=>h+=`<li>${f}</li>`);
+    h+='</ul></div></div>';
+  }
+  if(node.table){
+    h+='<div class="tbl-wrap"><table class="dt"><thead><tr>';
+    node.table.h.forEach(c=>h+=`<th>${c}</th>`);
+    h+='</tr></thead><tbody>';
+    node.table.r.forEach(row=>{h+='<tr>';row.forEach(c=>h+=`<td>${c}</td>`);h+='</tr>';});
+    h+='</tbody></table></div>';
+  }
+  if(node.mn){
+    h+=`<div class="mnemonic-block"><div class="fb-head">${node.mn.h}</div><div class="fb-body">${node.mn.b}</div></div>`;
+  }
+  if(node.traps&&node.traps.length){
+    h+='<div class="trap-block"><div class="fb-head">⚠ EXAM TRAPS — HIGH FREQUENCY</div><div class="fb-body"><ul class="facts">';
+    node.traps.forEach(t=>h+=`<li>${t}</li>`);
+    h+='</ul></div></div>';
+  }
+  if(node.revision&&node.revision.length){
+    h+='<div class="revision-block"><div class="fb-head">⚡ 30 SECOND REVISION</div><div class="fb-body"><ul class="facts">';
+    node.revision.forEach(r=>h+=`<li>${r}</li>`);
+    h+='</ul></div></div>';
+  }
+  if(node.oneliners&&node.oneliners.length){
+    h+='<div class="oneliner-block"><div class="fb-head">🎯 20 EXAM ONE-LINERS</div><div class="fb-body"><ul class="facts">';
+    node.oneliners.forEach(o=>h+=`<li>${o}</li>`);
+    h+='</ul></div></div>';
+  }
+  return h;
+}
+
+/* ── FLASHCARD PANE ── */
+function buildFlashPane(node){
+  const cards=node.flashcards||[];
+  if(!cards.length)return '<div class="fact-block"><div class="fb-body" style="padding:2rem;text-align:center;color:var(--ink2)">No flashcards for this node yet.</div></div>';
+  let h=`<p class="flash-hint">TAP A CARD TO FLIP • ${cards.length} CARDS</p><div class="flash-grid">`;
+  cards.forEach((c,i)=>{
+    h+=`<div class="flash-card" id="fc-${node.id}-${i}" onclick="this.classList.toggle('flipped')">
+      <div class="flash-inner">
+        <div class="flash-front">${c.q}</div>
+        <div class="flash-back">${c.a}</div>
+      </div>
+    </div>`;
+  });
+  h+=`</div><div class="flash-reset-row"><button class="retry-btn" onclick="resetFlash('${node.id}')">↺ Reset All Cards</button></div>`;
+  return h;
+}
+function resetFlash(nid){
+  document.querySelectorAll(`[id^="fc-${nid}-"]`).forEach(c=>c.classList.remove('flipped'));
+}
+
+/* ── TEST PANE ── */
+let _sess={};
+function buildTestPane(node){
+  if(node.type==='gold'){
+    return '<div class="fact-block"><div class="fb-body" style="padding:2rem;text-align:center"><p style="font-size:1.1rem;color:var(--ink2)">🏹 Golden Revision Node — read the facts above and revisit them until you can recall them all!</p></div></div>';
+  }
+  if(!_sess[node.id])_sess[node.id]={};
+  const m=S.mcq[node.id]||{};
+  const mcqs=node.mcqs||[];
+  let h='';
+  if(m.passed){
+    h+=`<div class="unlock-banner pass-banner">🎉 Passed! FAA: ${Math.round(m.faa||0)}% | Best: ${Math.round(m.best||0)}% | Attempts: ${m.attempts||1}</div>`;
+  } else if(m.lastScore!==undefined){
+    h+=`<div class="unlock-banner fail-banner">${m.lastScore}/10 — Need 10/10 to unlock next node. FAA locked at ${Math.round(m.faa||0)}%. <button class="retry-btn" onclick="retryNode('${node.id}')">↺ Retry</button></div>`;
+  }
+  mcqs.forEach((q,i)=>{
+    const sessAns=_sess[node.id][i];
+    const answered=sessAns!==undefined||m.passed;
+    const displayAns=sessAns!==undefined?sessAns:(m.passed?q.a:undefined);
+    const faaCorrect=S.faa[node.id]&&S.faa[node.id][i]===true;
+    const faaSet=S.faa[node.id]&&S.faa[node.id][i]!==undefined;
+    h+=`<div class="mcq-card${answered?' done':''}" data-qi="${i}" data-nid="${node.id}">`;
+    h+=`<div class="mcq-q"><span class="q-num">${i+1}.</span> ${q.q}</div>`;
+    h+='<div class="mcq-opts">';
+    q.o.forEach((opt,oi)=>{
+      let cls='mopt';
+      if(answered){
+        if(oi===q.a)cls+=' correct';
+        else if(oi===displayAns&&displayAns!==q.a)cls+=' wrong';
+      }
+      h+=`<button class="${cls}" data-oi="${oi}"${answered?' disabled':''}>${String.fromCharCode(65+oi)}. ${opt}</button>`;
+    });
+    h+='</div>';
+    if(answered){
+      const wasCorrect=displayAns===q.a;
+      h+=`<div class="mcq-fb">${wasCorrect?'✅':'❌'} ${q.e}</div>`;
+      if(faaSet){
+        h+=`<div class="mcq-faa"><span class="faa-chip ${faaCorrect?'faa-ok':'faa-err'}">${faaCorrect?'FAA ✓':'FAA ✗'} (first attempt)</span></div>`;
+      }
+    }
+    h+='</div>';
+  });
+  // Bottom retry bar — always visible after completing all questions
+  if(!m.passed&&m.attempts){
+    h+=`<div style="margin-top:20px;padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <span style="font-family:var(--mono);font-size:13px;color:var(--ink2)">Best: <b style="color:var(--gold)">${Math.round(m.best||0)}%</b> &nbsp;|&nbsp; FAA: <b style="color:var(--amber)">${Math.round(m.faa||0)}%</b> &nbsp;|&nbsp; Need <b style="color:var(--green)">10/10</b> to unlock next</span>
+      <button class="retry-btn" style="font-size:13px;padding:9px 22px" onclick="retryNode('${node.id}')">↺ Retry</button>
+    </div>`;
+  }
+  return h;
+}
+
+/* ── BIND MCQ ── */
+function bindMCQ(node){
+  const mcqs=node.mcqs||[];
+  const pane=document.getElementById('tab-test');
+  if(!pane)return;
+  pane.querySelectorAll('.mcq-card:not(.done)').forEach(card=>{
+    const qi=parseInt(card.dataset.qi);
+    card.querySelectorAll('.mopt').forEach(btn=>{
+      btn.addEventListener('click',function(){
+        if(card.classList.contains('done'))return;
+        const chosen=parseInt(btn.dataset.oi);
+        const correct=chosen===mcqs[qi].a;
+        if(!_sess[node.id])_sess[node.id]={};
+        _sess[node.id][qi]=chosen;
+        if(!S.faa[node.id])S.faa[node.id]={};
+        if(S.faa[node.id][qi]===undefined)S.faa[node.id][qi]=correct;
+        card.classList.add('done');
+        card.querySelectorAll('.mopt').forEach((b,oi)=>{
+          b.disabled=true;
+          if(oi===mcqs[qi].a)b.classList.add('correct');
+          else if(oi===chosen&&!correct)b.classList.add('wrong');
+        });
+        const fb=document.createElement('div');
+        fb.className='mcq-fb';
+        fb.innerHTML=`${correct?'✅':'❌'} ${mcqs[qi].e}`;
+        card.appendChild(fb);
+        const faaEl=document.createElement('div');
+        faaEl.className='mcq-faa';
+        faaEl.innerHTML=`<span class="faa-chip ${S.faa[node.id][qi]?'faa-ok':'faa-err'}">${S.faa[node.id][qi]?'FAA ✓':'FAA ✗'} (first attempt)</span>`;
+        card.appendChild(faaEl);
+        saveS();
+        if(Object.keys(_sess[node.id]).length===mcqs.length)finishAttempt(node);
+      });
+    });
+  });
+}
+
+function retryNode(nid){
+  _sess[nid]={};
+  if(S.mcq[nid])delete S.mcq[nid].lastScore;
+  saveS();
+  const node=findNode(nid);
+  document.getElementById('tab-test').innerHTML=buildTestPane(node);
+  bindMCQ(node);
+  document.getElementById('main-area').scrollTop=0;
+}
+
+function finishAttempt(node){
+  const mcqs=node.mcqs||[];
+  const sess=_sess[node.id]||{};
+  const correct=mcqs.filter((q,i)=>sess[i]===q.a).length;
+  const pct=Math.round(100*correct/mcqs.length);
+  const passed=correct===mcqs.length;
+  const faaCorrect=mcqs.filter((q,i)=>S.faa[node.id]&&S.faa[node.id][i]===true).length;
+  const faaPct=Math.round(100*faaCorrect/mcqs.length);
+  if(!S.mcq[node.id])S.mcq[node.id]={faa:faaPct,best:0,passed:false,attempts:0};
+  S.mcq[node.id].attempts=(S.mcq[node.id].attempts||0)+1;
+  S.mcq[node.id].faa=faaPct;
+  if(pct>(S.mcq[node.id].best||0))S.mcq[node.id].best=pct;
+  track('mcq_completed',{node_id:node.id,node_title:node.title,score:correct,total:mcqs.length,pct,faa_pct:faaPct,passed,attempts:S.mcq[node.id].attempts});
+  if(passed){
+    S.mcq[node.id].passed=true;
+    if(S.mcq[node.id].lastScore!==undefined)delete S.mcq[node.id].lastScore;
+    S.xp=(S.xp||0)+node.xp;
+    saveS();buildSidebar();
+    track('node_completed',{node_id:node.id,node_title:node.title,xp_earned:node.xp,faa_pct:faaPct,attempts:S.mcq[node.id].attempts});
+    showToast(`🎉 10/10! +${node.xp} XP earned!`,'ok');
+    setTimeout(()=>renderNode(node),400);
+  } else {
+    S.mcq[node.id].lastScore=correct;
+    saveS();buildSidebar();
+    const pane=document.getElementById('tab-test');
+    if(pane){pane.innerHTML=buildTestPane(node);bindMCQ(node);}
+    showToast(`${correct}/10 — Need 10/10. Retry to unlock next node.`,'warn');
+  }
+}
+
+/* ── NODE NAV ── */
+function buildNodeNav(node){
+  const all=seqNodes();
+  const idx=all.findIndex(n=>n.id===node.id);
+  const prev=idx>0?all[idx-1]:null;
+  const next=idx<all.length-1?all[idx+1]:null;
+  const nextOk=next&&isUnlocked(next);
+  document.getElementById('node-nav').innerHTML=`
+    <button class="nav-btn" ${prev?'':"disabled"} onclick="${prev?`openNode('${prev.id}')`:'void(0)'}">← ${prev?prev.title:'Start'}</button>
+    <button class="nav-btn home-btn" onclick="showDash()">⊞ Dashboard</button>
+    <button class="nav-btn" ${nextOk?'':"disabled"} onclick="${nextOk?`openNode('${next.id}')`:'void(0)'}">→ ${next?next.title:'End'}</button>`;
+}
+
+/* ── DASHBOARD ── */
+function showDash(){
+  S.curNode=null;saveS();buildSidebar();
+  document.getElementById('node-view').style.display='none';
+  document.getElementById('dash-view').style.display='block';
+  document.getElementById('mob-home').classList.add('act');
+  document.getElementById('mob-menu').classList.remove('act');
+  const allN=allNodes().filter(n=>n.type!=='gold');
+  const passedN=allN.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+  const pct=overallPct();
+  const xp=totalXP();
+  let chapCards='';
+  CHAPTERS.forEach(ch=>{
+    const nodes=ch.nodes;
+    const p=nodes.filter(n=>S.mcq[n.id]&&S.mcq[n.id].passed).length;
+    const pPct=nodes.length?Math.round(100*p/nodes.length):0;
+    chapCards+=`<div class="dc"><div class="dc-icon">${ch.icon}</div><div class="dc-label">${ch.title}</div><div class="dc-prog-bar"><div class="dc-bar" style="width:${pPct}%"></div></div><div class="dc-nums">${p}/${nodes.length} passed</div></div>`;
+  });
+  const goldenOk=pct>=80;
+  document.getElementById('dash-content').innerHTML=`
+<div class="dash-hero">
+  <div class="dh-title">CentuMania <span style="font-family:var(--mono);font-size:12px;color:var(--ink3);font-style:normal;letter-spacing:1px;display:block;margin-top:4px">ANCIENT HISTORY · PART 1</span></div>
+  <div class="dh-xp">${xp} XP</div>
+  <div class="dh-bar-wrap"><div class="dh-bar" style="width:${pct}%"></div></div>
+  <div class="dh-label">${passedN} of ${allN.length} nodes passed (${pct}%)</div>
+</div>
+<div class="dash-chapters">${chapCards}</div>
+<div class="cta-row">
+  <button class="cta-btn" onclick="startNext()">▶ Continue Learning</button>
+  <button class="cta-btn sec" ${goldenOk?'':"disabled"} onclick="openNode('golden')">🏹 Golden Node ${goldenOk?'':' (need 80%)'}</button>
+</div>`;
+}
+
+function startNext(){
+  const next=seqNodes().find(n=>isUnlocked(n)&&!(S.mcq[n.id]&&S.mcq[n.id].passed));
+  if(next)openNode(next.id);
+  else showToast('All nodes complete! 🏆 Amazing!');
+}
+
+/* ── MOBILE ── */
+function initMobile(){
+  document.getElementById('mob-home').addEventListener('click',()=>{showDash();});
+  document
+  document.getElementById("mob-menu").addEventListener("click",()=>{
+    document.getElementById("mob-drawer").classList.toggle("open");
+    document.getElementById("mob-overlay").classList.toggle("show");
+    document.getElementById("mob-menu").classList.toggle("act");
+  });
+  document.getElementById("mob-close").addEventListener("click",closeDrawer);
+  document.getElementById("mob-overlay").addEventListener("click",closeDrawer);
+}
+function closeDrawer(){
+  document.getElementById("mob-drawer").classList.remove("open");
+  document.getElementById("mob-overlay").classList.remove("show");
+  document.getElementById("mob-menu").classList.remove("act");
+}
+
+/* ── METRICS ── */
+// Reads the Supabase JWT from localStorage/sessionStorage (where the CentuMania
+// app persists it) and POSTs analytics events to the backend.
+// Works only when served from centumania.co.in — no token = silently no-ops.
+let _mToken=null, _mSid=null;
+
+function initMetrics(){
+  // Supabase stores the session under a key like `sb-<ref>-auth-token`
+  // in either localStorage or sessionStorage depending on the user's "keep me
+  // signed in" choice (see centumania-mvp/src/lib/supabase/client.ts).
+  try {
+    const stores=[localStorage,sessionStorage];
+    for(const store of stores){
+      if(_mToken)break;
+      for(let i=0;i<store.length;i++){
+        const k=store.key(i);
+        if(k&&k.startsWith('sb-')&&k.endsWith('-auth-token')){
+          const d=JSON.parse(store.getItem(k)||'{}');
+          _mToken=d?.access_token||null;
+          break;
+        }
+      }
+    }
+  } catch(e){}
+  _mSid='anc1-'+(Date.now().toString(36));
+}
+
+function track(name,meta={}){
+  if(!_mToken)return;
+  fetch('/api/events',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+_mToken},
+    body:JSON.stringify({event_name:name,session_id:_mSid,event_timestamp:new Date().toISOString(),metadata:meta})
+  }).catch(()=>{});
+}
+
+/* ── INIT ── */
+function init(){
+  loadS();
+  initMetrics();
+  track('material_opened',{material:'ancient_history_part1'});
+  buildSidebar();
+  initMobile();
+  if(S.curNode){const n=findNode(S.curNode);if(n&&isUnlocked(n)){openNode(S.curNode);return;}}
+  showDash();
+}
+
+document.addEventListener("DOMContentLoaded",init);
+
+
+/* ===== CentuMania metrics (injected — additive; module content unchanged) ===== */
+(function(){
+  if(window.__cmTrackInit)return; window.__cmTrackInit=1;
+  var CM_DEFAULT='ancient-1';
+  var CM_T0=Date.now(),CM_ACTIVE=0,_cmVisT=Date.now();
+  function cmToken(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function cmMat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function cmSid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'anon-'+Math.random().toString(36).slice(2);}}
+  function cmInteract(itype,nodeId,meta){try{var t=cmToken();if(!t||!nodeId)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify({interaction_type:itype,node_id:String(nodeId),material_id:cmMat(),session_id:cmSid(),timestamp:new Date().toISOString(),metadata:meta||{}})}).catch(function(){});}catch(e){}}
+  function cmEvent(name,meta){try{var t=cmToken();if(!t)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+t},body:JSON.stringify({event_name:name,session_id:cmSid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:cmMat()},meta||{})})}).catch(function(){});}catch(e){}}
+  function cmBeacon(name,meta){try{var t=cmToken();if(!t)return;var p=JSON.stringify({_token:t,event_name:name,session_id:cmSid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:cmMat()},meta||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_cmVisT;cmBeacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_cmVisT=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_cmVisT;cmBeacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  cmEvent('material_opened',{});cmEvent('session_start',{});
+  var _cmNodeT={},_cmLastQ=0;
+  function _cmNode(id){try{if(typeof CHAPTERS!=='undefined')for(var c=0;c<CHAPTERS.length;c++){var ns=CHAPTERS[c].nodes||[];for(var n=0;n<ns.length;n++)if(ns[n].id===id)return ns[n];}}catch(e){}return null;}
+  if(typeof openNode==='function'){var _o=openNode;openNode=function(id){_o(id);try{_cmNodeT[id]=Date.now();_cmLastQ=Date.now();var nd=_cmNode(id);cmInteract('node_opened',id,{total_questions:(nd&&nd.mcqs?nd.mcqs.length:0)});cmEvent('node_open',{node_id:id});}catch(e){}};}
+  if(typeof finishAttempt==='function'){var _f=finishAttempt;finishAttempt=function(node){_f(node);try{var faa=(typeof S!=='undefined'&&S.faa&&S.faa[node.id])||{},total=(node.mcqs||[]).length,ok=0,k;for(k in faa)if(faa[k])ok++;var pct=total?Math.round(ok/total*100):0;cmInteract('node_completed',node.id,{total_questions:total,correct_first_attempt:ok,accuracy_pct:pct,time_spent_seconds:Math.round((Date.now()-(_cmNodeT[node.id]||Date.now()))/1000)});cmEvent('node_completed',{node_id:node.id,pct:pct});}catch(e){}};}
+  try{new MutationObserver(function(ms){ms.forEach(function(m){var el=m.target;if(el&&el.classList&&el.classList.contains('mcq-card')&&el.classList.contains('done')&&!el._cmS){el._cmS=1;var qi=parseInt(el.dataset.qi),nid=el.dataset.nid;var fac=!!(typeof S!=='undefined'&&S.faa&&S.faa[nid]&&S.faa[nid][qi]===true);var now=Date.now(),dt=_cmLastQ?now-_cmLastQ:0;_cmLastQ=now;if(nid!=null){cmInteract('mcq_attempt',nid,{question_index:qi,is_correct:fac});cmEvent('answer',{node_id:nid,question_index:qi,is_correct:fac,time_spent_ms:dt});}}});}).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']});}catch(e){}
+})();
+
+</script>
+</body>
+</html>

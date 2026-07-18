@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>SSC English · Articles (A / An / The)</title>
+<title>SSC English · Synonyms & Antonyms</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -189,7 +189,7 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 <body>
 <div class="shell">
 <nav class="topbar">
-  <div class="logo"><span class="logo-dot"></span>SSC English — Articles (A / An / The)</div>
+  <div class="logo"><span class="logo-dot"></span>SSC English — Synonyms & Antonyms</div>
   <div class="nav-stats">
     <div class="stat xp">XP <b id="hXP">0</b></div>
     <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
@@ -219,264 +219,222 @@ table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono
 
 <script>
 
-const DIAGRAMS = {
-"articles-map": `<svg viewBox="0 0 760 170" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
-<rect x="4" y="4" width="752" height="26" rx="6" fill="rgba(61,214,140,.08)" stroke="#3dd68c" stroke-width="1"/>
-<text x="380" y="22" fill="#3dd68c" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" letter-spacing="2">ARTICLE DECISION MAP — A / AN / THE / ZERO</text>
-<rect x="4" y="36" width="246" height="128" rx="8" fill="rgba(34,211,200,.06)" stroke="#22d3c8" stroke-width="1.2"/>
-<text x="127" y="56" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">A / AN</text>
-<text x="127" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Singular · first mention</text>
-<text x="127" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">AN = vowel SOUND</text>
-<text x="127" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">an hour · an MBA · an heir</text>
-<text x="127" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">A = consonant SOUND</text>
-<text x="127" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">a university · a one-rupee</text>
-<rect x="258" y="36" width="246" height="128" rx="8" fill="rgba(61,214,140,.06)" stroke="#3dd68c" stroke-width="1.2"/>
-<text x="381" y="56" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">THE</text>
-<text x="381" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Second mention · unique</text>
-<text x="381" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Superlatives · ordinals</text>
-<text x="381" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Rivers · ranges · instruments</text>
-<text x="381" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">the sun · the best · the Ganga</text>
-<text x="381" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">the USA · the Himalayas</text>
-<rect x="512" y="36" width="244" height="128" rx="8" fill="rgba(240,107,107,.06)" stroke="#f06b6b" stroke-width="1.2"/>
-<text x="634" y="56" fill="#f06b6b" font-size="11" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">ZERO (no article)</text>
-<text x="634" y="76" fill="#e8f5f0" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Languages · meals · subjects</text>
-<text x="634" y="92" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">Countries · abstract nouns</text>
-<text x="634" y="108" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">After elected / appointed</text>
-<text x="634" y="124" fill="#9dc4b4" font-size="10" text-anchor="middle" font-family="DM Sans,sans-serif">by bus · go to bed</text>
-<text x="634" y="140" fill="#f0bc45" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">Honesty · English · lunch</text>
-</svg>`
-};
+const DIAGRAMS = {};
 
 const CHAPTERS = [
 
-{id:"art-foundations",title:"Foundations",icon:"📰",nodes:[
+{id:"syn-sets",title:"Vocabulary Sets",icon:"📖",nodes:[
 
- {id:"art-aan",title:"A vs AN — The Sound Rule",xp:20,type:"regular",diag:"articles-map",
+ {id:"syn-praise-wealth",title:"Praise · Courage · Wealth",xp:20,type:"regular",
   facts:[
-   "<b>A / AN depends on SOUND, not spelling</b> — this is the single most tested article rule in SSC",
-   "<b>AN</b> before a vowel SOUND: <code>an</code> apple, <code>an</code> hour, <code>an</code> honest man, <code>an</code> heir (silent h)",
-   "<b>AN</b> before letters pronounced with a vowel sound: <code>an</code> MBA, <code>an</code> MP, <code>an</code> MLA, <code>an</code> X-ray, <code>an</code> SSC exam",
-   "<b>A</b> before a consonant SOUND even if the word starts with a vowel LETTER: <code>a</code> university, <code>a</code> European, <code>a</code> union, <code>a</code> useful book (all 'yu' sound)",
-   "<b>A</b> before 'one-' words: <code>a</code> one-rupee note, <code>a</code> one-eyed man (the 'w/won' sound)",
-   "<b>A / AN + adjective + noun</b> → decide by the ADJECTIVE's sound: <b>an</b> old man, <b>a</b> beautiful actress, <b>an</b> honest officer"
+   "<b>PRAISE</b>: Laud, Extol, Eulogize, Acclaim, Commend · <b>CRITICISE</b>: Censure, Disparage, Denigrate, Castigate, Reprimand",
+   "<b>COURAGE</b>: Audacious, Intrepid, Dauntless, Valiant, Gallant · <b>FEAR/COWARD</b>: Timorous, Craven, Pusillanimous, Trepidation",
+   "<b>WEALTH</b>: Affluent, Opulent, Munificent (generous) · <b>POVERTY</b>: Indigent, Destitute, Penury, Impoverished",
+   "<b>Frugal</b> (thrifty) ↔ <b>Prodigal / Profligate</b> (wasteful); <b>Parsimonious</b> (stingy) ↔ <b>Munificent</b> (generous)",
+   "Laud/Extol = glorify · Censure/Castigate = criticise severely",
+   "Learn each with its synonym AND antonym for SSC's dual-format questions"
   ],
-  table:{h:["USE A (consonant sound)","USE AN (vowel sound)"],r:[
-   ["a university (yu-)","an umbrella (u-)"],
-   ["a European (yu-)","an honest man (silent h)"],
-   ["a one-rupee note (w-)","an hour (silent h)"],
-   ["a useful book (yu-)","an MBA / an MP (em-)"],
-   ["a unicorn (yu-)","an heir (silent h)"],
-   ["a historic event (h pronounced)","an X-ray (ex-)"]
+  table:{h:["Word","Meaning","Synonym / Antonym"],r:[
+   ["Laud","praise highly","Extol / Censure"],
+   ["Disparage","belittle","Denigrate / Extol"],
+   ["Audacious","bold, daring","Intrepid / Timid"],
+   ["Pusillanimous","lacking courage","Craven / Bold"],
+   ["Affluent","wealthy","Opulent / Indigent"],
+   ["Munificent","very generous","Bountiful / Parsimonious"]
   ]},
   mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"'Honest' has a silent H → vowel sound → AN."},
-   {q:"She is ___ European working in India.",o:["a","an","the","✗ (no article)"],a:0,e:"'European' begins with a 'yu' consonant sound → A."},
-   {q:"He has ___ MBA degree from IIM.",o:["a","an","the","✗ (no article)"],a:1,e:"'MBA' = 'em-bee-ay' → begins with a vowel sound → AN."},
-   {q:"Please give me ___ one-rupee coin.",o:["a","an","the","✗ (no article)"],a:0,e:"'One' begins with a 'w' (won) sound = consonant sound → A."},
-   {q:"It is ___ useful book for beginners.",o:["a","an","the","✗ (no article)"],a:0,e:"'Useful' = 'yu-' consonant sound → A."},
-   {q:"He is ___ heir to a large fortune.",o:["a","an","the","✗ (no article)"],a:1,e:"'Heir' has a silent H → vowel sound → AN."},
-   {q:"They lived through ___ historic event.",o:["a","an","the","✗ (no article)"],a:0,e:"In 'historic' the H is pronounced → consonant sound → A."}
+   {q:"SYNONYM of LAUD:",o:["Criticize","Extol","Ignore","Punish"],a:1,e:"Laud = praise highly → Extol."},
+   {q:"SYNONYM of AUDACIOUS:",o:["Timid","Pusillanimous","Intrepid","Craven"],a:2,e:"Audacious = bold → Intrepid."},
+   {q:"ANTONYM of AFFLUENT:",o:["Frugal","Opulent","Indigent","Munificent"],a:2,e:"Affluent = wealthy → antonym Indigent."},
+   {q:"SYNONYM of DISPARAGE:",o:["Praise","Denigrate","Extol","Glorify"],a:1,e:"Disparage = belittle → Denigrate."},
+   {q:"MUNIFICENT most nearly means:",o:["Stingy","Generous","Poor","Cruel"],a:1,e:"Munificent = very generous."},
+   {q:"ANTONYM of PRODIGAL:",o:["Wasteful","Lavish","Frugal","Extravagant"],a:2,e:"Prodigal = wasteful → antonym Frugal (thrifty)."},
+   {q:"SYNONYM of CENSURE:",o:["Reprimand","Commend","Applaud","Reward"],a:0,e:"Censure = strong criticism → Reprimand."}
   ]},
 
- {id:"art-the",title:"THE — The Definite Article",xp:20,type:"regular",
+ {id:"syn-character-intel",title:"Character · Intelligence · Talk",xp:20,type:"regular",
   facts:[
-   "<b>Second mention</b> of a noun: 'I saw a dog. THE dog was black.'",
-   "<b>Unique things</b>: the sun, the moon, the sky, the earth, the world, the universe",
-   "<b>Superlatives &amp; ordinals</b>: the best, the tallest, the first, the second, the last",
-   "<b>Rivers, oceans, seas</b>: the Ganga, the Nile, the Pacific, the Arabian Sea · <b>ranges</b>: the Himalayas, the Alps (NOT single peaks)",
-   "<b>Holy books</b>: the Gita, the Bible, the Quran · <b>newspapers</b>: the Hindu, the Times of India · <b>named ships/trains</b>: the Rajdhani, the Titanic",
-   "<b>Musical instruments</b>: play the violin, the piano · <b>directions</b>: the North, the East · <b>parallel comparatives</b>: THE more you read, THE better"
+   "<b>GOOD CHARACTER</b>: Benevolent, Altruistic, Magnanimous, Virtuous, Pious · <b>BAD</b>: Malevolent, Nefarious, Heinous, Depraved",
+   "<b>INTELLIGENT</b>: Astute, Sagacious, Perspicacious, Acumen (insight) · <b>FOOLISH</b>: Obtuse, Fatuous, Inane, Vacuous",
+   "<b>TALKATIVE</b>: Loquacious, Garrulous, Verbose, Voluble · <b>SILENT</b>: Taciturn, Reticent, Laconic, Reserved",
+   "Benevolent (kind) ↔ Malevolent (wishing harm); Altruistic (selfless) ↔ Egocentric (selfish)",
+   "Eloquent (fluent, persuasive) ↔ Inarticulate; Laconic/Terse (few words) ↔ Verbose/Prolix",
+   "Astute/Sagacious/Perspicacious all = shrewd, wise, sharp-minded"
   ],
-  table:{h:["Use THE for","Example"],r:[
-   ["Second mention","I saw a dog. THE dog barked."],
-   ["Unique in the world","the sun, the moon, the earth"],
-   ["Superlatives / ordinals","the best, the first, the last"],
-   ["Musical instruments","He plays THE violin"],
-   ["Rivers / ranges / seas","the Ganga, the Himalayas, the Pacific"],
-   ["Holy books / newspapers","the Gita, the Hindu"],
-   ["Political / govt bodies","the Parliament, the Cabinet"]
+  table:{h:["Word","Meaning","Synonym / Antonym"],r:[
+   ["Benevolent","kind","Altruistic / Malevolent"],
+   ["Nefarious","wicked","Villainous / Virtuous"],
+   ["Astute","shrewd","Sagacious / Obtuse"],
+   ["Fatuous","silly","Inane / Sagacious"],
+   ["Loquacious","talkative","Garrulous / Taciturn"],
+   ["Taciturn","silent","Reticent / Loquacious"]
   ]},
   mcqs:[
-   {q:"She plays ___ piano beautifully.",o:["a","an","the","✗ (no article)"],a:2,e:"Musical instruments always take THE."},
-   {q:"___ Himalayas are in the north of India.",o:["A","An","The","✗ (no article)"],a:2,e:"Mountain RANGES take THE (single peaks take none)."},
-   {q:"It is ___ most difficult question in the paper.",o:["a","an","the","✗ (no article)"],a:2,e:"Superlatives take THE → 'the most difficult'."},
-   {q:"___ Ganga is a holy river.",o:["A","An","The","✗ (no article)"],a:2,e:"Names of rivers take THE."},
-   {q:"The sun rises in ___ east.",o:["a","an","the","✗ (no article)"],a:2,e:"Cardinal directions take THE → 'the east'."},
-   {q:"I read ___ Times of India every morning.",o:["a","an","the","✗ (no article)"],a:2,e:"Newspapers take THE."},
-   {q:"___ more you practise, ___ better you become.",o:["The / the","A / a","No article / the","The / a"],a:0,e:"Parallel comparatives take THE...THE."}
+   {q:"ANTONYM of MALEVOLENT:",o:["Nefarious","Vicious","Benevolent","Depraved"],a:2,e:"Malevolent = wishing harm → antonym Benevolent."},
+   {q:"SYNONYM of SAGACIOUS:",o:["Obtuse","Fatuous","Astute","Inane"],a:2,e:"Sagacious = wise → Astute."},
+   {q:"SYNONYM of TACITURN:",o:["Loquacious","Reticent","Verbose","Eloquent"],a:1,e:"Taciturn = silent → Reticent."},
+   {q:"ANTONYM of LOQUACIOUS:",o:["Garrulous","Verbose","Voluble","Taciturn"],a:3,e:"Loquacious = talkative → antonym Taciturn."},
+   {q:"OBTUSE most nearly means:",o:["Sharp","Dull/slow","Bright","Kind"],a:1,e:"Obtuse = dull, slow to understand."},
+   {q:"SYNONYM of BENEVOLENT:",o:["Malicious","Altruistic","Spiteful","Vindictive"],a:1,e:"Benevolent = kind → Altruistic."},
+   {q:"LACONIC most nearly means:",o:["Using few words","Talkative","Angry","Cheerful"],a:0,e:"Laconic = terse, using few words."}
   ]},
 
- {id:"art-zero",title:"Zero Article — When to Use Nothing",xp:20,type:"regular",
+ {id:"syn-emotion-change",title:"Emotion · Support · Change",xp:20,type:"regular",
   facts:[
-   "<b>NO article</b> with proper nouns (Ram), countries (India, France), cities (Delhi), single mountains (Mount Everest), single lakes (Dal Lake)",
-   "<b>NO article</b> with languages (English), subjects (Mathematics), meals (breakfast, lunch), diseases (malaria, diabetes)",
-   "<b>NO article</b> with abstract/general nouns: 'Honesty is the best policy', 'Knowledge is power', 'Love is blind'",
-   "<b>NO article</b> with plural general nouns: 'Dogs are loyal', 'Man is mortal'",
-   "<b>THE + adjective = class of people</b>: the poor, the rich, the blind, the young, the dead",
-   "<b>Institution for its purpose</b> → no article: in hospital (as patient), in school, in prison, go to bed, go to work"
+   "<b>HAPPY</b>: Elated, Euphoric, Jubilant, Ecstatic · <b>SAD</b>: Dejected, Despondent, Melancholy, Morose",
+   "<b>SUPPORT</b>: Advocate, Endorse, Espouse, Champion · <b>OPPOSE</b>: Repudiate, Denounce, Decry",
+   "<b>INCREASE</b>: Augment, Burgeon, Proliferate, Amplify · <b>DECREASE</b>: Diminish, Dwindle, Wane, Abate, Ebb",
+   "<b>BEGINNING</b>: Inception, Nascent, Incipient, Genesis · <b>END</b>: Culminate, Terminate, Cessation",
+   "Elated/Jubilant ↔ Dejected/Despondent; Augment ↔ Diminish; Inception ↔ Termination",
+   "Abate/Wane/Subside = reduce in force; Burgeon/Proliferate = grow rapidly"
   ],
-  table:{h:["No article with","Example"],r:[
-   ["Languages","She speaks English & French"],
-   ["Subjects","I study Mathematics"],
-   ["Meals","Have lunch, eat breakfast"],
-   ["Diseases","He has malaria / diabetes"],
-   ["Single mountains / lakes","Mount Everest, Dal Lake"],
-   ["Abstract nouns (general)","Knowledge is power"],
-   ["by + transport","by bus, by train, by air"]
+  table:{h:["Word","Meaning","Synonym / Antonym"],r:[
+   ["Jubilant","joyful","Elated / Dejected"],
+   ["Despondent","hopeless","Melancholy / Optimistic"],
+   ["Advocate","support","Endorse / Oppose"],
+   ["Augment","increase","Amplify / Diminish"],
+   ["Abate","reduce","Subside / Intensify"],
+   ["Inception","beginning","Genesis / Termination"]
   ]},
   mcqs:[
-   {q:"She speaks ___ French and German fluently.",o:["a","the","✗ (no article)","an"],a:2,e:"Languages take no article."},
-   {q:"He had ___ lunch at noon.",o:["a","the","✗ (no article)","an"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"He travelled ___ train to Mumbai.",o:["by (no article)","in the","on a","with the"],a:0,e:"'By + transport' takes no article → 'by train'."},
-   {q:"___ knowledge is ___ power.",o:["The / the","A / a","✗ / ✗ (no article)","The / a"],a:2,e:"Abstract nouns used generally take no article."},
-   {q:"___ Mount Everest is the highest peak.",o:["The","A","An","✗ (no article)"],a:3,e:"Single mountains take no article (ranges take THE)."},
-   {q:"He suffers from ___ malaria.",o:["a","the","an","✗ (no article)"],a:3,e:"Names of diseases take no article."},
-   {q:"___ poor need our help.",o:["A","An","The","✗ (no article)"],a:2,e:"THE + adjective = a whole class of people → 'The poor'."}
+   {q:"ANTONYM of AUGMENT:",o:["Proliferate","Burgeon","Amplify","Diminish"],a:3,e:"Augment = increase → antonym Diminish."},
+   {q:"ANTONYM of JUBILANT:",o:["Elated","Euphoric","Dejected","Exultant"],a:2,e:"Jubilant = joyful → antonym Dejected."},
+   {q:"SYNONYM of ABATE:",o:["Intensify","Subside","Increase","Extend"],a:1,e:"Abate = reduce in force → Subside."},
+   {q:"SYNONYM of REPUDIATE:",o:["Accept","Disown","Endorse","Acknowledge"],a:1,e:"Repudiate = reject → Disown."},
+   {q:"INCEPTION most nearly means:",o:["Ending","Beginning","Middle","Climax"],a:1,e:"Inception = beginning, start."},
+   {q:"SYNONYM of BURGEON:",o:["Wither","Shrink","Flourish","Diminish"],a:2,e:"Burgeon = grow rapidly → Flourish."},
+   {q:"ANTONYM of TERMINATE:",o:["Cease","Conclude","Commence","Discontinue"],a:2,e:"Terminate = end → antonym Commence (begin)."}
+  ]},
+
+ {id:"syn-pyq50",title:"Top 50 SSC Synonyms",xp:20,type:"regular",
+  facts:[
+   "<b>Most repeated SSC synonyms</b>: Abhor=Detest · Alacrity=Eagerness · Ameliorate=Improve · Belligerent=Aggressive · Cajole=Persuade by flattery",
+   "Callous=Heartless · Candid=Frank · Capricious=Unpredictable · Clandestine=Secret · Complacent=Self-satisfied · Conundrum=Puzzle",
+   "Cynical=Distrustful · Debacle=Disaster · Docile=Obedient · Eccentric=Odd · Emulate=Imitate · Enigma=Mystery · Ephemeral=Short-lived",
+   "Eradicate=Destroy · Exacerbate=Worsen · Fabricate=Invent · Fiasco=Failure · Frugal=Thrifty · Futile=Useless · Gullible=Easily deceived",
+   "Hamper=Hinder · Haughty=Arrogant · Harbinger=Forerunner · Impetuous=Rash · Incorrigible=Beyond correction",
+   "Learn the exam answer for each — SSC repeats these year after year"
+  ],
+  table:{h:["Word","SSC Answer","Word","SSC Answer"],r:[
+   ["Abhor","Detest","Cajole","Persuade by flattery"],
+   ["Ameliorate","Improve","Capricious","Unpredictable"],
+   ["Clandestine","Secret","Ephemeral","Short-lived"],
+   ["Exacerbate","Worsen","Gullible","Easily deceived"],
+   ["Haughty","Arrogant","Harbinger","Forerunner"],
+   ["Impetuous","Rash","Futile","Useless"]
+  ]},
+  mcqs:[
+   {q:"SYNONYM of EPHEMERAL:",o:["Eternal","Short-lived","Permanent","Strong"],a:1,e:"Ephemeral = short-lived, fleeting."},
+   {q:"SYNONYM of EXACERBATE:",o:["Improve","Worsen","Solve","Reduce"],a:1,e:"Exacerbate = make worse."},
+   {q:"SYNONYM of CLANDESTINE:",o:["Open","Secret","Legal","Honest"],a:1,e:"Clandestine = secret, hidden."},
+   {q:"SYNONYM of GULLIBLE:",o:["Wise","Easily deceived","Stubborn","Honest"],a:1,e:"Gullible = easily fooled/deceived."},
+   {q:"SYNONYM of HAUGHTY:",o:["Humble","Arrogant","Friendly","Shy"],a:1,e:"Haughty = arrogant, proud."},
+   {q:"SYNONYM of ABHOR:",o:["Adore","Detest","Accept","Ignore"],a:1,e:"Abhor = hate → Detest."},
+   {q:"SYNONYM of CAPRICIOUS:",o:["Steady","Unpredictable","Reliable","Calm"],a:1,e:"Capricious = unpredictable, whimsical."}
   ]}
 ]},
 
-{id:"art-special",title:"Special Rules & Traps",icon:"⚠️",nodes:[
+{id:"syn-pairs",title:"Confusing Pairs & Practice",icon:"⚠️",nodes:[
 
- {id:"art-specialrules",title:"Special Rules 5A–5G",xp:20,type:"regular",
+ {id:"syn-pairs-node",title:"Confusing Word Pairs (Trap Words)",xp:20,type:"trap",
   facts:[
-   "<b>5A</b> — A/AN + adjective + noun → decide by the adjective's sound: 'an old man', 'a beautiful actress'",
-   "<b>5B</b> — Double article NEVER used: 'the a book' ✗, 'a the book' ✗",
-   "<b>5C</b> — Predicative use after elected/appointed/made/chosen → no article: 'He was elected President', 'She became captain'",
-   "<b>5D</b> — 'Kind of / Sort of / Type of' → no article after: 'What kind of man is he?' (not 'a man')",
-   "<b>5E</b> — By + transport → no article: by bus / by train / by air (BUT 'in the car / on the bus' when specific)",
-   "<b>5F</b> — In + institution for its purpose → no article: 'He is in hospital' (patient) vs 'in the hospital' (visiting); same for school/church/prison",
-   "<b>5G</b> — Fixed phrases: go to bed, go to school, go to work, at home, at night, in fact"
+   "<b>Eminent</b> (famous) vs <b>Imminent</b> (about to happen) · <b>Ambiguous</b> (two meanings) vs <b>Ambivalent</b> (mixed feelings)",
+   "<b>Ingenious</b> (clever) vs <b>Ingenuous</b> (naive) · <b>Flaunt</b> (show off) vs <b>Flout</b> (disobey)",
+   "<b>Prescribe</b> (recommend) vs <b>Proscribe</b> (forbid) · <b>Appraise</b> (assess) vs <b>Apprise</b> (inform)",
+   "<b>Disinterested</b> (impartial) vs <b>Uninterested</b> (not interested) · <b>Adverse</b> (unfavourable) vs <b>Averse</b> (opposed)",
+   "<b>Fortuitous</b> (by chance) vs <b>Fortunate</b> (lucky) · <b>Precede</b> (go before) vs <b>Proceed</b> (move forward)",
+   "<b>Complement</b> (complete) vs <b>Compliment</b> (praise) · <b>Stationary</b> (still) vs <b>Stationery</b> (paper)"
   ],
-  table:{h:["Rule","Wrong","Correct"],r:[
-   ["Elected + post","the President (after elected)","elected President"],
-   ["Kind of","kind of a man","kind of man"],
-   ["By transport","by the train","by train"],
-   ["Institution (purpose)","in the prison (as inmate)","in prison"],
-   ["Fixed phrase","go to the bed","go to bed"],
-   ["Double article","a the book","a book / the book"]
+  table:{h:["Word 1","Word 2"],r:[
+   ["Eminent — famous","Imminent — about to happen"],
+   ["Ingenious — clever","Ingenuous — naive"],
+   ["Flaunt — show off","Flout — disobey"],
+   ["Prescribe — recommend","Proscribe — forbid"],
+   ["Disinterested — impartial","Uninterested — bored"],
+   ["Adverse — harmful","Averse — opposed"]
   ]},
   mcqs:[
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After 'elected/appointed', the post takes no article."},
-   {q:"What kind of ___ man is he?",o:["a","an","the","✗ (no article)"],a:3,e:"'Kind of' takes no article after it."},
-   {q:"He is ___ hospital recovering from surgery. (as patient)",o:["in (no article)","in the","in a","at the"],a:0,e:"Institution for its purpose → 'in hospital' (no article)."},
-   {q:"She became ___ captain of the team.",o:["a","an","the","✗ (no article)"],a:3,e:"Predicative post after 'became' → no article."},
-   {q:"Children go to ___ bed early.",o:["a","the","✗ (no article)","an"],a:2,e:"Fixed phrase 'go to bed' → no article."},
-   {q:"He was old ___ man with grey hair. Choose the correct article.",o:["a","an","the","✗"],a:1,e:"A/AN + adjective → decide by adjective sound; 'old' = vowel sound → 'an old man'."}
+   {q:"'The storm was ___.' (about to happen)",o:["eminent","imminent","prominent","permanent"],a:1,e:"About to happen → Imminent (Eminent = famous)."},
+   {q:"He likes to ___ his wealth. (show off)",o:["flout","flaunt","flunk","flourish"],a:1,e:"Show off → Flaunt (Flout = disobey)."},
+   {q:"The judge was completely ___. (impartial)",o:["uninterested","disinterested","interested","interesting"],a:1,e:"Impartial → Disinterested (Uninterested = bored)."},
+   {q:"The doctor will ___ some medicine. (recommend)",o:["proscribe","prescribe","describe","subscribe"],a:1,e:"Recommend → Prescribe (Proscribe = forbid)."},
+   {q:"He is ___ to taking any risks. (opposed)",o:["adverse","averse","adverb","reverse"],a:1,e:"Opposed to → Averse (Adverse = harmful)."},
+   {q:"She gave me a lovely ___ on my dress. (praise)",o:["complement","compliment","comportment","component"],a:1,e:"Praise → Compliment (Complement = complete)."}
   ]},
 
- {id:"art-country",title:"THE with Countries & Groups",xp:20,type:"regular",
+ {id:"syn-antonym",title:"Antonym Practice",xp:20,type:"trap",
   facts:[
-   "<b>Most countries → NO article</b>: India, France, Japan, China, Brazil, Russia",
-   "<b>Plural / union names → THE</b>: the USA, the UK, the UAE, the Netherlands, the Philippines",
-   "<b>Reason</b>: these are plural words or abbreviated union names (United States, United Kingdom)",
-   "<b>Groups of islands → THE</b>: the Andamans, the Maldives, the West Indies",
-   "<b>Mountain ranges → THE</b>: the Himalayas, the Alps, the Andes (single peaks → none)",
-   "<b>Deserts, seas, oceans, canals → THE</b>: the Sahara, the Pacific, the Suez Canal"
-  ],
-  table:{h:["THE with","Reason / Example"],r:[
-   ["the USA","Plural (United States)"],
-   ["the UK","Union name"],
-   ["the Netherlands","Plural word"],
-   ["the Philippines","Plural word"],
-   ["the Maldives","Group of islands"],
-   ["the Sahara / the Pacific","Deserts, oceans"]
-  ]},
-  mcqs:[
-   {q:"___ Netherlands is a beautiful country.",o:["A","An","The","✗ (no article)"],a:2,e:"'Netherlands' is a plural name → THE."},
-   {q:"He works in ___ USA.",o:["a","an","the","✗ (no article)"],a:2,e:"'USA' (United States, plural) → THE."},
-   {q:"She visited ___ India last year.",o:["the","a","an","✗ (no article)"],a:3,e:"Most countries take no article → 'India'."},
-   {q:"They sailed to ___ Maldives.",o:["a","an","the","✗ (no article)"],a:2,e:"Groups of islands take THE."},
-   {q:"___ Sahara is the largest hot desert.",o:["A","An","The","✗ (no article)"],a:2,e:"Deserts take THE."},
-   {q:"He climbed ___ Mount Fuji.",o:["the","a","an","✗ (no article)"],a:3,e:"Single mountains take no article."}
-  ]},
-
- {id:"art-traps",title:"Trap Sheet — SSC Favourites",xp:20,type:"trap",
-  traps:[
-   "<b>a honest man</b> → <b>an honest man</b> (H silent = vowel sound)",
-   "<b>a MBA degree</b> → <b>an MBA degree</b> (em = vowel sound)",
-   "<b>an uniform</b> → <b>a uniform</b> (yu = consonant sound)",
-   "<b>an European</b> → <b>a European</b> (yu = consonant sound)",
-   "<b>an one-time offer</b> → <b>a one-time offer</b> (w sound)",
-   "<b>The gold is precious</b> → <b>Gold is precious</b> (general abstract = no article)",
-   "<b>I play violin</b> → <b>I play the violin</b> (instruments need THE)",
-   "<b>The Mount Everest</b> → <b>Mount Everest</b> (single mountain = no article)",
-   "<b>He was the elected President</b> → <b>He was elected President</b> (after elected = no article)",
-   "<b>I had the lunch</b> → <b>I had lunch</b> (meals = no article)",
-   "<b>The Sun rises in East</b> → <b>in the East</b> (cardinal directions need THE)",
-   "<b>The more harder you try</b> → <b>The harder you try</b> (no double comparative)"
+   "In antonym questions, first fix the word's meaning, then pick the OPPOSITE.",
+   "Watch distractors that are synonyms of the given word — they are traps.",
+   "Use the sets: praise↔criticise, courage↔fear, wealth↔poverty, increase↔decrease."
   ],
   mcqs:[
-   {q:"Which sentence is CORRECT?",o:["He is a honest man","She plays violin well","Mount Everest is the highest peak in the world","He speaks the English"],a:2,e:"Superlative + unique world → 'the highest peak in the world'. Others: an honest, the violin, English."},
-   {q:"Spot the error: 'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE → 'the violin'."},
-   {q:"Spot the error: 'He is (A) a best (B) student in (C) the class.'",o:["A → the best","B","C","No error"],a:0,e:"Superlatives need THE → 'the best student'."},
-   {q:"Which is WRONG?",o:["The Ganga is a holy river","Honesty is the best policy","He had the lunch at noon","The USA is powerful"],a:2,e:"Meals take no article → 'had lunch'."},
-   {q:"Spot the error: 'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = yu (consonant) sound → 'A European'."},
-   {q:"Which is CORRECT?",o:["He was the elected chairman","The gold is a precious metal","I saw a unique painting","He plays cricket with the bat"],a:2,e:"'Unique' = yu sound → 'a unique painting'. Others: elected chairman (no 'the'), Gold (no 'the'), cricket with a bat."}
+   {q:"ANTONYM of BENEVOLENT:",o:["Kind","Malevolent","Generous","Charitable"],a:1,e:"Benevolent = kind → antonym Malevolent."},
+   {q:"ANTONYM of LOQUACIOUS:",o:["Talkative","Verbose","Taciturn","Garrulous"],a:2,e:"Loquacious = talkative → antonym Taciturn."},
+   {q:"ANTONYM of FRUGAL:",o:["Thrifty","Sparing","Extravagant","Economical"],a:2,e:"Frugal = thrifty → antonym Extravagant."},
+   {q:"ANTONYM of ASCEND:",o:["Rise","Climb","Descend","Mount"],a:2,e:"Ascend = go up → antonym Descend."},
+   {q:"ANTONYM of TRANSPARENT:",o:["Clear","Opaque","Obvious","Visible"],a:1,e:"Transparent → antonym Opaque."},
+   {q:"ANTONYM of ABUNDANT:",o:["Plentiful","Ample","Scarce","Copious"],a:2,e:"Abundant = plentiful → antonym Scarce."},
+   {q:"ANTONYM of CONDEMN:",o:["Blame","Criticize","Praise","Censure"],a:2,e:"Condemn → antonym Praise."}
   ]}
 ]},
 
-{id:"art-pyq",title:"PYQ Practice",icon:"🎯",nodes:[
-
- {id:"art-fill",title:"Fill in the Blank — 25 PYQ",xp:20,type:"regular",
+{id:"syn-pyqch",title:"PYQ Practice",icon:"🎯",nodes:[
+ {id:"syn-synonym",title:"Synonym Practice — Mixed",xp:20,type:"regular",
   facts:[
-   "Practice from the 25-question SSC CGL exercise. For each blank pick a / an / the / ✗ (no article).",
-   "Apply the checklist: vowel SOUND? · second mention? · unique? · superlative? · language/meal/subject? · after elected?",
-   "Do all questions in the Test tab, then review the explanations tied to each rule."
+   "From the SSC exercise. Pick the closest synonym.",
+   "Use word roots and the category sets to eliminate distractors.",
+   "The correct option matches the MEANING, not just the sound."
   ],
   mcqs:[
-   {q:"He is ___ honest officer.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H = vowel sound → AN."},
-   {q:"I go to ___ school every day.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → no article."},
-   {q:"He was elected ___ President of India.",o:["a","an","the","✗ (no article)"],a:3,e:"After elected → no article."},
-   {q:"She is ___ heir to the throne.",o:["a","an","the","✗ (no article)"],a:1,e:"Silent H → vowel sound → AN."},
-   {q:"He went to ___ hospital to visit his friend.",o:["a","an","the","✗ (no article)"],a:2,e:"Visiting (not as patient) → 'the hospital'."},
-   {q:"He travelled by ___ train to Mumbai.",o:["a","an","the","✗ (no article)"],a:3,e:"By + transport → no article."},
-   {q:"He was sent to ___ prison for theft.",o:["a","an","the","✗ (no article)"],a:3,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"I saw ___ dog. ___ dog was barking loudly.",o:["a / The","the / a","an / The","a / a"],a:0,e:"First mention → A; second mention → THE."},
-   {q:"He is ___ unique artist.",o:["a","an","the","✗ (no article)"],a:0,e:"'Unique' = yu sound → A."},
-   {q:"Mount Everest is ___ highest peak in ___ world.",o:["the / the","a / the","the / a","a / a"],a:0,e:"Superlative → THE; unique world → THE."},
-   {q:"He is ___ IAS officer from Kerala.",o:["a","an","the","✗ (no article)"],a:1,e:"'IAS' = 'eye-ay-es' → vowel sound → AN."},
-   {q:"___ Gita is ___ holy book of Hindus.",o:["The / a","A / the","The / the","A / a"],a:0,e:"Holy book name → THE Gita; first mention 'a holy book'."}
+   {q:"SYNONYM of BELLIGERENT:",o:["Peaceful","Aggressive","Friendly","Calm"],a:1,e:"Belligerent = aggressive, hostile."},
+   {q:"SYNONYM of CANDID:",o:["Secretive","Frank/honest","Rude","Shy"],a:1,e:"Candid = frank, honest."},
+   {q:"SYNONYM of DOCILE:",o:["Stubborn","Obedient","Wild","Fierce"],a:1,e:"Docile = obedient, tame."},
+   {q:"SYNONYM of EMULATE:",o:["Ignore","Imitate","Defeat","Envy"],a:1,e:"Emulate = imitate (to match or surpass)."},
+   {q:"SYNONYM of ENIGMA:",o:["Solution","Mystery","Fact","Answer"],a:1,e:"Enigma = mystery, puzzle."},
+   {q:"SYNONYM of HAMPER:",o:["Help","Hinder","Speed","Support"],a:1,e:"Hamper = hinder, obstruct."},
+   {q:"SYNONYM of ALACRITY:",o:["Reluctance","Eagerness","Delay","Sadness"],a:1,e:"Alacrity = brisk eagerness."},
+   {q:"SYNONYM of FUTILE:",o:["Useful","Useless","Fruitful","Effective"],a:1,e:"Futile = useless, pointless."}
   ]},
-
- {id:"art-error",title:"Find the Error — Articles",xp:20,type:"trap",
+ {id:"syn-mixed",title:"Synonym & Antonym — Mixed PYQ",xp:20,type:"regular",
   facts:[
-   "SSC error-spotting: the sentence is split into parts (A)(B)(C); find the part with the article error.",
-   "Article errors are ~20% of all SSC error-spotting questions — always scan articles first.",
-   "Check: A/AN by sound · THE for superlatives/instruments/rivers/ranges · zero article for meals/languages/after elected."
+   "Mixed set: some ask for synonyms, some for antonyms — read the instruction word carefully.",
+   "The trap is choosing a synonym when the antonym is asked (and vice versa).",
+   "Confirm the base meaning first, then match the direction the question wants."
   ],
   mcqs:[
-   {q:"'He is (A) a best student (B) in (C) the class.'",o:["A → the best student","B","C","No error"],a:0,e:"Superlative needs THE."},
-   {q:"'She plays (A) violin (B) very (C) well.'",o:["A","B → the violin","C","No error"],a:1,e:"Musical instruments need THE."},
-   {q:"'An European tourist (A) visited (B) the Taj Mahal (C) yesterday.'",o:["A → A European","B","C","No error"],a:0,e:"'European' = consonant (yu) sound → A."},
-   {q:"'The Nile (A) is in (B) the Africa. (C)'",o:["A","B","C → in Africa","No error"],a:2,e:"Country/continent names take no article → 'in Africa'."},
-   {q:"'He was (A) sent to (B) the prison (C) for theft.'",o:["A","B","C → to prison","No error"],a:2,e:"Institution for its purpose → 'to prison' (no article)."},
-   {q:"'I had (A) the lunch (B) with (C) my friends.'",o:["A","B → had lunch","C","No error"],a:1,e:"Meals take no article → 'had lunch'."},
-   {q:"'She speaks (A) the English (B) and (C) French.'",o:["A","B → English","C","No error"],a:1,e:"Languages take no article → 'English'."}
+   {q:"ANTONYM of AUDACIOUS:",o:["Bold","Intrepid","Cowardly","Daring"],a:2,e:"Audacious = bold → antonym Cowardly."},
+   {q:"SYNONYM of PERSPICACIOUS:",o:["Dull","Discerning","Blind","Ignorant"],a:1,e:"Perspicacious = sharp-sighted → Discerning."},
+   {q:"ANTONYM of OPULENT:",o:["Lavish","Rich","Sparse","Wealthy"],a:2,e:"Opulent = luxurious/rich → antonym Sparse."},
+   {q:"SYNONYM of CONUNDRUM:",o:["Answer","Puzzle","Fact","Result"],a:1,e:"Conundrum = a puzzle/riddle."},
+   {q:"ANTONYM of PROLIFERATE:",o:["Multiply","Expand","Diminish","Spread"],a:2,e:"Proliferate = increase rapidly → antonym Diminish."},
+   {q:"SYNONYM of MELANCHOLY:",o:["Joy","Gloom","Energy","Anger"],a:1,e:"Melancholy = deep sadness → Gloom."},
+   {q:"ANTONYM of ADVOCATE (verb):",o:["Support","Champion","Oppose","Endorse"],a:2,e:"Advocate = support → antonym Oppose."}
   ]}
 ]},
 
-{id:"art-golden",title:"Golden",icon:"🏹",nodes:[
- {id:"art-gold",title:"Articles — Golden Node",xp:30,type:"gold",requires_pct:70,
+{id:"syn-golden",title:"Golden",icon:"🏹",nodes:[
+ {id:"syn-gold",title:"Vocabulary — Golden Node",xp:30,type:"gold",requires_pct:60,
   golden:[
-   "A/AN = <b>SOUND not spelling</b>: an hour, an MBA, an honest man; a university, a European, a one-rupee note",
-   "THE = second mention, unique (the sun), superlatives, ordinals, instruments, rivers, ranges, holy books, newspapers",
-   "ZERO = languages, subjects, meals, diseases, single mountains/lakes, abstract nouns, after elected/appointed",
-   "THE + adjective = class of people (the poor, the rich, the blind)",
-   "THE with plural-name countries (the USA, the Netherlands), island groups (the Maldives), ranges (the Himalayas)",
-   "By + transport = no article; in hospital/school/prison (purpose) = no article; go to bed/school/work = no article"
+   "Praise = Laud/Extol/Eulogize · Criticise = Censure/Disparage/Castigate",
+   "Talkative = Loquacious/Garrulous/Verbose · Silent = Taciturn/Reticent/Laconic",
+   "Increase = Augment/Burgeon/Proliferate · Decrease = Diminish/Dwindle/Abate/Wane",
+   "Eminent≠Imminent · Ingenious≠Ingenuous · Flaunt≠Flout · Prescribe≠Proscribe · Adverse≠Averse",
+   "Ephemeral=short-lived · Clandestine=secret · Exacerbate=worsen · Gullible=easily deceived · Haughty=arrogant",
+   "Read the instruction word: SYNONYM (same) vs ANTONYM (opposite) — the top distractor is usually the reverse"
   ]}
 ]}
 
 ];
 
-const SKEY="ssc_eng_01_articles";
+const SKEY="ssc_eng_09_synonyms";
 let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
 try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
 function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
 
 let _ns={nodeId:null,openedAt:null,answered:0,correct:0,totalQ:0};
 function trackEvent(ev,payload){
-  const body=Object.assign({event:ev,mapId:"ssc_eng_01_articles",ts:new Date().toISOString()},payload);
+  const body=Object.assign({event:ev,mapId:"ssc_eng_09_synonyms",ts:new Date().toISOString()},payload);
   try{fetch('/api/progress',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(()=>flashSync()).catch(()=>{});}catch(e){}
 }
 function flashSync(){const d=document.getElementById('syncDot');if(!d)return;d.classList.add('show');setTimeout(()=>d.classList.remove('show'),900);}
@@ -659,7 +617,7 @@ function showDash(){
   S.curNode=null;save();buildSidebar();
   const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
   document.getElementById("viewWrap").innerHTML=`<div class="dash">
-    <div class="dash-t">Articles (A / An / The)</div>
+    <div class="dash-t">Synonyms & Antonyms</div>
     <div class="dash-s">SSC CGL / CHSL / MTS / CPO · RULES · TRAPS · PYQ PRACTICE</div>
     <div class="dash-grid">
       <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
@@ -699,7 +657,7 @@ buildSidebar();updateHeader();showDash();
 /* ===== CentuMania metrics (injected — additive; module content unchanged) ===== */
 (function(){
   if(window.__cmTrackInit)return; window.__cmTrackInit=1;
-  var CM_DEFAULT='eng-01-articles';
+  var CM_DEFAULT='eng-09-synonyms-antonyms';
   var CM_T0=Date.now(),CM_ACTIVE=0,_cmVisT=Date.now();
   function cmToken(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
   function cmMat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
