@@ -27,6 +27,7 @@ const IcoOut       = (p: IconProps) => <Ico {...p}><path d="M9 21H5a2 2 0 0 1-2-
 
 const IcoBot = (p: IconProps) => <Ico {...p}><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V5M12 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/><circle cx="9.5" cy="13" r=".5"/><circle cx="14.5" cy="13" r=".5"/><path d="M9.5 16.5h5"/></Ico>
 const IcoMore = (p: IconProps) => <Ico {...p}><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></Ico>
+const IcoCap  = (p: IconProps) => <Ico {...p}><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></Ico>
 
 // Primary nav = the daily loop only. Everything else lives under "More".
 // Today's Test opens the Daily Test Engine module (25Q formal daily test);
@@ -35,6 +36,7 @@ const TEST_HREF = '/materials/viewer/daily-test-engine'
 const NAV = [
   { href: '/dashboard',   label: 'Dashboard',    short: 'Home',  Icon: IcoDashboard, highlight: false, mobile: true  },
   { href: '/materials',   label: 'Modules',      short: 'Study', Icon: IcoBook,      highlight: true,  mobile: true  },
+  { href: '/classroom',   label: 'Classroom',    short: 'Learn', Icon: IcoCap,       highlight: false, mobile: true  },
   { href: TEST_HREF,      label: "Today's Test", short: 'Test',  Icon: IcoExam,      highlight: false, mobile: true  },
 ] as const
 const IcoCard = (p: IconProps) => <Ico {...p}><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></Ico>
