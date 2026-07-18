@@ -20,10 +20,17 @@ export function useClassroomSession(): SessionState {
   const [s, setS] = useState<SessionState>({ ready: false, userName: 'Student', token: '' })
   useEffect(() => {
     let cancelled = false
-    getSupabaseBrowserClient().auth.getSession().then(({ data: { session } }) => {
+    getSupabaseBrowserClient().auth.getSession().then(async ({ data: { session } }) => {
       if (cancelled) return
       if (!session) { router.replace('/auth/login'); return }
       setCachedToken(session.access_token)
+      // Prime the `cm_access` cookie (middleware gates the embedded /study/*.html
+      // modules on it) — the same call the /materials page makes. Await it so the
+      // cookie is set before any lesson iframe renders.
+      try {
+        await fetch('/api/materials/status', { headers: { Authorization: `Bearer ${session.access_token}` } })
+      } catch { /* embed will still offer a full-screen fallback link */ }
+      if (cancelled) return
       const name = (session.user.user_metadata?.name as string) ?? session.user.email?.split('@')[0] ?? 'Student'
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setS({ ready: true, userName: name, token: session.access_token })

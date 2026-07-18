@@ -68,6 +68,7 @@ function Sidebar({ course, activeId, doneMap }: { course: Course; activeId: stri
 function LessonPane({
   course, lesson, index, token, done, onToggle,
 }: { course: Course; lesson: Lesson; index: number; token: string; done: boolean; onToggle: () => void }) {
+  const hasVideo = !!course.hasVideo
   const vid = ytId(lesson.videoUrl)
   const prev = course.lessons[index - 1]
   const next = course.lessons[index + 1]
@@ -79,24 +80,26 @@ function LessonPane({
         <Link href="/classroom" style={{ color: CT.FAINT }}>Classroom</Link> · <span style={{ color: CT.AMBER }}>{course.subject}</span> · Topic {index + 1}
       </p>
 
-      {/* VIDEO on top (16:9) */}
-      <div className="rounded-[16px] overflow-hidden mb-5" style={{ aspectRatio: '16 / 9', background: CT.INK, border: `1px solid ${CT.HAIRLINE}` }}>
-        {vid ? (
-          <iframe
-            className="w-full h-full" style={{ border: 0 }}
-            src={`https://www.youtube-nocookie.com/embed/${vid}?rel=0&modestbranding=1`}
-            title={lesson.title} allow="accelerated-sensors; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen
-          />
-        ) : lesson.videoUrl ? (
-          <video className="w-full h-full" controls src={lesson.videoUrl} />
-        ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-center px-6">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-            <p className="text-[13px] font-semibold" style={{ color: 'rgba(255,255,255,0.85)' }}>Video coming soon</p>
-            <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.5)' }}>The explanation below is ready to study now.</p>
-          </div>
-        )}
-      </div>
+      {/* VIDEO on top (16:9) — video courses only (Maths) */}
+      {hasVideo && (
+        <div className="rounded-[16px] overflow-hidden mb-5" style={{ aspectRatio: '16 / 9', background: CT.INK, border: `1px solid ${CT.HAIRLINE}` }}>
+          {vid ? (
+            <iframe
+              className="w-full h-full" style={{ border: 0 }}
+              src={`https://www.youtube-nocookie.com/embed/${vid}?rel=0&modestbranding=1`}
+              title={lesson.title} allow="accelerated-sensors; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen
+            />
+          ) : lesson.videoUrl ? (
+            <video className="w-full h-full" controls src={lesson.videoUrl} />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-center px-6">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.6"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+              <p className="text-[13px] font-semibold" style={{ color: 'rgba(255,255,255,0.85)' }}>Video coming soon</p>
+              <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.5)' }}>The explanation below is ready to study now.</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Title + mark-complete */}
       <div className="flex items-start justify-between gap-4 mb-1">
@@ -115,8 +118,24 @@ function LessonPane({
       {/* EXPLANATION below */}
       <article className="cm-lesson" dangerouslySetInnerHTML={{ __html: lesson.explanation }} />
 
-      {/* Practice link */}
-      {lesson.practiceHtmlPath && (
+      {/* Interactive module — EMBEDDED for non-video courses (their primary media) */}
+      {lesson.practiceHtmlPath && !hasVideo && (
+        <div className="mt-6">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[11px] font-extrabold uppercase" style={{ color: CT.AMBER, letterSpacing: '0.16em' }}>Interactive lesson</p>
+            <a href={lesson.practiceHtmlPath} target="_blank" rel="noopener noreferrer" className="text-[12px] font-bold inline-flex items-center gap-1" style={{ color: CT.SKY }}>
+              Full screen
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            </a>
+          </div>
+          <div className="rounded-[16px] overflow-hidden" style={{ border: `1px solid ${CT.HAIRLINE}`, background: CT.PAPER }}>
+            <iframe key={lesson.id} src={lesson.practiceHtmlPath} title={lesson.title} className="w-full" style={{ height: '78vh', border: 0, display: 'block' }} />
+          </div>
+        </div>
+      )}
+
+      {/* Practice link — video courses (Maths) keep the module as a side link */}
+      {lesson.practiceHtmlPath && hasVideo && (
         <a href={lesson.practiceHtmlPath} target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center gap-2 mt-5 pl-4 pr-4 py-2.5 rounded-xl text-[13px] font-bold"
           style={{ background: '#F7F6F3', border: `1px solid ${CT.HAIRLINE}`, color: CT.INK_SOFT }}>
@@ -170,6 +189,13 @@ export default function LessonView({ subjectSlug, topicId }: { subjectSlug: stri
     window.addEventListener('pagehide', onHide)
     return () => { window.removeEventListener('pagehide', onHide); onHide() }
   }, [ready, token, topicId, found])
+
+  // Let an embedded interactive module authenticate its own /api/study/interaction
+  // posts (same pattern the [studentId] viewer uses before iframing a module).
+  useEffect(() => {
+    if (!token) return
+    try { localStorage.setItem('cm:access_token', token); localStorage.setItem('cm:material_id', topicId) } catch { /* ignore */ }
+  }, [token, topicId])
 
   const toggle = useCallback(() => {
     if (!found) return

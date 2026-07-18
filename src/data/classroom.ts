@@ -4,6 +4,8 @@
 // day-gated Centum system stays untouched. A lesson id is globally unique and
 // doubles as the tracking material_id (feeds /api/study/interaction + /api/events).
 
+import { AUTHORED } from './classroom.authored'
+
 export interface Lesson {
   id: string               // global slug = tracking material_id, e.g. 'maths-num-system'
   title: string
@@ -23,6 +25,7 @@ export interface Course {
   accent: string           // cover gradient accent hex
   order: number
   status: 'live' | 'coming-soon'
+  hasVideo?: boolean       // true → lesson shows a video slot on top (Maths); false → embeds the interactive module
   lessons: Lesson[]
 }
 
@@ -36,8 +39,9 @@ const MATHS: Course = {
   blurb: 'Every arithmetic topic on the exam — a short video, then a clear worked explanation.',
   emoji: '📐',
   accent: '#2563EB',
-  order: 1,
+  order: 3,
   status: 'live',
+  hasVideo: true,
   lessons: [
     {
       id: 'maths-num-system',
@@ -123,16 +127,9 @@ const MATHS: Course = {
   ],
 }
 
-// Other subjects appear as "coming soon" cards until their courses are built.
-const COMING_SOON: Course[] = [
-  { subject: 'Ancient History', slug: 'ancient-history', title: 'Ancient History', blurb: 'IVC to the classical age.', emoji: '🏛️', accent: '#B45309', order: 2, status: 'coming-soon', lessons: [] },
-  { subject: 'Science',         slug: 'science',         title: 'Science',         blurb: 'Physics, Biology & Chemistry.', emoji: '🔬', accent: '#16A34A', order: 3, status: 'coming-soon', lessons: [] },
-  { subject: 'English',         slug: 'english',         title: 'English',         blurb: 'Grammar & usage to exam accuracy.', emoji: '✍️', accent: '#7C3AED', order: 4, status: 'coming-soon', lessons: [] },
-  { subject: 'Polity',          slug: 'polity',          title: 'Polity & Governance', blurb: 'Constitution, rights & institutions.', emoji: '⚖️', accent: '#0891B2', order: 5, status: 'coming-soon', lessons: [] },
-  { subject: 'Geography',       slug: 'geography',       title: 'Geography',       blurb: 'Physical, Indian & world geography.', emoji: '🌏', accent: '#059669', order: 6, status: 'coming-soon', lessons: [] },
-]
-
-export const COURSES: Course[] = [MATHS, ...COMING_SOON].sort((a, b) => a.order - b.order)
+// Every subject is live. Maths (video course) lives here; the rest are authored
+// from their interactive modules in classroom.authored.ts.
+export const COURSES: Course[] = [MATHS, ...AUTHORED].sort((a, b) => a.order - b.order)
 
 export function getCourse(slug: string): Course | undefined {
   return COURSES.find(c => c.slug === slug)
