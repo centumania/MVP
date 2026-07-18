@@ -3,31 +3,50 @@
 /**
  * LandingGate — first-visit guard for "/".
  *
- * A brand-new visitor (no cm_lang saved) is sent to /welcome (language gate +
- * onboarding). Returning visitors fall straight through to the landing.
+ * Routing decision (least friction for returning students):
+ *   • Logged-in student  → /dashboard (skip the marketing funnel entirely)
+ *   • Returning visitor (cm_lang saved) → fall through to the landing
+ *   • Brand-new visitor (no cm_lang) → /welcome (language gate + onboarding)
+ *   • ?stay=1 (the gate just sent us here) → always show the landing
+ *
  * Renders a neutral placeholder for the split second before the decision so
- * first-timers never see a flash of the landing. Additive wrapper — the
- * landing component itself is untouched.
+ * no one sees a flash of the wrong page. Additive wrapper — the landing
+ * component itself is untouched.
  */
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 
 export default function LandingGate({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    // The language gate is the first page every visit to "/". We only fall
-    // through to the landing when the gate sends us here with ?stay=1
-    // (after the visitor has picked a language). A reload of bare "/" always
-    // shows the gate again.
-    let redirecting = false
-    try {
-      const stay = new URLSearchParams(window.location.search).has('stay')
-      if (!stay) { redirecting = true; router.replace('/welcome'); return }
-    } catch { /* storage blocked — just show the landing */ }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (!redirecting) setReady(true)
+    let cancelled = false
+    const show = () => { if (!cancelled) setReady(true) }
+    ;(async () => {
+      try {
+        // The gate sends returning visitors here with ?stay=1 after they pick
+        // a language — always show the landing, never bounce them back.
+        if (new URLSearchParams(window.location.search).has('stay')) return show()
+
+        // Logged-in students never need the funnel — straight to their dashboard.
+        const { data: { session } } = await getSupabaseBrowserClient().auth.getSession()
+        if (cancelled) return
+        if (session) { router.replace('/dashboard'); return }
+
+        // Returning visitor who already chose a language → the landing.
+        let hasLang = false
+        try { hasLang = !!localStorage.getItem('cm_lang') } catch { hasLang = false }
+        if (hasLang) return show()
+
+        // Brand-new visitor → language gate + onboarding survey.
+        router.replace('/welcome')
+      } catch {
+        show() // any failure → show the landing, never block the visitor
+      }
+    })()
+    return () => { cancelled = true }
   }, [router])
 
   if (!ready) {
