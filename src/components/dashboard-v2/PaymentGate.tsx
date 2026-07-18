@@ -7,10 +7,10 @@
  */
 import { useState } from 'react'
 import { MessageCircle, ShieldCheck } from '@/src/components/landing-v2/icons'
+import { getProgramme, formatINR } from '@/src/data/pricing'
 
 const UPI_ID = 'anandhamuruugan-1@okicici'
 const PAYEE = 'Anandh Muruugan'
-const UPI_LINK = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(PAYEE)}&cu=INR`
 
 function CopyButton({ value }: { value: string }) {
   const [copied, setCopied] = useState(false)
@@ -40,8 +40,14 @@ function CopyButton({ value }: { value: string }) {
   )
 }
 
-export function PaymentGate() {
-  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(`upi://pay?pa=${UPI_ID}&pn=${PAYEE}&cu=INR`)}&margin=10&color=000000&bgcolor=ffffff`
+export function PaymentGate({ program }: { program?: string | null }) {
+  // Price follows the programme the student registered for
+  // (auth user_metadata.program); founder-batch accounts fall back to UDC.
+  const plan = getProgramme(program)
+  const price = formatINR(plan.priceINR)
+  // Amount embedded so the student's UPI app pre-fills the correct price.
+  const upiLink = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(PAYEE)}&am=${plan.priceINR}&cu=INR`
+  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(upiLink)}&margin=10&color=000000&bgcolor=ffffff`
 
   return (
     <div className="mx-auto max-w-md px-4 py-10 sm:px-6">
@@ -54,8 +60,12 @@ export function PaymentGate() {
         <h1 className="text-2xl font-extrabold tracking-tight text-gray-900" style={{ letterSpacing: '-0.02em' }}>
           Complete your payment
         </h1>
-        <div className="mt-2 flex items-baseline justify-center gap-1.5">
-          <span className="text-4xl font-extrabold tabular-nums tracking-tight text-gray-900" style={{ letterSpacing: '-0.03em' }}>₹999</span>
+        <p className="mt-1.5 text-[13px] font-semibold text-sky-700">
+          {plan.exam} programme · {plan.full} · {plan.days} days
+        </p>
+        <div className="mt-2 flex items-baseline justify-center gap-2">
+          <span className="text-4xl font-extrabold tabular-nums tracking-tight text-gray-900" style={{ letterSpacing: '-0.03em' }}>{price}</span>
+          <span className="text-[15px] font-medium tabular-nums text-gray-400 line-through">{formatINR(plan.originalINR)}</span>
           <span className="text-[12.5px] font-medium text-gray-500">one-time</span>
         </div>
         <p className="mt-2 text-[13.5px] leading-relaxed text-gray-600">
@@ -66,10 +76,10 @@ export function PaymentGate() {
       {/* QR card */}
       <div className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-[0_1px_3px_rgba(16,24,40,0.06)]">
         <div className="flex flex-col items-center border-b border-gray-100 px-6 py-7">
-          <a href={UPI_LINK} className="mb-4 block overflow-hidden rounded-2xl border border-gray-100 bg-white p-2 shadow-[0_2px_10px_rgba(16,24,40,0.06)]">
+          <a href={upiLink} className="mb-4 block overflow-hidden rounded-2xl border border-gray-100 bg-white p-2 shadow-[0_2px_10px_rgba(16,24,40,0.06)]">
             {/* Third-party QR service, unchanged from v1 (flagged in tech-debt) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={qrSrc} alt="UPI QR code — tap to pay ₹999" width={200} height={200} className="block" />
+            <img src={qrSrc} alt={`UPI QR code — tap to pay ${price}`} width={200} height={200} className="block" />
           </a>
           <p className="text-[12px] font-medium text-gray-500">Scan with any UPI app</p>
           <p className="mt-0.5 text-[12px] text-gray-400">PhonePe · GPay · Paytm · BHIM</p>
