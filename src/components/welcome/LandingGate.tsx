@@ -16,6 +16,29 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { LangProvider, useLang } from '@/src/components/landing-v2/lang'
+
+/* Floating pill — live language toggle. Lives inside LangProvider so a tap
+   re-renders the whole landing in the other language instantly. */
+function LangPill() {
+  const { lang, setLang } = useLang()
+  return (
+    <button
+      type="button"
+      onClick={() => setLang(lang === 'ta' ? 'en' : 'ta')}
+      aria-label={lang === 'ta' ? 'Switch to English' : 'தமிழுக்கு மாறவும்'}
+      className="fixed right-3 top-3 z-50 inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white/90 px-3 py-1.5 text-[12px] font-bold text-gray-700 shadow-sm backdrop-blur-sm transition-colors hover:border-sky-300 hover:text-sky-700"
+      style={{ paddingTop: 'max(0.375rem, env(safe-area-inset-top))' }}
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <circle cx="12" cy="12" r="10" /><path d="M2 12h20" /><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20" />
+      </svg>
+      <span className={lang === 'en' ? 'text-sky-700' : ''}>EN</span>
+      <span className="text-gray-300">/</span>
+      <span className={lang === 'ta' ? 'text-sky-700' : ''}>தமிழ்</span>
+    </button>
+  )
+}
 
 export default function LandingGate({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -53,21 +76,10 @@ export default function LandingGate({ children }: { children: React.ReactNode })
     return <div aria-hidden className="min-h-screen bg-[#FAFAF8]" />
   }
   return (
-    <>
+    <LangProvider>
       {children}
-      {/* Always-available language switcher — the gate is never "lost".
-          Returning visitors skip the gate, but can re-open it anytime. */}
-      <a
-        href="/welcome"
-        aria-label="Change language"
-        className="fixed right-3 top-3 z-50 inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white/90 px-3 py-1.5 text-[12px] font-bold text-gray-700 shadow-sm backdrop-blur-sm transition-colors hover:border-sky-300 hover:text-sky-700"
-        style={{ paddingTop: 'max(0.375rem, env(safe-area-inset-top))' }}
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <circle cx="12" cy="12" r="10" /><path d="M2 12h20" /><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20" />
-        </svg>
-        EN / தமிழ்
-      </a>
-    </>
+      {/* Always-available language toggle — flips the landing live. */}
+      <LangPill />
+    </LangProvider>
   )
 }

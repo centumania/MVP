@@ -8,13 +8,14 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Menu, X } from './icons'
 import Logo from './Logo'
+import { useLang } from './lang'
 
 const LINKS = [
-  { href: '#why', label: 'Why CentuMania' },
-  { href: '#features', label: 'Features' },
-  { href: '#centum-index', label: 'Centum Index' },
-  { href: '#pricing', label: 'Pricing' },
-  { href: '#faq', label: 'FAQ' },
+  { href: '#why', en: 'Why CentuMania', ta: 'ஏன் CentuMania' },
+  { href: '#features', en: 'Features', ta: 'அம்சங்கள்' },
+  { href: '#centum-index', en: 'Centum Index', ta: 'Centum Index' },
+  { href: '#pricing', en: 'Pricing', ta: 'கட்டணம்' },
+  { href: '#faq', en: 'FAQ', ta: 'கேள்விகள்' },
 ]
 
 function scrollToId(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
@@ -27,6 +28,7 @@ function scrollToId(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
 export default function Nav() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { lang, t } = useLang()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -66,7 +68,7 @@ export default function Nav() {
               onClick={(e) => scrollToId(e, l.href)}
               className="text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
             >
-              {l.label}
+              {l[lang]}
             </a>
           ))}
         </div>
@@ -74,13 +76,13 @@ export default function Nav() {
         {/* Actions */}
         <div className="hidden items-center gap-3 md:flex">
           <Link href="/auth/login" className="rounded-lg px-3.5 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900">
-            Sign in
+            {t('Sign in', 'உள்நுழைய')}
           </Link>
           <Link
             href="/auth/register"
             className="group inline-flex items-center gap-1.5 rounded-xl bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_1px_2px_rgba(16,24,40,0.1)] transition-all hover:bg-gray-800 hover:shadow-[0_4px_12px_rgba(16,24,40,0.15)]"
           >
-            Get started
+            {t('Get started', 'தொடங்குங்கள்')}
             <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
@@ -108,16 +110,16 @@ export default function Nav() {
                 onClick={(e) => { scrollToId(e, l.href); setOpen(false) }}
                 className="rounded-lg px-3 py-3 text-[15px] font-medium text-gray-700 transition-colors hover:bg-gray-50"
               >
-                {l.label}
+                {l[lang]}
               </a>
             ))}
           </div>
           <div className="mt-4 flex flex-col gap-2.5">
             <Link href="/auth/register" className="flex items-center justify-center gap-1.5 rounded-xl bg-gray-900 px-4 py-3 text-[15px] font-semibold text-white">
-              Get started <ArrowRight size={16} />
+              {t('Get started', 'தொடங்குங்கள்')} <ArrowRight size={16} />
             </Link>
             <Link href="/auth/login" className="flex items-center justify-center rounded-xl border border-gray-200 bg-white px-4 py-3 text-[15px] font-semibold text-gray-800">
-              Sign in
+              {t('Sign in', 'உள்நுழைய')}
             </Link>
           </div>
         </div>

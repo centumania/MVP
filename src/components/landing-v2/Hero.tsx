@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Check, Sparkles, Zap } from './icons'
 import { Reveal } from './ui'
+import { useLang } from './lang'
 
 // Founder-offer HARD deadline (IST). This is a real, fixed date — the countdown
 // genuinely ticks down to it and stops at 00 once it passes.
@@ -39,6 +40,7 @@ function useCountdown() {
 export default function Hero() {
   const cd = useCountdown()
   const [showDemo, setShowDemo] = useState(false)
+  const { lang, t } = useLang()
 
   return (
     <section className="relative overflow-hidden pb-16 pt-28 sm:pb-24 sm:pt-36">
@@ -67,7 +69,7 @@ export default function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
-              Founder batch open — SSC · RRB · Banking · TN Govt 2026
+              {t('Founder batch open — SSC · RRB · Banking · TN Govt 2026', 'Founder batch திறந்துள்ளது — SSC · RRB · வங்கி · TN அரசு 2026')}
             </span>
           </Reveal>
 
@@ -76,24 +78,36 @@ export default function Hero() {
               className="mt-5 text-[40px] font-extrabold leading-[1.06] tracking-tight text-gray-900 sm:text-6xl"
               style={{ letterSpacing: '-0.035em' }}
             >
-              Get ahead of{' '}
-              <span className="bg-gradient-to-r from-sky-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
-                90% of aspirants
-              </span>
+              {lang === 'ta' ? (
+                <>
+                  <span className="bg-gradient-to-r from-sky-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
+                    90% போட்டியாளர்களை
+                  </span>{' '}
+                  விட முன்னேறுங்கள்
+                </>
+              ) : (
+                <>
+                  Get ahead of{' '}
+                  <span className="bg-gradient-to-r from-sky-600 via-sky-500 to-indigo-600 bg-clip-text text-transparent">
+                    90% of aspirants
+                  </span>
+                </>
+              )}
             </h1>
           </Reveal>
 
           <Reveal delay={130}>
             <div className="mt-5">
-              <span className="lv2-tagline text-lg sm:text-xl">Winning is a Habit.</span>
+              <span className="lv2-tagline text-lg sm:text-xl">{t('Winning is a Habit.', 'வெற்றி ஒரு பழக்கம்.')}</span>
             </div>
           </Reveal>
 
           <Reveal delay={160}>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-gray-600 sm:text-lg lg:mx-0">
-              Most aspirants study hard and still miss the cut. You won&apos;t: one timed test every
-              morning, AI coaching after every attempt, and a live rank that keeps you honest —
-              for SSC, RRB, Banking &amp; TN-Govt exams.
+              {t(
+                'Most aspirants study hard and still miss the cut. You won\'t: one timed test every morning, AI coaching after every attempt, and a live rank that keeps you honest — for SSC, RRB, Banking & TN-Govt exams.',
+                'பலர் கடினமாகப் படித்தும் தேர்வில் வெற்றி பெறுவதில்லை. நீங்கள் அப்படி இல்லை: தினமும் காலை ஒரு நேரக் கட்டுப்பாட்டுத் தேர்வு, ஒவ்வொரு முயற்சிக்குப் பிறகும் AI பயிற்சி, உங்களை நேர்மையாக வைத்திருக்கும் நேரடி தரவரிசை — SSC, RRB, வங்கி & TN அரசுத் தேர்வுகளுக்கு.',
+              )}
             </p>
           </Reveal>
 
@@ -113,7 +127,7 @@ export default function Hero() {
                     aria-hidden
                     className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
                   />
-                  Start now — lock in ₹999
+                  {t('Start now — lock in ₹999', 'இப்போதே தொடங்குங்கள் — ₹999 உறுதி செய்யுங்கள்')}
                   <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </div>
@@ -126,20 +140,24 @@ export default function Hero() {
                 }}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-7 py-3.5 text-[15px] font-semibold text-gray-800 shadow-[0_1px_2px_rgba(16,24,40,0.05)] transition-all hover:border-gray-300 hover:bg-gray-50 sm:w-auto"
               >
-                See how it works
+                {t('See how it works', 'எப்படி வேலை செய்கிறது?')}
               </a>
             </div>
             <p className="mt-3 text-center text-[12.5px] font-medium text-gray-600 lg:text-left">
-              <span className="font-semibold text-amber-600">Founder pricing</span> — the ₹999 rate ends the moment the timer below hits zero.
+              <span className="font-semibold text-amber-600">{t('Founder pricing', 'Founder விலை')}</span>
+              {t(' — the ₹999 rate ends the moment the timer below hits zero.', ' — கீழே உள்ள டைமர் பூஜ்ஜியமானதும் ₹999 விலை முடிந்துவிடும்.')}
             </p>
           </Reveal>
 
           <Reveal delay={320}>
             <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] font-medium text-gray-600 lg:justify-start">
-              {['Performance-linked refund', 'Day 1 free preview', 'English & Tamil'].map((t) => (
-                <li key={t} className="flex items-center gap-1.5">
+              {(lang === 'ta'
+                ? ['செயல்திறன்-இணைந்த ரீஃபண்ட்', 'முதல் நாள் இலவசம்', 'English & தமிழ்']
+                : ['Performance-linked refund', 'Day 1 free preview', 'English & Tamil']
+              ).map((chip) => (
+                <li key={chip} className="flex items-center gap-1.5">
                   <Check size={14} className="text-emerald-600" />
-                  {t}
+                  {chip}
                 </li>
               ))}
             </ul>
@@ -150,12 +168,15 @@ export default function Hero() {
             <div className="mt-9 inline-flex flex-col items-center gap-3 rounded-2xl border border-amber-200/80 bg-white px-6 py-4 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_28px_rgba(245,158,11,0.12)] sm:flex-row sm:gap-5">
               <div className="text-center sm:text-left">
                 <span className="flex items-center justify-center gap-1.5 text-[13px] font-bold uppercase tracking-wider text-amber-600 sm:justify-start">
-                  <Zap size={14} /> Founder offer ends in
+                  <Zap size={14} /> {t('Founder offer ends in', 'Founder சலுகை முடிவடைய')}
                 </span>
-                <span className="mt-0.5 block text-[12px] font-medium text-gray-500">Lock in ₹999 before the price goes up</span>
+                <span className="mt-0.5 block text-[12px] font-medium text-gray-500">{t('Lock in ₹999 before the price goes up', 'விலை உயரும் முன் ₹999-ஐ உறுதி செய்யுங்கள்')}</span>
               </div>
               <div className="flex items-center gap-3">
-                {([['d', 'days'], ['h', 'hrs'], ['m', 'min'], ['s', 'sec']] as const).map(([k, tag], i) => (
+                {(lang === 'ta'
+                  ? ([['d', 'நாள்'], ['h', 'மணி'], ['m', 'நிமி'], ['s', 'வினா']] as const)
+                  : ([['d', 'days'], ['h', 'hrs'], ['m', 'min'], ['s', 'sec']] as const)
+                ).map(([k, tag], i) => (
                   <div key={k} className="flex items-center gap-3">
                     {i > 0 && <span className="text-lg font-bold text-gray-300">:</span>}
                     <div className="text-center">
@@ -181,8 +202,8 @@ export default function Hero() {
                   <Sparkles size={15} />
                 </span>
                 <div>
-                  <div className="text-[13px] font-bold tracking-tight text-gray-900">Try a real lesson — free</div>
-                  <div className="text-[11px] font-medium text-gray-500">Buddhism &amp; Jainism · no signup</div>
+                  <div className="text-[13px] font-bold tracking-tight text-gray-900">{t('Try a real lesson — free', 'உண்மையான பாடம் — இலவசமாக')}</div>
+                  <div className="text-[11px] font-medium text-gray-500">{t('Buddhism & Jainism · no signup', 'புத்தமும் சமணமும் · பதிவு தேவையில்லை')}</div>
                 </div>
               </div>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-600 ring-1 ring-emerald-200/70">
@@ -206,15 +227,15 @@ export default function Hero() {
                   <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform group-hover:scale-110">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="#0284c7"><polygon points="8 5 19 12 8 19 8 5" /></svg>
                   </span>
-                  <span className="text-[14.5px] font-bold text-white">Play the live lesson</span>
-                  <span className="max-w-[16rem] text-[11.5px] leading-relaxed text-white/70">Flashcards, an interactive map &amp; scored MCQs — running right here, no signup.</span>
+                  <span className="text-[14.5px] font-bold text-white">{t('Play the live lesson', 'நேரடி பாடத்தை இயக்குங்கள்')}</span>
+                  <span className="max-w-[16rem] text-[11.5px] leading-relaxed text-white/70">{t('Flashcards, an interactive map & scored MCQs — running right here, no signup.', 'ஃபிளாஷ்கார்டுகள், ஊடாடும் வரைபடம் & மதிப்பெண் MCQ-கள் — இங்கேயே இயங்குகிறது, பதிவு இல்லாமல்.')}</span>
                 </button>
               )}
             </div>
 
             <Link href="/demo"
               className="mt-2.5 flex items-center justify-center gap-1.5 rounded-xl border border-gray-200 bg-white py-2.5 text-[13px] font-bold text-gray-800 transition-colors hover:bg-gray-50">
-              Open the full lesson <ArrowRight size={15} />
+              {t('Open the full lesson', 'முழு பாடத்தையும் திறக்கவும்')} <ArrowRight size={15} />
             </Link>
           </div>
         </Reveal>
