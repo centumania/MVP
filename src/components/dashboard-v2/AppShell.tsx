@@ -33,6 +33,7 @@ const IcoOut = (p: IconProps) => <Base {...p}><path d="M9 21H5a2 2 0 0 1-2-2V5a2
 const IcoBot = (p: IconProps) => <Base {...p}><rect x="5" y="8" width="14" height="11" rx="2" /><path d="M12 8V5M12 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" /><circle cx="9.5" cy="13" r=".5" /><circle cx="14.5" cy="13" r=".5" /><path d="M9.5 16.5h5" /></Base>
 const IcoCard = (p: IconProps) => <Base {...p}><rect x="1" y="4" width="22" height="16" rx="2" /><line x1="1" y1="10" x2="23" y2="10" /></Base>
 const IcoMore = (p: IconProps) => <Base {...p}><circle cx="5" cy="12" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /></Base>
+const IcoCap = (p: IconProps) => <Base {...p}><path d="M22 10 12 5 2 10l10 5 10-5Z" /><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5" /></Base>
 
 // Primary nav = the daily loop only; everything else under "More" (matches AppLayout).
 // Today's Test opens the Daily Test Engine; AI Daily Test (personalised) is separate.
@@ -40,6 +41,7 @@ const TEST_HREF = '/materials/viewer/daily-test-engine'
 const NAV = [
   { href: '/dashboard', label: 'Dashboard', short: 'Home', Icon: IcoHome, mobile: true },
   { href: '/materials', label: 'Modules', short: 'Study', Icon: IcoBook, mobile: true },
+  { href: '/classroom', label: 'Classroom', short: 'Learn', Icon: IcoCap, mobile: true },
   { href: TEST_HREF, label: "Today's Test", short: 'Test', Icon: IcoExam, mobile: true },
 ] as const
 const MORE_NAV = [
