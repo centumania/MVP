@@ -78,6 +78,31 @@ export function beaconLessonDwell(topicId: string, timeSpentMs: number): void {
   if (timeSpentMs >= 30_000) trackBeacon('daily_material_completed', { material_id: topicId, duration_ms: timeSpentMs, surface: 'classroom' })
 }
 
+// ── Dedicated per-student classroom metrics (/api/classroom/progress) ──
+// Clean per-(student, lesson) progress + cross-device completion sync, on top
+// of the localStorage ticks and the shared /api/events + /api/study/interaction.
+export function postClassroomProgress(
+  token: string, lessonId: string, subject: string,
+  action: 'open' | 'complete' | 'uncomplete', timeSpentMs = 0,
+): void {
+  try {
+    void fetch('/api/classroom/progress', {
+      method: 'POST', keepalive: true,
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ lesson_id: lessonId, subject, action, time_spent_ms: timeSpentMs }),
+    }).catch(() => {})
+  } catch { /* best-effort */ }
+}
+
+export async function fetchClassroomCompleted(token: string): Promise<string[]> {
+  try {
+    const res = await fetch('/api/classroom/progress', { headers: { Authorization: `Bearer ${token}` } })
+    if (!res.ok) return []
+    const json = (await res.json()) as { completed?: string[] }
+    return Array.isArray(json.completed) ? json.completed : []
+  } catch { return [] }
+}
+
 // ── Instant completion ticks (localStorage) — backend also gets node_completed ──
 export function isDone(topicId: string): boolean {
   try { return localStorage.getItem(completionKey(topicId)) === '1' } catch { return false }

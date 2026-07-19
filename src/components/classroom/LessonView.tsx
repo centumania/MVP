@@ -8,6 +8,7 @@ import { getCourse, getLesson, type Course, type Lesson } from '@/src/data/class
 import {
   CT, useClassroomSession, isDone, setDone,
   trackLessonOpen, trackLessonComplete, beaconLessonDwell,
+  postClassroomProgress, fetchClassroomCompleted,
 } from './lib'
 
 function ytId(url?: string): string | null {
@@ -180,11 +181,28 @@ export default function LessonView({ subjectSlug, topicId }: { subjectSlug: stri
     setDoneMap(map)
   }, [course])
 
+  // Cross-device sync: fold the student's SERVER-side completions into the ticks,
+  // so progress survives a new device or cleared storage.
+  useEffect(() => {
+    if (!ready || !token || !course) return
+    let cancelled = false
+    void fetchClassroomCompleted(token).then(list => {
+      if (cancelled || list.length === 0) return
+      setDoneMap(m => {
+        const next = { ...m }
+        for (const id of list) { next[id] = true; setDone(id, true) }
+        return next
+      })
+    })
+    return () => { cancelled = true }
+  }, [ready, token, course])
+
   // Fire open metrics + dwell beacon per topic.
   useEffect(() => {
     if (!ready || !token || !found) return
     openedAt.current = Date.now()
     trackLessonOpen(token, topicId)
+    postClassroomProgress(token, topicId, found.course.subject, 'open')
     const onHide = () => beaconLessonDwell(topicId, Date.now() - openedAt.current)
     window.addEventListener('pagehide', onHide)
     return () => { window.removeEventListener('pagehide', onHide); onHide() }
@@ -200,9 +218,13 @@ export default function LessonView({ subjectSlug, topicId }: { subjectSlug: stri
   const toggle = useCallback(() => {
     if (!found) return
     const nextDone = !doneMap[topicId]
+    const dwellMs = Date.now() - openedAt.current
     setDone(topicId, nextDone)
     setDoneMap(m => ({ ...m, [topicId]: nextDone }))
-    if (nextDone && token) trackLessonComplete(token, topicId, Date.now() - openedAt.current)
+    if (!token) return
+    if (nextDone) trackLessonComplete(token, topicId, dwellMs)
+    // Dedicated per-student record (survives device changes / cleared storage).
+    postClassroomProgress(token, topicId, found.course.subject, nextDone ? 'complete' : 'uncomplete', nextDone ? dwellMs : 0)
   }, [found, doneMap, topicId, token])
 
   if (!ready) {
