@@ -11,7 +11,9 @@
  * Pricing (offer) → FAQ (objections) → Closing (final push).
  */
 import Nav from './Nav'
+import MotionStyles from './MotionStyles'
 import Hero from './Hero'
+import TrustBar from './TrustBar'
 import Problem from './Problem'
 import Features from './Features'
 import ProductTour from './ProductTour'
@@ -19,8 +21,10 @@ import KnowledgeUniverse from './KnowledgeUniverse'
 import CentumIndex from './CentumIndex'
 import Refund from './Refund'
 import Testimonials from './Testimonials'
+import Founder from './Founder'
 import Pricing from './Pricing'
 import Faq from './Faq'
+import LeadForm from './LeadForm'
 import Closing from './Closing'
 
 /* Scroll-reveal, logo 3D hover, tagline highlight and card tilt.
@@ -50,9 +54,11 @@ export default function LandingV2() {
       style={{ fontFamily: 'var(--font-inter), Inter, system-ui, sans-serif' }}
     >
       <style>{REVEAL_CSS}</style>
+      <MotionStyles />
       <Nav />
       <main id="main-content">
         <Hero />
+        <TrustBar />
         <Problem />
         <Features />
         <ProductTour />
@@ -60,8 +66,10 @@ export default function LandingV2() {
         <CentumIndex />
         <Refund />
         <Testimonials />
+        <Founder />
         <Pricing />
         <Faq />
+        <LeadForm />
         <Closing />
       </main>
     </div>

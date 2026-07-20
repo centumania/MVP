@@ -8,7 +8,7 @@
  */
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Check, Sparkles, Zap } from './icons'
+import { ArrowRight, BookOpen, Brain, Newspaper, Sparkles, Target, Timer, Trophy, Zap } from './icons'
 import { Reveal } from './ui'
 import { useLang } from './lang'
 
@@ -149,15 +149,29 @@ export default function Hero() {
             </p>
           </Reveal>
 
+          {/* What you get — full value in six one-line chips so it lands within
+              the first viewport. 2 columns even at 375px; 3 on desktop. */}
           <Reveal delay={320}>
-            <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] font-medium text-gray-600 lg:justify-start">
-              {(lang === 'ta'
-                ? ['செயல்திறன்-இணைந்த ரீஃபண்ட்', 'முதல் நாள் இலவசம்', 'English & தமிழ்']
-                : ['Performance-linked refund', 'Day 1 free preview', 'English & Tamil']
-              ).map((chip) => (
-                <li key={chip} className="flex items-center gap-1.5">
-                  <Check size={14} className="text-emerald-600" />
-                  {chip}
+            <p className="mt-7 text-center text-[11.5px] font-bold uppercase tracking-[0.14em] text-gray-400 lg:text-left">
+              {t('Everything you get — Day 1-la irundhe', 'நீங்கள் பெறுவது எல்லாம் — முதல் நாளிலிருந்தே')}
+            </p>
+            <ul className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-3" aria-label="What you get">
+              {([
+                [Timer, t('Daily 6 AM timed exam', 'தினமும் காலை 6 மணி தேர்வு'), 'bg-sky-50 text-sky-600'],
+                [Brain, t('Personal AI mentor', 'தனிப்பட்ட AI வழிகாட்டி'), 'bg-indigo-50 text-indigo-600'],
+                [Newspaper, t('Daily current affairs', 'தினசரி நடப்பு நிகழ்வுகள்'), 'bg-violet-50 text-violet-600'],
+                [BookOpen, t('Daily learning A→Z', 'தினசரி கற்றல் A→Z'), 'bg-emerald-50 text-emerald-600'],
+                [Target, t('End-to-end materials', 'முழுமையான பாடப் பொருட்கள்'), 'bg-amber-50 text-amber-600'],
+                [Trophy, t('Live rank & leaderboard', 'நேரடி rank & தரவரிசை'), 'bg-orange-50 text-orange-600'],
+              ] as const).map(([Icon, title, tone]) => (
+                <li
+                  key={title}
+                  className="lv2m-lift flex items-center gap-2 rounded-xl border border-gray-200/70 bg-white/85 px-3 py-2 text-left shadow-[0_1px_2px_rgba(16,24,40,0.04)] backdrop-blur-[2px]"
+                >
+                  <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md ${tone}`}>
+                    <Icon size={13} />
+                  </span>
+                  <span className="text-[12px] font-bold leading-tight text-gray-900">{title}</span>
                 </li>
               ))}
             </ul>
