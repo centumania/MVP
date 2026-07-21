@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
         .maybeSingle()
 
       if (activeBatch) {
-        const { data: created } = await supabase
+        const { data: created, error: upsertError } = await supabase
           .from('daily_tests')
           .upsert(
             { batch_id: activeBatch.id, test_date: todayIST, is_published: true, total_questions: null },
@@ -105,9 +105,45 @@ export async function POST(request: NextRequest) {
           )
           .select('id')
           .maybeSingle()
+        if (upsertError) {
+          // e.g. 42P10 when UNIQUE(batch_id, test_date) is missing — never
+          // swallow this: it silently disables ALL persistence downstream.
+          console.error('[daily-test/grade] daily_tests upsert failed:', upsertError)
+        }
         testId = created?.id ?? null
+
+        // Fallback 1: upsert can hit the conflict without returning a row.
+        if (!testId) {
+          const { data: existing } = await supabase
+            .from('daily_tests')
+            .select('id')
+            .eq('batch_id', activeBatch.id)
+            .eq('test_date', todayIST)
+            .maybeSingle()
+          testId = existing?.id ?? null
+        }
+
+        // Fallback 2: plain insert, so grading still persists even on a DB
+        // missing the unique constraint (the upsert errors there instead of
+        // inserting). The constraint guarantees integrity; this guarantees
+        // the write happens.
+        if (!testId) {
+          const { data: inserted, error: insertError } = await supabase
+            .from('daily_tests')
+            .insert({ batch_id: activeBatch.id, test_date: todayIST, is_published: true, total_questions: null })
+            .select('id')
+            .maybeSingle()
+          if (insertError) console.error('[daily-test/grade] daily_tests insert fallback failed:', insertError)
+          testId = inserted?.id ?? null
+        }
       }
     }
+  }
+
+  if (!testId) {
+    // Loud marker: submission will NOT be persisted and Centum attendance
+    // will NOT update. This state cost us weeks of silent data loss once.
+    console.error('[daily-test/grade] PERSISTENCE SKIPPED — no daily_tests row resolvable for', todayIST)
   }
 
   // ── 2. Prevent double submission (only when testId exists) ──────────────────
