@@ -8,9 +8,10 @@
  */
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Check, Sparkles, Zap } from './icons'
+import { ArrowRight, Check, Zap } from './icons'
 import { Reveal } from './ui'
 import { useLang } from './lang'
+import PhoneDemo from './PhoneDemo'
 
 // Founder-offer HARD deadline (IST). This is a real, fixed date — the countdown
 // genuinely ticks down to it and stops at 00 once it passes.
@@ -39,7 +40,6 @@ function useCountdown() {
 
 export default function Hero() {
   const cd = useCountdown()
-  const [showDemo, setShowDemo] = useState(false)
   const { lang, t } = useLang()
 
   return (
@@ -127,7 +127,7 @@ export default function Hero() {
                     aria-hidden
                     className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
                   />
-                  {t('Start now — lock in ₹999', 'இப்போதே தொடங்குங்கள் — ₹999 உறுதி செய்யுங்கள்')}
+                  {t('Start free — Day 1 on us', 'இலவசமாகத் தொடங்குங்கள் — முதல் நாள் இலவசம்')}
                   <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </div>
@@ -145,15 +145,15 @@ export default function Hero() {
             </div>
             <p className="mt-3 text-center text-[12.5px] font-medium text-gray-600 lg:text-left">
               <span className="font-semibold text-amber-600">{t('Founder pricing', 'Founder விலை')}</span>
-              {t(' — the ₹999 rate ends the moment the timer below hits zero.', ' — கீழே உள்ள டைமர் பூஜ்ஜியமானதும் ₹999 விலை முடிந்துவிடும்.')}
+              {t(' — lock the lowest subscription rate before the timer below hits zero.', ' — கீழே உள்ள டைமர் பூஜ்ஜியமாகும் முன் மிகக் குறைந்த சந்தா விலையைப் பிடித்துக்கொள்ளுங்கள்.')}
             </p>
           </Reveal>
 
           <Reveal delay={320}>
             <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] font-medium text-gray-600 lg:justify-start">
               {(lang === 'ta'
-                ? ['செயல்திறன்-இணைந்த ரீஃபண்ட்', 'முதல் நாள் இலவசம்', 'English & தமிழ்']
-                : ['Performance-linked refund', 'Day 1 free preview', 'English & Tamil']
+                ? ['எப்போது வேண்டுமானாலும் நிறுத்தலாம்', 'முதல் நாள் இலவசம்', 'English & தமிழ்']
+                : ['Cancel anytime', 'Day 1 free', 'English & Tamil']
               ).map((chip) => (
                 <li key={chip} className="flex items-center gap-1.5">
                   <Check size={14} className="text-emerald-600" />
@@ -170,7 +170,7 @@ export default function Hero() {
                 <span className="flex items-center justify-center gap-1.5 text-[13px] font-bold uppercase tracking-wider text-amber-600 sm:justify-start">
                   <Zap size={14} /> {t('Founder offer ends in', 'Founder சலுகை முடிவடைய')}
                 </span>
-                <span className="mt-0.5 block text-[12px] font-medium text-gray-500">{t('Lock in ₹999 before the price goes up', 'விலை உயரும் முன் ₹999-ஐ உறுதி செய்யுங்கள்')}</span>
+                <span className="mt-0.5 block text-[12px] font-medium text-gray-500">{t('Lock the founder rate before it goes up', 'Founder விலை உயரும் முன் அதைப் பிடித்துக்கொள்ளுங்கள்')}</span>
               </div>
               <div className="flex items-center gap-3">
                 {(lang === 'ta'
@@ -190,54 +190,9 @@ export default function Hero() {
           </Reveal>
         </div>
 
-        {/* ── Knowledge-universe column (live 3D neural map) ── */}
+        {/* ── Interactive product demo — the real app in a phone ── */}
         <Reveal delay={200} className="relative">
-          <div aria-hidden className="absolute -inset-6 rounded-[32px] bg-gradient-to-br from-sky-100/80 via-transparent to-indigo-100/60 blur-2xl" />
-
-          <div className="relative mx-auto max-w-md overflow-hidden rounded-2xl border border-gray-200/80 bg-white/90 p-4 shadow-[0_1px_3px_rgba(16,24,40,0.07),0_24px_48px_-12px_rgba(16,24,40,0.12)] backdrop-blur-sm sm:p-5">
-            {/* Header */}
-            <div className="mb-1 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-50 text-sky-600">
-                  <Sparkles size={15} />
-                </span>
-                <div>
-                  <div className="text-[13px] font-bold tracking-tight text-gray-900">{t('Try a real lesson — free', 'உண்மையான பாடம் — இலவசமாக')}</div>
-                  <div className="text-[11px] font-medium text-gray-500">{t('Buddhism & Jainism · no signup', 'புத்தமும் சமணமும் · பதிவு தேவையில்லை')}</div>
-                </div>
-              </div>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-600 ring-1 ring-emerald-200/70">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                </span>
-                Live
-              </span>
-            </div>
-
-            {/* Interactive live demo — click-to-load keeps the landing fast */}
-            <div className="relative h-[320px] w-full overflow-hidden rounded-xl border border-gray-200/70 sm:h-[360px]"
-              style={{ background: 'linear-gradient(150deg, #0f172a 0%, #1e1b4b 100%)' }}>
-              {showDemo ? (
-                <iframe src="/demo/buddhism-jainism.html" title="Sample lesson — Buddhism & Jainism"
-                  className="block h-full w-full" style={{ border: 0 }} />
-              ) : (
-                <button type="button" onClick={() => setShowDemo(true)}
-                  className="group flex h-full w-full flex-col items-center justify-center gap-2.5 px-6 text-center">
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_8px_24px_rgba(0,0,0,0.3)] transition-transform group-hover:scale-110">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#0284c7"><polygon points="8 5 19 12 8 19 8 5" /></svg>
-                  </span>
-                  <span className="text-[14.5px] font-bold text-white">{t('Play the live lesson', 'நேரடி பாடத்தை இயக்குங்கள்')}</span>
-                  <span className="max-w-[16rem] text-[11.5px] leading-relaxed text-white/70">{t('Flashcards, an interactive map & scored MCQs — running right here, no signup.', 'ஃபிளாஷ்கார்டுகள், ஊடாடும் வரைபடம் & மதிப்பெண் MCQ-கள் — இங்கேயே இயங்குகிறது, பதிவு இல்லாமல்.')}</span>
-                </button>
-              )}
-            </div>
-
-            <Link href="/demo"
-              className="mt-2.5 flex items-center justify-center gap-1.5 rounded-xl border border-gray-200 bg-white py-2.5 text-[13px] font-bold text-gray-800 transition-colors hover:bg-gray-50">
-              {t('Open the full lesson', 'முழு பாடத்தையும் திறக்கவும்')} <ArrowRight size={15} />
-            </Link>
-          </div>
+          <PhoneDemo />
         </Reveal>
       </div>
     </section>
