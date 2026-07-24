@@ -32,7 +32,7 @@ const IcoCap  = (p: IconProps) => <Ico {...p}><path d="M22 10 12 5 2 10l10 5 10-
 // Primary nav = the daily loop only. Everything else lives under "More".
 // Today's Test opens the Daily Test Engine module (25Q formal daily test);
 // the AI Daily Test (personalised practice) is a SEPARATE feature under More.
-const TEST_HREF = '/materials/viewer/daily-test-engine'
+const TEST_HREF = '/study/test-engine'
 const NAV = [
   { href: '/dashboard',   label: 'Dashboard',    short: 'Home',  Icon: IcoDashboard, highlight: false, mobile: true  },
   { href: '/materials',   label: 'Modules',      short: 'Study', Icon: IcoBook,      highlight: true,  mobile: true  },

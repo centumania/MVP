@@ -447,6 +447,18 @@ const DAY_META = {
 };
 const TOTAL_DAYS = 30;
 
+/* Free-tier day lock. The app shell passes ?free=N for unpaid students (e.g.
+   ?free=2 → Days 1–2 open, Day 3+ locked). No param / ?free=all → unlimited,
+   so paid students and standalone links are unaffected. */
+const FREE_DAYS = (function(){
+  try {
+    var v = new URLSearchParams(location.search).get('free');
+    if (v === null || v === 'all') return Infinity;
+    var n = parseInt(v, 10);
+    return isNaN(n) ? Infinity : n;
+  } catch (e) { return Infinity; }
+})();
+
 /* ============================================================
    ENGINE
    ============================================================ */
@@ -474,22 +486,26 @@ function renderHome(){
   for(let d=1; d<=TOTAL_DAYS; d++){
     const meta = DAY_META[d];
     const has = dayAvailable(d);
+    const paidLock = d > FREE_DAYS;                 // locked behind a subscription
+    const locked = !has || paidLock;
     const div = document.createElement("div");
-    div.className = "day" + (has ? "" : " locked");
+    div.className = "day" + (locked ? " locked" : "");
     const title = meta ? meta.title : "Day "+d;
-    const topics = meta ? meta.topics : "Coming soon";
+    const topics = paidLock ? "Subscribe to unlock" : (meta ? meta.topics : "Coming soon");
     div.innerHTML =
-      '<div class="qc">'+(has?countForDay(d)+" Q":"soon")+'</div>'+
+      '<div class="qc">'+(paidLock ? "🔒" : (has?countForDay(d)+" Q":"soon"))+'</div>'+
       '<div class="dnum">DAY '+d+'</div>'+
       '<div class="dttl">'+title+'</div>'+
       '<div class="dtop">'+topics+'</div>';
-    if(has) div.onclick = ()=>startTest(d);
+    if(has && !paidLock) div.onclick = ()=>startTest(d);
+    else if(paidLock)    div.onclick = ()=>toast("Subscribe to unlock Day "+d+".");
     el.dayGrid.appendChild(div);
   }
 }
 
 /* ---------- START TEST ---------- */
 function startTest(day){
+  if(day > FREE_DAYS){ toast("Subscribe to unlock Day "+day+"."); return; }
   const pool = QUESTION_BANK.filter(q=>q.day===day);
   if(pool.length < CONFIG.questionsPerTest){ toast("Not enough questions for Day "+day+" yet."); return; }
   const picked = shuffle(pool).slice(0, CONFIG.questionsPerTest).map(q=>{
