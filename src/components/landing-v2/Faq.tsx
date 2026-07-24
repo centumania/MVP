@@ -14,54 +14,62 @@ import { useLang } from './lang'
 const FAQS = {
   en: [
     {
-      q: "What if I miss a day's exam?",
-      a: "If you miss the 6:00–8:30 AM window, that day's exam is automatically marked as missed. Your rank won't update for that day and consecutive misses affect your streak. The programme rewards consistency — plan your schedule before you start.",
+      q: "What do I get with the subscription?",
+      a: "Everything, one price: a daily AI-personalised test, an AI mentor report after every attempt, the full classroom (video + notes per subject), interactive study modules, daily exam-tuned current affairs, a live batch leaderboard, and your Centum Index — all in English and Tamil. No add-ons, no upsells.",
     },
     {
-      q: 'Which exams does CentuMania cover?',
-      a: "CentuMania is building one disciplined platform for India's major competitive government exams — SSC (CGL, CHSL, MTS, CPO), RRB (NTPC, Group D), Banking, and Tamil Nadu & Puducherry state government exams. Every batch is calibrated to its exam's syllabus and question pattern, and more exams are being added — more exams coming soon.",
-    },
-    {
-      q: 'What language are the exams in?',
-      a: 'Exams are available in English and Tamil. You can switch your preferred language in account settings.',
-    },
-    {
-      q: 'How does the refund work?',
-      a: 'Two ways. Full refund: attempt all daily exams, maintain an average below 50%, and apply within 7 days of programme completion. Centum rewards: finish with a Centum Index of 75+ and earn back 25–50% of your fee based on your tier. Both are verified automatically from your data.',
-    },
-    {
-      q: 'Can I join mid-programme?',
-      a: 'No. Each batch starts on a fixed date and runs for a fixed duration. This structure is intentional — the leaderboard resets per batch, so everyone races on equal footing. Join the next available batch to get the full experience and refund eligibility.',
+      q: 'Is it a subscription or a one-time payment?',
+      a: "It's a subscription per exam — pay monthly, or go annual and get 2 months free. Billing is automatic and you can cancel anytime from your account; you keep full access until the end of the period you've paid for.",
     },
     {
       q: 'Is there a free trial?',
-      a: 'Day 1 of each batch is accessible to all registered users as a preview. You can attempt the first daily exam free of charge. Full programme access requires payment before Day 2 begins.',
+      a: "Yes — Day 1 is free, no card needed to start. Take a real daily test, open a classroom lesson and see your Centum Index move before you decide to subscribe.",
+    },
+    {
+      q: 'Can I cancel anytime?',
+      a: "Anytime, in two taps, no lock-in and no cancellation fee. You won't be charged again, and your access stays live until your current month or year runs out.",
+    },
+    {
+      q: 'Which exams does CentuMania cover?',
+      a: "SSC (CGL, CHSL, MTS, CPO), RRB (NTPC, Group D), Banking (IBPS & SBI PO/Clerk), UDC and Tamil Nadu & Puducherry state government exams. Each track is tuned to its exam's syllabus and question pattern — and more exams are being added.",
+    },
+    {
+      q: 'What is the Centum Index?',
+      a: "It's your real readiness score, updated daily. It blends attendance (did you show up and take the daily test?) with mastery (are you getting your first attempts right?). Unlike raw marks, it can't be gamed — showing up every day is what moves it, and it's the single best predictor of clearing the exam.",
+    },
+    {
+      q: 'What language is everything in?',
+      a: "English and Tamil, across the whole platform — tests, materials, classroom and current affairs. Switch your language anytime with one tap.",
     },
   ],
   ta: [
     {
-      q: 'ஒரு நாள் தேர்வைத் தவறவிட்டால் என்ன ஆகும்?',
-      a: 'காலை 6:00–8:30 நேரத்தைத் தவறவிட்டால், அன்றைய தேர்வு தானாகவே தவறியதாகப் பதிவாகும். அன்றைக்கு உங்கள் தரவரிசை புதுப்பிக்கப்படாது; தொடர்ந்து தவறினால் உங்கள் தொடர்ச்சி பாதிக்கப்படும். இந்தத் திட்டம் சீரான வருகைக்கு வெகுமதி தருகிறது — தொடங்கும் முன் உங்கள் அட்டவணையைத் திட்டமிடுங்கள்.',
+      q: 'சந்தாவில் எனக்கு என்ன கிடைக்கும்?',
+      a: 'எல்லாமே, ஒரே விலையில்: தினசரி AI தனிப்பயன் தேர்வு, ஒவ்வொரு முயற்சிக்குப் பின் AI வழிகாட்டி அறிக்கை, முழு classroom (பாடத்திற்கு வீடியோ + குறிப்புகள்), ஊடாடும் படிப்பு பாடங்கள், தேர்வுக்கு ஏற்ற தினசரி நடப்பு நிகழ்வுகள், நேரடி batch தரவரிசை, மற்றும் உங்கள் Centum Index — ஆங்கிலம் & தமிழில். கூடுதல் கட்டணம் இல்லை.',
     },
     {
-      q: 'CentuMania எந்தெந்தத் தேர்வுகளை உள்ளடக்குகிறது?',
-      a: 'இந்தியாவின் முக்கியப் போட்டித் தேர்வுகளுக்கான ஒரே ஒழுக்கமான தளத்தை CentuMania உருவாக்குகிறது — SSC (CGL, CHSL, MTS, CPO), RRB (NTPC, Group D), வங்கி, தமிழ்நாடு & புதுச்சேரி அரசுத் தேர்வுகள். ஒவ்வொரு batch-ும் அந்தத் தேர்வின் பாடத்திட்டம் மற்றும் கேள்வி முறைக்கு ஏற்ப அமைக்கப்படுகிறது. மேலும் பல தேர்வுகள் விரைவில்.',
-    },
-    {
-      q: 'தேர்வுகள் எந்த மொழியில் இருக்கும்?',
-      a: 'தேர்வுகள் ஆங்கிலம் மற்றும் தமிழில் கிடைக்கும். கணக்கு அமைப்புகளில் உங்களுக்கு விருப்பமான மொழியை மாற்றிக்கொள்ளலாம்.',
-    },
-    {
-      q: 'ரீஃபண்ட் எப்படி வேலை செய்கிறது?',
-      a: 'இரண்டு வழிகள். முழு ரீஃபண்ட்: எல்லா தினசரி தேர்வுகளையும் எழுதி, சராசரி 50%-க்கும் குறைவாக இருந்தால், திட்டம் முடிந்த 7 நாட்களுக்குள் விண்ணப்பியுங்கள். Centum வெகுமதிகள்: Centum Index 75+ உடன் முடித்தால், உங்கள் நிலைக்கு ஏற்ப கட்டணத்தில் 25–50% திரும்பப் பெறுங்கள். இரண்டும் உங்கள் தரவிலிருந்து தானாகச் சரிபார்க்கப்படும்.',
-    },
-    {
-      q: 'திட்டத்தின் நடுவில் சேரலாமா?',
-      a: 'முடியாது. ஒவ்வொரு batch-ும் குறிப்பிட்ட தேதியில் தொடங்கி குறிப்பிட்ட காலம் நடக்கும். இது வேண்டுமென்றே — தரவரிசை ஒவ்வொரு batch-க்கும் மீட்டமைக்கப்படுவதால், எல்லோரும் சம நிலையில் போட்டியிடுகிறார்கள். முழு அனுபவத்திற்கும் ரீஃபண்ட் தகுதிக்கும் அடுத்த batch-இல் சேருங்கள்.',
+      q: 'இது சந்தாவா அல்லது ஒருமுறை கட்டணமா?',
+      a: 'ஒவ்வொரு தேர்வுக்கும் ஒரு சந்தா — மாதந்தோறும் செலுத்துங்கள், அல்லது ஆண்டுத் திட்டத்தில் 2 மாதம் இலவசம். கட்டணம் தானாகச் செலுத்தப்படும்; எப்போது வேண்டுமானாலும் கணக்கிலிருந்து நிறுத்தலாம். செலுத்திய காலம் முடியும் வரை முழு அணுகல் தொடரும்.',
     },
     {
       q: 'இலவச முயற்சி உண்டா?',
-      a: 'ஒவ்வொரு batch-இன் முதல் நாள் பதிவு செய்த அனைவருக்கும் முன்னோட்டமாகக் கிடைக்கும். முதல் தினசரி தேர்வை இலவசமாக எழுதலாம். இரண்டாம் நாள் தொடங்கும் முன் முழு அணுகலுக்குக் கட்டணம் தேவை.',
+      a: 'ஆம் — முதல் நாள் இலவசம், தொடங்க கார்டு தேவையில்லை. உண்மையான தினசரி தேர்வை எழுதுங்கள், ஒரு classroom பாடத்தைத் திறங்கள், சந்தா செலுத்தும் முன் உங்கள் Centum Index நகர்வதைப் பாருங்கள்.',
+    },
+    {
+      q: 'எப்போது வேண்டுமானாலும் நிறுத்தலாமா?',
+      a: 'எப்போது வேண்டுமானாலும், இரண்டு தட்டுகளில் — கட்டுப்பாடு இல்லை, நிறுத்தக் கட்டணம் இல்லை. மீண்டும் கட்டணம் விதிக்கப்படாது; உங்கள் நடப்பு மாதம்/ஆண்டு முடியும் வரை அணுகல் தொடரும்.',
+    },
+    {
+      q: 'CentuMania எந்தெந்தத் தேர்வுகளை உள்ளடக்குகிறது?',
+      a: 'SSC (CGL, CHSL, MTS, CPO), RRB (NTPC, Group D), வங்கி (IBPS & SBI PO/Clerk), UDC மற்றும் தமிழ்நாடு & புதுச்சேரி அரசுத் தேர்வுகள். ஒவ்வொரு பாதையும் அந்தத் தேர்வின் பாடத்திட்டம் & கேள்வி முறைக்கு ஏற்ப அமைக்கப்பட்டுள்ளது — மேலும் பல தேர்வுகள் விரைவில்.',
+    },
+    {
+      q: 'Centum Index என்றால் என்ன?',
+      a: 'இது தினமும் புதுப்பிக்கப்படும் உங்கள் உண்மையான தயார்நிலை மதிப்பெண். வருகை (தினசரி தேர்வு எழுதினீர்களா?) + தேர்ச்சி (முதல் முயற்சியில் சரியாகச் செய்கிறீர்களா?) இரண்டையும் இணைக்கிறது. வெறும் மதிப்பெண்களைப் போல் இதை ஏமாற்ற முடியாது — தினமும் வருவதே இதை நகர்த்தும், தேர்வில் வெற்றிக்கான சிறந்த அறிகுறியும் இதுவே.',
+    },
+    {
+      q: 'எல்லாம் எந்த மொழியில் இருக்கும்?',
+      a: 'ஆங்கிலம் & தமிழ், முழுத் தளத்திலும் — தேர்வுகள், பாடங்கள், classroom, நடப்பு நிகழ்வுகள். ஒரு தட்டில் உங்கள் மொழியை மாற்றிக்கொள்ளுங்கள்.',
     },
   ],
 }
