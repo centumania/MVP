@@ -16,6 +16,10 @@ type Status = {
   testLinks:          Record<number, string>
 }
 
+// Free preview days for unpaid students — Days 1–2 open, Day 3+ locked.
+// Must match FREE_DAYS in src/app/api/materials/open/[id]/route.ts (server gate).
+const FREE_DAYS = 2
+
 // ── Design tokens — aligned with the study modules' visual language ──
 const INK       = '#1A1A2E'   // module "centum-card" navy
 const INK_SOFT  = '#111827'
@@ -55,11 +59,11 @@ function DayHeader({ day, status }: { day: number; status: Status }) {
   const daysLeft           = daysUntilUnlock(status.enrolledDate, day)
   const isScheduleUnlocked = daysLeft <= 0
   const isPublished        = status.activeDays.includes(day)
-  // Day 1 is the free preview day — open to every registered student
-  const isAvailable        = isScheduleUnlocked && isPublished && (status.paymentVerified || day === 1)
+  // Days 1–2 are the free preview — open to every registered student
+  const isAvailable        = isScheduleUnlocked && isPublished && (status.paymentVerified || day <= FREE_DAYS)
 
   let badge: React.ReactNode
-  if (!status.paymentVerified && day !== 1) {
+  if (!status.paymentVerified && day > FREE_DAYS) {
     badge = <StatusPill tone="pending">Payment required</StatusPill>
   } else if (isAvailable) {
     badge = <StatusPill tone="open">Open now</StatusPill>
@@ -380,8 +384,8 @@ export default function MaterialsPage() {
           const daysLeft           = daysUntilUnlock(status.enrolledDate, day)
           const isScheduleUnlocked = daysLeft <= 0
           const isPublished        = status.activeDays.includes(day)
-          // Day 1 is the free preview day — open to every registered student
-          const isAvailable        = isScheduleUnlocked && isPublished && (status.paymentVerified || day === 1)
+          // Days 1–2 are the free preview — open to every registered student
+          const isAvailable        = isScheduleUnlocked && isPublished && (status.paymentVerified || day <= FREE_DAYS)
 
           return (
             <div key={day}>

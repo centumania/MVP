@@ -31,7 +31,17 @@ function CheckCircle({ done }: { done: boolean }) {
   )
 }
 
-function Sidebar({ course, activeId, doneMap }: { course: Course; activeId: string; doneMap: Record<string, boolean> }) {
+function LockIcon() {
+  return (
+    <span className="inline-flex items-center justify-center rounded-full shrink-0" style={{ width: 20, height: 20 }}>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={CT.FAINT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+      </svg>
+    </span>
+  )
+}
+
+function Sidebar({ course, activeId, doneMap, isLocked }: { course: Course; activeId: string; doneMap: Record<string, boolean>; isLocked: (i: number) => boolean }) {
   const total = course.lessons.length
   const done = course.lessons.filter(l => doneMap[l.id]).length
   const pct = total ? Math.round((done / total) * 100) : 0
@@ -51,6 +61,16 @@ function Sidebar({ course, activeId, doneMap }: { course: Course; activeId: stri
       <nav className="py-1.5">
         {course.lessons.map((l, i) => {
           const active = l.id === activeId
+          if (isLocked(i)) {
+            return (
+              <div key={l.id} title="Unlocks with a subscription"
+                className="flex items-center gap-2.5 px-3.5 py-2.5 cursor-not-allowed select-none" style={{ opacity: 0.55 }}>
+                <LockIcon />
+                <span className="text-[10px] font-bold tabular-nums shrink-0" style={{ color: CT.FAINT, width: 16 }}>{String(i + 1).padStart(2, '0')}</span>
+                <span className="text-[13px] leading-snug truncate" style={{ color: CT.FAINT, fontWeight: 500 }}>{l.title}</span>
+              </div>
+            )
+          }
           return (
             <Link key={l.id} href={`/classroom/${course.slug}/${l.id}`}
               className="flex items-center gap-2.5 px-3.5 py-2.5 transition-colors"
@@ -164,10 +184,14 @@ function LessonPane({
   )
 }
 
+// Unpaid students get the first 5 topics of every subject free; the rest lock.
+const FREE_TOPICS = 5
+
 export default function LessonView({ subjectSlug, topicId }: { subjectSlug: string; topicId: string }) {
   const router = useRouter()
-  const { ready, userName, token } = useClassroomSession()
+  const { ready, userName, token, paymentVerified } = useClassroomSession()
   const found = getLesson(subjectSlug, topicId)
+  const isLocked = (i: number) => !paymentVerified && i >= FREE_TOPICS
   const [doneMap, setDoneMap] = useState<Record<string, boolean>>({})
   const openedAt = useRef<number>(0)
 
@@ -243,19 +267,42 @@ export default function LessonView({ subjectSlug, topicId }: { subjectSlug: stri
   }
 
   const { lesson, index } = found
+  const locked = isLocked(index)
   return (
     <AppLayout userName={userName}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-6">
           {/* Sidebar (top on mobile, left rail on desktop) */}
-          <aside className="lg:sticky lg:top-6 self-start"><Sidebar course={found.course} activeId={topicId} doneMap={doneMap} /></aside>
-          {/* Lesson */}
+          <aside className="lg:sticky lg:top-6 self-start"><Sidebar course={found.course} activeId={topicId} doneMap={doneMap} isLocked={isLocked} /></aside>
+          {/* Lesson — or a paywall for locked topics (direct-URL guard) */}
           <main style={{ maxWidth: 760 }}>
-            <LessonPane course={found.course} lesson={lesson} index={index} token={token} done={!!doneMap[topicId]} onToggle={toggle} />
+            {locked ? <LockedPane subject={found.course.subject} /> : (
+              <LessonPane course={found.course} lesson={lesson} index={index} token={token} done={!!doneMap[topicId]} onToggle={toggle} />
+            )}
           </main>
         </div>
       </div>
     </AppLayout>
+  )
+}
+
+function LockedPane({ subject }: { subject: string }) {
+  return (
+    <div className="rounded-[18px] px-6 py-10 text-center" style={{ background: CT.PAPER, border: `1px solid ${CT.HAIRLINE}` }}>
+      <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl" style={{ background: '#F4F3F0' }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={CT.INK_SOFT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+      </span>
+      <p className="mt-4 text-[17px] font-extrabold" style={{ color: CT.INK_SOFT }}>This topic is locked</p>
+      <p className="mx-auto mt-1.5 max-w-sm text-[13.5px] leading-relaxed" style={{ color: CT.MUTED }}>
+        The first {FREE_TOPICS} topics of {subject} are free. Subscribe to unlock the full classroom — every topic, every subject.
+      </p>
+      <Link href="/payment" className="mt-6 inline-flex items-center gap-2 rounded-xl px-5 py-3 text-[14px] font-bold text-white" style={{ background: CT.INK, boxShadow: '0 6px 18px rgba(26,26,46,0.22)' }}>
+        Unlock full access
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+      </Link>
+    </div>
   )
 }
 

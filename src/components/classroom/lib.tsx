@@ -13,11 +13,11 @@ export const CT = {
   MUTED: '#6B7280', FAINT: '#9CA3AF', GREEN: '#16A34A', AMBER: '#B45309', SKY: '#0284c7',
 }
 
-type SessionState = { ready: boolean; userName: string; token: string }
+type SessionState = { ready: boolean; userName: string; token: string; paymentVerified: boolean }
 
 export function useClassroomSession(): SessionState {
   const router = useRouter()
-  const [s, setS] = useState<SessionState>({ ready: false, userName: 'Student', token: '' })
+  const [s, setS] = useState<SessionState>({ ready: false, userName: 'Student', token: '', paymentVerified: false })
   useEffect(() => {
     let cancelled = false
     getSupabaseBrowserClient().auth.getSession().then(async ({ data: { session } }) => {
@@ -26,14 +26,17 @@ export function useClassroomSession(): SessionState {
       setCachedToken(session.access_token)
       // Prime the `cm_access` cookie (middleware gates the embedded /study/*.html
       // modules on it) — the same call the /materials page makes. Await it so the
-      // cookie is set before any lesson iframe renders.
+      // cookie is set before any lesson iframe renders. Also read paymentVerified
+      // from the same response to gate locked classroom topics.
+      let paymentVerified = false
       try {
-        await fetch('/api/materials/status', { headers: { Authorization: `Bearer ${session.access_token}` } })
+        const r = await fetch('/api/materials/status', { headers: { Authorization: `Bearer ${session.access_token}` } })
+        if (r.ok) { const j = await r.json(); paymentVerified = j?.paymentVerified === true }
       } catch { /* embed will still offer a full-screen fallback link */ }
       if (cancelled) return
       const name = (session.user.user_metadata?.name as string) ?? session.user.email?.split('@')[0] ?? 'Student'
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setS({ ready: true, userName: name, token: session.access_token })
+      setS({ ready: true, userName: name, token: session.access_token, paymentVerified })
     })
     return () => { cancelled = true }
   }, [router])
