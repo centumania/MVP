@@ -84,6 +84,25 @@ export default function StudentIntelPage() {
 
   useEffect(() => { load() }, [load])
 
+  const [sendState, setSendState] = useState<Record<string, string>>({})
+  const sendNudge = useCallback(async (s: StudentIntel) => {
+    setSendState(m => ({ ...m, [s.id]: 'sending…' }))
+    const { data: { session } } = await getSupabaseBrowserClient().auth.getSession()
+    if (!session) { router.replace('/auth/login'); return }
+    const message = `Hi ${s.name.split(' ')[0]}, Rajan here from CentuMania 👋 Noticed you've been away — your daily test and streak are waiting. Shall I help you get back on track today?`
+    try {
+      const res = await fetch('/api/admin/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.access_token}` },
+        body: JSON.stringify({ userId: s.id, message, templateKey: 'at_risk_nudge' }),
+      })
+      const r = await res.json().catch(() => ({}))
+      setSendState(m => ({ ...m, [s.id]: r.status === 'sent' ? '✓ sent' : (r.detail ?? 'failed') }))
+    } catch {
+      setSendState(m => ({ ...m, [s.id]: 'network error' }))
+    }
+  }, [router])
+
   const needsAttention = (s: StudentIntel) => s.health === 'at_risk' || s.health === 'never_started' || s.health === 'watch'
   const rows = (data?.students ?? []).filter(s => filter === 'all' ? true : needsAttention(s))
 
@@ -168,11 +187,20 @@ export default function StudentIntelPage() {
                   </div>
                   {/* nudge actions */}
                   <div className="flex items-center gap-2 shrink-0">
+                    {s.phone && (
+                      <button onClick={() => sendNudge(s)} disabled={!!sendState[s.id] && sendState[s.id] === 'sending…'}
+                        title="Auto-send via Twilio (records to the ledger)"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[12px] font-bold disabled:opacity-60"
+                        style={{ background: '#111827', color: '#fff' }}>
+                        {sendState[s.id] ?? 'Send'}
+                      </button>
+                    )}
                     {wa && (
                       <a href={wa} target="_blank" rel="noopener noreferrer"
+                        title="Open WhatsApp with a prefilled message (manual)"
                         className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[12px] font-bold"
                         style={{ background: 'rgba(37,211,102,0.10)', color: '#128C3E', border: '1px solid rgba(37,211,102,0.25)' }}>
-                        WhatsApp
+                        Manual
                       </a>
                     )}
                     {mail && (
