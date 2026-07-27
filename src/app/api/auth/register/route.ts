@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
+import type { SupabaseClient } from '@supabase/supabase-js'
 import { getSupabaseAdminClient } from '@/src/lib/supabase/server'
 import { rateLimit } from '@/src/lib/rate-limit'
+import { sendWelcome } from '@/src/lib/notify/welcome'
 
 /**
  * POST /api/auth/register
@@ -22,7 +24,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const { name, phone, email, password } = await req.json()
+    const { name, phone, email, password, whatsappOptIn } = await req.json()
 
     if (!name || name.trim().length < 2) {
       return NextResponse.json({ error: 'Please enter your full name.' }, { status: 400 })
@@ -71,6 +73,22 @@ export async function POST(req: NextRequest) {
         .from('profiles')
         .update({ registration_number: registrationNumber })
         .eq('id', data.user.id)
+
+      // Best-effort consent capture (column exists once migration 031 is live).
+      // Wrapped so a missing column can never break registration.
+      if (whatsappOptIn === true) {
+        try {
+          // whatsapp_opt_in is not in the generated types yet — untyped view.
+          await (supabase as unknown as SupabaseClient)
+            .from('profiles').update({ whatsapp_opt_in: true }).eq('id', data.user.id)
+        } catch { /* pre-migration or transient — ignore */ }
+      }
+
+      // Fire the onboarding welcome (email always; WhatsApp only if opted in).
+      // Never throws; if providers aren't configured yet it no-ops silently.
+      try {
+        await sendWelcome(supabase, { userId: data.user.id, name: name.trim() })
+      } catch { /* best-effort — registration already succeeded */ }
     }
 
     return NextResponse.json({ userId: data.user?.id })
