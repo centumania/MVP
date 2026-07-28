@@ -8,6 +8,9 @@
 import { useState } from 'react'
 import { MessageCircle, ShieldCheck } from '@/src/components/landing-v2/icons'
 import { getProgramme, formatINR } from '@/src/data/pricing'
+import { useIsNativeApp } from '@/src/lib/native/app-mode'
+import { NativeAccessNotice } from './NativeAccessNotice'
+import { DashboardSkeleton } from './ui'
 
 const UPI_ID = 'anandhamuruugan-1@okicici'
 const PAYEE = 'Anandh Muruugan'
@@ -41,6 +44,16 @@ function CopyButton({ value }: { value: string }) {
 }
 
 export function PaymentGate({ program }: { program?: string | null }) {
+  // Consumption-only compliance: inside the native app, NEVER render the UPI
+  // screen — Google Play forbids leading users to an outside payment method
+  // from within the app. While app-mode is still resolving (`null`, the split
+  // second before useIsNativeApp's effect runs) we show a neutral skeleton —
+  // not the notice and not the QR — so neither web nor native users see the
+  // wrong state; only once we KNOW it's the browser does the UPI screen render.
+  const native = useIsNativeApp()
+  if (native === null) return <div className="mx-auto max-w-md px-4 py-10 sm:px-6"><DashboardSkeleton /></div>
+  if (native === true) return <NativeAccessNotice />
+
   // Price follows the programme the student registered for
   // (auth user_metadata.program); founder-batch accounts fall back to UDC.
   const plan = getProgramme(program)

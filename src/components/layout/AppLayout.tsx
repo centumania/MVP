@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
+import { useIsNativeApp } from '@/src/lib/native/app-mode'
 import Logo from '@/src/components/landing-v2/Logo'
 import type { SVGProps } from 'react'
 
@@ -78,7 +79,11 @@ export function AppLayout({ children, userName, batchName }: {
     href === '/materials'
       ? (pathname === href || pathname.startsWith(href + '/')) && !pathname.startsWith(TEST_HREF)
       : pathname === href || pathname.startsWith(href + '/')
-  const moreActive = MORE_NAV.some(m => isActive(m.href))
+  // In the native app (consumption-only) the Payment/UPI surface is hidden for
+  // Google Play compliance — students subscribe on the website, not in-app.
+  const native = useIsNativeApp()
+  const moreNav = native ? MORE_NAV.filter(m => m.href !== '/payment') : MORE_NAV
+  const moreActive = moreNav.some(m => isActive(m.href))
   const [moreOpen, setMoreOpen] = useState(false)
   const [mobileMoreOpen, setMobileMoreOpen] = useState(false)
 
@@ -151,7 +156,7 @@ export function AppLayout({ children, userName, batchName }: {
               <polyline points="6 9 12 15 18 9" />
             </svg>
           </button>
-          {(moreOpen || moreActive) && MORE_NAV.map(({ href, label, Icon }) => {
+          {(moreOpen || moreActive) && moreNav.map(({ href, label, Icon }) => {
             const active = isActive(href)
             return (
               <Link key={href} href={href}
@@ -230,7 +235,7 @@ export function AppLayout({ children, userName, batchName }: {
           <div className="md:hidden fixed inset-x-3 z-40 rounded-2xl p-2"
             style={{ bottom: 'calc(4.5rem + env(safe-area-inset-bottom))', background: '#FFFFFF', border: `1px solid ${BORDER}`, boxShadow: '0 12px 40px rgba(17,24,39,0.18)' }}
             role="menu" aria-label="More navigation">
-            {MORE_NAV.map(({ href, label, Icon }) => {
+            {moreNav.map(({ href, label, Icon }) => {
               const active = isActive(href)
               return (
                 <Link key={href} href={href} onClick={() => setMobileMoreOpen(false)}
