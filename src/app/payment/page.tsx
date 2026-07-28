@@ -40,6 +40,8 @@ export default function PaymentPage() {
     )
   }
 
+  // PaymentGate self-neutralises inside the native app (consumption-only) —
+  // it renders NativeAccessNotice instead of the UPI screen. See PaymentGate.
   return (
     <AppShell userName={name} batchName={batchName}>
       <PaymentGate program={program} />

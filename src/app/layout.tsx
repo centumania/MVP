@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Bebas_Neue } from 'next/font/google'
 import { headers } from 'next/headers'
+import { RegisterServiceWorker } from '@/src/components/pwa/RegisterServiceWorker'
 import './globals.css'
 
 /**
@@ -114,6 +115,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           Skip to main content
         </a>
         {children}
+        <RegisterServiceWorker />
       </body>
     </html>
   )
