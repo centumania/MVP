@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AppLayout } from '@/src/components/layout/AppLayout'
 import { getCourse, getLesson, type Course, type Lesson } from '@/src/data/classroom'
+// Free-topic count lives in lib/access/free-content so this UI gate and the
+// middleware gate that serves the underlying /study files can never drift apart.
+import { FREE_TOPICS } from '@/src/lib/access/free-content'
 import {
   CT, useClassroomSession, isDone, setDone,
   trackLessonOpen, trackLessonComplete, beaconLessonDwell,
@@ -184,8 +187,7 @@ function LessonPane({
   )
 }
 
-// Unpaid students get the first 5 topics of every subject free; the rest lock.
-const FREE_TOPICS = 5
+// Unpaid students get the free head of every subject (FREE_TOPICS); the rest lock.
 
 export default function LessonView({ subjectSlug, topicId }: { subjectSlug: string; topicId: string }) {
   const router = useRouter()

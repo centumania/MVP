@@ -24,8 +24,12 @@ import { COURSES } from '@/src/data/classroom'
 
 /** Must match FREE_DAYS in /api/materials/open/[id] and materials/page.tsx. */
 export const FREE_DAYS = 2
-/** Must match FREE_TOPICS in components/classroom/LessonView.tsx. */
-export const FREE_TOPICS = 5
+/**
+ * Free head of every classroom course. Kept deliberately small: this applies
+ * per COURSE, so across ~8 subjects it is the real size of the free tier.
+ * LessonView imports this — do not redeclare it there.
+ */
+export const FREE_TOPICS = 2
 
 /** Always reachable: it holds no answers and gates each day server-side. */
 const ALWAYS_FREE = ['/study/daily-test-engine.html']
