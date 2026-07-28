@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { isFreeStudyPath } from '@/src/lib/access/free-content'
 
 /**
  * Edge Middleware — src/middleware.ts
@@ -8,7 +9,10 @@ import { NextRequest, NextResponse } from 'next/server'
  *  2. Permissive CSP for /study/, /content/, /pdfs/ and materials viewer routes —
  *     these serve interactive HTML with inline scripts, eval, and CDN assets.
  *  3. All security response headers (HSTS, X-Frame-Options, etc.)
- *  4. Cookie gate: /study/, /content/, /pdfs/ require cm_access session cookie.
+ *  4. Entitlement gate: /study/, /content/, /pdfs/ require a cm_access cookie,
+ *     and a 'free' cookie only opens free-tier lessons — these are static files,
+ *     so this is the only thing standing between an unpaid account and every
+ *     paid lesson (the /api/materials/open gateway guards the front door only).
  */
 
 // ── Strict CSP — all routes except viewer/study routes ─────────────
@@ -88,6 +92,10 @@ export function middleware(request: NextRequest): NextResponse {
     const accessCookie = request.cookies.get('cm_access')
     if (!accessCookie) {
       return NextResponse.redirect(new URL('/auth/login', request.url), { status: 302 })
+    }
+    // 'paid' opens everything; 'free' (and any legacy '1') opens free-tier only.
+    if (accessCookie.value !== 'paid' && !isFreeStudyPath(pathname)) {
+      return NextResponse.redirect(new URL('/payment', request.url), { status: 302 })
     }
   }
 

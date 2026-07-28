@@ -65,7 +65,11 @@ export async function GET(request: NextRequest) {
     testLinks,
   })
 
-  response.cookies.set('cm_access', '1', {
+  // Carries ENTITLEMENT, not just "signed in": middleware serves the static
+  // /study files off this. A 'free' cookie only opens free-tier lessons (see
+  // src/lib/access/free-content.ts); 'paid' opens everything. Setting a bare
+  // '1' here is what previously let any registered account read every lesson.
+  response.cookies.set('cm_access', paymentVerified ? 'paid' : 'free', {
     httpOnly: true,
     maxAge: 60 * 60,
     sameSite: 'lax',
