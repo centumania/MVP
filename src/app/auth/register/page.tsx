@@ -15,6 +15,7 @@ import { AuthButton, Checkbox, ErrorBanner, Field, PasswordField, StatusIcon } f
 export default function RegisterPage() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', password: '' })
   const [consent, setConsent] = useState(false)
+  const [waOptIn, setWaOptIn] = useState(true) // WhatsApp reminders — opt-in, on by default but freely unchecked
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -41,6 +42,7 @@ export default function RegisterPage() {
           phone: form.phone,
           email: form.email.trim().toLowerCase(),
           password: form.password,
+          whatsappOptIn: waOptIn,
         }),
       })
       const body = await res.json()
@@ -156,6 +158,10 @@ export default function RegisterPage() {
             Privacy Policy
           </Link>{' '}
           and confirm I am enrolling in the CentuMania 2026 founder cohort.
+        </Checkbox>
+
+        <Checkbox checked={waOptIn} onChange={setWaOptIn}>
+          Send me daily test reminders and important updates on WhatsApp. You can opt out anytime.
         </Checkbox>
 
         {error && <ErrorBanner>{error}</ErrorBanner>}

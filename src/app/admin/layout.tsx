@@ -10,6 +10,7 @@ import Logo from '@/src/components/landing-v2/Logo'
 const NAV = [
   { href: '/admin',           label: 'Overview',  icon: GridIcon    },
   { href: '/admin/ops',       label: 'Operations',icon: BoltIcon    },
+  { href: '/admin/intel',     label: 'Intel',     icon: TrendingIcon },
   { href: '/admin/students',  label: 'Students',  icon: UsersIcon   },
   { href: '/admin/exams',     label: 'Exams',     icon: PencilIcon  },
   { href: '/admin/centum',    label: 'Centum',    icon: TrendingIcon },
