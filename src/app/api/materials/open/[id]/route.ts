@@ -52,6 +52,26 @@ export async function GET(request: NextRequest, { params }: Params) {
       )
     }
 
+    // Entitlement, read once: it both gates this response and refreshes the
+    // cm_access cookie below. The viewer opens a module through this route and
+    // nothing else, so this is the only place that can keep a student's cookie
+    // in step with their access before the iframe requests the static file.
+    const { data: profileRow } = await supabase
+      .from('profiles').select('payment_verified').eq('id', user.id).single()
+    const paymentVerified = profileRow?.payment_verified === true
+
+    /** Attaches the entitlement cookie middleware reads when serving /study files. */
+    const withAccessCookie = (res: NextResponse) => {
+      res.cookies.set('cm_access', paymentVerified ? 'paid' : 'free', {
+        httpOnly: true,
+        maxAge: 60 * 60,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+      })
+      return res
+    }
+
     // ── Static-catalog modules (programs.ts pool): slug ids served from
     //    /public/study, never expire. Day-1 preview + the daily test engine are
     //    free; later days need payment. Checked BEFORE the DB so slug ids never
@@ -59,14 +79,10 @@ export async function GET(request: NextRequest, { params }: Params) {
     const staticMat = getMaterialById(id)
     if (staticMat) {
       const alwaysFree = id === 'daily-test-engine'
-      if (!alwaysFree && staticMat.day > FREE_DAYS) {
-        const { data: profile } = await supabase
-          .from('profiles').select('payment_verified').eq('id', user.id).single()
-        if (!profile?.payment_verified) {
-          return NextResponse.json({ error: 'Payment required' }, { status: 402 })
-        }
+      if (!alwaysFree && staticMat.day > FREE_DAYS && !paymentVerified) {
+        return withAccessCookie(NextResponse.json({ error: 'Payment required' }, { status: 402 }))
       }
-      return NextResponse.json({ url: staticMat.htmlPath, type: 'html' })
+      return withAccessCookie(NextResponse.json({ url: staticMat.htmlPath, type: 'html' }))
     }
 
     const now = new Date().toISOString()
@@ -83,16 +99,8 @@ export async function GET(request: NextRequest, { params }: Params) {
     }
 
     // Payment gate for content beyond free days
-    if (material.day_number > FREE_DAYS) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('payment_verified')
-        .eq('id', user.id)
-        .single()
-
-      if (!profile?.payment_verified) {
-        return NextResponse.json({ error: 'Payment required' }, { status: 402 })
-      }
+    if (material.day_number > FREE_DAYS && !paymentVerified) {
+      return withAccessCookie(NextResponse.json({ error: 'Payment required' }, { status: 402 }))
     }
 
     // ── PDF: generate a short-lived signed URL ──────────────────────────────
@@ -106,10 +114,10 @@ export async function GET(request: NextRequest, { params }: Params) {
         return NextResponse.json({ error: 'Failed to generate download link' }, { status: 500 })
       }
 
-      return NextResponse.json({ url: signed.signedUrl, type: 'pdf' })
+      return withAccessCookie(NextResponse.json({ url: signed.signedUrl, type: 'pdf' }))
     }
 
-    return NextResponse.json({ url: material.html_url, type: 'html' })
+    return withAccessCookie(NextResponse.json({ url: material.html_url, type: 'html' }))
 
   } catch (err) {
     console.error('[materials/open] Unhandled error:', err)
