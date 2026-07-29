@@ -21,6 +21,7 @@ import { StatTile } from './ui'
 import { TodayStudy, type TodayStudyData } from './TodayStudy'
 import { ExamHero, DailyTestCard, type TodayExam } from './ExamHero'
 import { CentumCard, type CentumData } from './CentumCard'
+import { StreakCard } from './StreakCard'
 import { InsightsPanel } from './InsightsPanel'
 import { NewsPanel } from './NewsPanel'
 import { PerformanceCard, BatchTimeline, type HistoryItem } from './Performance'
@@ -122,6 +123,9 @@ export function DashboardView({ firstName, data, insights, currentAffairs, today
 
       {/* ── Today's exam (only meaningful when one is actually scheduled) ── */}
       <ExamHero exam={data.todayExam} />
+
+      {/* ── 4. Streak — the habit loop, right under the daily routine ── */}
+      <StreakCard streak={data.streak} />
 
       {/* ── Standings ── */}
       <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">

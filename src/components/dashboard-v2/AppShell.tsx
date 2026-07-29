@@ -12,6 +12,7 @@ import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { getSupabaseBrowserClient } from '@/src/lib/supabase/client'
 import { useIsNativeApp } from '@/src/lib/native/app-mode'
+import { AssistantWidget } from '@/src/components/ai/AssistantWidget'
 import Logo from '@/src/components/landing-v2/Logo'
 import type { SVGProps } from 'react'
 
@@ -274,6 +275,8 @@ export function AppShell({ children, userName, batchName }: {
           <span className={`text-[10.5px] tracking-wide ${mobileMoreOpen || moreActive ? 'font-bold' : 'font-medium'}`}>More</span>
         </button>
       </nav>
+      {/* Floating AI study companion — self-hides when signed out or in-app */}
+      <AssistantWidget />
     </div>
   )
 }
