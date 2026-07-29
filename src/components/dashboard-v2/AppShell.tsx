@@ -39,11 +39,17 @@ const IcoCap = (p: IconProps) => <Base {...p}><path d="M22 10 12 5 2 10l10 5 10-
 // Primary nav = the daily loop only; everything else under "More" (matches AppLayout).
 // Today's Test opens the Daily Test Engine; AI Daily Test (personalised) is separate.
 const TEST_HREF = '/materials/viewer/daily-test-engine'
+// `highlight` is declared on every item (not just the one that uses it) so the
+// `as const` union stays uniform and destructuring it below typechecks.
+// Modules is the daily habit we want students pulled back into, so it carries an
+// amber accent + STUDY badge on every other page — AppLayout has always done
+// this, and AppShell was missing it, which is why the sidebar looked different
+// on /dashboard than on /classroom.
 const NAV = [
-  { href: '/dashboard', label: 'Dashboard', short: 'Home', Icon: IcoHome, mobile: true },
-  { href: '/materials', label: 'Modules', short: 'Study', Icon: IcoBook, mobile: true },
-  { href: '/classroom', label: 'Classroom', short: 'Learn', Icon: IcoCap, mobile: true },
-  { href: TEST_HREF, label: "Today's Test", short: 'Test', Icon: IcoExam, mobile: true },
+  { href: '/dashboard', label: 'Dashboard', short: 'Home', Icon: IcoHome, mobile: true, highlight: false },
+  { href: '/materials', label: 'Modules', short: 'Study', Icon: IcoBook, mobile: true, highlight: true },
+  { href: '/classroom', label: 'Classroom', short: 'Learn', Icon: IcoCap, mobile: true, highlight: false },
+  { href: TEST_HREF, label: "Today's Test", short: 'Test', Icon: IcoExam, mobile: true, highlight: false },
 ] as const
 const MORE_NAV = [
   { href: '/study/daily-test', label: 'AI Daily Test',   Icon: IcoBot   },
@@ -104,8 +110,11 @@ export function AppShell({ children, userName, batchName }: {
         </div>
 
         <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4" aria-label="Main navigation">
-          {NAV.map(({ href, label, Icon }) => {
+          {NAV.map(({ href, label, Icon, highlight }) => {
             const active = isActive(href)
+            // Amber accent only when NOT the current page — on /materials itself
+            // the normal blue "you are here" state wins.
+            const nudge = !!highlight && !active
             return (
               <Link
                 key={href}
@@ -114,12 +123,20 @@ export function AppShell({ children, userName, batchName }: {
                 className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] transition-colors ${
                   active
                     ? 'bg-sky-50 font-semibold text-sky-700 ring-1 ring-sky-200/60'
-                    : 'font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    : nudge
+                      ? 'bg-amber-50/70 font-semibold text-amber-700 ring-1 ring-amber-200/70 hover:bg-amber-50'
+                      : 'font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
                 {active && <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-sky-600" />}
-                <Icon size={17} className={active ? 'text-sky-600' : 'text-gray-400'} />
-                {label}
+                {nudge && <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-full bg-amber-500" />}
+                <Icon size={17} className={active ? 'text-sky-600' : nudge ? 'text-amber-600' : 'text-gray-400'} />
+                <span className="flex-1">{label}</span>
+                {nudge && (
+                  <span className="shrink-0 rounded bg-amber-100 px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-amber-700 ring-1 ring-amber-200">
+                    Study
+                  </span>
+                )}
               </Link>
             )
           })}

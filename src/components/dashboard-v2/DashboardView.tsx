@@ -3,16 +3,19 @@
  * Receives all data as props; no fetching, no auth. Used by the real
  * /dashboard page (live data) and /dev/dashboard-preview (mock data).
  *
- * Visual hierarchy (one primary action, calm supporting layers):
+ * Visual hierarchy — the top three ARE the daily routine, in the order a
+ * student should work through them each morning. Current affairs used to sit
+ * near the bottom, below the analytics, which buried a daily-reading habit:
  *   1. Greeting          — orientation
- *   2. TodayStudy        — today's topic, what to study, where to continue
- *   3. ExamHero          — today's formal exam
- *   4. DailyTestCard     — secondary AI action
- *   5. Stat tiles        — standings at a glance
- *   6. Centum Index      — the long-game score
- *   7. Performance       — trend + history (merged, capped)
- *   8. Insights / News   — study intelligence
- *   9. Batch timeline + tip — closing rhythm
+ *   2. TodayStudy        — today's module: what to study, where to continue
+ *   3. NewsPanel         — current affairs, read alongside today's module
+ *   4. DailyTestCard     — the daily test that closes the loop
+ *   5. ExamHero          — formal exam, only meaningful when one is scheduled
+ *   6. Stat tiles        — standings at a glance
+ *   7. Centum Index      — the long-game score
+ *   8. Performance       — trend + history (merged, capped)
+ *   9. Insights          — study intelligence
+ *  10. Batch timeline + tip — closing rhythm
  */
 import { StatTile } from './ui'
 import { TodayStudy, type TodayStudyData } from './TodayStudy'
@@ -104,14 +107,21 @@ export function DashboardView({ firstName, data, insights, currentAffairs, today
         </div>
       </header>
 
-      {/* ── Primary action: today's study — topic, task, continue point ── */}
+      {/* ── 1. Today's module — the single most important thing on the page ── */}
       <TodayStudy data={todayStudy} />
 
-      {/* ── Today's exam ── */}
-      <ExamHero exam={data.todayExam} />
+      {/* ── 2. Current affairs — daily reading sits directly under today's
+             module so it is part of the morning routine, not buried below the
+             analytics the way it used to be. ── */}
+      {currentAffairs && (
+        <NewsPanel items={currentAffairs.items} generatedToday={currentAffairs.generatedToday} todayDate={currentAffairs.todayDate} />
+      )}
 
-      {/* ── Secondary action: AI revision test ── */}
+      {/* ── 3. Daily test ── */}
       <DailyTestCard />
+
+      {/* ── Today's exam (only meaningful when one is actually scheduled) ── */}
+      <ExamHero exam={data.todayExam} />
 
       {/* ── Standings ── */}
       <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
@@ -128,11 +138,6 @@ export function DashboardView({ firstName, data, insights, currentAffairs, today
 
       {/* ── AI insights ── */}
       <InsightsPanel data={insights} />
-
-      {/* ── Current affairs ── */}
-      {currentAffairs && (
-        <NewsPanel items={currentAffairs.items} generatedToday={currentAffairs.generatedToday} todayDate={currentAffairs.todayDate} />
-      )}
 
       {/* ── Batch timeline ── */}
       <BatchTimeline attended={data.daysAttended} total={totalDays} pct={progressPct} />
