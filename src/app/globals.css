@@ -97,7 +97,10 @@
   --color-gold-subtle:      rgba(217,119,6,0.10);
   --color-gold-text:        #B45309;
 
-  /* ── Typography — Inter everywhere (Bebas retired with dark UI) ─── */
+  /* ── Typography — Apple's system font, Inter as the cross-platform stand-in.
+     The full stack lives on --font-inter in :root below; every alias here (and
+     the ~20 components that inline `var(--font-inter)`) inherits it, so the
+     typeface is changed in exactly one place. ─────────────────────────────── */
   --font-bebas:    var(--font-inter), 'Inter', system-ui, sans-serif;
   --font-display:  var(--font-inter), 'Inter', system-ui, sans-serif;
   --font-sans:     var(--font-inter), 'Inter', 'Noto Sans Tamil', system-ui, sans-serif;
@@ -134,6 +137,26 @@
   --color-text-muted:      #6B7280;
   --color-text-faint:      #9CA3AF;
   --color-text-inverse:    #FFFFFF;
+}
+
+/* ── Typeface ────────────────────────────────────────────────────────
+   Apple's site renders in San Francisco. SF Pro cannot be self-hosted as a
+   webfont under its licence, but it ships with macOS/iOS and `-apple-system`
+   resolves to it — so on a Mac or iPhone this IS Apple's typeface, at zero
+   download cost. Inter follows for Android/Windows (where no SF exists); it
+   was drawn as an open SF-alike, so the layout keeps its proportions rather
+   than falling back to stock Roboto. Noto Sans Tamil stays in the chain for
+   the Tamil landing page.
+
+   Everything downstream — the @theme aliases above, `body`, and the ~20
+   components that inline `var(--font-inter)` — reads from this one line. The
+   name is kept as --font-inter so none of those had to be touched; the Inter
+   webfont itself now arrives as --font-inter-webfont (see layout.tsx). */
+:root {
+  --font-inter:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
+    var(--font-inter-webfont), 'Inter',
+    'Noto Sans Tamil', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 /* ── Global Resets ───────────────────────────────────────────────── */

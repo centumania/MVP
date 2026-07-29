@@ -6,40 +6,13 @@
  * from actual platform metrics) instead of abstract art. Countdown retained
  * from v1 — it is the strongest urgency device for a fixed-start batch.
  */
-import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Check, Zap } from './icons'
+import { ArrowRight, Check } from './icons'
 import { Reveal } from './ui'
 import { useLang } from './lang'
 import PhoneDemo from './PhoneDemo'
 
-// Founder-offer HARD deadline (IST). This is a real, fixed date — the countdown
-// genuinely ticks down to it and stops at 00 once it passes.
-// 👉 To extend/shorten the offer, edit ONLY this one line.
-const FOUNDER_DEADLINE = new Date('2026-07-20T23:59:59+05:30')
-
-function useCountdown() {
-  const [cd, setCd] = useState({ d: '--', h: '--', m: '--', s: '--' })
-  useEffect(() => {
-    function tick() {
-      const diff = Math.max(0, +FOUNDER_DEADLINE - Date.now())
-      const pad = (n: number) => String(n).padStart(2, '0')
-      setCd({
-        d: pad(Math.floor(diff / 864e5)),
-        h: pad(Math.floor((diff % 864e5) / 36e5)),
-        m: pad(Math.floor((diff % 36e5) / 6e4)),
-        s: pad(Math.floor((diff % 6e4) / 1e3)),
-      })
-    }
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
-  }, [])
-  return cd
-}
-
 export default function Hero() {
-  const cd = useCountdown()
   const { lang, t } = useLang()
 
   return (
@@ -145,7 +118,7 @@ export default function Hero() {
             </div>
             <p className="mt-3 text-center text-[12.5px] font-medium text-gray-600 lg:text-left">
               <span className="font-semibold text-amber-600">{t('Founder pricing', 'Founder விலை')}</span>
-              {t(' — lock the lowest subscription rate before the timer below hits zero.', ' — கீழே உள்ள டைமர் பூஜ்ஜியமாகும் முன் மிகக் குறைந்த சந்தா விலையைப் பிடித்துக்கொள்ளுங்கள்.')}
+              {t(' — lock the lowest subscription rate CentuMania will ever offer.', ' — CentuMania என்றுமே வழங்கும் மிகக் குறைந்த சந்தா விலையைப் பிடித்துக்கொள்ளுங்கள்.')}
             </p>
           </Reveal>
 
@@ -163,31 +136,6 @@ export default function Hero() {
             </ul>
           </Reveal>
 
-          {/* Countdown */}
-          <Reveal delay={400}>
-            <div className="mt-9 inline-flex flex-col items-center gap-3 rounded-2xl border border-amber-200/80 bg-white px-6 py-4 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_28px_rgba(245,158,11,0.12)] sm:flex-row sm:gap-5">
-              <div className="text-center sm:text-left">
-                <span className="flex items-center justify-center gap-1.5 text-[13px] font-bold uppercase tracking-wider text-amber-600 sm:justify-start">
-                  <Zap size={14} /> {t('Founder offer ends in', 'Founder சலுகை முடிவடைய')}
-                </span>
-                <span className="mt-0.5 block text-[12px] font-medium text-gray-500">{t('Lock the founder rate before it goes up', 'Founder விலை உயரும் முன் அதைப் பிடித்துக்கொள்ளுங்கள்')}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                {(lang === 'ta'
-                  ? ([['d', 'நாள்'], ['h', 'மணி'], ['m', 'நிமி'], ['s', 'வினா']] as const)
-                  : ([['d', 'days'], ['h', 'hrs'], ['m', 'min'], ['s', 'sec']] as const)
-                ).map(([k, tag], i) => (
-                  <div key={k} className="flex items-center gap-3">
-                    {i > 0 && <span className="text-lg font-bold text-gray-300">:</span>}
-                    <div className="text-center">
-                      <div className="min-w-[2.2rem] text-2xl font-bold tabular-nums tracking-tight text-gray-900">{cd[k]}</div>
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-gray-500">{tag}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Reveal>
         </div>
 
         {/* ── Interactive product demo — the real app in a phone ── */}

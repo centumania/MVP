@@ -1,26 +1,29 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Bebas_Neue } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { headers } from 'next/headers'
 import { RegisterServiceWorker } from '@/src/components/pwa/RegisterServiceWorker'
 import './globals.css'
 
 /**
- * Inter — body, numeric text, UI labels.
- * Bebas Neue — screen titles, timer, major section headings.
- * Both exposed as CSS variables for use in globals.css @theme.
+ * TYPOGRAPHY — Apple's system font first, Inter as the cross-platform stand-in.
+ *
+ * Apple's own site renders in San Francisco, which ships with macOS/iOS and is
+ * reachable via `-apple-system` (see --font-inter in globals.css). SF Pro is NOT
+ * licensed for us to self-host as a webfont, so we reference the installed
+ * system copy instead — on a Mac or iPhone that is literally Apple's typeface.
+ *
+ * Inter stays loaded because most of our students are on Android, where no SF
+ * exists: it was designed as an open SF-alike, so the page keeps the same
+ * proportions and feel there instead of dropping to stock Roboto.
+ *
+ * Bebas Neue was removed — every alias that once used it already resolved to
+ * Inter, so it was a font download nothing rendered.
  */
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-inter-webfont',
   display: 'swap',
   weight: ['400', '500', '600', '700', '800'],
-})
-
-const bebasNeue = Bebas_Neue({
-  subsets: ['latin'],
-  variable: '--font-bebas-neue',
-  display: 'swap',
-  weight: ['400'],
 })
 
 // Resolves relative OG/Twitter image URLs to absolute ones. Prefers an explicit
@@ -103,7 +106,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       lang="en"
       nonce={nonce || undefined}
       suppressHydrationWarning
-      className={`${inter.variable} ${bebasNeue.variable}`}
+      className={inter.variable}
     >
       <body className="bg-[#FAFAF8] text-[#111827] font-sans antialiased" suppressHydrationWarning>
         {/* Skip-to-content link — WCAG 2.1 SC 2.4.1 */}
