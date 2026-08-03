@@ -1,0 +1,1054 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chemical Reactions &amp; Equations — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"🧪";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:29px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.dia{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;text-align:center}
+.dia svg{max-width:100%;height:auto}
+.dia .cap{font-size:11px;color:var(--mut);font-weight:600;margin-top:7px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Chemistry · Mastery Pack</div>
+  <h1>Chemical Reactions &amp; Equations</h1>
+  <p>Chemical Change → Balancing → Combination → Decomposition → Displacement → Redox → Everyday Effects → Famous Reactions &amp; Colours.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/40</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/60</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+
+  <h2 class="sec"><span class="em">🌐</span>The Big Picture</h2>
+  <div class="sec-sub">Every reaction is atoms re-partnering. Learn to spot the pattern — combine, split, swap, or transfer oxygen/electrons — and every question becomes classification.</div>
+  <div class="flow">
+    <span class="step">Change happens</span><span class="arw">→</span>
+    <span class="step">Write &amp; balance the equation</span><span class="arw">→</span>
+    <span class="step">Classify the pattern</span><span class="arw">→</span>
+    <span class="step">Predict products</span>
+  </div>
+  <div class="note"><span class="t">Anchor idea</span>Atoms are never created or destroyed — they only <b>re-arrange</b>. That's why equations must balance, and why every reaction fits one of a few patterns: <b>combine</b> (A+B→AB), <b>split</b> (AB→A+B), <b>swap</b> (displacement), or <b>transfer O/e⁻</b> (redox).</div>
+
+  <!-- 1 CHEMICAL CHANGE -->
+  <h2 class="sec"><span class="em">🔄</span>1 · Chemical Change</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A change producing <b>new substances</b> — unlike a physical change (same substance, new form).</div></div>
+      <div class="row"><div class="lab l-why">Why the signs appear</div><div class="txt">New substances have new properties — a different colour, a gas that wasn't there, an insoluble solid, released or absorbed heat. The <b>signs are the new substances announcing themselves</b>.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Signs: gas evolution, colour change, precipitate, temperature change, smell. <b>Exothermic</b> = heat out (burning, respiration); <b>endothermic</b> = heat in (photosynthesis).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Cooking, digestion, rusting, curdling milk, fireworks.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Which is a chemical/physical change?" is guaranteed. Candle = both (melt physical + burn chemical). Respiration = exothermic; photosynthesis = endothermic.</div></div>
+    </div>
+  </div>
+
+  <!-- 2 EQUATIONS -->
+  <h2 class="sec"><span class="em">⚖️</span>2 · Equations &amp; Balancing</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A chemical equation writes a reaction in symbols: <b>reactants → products</b>, with state symbols (s), (l), (g), (aq).</div></div>
+      <div class="row"><div class="lab l-why">Why balance</div><div class="txt"><b>Law of conservation of mass</b> (Lavoisier): atoms can't appear or vanish, so each element's count must match on both sides.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Hit-and-trial: balance metals first, then non-metals, then H, then O — adjusting <b>coefficients only</b>, never formulas. E.g. H₂ + O₂ → H₂O becomes <b>2H₂ + O₂ → 2H₂O</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Every reaction question, stoichiometry, lab work.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Balancing satisfies conservation of mass." "(aq) = dissolved in water." "You may change coefficients, never subscripts."</div></div>
+    </div>
+  </div>
+
+  <!-- 3 COMBINATION -->
+  <h2 class="sec"><span class="em">🤝</span>3 · Combination Reactions</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Two or more substances form <b>one product</b>: A + B → AB.</div></div>
+      <div class="row"><div class="lab l-why">Why often exothermic</div><div class="txt">Forming new bonds releases energy — so combinations like burning and slaking of lime pour out heat.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>CaO + H₂O → Ca(OH)₂ + heat</b> (quicklime slaking). <b>2Mg + O₂ → 2MgO</b> (dazzling white). <b>C + O₂ → CO₂</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Whitewashing walls, burning fuels, striking a match.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Quicklime + water → slaked lime, exothermic." "Wall shines: Ca(OH)₂ + CO₂ → CaCO₃." "Clean Mg ribbon with sandpaper first."</div></div>
+    </div>
+  </div>
+
+  <!-- 4 DECOMPOSITION -->
+  <h2 class="sec"><span class="em">💥</span>4 · Decomposition Reactions</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">One compound splits into simpler substances: AB → A + B — powered by <b>heat, light or electricity</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why energy is needed</div><div class="txt">Breaking bonds costs energy, so decomposition must be <b>fed</b> energy — the three feeders name the three types.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Thermal:</b> CaCO₃ → CaO + CO₂; green FeSO₄ → brown Fe₂O₃ (sulphur smell); Pb(NO₃)₂ → PbO + <b>brown NO₂</b> + O₂. <b>Photolytic:</b> 2AgCl → 2Ag + Cl₂ (white→grey). <b>Electrolytic:</b> 2H₂O → 2H₂ + O₂ (H₂ double O₂, at cathode).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Cement/lime kilns, B&amp;W photography, hydrogen production.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">The four classics above ARE the questions — colours, gases and smells included. H₂:O₂ = 2:1; hydrogen at cathode.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Type</th><th>Energy source</th><th>Classic example</th></tr>
+      <tr><td class="h">Thermal</td><td>Heat</td><td>CaCO₃ → CaO + CO₂</td></tr>
+      <tr><td class="h">Photolytic</td><td>Light</td><td>2AgCl → 2Ag + Cl₂</td></tr>
+      <tr><td class="h">Electrolytic</td><td>Electricity</td><td>2H₂O → 2H₂ + O₂</td></tr>
+    </table>
+  </div>
+
+  <!-- 5 DISPLACEMENT -->
+  <h2 class="sec"><span class="em">🔀</span>5 · Displacement Reactions</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Single:</b> a more reactive element evicts a less reactive one (A + BC → AC + B). <b>Double:</b> two compounds swap ions (AB + CD → AD + CB).</div></div>
+      <div class="row"><div class="lab l-why">Why the reactivity series rules</div><div class="txt">Only a metal <b>higher</b> in the series can push out a lower one — reactivity is the muscle behind every displacement.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Fe + CuSO₄ → FeSO₄ + Cu</b> (blue→green, nail browns). <b>BaCl₂ + Na₂SO₄ → BaSO₄↓ + 2NaCl</b> (white precipitate). Neutralisation is also a double displacement.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Thermite welding, metal refining, qualitative salt tests.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Fe + CuSO₄ observations." "BaSO₄ white precipitate." "Precipitation = double displacement." "Can Cu displace Zn? Never."</div></div>
+    </div>
+  </div>
+
+  <!-- 6 REDOX -->
+  <h2 class="sec"><span class="em">🔥</span>6 · Redox Reactions</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Oxidation</b> = gain of O / loss of H / loss of e⁻. <b>Reduction</b> = the exact opposite. They always happen together.</div></div>
+      <div class="row"><div class="lab l-why">Why always together</div><div class="txt">Electrons (or oxygen atoms) don't vanish — what one substance loses, another must gain. One reaction, two halves.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>CuO + H₂ → Cu + H₂O:</b> CuO reduced (black→brown), H₂ oxidised. The oxidised substance is the <b>reducing agent</b>; the reduced one is the <b>oxidising agent</b> — agents are named for what they do to the OTHER.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Metal extraction, batteries, combustion, corrosion, bleaching.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Identify oxidised/reduced in CuO+H₂ or ZnO+C." "Oxidised = reducing agent" (the top trap)."</div></div>
+    </div>
+  </div>
+
+  <!-- 7 EVERYDAY -->
+  <h2 class="sec"><span class="em">🏠</span>7 · Everyday Effects: Corrosion &amp; Rancidity</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Two slow oxidations in daily life: <b>corrosion</b> attacks metals; <b>rancidity</b> attacks fats and oils in food.</div></div>
+      <div class="row"><div class="lab l-why">Why they happen</div><div class="txt">Oxygen is relentless — given moisture and time it oxidises iron to rust; given warmth and light it oxidises cooking oil to smelly acids.</div></div>
+      <div class="row"><div class="lab l-how">How to prevent</div><div class="txt">Corrosion: paint, oil, galvanise, alloy. Rancidity: <b>antioxidants</b>, airtight packs, refrigeration, and <b>nitrogen-flushed</b> chips packets.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Rusting gates, stale chips, rancid butter, blackened silver.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Chips packets → nitrogen." "Rancidity = oxidation of fats." "Corrosion = metals; rancidity = food."</div></div>
+    </div>
+  </div>
+
+  <!-- 8 FAMOUS -->
+  <h2 class="sec"><span class="em">🌈</span>8 · Famous Reactions &amp; Colour Changes</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">The colour-and-smell bank examiners draw from every year — learn each observation as a mini-story.</div></div>
+      <div class="row"><div class="lab l-why">Why colours matter</div><div class="txt">In an exam you're given the <b>observation</b> and asked for the <b>chemistry</b> (or vice versa). Colours are the fingerprints of reactions.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>FeSO₄:</b> green → brown + sulphur smell. <b>Cu:</b> heated → black CuO; +H₂ → brown Cu. <b>AgCl:</b> white → grey in light. <b>Pb(NO₃)₂:</b> → brown NO₂ + yellow PbO. <b>Lime water:</b> milky with CO₂, clears with excess.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Lab practicals, photography, whitewash, gas tests.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">Every line of the How row is a repeated PYQ — treat this card as a colour cheat-sheet.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Reaction</th><th>Observation</th></tr>
+      <tr><td class="h">FeSO₄ heated</td><td>Green → brown, burning-sulphur smell</td></tr>
+      <tr><td class="h">Cu heated in air</td><td>Brown → black (CuO)</td></tr>
+      <tr><td class="h">H₂ over hot CuO</td><td>Black → brown (Cu back)</td></tr>
+      <tr><td class="h">AgCl in sunlight</td><td>White → grey (photolysis)</td></tr>
+      <tr><td class="h">Pb(NO₃)₂ heated</td><td>Brown NO₂ fumes, yellow PbO residue</td></tr>
+      <tr><td class="h">CO₂ + lime water</td><td>Milky; clears with excess CO₂</td></tr>
+    </table>
+  </div>
+
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 8 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+  <h2 class="sec"><span class="em">📊</span>Comparison &amp; Reference Tables</h2>
+  <div class="sec-sub">The classification cheat-sheets this chapter is built on.</div>
+
+  <div class="card"><h3>The Five Reaction Types</h3>
+  <table class="tbl">
+    <tr><th>Type</th><th>Pattern</th><th>Example</th></tr>
+    <tr><td class="h">Combination</td><td>A + B → AB</td><td>CaO + H₂O → Ca(OH)₂</td></tr>
+    <tr><td class="h">Decomposition</td><td>AB → A + B</td><td>CaCO₃ → CaO + CO₂</td></tr>
+    <tr><td class="h">Single displacement</td><td>A + BC → AC + B</td><td>Zn + CuSO₄ → ZnSO₄ + Cu</td></tr>
+    <tr><td class="h">Double displacement</td><td>AB + CD → AD + CB</td><td>BaCl₂ + Na₂SO₄ → BaSO₄ + NaCl</td></tr>
+    <tr><td class="h">Redox</td><td>O/e⁻ transfer</td><td>CuO + H₂ → Cu + H₂O</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Physical vs Chemical Change</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Physical</th><th>Chemical</th></tr>
+    <tr><td class="h">New substance?</td><td>No</td><td>Yes</td></tr>
+    <tr><td class="h">Reversible?</td><td>Usually</td><td>Usually not</td></tr>
+    <tr><td class="h">Examples</td><td>Melting, dissolving, boiling</td><td>Burning, rusting, curdling, digestion</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Exothermic vs Endothermic</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Exothermic</th><th>Endothermic</th></tr>
+    <tr><td class="h">Heat</td><td>Released</td><td>Absorbed</td></tr>
+    <tr><td class="h">Examples</td><td>Burning, respiration, quicklime + water</td><td>Photosynthesis, thermal decomposition</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Oxidation vs Reduction (3 definitions each)</h3>
+  <table class="tbl">
+    <tr><th>Basis</th><th>Oxidation</th><th>Reduction</th></tr>
+    <tr><td class="h">Oxygen</td><td>Gain of O</td><td>Loss of O</td></tr>
+    <tr><td class="h">Hydrogen</td><td>Loss of H</td><td>Gain of H</td></tr>
+    <tr><td class="h">Electrons</td><td>Loss of e⁻</td><td>Gain of e⁻</td></tr>
+    <tr><td class="h">Agent role</td><td>Oxidised = reducing agent</td><td>Reduced = oxidising agent</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Decomposition by Energy Source</h3>
+  <table class="tbl">
+    <tr><th>Energy</th><th>Name</th><th>Classic reaction</th></tr>
+    <tr><td class="h">Heat</td><td>Thermal</td><td>CaCO₃ → CaO + CO₂ ; 2FeSO₄ → Fe₂O₃ + SO₂ + SO₃</td></tr>
+    <tr><td class="h">Light</td><td>Photolytic</td><td>2AgCl → 2Ag + Cl₂</td></tr>
+    <tr><td class="h">Electricity</td><td>Electrolytic</td><td>2H₂O → 2H₂ + O₂ (H₂ : O₂ = 2 : 1)</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Corrosion vs Rancidity</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Corrosion</th><th>Rancidity</th></tr>
+    <tr><td class="h">Attacks</td><td>Metals</td><td>Fats &amp; oils in food</td></tr>
+    <tr><td class="h">Cause</td><td>Oxidation by air/moisture</td><td>Oxidation of fats</td></tr>
+    <tr><td class="h">Prevention</td><td>Paint, galvanise, alloy</td><td>Antioxidants, airtight, N₂ flush, fridge</td></tr>
+  </table></div>
+</div>
+<div class="panel" id="p-memory">
+  <h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+  <div class="sec-sub">One hook per recall-worthy fact. Concept → hook → recall question.</div>
+
+  <div class="mem-card"><div class="cn">Reaction patterns <span class="tag">peg</span></div>
+    <div class="hk">"<b>Combine, Split, Swap, Transfer</b>" — combination, decomposition, displacement, redox. Every reaction is one of the four verbs.</div>
+    <div class="rq">Q: AB → A + B is which verb? → Split (decomposition).</div></div>
+
+  <div class="mem-card"><div class="cn">OIL RIG <span class="tag">classic</span></div>
+    <div class="hk">"<b>O</b>xidation <b>I</b>s <b>L</b>oss, <b>R</b>eduction <b>I</b>s <b>G</b>ain" — of electrons. For oxygen it flips: oxidation gains O.</div>
+    <div class="rq">Q: Loss of electrons is? → Oxidation.</div></div>
+
+  <div class="mem-card"><div class="cn">Agent naming <span class="tag">trap-buster</span></div>
+    <div class="hk">"The one <b>oxidised</b> is the <b>reducing</b> agent" — agents are named for what they do to the OTHER substance.</div>
+    <div class="rq">Q: In CuO + H₂, the reducing agent is? → H₂.</div></div>
+
+  <div class="mem-card"><div class="cn">தமிழ் — வினை வகைகள் <span class="tag">tamil hook</span></div>
+    <div class="hk">"<b>சேர் (combination), பிரி (decomposition), இடம்மாற்று (displacement)</b>." வெப்பம் வெளியே = வெப்ப-உமிழ் (exo); உள்ளே = வெப்ப-கொள் (endo).</div>
+    <div class="rq">Q: ஒளிச்சேர்க்கை exo-வா endo-வா? → Endothermic (வெப்பம் உள்வாங்கும்).</div></div>
+
+  <div class="mem-card"><div class="cn">FeSO₄ colour story <span class="tag">visual</span></div>
+    <div class="hk">"<b>Green leaves burn brown</b>, and it smells of burnt sulphur." Green FeSO₄ → brown Fe₂O₃ + SO₂/SO₃.</div>
+    <div class="rq">Q: Residue colour after heating FeSO₄? → Brown.</div></div>
+
+  <div class="mem-card"><div class="cn">Lead nitrate fumes <span class="tag">visual</span></div>
+    <div class="hk">"<b>Brown smoke, yellow ash.</b>" Pb(NO₃)₂ → brown NO₂ fumes + yellow PbO residue.</div>
+    <div class="rq">Q: Brown fumes on heating lead nitrate are? → NO₂.</div></div>
+
+  <div class="mem-card"><div class="cn">AgCl photo-trick <span class="tag">story</span></div>
+    <div class="hk">"Silver salt <b>tans in the sun</b>" — white AgCl turns grey as light frees the silver. That's photography's grandfather.</div>
+    <div class="rq">Q: AgCl in sunlight becomes? → Grey (Ag + Cl₂).</div></div>
+
+  <div class="mem-card"><div class="cn">Electrolysis ratio <span class="tag">number peg</span></div>
+    <div class="hk">"<b>H₂ is 2, O₂ is 1</b> — hydrogen at the cathode." Water splits 2:1 by volume.</div>
+    <div class="rq">Q: H₂:O₂ volume ratio in water electrolysis? → 2:1.</div></div>
+
+  <div class="mem-card"><div class="cn">Quicklime chain <span class="tag">chain</span></div>
+    <div class="hk">"<b>Limestone → Quicklime → Slaked lime → back to Limestone</b>": CaCO₃ –heat→ CaO –water→ Ca(OH)₂ –CO₂→ CaCO₃. The wall completes the circle.</div>
+    <div class="rq">Q: Whitewash shine is which compound? → CaCO₃.</div></div>
+
+  <div class="mem-card"><div class="cn">Chips packet gas <span class="tag">everyday</span></div>
+    <div class="hk">"Chips ride on a <b>nitrogen pillow</b>" — inert N₂ keeps oxygen off the oil, stopping rancidity.</div>
+    <div class="rq">Q: Gas inside chips packets? → Nitrogen.</div></div>
+
+  <div class="mem-card"><div class="cn">Corrosion vs Rancidity <span class="tag">peg</span></div>
+    <div class="hk">"<b>Metal rots = corrosion; food fat rots = rancidity.</b>" Both are slow oxidation — different victims.</div>
+    <div class="rq">Q: Oxidation of oils in food is called? → Rancidity.</div></div>
+
+  <div class="mem-card"><div class="cn">Balancing rule <span class="tag">rule</span></div>
+    <div class="hk">"<b>Touch the big numbers, never the small ones.</b>" Coefficients may change; subscripts never.</div>
+    <div class="rq">Q: Can you change H₂O to H₂O₂ while balancing? → Never.</div></div>
+</div>
+<div class="panel" id="p-traps">
+  <h2 class="sec"><span class="em">⚠️</span>Exam Traps &amp; Confusion Pairs</h2>
+  <div class="sec-sub">Each has been set in real papers. Read the reality line and it dies.</div>
+
+  <div class="note trap"><span class="t">Trap 1 · Oxidised = REDUCING agent</span>The substance that gets oxidised is the <b>reducing agent</b> (it reduces the other). Naming it the "oxidising agent" is the #1 error here.</div>
+
+  <div class="note trap"><span class="t">Trap 2 · Photosynthesis is ENDOthermic</span>Plants absorb light energy. Respiration and burning are exothermic; photosynthesis is not.</div>
+
+  <div class="note trap"><span class="t">Trap 3 · Coefficients, never subscripts</span>Balancing changes the big numbers in front — turning H₂O into H₂O₂ creates a different compound.</div>
+
+  <div class="note trap"><span class="t">Trap 4 · AgCl decomposes by LIGHT, not heat</span>White→grey AgCl in sunlight is <b>photolytic</b>, not thermal decomposition.</div>
+
+  <div class="note trap"><span class="t">Trap 5 · Hydrogen at the CATHODE</span>In water electrolysis H₂ collects at the cathode (−) and is <b>double</b> the O₂ volume. Both facts get swapped.</div>
+
+  <div class="note trap"><span class="t">Trap 6 · Neutralisation is double displacement</span>Acid + base → salt + water is a partner-swap, not a combination reaction.</div>
+
+  <div class="note trap"><span class="t">Trap 7 · Quicklime vs slaked lime vs limestone</span><b>CaO</b> quicklime, <b>Ca(OH)₂</b> slaked lime, <b>CaCO₃</b> limestone/marble. The trio is endlessly shuffled in options.</div>
+
+  <div class="note trap"><span class="t">Trap 8 · FeSO₄ heating colours</span>Green → <b>brown</b> (Fe₂O₃), with SO₂+SO₃ smell — not white, not black.</div>
+
+  <div class="note trap"><span class="t">Trap 9 · Displacement obeys the series</span>Cu can never displace Zn or Fe. Only a HIGHER metal displaces a lower one.</div>
+
+  <div class="note trap"><span class="t">Trap 10 · Rancidity is oxidation, not bacteria</span>Rancid oil is a chemical oxidation problem — fixed by antioxidants/N₂, not by boiling.</div>
+
+  <div class="note trap"><span class="t">Trap 11 · Milkiness clears with EXCESS CO₂</span>Lime water turns milky with CO₂ but turns clear again when excess CO₂ forms soluble bicarbonate.</div>
+
+  <div class="note trap"><span class="t">Trap 12 · A candle shows BOTH changes</span>Wax melting = physical; wax burning = chemical. "Only physical" and "only chemical" are both wrong.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> Silver chloride is kept in dark bottles. <b>R:</b> Light decomposes it into silver and chlorine. → Both true, <b>R explains A</b>.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> Quicklime water hisses and gets hot. <b>R:</b> Slaking of lime is highly exothermic. → Both true, <b>R explains A</b>.</div>
+</div>
+<div class="panel" id="p-rapid">
+  <h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-Liners</h2>
+  <div class="sec-sub"><span class="star">★</span> = highest-frequency in exams. Tap ☆ to flag any line for your FAA revisit list.</div>
+  <div class="ol">
+    <div><span class="n">1</span><span><span class="star">★</span> Chemical change = new substance forms (burning, rusting, curdling).</span></div>
+    <div><span class="n">2</span><span>Signs: gas, colour change, precipitate, heat, smell.</span></div>
+    <div><span class="n">3</span><span><span class="star">★</span> Exothermic releases heat; endothermic absorbs heat.</span></div>
+    <div><span class="n">4</span><span><span class="star">★</span> Respiration = exothermic; photosynthesis = endothermic.</span></div>
+    <div><span class="n">5</span><span><span class="star">★</span> Balancing satisfies the law of conservation of mass (Lavoisier).</span></div>
+    <div><span class="n">6</span><span>Change coefficients only, never subscripts.</span></div>
+    <div><span class="n">7</span><span>(s) solid, (l) liquid, (g) gas, (aq) aqueous.</span></div>
+    <div><span class="n">8</span><span><span class="star">★</span> 2H₂ + O₂ → 2H₂O.</span></div>
+    <div><span class="n">9</span><span><span class="star">★</span> Combination: A + B → AB (CaO + H₂O → Ca(OH)₂, exothermic).</span></div>
+    <div><span class="n">10</span><span>Whitewash shine: Ca(OH)₂ + CO₂ → CaCO₃.</span></div>
+    <div><span class="n">11</span><span>2Mg + O₂ → 2MgO — dazzling white flame.</span></div>
+    <div><span class="n">12</span><span>Clean Mg ribbon with sandpaper to remove the oxide layer.</span></div>
+    <div><span class="n">13</span><span><span class="star">★</span> Decomposition: AB → A + B by heat, light or electricity.</span></div>
+    <div><span class="n">14</span><span><span class="star">★</span> CaCO₃ → CaO + CO₂ (thermal).</span></div>
+    <div><span class="n">15</span><span><span class="star">★</span> FeSO₄ heated: green → brown, burning-sulphur smell.</span></div>
+    <div><span class="n">16</span><span><span class="star">★</span> Pb(NO₃)₂ heated: brown NO₂ fumes + yellow PbO.</span></div>
+    <div><span class="n">17</span><span><span class="star">★</span> 2AgCl → 2Ag + Cl₂ in sunlight (photolytic; photography).</span></div>
+    <div><span class="n">18</span><span><span class="star">★</span> Water electrolysis: H₂ : O₂ = 2 : 1; H₂ at cathode.</span></div>
+    <div><span class="n">19</span><span><span class="star">★</span> Single displacement: Zn + CuSO₄ → ZnSO₄ + Cu.</span></div>
+    <div><span class="n">20</span><span>Fe + CuSO₄: blue fades to green, nail turns brown.</span></div>
+    <div><span class="n">21</span><span><span class="star">★</span> Double displacement: ions swap; BaCl₂ + Na₂SO₄ → BaSO₄↓ (white).</span></div>
+    <div><span class="n">22</span><span>Precipitate = insoluble solid formed in solution.</span></div>
+    <div><span class="n">23</span><span>Neutralisation is a double displacement.</span></div>
+    <div><span class="n">24</span><span><span class="star">★</span> Oxidation: gain O / lose H / lose e⁻. Reduction: the reverse.</span></div>
+    <div><span class="n">25</span><span><span class="star">★</span> OIL RIG — Oxidation Is Loss, Reduction Is Gain (of electrons).</span></div>
+    <div><span class="n">26</span><span><span class="star">★</span> Oxidised substance = reducing agent; reduced = oxidising agent.</span></div>
+    <div><span class="n">27</span><span>CuO + H₂ → Cu + H₂O: CuO reduced, H₂ oxidised.</span></div>
+    <div><span class="n">28</span><span>Cu heated → black CuO; H₂ over hot CuO → brown Cu.</span></div>
+    <div><span class="n">29</span><span>Redox: oxidation and reduction always occur together.</span></div>
+    <div><span class="n">30</span><span><span class="star">★</span> Corrosion = slow oxidation of metals (rust, green Cu, black Ag).</span></div>
+    <div><span class="n">31</span><span><span class="star">★</span> Rancidity = oxidation of fats/oils in food.</span></div>
+    <div><span class="n">32</span><span><span class="star">★</span> Chips packets are flushed with nitrogen.</span></div>
+    <div><span class="n">33</span><span>Prevent rancidity: antioxidants, airtight, refrigerate, N₂.</span></div>
+    <div><span class="n">34</span><span><span class="star">★</span> CO₂ turns lime water milky; excess CO₂ clears it.</span></div>
+    <div><span class="n">35</span><span><span class="star">★</span> CaO quicklime; Ca(OH)₂ slaked lime; CaCO₃ limestone.</span></div>
+    <div><span class="n">36</span><span>Digestion is a chemical change.</span></div>
+    <div><span class="n">37</span><span>A candle: melting is physical, burning is chemical.</span></div>
+    <div><span class="n">38</span><span>Balance order: metals → non-metals → H → O.</span></div>
+    <div><span class="n">39</span><span>AgBr also photolyses (used in photography).</span></div>
+    <div><span class="n">40</span><span>Compost formation is exothermic decomposition.</span></div>
+    <div><span class="n">41</span><span>MnO₂ + 4HCl → MnCl₂ + Cl₂ + 2H₂O is a redox reaction.</span></div>
+    <div><span class="n">42</span><span>Store AgCl/AgBr in dark bottles (block light).</span></div>
+    <div><span class="n">43</span><span>PbO residue is yellow; NO₂ gas is brown.</span></div>
+    <div><span class="n">44</span><span>The limestone cycle: CaCO₃ → CaO → Ca(OH)₂ → CaCO₃.</span></div>
+    <div><span class="n">45</span><span>Thermite (Fe₂O₃ + Al) is a displacement used for rail welding.</span></div>
+  </div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Chemical Reactions &amp; Equations Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_chem_reactions_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:40;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:60;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA (8 hubs × 4 leaves) ===== */
+var MAP=[
+ {id:0,cat:null,icon:"🧪",label:"Chemical\nReactions",fact:"A chemical reaction rearranges atoms into new substances. Equations describe it; balancing conserves mass; reaction types organise the whole of chemistry."},
+ {id:1,cat:0,icon:"🔄",label:"Chemical\nChange",fact:"A change producing NEW substances — signalled by gas, colour change, precipitate, heat/light or smell."},
+ {id:2,cat:0,icon:"⚖️",label:"Equations &\nBalancing",fact:"Word/symbol equations describe reactions. Balancing makes atoms equal on both sides (law of conservation of mass)."},
+ {id:3,cat:0,icon:"🤝",label:"Combination\nReactions",fact:"Two or more substances join into one product: A + B → AB. Often exothermic (quicklime + water)."},
+ {id:4,cat:0,icon:"💥",label:"Decomposition\nReactions",fact:"One substance splits into two or more: AB → A + B, using heat, light or electricity."},
+ {id:5,cat:0,icon:"🔀",label:"Displacement\nReactions",fact:"Single: a reactive element pushes out a less reactive one. Double: two compounds swap partners (precipitates)."},
+ {id:6,cat:0,icon:"🔥",label:"Redox\n(Oxidation-Reduction)",fact:"Oxidation = gain of O / loss of e⁻; reduction = loss of O / gain of e⁻. Both always occur together."},
+ {id:7,cat:0,icon:"🏠",label:"Everyday\nEffects",fact:"Corrosion and rancidity are slow oxidation in daily life — prevented by coatings and antioxidants."},
+ {id:8,cat:0,icon:"🌈",label:"Famous Reactions\n& Colours",fact:"The exam bank: quicklime, ferrous sulphate, lead nitrate, silver salts in photography, lime water test."},
+ /* 1 Chemical change */
+ {id:101,cat:1,icon:"🆕",label:"New substance\nforms",fact:"Physical change = same substance, new form (ice→water). Chemical change = NEW substance (burning, rusting)."},
+ {id:102,cat:1,icon:"👀",label:"Observable\nsigns",fact:"Evolution of gas, change of colour, precipitate formation, temperature change, smell — any signals a reaction."},
+ {id:103,cat:1,icon:"🔥",label:"Exo vs\nendothermic",fact:"Exothermic releases heat (burning, respiration); endothermic absorbs heat (photosynthesis, decomposition)."},
+ {id:104,cat:1,icon:"🍚",label:"Respiration\nexample",fact:"Respiration is a slow exothermic combustion of glucose — the body's energy reaction."},
+ /* 2 Equations */
+ {id:201,cat:2,icon:"✍️",label:"Writing\nequations",fact:"Reactants → Products. Symbols: (s) solid, (l) liquid, (g) gas, (aq) in water, ↑ gas released, ↓ precipitate."},
+ {id:202,cat:2,icon:"⚖️",label:"Why\nbalance?",fact:"Law of conservation of mass (Lavoisier): atoms are never created or destroyed, so both sides must match."},
+ {id:203,cat:2,icon:"🧮",label:"Balancing by\nhit & trial",fact:"Balance one element at a time (metals→non-metals→H→O), adjusting coefficients, never formulas."},
+ {id:204,cat:2,icon:"📌",label:"Example",fact:"Unbalanced: H₂ + O₂ → H₂O. Balanced: 2H₂ + O₂ → 2H₂O."},
+ /* 3 Combination */
+ {id:301,cat:3,icon:"➕",label:"A + B → AB",fact:"Two reactants form a single product — the simplest reaction pattern."},
+ {id:302,cat:3,icon:"🪨",label:"Quicklime +\nwater",fact:"CaO + H₂O → Ca(OH)₂ + heat — vigorous, exothermic; slaked lime for whitewashing."},
+ {id:303,cat:3,icon:"🔥",label:"Burning",fact:"C + O₂ → CO₂; 2Mg + O₂ → 2MgO (dazzling white light) — combustion is combination with oxygen."},
+ {id:304,cat:3,icon:"🎨",label:"Whitewash\nchemistry",fact:"Ca(OH)₂ + CO₂ → CaCO₃ (shiny wall coat) — the wall slowly turns to thin calcium carbonate."},
+ /* 4 Decomposition */
+ {id:401,cat:4,icon:"♨️",label:"Thermal\n(by heat)",fact:"CaCO₃ → CaO + CO₂ (limestone to quicklime); FeSO₄ green → brown Fe₂O₃ + SO₂ + SO₃ (smell of burning sulphur)."},
+ {id:402,cat:4,icon:"💡",label:"Photolytic\n(by light)",fact:"2AgCl → 2Ag + Cl₂ (white → grey in sunlight); AgBr the same — the principle of black-and-white photography."},
+ {id:403,cat:4,icon:"⚡",label:"Electrolytic\n(by electricity)",fact:"2H₂O → 2H₂ + O₂ on electrolysis; hydrogen at cathode is DOUBLE the oxygen at anode."},
+ {id:404,cat:4,icon:"🎆",label:"Lead nitrate",fact:"2Pb(NO₃)₂ → 2PbO + 4NO₂ (brown fumes!) + O₂ — the classic brown-gas decomposition."},
+ /* 5 Displacement */
+ {id:501,cat:5,icon:"1️⃣",label:"Single\ndisplacement",fact:"Zn + CuSO₄ → ZnSO₄ + Cu. More reactive metal evicts the less reactive one from its salt."},
+ {id:502,cat:5,icon:"2️⃣",label:"Double\ndisplacement",fact:"Two compounds exchange ions: AB + CD → AD + CB. Often forms an insoluble precipitate."},
+ {id:503,cat:5,icon:"🟡",label:"Precipitation\nexample",fact:"Na₂SO₄ + BaCl₂ → BaSO₄↓ (white precipitate) + 2NaCl — the textbook double displacement."},
+ {id:504,cat:5,icon:"🧂",label:"Neutralisation\nis double D",fact:"Acid + base → salt + water is also a double displacement (H and metal swap partners)."},
+ /* 6 Redox */
+ {id:601,cat:6,icon:"➕",label:"Oxidation",fact:"Gain of oxygen / loss of hydrogen / LOSS of electrons. The substance oxidised is the reducing agent."},
+ {id:602,cat:6,icon:"➖",label:"Reduction",fact:"Loss of oxygen / gain of hydrogen / GAIN of electrons. The substance reduced is the oxidising agent."},
+ {id:603,cat:6,icon:"🔁",label:"Always\ntogether",fact:"One substance's loss is another's gain — oxidation and reduction always occur simultaneously (redox)."},
+ {id:604,cat:6,icon:"🧱",label:"CuO + H₂\nexample",fact:"CuO + H₂ → Cu + H₂O: CuO is reduced (loses O), H₂ is oxidised (gains O). Black CuO turns brown Cu."},
+ /* 7 Everyday */
+ {id:701,cat:7,icon:"🦀",label:"Corrosion",fact:"Slow oxidation of metals by air/moisture — rusting of iron, green copper, black silver."},
+ {id:702,cat:7,icon:"🥔",label:"Rancidity",fact:"Oxidation of fats/oils in food → bad smell and taste. A slow oxidation problem in the kitchen."},
+ {id:703,cat:7,icon:"🛡️",label:"Preventing\nrancidity",fact:"Antioxidants, airtight containers, refrigeration, and flushing chip packets with NITROGEN gas."},
+ {id:704,cat:7,icon:"⚗️",label:"Antioxidants",fact:"Substances that stop oxidation (BHA/BHT in food). Nitrogen in packets keeps oxygen away from chips."},
+ /* 8 Famous */
+ {id:801,cat:8,icon:"🟢",label:"FeSO₄\ncolour change",fact:"Green ferrous sulphate crystals, on heating, lose water then decompose to brown Fe₂O₃ with SO₂/SO₃ smell."},
+ {id:802,cat:8,icon:"🟤",label:"Copper &\noxygen cycle",fact:"Cu heated → black CuO; pass H₂ over hot CuO → brown Cu returns. Oxidation and reduction demonstrated."},
+ {id:803,cat:8,icon:"📷",label:"Silver &\nphotography",fact:"Light splits AgCl/AgBr → grey silver. Old B&W photography and photochromic lenses use this."},
+ {id:804,cat:8,icon:"🥛",label:"Lime water\ntest",fact:"CO₂ turns lime water (Ca(OH)₂) milky by forming CaCO₃; excess CO₂ clears it again."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7,8];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK (60) ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"Which of these is a chemical change?",o:["Melting of ice","Burning of paper","Dissolving sugar","Boiling water"],a:1,e:"Burning creates NEW substances (ash, CO₂) — a chemical change."},
+ {t:"Conceptual · TNPSC",q:"Which of these is a physical change?",o:["Rusting of iron","Curdling of milk","Melting of wax","Burning of LPG"],a:2,e:"Melting wax is the same substance in a new state — reversible physical change."},
+ {t:"Recall · RRB",q:"Which is NOT a sign of a chemical reaction?",o:["Evolution of gas","Change of state only","Colour change","Precipitate formation"],a:1,e:"A mere change of state (ice→water) is physical, not chemical."},
+ {t:"Recall · SSC",q:"A reaction that releases heat is called:",o:["Endothermic","Exothermic","Photolytic","Electrolytic"],a:1,e:"Exo = heat out (burning). Endo = heat absorbed (photosynthesis)."},
+ {t:"Conceptual · Banking",q:"Photosynthesis is an example of a(n):",o:["Exothermic reaction","Endothermic reaction","Displacement","Neutralisation"],a:1,e:"Plants ABSORB light energy — endothermic."},
+ {t:"Conceptual · TNPSC",q:"Respiration is considered a(n):",o:["Endothermic reaction","Exothermic reaction","Physical change","Photolytic reaction"],a:1,e:"Glucose oxidation releases energy — a slow exothermic combustion."},
+ {t:"Recall · SSC",q:"Chemical equations are balanced to satisfy the law of:",o:["Constant proportions","Conservation of mass","Conservation of energy","Multiple proportions"],a:1,e:"Atoms are neither created nor destroyed (Lavoisier)."},
+ {t:"Recall · RRB",q:"In an equation, the symbol (aq) means the substance is:",o:["A gas","A solid","Dissolved in water","A liquid metal"],a:2,e:"(aq) = aqueous, i.e. in water solution."},
+ {t:"Numerical · SSC",q:"The balanced equation for water formation is:",o:["H₂ + O₂ → H₂O","2H₂ + O₂ → 2H₂O","H₂ + 2O₂ → H₂O₂","2H + O → H₂O"],a:1,e:"2H₂ + O₂ → 2H₂O balances 4 H and 2 O on both sides."},
+ {t:"Conceptual · Banking",q:"While balancing an equation you may change:",o:["Chemical formulas","Coefficients only","Subscripts","Element symbols"],a:1,e:"Only coefficients — changing formulas would change the substances."},
+ {t:"Recall · SSC",q:"A + B → AB represents a:",o:["Decomposition","Combination reaction","Displacement","Double displacement"],a:1,e:"Two reactants join into one product = combination."},
+ {t:"Recall · TNPSC",q:"CaO + H₂O → Ca(OH)₂ is a combination reaction that is also:",o:["Endothermic","Highly exothermic","Photolytic","A precipitation"],a:1,e:"Slaking of quicklime releases much heat — the mixture hisses and warms."},
+ {t:"Application · SSC",q:"Walls shine a few days after whitewashing because Ca(OH)₂ reacts with CO₂ to form:",o:["CaO","CaCO₃","CaCl₂","Ca(NO₃)₂"],a:1,e:"Thin calcium carbonate forms — the same compound as marble."},
+ {t:"Recall · RRB",q:"Burning magnesium ribbon gives a dazzling white flame and forms:",o:["MgCl₂","MgO","Mg(OH)₂","MgCO₃"],a:1,e:"2Mg + O₂ → 2MgO (white powder)."},
+ {t:"Conceptual · SSC",q:"Before burning, a magnesium ribbon is cleaned with sandpaper to:",o:["Make it shine","Remove the oxide layer","Cool it","Sharpen it"],a:1,e:"The MgO layer must be removed so fresh Mg contacts oxygen."},
+ {t:"Recall · Banking",q:"AB → A + B represents a:",o:["Combination","Decomposition reaction","Single displacement","Neutralisation"],a:1,e:"One substance splitting into simpler ones = decomposition."},
+ {t:"Recall · SSC",q:"Heating limestone (CaCO₃) produces quicklime and:",o:["O₂","CO₂","H₂","SO₂"],a:1,e:"CaCO₃ → CaO + CO₂ (thermal decomposition)."},
+ {t:"Conceptual · TNPSC",q:"On heating green ferrous sulphate crystals, the residue is:",o:["White FeSO₄","Brown Fe₂O₃","Black FeO","Green FeCO₃"],a:1,e:"FeSO₄ decomposes to brown ferric oxide with SO₂ + SO₃ (burning-sulphur smell)."},
+ {t:"Recall · RRB",q:"Heating lead nitrate produces brown fumes of:",o:["NO₂","SO₂","CO₂","Cl₂"],a:0,e:"2Pb(NO₃)₂ → 2PbO + 4NO₂ (brown) + O₂."},
+ {t:"Conceptual · SSC",q:"Silver chloride kept in sunlight turns grey due to:",o:["Thermal decomposition","Photolytic decomposition","Oxidation","Displacement"],a:1,e:"Light splits 2AgCl → 2Ag + Cl₂ — basis of B&W photography."},
+ {t:"Recall · Banking",q:"Electrolysis of water gives hydrogen and oxygen in the volume ratio:",o:["1:1","1:2","2:1","3:1"],a:2,e:"2H₂O → 2H₂ + O₂; hydrogen (cathode) is double the oxygen."},
+ {t:"Conceptual · TNPSC",q:"In water electrolysis, hydrogen collects at the:",o:["Anode","Cathode","Both electrodes","Neither"],a:1,e:"H₂ (positive ions reduced) forms at the negative cathode."},
+ {t:"Recall · SSC",q:"Zn + CuSO₄ → ZnSO₄ + Cu is a:",o:["Combination","Decomposition","Displacement reaction","Double displacement"],a:2,e:"More reactive zinc displaces copper — single displacement."},
+ {t:"Conceptual · RRB",q:"In the reaction above, the blue colour of the solution:",o:["Deepens","Fades","Stays the same","Turns red"],a:1,e:"Blue CuSO₄ becomes colourless ZnSO₄ as copper is displaced."},
+ {t:"Recall · SSC",q:"AB + CD → AD + CB (exchange of ions) is called:",o:["Combination","Decomposition","Single displacement","Double displacement"],a:3,e:"Two compounds swap partners — double displacement."},
+ {t:"Recall · Banking",q:"Na₂SO₄ + BaCl₂ produces a white precipitate of:",o:["NaCl","BaSO₄","BaCl₂","Na₂CO₃"],a:1,e:"Insoluble barium sulphate precipitates — classic double displacement."},
+ {t:"Conceptual · TNPSC",q:"A precipitation reaction always produces a(n):",o:["Gas","Insoluble solid","Acid","Colour change only"],a:1,e:"A precipitate is an insoluble solid separating from solution."},
+ {t:"Conceptual · SSC",q:"Neutralisation (acid + base → salt + water) is a type of:",o:["Combination","Decomposition","Double displacement","Redox only"],a:2,e:"H⁺ and the metal ion swap partners — double displacement."},
+ {t:"Recall · RRB",q:"Oxidation is the:",o:["Loss of oxygen","Gain of oxygen","Gain of hydrogen","Gain of electrons"],a:1,e:"Oxidation = gain of O (or loss of H / loss of electrons)."},
+ {t:"Recall · SSC",q:"Reduction is the:",o:["Gain of oxygen","Loss of electrons","Loss of oxygen","Loss of hydrogen"],a:2,e:"Reduction = loss of O (or gain of H / gain of electrons)."},
+ {t:"Conceptual · Banking",q:"In CuO + H₂ → Cu + H₂O, the substance reduced is:",o:["H₂","CuO","H₂O","Cu"],a:1,e:"CuO loses oxygen → reduced. H₂ gains oxygen → oxidised."},
+ {t:"Conceptual · TNPSC",q:"In the same reaction, the reducing agent is:",o:["CuO","H₂","Cu","H₂O"],a:1,e:"H₂ causes the reduction of CuO (and is itself oxidised)."},
+ {t:"Conceptual · SSC",q:"Oxidation and reduction:",o:["Occur separately","Always occur together","Never occur in nature","Only occur when heated"],a:1,e:"One substance's electron loss is another's gain — hence 'redox'."},
+ {t:"Recall · RRB",q:"When copper is heated in air, its surface turns:",o:["Green","Black (CuO)","White","Red"],a:1,e:"Cu + O₂ → black copper(II) oxide."},
+ {t:"Conceptual · SSC",q:"Passing hydrogen over hot black CuO turns it:",o:["Blue","Brown (Cu)","Green","White"],a:1,e:"CuO is reduced back to brown copper metal."},
+ {t:"Recall · Banking",q:"The slow eating up of metals by the environment is called:",o:["Rancidity","Corrosion","Combustion","Distillation"],a:1,e:"Corrosion — rust on iron, green on copper, black on silver."},
+ {t:"Recall · SSC",q:"Oxidation of fats and oils in food, giving a bad smell, is called:",o:["Corrosion","Rancidity","Fermentation","Decay"],a:1,e:"Rancidity is the oxidation of fats/oils."},
+ {t:"Application · TNPSC",q:"Chips packets are flushed with which gas to prevent rancidity?",o:["Oxygen","Nitrogen","CO₂","Hydrogen"],a:1,e:"Inert nitrogen keeps oxygen away from the oil in chips."},
+ {t:"Application · RRB",q:"Substances added to food to prevent oxidation are called:",o:["Catalysts","Antioxidants","Preservative acids","Enzymes"],a:1,e:"Antioxidants (like BHA/BHT) slow the oxidation of fats."},
+ {t:"Application · SSC",q:"Which of these does NOT prevent rancidity?",o:["Refrigeration","Airtight containers","Keeping food in bright sunlight","Nitrogen flushing"],a:2,e:"Light and warmth SPEED UP oxidation — sunlight worsens rancidity."},
+ {t:"Recall · TNPSC",q:"CO₂ gas turns lime water:",o:["Blue","Milky","Red","Green"],a:1,e:"Ca(OH)₂ + CO₂ → CaCO₃ (milky white)."},
+ {t:"Conceptual · SSC",q:"On passing excess CO₂ through milky lime water, the milkiness:",o:["Increases","Disappears","Turns yellow","Stays"],a:1,e:"Soluble calcium bicarbonate forms — the solution clears."},
+ {t:"Recall · Banking",q:"The chemical name of quicklime is:",o:["Calcium hydroxide","Calcium oxide","Calcium carbonate","Calcium sulphate"],a:1,e:"Quicklime = CaO; slaked lime = Ca(OH)₂; limestone = CaCO₃."},
+ {t:"Recall · RRB",q:"Slaked lime is:",o:["CaO","Ca(OH)₂","CaCO₃","CaSO₄"],a:1,e:"Slaked lime = calcium hydroxide, made by adding water to quicklime."},
+ {t:"Conceptual · SSC",q:"Which reaction type is 'respiration' chemically closest to?",o:["Photosynthesis","Combustion (oxidation of glucose)","Electrolysis","Precipitation"],a:1,e:"Glucose + O₂ → CO₂ + H₂O + energy — slow combustion."},
+ {t:"Conceptual · TNPSC",q:"Digestion of food in our body is a:",o:["Physical change","Chemical change","No change","Reversible change"],a:1,e:"Food molecules are broken into NEW simpler substances — chemical."},
+ {t:"Recall · SSC",q:"A substance that gets oxidised in a redox reaction acts as the:",o:["Oxidising agent","Reducing agent","Catalyst","Precipitate"],a:1,e:"The oxidised substance donates electrons/hydrogen → reducing agent."},
+ {t:"Recall · Banking",q:"A substance that gets reduced acts as the:",o:["Reducing agent","Oxidising agent","Indicator","Solvent"],a:1,e:"It accepts electrons/oxygen from the other substance."},
+ {t:"Conceptual · RRB",q:"The decomposition of vegetable matter into compost is a(n):",o:["Endothermic change","Exothermic change","Physical change","Photolytic change"],a:1,e:"Decomposition of organic matter releases heat — exothermic."},
+ {t:"Application · SSC",q:"Old oil-fried snacks smell bad because of:",o:["Corrosion","Rancidity (oxidation of oil)","Displacement","Reduction"],a:1,e:"Fats oxidise over time → rancid smell and taste."},
+ {t:"Statement · SSC",q:"Consider: (1) Melting ice is a chemical change. (2) Burning candle wax involves both physical and chemical change. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"Melting is physical. A candle melts (physical) AND burns (chemical) — 2 is true."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Balancing changes coefficients. (2) Balancing may change subscripts. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Only coefficients may change; subscripts would alter the compound."},
+ {t:"Statement · RRB",q:"Consider: (1) Quicklime + water is exothermic. (2) Photosynthesis is exothermic. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — photosynthesis absorbs energy."},
+ {t:"Statement · Banking",q:"Consider: (1) AgCl turns grey in sunlight. (2) This is thermal decomposition. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true; the cause is LIGHT (photolytic), not heat — 2 is false."},
+ {t:"Statement · SSC",q:"Consider: (1) Oxidation and reduction occur together. (2) The oxidised substance is the oxidising agent. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — the oxidised substance is the REDUCING agent."},
+ {t:"Statement · TNPSC",q:"Consider: (1) In electrolysis of water, H₂ volume is double O₂. (2) H₂ collects at the anode. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — hydrogen collects at the CATHODE."},
+ {t:"Statement · RRB",q:"Consider: (1) Corrosion affects metals. (2) Rancidity affects fats and oils. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both true — the two everyday oxidation effects."},
+ {t:"Assertion–Reason · SSC",q:"A: Chips packets are flushed with nitrogen. R: Nitrogen is inert and prevents oxidation of the oil.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A."},
+ {t:"Assertion–Reason · TNPSC",q:"A: A shiny layer appears on whitewashed walls after 2–3 days. R: Ca(OH)₂ reacts with CO₂ to form CaCO₃.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A."},
+ {t:"Assertion–Reason · RRB",q:"A: Copper cannot displace zinc from zinc sulphate. R: Copper is less reactive than zinc.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A — displacement follows the reactivity series."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, application, statement & assertion–reason. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS ===== */
+var PROB=[
+ {lvl:"e",tag:"Balancing",q:"Balance: H₂ + O₂ → H₂O",given:"unbalanced water equation",find:"balanced form",steps:["O is 2 on left, 1 on right → put 2H₂O","Now H is 4 on right → put 2H₂"],ans:"2H₂ + O₂ → 2H₂O"},
+ {lvl:"e",tag:"Type ID",q:"Identify the type: CaO + H₂O → Ca(OH)₂",given:"one product from two reactants",find:"reaction type",steps:["Two substances combine into one","A + B → AB"],ans:"Combination (exothermic)"},
+ {lvl:"e",tag:"Type ID",q:"Identify the type: 2H₂O → 2H₂ + O₂ (electric current)",given:"one substance splits",find:"type",steps:["AB → A + B by electricity"],ans:"Electrolytic decomposition"},
+ {lvl:"m",tag:"Balancing",q:"Balance: Fe + H₂O → Fe₃O₄ + H₂ (steam over iron)",given:"unbalanced",find:"balanced",steps:["Need 3 Fe and 4 O → 3Fe + 4H₂O","H: 8 on left → 4H₂ on right"],ans:"3Fe + 4H₂O → Fe₃O₄ + 4H₂"},
+ {lvl:"m",tag:"Balancing",q:"Balance: Pb(NO₃)₂ → PbO + NO₂ + O₂",given:"lead nitrate decomposition",find:"balanced",steps:["Take 2Pb(NO₃)₂ → 2PbO","N: 4 → 4NO₂; O balances with + O₂"],ans:"2Pb(NO₃)₂ → 2PbO + 4NO₂ + O₂"},
+ {lvl:"m",tag:"Prediction",q:"What happens when an iron nail is placed in copper sulphate solution? Write the reaction.",given:"Fe + CuSO₄",find:"observation & equation",steps:["Fe is more reactive → displaces Cu","Blue fades to green; brown Cu coats the nail"],ans:"Fe + CuSO₄ → FeSO₄ + Cu"},
+ {lvl:"m",tag:"Redox ID",q:"In ZnO + C → Zn + CO, identify what is oxidised and reduced.",given:"ZnO + C",find:"oxidised/reduced",steps:["ZnO loses O → reduced","C gains O → oxidised"],ans:"C oxidised; ZnO reduced (C is the reducing agent)"},
+ {lvl:"m",tag:"Observation",q:"What is observed when dilute HCl is added to sodium carbonate, and how is the gas tested?",given:"Na₂CO₃ + HCl",find:"gas & test",steps:["Brisk effervescence of CO₂","CO₂ turns lime water milky"],ans:"CO₂ evolves; lime water turns milky"},
+ {lvl:"h",tag:"Double disp.",q:"Write and classify: barium chloride + sodium sulphate.",given:"BaCl₂ + Na₂SO₄",find:"equation & type",steps:["Ions swap: Ba²⁺ meets SO₄²⁻","BaSO₄ is insoluble → white precipitate"],ans:"BaCl₂ + Na₂SO₄ → BaSO₄↓ + 2NaCl (double displacement/precipitation)"},
+ {lvl:"h",tag:"Chain",q:"Limestone cycle: write the three reactions from CaCO₃ → CaO → Ca(OH)₂ → CaCO₃.",given:"limestone cycle",find:"three equations",steps:["Heat: CaCO₃ → CaO + CO₂","Add water: CaO + H₂O → Ca(OH)₂","Whitewash: Ca(OH)₂ + CO₂ → CaCO₃ + H₂O"],ans:"The limestone cycle (decomposition → combination → combination)"},
+ {lvl:"h",tag:"Redox",q:"Why is the reaction MnO₂ + 4HCl → MnCl₂ + Cl₂ + 2H₂O a redox reaction?",given:"MnO₂ + HCl",find:"reason",steps:["HCl is oxidised to Cl₂ (loses H)","MnO₂ is reduced to MnCl₂ (loses O)"],ans:"Both oxidation (HCl→Cl₂) and reduction (MnO₂→MnCl₂) occur"},
+ {lvl:"h",tag:"Reasoning",q:"Silver chloride is stored in dark-coloured bottles. Why?",given:"AgCl storage",find:"reason",steps:["Sunlight decomposes AgCl → Ag + Cl₂ (photolysis)","Dark bottles block light"],ans:"To prevent photolytic decomposition"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked balancing/reaction problems graded easy→hard. Try first, then reveal. Mark solved for XP.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS (45) ===== */
+var FC=[
+ {q:"What defines a chemical change?",a:"Formation of one or more NEW substances (usually irreversible)."},
+ {q:"Four observable signs of a chemical reaction?",a:"Gas evolution, colour change, precipitate, temperature change (also smell)."},
+ {q:"Exothermic vs endothermic?",a:"Exo releases heat (burning); endo absorbs heat (photosynthesis)."},
+ {q:"Is respiration exothermic or endothermic?",a:"Exothermic — slow oxidation of glucose releasing energy."},
+ {q:"Which law does balancing satisfy?",a:"Law of conservation of mass (Lavoisier)."},
+ {q:"What may you change while balancing?",a:"Only coefficients — never the formulas/subscripts."},
+ {q:"Meaning of (s), (l), (g), (aq)?",a:"Solid, liquid, gas, aqueous (dissolved in water)."},
+ {q:"Balanced equation for water formation?",a:"2H₂ + O₂ → 2H₂O."},
+ {q:"General form of a combination reaction?",a:"A + B → AB (two or more → one product)."},
+ {q:"Quicklime + water equation & nature?",a:"CaO + H₂O → Ca(OH)₂; highly exothermic."},
+ {q:"Why do whitewashed walls turn shiny?",a:"Ca(OH)₂ + CO₂ → thin CaCO₃ layer (marble-like)."},
+ {q:"Burning magnesium: flame & product?",a:"Dazzling white flame; white MgO powder."},
+ {q:"Why sandpaper a Mg ribbon before burning?",a:"To remove the MgO layer so fresh metal burns."},
+ {q:"General form of decomposition?",a:"AB → A + B (by heat, light or electricity)."},
+ {q:"Thermal decomposition of limestone?",a:"CaCO₃ → CaO + CO₂."},
+ {q:"Colour change when FeSO₄ is heated?",a:"Green → brown Fe₂O₃, with SO₂/SO₃ (burning-sulphur smell)."},
+ {q:"Gas colours from heating lead nitrate?",a:"Brown NO₂ fumes (plus O₂); residue yellow PbO."},
+ {q:"Photolytic decomposition example?",a:"2AgCl → 2Ag + Cl₂ in sunlight (white → grey)."},
+ {q:"Use of silver halide photolysis?",a:"Black-and-white photography."},
+ {q:"Electrolysis of water: gases & ratio?",a:"H₂ (cathode) : O₂ (anode) = 2 : 1 by volume."},
+ {q:"Single displacement general form?",a:"A + BC → AC + B (more reactive displaces less)."},
+ {q:"Fe + CuSO₄ observation?",a:"Blue fades to green; brown copper coats the iron."},
+ {q:"Double displacement general form?",a:"AB + CD → AD + CB (ions swap partners)."},
+ {q:"BaCl₂ + Na₂SO₄ gives?",a:"White precipitate of BaSO₄ + NaCl."},
+ {q:"What is a precipitate?",a:"An insoluble solid formed in a solution during reaction."},
+ {q:"Neutralisation is which reaction type?",a:"Double displacement (acid + base → salt + water)."},
+ {q:"Define oxidation (3 ways).",a:"Gain of O / loss of H / loss of electrons."},
+ {q:"Define reduction (3 ways).",a:"Loss of O / gain of H / gain of electrons."},
+ {q:"In CuO + H₂ → Cu + H₂O, what is reduced?",a:"CuO (loses oxygen); H₂ is oxidised."},
+ {q:"The substance oxidised acts as the…?",a:"Reducing agent."},
+ {q:"The substance reduced acts as the…?",a:"Oxidising agent."},
+ {q:"Why 'redox'?",a:"REDuction and OXidation always occur together."},
+ {q:"Copper heated in air turns…?",a:"Black (CuO forms)."},
+ {q:"H₂ over hot CuO turns it…?",a:"Brown — copper metal is regenerated (reduction)."},
+ {q:"What is corrosion?",a:"Slow attack of metals by air/moisture (rust, green Cu, black Ag)."},
+ {q:"What is rancidity?",a:"Oxidation of fats/oils in food → bad smell/taste."},
+ {q:"Four ways to prevent rancidity?",a:"Antioxidants, airtight packing, refrigeration, nitrogen flushing."},
+ {q:"Which gas fills chips packets and why?",a:"Nitrogen — inert, keeps oxygen away."},
+ {q:"CO₂ + lime water observation?",a:"Turns milky (CaCO₃); clears with excess CO₂."},
+ {q:"Quicklime / slaked lime / limestone formulas?",a:"CaO / Ca(OH)₂ / CaCO₃."},
+ {q:"Digestion is which type of change?",a:"Chemical change (new simpler substances form)."},
+ {q:"A candle burning shows which changes?",a:"Both: melting wax (physical) + burning (chemical)."},
+ {q:"Why store AgCl in dark bottles?",a:"To prevent photolytic decomposition by light."},
+ {q:"Hydrogen collects at which electrode?",a:"Cathode (negative electrode)."},
+ {q:"Colour of PbO residue after heating lead nitrate?",a:"Yellow."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script src="/study/_cm-auto-track.js"></script>
+</body></html>

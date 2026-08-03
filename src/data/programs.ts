@@ -7,7 +7,7 @@
 export type ProgramId = 'LDC' | 'SSC' | 'Banking'
 export type Subject =
   | 'Ancient History' | 'Medieval History' | 'Modern History' | 'World History'
-  | 'Physics' | 'Biology' | 'English' | 'Daily Test'
+  | 'Physics' | 'Chemistry' | 'Biology' | 'English' | 'Daily Test'
 
 export interface Module {
   id: string            // slug; file served from /study/<id>.html; also the tracking material_id
@@ -46,6 +46,19 @@ export const MODULES: Module[] = [
   { id: 'physics-electricity',          title: 'Electricity', subject: 'Physics' },
   { id: 'physics-magnetism-em-effects', title: 'Magnetism & EM Effects', subject: 'Physics' },
   { id: 'physics-modern-physics-energy',title: 'Modern Physics & Energy', subject: 'Physics' },
+  // Chemistry — beginner overview maps first, then the intermediate topic-by-topic packs
+  { id: 'chem-map-a',                        title: 'Chem Map A — Matter & Atom', subject: 'Chemistry' },
+  { id: 'chem-map-b',                        title: 'Chem Map B — Acids, pH & Periodic Table', subject: 'Chemistry' },
+  { id: 'chemistry-matter-surroundings',     title: 'Matter in Our Surroundings', subject: 'Chemistry' },
+  { id: 'chemistry-matter-pure',             title: 'Is Matter Around Us Pure?', subject: 'Chemistry' },
+  { id: 'chemistry-atoms-molecules',         title: 'Atoms & Molecules', subject: 'Chemistry' },
+  { id: 'chemistry-structure-of-atom',       title: 'Structure of the Atom', subject: 'Chemistry' },
+  { id: 'chemistry-periodic-classification', title: 'Periodic Classification of Elements', subject: 'Chemistry' },
+  { id: 'chemistry-chemical-reactions',      title: 'Chemical Reactions & Equations', subject: 'Chemistry' },
+  { id: 'chemistry-acids-bases-salts',       title: 'Acids, Bases & Salts', subject: 'Chemistry' },
+  { id: 'chemistry-metals-nonmetals',        title: 'Metals & Non-metals', subject: 'Chemistry' },
+  { id: 'chemistry-carbon-compounds',        title: 'Carbon & Its Compounds', subject: 'Chemistry' },
+  { id: 'chemistry-everyday-life',           title: 'Chemistry in Everyday Life', subject: 'Chemistry' },
   // Biology
   { id: 'biology-life-processes',        title: 'Life Processes', subject: 'Biology' },
   { id: 'biology-human-body-systems',    title: 'Human Body Systems', subject: 'Biology' },
@@ -119,15 +132,15 @@ const LDC_PLAN: DayPlan[] = [
   { day: 14, modules: ['eng-04-voice', 'eng-05-narration'], reasoningOrArithmetic: 'ARITHMETIC: Simple & Compound Interest', rotating: 'ENGLISH: Voice & Narration' },
   { day: 15, modules: [], reasoningOrArithmetic: 'REASONING: Venn Diagrams', rotating: 'COMPUTER: Software & OS' },
   { day: 16, modules: [], reasoningOrArithmetic: 'ARITHMETIC: Time & Work', rotating: 'ETHICS: Emotional intelligence' },
-  { day: 17, modules: [], reasoningOrArithmetic: 'REASONING: Seating (Linear)', rotating: 'CURRENT AFFAIRS: Sports & Awards' },
+  { day: 17, modules: ['chem-map-a', 'chem-map-b', 'chemistry-matter-surroundings'], reasoningOrArithmetic: 'REASONING: Seating (Linear)', rotating: 'CURRENT AFFAIRS: Sports & Awards' },
   { day: 18, modules: ['eng-15-error-spotting', 'eng-16-sentence-improvement', 'eng-14-parajumbles'], reasoningOrArithmetic: 'ARITHMETIC: Time-Speed-Distance', rotating: 'ENGLISH: Error Spotting, Improvement & Para-jumbles' },
   { day: 19, modules: ['physics-units-measurement', 'physics-laws-of-motion', 'physics-work-energy-power'], reasoningOrArithmetic: 'REASONING: Seating (Circular) & Puzzles', rotating: 'COMPUTER: MS Office' },
   { day: 20, modules: ['physics-pressure-buoyancy', 'physics-heat-thermodynamics', 'physics-sound-waves'], reasoningOrArithmetic: 'ARITHMETIC: Mixtures & Alligation', rotating: 'ETHICS: Public administration' },
   { day: 21, modules: ['physics-light', 'physics-electricity'], reasoningOrArithmetic: 'REASONING: Clock & Calendar', rotating: 'CURRENT AFFAIRS: Puducherry & TN affairs' },
   { day: 22, modules: ['physics-magnetism-em-effects', 'physics-modern-physics-energy', 'eng-09-synonyms-antonyms', 'eng-10-oneword', 'eng-11-idioms'], reasoningOrArithmetic: 'ARITHMETIC: Mensuration 2D', rotating: 'ENGLISH: Vocabulary' },
-  { day: 23, modules: [], reasoningOrArithmetic: 'REASONING: Cubes, Dice & Figures', rotating: 'COMPUTER: Internet & Networking' },
-  { day: 24, modules: [], reasoningOrArithmetic: 'ARITHMETIC: Mensuration 3D', rotating: 'ETHICS: Moral reasoning' },
-  { day: 25, modules: [], reasoningOrArithmetic: 'REASONING: Non-verbal', rotating: 'CURRENT AFFAIRS: Books, Days, Persons' },
+  { day: 23, modules: ['chemistry-matter-pure', 'chemistry-atoms-molecules', 'chemistry-structure-of-atom'], reasoningOrArithmetic: 'REASONING: Cubes, Dice & Figures', rotating: 'COMPUTER: Internet & Networking' },
+  { day: 24, modules: ['chemistry-periodic-classification', 'chemistry-chemical-reactions', 'chemistry-acids-bases-salts'], reasoningOrArithmetic: 'ARITHMETIC: Mensuration 3D', rotating: 'ETHICS: Moral reasoning' },
+  { day: 25, modules: ['chemistry-metals-nonmetals', 'chemistry-carbon-compounds', 'chemistry-everyday-life'], reasoningOrArithmetic: 'REASONING: Non-verbal', rotating: 'CURRENT AFFAIRS: Books, Days, Persons' },
   { day: 26, modules: ['eng-13-reading', 'eng-12-spelling'], reasoningOrArithmetic: 'ARITHMETIC: Algebra, Geometry & Trig', rotating: 'ENGLISH: Reading Comprehension & Spelling' },
   { day: 27, modules: ['biology-life-processes', 'biology-control-coordination', 'biology-heredity-evolution'], reasoningOrArithmetic: 'REASONING: Statement–Conclusion', rotating: 'COMPUTER: Security & shortcuts' },
   { day: 28, modules: ['biology-how-organisms-reproduce', 'biology-human-body-systems'], reasoningOrArithmetic: 'ARITHMETIC: Data Interpretation', rotating: 'ETHICS: Case studies' },
@@ -153,6 +166,9 @@ const SSC_PLAN: DayPlan[] = [
   { day: 13, modules: ['eng-09-synonyms-antonyms', 'eng-10-oneword', 'eng-11-idioms'], rotating: 'ENGLISH: Vocabulary' },
   { day: 14, modules: ['eng-13-reading', 'eng-14-parajumbles'], rotating: 'ENGLISH: RC & Para Jumbles' },
   { day: 15, modules: ['daily-test-engine'], rotating: 'FULL MOCK: mixed GS + English' },
+  { day: 16, modules: ['chem-map-a', 'chem-map-b', 'chemistry-matter-surroundings', 'chemistry-matter-pure'], rotating: 'GA: Chemistry — Matter' },
+  { day: 17, modules: ['chemistry-atoms-molecules', 'chemistry-structure-of-atom', 'chemistry-periodic-classification', 'chemistry-chemical-reactions'], rotating: 'GA: Chemistry — Atomic structure & reactions' },
+  { day: 18, modules: ['chemistry-acids-bases-salts', 'chemistry-metals-nonmetals', 'chemistry-carbon-compounds', 'chemistry-everyday-life'], rotating: 'GA: Chemistry — Acids, metals & carbon' },
 ]
 
 // Banking — Quant/Reasoning heavy + English; GS only for Mains. English-forward.
@@ -169,6 +185,8 @@ const BANKING_PLAN: DayPlan[] = [
   { day: 10, modules: ['biology-life-processes', 'modern-1'], rotating: 'MAINS GA: Bio + Modern' },
   { day: 11, modules: ['eng-12-spelling', 'eng-08-conjunctions'], reasoningOrArithmetic: 'QUANT: DI sets' },
   { day: 12, modules: ['daily-test-engine'], rotating: 'FULL MOCK: Prelims pattern' },
+  { day: 13, modules: ['chem-map-a', 'chem-map-b', 'chemistry-matter-surroundings', 'chemistry-matter-pure', 'chemistry-atoms-molecules', 'chemistry-structure-of-atom'], rotating: 'MAINS GA: Chemistry — Matter & atomic structure' },
+  { day: 14, modules: ['chemistry-periodic-classification', 'chemistry-chemical-reactions', 'chemistry-acids-bases-salts', 'chemistry-metals-nonmetals', 'chemistry-carbon-compounds', 'chemistry-everyday-life'], rotating: 'MAINS GA: Chemistry — Reactions, acids & carbon' },
 ]
 
 export const PLANS: Record<ProgramId, DayPlan[]> = {

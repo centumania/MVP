@@ -1,0 +1,1123 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Acids, Bases &amp; Salts — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"⚗️";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:31px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.dia{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;text-align:center}
+.dia svg{max-width:100%;height:auto}
+.dia .cap{font-size:11px;color:var(--mut);font-weight:600;margin-top:7px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Chemistry · Mastery Pack</div>
+  <h1>Acids, Bases &amp; Salts</h1>
+  <p>Acids → Bases → Indicators → pH Scale → Reactions → Salts → Everyday Chemistry → Crystallisation &amp; Hydrated Salts. What makes things sour, soapy or neutral — and why it matters.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/35</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/40</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+
+  <h2 class="sec"><span class="em">🌐</span>The Big Picture</h2>
+  <div class="sec-sub">One idea runs through the whole chapter: acids give H⁺, bases give OH⁻, and when they meet they cancel out into a salt.</div>
+  <div class="flow">
+    <span class="step">Acid (H⁺)</span><span class="arw">+</span>
+    <span class="step">Base (OH⁻)</span><span class="arw">→</span>
+    <span class="step">Salt + Water</span><span class="arw">·</span>
+    <span class="step">pH measures it</span>
+  </div>
+  <div class="note"><span class="t">Anchor idea</span>Everything here follows from two ions. An <b>acid</b> is anything that releases <b>H⁺</b> in water (sour, turns blue litmus red); a <b>base</b> releases <b>OH⁻</b> (bitter/soapy, turns red litmus blue). Mix them and H⁺ + OH⁻ → water, leaving a <b>salt</b>. The <b>pH scale</b> just counts how many H⁺ ions are around.</div>
+
+  <!-- 1 ACIDS -->
+  <h2 class="sec"><span class="em">🍋</span>1 · Acids</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">An <b>acid</b> is a substance that releases <b>H⁺ ions</b> in water. It tastes sour and turns blue litmus red.</div></div>
+      <div class="row"><div class="lab l-why">Why acids need water</div><div class="txt">A dry acid does nothing — it only shows acidic behaviour when <b>dissolved in water</b>, because that lets it release free H⁺ ions. This is why dry HCl gas doesn't turn litmus red.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Strong acids</b> (HCl, H₂SO₄, HNO₃) ionise <b>completely</b>; <b>weak acids</b> (acetic, citric, carbonic) only partly. Acids react with metals to give H₂.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Stomach (HCl), lemon (citric), vinegar (acetic), curd (lactic), car batteries (H₂SO₄), ant stings (formic).</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Acids give H⁺." "Stomach = HCl." "Vinegar = acetic; lemon = citric; curd = lactic." "H₂SO₄ = king of chemicals."</div></div>
+    </div>
+    <div class="eg">
+      <div class="e"><div class="h">🍋 Citric</div><p>Lemon, orange</p></div>
+      <div class="e"><div class="h">🍶 Acetic</div><p>Vinegar</p></div>
+      <div class="e"><div class="h">🥛 Lactic</div><p>Curd, sour milk</p></div>
+      <div class="e"><div class="h">🐜 Formic</div><p>Ant / bee sting</p></div>
+    </div>
+  </div>
+
+  <!-- 2 BASES -->
+  <h2 class="sec"><span class="em">🧼</span>2 · Bases</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A <b>base</b> releases <b>OH⁻ ions</b> in water. It tastes bitter, feels soapy, and turns red litmus blue.</div></div>
+      <div class="row"><div class="lab l-why">Why "alkali" ≠ "base"</div><div class="txt">A base that <b>dissolves in water</b> is called an <b>alkali</b>. So all alkalis are bases, but some bases (like copper oxide) don't dissolve and aren't alkalis.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Strong bases (NaOH, KOH) ionise fully; weak bases (NH₄OH) partly. Bases feel slippery because they react with skin oils to form soap.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Soap &amp; detergents, drain cleaner (NaOH), antacids (Mg(OH)₂), lime (Ca(OH)₂), window cleaner (ammonia).</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Bases give OH⁻." "Alkali = soluble base." "All alkalis are bases, not all bases are alkalis." NaOH = caustic soda.</div></div>
+    </div>
+    <div class="note trap"><span class="t">Base vs Alkali</span>An <b>alkali</b> is just a <b>water-soluble base</b> (NaOH, KOH, Ca(OH)₂). "All bases are alkalis" is false.</div>
+  </div>
+
+  <!-- 3 INDICATORS -->
+  <h2 class="sec"><span class="em">🌈</span>3 · Indicators</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">An <b>indicator</b> shows, by a change of colour (or smell), whether a substance is acidic or basic.</div></div>
+      <div class="row"><div class="lab l-why">Why they work</div><div class="txt">Indicator molecules are themselves weak acids/bases whose structure — and therefore colour — <b>changes with the H⁺ level</b>. That colour flip is our window into the invisible ions.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Litmus:</b> acid→red, base→blue. <b>Phenolphthalein:</b> colourless in acid, PINK in base. <b>Methyl orange:</b> red in acid, yellow in base. <b>Turmeric:</b> yellow → red in base.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Lab tests, soil-pH kits, why a soap-washed turmeric stain turns red, universal indicator paper.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Phenolphthalein = pink in base." "Methyl orange = red in acid." "Turmeric turns red in base." Olfactory indicators change smell.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Indicator</th><th>In acid</th><th>In base</th></tr>
+      <tr><td class="h">Litmus (blue)</td><td>Red</td><td>Stays blue</td></tr>
+      <tr><td class="h">Litmus (red)</td><td>Stays red</td><td>Blue</td></tr>
+      <tr><td class="h">Phenolphthalein</td><td>Colourless</td><td>Pink</td></tr>
+      <tr><td class="h">Methyl orange</td><td>Red</td><td>Yellow</td></tr>
+      <tr><td class="h">Turmeric</td><td>Yellow</td><td>Red</td></tr>
+    </table>
+  </div>
+
+  <!-- 4 pH -->
+  <h2 class="sec"><span class="em">📏</span>4 · The pH Scale</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">The <b>pH scale</b> (0–14) measures how acidic or basic a solution is. <b>7 is neutral</b>, below 7 acidic, above 7 basic.</div></div>
+      <div class="row"><div class="lab l-why">Why lower pH = more acidic</div><div class="txt">pH tracks the <b>H⁺ concentration</b> — more H⁺ means lower pH. Each pH unit is a <b>10× change</b>: pH 3 has ten times more H⁺ than pH 4.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Measure with universal indicator or a pH meter. 'p' stands for 'power' (of hydrogen).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Tooth decay (below 5.5), blood (≈7.4), soil for crops, swimming pools, antacid dosing.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"pH 7 = neutral." "Lower pH = more acidic." "Tooth decay below pH 5.5." "Blood ≈ 7.4." Each unit = 10× change.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Substance</th><th>Approx pH</th><th>Nature</th></tr>
+      <tr><td class="h">Gastric (stomach) acid</td><td>1.5</td><td>Strongly acidic</td></tr>
+      <tr><td class="h">Lemon juice</td><td>2</td><td>Acidic</td></tr>
+      <tr><td class="h">Vinegar</td><td>3</td><td>Acidic</td></tr>
+      <tr><td class="h">Pure water</td><td>7</td><td>Neutral</td></tr>
+      <tr><td class="h">Blood</td><td>7.4</td><td>Slightly basic</td></tr>
+      <tr><td class="h">Baking soda</td><td>9</td><td>Basic</td></tr>
+      <tr><td class="h">Sodium hydroxide</td><td>14</td><td>Strongly basic</td></tr>
+    </table>
+  </div>
+
+  <!-- 5 REACTIONS -->
+  <h2 class="sec"><span class="em">⚡</span>5 · Reactions of Acids &amp; Bases</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Acids react with <b>metals, bases and carbonates</b>, each giving a characteristic product.</div></div>
+      <div class="row"><div class="lab l-why">Why neutralisation gives heat</div><div class="txt">When H⁺ and OH⁻ join to form water, energy is released — so <b>neutralisation is exothermic</b> (the mixture warms up).</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Acid + metal → salt + H₂</b> (pop test). <b>Acid + base → salt + water</b> (neutralisation). <b>Acid + carbonate → salt + water + CO₂</b> (milky lime water).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Antacids, baking, fizzing tablets, testing gases, metal cleaning (pickling).</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Acid + metal → H₂." "Acid + carbonate → CO₂ (milky lime water)." "Metal oxides basic, non-metal oxides acidic." Neutralisation is exothermic.</div></div>
+    </div>
+    <div class="note life"><span class="t">Everyday — the pop and the fizz</span>Drop zinc into acid and the escaping <b>hydrogen</b> makes a burning splint "pop". Drop a carbonate (like an antacid tablet) into acid and it <b>fizzes CO₂</b>, which turns lime water milky. Two gases, two classic tests.</div>
+  </div>
+
+  <!-- 6 SALTS -->
+  <h2 class="sec"><span class="em">🧂</span>6 · Salts</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">A <b>salt</b> forms when an acid reacts with a base (the metal of the base + the acid radical). Family members: common salt, baking soda, washing soda, bleaching powder, POP.</div></div>
+      <div class="row"><div class="lab l-why">Why one salt makes many products</div><div class="txt">Common salt (NaCl) is the raw material of the <b>chlor-alkali industry</b>: electrolysis gives NaOH, chlorine and hydrogen, and from these come bleaching powder, baking soda and washing soda.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>NaCl</b> (from HCl+NaOH); <b>baking soda NaHCO₃</b>; <b>washing soda Na₂CO₃·10H₂O</b>; <b>bleaching powder CaOCl₂</b>; <b>POP CaSO₄·½H₂O</b>.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Cooking, cakes, cleaning, water treatment, plaster casts, fire extinguishers.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">Match formula ↔ name (NaHCO₃ = baking soda, Na₂CO₃ = washing soda, CaOCl₂ = bleaching powder, CaSO₄·½H₂O = POP).</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Common name</th><th>Chemical name</th><th>Formula</th></tr>
+      <tr><td class="h">Common salt</td><td>Sodium chloride</td><td>NaCl</td></tr>
+      <tr><td class="h">Baking soda</td><td>Sodium hydrogencarbonate</td><td>NaHCO₃</td></tr>
+      <tr><td class="h">Washing soda</td><td>Sodium carbonate</td><td>Na₂CO₃·10H₂O</td></tr>
+      <tr><td class="h">Bleaching powder</td><td>Calcium oxychloride</td><td>CaOCl₂</td></tr>
+      <tr><td class="h">Plaster of Paris</td><td>Calcium sulphate hemihydrate</td><td>CaSO₄·½H₂O</td></tr>
+    </table>
+  </div>
+
+  <!-- 7 EVERYDAY -->
+  <h2 class="sec"><span class="em">🏠</span>7 · Everyday Chemistry</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Acid–base chemistry explains <b>antacids, tooth decay, acid rain, stings and soil treatment</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why it's all neutralisation</div><div class="txt">Nearly every remedy here is <b>neutralising the wrong pH</b>: base for an acid problem, acid for a base problem. Understand that and you can predict the fix.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Antacid</b> (base) neutralises stomach HCl. <b>Toothpaste</b> (base) fights mouth acid. <b>Baking soda</b> soothes an acidic ant sting. <b>Lime</b> fixes acidic soil.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Medicine, dental care, farming, environment (acid rain on the Taj Mahal).</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Antacid = base." "Ant sting (acid) → baking soda." "Acidic soil → add lime." "Acid rain pH &lt; 5.6 (SO₂/NOₓ)."</div></div>
+    </div>
+    <div class="note why"><span class="t">Why acid rain harms the Taj Mahal</span>Marble is calcium carbonate. Acid rain (from SO₂/NOₓ) reacts with it exactly like acid + carbonate — eating away the stone and dulling its shine. It's the same reaction that fizzes an antacid, just very slow and destructive.</div>
+  </div>
+
+  <!-- 8 CRYSTALLISATION -->
+  <h2 class="sec"><span class="em">💎</span>8 · Crystallisation &amp; Hydrated Salts</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Many salts crystallise with a <b>fixed number of water molecules</b> locked in their structure — the <b>water of crystallisation</b>. E.g. CuSO₄·<b>5</b>H₂O.</div></div>
+      <div class="row"><div class="lab l-why">Why colour depends on it</div><div class="txt">The water molecules are part of the crystal's structure — copper sulphate is <b>blue only because of them</b>. Heat drives the water off and the colour collapses to white; add a drop of water and the blue snaps back.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Heating a hydrated salt removes the water (it is <b>not wet</b> — the water is chemically held). The change is <b>reversible</b>: anhydrous CuSO₄ + water → blue hydrated CuSO₄ (also the standard <b>test for water</b>).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Gypsum → POP manufacture, blue vitriol in fungicides, testing whether a liquid contains water, silica gel packets.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"CuSO₄·5H₂O blue → white on heating." Formulas: gypsum CaSO₄·2H₂O, washing soda Na₂CO₃·10H₂O, Glauber's salt Na₂SO₄·10H₂O, green vitriol FeSO₄·7H₂O.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Hydrated salt</th><th>Formula</th><th>Water molecules</th></tr>
+      <tr><td class="h">Blue vitriol (copper sulphate)</td><td>CuSO₄·5H₂O</td><td>5</td></tr>
+      <tr><td class="h">Gypsum</td><td>CaSO₄·2H₂O</td><td>2</td></tr>
+      <tr><td class="h">Washing soda</td><td>Na₂CO₃·10H₂O</td><td>10</td></tr>
+      <tr><td class="h">Glauber's salt</td><td>Na₂SO₄·10H₂O</td><td>10</td></tr>
+      <tr><td class="h">Green vitriol (iron sulphate)</td><td>FeSO₄·7H₂O</td><td>7</td></tr>
+    </table>
+    <div class="note trap"><span class="t">pH of salt solutions — statement-question gold</span><b>Strong acid + strong base → neutral salt</b> (NaCl, pH 7). <b>Strong acid + weak base → acidic salt</b> (NH₄Cl, pH &lt; 7). <b>Weak acid + strong base → basic salt</b> (Na₂CO₃, CH₃COONa, pH &gt; 7). The salt remembers its stronger parent.</div>
+    <div class="note trap"><span class="t">Dilution safety — always acid INTO water</span>Diluting acid is highly <b>exothermic</b>. Always add <b>acid to water slowly</b>, never water to acid — water added to concentrated acid can boil instantly and splash acid out.</div>
+    <div class="note why"><span class="t">Strong vs Concentrated — not the same</span><b>Strong/weak</b> is about how fully an acid ionises; <b>concentrated/dilute</b> is about how much water it's mixed with. Dilute HCl is still a strong acid; concentrated acetic acid is still a weak acid.</div>
+    <div class="note life"><span class="t">Chlor-alkali — one salt, three products</span>Electrolysis of brine (NaCl solution) gives <b>NaOH</b> (near the cathode), <b>Cl₂</b> (anode) and <b>H₂</b> (cathode). From these come bleaching powder (Cl₂ + slaked lime), and NaOH feeds soap and paper industries — all starting from common salt.</div>
+  </div>
+
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 7 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+  <h2 class="sec"><span class="em">📊</span>Comparison &amp; Reference Tables</h2>
+  <div class="sec-sub">The pairs examiners swap, plus the key acids, indicators and salts.</div>
+
+  <div class="card"><h3>Acids vs Bases</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Acid</th><th>Base</th></tr>
+    <tr><td class="h">Ion in water</td><td>H⁺ (H₃O⁺)</td><td>OH⁻</td></tr>
+    <tr><td class="h">Taste</td><td>Sour</td><td>Bitter</td></tr>
+    <tr><td class="h">Feel</td><td>—</td><td>Soapy/slippery</td></tr>
+    <tr><td class="h">Litmus</td><td>Blue → red</td><td>Red → blue</td></tr>
+    <tr><td class="h">pH</td><td>Below 7</td><td>Above 7</td></tr>
+    <tr><td class="h">Phenolphthalein</td><td>Colourless</td><td>Pink</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Common Acids &amp; Their Sources</h3>
+  <table class="tbl">
+    <tr><th>Acid</th><th>Found in</th><th>Type</th></tr>
+    <tr><td class="h">Hydrochloric (HCl)</td><td>Stomach (gastric juice)</td><td>Strong</td></tr>
+    <tr><td class="h">Sulphuric (H₂SO₄)</td><td>Car batteries; 'king of chemicals'</td><td>Strong</td></tr>
+    <tr><td class="h">Citric</td><td>Lemon, orange</td><td>Weak</td></tr>
+    <tr><td class="h">Acetic</td><td>Vinegar</td><td>Weak</td></tr>
+    <tr><td class="h">Lactic</td><td>Curd, sour milk</td><td>Weak</td></tr>
+    <tr><td class="h">Formic</td><td>Ant / bee sting</td><td>Weak</td></tr>
+    <tr><td class="h">Tartaric</td><td>Tamarind, grapes</td><td>Weak</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Indicators at a Glance</h3>
+  <table class="tbl">
+    <tr><th>Indicator</th><th>Acid</th><th>Base</th></tr>
+    <tr><td class="h">Blue litmus</td><td>Red</td><td>Blue</td></tr>
+    <tr><td class="h">Phenolphthalein</td><td>Colourless</td><td>Pink</td></tr>
+    <tr><td class="h">Methyl orange</td><td>Red</td><td>Yellow</td></tr>
+    <tr><td class="h">Turmeric</td><td>Yellow</td><td>Red</td></tr>
+    <tr><td class="h">China rose</td><td>Dark pink (magenta)</td><td>Green</td></tr>
+  </table></div>
+
+  <div class="card"><h3>The Three Acid Reactions</h3>
+  <table class="tbl">
+    <tr><th>Reaction</th><th>Products</th><th>Gas test</th></tr>
+    <tr><td class="h">Acid + metal</td><td>Salt + H₂</td><td>'Pop' with a flame</td></tr>
+    <tr><td class="h">Acid + base</td><td>Salt + water</td><td>— (neutralisation, exothermic)</td></tr>
+    <tr><td class="h">Acid + carbonate</td><td>Salt + water + CO₂</td><td>Turns lime water milky</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Important Salts (name → formula → use)</h3>
+  <table class="tbl">
+    <tr><th>Salt</th><th>Formula</th><th>Use</th></tr>
+    <tr><td class="h">Common salt</td><td>NaCl</td><td>Food; raw material for NaOH</td></tr>
+    <tr><td class="h">Baking soda</td><td>NaHCO₃</td><td>Antacid; makes cakes fluffy</td></tr>
+    <tr><td class="h">Washing soda</td><td>Na₂CO₃·10H₂O</td><td>Removes water hardness</td></tr>
+    <tr><td class="h">Bleaching powder</td><td>CaOCl₂</td><td>Disinfects water; bleaches</td></tr>
+    <tr><td class="h">Plaster of Paris</td><td>CaSO₄·½H₂O</td><td>Bone casts; moulds</td></tr>
+  </table></div>
+
+  <div class="card"><h3>pH of Common Substances</h3>
+  <table class="tbl">
+    <tr><th>pH</th><th>Example</th></tr>
+    <tr><td class="h">1–2</td><td>Gastric acid, lemon</td></tr>
+    <tr><td class="h">3–6</td><td>Vinegar, coffee, milk</td></tr>
+    <tr><td class="h">7</td><td>Pure water (neutral)</td></tr>
+    <tr><td class="h">8–9</td><td>Blood (7.4), baking soda</td></tr>
+    <tr><td class="h">10–14</td><td>Soap, lime water, NaOH</td></tr>
+  </table></div>
+</div>
+<div class="panel" id="p-memory">
+  <h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+  <div class="sec-sub">One hook per recall-worthy fact. Concept → hook → recall question.</div>
+
+  <div class="mem-card"><div class="cn">Acid vs Base ions <span class="tag">peg</span></div>
+    <div class="hk">"<b>A</b>cid <b>A</b>dds <b>H</b>⁺; <b>B</b>ase <b>B</b>rings <b>OH</b>⁻." Sour H⁺, soapy OH⁻.</div>
+    <div class="rq">Q: Which ion do bases give? → OH⁻.</div></div>
+
+  <div class="mem-card"><div class="cn">Litmus colours <span class="tag">rhyme</span></div>
+    <div class="hk">"<b>Acid → blue to red</b> (A-R); base does the reverse." Blue litmus red = acid; red litmus blue = base.</div>
+    <div class="rq">Q: Acid turns blue litmus…? → Red.</div></div>
+
+  <div class="mem-card"><div class="cn">Phenolphthalein <span class="tag">visual</span></div>
+    <div class="hk">"<b>Pheno-Pink in a Base.</b>" Colourless in acid, PINK in base. Two P's stick together.</div>
+    <div class="rq">Q: Phenolphthalein in base? → Pink.</div></div>
+
+  <div class="mem-card"><div class="cn">Methyl orange <span class="tag">peg</span></div>
+    <div class="hk">"Methyl orange is <b>Red-hot in acid</b>, mellow <b>Yellow in base</b>." Opposite of what you'd guess.</div>
+    <div class="rq">Q: Methyl orange in acid? → Red.</div></div>
+
+  <div class="mem-card"><div class="cn">pH direction <span class="tag">why-hook</span></div>
+    <div class="hk">"<b>Low pH, high H⁺</b> = acid; 7 is the middle; high pH = base." Lower number, more sour.</div>
+    <div class="rq">Q: pH 2 is acidic or basic? → Acidic.</div></div>
+
+  <div class="mem-card"><div class="cn">Three acid reactions <span class="tag">chain</span></div>
+    <div class="hk">"<b>Metal → H₂, Base → water, Carbonate → CO₂.</b>" M-H, B-W, C-C. Gas pops, warms, or fizzes.</div>
+    <div class="rq">Q: Acid + carbonate gives which gas? → CO₂.</div></div>
+
+  <div class="mem-card"><div class="cn">CO₂ test <span class="tag">visual</span></div>
+    <div class="hk">"<b>CO₂ makes lime water milky.</b>" A cloudy white lime water = carbon dioxide, every time.</div>
+    <div class="rq">Q: A gas turns lime water milky. What is it? → CO₂.</div></div>
+
+  <div class="mem-card"><div class="cn">Soda twins <span class="tag">peg</span></div>
+    <div class="hk">"<b>Baking = biCarbonate</b> (NaHCO₃, one Na); <b>Washing = Carbonate</b> (Na₂CO₃, two Na)." Baking is the mild edible one.</div>
+    <div class="rq">Q: Washing soda formula? → Na₂CO₃·10H₂O.</div></div>
+
+  <div class="mem-card"><div class="cn">Sting cures <span class="tag">opposites</span></div>
+    <div class="hk">"Acid sting → rub a base." Ant/bee sting is acidic (formic) → soothe with baking soda. Wasp sting is basic → use vinegar.</div>
+    <div class="rq">Q: Cure for an ant sting? → Baking soda (base).</div></div>
+
+  <div class="mem-card"><div class="cn">Tooth decay pH <span class="tag">number peg</span></div>
+    <div class="hk">"<b>Below 5.5, enamel dives.</b>" Mouth acid under pH 5.5 dissolves tooth enamel — brush with basic paste.</div>
+    <div class="rq">Q: Tooth decay starts below which pH? → 5.5.</div></div>
+
+  <div class="mem-card"><div class="cn">அமிலம் = புளிப்பு <span class="tag">tamil hook</span></div>
+    <div class="hk">"<b>அமிலம் = புளிப்பு</b> (எலுமிச்சை); <b>காரம் = கசப்பு</b> (சோப்பு)." புளிப்பு என்றால் H⁺; கசப்பு-வழவழப்பு என்றால் OH⁻.</div>
+    <div class="rq">Q: புளிப்பு சுவை எதன் அடையாளம்? → அமிலம் (acid).</div></div>
+
+  <div class="mem-card"><div class="cn">Litmus தமிழ் ஞாபகம் <span class="tag">tamil hook</span></div>
+    <div class="hk">"அமிலம் வந்தால் <b>நீலம் சிவக்கும்</b>" — blue litmus turns red. காரம் வந்தால் சிவப்பு நீலமாகும்.</div>
+    <div class="rq">Q: அமிலம் நீல லிட்மஸை என்ன செய்யும்? → சிவப்பாக்கும்.</div></div>
+
+  <div class="mem-card"><div class="cn">CuSO₄ colour flip <span class="tag">tamil hook</span></div>
+    <div class="hk">"சூடு பட்டா <b>நீலம் வெள்ளை</b>; தண்ணீர் பட்டா மறுபடி நீலம்." Blue vitriol white on heating, blue again with water — நீர்த்-தேர்வு (test for water).</div>
+    <div class="rq">Q: CuSO₄·5H₂O-ஐ சூடாக்கினால்? → வெள்ளையாகும் (5H₂O போகும்).</div></div>
+
+  <div class="mem-card"><div class="cn">Hydrated-salt numbers <span class="tag">mnemonic</span></div>
+    <div class="hk">"<b>Cu-5, Gypsum-2, Washing-10, Glauber-10, Fe-7</b>." Chant: 'five-two-ten-ten-seven' — the water counts examiners ask.</div>
+    <div class="rq">Q: Water molecules in gypsum? → 2 (CaSO₄·2H₂O).</div></div>
+
+  <div class="mem-card"><div class="cn">Salt remembers its strong parent <span class="tag">why-hook</span></div>
+    <div class="hk">"The salt takes after the <b>stronger parent</b>." Strong acid parent → acidic salt (NH₄Cl); strong base parent → basic salt (Na₂CO₃); both strong → neutral (NaCl).</div>
+    <div class="rq">Q: Is NH₄Cl solution acidic or basic? → Acidic.</div></div>
+
+  <div class="mem-card"><div class="cn">Acid into water <span class="tag">safety</span></div>
+    <div class="hk">"<b>A-to-W:</b> Acid TO Water, always." தண்ணீரில் அமிலம் ஊற்று — அமிலத்தில் தண்ணீர் ஊற்றினால் தெறிக்கும் (splash!).</div>
+    <div class="rq">Q: Dilute acid safely by adding…? → Acid into water, slowly.</div></div>
+</div>
+<div class="panel" id="p-traps">
+  <h2 class="sec"><span class="em">⚠️</span>Exam Traps &amp; Confusion Pairs</h2>
+  <div class="sec-sub">Each has been set in real papers. Read the reality line and it dies.</div>
+
+  <div class="note trap"><span class="t">Trap 1 · Litmus direction</span>Acids turn <b>blue litmus red</b>; bases turn <b>red litmus blue</b>. "Bases turn blue litmus red" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 2 · Phenolphthalein</span><b>Colourless in acid, pink in base.</b> Not the reverse.</div>
+
+  <div class="note trap"><span class="t">Trap 3 · Methyl orange</span><b>Red in acid, yellow in base</b> — the opposite of what most people guess.</div>
+
+  <div class="note trap"><span class="t">Trap 4 · Higher pH is more BASIC</span>Higher pH = more basic; lower pH = more acidic. "Higher pH means more acidic" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 5 · Base vs Alkali</span>An <b>alkali is a water-soluble base</b>. All alkalis are bases, but not all bases are alkalis.</div>
+
+  <div class="note trap"><span class="t">Trap 6 · Baking vs Washing soda</span><b>Baking soda = NaHCO₃</b> (bicarbonate, mild, edible). <b>Washing soda = Na₂CO₃·10H₂O</b> (carbonate). Don't swap them.</div>
+
+  <div class="note trap"><span class="t">Trap 7 · Which gas from which reaction</span>Acid + <b>metal</b> → <b>H₂</b> (pop). Acid + <b>carbonate</b> → <b>CO₂</b> (milky lime water). Don't mix the gases up.</div>
+
+  <div class="note trap"><span class="t">Trap 8 · Metal vs Non-metal oxides</span><b>Metal oxides are basic</b>; <b>non-metal oxides are acidic</b>. (e.g. CaO basic, CO₂/SO₂ acidic.)</div>
+
+  <div class="note trap"><span class="t">Trap 9 · Dry acid is not acidic</span>Acids show acidic behaviour <b>only in water</b> (they need to release H⁺). Dry HCl gas does not turn litmus red.</div>
+
+  <div class="note trap"><span class="t">Trap 10 · 'King of chemicals'</span>That title belongs to <b>sulphuric acid (H₂SO₄)</b>, not HCl or HNO₃.</div>
+
+  <div class="note trap"><span class="t">Trap 11 · Ant sting is acidic</span>An ant/bee sting injects <b>formic acid</b>, so you treat it with a <b>base</b> (baking soda), not more acid.</div>
+
+  <div class="note trap"><span class="t">Trap 12 · Neutralisation product</span>Acid + base → <b>salt + water</b> (not CO₂). CO₂ comes only from carbonates.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> Toothpaste is basic. <b>R:</b> It neutralises the acid made by bacteria in the mouth. → Both true, <b>R explains A</b>.</div>
+
+  <div class="note trap"><span class="t">Trap 13 · Hydrated salt is not wet</span>The water of crystallisation is <b>chemically held</b> in fixed proportion — the crystal is dry to touch. "Hydrated salts are moist" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 14 · Strong ≠ Concentrated</span><b>Strong/weak</b> = degree of ionisation; <b>concentrated/dilute</b> = amount of water. Dilute HCl is still a strong acid.</div>
+
+  <div class="note trap"><span class="t">Trap 15 · Salt solutions are not always neutral</span>NaCl → neutral, NH₄Cl → <b>acidic</b>, Na₂CO₃ → <b>basic</b>. "All salts are neutral" is false — the salt follows its stronger parent.</div>
+
+  <div class="note trap"><span class="t">Trap 16 · Acid into water, never the reverse</span>Always add <b>acid to water</b> slowly. Adding water to concentrated acid can boil and splash — a favourite safety question.</div>
+
+  <div class="note trap"><span class="t">Trap 17 · Gypsum vs POP</span><b>Gypsum = CaSO₄·2H₂O</b>; <b>POP = CaSO₄·½H₂O</b> (made by heating gypsum to ~100°C). Swapping their formulas is a set trap.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> Acid rain damages marble monuments. <b>R:</b> Marble (calcium carbonate) reacts with acids to release CO₂. → Both true, <b>R explains A</b>.</div>
+</div>
+<div class="panel" id="p-rapid">
+  <h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-Liners</h2>
+  <div class="sec-sub"><span class="star">★</span> = highest-frequency in exams. Tap ☆ to flag any line for your FAA revisit list.</div>
+  <div class="ol">
+    <div><span class="n">1</span><span><span class="star">★</span> Acids release H⁺ ions; bases release OH⁻ ions in water.</span></div>
+    <div><span class="n">2</span><span><span class="star">★</span> Acids turn blue litmus red; bases turn red litmus blue.</span></div>
+    <div><span class="n">3</span><span>Acids taste sour; bases taste bitter and feel soapy.</span></div>
+    <div><span class="n">4</span><span>Strong acids: HCl, H₂SO₄, HNO₃; weak acids: acetic, citric, carbonic.</span></div>
+    <div><span class="n">5</span><span><span class="star">★</span> Stomach acid = HCl; vinegar = acetic; lemon = citric; curd = lactic.</span></div>
+    <div><span class="n">6</span><span>H₂SO₄ is called the 'king of chemicals'.</span></div>
+    <div><span class="n">7</span><span><span class="star">★</span> An alkali is a water-soluble base (NaOH, KOH, Ca(OH)₂).</span></div>
+    <div><span class="n">8</span><span>All alkalis are bases, but not all bases are alkalis.</span></div>
+    <div><span class="n">9</span><span><span class="star">★</span> Phenolphthalein: colourless in acid, pink in base.</span></div>
+    <div><span class="n">10</span><span><span class="star">★</span> Methyl orange: red in acid, yellow in base.</span></div>
+    <div><span class="n">11</span><span>Turmeric turns red in a base (yellow otherwise).</span></div>
+    <div><span class="n">12</span><span>Olfactory indicators change smell (onion, vanilla, clove).</span></div>
+    <div><span class="n">13</span><span><span class="star">★</span> pH scale runs 0–14; 7 is neutral.</span></div>
+    <div><span class="n">14</span><span><span class="star">★</span> pH below 7 = acidic; above 7 = basic.</span></div>
+    <div><span class="n">15</span><span>Lower pH means more H⁺ ions (more acidic); each unit = 10× change.</span></div>
+    <div><span class="n">16</span><span>Gastric acid ~1.5, lemon ~2, water 7, blood ~7.4, NaOH ~14.</span></div>
+    <div><span class="n">17</span><span><span class="star">★</span> Tooth decay starts below pH 5.5.</span></div>
+    <div><span class="n">18</span><span>Human blood pH is close to 7.4.</span></div>
+    <div><span class="n">19</span><span><span class="star">★</span> Acid + metal → salt + hydrogen gas (pop test).</span></div>
+    <div><span class="n">20</span><span><span class="star">★</span> Acid + base → salt + water (neutralisation, exothermic).</span></div>
+    <div><span class="n">21</span><span><span class="star">★</span> Acid + carbonate → salt + water + CO₂.</span></div>
+    <div><span class="n">22</span><span>CO₂ turns lime water milky (the CO₂ test).</span></div>
+    <div><span class="n">23</span><span>Metal oxides are basic; non-metal oxides are acidic.</span></div>
+    <div><span class="n">24</span><span><span class="star">★</span> Common salt = NaCl.</span></div>
+    <div><span class="n">25</span><span><span class="star">★</span> Baking soda = NaHCO₃ (sodium hydrogencarbonate).</span></div>
+    <div><span class="n">26</span><span><span class="star">★</span> Washing soda = Na₂CO₃·10H₂O (sodium carbonate).</span></div>
+    <div><span class="n">27</span><span>Bleaching powder = CaOCl₂; disinfects water.</span></div>
+    <div><span class="n">28</span><span>Plaster of Paris = CaSO₄·½H₂O; sets fractured bones.</span></div>
+    <div><span class="n">29</span><span>Baking soda makes cakes fluffy (releases CO₂ on heating).</span></div>
+    <div><span class="n">30</span><span><span class="star">★</span> Antacids are mild bases that neutralise stomach HCl.</span></div>
+    <div><span class="n">31</span><span>An ant/bee sting is acidic (formic acid) → treat with baking soda.</span></div>
+    <div><span class="n">32</span><span>Acidic soil is treated with lime (a base).</span></div>
+    <div><span class="n">33</span><span>Acid rain (pH &lt; 5.6) comes from SO₂ and NOₓ.</span></div>
+    <div><span class="n">34</span><span>Acid rain damages marble monuments (calcium carbonate).</span></div>
+    <div><span class="n">35</span><span>Dry acids don't show acidity — they need water to release H⁺.</span></div>
+    <div><span class="n">36</span><span><span class="star">★</span> CuSO₄·5H₂O (blue vitriol): blue → white on heating; blue again with water.</span></div>
+    <div><span class="n">37</span><span>Anhydrous CuSO₄ is the standard test for water.</span></div>
+    <div><span class="n">38</span><span><span class="star">★</span> Gypsum CaSO₄·2H₂O; heated to ~100°C → POP (CaSO₄·½H₂O).</span></div>
+    <div><span class="n">39</span><span>Glauber's salt Na₂SO₄·10H₂O; green vitriol FeSO₄·7H₂O.</span></div>
+    <div><span class="n">40</span><span><span class="star">★</span> Salt pH: NaCl neutral; NH₄Cl acidic; Na₂CO₃ basic.</span></div>
+    <div><span class="n">41</span><span><span class="star">★</span> Dilute by adding ACID to WATER slowly (exothermic!).</span></div>
+    <div><span class="n">42</span><span>Strong ≠ concentrated: dilute HCl is still a strong acid.</span></div>
+    <div><span class="n">43</span><span><span class="star">★</span> Chlor-alkali (brine electrolysis): NaOH + Cl₂ + H₂.</span></div>
+    <div><span class="n">44</span><span>Bleaching powder: Cl₂ + dry slaked lime → CaOCl₂.</span></div>
+    <div><span class="n">45</span><span>Soda-acid fire extinguishers use NaHCO₃ + acid → CO₂.</span></div>
+  </div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Acids, Bases &amp; Salts Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_chem_abs_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:35;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:40;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA ===== */
+var MAP=[
+ {id:0,cat:null,icon:"⚗️",label:"Acids, Bases\n& Salts",fact:"Acids give H⁺ ions (sour); bases give OH⁻ ions (bitter/soapy). They neutralise to form salts + water. The pH scale measures how acidic or basic something is."},
+ {id:1,cat:0,icon:"🍋",label:"Acids",fact:"Sour substances that release H⁺ ions in water and turn blue litmus red. Examples: HCl, H₂SO₄, citric acid."},
+ {id:2,cat:0,icon:"🧼",label:"Bases",fact:"Bitter, soapy substances that release OH⁻ ions in water and turn red litmus blue. Soluble bases are called alkalis."},
+ {id:3,cat:0,icon:"🌈",label:"Indicators",fact:"Substances that show a colour (or smell) change to tell acids from bases — litmus, phenolphthalein, methyl orange, turmeric."},
+ {id:4,cat:0,icon:"📏",label:"pH Scale",fact:"A 0–14 scale of acidity/basicity. 7 = neutral, below 7 = acidic, above 7 = basic."},
+ {id:5,cat:0,icon:"⚡",label:"Reactions",fact:"Acids react with metals (→ H₂), bases (→ neutralisation), and carbonates (→ CO₂)."},
+ {id:6,cat:0,icon:"🧂",label:"Salts",fact:"Compounds formed when an acid reacts with a base. Common salt, baking soda, washing soda, bleaching powder, POP."},
+ {id:7,cat:0,icon:"🏠",label:"Everyday\nChemistry",fact:"Acid–base chemistry explains antacids, tooth decay, acid rain and many industrial products."},
+ {id:8,cat:0,icon:"💎",label:"Crystallisation &\nHydrated Salts",fact:"Many salts hold a fixed number of water molecules (water of crystallisation) that give them shape and colour — lost on heating."},
+ /* Acids */
+ {id:101,cat:1,icon:"➕",label:"H⁺ ions",fact:"An acid produces hydrogen ions (H⁺, actually H₃O⁺) in water — that is the source of acidic behaviour."},
+ {id:102,cat:1,icon:"👅",label:"Properties",fact:"Sour taste, turn blue litmus red, conduct electricity in water, react with metals to release hydrogen gas."},
+ {id:103,cat:1,icon:"💪",label:"Strong vs\nweak",fact:"Strong acids (HCl, H₂SO₄, HNO₃) ionise fully; weak acids (acetic, citric, carbonic) ionise partly."},
+ {id:104,cat:1,icon:"🧴",label:"Common acids",fact:"Mineral: HCl (stomach), H₂SO₄ ('king of chemicals'), HNO₃. Organic: citric (lemon), acetic (vinegar), lactic (curd)."},
+ /* Bases */
+ {id:201,cat:2,icon:"➖",label:"OH⁻ ions",fact:"A base produces hydroxide ions (OH⁻) in water — the source of basic (alkaline) behaviour."},
+ {id:202,cat:2,icon:"🧽",label:"Properties",fact:"Bitter taste, soapy/slippery feel, turn red litmus blue, conduct electricity in solution."},
+ {id:203,cat:2,icon:"💧",label:"Alkalis",fact:"Bases that dissolve in water are called alkalis (e.g. NaOH, KOH). All alkalis are bases, but not all bases are alkalis."},
+ {id:204,cat:2,icon:"🧴",label:"Common bases",fact:"NaOH (caustic soda), KOH, Ca(OH)₂ (slaked lime), NH₄OH (ammonia), Mg(OH)₂ (milk of magnesia)."},
+ /* Indicators */
+ {id:301,cat:3,icon:"📄",label:"Litmus",fact:"Natural dye from lichen. Acids turn blue litmus RED; bases turn red litmus BLUE. Neutral: no change."},
+ {id:302,cat:3,icon:"🌺",label:"Natural",fact:"Turmeric (yellow → red in base), red cabbage, china rose (hibiscus) — natural plant indicators."},
+ {id:303,cat:3,icon:"🧪",label:"Synthetic",fact:"Phenolphthalein: colourless in acid, PINK in base. Methyl orange: red in acid, yellow in base."},
+ {id:304,cat:3,icon:"👃",label:"Olfactory",fact:"Substances that change SMELL with acids/bases (e.g. onion, vanilla, clove) — used to test for the blind."},
+ /* pH */
+ {id:401,cat:4,icon:"0️⃣",label:"0 to 14",fact:"pH runs from 0 (most acidic) to 14 (most basic). Lower pH = more H⁺ ions = more acidic."},
+ {id:402,cat:4,icon:"⚖️",label:"Acidic /\nneutral / basic",fact:"pH < 7 acidic, pH = 7 neutral (pure water), pH > 7 basic. Each unit is a 10× change in acidity."},
+ {id:403,cat:4,icon:"📊",label:"pH values",fact:"Gastric acid ~1.5, lemon ~2, vinegar ~3, water 7, blood ~7.4, baking soda ~9, NaOH ~14."},
+ {id:404,cat:4,icon:"🦷",label:"pH in life",fact:"Tooth decay below pH 5.5; soil pH affects crops; blood is tightly held near 7.4; antacids treat excess stomach acid."},
+ /* Reactions */
+ {id:501,cat:5,icon:"🔩",label:"Acid + metal",fact:"Acid + metal → salt + hydrogen gas (H₂). Test: burning splint gives a 'pop' sound."},
+ {id:502,cat:5,icon:"🤝",label:"Neutralisation",fact:"Acid + base → salt + water. Heat is released (exothermic). This is neutralisation."},
+ {id:503,cat:5,icon:"🫧",label:"Acid +\ncarbonate",fact:"Acid + metal carbonate/bicarbonate → salt + water + CO₂ (turns lime water milky)."},
+ {id:504,cat:5,icon:"⚗️",label:"Oxides",fact:"Metal oxides are basic (react with acids); non-metal oxides are acidic (react with bases)."},
+ /* Salts */
+ {id:601,cat:6,icon:"🧂",label:"Common salt\n(NaCl)",fact:"Sodium chloride from HCl + NaOH. Source of NaOH (chlor-alkali), washing soda and baking soda."},
+ {id:602,cat:6,icon:"🍞",label:"Baking soda",fact:"Sodium hydrogencarbonate (NaHCO₃) — mild base, antacid, and makes cakes fluffy by releasing CO₂."},
+ {id:603,cat:6,icon:"🧺",label:"Washing soda",fact:"Sodium carbonate (Na₂CO₃·10H₂O) — removes hardness of water and is used in glass/soap making."},
+ {id:604,cat:6,icon:"🏊",label:"Bleaching\npowder & POP",fact:"Bleaching powder (CaOCl₂) disinfects water &amp; bleaches; Plaster of Paris (CaSO₄·½H₂O) sets casts."},
+ /* Everyday */
+ {id:701,cat:7,icon:"💊",label:"Antacids",fact:"Milk of magnesia / baking soda neutralise excess stomach acid (HCl) to relieve acidity."},
+ {id:702,cat:7,icon:"🦷",label:"Tooth decay",fact:"Bacteria make acid from sugar; below pH 5.5 enamel dissolves. Basic toothpaste neutralises it."},
+ {id:703,cat:7,icon:"🌧️",label:"Acid rain",fact:"SO₂ and NOₓ from fuels dissolve in rain (pH < 5.6), damaging plants, lakes and monuments."},
+ {id:704,cat:7,icon:"🐜",label:"Stings & soil",fact:"Ant/bee stings inject formic acid (treat with baking soda); acidic soil is fixed with lime, basic soil with gypsum."},
+ /* Crystallisation & Hydrated Salts */
+ {id:801,cat:8,icon:"💧",label:"Water of\ncrystallisation",fact:"A fixed number of water molecules built into a salt's crystal structure — e.g. CuSO₄·5H₂O has 5."},
+ {id:802,cat:8,icon:"🔵",label:"Blue vitriol\n(CuSO₄·5H₂O)",fact:"Blue copper sulphate turns WHITE on heating (loses its water); add water and the blue returns — a classic reversible test."},
+ {id:803,cat:8,icon:"🧂",label:"Hydrated salt\nexamples",fact:"Gypsum CaSO₄·2H₂O, washing soda Na₂CO₃·10H₂O, Glauber's salt Na₂SO₄·10H₂O, green vitriol FeSO₄·7H₂O."},
+ {id:804,cat:8,icon:"⚖️",label:"pH of salt\nsolutions",fact:"Strong acid + strong base → neutral salt (NaCl). Strong acid + weak base → acidic (NH₄Cl). Weak acid + strong base → basic (Na₂CO₃)."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7,8];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"Acids release which ion in water?",o:["OH⁻","H⁺","Cl⁻","Na⁺"],a:1,e:"Acids release hydrogen ions (H⁺, as H₃O⁺) in water."},
+ {t:"Recall · TNPSC",q:"Bases release which ion in water?",o:["H⁺","OH⁻","CO₃²⁻","SO₄²⁻"],a:1,e:"Bases release hydroxide ions (OH⁻)."},
+ {t:"Conceptual · RRB",q:"Acids turn blue litmus:",o:["Blue","Red","Green","Colourless"],a:1,e:"Acids turn blue litmus red; bases turn red litmus blue."},
+ {t:"Conceptual · SSC",q:"A base turns red litmus:",o:["Red","Blue","Yellow","Pink"],a:1,e:"Bases turn red litmus blue."},
+ {t:"Recall · Banking",q:"Which of these is a strong acid?",o:["Acetic acid","Citric acid","Hydrochloric acid","Carbonic acid"],a:2,e:"HCl (like H₂SO₄, HNO₃) is a strong acid; the others are weak."},
+ {t:"Recall · TNPSC",q:"The acid present in the human stomach is:",o:["Sulphuric acid","Hydrochloric acid","Nitric acid","Acetic acid"],a:1,e:"Gastric juice contains dilute hydrochloric acid (HCl)."},
+ {t:"Recall · SSC",q:"The acid present in lemon and citrus fruits is:",o:["Acetic acid","Citric acid","Lactic acid","Tartaric acid"],a:1,e:"Citric acid gives citrus fruits their sour taste."},
+ {t:"Recall · RRB",q:"The acid present in vinegar is:",o:["Citric acid","Acetic acid","Formic acid","Oxalic acid"],a:1,e:"Vinegar is dilute acetic acid."},
+ {t:"Recall · Banking",q:"The acid present in sour milk / curd is:",o:["Lactic acid","Citric acid","Acetic acid","Malic acid"],a:0,e:"Lactic acid forms as milk sours."},
+ {t:"Recall · SSC",q:"Which acid is called the 'king of chemicals'?",o:["HCl","HNO₃","H₂SO₄","H₂CO₃"],a:2,e:"Sulphuric acid (H₂SO₄) is the 'king of chemicals' due to wide industrial use."},
+ {t:"Conceptual · TNPSC",q:"All alkalis are bases, but:",o:["all bases are alkalis","not all bases are alkalis","alkalis are acids","bases are neutral"],a:1,e:"An alkali is a water-soluble base; not every base dissolves in water."},
+ {t:"Recall · SSC",q:"Which is a common base (alkali)?",o:["HCl","NaOH","H₂SO₄","CO₂"],a:1,e:"Sodium hydroxide (caustic soda) is a strong alkali."},
+ {t:"Application · RRB",q:"In acid, phenolphthalein is:",o:["Pink","Colourless","Yellow","Red"],a:1,e:"Phenolphthalein is colourless in acid and PINK in base."},
+ {t:"Application · SSC",q:"Methyl orange turns ___ in an acidic solution:",o:["Yellow","Red","Blue","Colourless"],a:1,e:"Methyl orange is red in acid, yellow in base."},
+ {t:"Conceptual · Banking",q:"Turmeric is a natural indicator that turns ___ in a base:",o:["Yellow","Red","Green","Blue"],a:1,e:"Turmeric (yellow) turns red in a base — as seen on a stained cloth washed with soap."},
+ {t:"Recall · TNPSC",q:"The pH of a neutral solution (pure water) is:",o:["0","7","14","1"],a:1,e:"pH 7 is neutral; below 7 acidic, above 7 basic."},
+ {t:"Conceptual · SSC",q:"A solution with pH 2 is:",o:["Strongly basic","Weakly basic","Neutral","Strongly acidic"],a:3,e:"pH 2 is strongly acidic (low pH = many H⁺ ions)."},
+ {t:"Conceptual · RRB",q:"As pH decreases, a solution becomes:",o:["More basic","More acidic","More neutral","Coloured"],a:1,e:"Lower pH means more H⁺ ions, i.e. more acidic."},
+ {t:"Application · SSC",q:"Tooth decay begins when the pH in the mouth falls below:",o:["7.0","5.5","2.0","9.0"],a:1,e:"Below pH 5.5, tooth enamel starts to dissolve."},
+ {t:"Application · Banking",q:"The pH of human blood is close to:",o:["2","5.5","7.4","10"],a:2,e:"Blood is slightly basic, held near pH 7.4."},
+ {t:"Recall · SSC",q:"When an acid reacts with a metal, the gas released is:",o:["Oxygen","Carbon dioxide","Hydrogen","Chlorine"],a:2,e:"Acid + metal → salt + hydrogen gas (gives a 'pop' test)."},
+ {t:"Conceptual · TNPSC",q:"Acid + base → salt + water. This reaction is called:",o:["Oxidation","Neutralisation","Displacement","Combustion"],a:1,e:"Neutralisation; it is exothermic (releases heat)."},
+ {t:"Recall · RRB",q:"When an acid reacts with a carbonate, the gas released is:",o:["Hydrogen","Oxygen","Carbon dioxide","Ammonia"],a:2,e:"Acid + carbonate → salt + water + CO₂ (turns lime water milky)."},
+ {t:"Conceptual · SSC",q:"CO₂ turns lime water:",o:["Blue","Milky/white","Red","Yellow"],a:1,e:"CO₂ turns lime water milky (forms calcium carbonate) — the standard CO₂ test."},
+ {t:"Recall · Banking",q:"The chemical name of common salt is:",o:["Sodium carbonate","Sodium chloride","Sodium bicarbonate","Calcium chloride"],a:1,e:"Common salt is sodium chloride (NaCl)."},
+ {t:"Recall · TNPSC",q:"The chemical name of baking soda is:",o:["Sodium carbonate","Sodium hydrogencarbonate","Sodium hydroxide","Calcium oxide"],a:1,e:"Baking soda = sodium hydrogencarbonate (NaHCO₃)."},
+ {t:"Recall · SSC",q:"The chemical name of washing soda is:",o:["NaHCO₃","Na₂CO₃·10H₂O","NaOH","NaCl"],a:1,e:"Washing soda = sodium carbonate decahydrate (Na₂CO₃·10H₂O)."},
+ {t:"Application · RRB",q:"Which substance is used to make cakes soft and fluffy?",o:["Washing soda","Baking soda","Bleaching powder","Common salt"],a:1,e:"Baking soda releases CO₂ on heating, making the cake rise."},
+ {t:"Application · SSC",q:"Bleaching powder is used to:",o:["Sweeten food","Disinfect drinking water","Fertilise soil","Make glass"],a:1,e:"Bleaching powder (CaOCl₂) disinfects water and bleaches fabric/paper."},
+ {t:"Application · Banking",q:"Plaster of Paris is used to:",o:["Set fractured bones","Disinfect water","Soften water","Make soap"],a:0,e:"POP (CaSO₄·½H₂O) sets hard on adding water — used for casts and moulds."},
+ {t:"Application · SSC",q:"An ant sting is acidic (formic acid). It is best relieved by rubbing:",o:["Vinegar","Lemon juice","Baking soda","Salt"],a:2,e:"Baking soda (a mild base) neutralises the acidic sting."},
+ {t:"Conceptual · TNPSC",q:"Antacids relieve acidity by:",o:["Adding more acid","Neutralising excess stomach acid","Cooling the stomach","Absorbing water"],a:1,e:"Antacids (mild bases like milk of magnesia) neutralise excess HCl."},
+ {t:"Statement · SSC",q:"Consider: (1) Acids turn blue litmus red. (2) Bases turn blue litmus red. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Acids turn blue litmus red; bases turn RED litmus blue. Only 1 is correct."},
+ {t:"Statement · TNPSC",q:"Consider: (1) pH 7 is neutral. (2) Higher pH means more acidic. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — higher pH means more basic."},
+ {t:"Statement · RRB",q:"Consider: (1) Phenolphthalein is pink in base. (2) Methyl orange is yellow in acid. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — methyl orange is RED in acid, yellow in base."},
+ {t:"Statement · Banking",q:"Consider: (1) All alkalis are bases. (2) All bases are alkalis. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"All alkalis are bases (soluble ones); not all bases dissolve, so 2 is false."},
+ {t:"Statement · SSC",q:"Consider: (1) Baking soda is a mild base. (2) Washing soda is sodium bicarbonate. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — washing soda is sodium CARBONATE (Na₂CO₃)."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Metal oxides are basic. (2) Non-metal oxides are acidic. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both correct — metal oxides basic, non-metal oxides acidic."},
+ {t:"Assertion–Reason · SSC",q:"A: Baking soda is used to relieve an ant sting. R: It is a mild base that neutralises the acidic sting.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A."},
+ {t:"Assertion–Reason · RRB",q:"A: Tooth decay is worse after eating sweets. R: Bacteria convert sugar into acid that lowers mouth pH below 5.5.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A."},
+ {t:"Recall · SSC",q:"The number of water molecules in blue vitriol (CuSO₄·xH₂O) is:",o:["2","5","7","10"],a:1,e:"Blue vitriol is CuSO₄·5H₂O — five water molecules of crystallisation."},
+ {t:"Conceptual · TNPSC",q:"On heating, blue copper sulphate crystals turn:",o:["Green","White","Black","Red"],a:1,e:"Heating drives off the water of crystallisation, leaving white anhydrous CuSO₄."},
+ {t:"Application · RRB",q:"Anhydrous copper sulphate is used to test for:",o:["Oxygen","Water","CO₂","Acid"],a:1,e:"It turns blue in the presence of water — the standard test."},
+ {t:"Recall · SSC",q:"The formula of gypsum is:",o:["CaSO₄·½H₂O","CaSO₄·2H₂O","CaSO₄·5H₂O","CaCO₃"],a:1,e:"Gypsum = CaSO₄·2H₂O; heating it to ~100°C gives Plaster of Paris (CaSO₄·½H₂O)."},
+ {t:"Recall · Banking",q:"Glauber's salt is:",o:["Na₂SO₄·10H₂O","Na₂CO₃·10H₂O","FeSO₄·7H₂O","MgSO₄·7H₂O"],a:0,e:"Glauber's salt = sodium sulphate decahydrate (Na₂SO₄·10H₂O)."},
+ {t:"Recall · TNPSC",q:"Green vitriol is:",o:["CuSO₄·5H₂O","FeSO₄·7H₂O","ZnSO₄·7H₂O","Na₂SO₄·10H₂O"],a:1,e:"Green vitriol = iron(II) sulphate heptahydrate (FeSO₄·7H₂O)."},
+ {t:"Conceptual · SSC",q:"What is 'water of crystallisation'?",o:["Water wetting a crystal","A fixed number of water molecules in the crystal structure","Water used to wash crystals","Free water in solution"],a:1,e:"It is chemically held water in fixed proportion — the crystal is not 'wet'."},
+ {t:"Conceptual · RRB",q:"An aqueous solution of NH₄Cl (from strong acid + weak base) is:",o:["Neutral","Basic","Acidic","Amphoteric"],a:2,e:"Salt of strong acid + weak base → acidic solution (pH < 7)."},
+ {t:"Conceptual · SSC",q:"An aqueous solution of sodium carbonate is:",o:["Acidic","Neutral","Basic","Cannot say"],a:2,e:"Salt of weak acid (carbonic) + strong base (NaOH) → basic solution."},
+ {t:"Conceptual · Banking",q:"A solution of NaCl (strong acid + strong base salt) has pH:",o:["Less than 7","Exactly 7","More than 7","Zero"],a:1,e:"Strong-strong salt → neutral, pH 7."},
+ {t:"Application · SSC",q:"While diluting a concentrated acid, one must:",o:["Add water to acid quickly","Add acid to water slowly","Mix both at once","Heat the acid first"],a:1,e:"Always acid INTO water slowly — dilution is exothermic; the reverse can splash violently."},
+ {t:"Conceptual · TNPSC",q:"Dilute HCl is still called a strong acid because:",o:["It is concentrated","It ionises completely in water","It is corrosive","It has more water"],a:1,e:"Strong/weak is about degree of ionisation, not concentration."},
+ {t:"Recall · RRB",q:"Electrolysis of brine (chlor-alkali process) gives:",o:["NaOH, Cl₂ and H₂","Na and Cl only","NaCl and water","O₂ and H₂"],a:0,e:"Brine electrolysis yields sodium hydroxide, chlorine and hydrogen."},
+ {t:"Recall · SSC",q:"Bleaching powder is made by passing chlorine over:",o:["Quick lime","Dry slaked lime","Washing soda","Baking soda"],a:1,e:"Cl₂ + dry slaked lime Ca(OH)₂ → bleaching powder (CaOCl₂)."},
+ {t:"Recall · Banking",q:"Plaster of Paris is made by heating gypsum to about:",o:["1000°C","100°C","500°C","0°C"],a:1,e:"Gypsum heated to ~100°C (373 K) loses water to form CaSO₄·½H₂O."},
+ {t:"Conceptual · SSC",q:"POP must be stored in moisture-proof containers because:",o:["It melts","It absorbs water and sets into hard gypsum","It evaporates","It turns blue"],a:1,e:"POP + water → gypsum (hard mass), ruining the powder."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Strong acid means concentrated acid. (2) Dilute H₂SO₄ is a strong acid. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"1 is false (strength ≠ concentration); 2 is true (H₂SO₄ ionises fully even when dilute)."},
+ {t:"Statement · SSC",q:"Consider: (1) NaCl solution is neutral. (2) NH₄Cl solution is basic. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"NaCl is neutral (strong-strong). NH₄Cl is ACIDIC, not basic — so only 1."},
+ {t:"Statement · RRB",q:"Consider: (1) Hydrated salts contain water of crystallisation. (2) Heating a hydrated salt has no effect. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — heating removes the water (colour/structure changes)."},
+ {t:"Assertion–Reason · SSC",q:"A: Water should never be added to concentrated sulphuric acid. R: Dilution of H₂SO₄ is highly exothermic and can splash.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A — always add acid to water."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, application, statement & assertion–reason. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS (mostly reaction / reasoning) ===== */
+var PROB=[
+ {lvl:"e",tag:"Reaction",q:"Complete: Zinc + dilute sulphuric acid → ? + ?",given:"Zn + H₂SO₄",find:"products",steps:["Acid + metal → salt + hydrogen","Zn + H₂SO₄ → ZnSO₄ + H₂"],ans:"Zinc sulphate + hydrogen gas"},
+ {lvl:"e",tag:"Neutralisation",q:"Complete: HCl + NaOH → ? + ?",given:"HCl + NaOH",find:"products",steps:["Acid + base → salt + water","HCl + NaOH → NaCl + H₂O"],ans:"Sodium chloride + water"},
+ {lvl:"e",tag:"Carbonate",q:"Complete: HCl + Na₂CO₃ → ? + ? + ?",given:"HCl + Na₂CO₃",find:"products",steps:["Acid + carbonate → salt + water + CO₂","2HCl + Na₂CO₃ → 2NaCl + H₂O + CO₂"],ans:"NaCl + water + CO₂"},
+ {lvl:"m",tag:"pH",q:"A solution has pH 3. Is it acidic or basic, and how does it compare to pH 4?",given:"pH 3 vs pH 4",find:"nature & strength",steps:["pH < 7 → acidic","Each pH unit = 10× → pH 3 is 10× more acidic than pH 4"],ans:"Acidic; 10× more acidic than pH 4"},
+ {lvl:"m",tag:"Indicator",q:"A liquid turns phenolphthalein pink and red litmus blue. What is its nature?",given:"pink phenolphthalein, red litmus → blue",find:"nature",steps:["Phenolphthalein pink → base","Red litmus → blue → base"],ans:"Basic (alkaline)"},
+ {lvl:"m",tag:"Gas test",q:"A gas turns lime water milky. Identify the gas and the likely reaction.",given:"gas turns lime water milky",find:"gas",steps:["Only CO₂ turns lime water milky","Likely from acid + carbonate"],ans:"Carbon dioxide (CO₂)"},
+ {lvl:"m",tag:"Salt",q:"Name the salt and acid+base that form it: acid HCl + base NaOH.",given:"HCl + NaOH",find:"salt",steps:["Salt uses the metal of the base + the acid radical","Na from NaOH + Cl from HCl"],ans:"Sodium chloride (NaCl)"},
+ {lvl:"m",tag:"Everyday",q:"A farmer's soil is too acidic. What should be added to correct it?",given:"acidic soil",find:"treatment",steps:["Acidic soil needs a base","Add lime (calcium hydroxide/quicklime)"],ans:"Lime (a base)"},
+ {lvl:"h",tag:"Reasoning",q:"Why does a wet turmeric stain on cloth turn red when soap is applied, then yellow again with lemon?",given:"turmeric + soap + lemon",find:"explanation",steps:["Soap is basic → turmeric turns red","Lemon (citric acid) neutralises the base → turmeric returns to yellow"],ans:"Soap (base) → red; lemon (acid) → yellow"},
+ {lvl:"h",tag:"Reasoning",q:"Why is baking soda, not washing soda, used in antacids and cooking?",given:"antacid & cooking",find:"reason",steps:["Baking soda (NaHCO₃) is a MILD base — safe to eat","Washing soda (Na₂CO₃) is more strongly basic and not edible"],ans:"Baking soda is a mild, edible base"},
+ {lvl:"h",tag:"pH",q:"Rainwater has pH 5.6 normally but 4.2 during 'acid rain'. Explain briefly.",given:"pH 5.6 → 4.2",find:"explanation",steps:["Normal rain is mildly acidic from dissolved CO₂ (pH 5.6)","SO₂ &amp; NOₓ from fuels form stronger acids → lower pH (acid rain)"],ans:"SO₂/NOₓ acids lower the pH"},
+ {lvl:"h",tag:"Reaction",q:"Complete and identify the gas: Mg + 2HCl → ? + ?",given:"Mg + 2HCl",find:"products & gas",steps:["Acid + metal → salt + hydrogen","Mg + 2HCl → MgCl₂ + H₂"],ans:"MgCl₂ + H₂ (hydrogen gas)"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked reaction/reasoning problems graded easy→hard. Try first, then reveal. Mark solved for XP.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS ===== */
+var FC=[
+ {q:"Which ion do acids release in water?",a:"Hydrogen ions (H⁺, as H₃O⁺)."},
+ {q:"Which ion do bases release in water?",a:"Hydroxide ions (OH⁻)."},
+ {q:"How do acids affect litmus?",a:"They turn blue litmus red."},
+ {q:"How do bases affect litmus?",a:"They turn red litmus blue."},
+ {q:"Name two strong acids and two weak acids.",a:"Strong: HCl, H₂SO₄, HNO₃. Weak: acetic, citric, carbonic."},
+ {q:"Acid in the stomach?",a:"Hydrochloric acid (HCl)."},
+ {q:"Acid in lemon / vinegar / curd?",a:"Citric acid / acetic acid / lactic acid."},
+ {q:"Which acid is the 'king of chemicals'?",a:"Sulphuric acid (H₂SO₄)."},
+ {q:"What is an alkali?",a:"A base that dissolves in water (e.g. NaOH, KOH)."},
+ {q:"Give two common bases.",a:"NaOH (caustic soda), Ca(OH)₂ (slaked lime); also KOH, NH₄OH."},
+ {q:"Phenolphthalein colours in acid and base?",a:"Colourless in acid; pink in base."},
+ {q:"Methyl orange colours in acid and base?",a:"Red in acid; yellow in base."},
+ {q:"What colour does turmeric turn in a base?",a:"Red (it is yellow in acid/neutral)."},
+ {q:"What is an olfactory indicator?",a:"A substance (e.g. onion, vanilla) that changes SMELL with acids/bases."},
+ {q:"Range and neutral point of the pH scale?",a:"0 to 14; 7 is neutral."},
+ {q:"What does pH below 7 and above 7 mean?",a:"Below 7 = acidic; above 7 = basic."},
+ {q:"Below what pH does tooth decay start?",a:"Below pH 5.5."},
+ {q:"Approximate pH of blood?",a:"About 7.4 (slightly basic)."},
+ {q:"Acid + metal gives?",a:"Salt + hydrogen gas (H₂) — the 'pop' test."},
+ {q:"Acid + base gives? Name of the reaction?",a:"Salt + water; neutralisation (exothermic)."},
+ {q:"Acid + carbonate gives?",a:"Salt + water + CO₂ (turns lime water milky)."},
+ {q:"How do you test for CO₂?",a:"It turns lime water milky."},
+ {q:"Metal oxides vs non-metal oxides (nature)?",a:"Metal oxides are basic; non-metal oxides are acidic."},
+ {q:"Chemical name of common salt?",a:"Sodium chloride (NaCl)."},
+ {q:"Chemical name & one use of baking soda?",a:"Sodium hydrogencarbonate (NaHCO₃); antacid / makes cakes fluffy."},
+ {q:"Chemical name & one use of washing soda?",a:"Sodium carbonate (Na₂CO₃·10H₂O); removes water hardness."},
+ {q:"Use of bleaching powder?",a:"Disinfecting water and bleaching cloth/paper (CaOCl₂)."},
+ {q:"What is Plaster of Paris used for?",a:"Setting fractured bones and making moulds (CaSO₄·½H₂O)."},
+ {q:"How to relieve an ant/bee sting?",a:"Apply baking soda (a mild base) to neutralise the formic acid."},
+ {q:"How do antacids work?",a:"They are mild bases that neutralise excess stomach acid (HCl)."},
+ {q:"What is water of crystallisation?",a:"A fixed number of water molecules chemically held in a salt's crystal structure."},
+ {q:"Formula of blue vitriol and its water count?",a:"CuSO₄·5H₂O — five water molecules."},
+ {q:"What happens when blue CuSO₄ crystals are heated?",a:"They turn white (anhydrous); adding water restores the blue."},
+ {q:"Standard chemical test for water?",a:"Anhydrous copper sulphate turns blue."},
+ {q:"Formula of gypsum? What does heating it give?",a:"CaSO₄·2H₂O; heating to ~100°C gives Plaster of Paris (CaSO₄·½H₂O)."},
+ {q:"Glauber's salt and green vitriol formulas?",a:"Na₂SO₄·10H₂O and FeSO₄·7H₂O."},
+ {q:"pH of NaCl solution and why?",a:"7 (neutral) — salt of a strong acid and a strong base."},
+ {q:"pH nature of NH₄Cl solution?",a:"Acidic — salt of strong acid (HCl) + weak base (NH₄OH)."},
+ {q:"pH nature of Na₂CO₃ solution?",a:"Basic — salt of weak acid (carbonic) + strong base (NaOH)."},
+ {q:"Rule for diluting concentrated acid?",a:"Add acid to water slowly (never water to acid) — dilution is exothermic."},
+ {q:"Strong acid vs concentrated acid?",a:"Strong = ionises fully; concentrated = little water. Dilute HCl is still strong."},
+ {q:"Products of brine electrolysis (chlor-alkali)?",a:"NaOH, chlorine (Cl₂) and hydrogen (H₂)."},
+ {q:"How is bleaching powder made?",a:"Chlorine passed over dry slaked lime: Cl₂ + Ca(OH)₂ → CaOCl₂."},
+ {q:"Why store POP away from moisture?",a:"It absorbs water and sets into hard gypsum."},
+ {q:"Which salt is used in fire extinguishers (soda-acid type)?",a:"Sodium hydrogencarbonate (baking soda) — reacts with acid to release CO₂."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script src="/study/_cm-auto-track.js"></script>
+</body></html>

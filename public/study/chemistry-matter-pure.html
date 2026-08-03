@@ -1,0 +1,1020 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Is Matter Around Us Pure? — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"🥤";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:30px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Chemistry · Mastery Pack</div>
+  <h1>Is Matter Around Us Pure?</h1>
+  <p>Pure substances → Solutions → Colloids &amp; suspensions → Separation techniques → Elements &amp; compounds → Physical vs chemical change → Alloys &amp; key facts.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/40</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/60</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+<h2 class="sec"><span class="em">🌍</span>The Big Picture</h2>
+<div class="sec-sub">"Pure milk" in an advertisement is chemically IMPURE.</div>
+<div class="card">
+<p>In everyday talk, "pure" means unadulterated. In chemistry, <b>pure</b> means <b>one kind of substance only</b>. By that rule milk, honey, air, steel and sea water are all <b>mixtures</b>. This chapter sorts everything you see into elements, compounds and mixtures — then teaches the toolbox for pulling mixtures apart.</p>
+<div class="note why"><span class="t">Why exams love it</span>Tyndall-effect examples, separation-technique matching, compound-vs-mixture (Fe+S experiment), alloy compositions and air percentages appear in every SSC/TNPSC cycle.</div>
+</div>
+
+<h2 class="sec"><span class="em">💎</span>Branch 1 · Pure Substances vs Mixtures</h2>
+<div class="card"><h3>The master classification</h3>
+<div class="flow"><span class="step">Matter</span><span class="arw">→</span><span class="step">Pure: element / compound</span><span class="arw">or</span><span class="step">Mixture: homogeneous / heterogeneous</span></div>
+<div class="wbw">
+<div class="row"><span class="lab l-what">What</span><span class="txt"><b>Pure substance:</b> one kind of particle (copper, water). <b>Mixture:</b> two or more substances physically together in any ratio.</span></div>
+<div class="row"><span class="lab l-how">How</span><span class="txt"><b>Homogeneous</b> = uniform, one phase (salt water, air, brass). <b>Heterogeneous</b> = visible parts (sand-water, oil-water, salad).</span></div>
+<div class="row"><span class="lab l-exam">Exam</span><span class="txt">"Which is a pure substance: milk / air / water / brass?" → water. Milk and brass fool many.</span></div>
+</div></div>
+
+<h2 class="sec"><span class="em">🥛</span>Branch 2 · Solutions</h2>
+<div class="card"><h3>🧂 Solute + solvent = solution</h3>
+<p>A <b>solution</b> is a homogeneous mixture: the <b>solute</b> dissolves in the <b>solvent</b>. Particles are <b>&lt; 1 nm</b> — invisible, unfilterable, never settle, no light scattering. Solutions aren't only liquids: air (gas-in-gas) and alloys (solid-in-solid) count too.</p>
+<div class="note"><span class="t">Concentration</span>Mass % = solute mass ÷ <b>solution</b> mass × 100. (Dividing by solvent mass is the standard wrong option.)</div>
+<div class="note life"><span class="t">Saturation &amp; solubility</span><b>Saturated</b> = holds no more solute at that temperature. Solids dissolve MORE in hot water; gases dissolve LESS — warm soda goes flat, warm lakes suffocate fish. Pressure ↑ keeps gas dissolved → soda bottles.</div>
+</div>
+
+<h2 class="sec"><span class="em">🌫️</span>Branch 3 · Suspensions &amp; Colloids</h2>
+<div class="card"><h3>🔦 The three-mixture ladder</h3>
+<p><b>Suspension</b> (&gt;1000 nm): visible particles, settle on standing, filterable — muddy water, chalk-water. <b>Colloid</b> (1–1000 nm): stable, unfilterable, but <b>scatters light</b> — milk, fog, blood, starch solution. <b>Solution</b> (&lt;1 nm): does none of these.</p>
+<div class="wbw">
+<div class="row"><span class="lab l-what">What</span><span class="txt"><b>Tyndall effect</b> = a light beam turning visible inside a colloid.</span></div>
+<div class="row"><span class="lab l-where">Where</span><span class="txt">Sunbeam in a dusty room; headlights in fog; light shafts through forest canopy.</span></div>
+<div class="row"><span class="lab l-exam">Exam</span><span class="txt">"Which shows Tyndall: salt solution or starch solution?" → starch (colloid).</span></div>
+</div>
+<div class="eg">
+<div class="e"><div class="h">☁️ Aerosol</div><p>Fog, clouds, smoke</p></div>
+<div class="e"><div class="h">🫧 Foam</div><p>Shaving cream, soda froth</p></div>
+<div class="e"><div class="h">🥛 Emulsion</div><p>Milk, butter, face cream</p></div>
+<div class="e"><div class="h">🍮 Sol &amp; Gel</div><p>Mud (sol); jelly, cheese (gel)</p></div>
+</div></div>
+
+<h2 class="sec"><span class="em">🧲</span>Branch 4 · Separation Basics</h2>
+<div class="card"><h3>Match the tool to the mixture</h3>
+<p><b>Evaporation:</b> dissolved solid from liquid (salt from sea water). <b>Filtration:</b> insoluble solid (sand from water). <b>Centrifugation:</b> tiny suspended particles — cream from milk, blood tests. <b>Separating funnel:</b> immiscible liquids in layers — oil/water. <b>Sublimation:</b> camphor/NH₄Cl away from salt. <b>Magnet:</b> iron from sulphur.</p>
+<div class="note mem"><span class="t">Choosing logic</span>Ask two questions: dissolved or not? liquid layers or not? The answers pick the technique for you.</div>
+</div>
+
+<h2 class="sec"><span class="em">⚗️</span>Branch 5 · Advanced Separation</h2>
+<div class="card"><h3>🌈 Chromatography → ⚗️ Distillation → 💠 Crystallisation</h3>
+<p><b>Chromatography</b> ("colour-writing"): solutes climb paper at different speeds — ink dyes, plant pigments, drugs in blood. <b>Simple distillation:</b> miscible liquids, boiling points &gt; 25 K apart (acetone + water). <b>Fractional distillation:</b> close boiling points, uses a bead-packed <b>fractionating column</b> — separating air into N₂/O₂/Ar, refining crude oil. <b>Crystallisation:</b> pure crystals from a hot saturated solution — beats evaporation because nothing chars and impurities stay behind.</p>
+<div class="note life"><span class="t">Liquid air fact</span>Cool + compress air to liquid, then warm slowly: N₂ (b.p. −196°C) escapes FIRST, then Ar, then O₂ (−183°C).</div>
+</div>
+
+<h2 class="sec"><span class="em">🔩</span>Branch 6 · Elements &amp; Compounds</h2>
+<div class="card"><h3>🔥 The iron–sulphur classic</h3>
+<div class="wbw">
+<div class="row"><span class="lab l-what">What</span><span class="txt"><b>Element:</b> can't be broken down chemically (~118 known: metals, non-metals, metalloids). <b>Compound:</b> elements chemically combined in a <b>fixed ratio</b> with brand-new properties.</span></div>
+<div class="row"><span class="lab l-how">How</span><span class="txt">Mix Fe + S: magnet still pulls iron; CS₂ still dissolves sulphur. <b>Heat</b> them → FeS forms: magnet fails, CS₂ fails, dilute acid now gives H₂S (rotten-egg gas) instead of H₂.</span></div>
+<div class="row"><span class="lab l-exam">Exam</span><span class="txt">Water = compound (H:O fixed at 1:8 by mass). Only liquid elements at room temp: mercury + bromine.</span></div>
+</div></div>
+
+<h2 class="sec"><span class="em">🔄</span>Branch 7 · Physical vs Chemical Change</h2>
+<div class="card"><h3>🕯️ One candle, two changes</h3>
+<p><b>Physical:</b> no new substance, usually reversible — melting, dissolving, tearing, magnetising. <b>Chemical:</b> a new substance appears — burning, rusting, curdling, digestion. The candle does both at once: wax <b>melts</b> (physical) while wax vapour <b>burns</b> (chemical).</p>
+<div class="note"><span class="t">Spotting chemistry</span>Any of these = chemical change: gas evolved, colour change, precipitate, heat/light released, can't be undone.</div>
+</div>
+
+<h2 class="sec"><span class="em">⭐</span>Branch 8 · Alloys &amp; Key Facts</h2>
+<div class="card"><h3>The recycled fact set</h3>
+<p><b>Alloys are homogeneous MIXTURES</b> (not compounds): brass = Cu+Zn, bronze = Cu+Sn, steel = Fe+C — ratios vary, properties blend. <b>Air is a mixture</b>: N₂ 78%, O₂ 21%, Ar 0.9%, CO₂ 0.04%. <b>Water is a compound</b>. <b>24-carat</b> gold is pure; 22-carat ornament gold is alloyed for hardness. <b>Tincture of iodine</b> = iodine in alcohol; <b>soda water</b> = CO₂ in water.</p>
+</div>
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 8 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+<h2 class="sec"><span class="em">📊</span>Master Comparison Tables</h2>
+<div class="sec-sub">The exact tables examiners build questions from.</div>
+
+<h2 class="sec" style="font-size:16px">🥤 Solution vs Colloid vs Suspension</h2>
+<table class="tbl"><tr><th>Property</th><th>Solution</th><th>Colloid</th><th>Suspension</th></tr>
+<tr><td class="h">Particle size</td><td>&lt; 1 nm</td><td>1–1000 nm</td><td>&gt; 1000 nm</td></tr>
+<tr><td class="h">Visibility</td><td>Invisible</td><td>Not by eye</td><td>Visible</td></tr>
+<tr><td class="h">Tyndall effect</td><td>No</td><td>YES</td><td>May scatter</td></tr>
+<tr><td class="h">Settling</td><td>Never</td><td>Never (stable)</td><td>Settles on standing</td></tr>
+<tr><td class="h">Filtration</td><td>Passes through</td><td>Passes through</td><td>Caught by filter</td></tr>
+<tr><td class="h">Type</td><td>Homogeneous</td><td>Heterogeneous (micro)</td><td>Heterogeneous</td></tr>
+<tr><td class="h">Examples</td><td>Salt water, sugar water</td><td>Milk, fog, blood, starch</td><td>Muddy water, chalk-water</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🧀 Colloid classification</h2>
+<table class="tbl"><tr><th>Type</th><th>Dispersed / medium</th><th>Examples</th></tr>
+<tr><td class="h">Aerosol</td><td>Liquid or solid in gas</td><td>Fog, clouds, smoke</td></tr>
+<tr><td class="h">Foam</td><td>Gas in liquid</td><td>Shaving cream, soda froth</td></tr>
+<tr><td class="h">Emulsion</td><td>Liquid in liquid</td><td>Milk, butter, face cream</td></tr>
+<tr><td class="h">Sol</td><td>Solid in liquid</td><td>Mud, milk of magnesia</td></tr>
+<tr><td class="h">Gel</td><td>Liquid in solid</td><td>Jelly, cheese, butter</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🧲 Separation technique matcher</h2>
+<table class="tbl"><tr><th>Mixture</th><th>Technique</th><th>Principle</th></tr>
+<tr><td>Salt from sea water</td><td class="h">Evaporation</td><td>Solvent vaporises, solute stays</td></tr>
+<tr><td>Sand from water</td><td class="h">Filtration</td><td>Insoluble solid caught by paper</td></tr>
+<tr><td>Cream from milk / blood tests</td><td class="h">Centrifugation</td><td>Spin forces denser particles down</td></tr>
+<tr><td>Oil from water</td><td class="h">Separating funnel</td><td>Immiscible liquids form layers</td></tr>
+<tr><td>Camphor/NH₄Cl from salt</td><td class="h">Sublimation</td><td>One solid vaporises directly</td></tr>
+<tr><td>Iron from sulphur (mixture)</td><td class="h">Magnet</td><td>Magnetic attraction</td></tr>
+<tr><td>Ink dyes / plant pigments</td><td class="h">Chromatography</td><td>Different climb speeds on paper</td></tr>
+<tr><td>Acetone from water (Δb.p. &gt; 25 K)</td><td class="h">Simple distillation</td><td>Boil + condense the volatile one</td></tr>
+<tr><td>Gases of air; petroleum</td><td class="h">Fractional distillation</td><td>Column handles close b.p.s</td></tr>
+<tr><td>Pure salt/alum crystals</td><td class="h">Crystallisation</td><td>Hot saturated solution cools → crystals</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🔩 Compound vs Mixture</h2>
+<table class="tbl"><tr><th>Feature</th><th>Compound</th><th>Mixture</th></tr>
+<tr><td class="h">Combination</td><td>Chemical, FIXED ratio</td><td>Physical, any ratio</td></tr>
+<tr><td class="h">Properties</td><td>Entirely new</td><td>Components keep theirs</td></tr>
+<tr><td class="h">Separation</td><td>Chemical/electrochemical methods</td><td>Physical methods</td></tr>
+<tr><td class="h">Energy change</td><td>Heat/light during formation</td><td>Usually none</td></tr>
+<tr><td class="h">Examples</td><td>Water, NaCl, CO₂, FeS</td><td>Air, brass, sea water, Fe+S mix</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🔥 Fe + S mixture vs FeS compound</h2>
+<table class="tbl"><tr><th>Test</th><th>Fe + S (mixture)</th><th>FeS (compound)</th></tr>
+<tr><td class="h">Magnet</td><td>Iron attracted</td><td>Not attracted</td></tr>
+<tr><td class="h">CS₂ solvent</td><td>Sulphur dissolves</td><td>No effect</td></tr>
+<tr><td class="h">Dilute acid</td><td>H₂ gas (odourless)</td><td>H₂S gas (rotten-egg smell)</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🔄 Physical vs Chemical change</h2>
+<table class="tbl"><tr><th>Feature</th><th>Physical</th><th>Chemical</th></tr>
+<tr><td class="h">New substance?</td><td>No</td><td>Yes</td></tr>
+<tr><td class="h">Reversible?</td><td>Usually</td><td>Usually not</td></tr>
+<tr><td class="h">Examples</td><td>Melting, dissolving, tearing, magnetising</td><td>Burning, rusting, curdling, digestion, cooking</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🔗 Alloy &amp; solution quick facts</h2>
+<table class="tbl"><tr><th>Item</th><th>Composition</th><th>Class</th></tr>
+<tr><td class="h">Brass</td><td>Cu + Zn</td><td>Homogeneous mixture</td></tr>
+<tr><td class="h">Bronze</td><td>Cu + Sn</td><td>Homogeneous mixture</td></tr>
+<tr><td class="h">Steel</td><td>Fe + C</td><td>Homogeneous mixture</td></tr>
+<tr><td class="h">Air</td><td>N₂ 78% · O₂ 21% · Ar 0.9% · CO₂ 0.04%</td><td>Mixture</td></tr>
+<tr><td class="h">Tincture of iodine</td><td>I₂ in alcohol</td><td>Non-aqueous solution</td></tr>
+<tr><td class="h">Soda water</td><td>CO₂ in water</td><td>Gas-in-liquid solution</td></tr>
+<tr><td class="h">22-carat gold</td><td>Au + Cu/Ag</td><td>Alloy (24ct = pure)</td></tr></table>
+</div>
+<div class="panel" id="p-memory">
+<h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+<div class="sec-sub">Hooks, mnemonics and Tamil tricks — one per hard-to-hold fact.</div>
+
+<div class="mem-card"><div class="cn">Size ladder 1-1000<span class="tag">Number hook</span></div>
+<div class="hk">Solution &lt; <b>1 nm</b> · colloid <b>1–1000 nm</b> · suspension &gt; <b>1000 nm</b>. "ஒன்றுக்குள் கரைசல், ஆயிரம் வரை கூழ், அதற்கு மேல் தொங்கல்."</div>
+<div class="rq">Asked as: particle size of a colloid? 1–1000 nm.</div></div>
+
+<div class="mem-card"><div class="cn">Tyndall = colloid's torch<span class="tag">Visual</span></div>
+<div class="hk">Colloid particles are the perfect size to <b>bounce light sideways</b> — solution particles too small, done. Picture the fog headlight beam: fog = colloid.</div>
+<div class="rq">Asked as: which mixture makes a light beam visible?</div></div>
+
+<div class="mem-card"><div class="cn">Colloid types FFEGS<span class="tag">Mnemonic</span></div>
+<div class="hk"><b>F</b>og-aerosol, <b>F</b>oam-shaving cream, <b>E</b>mulsion-milk, <b>G</b>el-jelly, <b>S</b>ol-mud. "பனி-நுரை-பால்-ஜெல்லி-சேறு."</div>
+<div class="rq">Asked as: milk is which colloid type? Emulsion.</div></div>
+
+<div class="mem-card"><div class="cn">Mass % denominator<span class="tag">Trap killer</span></div>
+<div class="hk">Divide by <b>SOLUTION</b> (solute + solvent), never solvent alone. "மொத்தத்தால் வகு" — 20 g in 180 g water = 20/200 = 10%, not 11.1%.</div>
+<div class="rq">Asked as: concentration of 20 g salt in 180 g water? 10%.</div></div>
+
+<div class="mem-card"><div class="cn">Solubility see-saw<span class="tag">Logic hook</span></div>
+<div class="hk">Heat helps <b>solids</b> dissolve but kicks <b>gases</b> out. "சூடு: திடம் சேரும், வாயு பிரியும்." Pressure does the opposite for gases — pushes them IN (soda bottle).</div>
+<div class="rq">Asked as: why does warm soda go flat? Gas solubility falls with heat.</div></div>
+
+<div class="mem-card"><div class="cn">Separation two questions<span class="tag">Decision hook</span></div>
+<div class="hk">Q1: dissolved? → evaporation/distillation/chromatography. Q2: layers? → separating funnel. Neither? → filter, magnet, sublime, centrifuge by particle nature.</div>
+<div class="rq">Asked as: best method for oil + water? Separating funnel.</div></div>
+
+<div class="mem-card"><div class="cn">25 K distillation rule<span class="tag">Number hook</span></div>
+<div class="hk">Boiling points &gt; <b>25 K apart</b> → simple distillation. Closer → <b>fractional</b> (column needed). Air and petrol are the two fractional superstars.</div>
+<div class="rq">Asked as: why fractional distillation for air? Close boiling points.</div></div>
+
+<div class="mem-card"><div class="cn">Liquid air order<span class="tag">Tamil hook</span></div>
+<div class="hk">N₂ −196°C leaves first, O₂ −183°C last: "<b>நை</b>ட்ரஜன் <b>முந்தி</b>, ஆக்சிஜன் <b>பிந்தி</b>." Lower b.p. = first out.</div>
+<div class="rq">Asked as: first gas from fractional distillation of liquid air? Nitrogen.</div></div>
+
+<div class="mem-card"><div class="cn">Fe+S triple test<span class="tag">Story</span></div>
+<div class="hk">Mixture: magnet ✓, CS₂ ✓, acid→H₂. Heat to FeS: magnet ✗, CS₂ ✗, acid→<b>H₂S முட்டை நாற்றம்</b> (rotten-egg). Compound = personality transplant.</div>
+<div class="rq">Asked as: gas from FeS + dilute acid? Hydrogen sulphide.</div></div>
+
+<div class="mem-card"><div class="cn">Alloy = கலவை<span class="tag">Tamil hook</span></div>
+<div class="hk">"உலோகக் <b>கலவை</b>" — alloy is a MIXTURE (ratio varies, properties blend). Brass = <b>B</b>oth <b>Z</b>inc (Cu+Zn); Bro<b>nze</b> = ti<b>N</b> (Cu+Sn); steel = Fe+C.</div>
+<div class="rq">Asked as: brass contains? Copper + zinc.</div></div>
+
+<div class="mem-card"><div class="cn">Air 78-21-0.9<span class="tag">Number hook</span></div>
+<div class="hk">"<b>78</b>-இல் நைட்ரஜன், <b>21</b>-இல் ஆக்சிஜன், மீதி அர்கான் கொஞ்சம்" — and CO₂ just 0.04%. Adds to ~100.</div>
+<div class="rq">Asked as: % of nitrogen in air? 78%.</div></div>
+
+<div class="mem-card"><div class="cn">Liquid elements pair<span class="tag">Odd pair</span></div>
+<div class="hk">Room-temperature liquids: <b>mercury</b> (metal) + <b>bromine</b> (non-metal). "பாதரசம்-புரோமின் — திரவ இரட்டையர்."</div>
+<div class="rq">Asked as: the only liquid non-metal? Bromine.</div></div>
+
+<div class="mem-card"><div class="cn">Candle duality<span class="tag">Exam classic</span></div>
+<div class="hk">One flame, two changes: wax <b>உருகுவது physical</b>, wax <b>எரிவது chemical</b>. If a question offers "both", the candle is why.</div>
+<div class="rq">Asked as: burning candle shows which change(s)? Both.</div></div>
+</div>
+<div class="panel" id="p-traps">
+<h2 class="sec"><span class="em">⚠️</span>Confusion Pairs &amp; Exam Traps</h2>
+<div class="sec-sub">Where examiners hide the wrong options.</div>
+
+<div class="card"><h3>1. Everyday "pure" vs chemical "pure"</h3>
+<p>"Pure milk", "pure honey", "pure ghee" — all chemically MIXTURES. Chemical purity = one substance. Water, salt, copper = pure; milk, air, brass = not.</p></div>
+
+<div class="card"><h3>2. Water vs Air classification</h3>
+<p>Water = <b>compound</b> (fixed 1:8 ratio, new properties). Air = <b>mixture</b> (variable ratio, gases keep properties, physically separable). Statements often swap them.</p></div>
+
+<div class="card"><h3>3. Alloys are mixtures, not compounds</h3>
+<p>Brass/bronze/steel have variable composition and blended (not brand-new) properties → homogeneous <b>mixtures</b>. But no, you can't filter the metals apart — physical separability doesn't mean EASY separability.</p></div>
+
+<div class="card"><h3>4. Mass % denominator</h3>
+<p>Concentration = solute ÷ <b>SOLUTION</b> × 100. With 20 g salt + 180 g water: 20/200 = 10%. The 11.1% option (20/180) is planted every time.</p></div>
+
+<div class="card"><h3>5. Colloids don't settle — suspensions do</h3>
+<p>Both are heterogeneous, but colloids are <b>stable</b> (milk never separates on standing). Settling + filterable = suspension only.</p></div>
+
+<div class="card"><h3>6. Tyndall needs colloid-size particles</h3>
+<p>True solutions (salt, sugar, CuSO₄) show NO Tyndall effect however concentrated. Starch solution — despite the name — is a colloid and DOES scatter.</p></div>
+
+<div class="card"><h3>7. Gas solubility runs backwards</h3>
+<p>Solids: hotter = more soluble. Gases: hotter = LESS soluble (flat warm soda, gasping fish), but MORE soluble under pressure. Two variables, opposite directions.</p></div>
+
+<div class="card"><h3>8. Separating funnel vs distillation</h3>
+<p>Funnel = <b>immiscible</b> (layers: oil/water). Distillation = <b>miscible</b> (no layers: acetone/water). "Separate alcohol from water with a funnel" = wrong — they mix completely (needs distillation).</p></div>
+
+<div class="card"><h3>9. Fractional vs simple distillation cutoff</h3>
+<p>Δb.p. &gt; 25 K → simple. Δb.p. &lt; 25 K → fractional (column). Air separation is ALWAYS fractional.</p></div>
+
+<div class="card"><h3>10. Crystallisation ≠ evaporation</h3>
+<p>Both recover solids, but crystallisation is the <b>better</b> technique: no decomposition (sugar would char), impurities left in the mother liquor.</p></div>
+
+<div class="card"><h3>11. Dissolving is physical, burning is chemical</h3>
+<p>Dissolving sugar/salt: recoverable → physical. But dissolving a metal in acid creates a new salt → chemical. Check whether a NEW substance exists.</p></div>
+
+<div class="card"><h3>12. Magnetising vs rusting</h3>
+<p>Magnetising an iron needle: same iron, reversible → physical. Rusting: new substance Fe₂O₃·xH₂O → chemical. Both happen to iron; options pair them deliberately.</p></div>
+</div>
+<div class="panel" id="p-rapid">
+<h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-liners</h2>
+<div class="sec-sub">45 exam-ready facts. Tap ☆ to flag any as Frequently-Asked-Again.</div>
+<div class="ol">
+<div><span class="n">1</span><span>Pure substance = one kind of particle (element or compound).</span></div>
+<div><span class="n">2</span><span>Milk, air, brass, sea water — all mixtures.</span></div>
+<div><span class="n">3</span><span>Homogeneous = uniform (salt water, air, alloys); heterogeneous = visible parts.</span></div>
+<div><span class="n">4</span><span>Solution = solute + solvent; particles &lt; 1 nm.</span></div>
+<div><span class="n">5</span><span>Solutions: no Tyndall, no settling, unfilterable.</span></div>
+<div><span class="n">6</span><span>Mass % = solute / SOLUTION × 100.</span></div>
+<div><span class="n">7</span><span>Saturated solution: holds no more solute at that temperature.</span></div>
+<div><span class="n">8</span><span>Solubility of solids rises with temperature; of gases falls.</span></div>
+<div><span class="n">9</span><span>Gas solubility rises with pressure — soda bottles.</span></div>
+<div><span class="n">10</span><span>Warm water holds less O₂ — aquatic life suffers.</span></div>
+<div><span class="n">11</span><span>Suspension: particles &gt; 1000 nm, settle, filterable (muddy water).</span></div>
+<div><span class="n">12</span><span>Colloid: 1–1000 nm, stable, scatters light (milk, fog, blood).</span></div>
+<div><span class="n">13</span><span>Tyndall effect = light scattering by colloids.</span></div>
+<div><span class="n">14</span><span>Tyndall sightings: dusty-room sunbeam, fog headlights, forest canopy shafts.</span></div>
+<div><span class="n">15</span><span>Aerosol-fog · foam-shaving cream · emulsion-milk · sol-mud · gel-jelly.</span></div>
+<div><span class="n">16</span><span>Evaporation recovers dissolved salt from water.</span></div>
+<div><span class="n">17</span><span>Filtration removes insoluble solids.</span></div>
+<div><span class="n">18</span><span>Centrifugation: cream from milk, blood tests — density + spin.</span></div>
+<div><span class="n">19</span><span>Separating funnel: immiscible liquids (oil + water).</span></div>
+<div><span class="n">20</span><span>Sublimation separates camphor/NH₄Cl from salt.</span></div>
+<div><span class="n">21</span><span>Magnet pulls iron from a sulphur mixture.</span></div>
+<div><span class="n">22</span><span>Chromatography: ink dyes, pigments, drugs in blood.</span></div>
+<div><span class="n">23</span><span>Simple distillation: miscible, Δb.p. &gt; 25 K (acetone + water).</span></div>
+<div><span class="n">24</span><span>Fractional distillation: close b.p.s — air, crude oil.</span></div>
+<div><span class="n">25</span><span>From liquid air: N₂ (−196°C) boils off before O₂ (−183°C).</span></div>
+<div><span class="n">26</span><span>Crystallisation &gt; evaporation: purer, no charring.</span></div>
+<div><span class="n">27</span><span>City water: sedimentation → filtration → chlorination.</span></div>
+<div><span class="n">28</span><span>Element: unbreakable chemically; ~118 known.</span></div>
+<div><span class="n">29</span><span>Element classes: metals, non-metals, metalloids.</span></div>
+<div><span class="n">30</span><span>Room-temperature liquid elements: mercury and bromine.</span></div>
+<div><span class="n">31</span><span>Compound: fixed ratio, new properties, chemical separation only.</span></div>
+<div><span class="n">32</span><span>Water: H:O = 1:8 by mass — a compound.</span></div>
+<div><span class="n">33</span><span>Fe+S mixture: magnet works, CS₂ dissolves S, acid gives H₂.</span></div>
+<div><span class="n">34</span><span>FeS compound: magnet fails, acid gives H₂S (rotten-egg).</span></div>
+<div><span class="n">35</span><span>Physical change: no new substance, usually reversible.</span></div>
+<div><span class="n">36</span><span>Chemical change: new substance — burning, rusting, curdling.</span></div>
+<div><span class="n">37</span><span>Candle: melting = physical, burning = chemical.</span></div>
+<div><span class="n">38</span><span>Chemical-change signs: gas, colour, precipitate, heat/light, irreversible.</span></div>
+<div><span class="n">39</span><span>Alloys = homogeneous mixtures.</span></div>
+<div><span class="n">40</span><span>Brass = Cu+Zn · bronze = Cu+Sn · steel = Fe+C.</span></div>
+<div><span class="n">41</span><span>Air: N₂ 78%, O₂ 21%, Ar 0.9%, CO₂ 0.04%.</span></div>
+<div><span class="n">42</span><span>24-carat gold = pure; 22-carat = alloyed with Cu/Ag.</span></div>
+<div><span class="n">43</span><span>Tincture of iodine = iodine in alcohol.</span></div>
+<div><span class="n">44</span><span>Soda water = CO₂ dissolved in water under pressure.</span></div>
+<div><span class="n">45</span><span>Starch solution is a colloid — it shows the Tyndall effect.</span></div>
+</div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Is Matter Around Us Pure? Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_chem_pure_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:40;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:60;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA (8 hubs × 4 leaves) ===== */
+var MAP=[
+ {id:0,cat:null,icon:"🥤",label:"Is Matter\nAround Us Pure?",fact:"'Pure' in chemistry means ONE kind of substance — most everyday things (milk, air, steel) are mixtures we can separate cleverly."},
+ {id:1,cat:0,icon:"💎",label:"Pure vs\nMixture",fact:"Pure substance = one kind of particle (element or compound). Mixture = two or more substances physically mixed."},
+ {id:2,cat:0,icon:"🥛",label:"Solutions",fact:"Homogeneous mixtures: solute dissolved in solvent — with concentration, saturation and solubility rules."},
+ {id:3,cat:0,icon:"🌫️",label:"Colloids &\nSuspensions",fact:"In-between mixtures: suspensions settle, colloids scatter light (Tyndall effect) and never settle."},
+ {id:4,cat:0,icon:"🧲",label:"Separation\nBasics",fact:"Evaporation, filtration, centrifugation, separating funnel, sublimation and magnets — matched to the mixture type."},
+ {id:5,cat:0,icon:"⚗️",label:"Advanced\nSeparation",fact:"Chromatography, distillation, fractional distillation, crystallisation — for tougher mixtures."},
+ {id:6,cat:0,icon:"🔩",label:"Elements &\nCompounds",fact:"Elements can't be broken down; compounds are chemically combined in fixed ratio with NEW properties."},
+ {id:7,cat:0,icon:"🔄",label:"Physical vs\nChemical Change",fact:"Physical: no new substance, usually reversible. Chemical: new substance forms."},
+ {id:8,cat:0,icon:"⭐",label:"Alloys &\nKey Facts",fact:"Alloys are mixtures; air is a mixture; water is a compound — the fact set exams recycle."},
+ /* 1 Pure vs mixture */
+ {id:101,cat:1,icon:"💎",label:"What 'pure'\nmeans",fact:"A pure substance has only ONE kind of particle throughout — elements (Cu, O₂) and compounds (H₂O, NaCl) are pure."},
+ {id:102,cat:1,icon:"🥗",label:"Mixtures",fact:"Two or more substances mixed in ANY ratio, keeping their own properties, separable by physical means."},
+ {id:103,cat:1,icon:"🥛",label:"Homogeneous",fact:"Uniform throughout — salt solution, air, alloys. No visible boundaries; single 'phase'."},
+ {id:104,cat:1,icon:"🥣",label:"Heterogeneous",fact:"Non-uniform with visible parts — sand + water, oil + water, salad."},
+ /* 2 Solutions */
+ {id:201,cat:2,icon:"🧂",label:"Solute &\nsolvent",fact:"Solvent = larger dissolving component; solute = dissolved one. Salt (solute) in water (solvent)."},
+ {id:202,cat:2,icon:"🔍",label:"Solution\nproperties",fact:"Particles < 1 nm: invisible, don't scatter light, never settle, can't be filtered out."},
+ {id:203,cat:2,icon:"📊",label:"Concentration",fact:"Mass % = mass of solute / mass of solution × 100. 'Dilute' and 'concentrated' are relative terms."},
+ {id:204,cat:2,icon:"🧊",label:"Saturation &\nsolubility",fact:"Saturated = no more solute dissolves at that temperature. Solubility of solids usually RISES with temperature; of gases FALLS."},
+ /* 3 Colloids & suspensions */
+ {id:301,cat:3,icon:"🏖️",label:"Suspensions",fact:"Particles > 1000 nm: visible, settle on standing, filterable — muddy water, chalk in water."},
+ {id:302,cat:3,icon:"🥛",label:"Colloids",fact:"Particles 1–1000 nm: don't settle, pass filter paper, but SCATTER light — milk, fog, blood."},
+ {id:303,cat:3,icon:"🔦",label:"Tyndall\neffect",fact:"Light beam becomes visible in a colloid — sunbeam in a dusty room, headlights in fog. True solutions show NO Tyndall."},
+ {id:304,cat:3,icon:"🧀",label:"Colloid\ntypes",fact:"Aerosol (fog, clouds), foam (shaving cream), emulsion (milk, butter), sol (mud), gel (jelly, cheese)."},
+ /* 4 Separation basics */
+ {id:401,cat:4,icon:"☀️",label:"Evaporation &\nfiltration",fact:"Evaporation recovers dissolved salt from water; filtration removes insoluble solids (sand from water)."},
+ {id:402,cat:4,icon:"🌀",label:"Centrifugation",fact:"Spinning forces denser particles down — cream from milk, blood tests, washing-machine dryer."},
+ {id:403,cat:4,icon:"🫙",label:"Separating\nfunnel",fact:"Immiscible liquids form layers — oil/water; used to separate slag from molten iron too."},
+ {id:404,cat:4,icon:"🌨️",label:"Sublimation\n& magnet",fact:"Camphor/NH₄Cl sublime away from salt; a magnet pulls iron filings from sulphur powder."},
+ /* 5 Advanced separation */
+ {id:501,cat:5,icon:"🌈",label:"Chromatography",fact:"'Colour-writing': dyes in ink climb paper at different speeds — separates pigments, drugs in blood."},
+ {id:502,cat:5,icon:"⚗️",label:"Distillation",fact:"Boil + condense: separates miscible liquids with boiling points >25 K apart (acetone + water)."},
+ {id:503,cat:5,icon:"🏭",label:"Fractional\ndistillation",fact:"Fractionating column for close boiling points — air into O₂/N₂/Ar; crude-oil refining."},
+ {id:504,cat:5,icon:"💠",label:"Crystallisation",fact:"Pure crystals from hot saturated solution — better than evaporation (no decomposition, removes impurities)."},
+ /* 6 Elements & compounds */
+ {id:601,cat:6,icon:"🧱",label:"Elements",fact:"Cannot be broken into simpler substances — ~118 known; metals, non-metals, metalloids."},
+ {id:602,cat:6,icon:"🧬",label:"Compounds",fact:"Two+ elements chemically combined in FIXED ratio — water, salt, CO₂. Need chemical methods to break."},
+ {id:603,cat:6,icon:"⚖️",label:"Compound vs\nmixture",fact:"Compound: new properties, fixed ratio, energy change on forming. Mixture: parent properties, any ratio."},
+ {id:604,cat:6,icon:"🔥",label:"Iron + sulphur\nclassic",fact:"Mixed Fe+S: magnet works, CS₂ dissolves S. Heated FeS compound: magnet fails, new substance formed."},
+ /* 7 Physical vs chemical */
+ {id:701,cat:7,icon:"🧊",label:"Physical\nchange",fact:"No new substance; usually reversible — melting, dissolving, tearing paper, magnetising iron."},
+ {id:702,cat:7,icon:"🔥",label:"Chemical\nchange",fact:"New substance with new properties — burning, rusting, digestion, curdling of milk."},
+ {id:703,cat:7,icon:"🕯️",label:"Candle: both\nat once",fact:"Wax melting = physical; wax burning = chemical. One candle, two changes — favourite exam example."},
+ {id:704,cat:7,icon:"🧪",label:"Signs of chemical\nchange",fact:"Gas evolved, colour change, precipitate, heat/light released, irreversibility — any of these signal chemistry."},
+ /* 8 Key facts */
+ {id:801,cat:8,icon:"🔗",label:"Alloys are\nmixtures",fact:"Brass (Cu+Zn), bronze (Cu+Sn), steel (Fe+C) — homogeneous mixtures, NOT compounds: ratio can vary, properties blend."},
+ {id:802,cat:8,icon:"🌬️",label:"Air is a\nmixture",fact:"N₂ 78%, O₂ 21%, Ar ~0.9%, CO₂ 0.04% — separable by fractional distillation of liquid air."},
+ {id:803,cat:8,icon:"💧",label:"Water is a\ncompound",fact:"H and O combined 1:8 by mass — its properties differ totally from hydrogen and oxygen gases."},
+ {id:804,cat:8,icon:"🥇",label:"24-carat\ngold",fact:"Pure gold = 24 carat; 22-carat ornament gold is an ALLOY with Cu/Ag for hardness."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7,8];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK (60) ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"In chemistry, a 'pure substance' contains:",o:["Only natural things","One kind of particle throughout","No colour","No water"],a:1,e:"Pure = single kind of matter — an element or a compound."},
+ {t:"Conceptual · TNPSC",q:"Which of these is a pure substance?",o:["Milk","Air","Water","Brass"],a:2,e:"Water (H₂O) is a compound; milk, air and brass are mixtures."},
+ {t:"Recall · SSC",q:"A mixture uniform throughout is called:",o:["Heterogeneous","Homogeneous","Saturated","Colloidal"],a:1,e:"Homogeneous — e.g., salt solution, air, alloys."},
+ {t:"Conceptual · RRB",q:"Sand in water is an example of:",o:["Solution","Homogeneous mixture","Heterogeneous mixture","Compound"],a:2,e:"Visible, non-uniform parts — heterogeneous."},
+ {t:"Recall · Banking",q:"In a sugar solution, sugar is the ___ and water is the ___:",o:["Solvent; solute","Solute; solvent","Colloid; solution","Solvent; colloid"],a:1,e:"Dissolved substance = solute; dissolving medium = solvent."},
+ {t:"Conceptual · SSC",q:"Solution particles cannot be seen because they are:",o:["Transparent","Smaller than 1 nm","Moving too fast","Colourless"],a:1,e:"True-solution particles are < 1 nm — too small to see or scatter light."},
+ {t:"Conceptual · TNPSC",q:"A solution does NOT show the Tyndall effect because:",o:["It is coloured","Its particles are too small to scatter light","Light cannot enter","It is dense"],a:1,e:"Scattering needs colloid-sized particles (1–1000 nm)."},
+ {t:"Numerical · SSC",q:"A solution has 20 g salt in 180 g water. Its mass % concentration is:",o:["10%","11.1%","20%","9%"],a:0,e:"20/(20+180) × 100 = 10%. Divide by SOLUTION mass, not solvent."},
+ {t:"Recall · RRB",q:"A solution that cannot dissolve more solute at a given temperature is:",o:["Dilute","Unsaturated","Saturated","Colloidal"],a:2,e:"Saturated at that temperature — heat it and more may dissolve."},
+ {t:"Conceptual · Banking",q:"Solubility of most solids in water ___ with temperature; of gases it ___:",o:["Falls; rises","Rises; falls","Rises; rises","Stays same; falls"],a:1,e:"Hot water dissolves more sugar but LESS gas — why warm soda goes flat."},
+ {t:"Application · SSC",q:"Aquatic life suffers in warm water because:",o:["Warm water is acidic","Dissolved oxygen decreases with temperature","Fish dislike heat","Water expands"],a:1,e:"Gas solubility drops as temperature rises."},
+ {t:"Application · TNPSC",q:"Soda bottles are stored under high pressure because:",o:["To crush the bottle","Gas solubility increases with pressure","Bottles look nicer","CO₂ is heavy"],a:1,e:"Pressure keeps CO₂ dissolved; opening releases it — the fizz."},
+ {t:"Recall · SSC",q:"Muddy water, where particles settle on standing, is a:",o:["Solution","Colloid","Suspension","Compound"],a:2,e:"Suspension: particles > 1000 nm, visible, settle, filterable."},
+ {t:"Recall · RRB",q:"Milk, fog and blood are examples of:",o:["Solutions","Colloids","Suspensions","Elements"],a:1,e:"Colloids: 1–1000 nm particles, don't settle, show Tyndall effect."},
+ {t:"Conceptual · Banking",q:"The Tyndall effect is:",o:["Settling of particles","Scattering of light by colloidal particles","Bending of light","Reflection by mirrors"],a:1,e:"A light beam becomes visible in a colloid — sunbeam in a dusty room."},
+ {t:"Application · SSC",q:"Car headlights become visible beams in fog because fog is a:",o:["Solution","Suspension","Colloid (aerosol)","Compound"],a:2,e:"Fog = liquid droplets in air = aerosol colloid → Tyndall scattering."},
+ {t:"Recall · TNPSC",q:"Milk is which type of colloid?",o:["Gel","Aerosol","Emulsion","Foam"],a:2,e:"Liquid fat dispersed in liquid water = emulsion."},
+ {t:"Recall · SSC",q:"Jelly and cheese are examples of:",o:["Sols","Gels","Foams","Aerosols"],a:1,e:"Liquid trapped in solid network = gel."},
+ {t:"Recall · RRB",q:"Clouds are an example of:",o:["Foam","Aerosol","Emulsion","Sol"],a:1,e:"Liquid droplets dispersed in gas = aerosol."},
+ {t:"Conceptual · Banking",q:"Dissolved salt is recovered from sea water by:",o:["Filtration","Evaporation","Magnetism","Decantation"],a:1,e:"Water evaporates in salt pans, leaving salt — filtration can't catch dissolved salt."},
+ {t:"Recall · SSC",q:"Cream is separated from milk by:",o:["Filtration","Centrifugation","Sublimation","Chromatography"],a:1,e:"Spinning throws denser liquid outward/down; lighter cream collects."},
+ {t:"Recall · TNPSC",q:"Two immiscible liquids like oil and water are separated using:",o:["Distillation","Separating funnel","Evaporation","Filter paper"],a:1,e:"They form layers; the funnel's tap drains the lower layer."},
+ {t:"Conceptual · SSC",q:"A mixture of camphor and salt is best separated by:",o:["Filtration","Sublimation","Decantation","Magnet"],a:1,e:"Camphor sublimes on heating; salt stays behind."},
+ {t:"Recall · RRB",q:"Iron filings are removed from a sulphur mixture using:",o:["Water","A magnet","Heat","CS₂ only"],a:1,e:"Iron is magnetic — physical separation works in a MIXTURE."},
+ {t:"Recall · Banking",q:"The dyes in black ink are separated by:",o:["Distillation","Paper chromatography","Crystallisation","Evaporation"],a:1,e:"Dyes climb the paper at different speeds — 'colour writing'."},
+ {t:"Application · SSC",q:"Chromatography is used in medicine to:",o:["Sterilise tools","Separate drugs from blood","Cool samples","Colour tablets"],a:1,e:"Also for pigments in leaves — separates small dissolved amounts."},
+ {t:"Recall · TNPSC",q:"Two miscible liquids with boiling points far apart are separated by:",o:["Separating funnel","Distillation","Filtration","Magnet"],a:1,e:"Boil the lower-b.p. liquid off and condense it — e.g., acetone + water."},
+ {t:"Conceptual · SSC",q:"Fractional distillation differs from simple distillation by using:",o:["A magnet","A fractionating column","Filter paper","A funnel"],a:1,e:"The column's beads give repeated condensation for CLOSE boiling points."},
+ {t:"Recall · RRB",q:"Oxygen, nitrogen and argon are obtained from air by:",o:["Filtration","Fractional distillation of liquid air","Evaporation","Chromatography"],a:1,e:"Compress + cool air to liquid, then distil by boiling points."},
+ {t:"Conceptual · Banking",q:"Crystallisation is better than evaporation for purifying salt because:",o:["It is faster","Some solids decompose or stay impure on strong heating","It needs no water","It is colourful"],a:1,e:"Crystallisation gives pure crystals; evaporation may char sugar or keep impurities."},
+ {t:"Recall · SSC",q:"Drinking water systems kill germs commonly by:",o:["Boiling only","Chlorination","Freezing","Shaking"],a:1,e:"Chlorine treatment disinfects municipal water supplies."},
+ {t:"Recall · TNPSC",q:"A substance that cannot be broken into simpler substances by chemical means is:",o:["A compound","An element","A mixture","A colloid"],a:1,e:"Elements — about 118 known."},
+ {t:"Recall · SSC",q:"Elements are classified as metals, non-metals and:",o:["Alloys","Metalloids","Isotopes","Compounds"],a:1,e:"Metalloids (B, Si, Ge, As…) show properties of both."},
+ {t:"Recall · RRB",q:"The only two elements liquid at room temperature are:",o:["Mercury and bromine","Mercury and iodine","Gallium and gold","Sodium and chlorine"],a:0,e:"Metal: mercury. Non-metal: bromine."},
+ {t:"Conceptual · Banking",q:"A compound differs from a mixture because a compound:",o:["Can have any ratio","Has a fixed ratio of elements and new properties","Keeps parent properties","Is always solid"],a:1,e:"Chemical combination in fixed ratio creates entirely new properties."},
+ {t:"Conceptual · SSC",q:"When iron and sulphur are HEATED together, the product FeS:",o:["Is attracted to magnets","Is not attracted to magnets","Dissolves in CS₂","Remains two substances"],a:1,e:"A NEW compound forms — iron's magnetism is gone."},
+ {t:"Conceptual · TNPSC",q:"In an unheated iron–sulphur mixture, sulphur can be removed by dissolving in:",o:["Water","Carbon disulphide (CS₂)","Alcohol","Acid only"],a:1,e:"Mixture components keep their properties — S still dissolves in CS₂."},
+ {t:"Recall · SSC",q:"Water is a compound because hydrogen and oxygen combine in a fixed mass ratio of:",o:["1:1","1:8","2:1","1:16"],a:1,e:"H:O = 1:8 by mass (2:16). Fixed ratio = compound."},
+ {t:"Conceptual · RRB",q:"Melting of ice is a ___ change; burning of paper is a ___ change:",o:["Chemical; physical","Physical; chemical","Both physical","Both chemical"],a:1,e:"Melting: same substance, reversible. Burning: new substances (ash, CO₂)."},
+ {t:"Conceptual · Banking",q:"Which is a chemical change?",o:["Dissolving sugar","Tearing paper","Rusting of iron","Melting wax"],a:2,e:"Rust (Fe₂O₃·xH₂O) is a new substance — chemical."},
+ {t:"Conceptual · SSC",q:"In a burning candle, which pair is correct?",o:["Melting wax: chemical; burning wax: physical","Melting wax: physical; burning wax: chemical","Both physical","Both chemical"],a:1,e:"The classic dual example — melting reversible, combustion creates new substances."},
+ {t:"Conceptual · TNPSC",q:"Curdling of milk is a:",o:["Physical change","Chemical change","Sublimation","Dilution"],a:1,e:"New substance (curd/lactic acid) forms — irreversible chemical change."},
+ {t:"Recall · SSC",q:"Brass is an alloy of:",o:["Cu + Sn","Cu + Zn","Fe + C","Al + Mg"],a:1,e:"Brass = copper + zinc. Bronze = copper + tin."},
+ {t:"Recall · RRB",q:"Alloys are classified as:",o:["Compounds","Homogeneous mixtures","Elements","Suspensions"],a:1,e:"Composition can vary and components keep metallic properties → mixture."},
+ {t:"Recall · Banking",q:"The percentage of nitrogen in air is about:",o:["21%","50%","78%","90%"],a:2,e:"N₂ ≈ 78%, O₂ ≈ 21%, Ar ≈ 0.9%."},
+ {t:"Recall · SSC",q:"Air is regarded as a:",o:["Compound","Element","Mixture","Colloid"],a:2,e:"Gases keep their properties, ratio varies place to place, separable physically."},
+ {t:"Recall · TNPSC",q:"Pure gold is expressed as:",o:["22 carat","24 carat","18 carat","100 carat"],a:1,e:"24-carat = pure; ornament gold (22ct) is alloyed with Cu/Ag for strength."},
+ {t:"Recall · SSC",q:"Tincture of iodine is iodine dissolved in:",o:["Water","Alcohol","Oil","Acid"],a:1,e:"Solvent = alcohol → 'tincture'. An example of a non-aqueous solution."},
+ {t:"Conceptual · RRB",q:"Aerated (soda) water is a solution of ___ in water:",o:["Oxygen","Carbon dioxide","Nitrogen","Hydrogen"],a:1,e:"CO₂ dissolved under pressure = gas-in-liquid solution."},
+ {t:"Conceptual · Banking",q:"Which shows the Tyndall effect?",o:["Salt solution","Copper sulphate solution","Starch solution (colloid)","Sugar solution"],a:2,e:"Starch forms a colloid; true solutions don't scatter."},
+ {t:"Conceptual · SSC",q:"Sunlight becomes visible through forest canopy gaps because:",o:["Leaves glow","Mist/dust droplets scatter light (Tyndall)","Air is green","The sun is low"],a:1,e:"The canopy scene is the textbook Tyndall photo."},
+ {t:"Numerical · TNPSC",q:"To make a 25% (mass) solution, how much solute is needed in 200 g of SOLUTION?",o:["25 g","50 g","75 g","40 g"],a:1,e:"25% of 200 g = 50 g solute (+150 g solvent)."},
+ {t:"Statement · SSC",q:"Consider: (1) A solution shows the Tyndall effect. (2) A colloid shows the Tyndall effect. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"Only colloids scatter light; true solutions don't."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Water is a mixture. (2) Air is a compound. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:3,e:"Reversed! Water is a COMPOUND; air is a MIXTURE. Neither statement is correct."},
+ {t:"Statement · RRB",q:"Consider: (1) Alloys are homogeneous mixtures. (2) Alloys can be separated by filtration. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Alloys are homogeneous mixtures, but filtration can't separate metals — only 1."},
+ {t:"Statement · Banking",q:"Consider: (1) Suspensions settle on standing. (2) Colloids settle on standing. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Colloids are stable — they never settle. Only 1."},
+ {t:"Statement · SSC",q:"Consider: (1) Rusting is a chemical change. (2) Magnetising an iron needle is a chemical change. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Magnetising creates no new substance — physical. Only 1."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Solubility of gases rises with pressure. (2) Solubility of gases rises with temperature. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Pressure ↑ → more gas dissolves; temperature ↑ → LESS gas dissolves. Only 1."},
+ {t:"Assertion–Reason · SSC",q:"A: Fractional distillation is used to separate the gases of air. R: The components of air have boiling points close to one another.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Close b.p.s need the fractionating column. R explains A."},
+ {t:"Assertion–Reason · RRB",q:"A: A compound of iron and sulphur is not attracted by a magnet. R: In a compound, elements lose their individual properties.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"FeS shows new properties — both true, R explains A."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, numerical, statement & assertion–reason. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS ===== */
+var PROB=[
+ {lvl:"e",tag:"Concentration",q:"Find the mass % of a solution with 30 g sugar in 120 g water.",given:"solute 30 g, solvent 120 g",find:"mass %",steps:["Solution mass = 30 + 120 = 150 g","% = 30/150 × 100"],ans:"20%"},
+ {lvl:"e",tag:"Concentration",q:"How much salt is in 250 g of a 8% (mass) salt solution?",given:"8% solution, 250 g",find:"salt mass",steps:["8% of 250","= 0.08 × 250"],ans:"20 g salt (230 g water)"},
+ {lvl:"e",tag:"Classify",q:"Classify: brass, water, milk, oxygen (element/compound/mixture).",given:"4 substances",find:"class",steps:["Brass = homogeneous mixture (alloy)","Water = compound","Milk = colloid mixture","Oxygen = element"],ans:"Mixture, compound, mixture, element"},
+ {lvl:"m",tag:"Concentration",q:"A 15% solution weighs 400 g. How much water must be present?",given:"15% by mass, 400 g solution",find:"water mass",steps:["Solute = 0.15 × 400 = 60 g","Water = 400 − 60"],ans:"340 g"},
+ {lvl:"m",tag:"Solubility",q:"Solubility of KNO₃ is 62 g/100 g water at 40°C. Can 150 g dissolve in 200 g water at 40°C?",given:"62 g per 100 g water",find:"yes/no",steps:["200 g water holds 2 × 62 = 124 g max","150 > 124"],ans:"No — only 124 g dissolves; 26 g stays undissolved"},
+ {lvl:"m",tag:"Separation",q:"Design a sequence to separate a mixture of sand, salt and camphor.",given:"3-component mixture",find:"steps",steps:["Heat → camphor sublimes off","Add water, filter → sand on paper","Evaporate/crystallise filtrate → salt"],ans:"Sublimation → filtration → evaporation"},
+ {lvl:"m",tag:"Separation",q:"Which method separates acetone (b.p. 56°C) from water (b.p. 100°C)? Why not a separating funnel?",given:"miscible pair, Δb.p. = 44 K",find:"method",steps:["They are MISCIBLE — no layers, funnel useless","Δb.p. > 25 K → simple distillation works"],ans:"Simple distillation"},
+ {lvl:"m",tag:"Tyndall",q:"Salt solution, starch solution and chalk-water are given unlabeled. Identify each with two tests.",given:"3 liquids",find:"tests",steps:["Light beam: starch scatters (colloid), salt doesn't","Standing: chalk settles (suspension)"],ans:"Tyndall + settling identify all three"},
+ {lvl:"h",tag:"Concentration",q:"20 g solute dissolves in 80 g solvent. Then 25 g more solvent is added. New mass %?",given:"20 g solute, 80+25 g solvent",find:"new %",steps:["New solution = 20 + 105 = 125 g","% = 20/125 × 100"],ans:"16%"},
+ {lvl:"h",tag:"Air distillation",q:"In fractional distillation of liquid air, which gas boils off first: N₂ (b.p. −196°C) or O₂ (b.p. −183°C)?",given:"b.p.s of N₂ and O₂",find:"first gas",steps:["Lower boiling point escapes first","−196°C < −183°C"],ans:"Nitrogen boils off first; oxygen stays liquid longer"},
+ {lvl:"h",tag:"Fe + S",q:"Explain with the iron–sulphur experiment how a mixture differs from a compound (3 tests).",given:"Fe + S vs FeS",find:"3 differences",steps:["Magnet: attracts Fe in mixture, fails on FeS","CS₂: dissolves S from mixture, no effect on FeS","Dilute acid: mixture gives H₂; FeS gives H₂S (rotten-egg smell)"],ans:"Mixture keeps parent properties; compound has new ones"},
+ {lvl:"h",tag:"Reasoning",q:"Sugar solution is 'homogeneous' yet sugar can still be recovered. Does separation by evaporation make it a compound? Explain.",given:"sugar + water",find:"reasoning",steps:["Evaporation is a PHYSICAL method","Physical separability is the definition of a mixture","Compounds need chemical breaking"],ans:"No — physical recovery proves it is a mixture"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked concentration, solubility and separation-design problems graded easy→hard. Try first, then reveal.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS (45) ===== */
+var FC=[
+ {q:"Chemistry's definition of a pure substance?",a:"Matter with only ONE kind of particle — an element or a compound."},
+ {q:"Define a mixture.",a:"Two or more substances mixed in any ratio, keeping their own properties, separable physically."},
+ {q:"Homogeneous vs heterogeneous mixture?",a:"Uniform (salt water, air, alloys) vs non-uniform with visible parts (sand + water)."},
+ {q:"Define solute and solvent.",a:"Solute = dissolved substance; solvent = the dissolving medium (larger part)."},
+ {q:"Four properties of a true solution?",a:"Particles < 1 nm, invisible, no Tyndall scattering, never settle, unfilterable."},
+ {q:"Formula for mass % concentration?",a:"(Mass of solute / mass of SOLUTION) × 100."},
+ {q:"Define a saturated solution.",a:"One that can dissolve no more solute at that temperature."},
+ {q:"Define solubility.",a:"Max solute (g) dissolving in 100 g solvent at a given temperature."},
+ {q:"Effect of temperature on solubility of solids? Of gases?",a:"Solids: usually increases. Gases: decreases."},
+ {q:"Effect of pressure on gas solubility?",a:"Increases — the principle behind soda bottles."},
+ {q:"Why does warm water hold less oxygen?",a:"Gas solubility falls with temperature — harms aquatic life."},
+ {q:"Define a suspension.",a:"Heterogeneous mixture with particles > 1000 nm that settle and can be filtered."},
+ {q:"Define a colloid.",a:"Particles 1–1000 nm: don't settle, pass filters, scatter light."},
+ {q:"What is the Tyndall effect?",a:"Visible scattering of a light beam by colloidal particles."},
+ {q:"Two everyday Tyndall sightings?",a:"Sunbeam in a dusty room; headlight beams in fog; forest-canopy light shafts."},
+ {q:"Colloid types with one example each?",a:"Aerosol-fog, foam-shaving cream, emulsion-milk, sol-mud, gel-jelly."},
+ {q:"Milk is which colloid type?",a:"Emulsion (liquid in liquid)."},
+ {q:"How is salt recovered from sea water?",a:"Evaporation in salt pans."},
+ {q:"What does centrifugation separate and how?",a:"Cream from milk, blood components — spinning pushes denser particles down."},
+ {q:"When is a separating funnel used?",a:"For immiscible liquids (oil + water) that form layers."},
+ {q:"Separate camphor from salt?",a:"Sublimation — camphor vaporises, salt remains."},
+ {q:"Separate iron filings from sulphur (unheated)?",a:"A magnet — mixture components keep their properties."},
+ {q:"What does chromatography separate?",a:"Dyes in ink, plant pigments, drugs in blood — solutes moving at different speeds."},
+ {q:"When does simple distillation work?",a:"Miscible liquids with boiling points more than ~25 K apart."},
+ {q:"When is fractional distillation needed?",a:"Miscible liquids with CLOSE boiling points — uses a fractionating column."},
+ {q:"How are O₂, N₂, Ar obtained from air?",a:"Fractional distillation of liquefied air."},
+ {q:"Which boils off first from liquid air, N₂ or O₂?",a:"N₂ (b.p. −196°C) before O₂ (−183°C)."},
+ {q:"Why is crystallisation better than evaporation?",a:"No decomposition on heating; impurities stay in solution — purer crystals."},
+ {q:"Three steps in city water purification?",a:"Sedimentation, filtration, chlorination (disinfection)."},
+ {q:"Define an element.",a:"A substance that cannot be broken into simpler substances chemically (~118 known)."},
+ {q:"Three classes of elements?",a:"Metals, non-metals, metalloids (B, Si, Ge, As…)."},
+ {q:"Two elements liquid at room temperature?",a:"Mercury (metal) and bromine (non-metal)."},
+ {q:"Define a compound.",a:"Two+ elements chemically combined in a FIXED ratio with new properties."},
+ {q:"Water's H:O mass ratio?",a:"1:8 (2 g H : 16 g O)."},
+ {q:"Compound vs mixture — three differences?",a:"Fixed vs any ratio; new vs parent properties; chemical vs physical separation."},
+ {q:"Fe + S mixture vs FeS compound — magnet test?",a:"Mixture: iron attracted. FeS: not attracted (new substance)."},
+ {q:"Define physical change.",a:"No new substance; usually reversible — melting, dissolving, tearing."},
+ {q:"Define chemical change.",a:"New substance with new properties — burning, rusting, curdling."},
+ {q:"The candle's double change?",a:"Wax melting = physical; wax burning = chemical."},
+ {q:"Four signs of a chemical change?",a:"Gas evolved, colour change, precipitate, heat/light, irreversibility."},
+ {q:"Brass and bronze compositions?",a:"Brass = Cu + Zn; bronze = Cu + Sn."},
+ {q:"Why are alloys mixtures, not compounds?",a:"Variable composition and components keep their metallic properties."},
+ {q:"Air composition (top 3)?",a:"N₂ 78%, O₂ 21%, Ar ~0.9% (CO₂ 0.04%)."},
+ {q:"What is 24-carat gold?",a:"Pure gold; 22-carat is alloyed with Cu/Ag for hardness."},
+ {q:"What is tincture of iodine?",a:"Iodine dissolved in alcohol — a non-aqueous solution antiseptic."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script src="/study/_cm-auto-track.js"></script>
+</body></html>

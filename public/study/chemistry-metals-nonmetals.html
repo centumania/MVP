@@ -1,0 +1,1071 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Metals &amp; Non-metals — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"🔩";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:31px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.dia{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;text-align:center}
+.dia svg{max-width:100%;height:auto}
+.dia .cap{font-size:11px;color:var(--mut);font-weight:600;margin-top:7px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Chemistry · Mastery Pack</div>
+  <h1>Metals &amp; Non-metals</h1>
+  <p>Physical Properties → Chemical Reactions → Reactivity Series → Ionic Bonding → Extraction → Corrosion → Alloys → Important Metals &amp; Exceptions.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/40</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/60</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+
+  <h2 class="sec"><span class="em">🌐</span>The Big Picture</h2>
+  <div class="sec-sub">One split drives everything: metals lose electrons, non-metals gain them. Properties, reactivity, bonding, extraction and corrosion all follow.</div>
+  <div class="flow">
+    <span class="step">Metals lose e⁻</span><span class="arw">→</span>
+    <span class="step">Reactivity series ranks them</span><span class="arw">→</span>
+    <span class="step">Bonding &amp; extraction follow</span><span class="arw">→</span>
+    <span class="step">Corrosion &amp; alloys fix problems</span>
+  </div>
+  <div class="note"><span class="t">Anchor idea</span>A metal's whole personality comes from its <b>loose outer electrons</b>: they carry heat and current (conduction), let layers slide (malleability), reflect light (lustre), and leave easily (forming positive ions and reactions). Non-metals hold electrons tightly — so they're the opposite in every column.</div>
+
+  <!-- 1 PHYSICAL -->
+  <h2 class="sec"><span class="em">✨</span>1 · Physical Properties</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Metals: <b>lustrous, malleable, ductile, sonorous</b>, good <b>conductors</b>, high melting points. Non-metals: dull, brittle, insulators, low melting points.</div></div>
+      <div class="row"><div class="lab l-why">Why metals conduct &amp; shine</div><div class="txt">Their <b>free electrons</b> ferry charge and heat, and re-emit light from the surface — one electron sea explains conduction, lustre and malleability all at once.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Malleable = sheets (gold leaf); ductile = wires (1 g gold → ~2 km wire); sonorous = ringing (bells).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Copper wires, aluminium foil, iron structures, gold jewellery, metal bells.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Most malleable/ductile = gold." "Best conductor = silver." "Bells are metal → sonority." Every exception below is a PYQ.</div></div>
+    </div>
+    <div class="note trap"><span class="t">The famous exceptions — memorise as a set</span><b>Mercury</b>: liquid metal. <b>Bromine</b>: liquid non-metal. <b>Graphite</b>: conducting non-metal. <b>Diamond</b>: hardest natural substance. <b>Iodine</b>: lustrous non-metal. <b>Na/K</b>: soft metals cut by knife. <b>Tungsten</b>: highest melting point.</div>
+  </div>
+
+  <!-- 2 CHEMICAL -->
+  <h2 class="sec"><span class="em">⚗️</span>2 · Chemical Reactions</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Metals react with <b>oxygen</b> (basic oxides), <b>water</b> (hydroxide/oxide + H₂) and <b>acids</b> (salt + H₂). Non-metal oxides are <b>acidic</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why some react and some don't</div><div class="txt">It all depends on how easily the metal <b>gives up electrons</b>. Sodium surrenders instantly (violent with cold water); copper holds on (no reaction even with steam).</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Water ladder: <b>K/Na → cold water; Ca → warm; Mg → hot; Al/Zn/Fe → steam; Cu/Ag/Au → never.</b> Acids: metals above H give H₂. <b>Amphoteric oxides</b> (Al₂O₃, ZnO) react with both acids and bases.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Hydrogen 'pop' test, magnesium ribbon burning white, sodium fireworks in the lab demo.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Fe reacts only with steam." "Cu gives no H₂ with dilute acid." "Amphoteric = Al₂O₃, ZnO." Displacement: Fe + CuSO₄ → FeSO₄ + Cu.</div></div>
+    </div>
+    <div class="note life"><span class="t">The iron nail experiment</span>Dip an iron nail in blue CuSO₄ solution: the nail turns <b>brown</b> (copper coats it) and the solution fades to <b>green</b> (FeSO₄). One experiment proves iron is more reactive than copper — a guaranteed exam picture.</div>
+  </div>
+
+  <!-- 3 REACTIVITY -->
+  <h2 class="sec"><span class="em">📶</span>3 · The Reactivity Series</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Metals ranked by how readily they react: <b>K &gt; Na &gt; Ca &gt; Mg &gt; Al &gt; Zn &gt; Fe &gt; Pb &gt; (H) &gt; Cu &gt; Hg &gt; Ag &gt; Au</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why it predicts everything</div><div class="txt">The series is really an <b>electron-giving ranking</b>. Whoever gives electrons more easily wins every contest: displaces lower metals, releases H₂ from acids, corrodes first.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Above H → releases hydrogen from acids. Higher metal <b>displaces</b> lower from its salt. Top metals never occur free; bottom metals (Au, Ag) occur native.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Predicting reactions, choosing extraction methods, galvanising logic, thermite welding.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Most reactive metal in options" (usually K/Na). "Least reactive" (Au). "Can Cu displace Zn? No." H is the reference line.</div></div>
+    </div>
+  </div>
+
+  <!-- 4 IONIC -->
+  <h2 class="sec"><span class="em">🔗</span>4 · Ionic Bonding</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Metals <b>lose</b> electrons (→ cations), non-metals <b>gain</b> them (→ anions); the electrostatic attraction between them is the <b>ionic bond</b>.</div></div>
+      <div class="row"><div class="lab l-why">Why the transfer happens</div><div class="txt">Both atoms want a full outer shell. Na (2,8,1) dumps one electron; Cl (2,8,7) grabs it — both reach stable octets and the resulting Na⁺Cl⁻ pair locks together.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Ionic compounds are hard crystals, have <b>high melting points</b>, dissolve in water and conduct <b>only when molten or dissolved</b> (never as solids).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Table salt, washing soda, most salts and metal oxides.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Metals form + ions." "Ionic compounds don't conduct as solids." "High melting points." NaCl electron-transfer diagram.</div></div>
+    </div>
+  </div>
+
+  <!-- 5 EXTRACTION -->
+  <h2 class="sec"><span class="em">⛏️</span>5 · Extraction of Metals</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Getting metal from its <b>ore</b>. The method matches the metal's <b>reactivity</b>: electrolysis (top), carbon reduction (middle), heating alone (bottom).</div></div>
+      <div class="row"><div class="lab l-why">Why three methods</div><div class="txt">The harder a metal grips its compound, the more force is needed to free it. Na/Al bond so strongly that only <b>electricity</b> can rip them out; Fe/Zn yield to hot <b>carbon</b>; Hg lets go with mere <b>heat</b>.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Roasting</b> = sulphide ore + excess air; <b>calcination</b> = carbonate ore, limited air. Then reduce the oxide. <b>Thermite:</b> Fe₂O₃ + 2Al → 2Fe + Al₂O₃ (rail welding).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Bauxite→Al smelters, haematite→Fe blast furnaces, cinnabar→Hg, rail-track welding.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">Ore matching (bauxite-Al, haematite-Fe, cinnabar-Hg, galena-Pb). "Na extracted by electrolysis." "Roasting vs calcination." Thermite reaction use.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Reactivity</th><th>Metals</th><th>Extraction method</th></tr>
+      <tr><td class="h">High (top)</td><td>K, Na, Ca, Mg, Al</td><td>Electrolysis of molten compound</td></tr>
+      <tr><td class="h">Middle</td><td>Zn, Fe, Pb, Cu</td><td>Reduction of oxide with carbon</td></tr>
+      <tr><td class="h">Low (bottom)</td><td>Hg; Ag, Au</td><td>Heating alone; found native</td></tr>
+    </table>
+  </div>
+
+  <!-- 6 CORROSION -->
+  <h2 class="sec"><span class="em">🦀</span>6 · Corrosion</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Slow eating-away of metals by air/moisture. <b>Iron rusts</b> (Fe₂O₃·xH₂O), copper greens, silver blackens.</div></div>
+      <div class="row"><div class="lab l-why">Why iron needs BOTH air and water</div><div class="txt">Rusting is an electrochemical process: oxygen is the oxidiser, but water is the medium that carries ions. Remove either (oil layer, dry air) and rust cannot form.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Prevention: paint, oil, grease, chrome plating, <b>galvanising</b> (zinc coat) and alloying (stainless steel). Zinc protects <b>sacrificially</b> — being more reactive, it corrodes first even if scratched.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Bridges, car bodies, ship hulls, water pipes, the green Statue of Liberty.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Rust needs air + moisture." "Rust = Fe₂O₃·xH₂O." "Copper → green basic carbonate; silver → black sulphide." "Galvanisation = zinc coat, sacrificial."</div></div>
+    </div>
+  </div>
+
+  <!-- 7 ALLOYS -->
+  <h2 class="sec"><span class="em">🥇</span>7 · Alloys</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">An <b>alloy</b> is a homogeneous mixture of a metal with other metal(s) or carbon — engineered for better properties.</div></div>
+      <div class="row"><div class="lab l-why">Why alloys are harder</div><div class="txt">Foreign atoms of a different size <b>disturb the neat layers</b> of the pure metal so they can't slide — the alloy becomes harder and stronger than its ingredients.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Steel</b> = Fe+C; <b>stainless steel</b> = Fe+Cr+Ni; <b>brass</b> = Cu+Zn; <b>bronze</b> = Cu+Sn; <b>solder</b> = Pb+Sn; <b>amalgam</b> = metal+Hg. 22K gold = gold + Cu/Ag for hardness.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Utensils, statues, coins, electrical solder, dental fillings, jewellery.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">Alloy matching is a guaranteed question: brass/bronze/steel/solder/amalgam compositions.</div></div>
+    </div>
+    <table class="tbl">
+      <tr><th>Alloy</th><th>Composition</th><th>Use</th></tr>
+      <tr><td class="h">Steel</td><td>Fe + C</td><td>Construction</td></tr>
+      <tr><td class="h">Stainless steel</td><td>Fe + Cr + Ni</td><td>Utensils, surgical tools</td></tr>
+      <tr><td class="h">Brass</td><td>Cu + Zn</td><td>Fittings, instruments</td></tr>
+      <tr><td class="h">Bronze</td><td>Cu + Sn</td><td>Statues, medals, bells</td></tr>
+      <tr><td class="h">Solder</td><td>Pb + Sn</td><td>Joining wires</td></tr>
+      <tr><td class="h">Amalgam</td><td>Metal + Hg</td><td>Dental fillings</td></tr>
+    </table>
+  </div>
+
+  <!-- 8 IMPORTANT METALS -->
+  <h2 class="sec"><span class="em">⭐</span>8 · Important Metals &amp; Exceptions</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">The static-GK layer of this chapter: record-holders, abundances and the exception list examiners recycle every year.</div></div>
+      <div class="row"><div class="lab l-why">Why exceptions are tested</div><div class="txt">Rules are easy; <b>exceptions separate rankers</b>. Every "which of the following is NOT…" question lives here.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>Mercury</b> liquid metal; <b>bromine</b> liquid non-metal; <b>Al</b> most abundant metal; <b>O</b> most abundant element; <b>tungsten</b> highest m.p.; <b>Na/K</b> knife-cuttable, kerosene-stored; <b>graphite</b> conducts; <b>diamond</b> hardest.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Thermometers (Hg), bulb filaments (W), aircraft (Al), pencils (graphite).</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">Every fact in the How row is a repeated one-mark PYQ. Learn them as a single "exceptions card".</div></div>
+    </div>
+  </div>
+
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 8 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+  <h2 class="sec"><span class="em">📊</span>Comparison &amp; Reference Tables</h2>
+  <div class="sec-sub">The pairs examiners swap, plus the reactivity series, ores and alloys master lists.</div>
+
+  <div class="card"><h3>Metals vs Non-metals</h3>
+  <table class="tbl">
+    <tr><th>Property</th><th>Metals</th><th>Non-metals</th></tr>
+    <tr><td class="h">Appearance</td><td>Lustrous (shiny)</td><td>Dull (except iodine)</td></tr>
+    <tr><td class="h">State</td><td>Solid (except Hg)</td><td>Solid/gas (Br liquid)</td></tr>
+    <tr><td class="h">Malleability</td><td>Malleable &amp; ductile</td><td>Brittle</td></tr>
+    <tr><td class="h">Conduction</td><td>Good (heat &amp; electricity)</td><td>Poor (except graphite)</td></tr>
+    <tr><td class="h">Ions formed</td><td>Positive (cations)</td><td>Negative (anions)</td></tr>
+    <tr><td class="h">Oxides</td><td>Basic</td><td>Acidic</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Reactivity Series (memorise!)</h3>
+  <table class="tbl">
+    <tr><th>Rank</th><th>Metal</th><th>Key behaviour</th></tr>
+    <tr><td class="h">1–2</td><td>Potassium, Sodium</td><td>Violent with cold water; kerosene storage</td></tr>
+    <tr><td class="h">3–5</td><td>Calcium, Magnesium, Aluminium</td><td>React with water/steam; electrolysis extraction</td></tr>
+    <tr><td class="h">6–8</td><td>Zinc, Iron, Lead</td><td>React with acids/steam; carbon reduction</td></tr>
+    <tr><td class="h">—</td><td><b>(Hydrogen)</b></td><td>Reference line</td></tr>
+    <tr><td class="h">9–12</td><td>Copper, Mercury, Silver, Gold</td><td>No H₂ from acids; found native</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Ores Master List</h3>
+  <table class="tbl">
+    <tr><th>Ore</th><th>Formula (key)</th><th>Metal</th></tr>
+    <tr><td class="h">Bauxite</td><td>Al₂O₃·2H₂O</td><td>Aluminium</td></tr>
+    <tr><td class="h">Haematite</td><td>Fe₂O₃</td><td>Iron</td></tr>
+    <tr><td class="h">Cinnabar</td><td>HgS</td><td>Mercury</td></tr>
+    <tr><td class="h">Galena</td><td>PbS</td><td>Lead</td></tr>
+    <tr><td class="h">Rock salt</td><td>NaCl</td><td>Sodium</td></tr>
+    <tr><td class="h">Zinc blende</td><td>ZnS</td><td>Zinc</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Roasting vs Calcination</h3>
+  <table class="tbl">
+    <tr><th>Feature</th><th>Roasting</th><th>Calcination</th></tr>
+    <tr><td class="h">Ore type</td><td>Sulphide (ZnS)</td><td>Carbonate (ZnCO₃)</td></tr>
+    <tr><td class="h">Air</td><td>Excess air</td><td>Limited/no air</td></tr>
+    <tr><td class="h">By-product</td><td>SO₂</td><td>CO₂</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Alloys Master List</h3>
+  <table class="tbl">
+    <tr><th>Alloy</th><th>Composition</th><th>Use</th></tr>
+    <tr><td class="h">Steel</td><td>Fe + C</td><td>Buildings, tools</td></tr>
+    <tr><td class="h">Stainless steel</td><td>Fe + Cr + Ni</td><td>Utensils (rust-free)</td></tr>
+    <tr><td class="h">Brass</td><td>Cu + Zn</td><td>Fittings, instruments</td></tr>
+    <tr><td class="h">Bronze</td><td>Cu + Sn</td><td>Statues, bells</td></tr>
+    <tr><td class="h">Solder</td><td>Pb + Sn</td><td>Wire joints</td></tr>
+    <tr><td class="h">Amalgam</td><td>Metal + Hg</td><td>Dental fillings</td></tr>
+    <tr><td class="h">22K gold</td><td>Au + Cu/Ag</td><td>Jewellery (hardness)</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Corrosion Colours</h3>
+  <table class="tbl">
+    <tr><th>Metal</th><th>Corrosion product</th><th>Colour</th></tr>
+    <tr><td class="h">Iron</td><td>Fe₂O₃·xH₂O (rust)</td><td>Red-brown</td></tr>
+    <tr><td class="h">Copper</td><td>Basic copper carbonate</td><td>Green</td></tr>
+    <tr><td class="h">Silver</td><td>Silver sulphide (Ag₂S)</td><td>Black</td></tr>
+    <tr><td class="h">Aluminium</td><td>Al₂O₃ (protective!)</td><td>Dull white layer</td></tr>
+  </table></div>
+</div>
+<div class="panel" id="p-memory">
+  <h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+  <div class="sec-sub">One hook per recall-worthy fact. Concept → hook → recall question.</div>
+
+  <div class="mem-card"><div class="cn">Reactivity series <span class="tag">mnemonic</span></div>
+    <div class="hk">"<b>K</b>ind <b>Na</b>na <b>Ca</b>me <b>Mg</b>(making) <b>Al</b>oo <b>Zn</b>(zesty) <b>Fe</b>(fried) <b>Pb</b>(properly), <b>H</b>alting <b>Cu</b>(curry) <b>Hg</b>(hungry) <b>Ag</b>(after) <b>Au</b>(August)." K Na Ca Mg Al Zn Fe Pb H Cu Hg Ag Au.</div>
+    <div class="rq">Q: Which is more reactive, Zn or Cu? → Zn.</div></div>
+
+  <div class="mem-card"><div class="cn">தமிழ் — உலோகம் <span class="tag">tamil hook</span></div>
+    <div class="hk">"<b>உலோகம் = மின்சாரம் ஓடும், தட்டினால் ஒலிக்கும், வளையும்</b>." உலோகம் எலக்ட்ரான்களை <b>இழக்கும்</b> (positive ion); அலோகம் <b>பெறும்</b>.</div>
+    <div class="rq">Q: உலோகங்கள் எலக்ட்ரானை இழக்குமா பெறுமா? → இழக்கும்.</div></div>
+
+  <div class="mem-card"><div class="cn">Liquid pair <span class="tag">peg</span></div>
+    <div class="hk">"<b>Mercury the metal, Bromine the non-metal</b> — the only two liquids at room temperature." Hg in thermometers, Br₂ red-brown.</div>
+    <div class="rq">Q: Only liquid non-metal? → Bromine.</div></div>
+
+  <div class="mem-card"><div class="cn">Gold records <span class="tag">peg</span></div>
+    <div class="hk">"<b>Gold bends best</b>" — most malleable AND most ductile. But <b>silver conducts best</b>. Don't give gold the conductivity crown.</div>
+    <div class="rq">Q: Best conductor of electricity? → Silver.</div></div>
+
+  <div class="mem-card"><div class="cn">Water ladder <span class="tag">chain</span></div>
+    <div class="hk">"<b>Cold-Hot-Steam-Never</b>: Na cold, Mg hot, Fe steam, Cu never." Reactivity decides which water a metal fights.</div>
+    <div class="rq">Q: Which water does iron react with? → Steam only.</div></div>
+
+  <div class="mem-card"><div class="cn">Kerosene babies <span class="tag">funny</span></div>
+    <div class="hk">"Na &amp; K sleep in kerosene" — too reactive to face air or water. Cut them with a knife before bed.</div>
+    <div class="rq">Q: Why is sodium stored in kerosene? → Reacts violently with air/moisture.</div></div>
+
+  <div class="mem-card"><div class="cn">Amphoteric pair <span class="tag">acronym</span></div>
+    <div class="hk">"<b>A-Z of both worlds</b>": <b>A</b>l₂O₃ and <b>Z</b>nO react with acids AND bases (amphoteric).</div>
+    <div class="rq">Q: Name two amphoteric oxides. → Al₂O₃, ZnO.</div></div>
+
+  <div class="mem-card"><div class="cn">Ore matching <span class="tag">tamil hook</span></div>
+    <div class="hk">"<b>பாக்சைட்-அலுமினியம், ஹேமடைட்-இரும்பு, சின்னாபார்-பாதரசம்</b>." Bauxite-Al, Haematite-Fe, Cinnabar-Hg, Galena-Pb.</div>
+    <div class="rq">Q: Cinnabar is the ore of? → Mercury.</div></div>
+
+  <div class="mem-card"><div class="cn">Roast vs Calcine <span class="tag">word hook</span></div>
+    <div class="hk">"<b>S for S</b>: Sulphide → roaSting (air + SO₂). <b>C for C</b>: Carbonate → Calcination (CO₂, no air)."</div>
+    <div class="rq">Q: Carbonate ore heated in limited air is called? → Calcination.</div></div>
+
+  <div class="mem-card"><div class="cn">Rust recipe <span class="tag">why-hook</span></div>
+    <div class="hk">"Rust needs a <b>duet</b>: air AND water." Solo performances fail — oiled nails and dry nails never rust.</div>
+    <div class="rq">Q: Two conditions for rusting? → Oxygen + moisture.</div></div>
+
+  <div class="mem-card"><div class="cn">Corrosion colours <span class="tag">visual</span></div>
+    <div class="hk">"<b>Iron reds, copper greens, silver blackens.</b>" Rust red-brown; basic copper carbonate green; Ag₂S black.</div>
+    <div class="rq">Q: Why do silver items blacken? → Silver sulphide forms.</div></div>
+
+  <div class="mem-card"><div class="cn">Brass vs Bronze <span class="tag">letter hook</span></div>
+    <div class="hk">"Bra<b>SS</b> has <b>Z</b>inc (S-Z sound); Bron<b>ZE</b> has <b>T</b>in." Brass = Cu+Zn; Bronze = Cu+Sn.</div>
+    <div class="rq">Q: Bronze = copper + ? → Tin.</div></div>
+</div>
+<div class="panel" id="p-traps">
+  <h2 class="sec"><span class="em">⚠️</span>Exam Traps &amp; Confusion Pairs</h2>
+  <div class="sec-sub">Each has been set in real papers. Read the reality line and it dies.</div>
+
+  <div class="note trap"><span class="t">Trap 1 · Silver conducts best, not gold/copper</span>The best conductor is <b>silver</b>; copper is used in wires only because silver is costly. Gold's records are malleability/ductility.</div>
+
+  <div class="note trap"><span class="t">Trap 2 · Mercury vs Bromine</span><b>Mercury</b> = only liquid <b>metal</b>; <b>bromine</b> = only liquid <b>non-metal</b>. Options love swapping them.</div>
+
+  <div class="note trap"><span class="t">Trap 3 · Graphite conducts, diamond doesn't</span>Both are carbon, but only <b>graphite</b> has free electrons. "Diamond conducts electricity" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 4 · Metal oxides basic, non-metal oxides acidic</span>Reversing this is a standard wrong option. The exceptions are the <b>amphoteric</b> pair: Al₂O₃ and ZnO.</div>
+
+  <div class="note trap"><span class="t">Trap 5 · Copper gives NO hydrogen</span>Cu (and Ag, Au) are below H in the series — they release <b>no H₂</b> from dilute acids or water.</div>
+
+  <div class="note trap"><span class="t">Trap 6 · Displacement goes one way</span>Fe displaces Cu from CuSO₄, but Cu can <b>never</b> displace Fe (or Zn). Lower can't push out higher.</div>
+
+  <div class="note trap"><span class="t">Trap 7 · Iron reacts with steam only</span>Not cold water, not hot water — <b>steam</b>. Na/K take cold water; Mg takes hot.</div>
+
+  <div class="note trap"><span class="t">Trap 8 · Rust needs BOTH air and moisture</span>Only oxygen, or only water, is not enough. Rust = <b>Fe₂O₃·xH₂O</b>, not FeO.</div>
+
+  <div class="note trap"><span class="t">Trap 9 · Brass-Zn, Bronze-Sn</span>Brass = Cu + <b>Zn</b>; bronze = Cu + <b>Sn</b> (tin). The single most swapped alloy pair.</div>
+
+  <div class="note trap"><span class="t">Trap 10 · Roasting vs Calcination</span>Roasting = <b>sulphide + excess air</b>; calcination = <b>carbonate + limited air</b>. Match S-with-roaSting.</div>
+
+  <div class="note trap"><span class="t">Trap 11 · Most abundant: element vs metal</span><b>Oxygen</b> is the most abundant element; <b>aluminium</b> is the most abundant METAL. Questions bank on the mix-up.</div>
+
+  <div class="note trap"><span class="t">Trap 12 · Ionic solids don't conduct</span>Ionic compounds conduct only when <b>molten or dissolved</b>. "NaCl solid conducts electricity" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 13 · Aluminium's oxide protects it</span>Al is reactive, but its oxide layer <b>shields</b> it — that's why Al doesn't corrode away like iron.</div>
+
+  <div class="note trap"><span class="t">Trap 14 · Tin cans, not zinc cans</span>Food cans are <b>tin</b>-plated because tin is LESS reactive than zinc — safer with food acids.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> Gold ornaments are made of 22K, not 24K gold. <b>R:</b> Pure gold is too soft; Cu/Ag harden it. → Both true, <b>R explains A</b>.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> A galvanised bucket resists rust even when scratched. <b>R:</b> Zinc, being more reactive, corrodes in place of iron. → Both true, <b>R explains A</b>.</div>
+</div>
+<div class="panel" id="p-rapid">
+  <h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-Liners</h2>
+  <div class="sec-sub"><span class="star">★</span> = highest-frequency in exams. Tap ☆ to flag any line for your FAA revisit list.</div>
+  <div class="ol">
+    <div><span class="n">1</span><span><span class="star">★</span> Metals: lustrous, malleable, ductile, sonorous, good conductors.</span></div>
+    <div><span class="n">2</span><span><span class="star">★</span> Malleable = sheets; ductile = wires; gold is best at both.</span></div>
+    <div><span class="n">3</span><span><span class="star">★</span> Silver is the best conductor; copper second (used for cost).</span></div>
+    <div><span class="n">4</span><span><span class="star">★</span> Mercury = only liquid metal; bromine = only liquid non-metal.</span></div>
+    <div><span class="n">5</span><span><span class="star">★</span> Graphite is the conducting non-metal; diamond is the hardest substance.</span></div>
+    <div><span class="n">6</span><span>Iodine is a lustrous non-metal; Na/K are knife-soft metals.</span></div>
+    <div><span class="n">7</span><span><span class="star">★</span> Na and K are stored under kerosene.</span></div>
+    <div><span class="n">8</span><span><span class="star">★</span> Metal oxides basic; non-metal oxides acidic.</span></div>
+    <div><span class="n">9</span><span><span class="star">★</span> Amphoteric oxides: Al₂O₃ and ZnO.</span></div>
+    <div><span class="n">10</span><span>Water ladder: Na-cold, Mg-hot, Fe-steam, Cu-never.</span></div>
+    <div><span class="n">11</span><span><span class="star">★</span> Metal + dilute acid → salt + H₂ (only metals above H).</span></div>
+    <div><span class="n">12</span><span>Cu, Ag, Au give no H₂ from dilute acids.</span></div>
+    <div><span class="n">13</span><span><span class="star">★</span> Reactivity series: K Na Ca Mg Al Zn Fe Pb (H) Cu Hg Ag Au.</span></div>
+    <div><span class="n">14</span><span><span class="star">★</span> Higher metal displaces lower: Fe + CuSO₄ → FeSO₄ + Cu.</span></div>
+    <div><span class="n">15</span><span>Blue CuSO₄ fades to green when an iron nail is dipped.</span></div>
+    <div><span class="n">16</span><span>Au, Ag, Pt occur native (free) in nature.</span></div>
+    <div><span class="n">17</span><span><span class="star">★</span> Metals lose electrons → cations; non-metals gain → anions.</span></div>
+    <div><span class="n">18</span><span><span class="star">★</span> Ionic compounds: high m.p., conduct only when molten/dissolved.</span></div>
+    <div><span class="n">19</span><span>Ore = mineral worth extracting; impurity = gangue.</span></div>
+    <div><span class="n">20</span><span><span class="star">★</span> Ores: bauxite-Al, haematite-Fe, cinnabar-Hg, galena-Pb.</span></div>
+    <div><span class="n">21</span><span><span class="star">★</span> Extraction: top→electrolysis; middle→carbon reduction; bottom→heat alone.</span></div>
+    <div><span class="n">22</span><span><span class="star">★</span> Roasting = sulphide + air; calcination = carbonate, no air.</span></div>
+    <div><span class="n">23</span><span>Thermite: Fe₂O₃ + 2Al → 2Fe + Al₂O₃ (rail welding).</span></div>
+    <div><span class="n">24</span><span><span class="star">★</span> Rust = Fe₂O₃·xH₂O; needs BOTH air and moisture.</span></div>
+    <div><span class="n">25</span><span>Copper turns green (basic carbonate); silver blackens (Ag₂S).</span></div>
+    <div><span class="n">26</span><span><span class="star">★</span> Galvanisation = zinc coating; protects sacrificially even when scratched.</span></div>
+    <div><span class="n">27</span><span>Aluminium is protected by its own oxide layer.</span></div>
+    <div><span class="n">28</span><span>Rust prevention: paint, oil, grease, plating, alloying.</span></div>
+    <div><span class="n">29</span><span><span class="star">★</span> Steel = Fe+C; stainless steel = Fe+Cr+Ni.</span></div>
+    <div><span class="n">30</span><span><span class="star">★</span> Brass = Cu+Zn; bronze = Cu+Sn.</span></div>
+    <div><span class="n">31</span><span>Solder = Pb+Sn; amalgam = metal + Hg.</span></div>
+    <div><span class="n">32</span><span>22K jewellery gold = Au + Cu/Ag (pure gold too soft).</span></div>
+    <div><span class="n">33</span><span><span class="star">★</span> Aluminium = most abundant metal; oxygen = most abundant element.</span></div>
+    <div><span class="n">34</span><span>Tungsten has the highest melting point (bulb filaments).</span></div>
+    <div><span class="n">35</span><span>Iron is the most widely used metal.</span></div>
+    <div><span class="n">36</span><span>Food cans are tin-plated (tin is less reactive than zinc).</span></div>
+    <div><span class="n">37</span><span>School bells ring because metals are sonorous.</span></div>
+    <div><span class="n">38</span><span>Alloys are harder than pure metals (layers can't slide).</span></div>
+    <div><span class="n">39</span><span>Copper vessels are tinned ('kalai') to stop food reacting.</span></div>
+    <div><span class="n">40</span><span>Hydrogen 'pop' test confirms the gas from metal + acid.</span></div>
+    <div><span class="n">41</span><span>CO₂/SO₂ dissolve in water → acids (acid rain link).</span></div>
+    <div><span class="n">42</span><span>Sodium's reaction with water is exothermic → H₂ may catch fire.</span></div>
+    <div><span class="n">43</span><span>Metals near the top can never be reduced by carbon.</span></div>
+    <div><span class="n">44</span><span>Mercury is extracted by simply heating cinnabar (HgS).</span></div>
+    <div><span class="n">45</span><span>Non-metals like oxygen &amp; nitrogen make up most of the air.</span></div>
+  </div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Metals &amp; Non-metals Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_chem_metals_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:40;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:60;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA (8 hubs × 4 leaves) ===== */
+var MAP=[
+ {id:0,cat:null,icon:"🔩",label:"Metals &\nNon-metals",fact:"Metals are lustrous, malleable conductors that form positive ions; non-metals are the opposite. Reactivity, bonding, extraction and alloys follow from that split."},
+ {id:1,cat:0,icon:"✨",label:"Physical\nProperties",fact:"Metals: lustre, malleability, ductility, conduction, sonority. Non-metals: dull, brittle, insulators — with famous exceptions."},
+ {id:2,cat:0,icon:"⚗️",label:"Chemical\nReactions",fact:"Metals react with oxygen (basic oxides), water (H₂) and acids (H₂); non-metals form acidic oxides."},
+ {id:3,cat:0,icon:"📶",label:"Reactivity\nSeries",fact:"Metals ranked by reactivity: K > Na > Ca > Mg > Al > Zn > Fe > Pb > H > Cu > Hg > Ag > Au."},
+ {id:4,cat:0,icon:"🔗",label:"Ionic\nBonding",fact:"Metals lose electrons (cations), non-metals gain them (anions); the attraction forms ionic compounds like NaCl."},
+ {id:5,cat:0,icon:"⛏️",label:"Extraction of\nMetals",fact:"Ores are refined by methods matched to reactivity: electrolysis (top), carbon reduction (middle), heating alone (bottom)."},
+ {id:6,cat:0,icon:"🦀",label:"Corrosion",fact:"Metals are eaten away by air/moisture — iron rusts, copper turns green, silver blackens. Prevented by paint, galvanising, alloying."},
+ {id:7,cat:0,icon:"🥇",label:"Alloys",fact:"Mixtures of metals (or metal + non-metal) with improved properties — steel, brass, bronze, solder, amalgam."},
+ {id:8,cat:0,icon:"⭐",label:"Important Metals\n& Exceptions",fact:"The exam-favourite facts: liquid mercury, sodium in kerosene, most abundant metals, and the famous exceptions."},
+ /* 1 Physical */
+ {id:101,cat:1,icon:"💫",label:"Lustre &\nsonority",fact:"Metals shine (metallic lustre) and ring when struck (sonorous) — why temple bells are metal."},
+ {id:102,cat:1,icon:"🔨",label:"Malleable &\nductile",fact:"Malleable = hammered into sheets; ductile = drawn into wires. Gold is the most malleable and ductile."},
+ {id:103,cat:1,icon:"⚡",label:"Conductors",fact:"Metals conduct heat and electricity (free electrons). Silver is the best conductor; copper is next."},
+ {id:104,cat:1,icon:"❗",label:"Exceptions",fact:"Graphite (non-metal) conducts; diamond is hardest; iodine is lustrous; mercury is liquid; sodium is soft."},
+ /* 2 Chemical */
+ {id:201,cat:2,icon:"🔥",label:"With oxygen",fact:"Metal + O₂ → metal oxide (basic). Non-metal + O₂ → acidic oxide (CO₂, SO₂). Some oxides (Al₂O₃, ZnO) are amphoteric."},
+ {id:202,cat:2,icon:"💧",label:"With water",fact:"K & Na react violently with cold water (→ H₂ + hydroxide); Mg with hot water; Fe with steam; Cu/Ag/Au never."},
+ {id:203,cat:2,icon:"🧪",label:"With acids",fact:"Metal + dilute acid → salt + H₂ (metals above H in the series). Cu, Ag, Au don't release H₂ from dilute acids."},
+ {id:204,cat:2,icon:"🔄",label:"Displacement",fact:"A more reactive metal displaces a less reactive one from its salt solution: Fe + CuSO₄ → FeSO₄ + Cu."},
+ /* 3 Reactivity */
+ {id:301,cat:3,icon:"📶",label:"The series",fact:"K Na Ca Mg Al | Zn Fe Pb | (H) | Cu Hg Ag Au — most to least reactive. Hydrogen is the reference line."},
+ {id:302,cat:3,icon:"🔝",label:"Top metals",fact:"K and Na are so reactive they're stored under kerosene and never found free in nature."},
+ {id:303,cat:3,icon:"🔻",label:"Bottom metals",fact:"Cu, Ag, Au are least reactive — found native (free) in nature; gold never corrodes."},
+ {id:304,cat:3,icon:"🧭",label:"Predicting\nreactions",fact:"Above H → releases H₂ from acids; higher metal displaces lower from salt solution. The series predicts everything."},
+ /* 4 Ionic */
+ {id:401,cat:4,icon:"➕",label:"Cations &\nanions",fact:"Metals LOSE electrons → positive cations (Na⁺); non-metals GAIN electrons → negative anions (Cl⁻)."},
+ {id:402,cat:4,icon:"🧂",label:"NaCl\nformation",fact:"Na gives its 1 outer electron to Cl; the Na⁺ and Cl⁻ ions attract strongly → sodium chloride crystal."},
+ {id:403,cat:4,icon:"💎",label:"Properties",fact:"Ionic compounds: hard crystals, high melting/boiling points, soluble in water, conduct when molten or dissolved (NOT solid)."},
+ {id:404,cat:4,icon:"🚫",label:"Why solids\ndon't conduct",fact:"In a solid the ions are locked in a lattice; melt or dissolve it and the ions move freely — then it conducts."},
+ /* 5 Extraction */
+ {id:501,cat:5,icon:"🪨",label:"Minerals\n& ores",fact:"A mineral contains metal; an ORE is a mineral from which metal can be extracted profitably. Bauxite→Al, haematite→Fe."},
+ {id:502,cat:5,icon:"⚡",label:"Electrolysis\n(top)",fact:"Highly reactive metals (K, Na, Ca, Mg, Al) are extracted by electrolysis of their molten compounds."},
+ {id:503,cat:5,icon:"🔥",label:"Carbon reduction\n(middle)",fact:"Zn, Fe, Pb, Cu oxides are reduced by heating with carbon (coke): ZnO + C → Zn + CO."},
+ {id:504,cat:5,icon:"♨️",label:"Low & native\n(bottom)",fact:"HgS is converted by heating alone; Ag and Au occur free. Roasting (sulphide) and calcination (carbonate) prepare ores."},
+ /* 6 Corrosion */
+ {id:601,cat:6,icon:"🧲",label:"Rusting\nof iron",fact:"Iron + oxygen + MOISTURE → rust (hydrated iron oxide, Fe₂O₃·xH₂O). Both air and water are needed."},
+ {id:602,cat:6,icon:"🟢",label:"Other\ncorrosion",fact:"Copper turns green (basic copper carbonate); silver blackens (silver sulphide); aluminium forms a protective oxide layer."},
+ {id:603,cat:6,icon:"🛡️",label:"Prevention",fact:"Painting, oiling, greasing, chrome plating, galvanising (zinc coat), and alloying (stainless steel)."},
+ {id:604,cat:6,icon:"🧪",label:"Galvanisation\n& sacrifice",fact:"Zinc coating protects iron even when scratched — zinc is more reactive and corrodes first (sacrificial protection)."},
+ /* 7 Alloys */
+ {id:701,cat:7,icon:"🥄",label:"What & why",fact:"An alloy is a homogeneous mixture of metals (or metal + C). Alloying increases strength/hardness and resists corrosion."},
+ {id:702,cat:7,icon:"🔩",label:"Iron alloys",fact:"Steel = Fe + C; stainless steel = Fe + Cr + Ni (doesn't rust)."},
+ {id:703,cat:7,icon:"🎺",label:"Copper alloys",fact:"Brass = Cu + Zn; bronze = Cu + Sn (tin). Both harder than pure copper."},
+ {id:704,cat:7,icon:"🦷",label:"Solder &\namalgam",fact:"Solder = Pb + Sn (low melting point, joins wires); amalgam = any metal + mercury (dental fillings)."},
+ /* 8 Important metals */
+ {id:801,cat:8,icon:"🌡️",label:"Liquid\nmetals",fact:"Mercury is the only liquid metal at room temperature; bromine is the only liquid non-metal."},
+ {id:802,cat:8,icon:"🌍",label:"Abundance",fact:"Aluminium is the most abundant METAL in Earth's crust; oxygen the most abundant element; iron most used."},
+ {id:803,cat:8,icon:"🔪",label:"Soft metals",fact:"Sodium and potassium are soft enough to cut with a knife — and stored under kerosene to block air/water."},
+ {id:804,cat:8,icon:"🏆",label:"Famous\nexceptions",fact:"Graphite conducts (non-metal); diamond is hardest natural substance; gold/silver most malleable; tungsten has the highest melting point."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7,8];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK (60) ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"The property of metals to be beaten into thin sheets is:",o:["Ductility","Malleability","Sonority","Lustre"],a:1,e:"Malleability = sheets; ductility = wires."},
+ {t:"Recall · TNPSC",q:"The property of metals to be drawn into wires is:",o:["Malleability","Ductility","Conductivity","Hardness"],a:1,e:"Ductility. Gold is the most ductile metal."},
+ {t:"Recall · RRB",q:"The most malleable and ductile metal is:",o:["Silver","Copper","Gold","Iron"],a:2,e:"Gold — 1 g can be drawn into a ~2 km wire."},
+ {t:"Recall · SSC",q:"The best conductor of electricity is:",o:["Copper","Gold","Silver","Aluminium"],a:2,e:"Silver is the best conductor; copper is used for cost."},
+ {t:"Conceptual · Banking",q:"Metals are sonorous, which means they:",o:["Shine","Ring when struck","Melt easily","Rust"],a:1,e:"Sonority = producing a ringing sound — why bells are metal."},
+ {t:"Recall · TNPSC",q:"The only metal that is liquid at room temperature is:",o:["Gallium","Mercury","Sodium","Bromine"],a:1,e:"Mercury. (Bromine is the liquid NON-metal.)"},
+ {t:"Recall · SSC",q:"The only non-metal that is liquid at room temperature is:",o:["Iodine","Chlorine","Bromine","Sulphur"],a:2,e:"Bromine — a red-brown liquid."},
+ {t:"Conceptual · RRB",q:"Which non-metal is a good conductor of electricity?",o:["Sulphur","Graphite","Phosphorus","Iodine"],a:1,e:"Graphite (a carbon form) conducts — the famous exception."},
+ {t:"Recall · Banking",q:"The hardest natural substance is:",o:["Iron","Graphite","Diamond","Tungsten"],a:2,e:"Diamond — a form of carbon (a non-metal)."},
+ {t:"Recall · SSC",q:"Which metals can be cut with a knife?",o:["Iron and copper","Sodium and potassium","Gold and silver","Zinc and lead"],a:1,e:"Na and K are soft alkali metals."},
+ {t:"Conceptual · TNPSC",q:"Sodium is stored under kerosene because it:",o:["Melts in air","Reacts violently with air and moisture","Evaporates","Turns black"],a:1,e:"Kerosene blocks contact with oxygen and water vapour."},
+ {t:"Recall · SSC",q:"Metal oxides are generally:",o:["Acidic","Basic","Neutral","Amphoteric always"],a:1,e:"Metal oxides are basic; non-metal oxides are acidic."},
+ {t:"Conceptual · RRB",q:"Which oxides are amphoteric (react with both acids and bases)?",o:["Na₂O and K₂O","Al₂O₃ and ZnO","CO₂ and SO₂","MgO and CaO"],a:1,e:"Aluminium and zinc oxides are amphoteric."},
+ {t:"Recall · Banking",q:"Which metal reacts violently with cold water?",o:["Iron","Copper","Sodium","Zinc"],a:2,e:"Na (and K) react violently with cold water, releasing H₂."},
+ {t:"Conceptual · SSC",q:"Iron reacts with which form of water?",o:["Cold water","Hot water","Steam","None"],a:2,e:"Fe reacts only with steam: 3Fe + 4H₂O → Fe₃O₄ + 4H₂."},
+ {t:"Recall · TNPSC",q:"Which metal does NOT react with water at all?",o:["Magnesium","Calcium","Copper","Potassium"],a:2,e:"Cu (also Ag, Au) never reacts with water."},
+ {t:"Recall · SSC",q:"Metal + dilute acid produces salt and:",o:["Oxygen","Hydrogen","CO₂","Chlorine"],a:1,e:"Metals above hydrogen release H₂ from dilute acids."},
+ {t:"Conceptual · RRB",q:"Which metal does NOT liberate hydrogen from dilute HCl?",o:["Zinc","Iron","Magnesium","Copper"],a:3,e:"Cu is below H in the reactivity series — no H₂."},
+ {t:"Application · SSC",q:"Fe + CuSO₄ → FeSO₄ + Cu is an example of:",o:["Combination","Displacement","Decomposition","Neutralisation"],a:1,e:"More reactive Fe displaces Cu from its salt solution."},
+ {t:"Conceptual · Banking",q:"An iron nail dipped in copper sulphate solution becomes:",o:["Green","Brown-coated (copper deposits)","Black","White"],a:1,e:"Cu deposits on the nail; the blue solution fades to green (FeSO₄)."},
+ {t:"Recall · TNPSC",q:"The most reactive metal among these is:",o:["Zinc","Potassium","Iron","Copper"],a:1,e:"Order: K > Na > Ca > Mg > Al > Zn > Fe > Pb > Cu."},
+ {t:"Recall · SSC",q:"The least reactive metal among these is:",o:["Gold","Iron","Zinc","Magnesium"],a:0,e:"Gold sits at the bottom — found free in nature, never corrodes."},
+ {t:"Conceptual · RRB",q:"Metals found in the free (native) state in nature are:",o:["Na and K","Au and Ag","Fe and Zn","Ca and Mg"],a:1,e:"The least reactive metals (Au, Ag, Pt) occur uncombined."},
+ {t:"Conceptual · SSC",q:"Hydrogen is placed in the reactivity series because:",o:["It is a metal","Metals above it displace it from acids","It conducts","It is lightest"],a:1,e:"H is the reference: metals above it release H₂ from acids."},
+ {t:"Recall · Banking",q:"When metals react, they form ions by:",o:["Gaining electrons","Losing electrons","Sharing electrons","Gaining protons"],a:1,e:"Metals lose electrons → positive cations."},
+ {t:"Recall · TNPSC",q:"Non-metals form ions by:",o:["Losing electrons","Gaining electrons","Losing protons","Sharing only"],a:1,e:"Non-metals gain electrons → negative anions."},
+ {t:"Conceptual · SSC",q:"In NaCl formation, sodium:",o:["Gains one electron","Loses one electron","Shares electrons","Loses a proton"],a:1,e:"Na → Na⁺ + e⁻; chlorine gains that electron → Cl⁻."},
+ {t:"Conceptual · RRB",q:"Ionic compounds conduct electricity:",o:["In solid state","When molten or in solution","Never","Only when cold"],a:1,e:"Ions are free to move only when molten/dissolved."},
+ {t:"Recall · SSC",q:"Ionic compounds generally have:",o:["Low melting points","High melting points","No fixed shape","Gaseous nature"],a:1,e:"Strong ionic attraction → high melting/boiling points."},
+ {t:"Recall · Banking",q:"A mineral from which metal can be profitably extracted is called:",o:["Rock","Ore","Alloy","Gangue"],a:1,e:"An ore is a workable mineral; impurities are gangue."},
+ {t:"Recall · TNPSC",q:"The main ore of aluminium is:",o:["Haematite","Bauxite","Galena","Cinnabar"],a:1,e:"Bauxite → Al. (Haematite → Fe; galena → Pb; cinnabar → Hg.)"},
+ {t:"Recall · SSC",q:"The main ore of iron is:",o:["Bauxite","Haematite","Cinnabar","Rock salt"],a:1,e:"Haematite (Fe₂O₃) is the chief iron ore."},
+ {t:"Conceptual · RRB",q:"Highly reactive metals (Na, Al) are extracted by:",o:["Carbon reduction","Electrolysis","Heating alone","Washing"],a:1,e:"Electrolysis of molten compounds — carbon can't reduce them."},
+ {t:"Conceptual · SSC",q:"Middle-reactivity metals (Zn, Fe) are extracted by:",o:["Electrolysis","Reduction with carbon","Heating alone","Distillation"],a:1,e:"Their oxides are reduced by heating with carbon (coke)."},
+ {t:"Recall · Banking",q:"Heating a sulphide ore in excess air is called:",o:["Calcination","Roasting","Smelting","Refining"],a:1,e:"Roasting = sulphide + air; calcination = carbonate heated without air."},
+ {t:"Recall · TNPSC",q:"Heating a carbonate ore in limited air is called:",o:["Roasting","Calcination","Galvanising","Annealing"],a:1,e:"Calcination drives off CO₂ from carbonate ores."},
+ {t:"Recall · SSC",q:"Rusting of iron requires:",o:["Only oxygen","Only water","Both oxygen and moisture","Only CO₂"],a:2,e:"Rust (Fe₂O₃·xH₂O) needs BOTH air and water."},
+ {t:"Recall · RRB",q:"The chemical composition of rust is:",o:["FeO","Fe₂O₃·xH₂O","FeS","FeCO₃"],a:1,e:"Rust is hydrated iron(III) oxide."},
+ {t:"Conceptual · SSC",q:"Copper vessels slowly turn green due to formation of:",o:["Copper oxide","Basic copper carbonate","Copper sulphide","Copper nitrate"],a:1,e:"Cu + moist air + CO₂ → green basic copper carbonate."},
+ {t:"Conceptual · Banking",q:"Silver articles blacken over time due to formation of:",o:["Silver oxide","Silver sulphide","Silver chloride","Silver nitrate"],a:1,e:"Ag reacts with H₂S in air → black Ag₂S."},
+ {t:"Recall · TNPSC",q:"Coating iron with a layer of zinc is called:",o:["Alloying","Galvanisation","Anodising","Soldering"],a:1,e:"Galvanisation protects iron even if the coat is scratched."},
+ {t:"Conceptual · SSC",q:"Galvanised iron stays protected even when scratched because:",o:["Paint covers it","Zinc is more reactive and corrodes first","Iron becomes noble","Water can't touch it"],a:1,e:"Sacrificial protection — zinc oxidises in place of iron."},
+ {t:"Conceptual · RRB",q:"Aluminium resists corrosion because:",o:["It is unreactive","A protective oxide layer forms on it","It contains zinc","It repels water"],a:1,e:"A thin, tough Al₂O₃ layer seals the surface."},
+ {t:"Recall · SSC",q:"An alloy is:",o:["A pure metal","A homogeneous mixture of metals","A compound of two non-metals","An ore"],a:1,e:"An alloy is a metal mixed with other metal(s) or carbon."},
+ {t:"Recall · Banking",q:"Brass is an alloy of:",o:["Cu + Sn","Cu + Zn","Fe + C","Pb + Sn"],a:1,e:"Brass = copper + zinc. Bronze = copper + tin."},
+ {t:"Recall · TNPSC",q:"Bronze is an alloy of:",o:["Cu + Zn","Cu + Sn","Fe + Cr","Al + Mg"],a:1,e:"Bronze = copper + tin — the alloy of statues and medals."},
+ {t:"Recall · SSC",q:"Stainless steel contains iron along with:",o:["Zinc and lead","Chromium and nickel","Copper and tin","Carbon only"],a:1,e:"Fe + Cr + Ni = stainless steel (rust-resistant)."},
+ {t:"Recall · RRB",q:"Solder, used for joining electrical wires, is an alloy of:",o:["Cu + Zn","Pb + Sn","Fe + C","Ag + Au"],a:1,e:"Solder = lead + tin; its low melting point makes joining easy."},
+ {t:"Recall · Banking",q:"An amalgam always contains:",o:["Iron","Mercury","Zinc","Silver"],a:1,e:"An amalgam is any metal alloyed with mercury."},
+ {t:"Recall · SSC",q:"The most abundant metal in the Earth's crust is:",o:["Iron","Aluminium","Copper","Calcium"],a:1,e:"Aluminium; (oxygen is the most abundant element; silicon second)."},
+ {t:"Recall · TNPSC",q:"The metal with the highest melting point is:",o:["Iron","Tungsten","Gold","Platinum"],a:1,e:"Tungsten (~3400°C) — used in bulb filaments."},
+ {t:"Conceptual · SSC",q:"Why is copper, not steel, used for electric wires?",o:["It is stronger","It is an excellent conductor and ductile","It is heavier","It is magnetic"],a:1,e:"Copper combines high conductivity with ductility at reasonable cost."},
+ {t:"Application · RRB",q:"School bells are made of metal because metals are:",o:["Cheap","Sonorous","Soft","Reactive"],a:1,e:"Sonority — metals ring when struck."},
+ {t:"Statement · SSC",q:"Consider: (1) Metals form positive ions. (2) Non-metal oxides are basic. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — non-metal oxides are ACIDIC."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Graphite conducts electricity. (2) Diamond conducts electricity. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Graphite conducts; diamond does not (no free electrons)."},
+ {t:"Statement · RRB",q:"Consider: (1) Rust needs both air and moisture. (2) Rust is FeO. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"1 is true. 2 is false — rust is Fe₂O₃·xH₂O."},
+ {t:"Statement · Banking",q:"Consider: (1) Gold occurs free in nature. (2) Sodium occurs free in nature. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Gold is native; sodium is far too reactive to occur free."},
+ {t:"Statement · SSC",q:"Consider: (1) Brass = Cu + Zn. (2) Bronze = Cu + Zn. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Brass = Cu+Zn; bronze = Cu+SN (tin). Only 1."},
+ {t:"Assertion–Reason · SSC",q:"A: Copper cannot displace iron from FeSO₄ solution. R: Copper is less reactive than iron.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A — only a MORE reactive metal displaces."},
+ {t:"Assertion–Reason · RRB",q:"A: Ionic compounds conduct in molten state. R: Their ions become free to move when melted.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, application, statement & assertion–reason. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS (reaction/reasoning) ===== */
+var PROB=[
+ {lvl:"e",tag:"Displacement",q:"Complete: Zn + CuSO₄ → ? + ?",given:"Zn + CuSO₄",find:"products",steps:["Zn is above Cu in the series → displaces it","Zn + CuSO₄ → ZnSO₄ + Cu"],ans:"ZnSO₄ + Cu"},
+ {lvl:"e",tag:"Acid",q:"Complete: Mg + 2HCl → ? + ?",given:"Mg + dilute HCl",find:"products",steps:["Metal above H → salt + hydrogen","Mg + 2HCl → MgCl₂ + H₂"],ans:"MgCl₂ + H₂"},
+ {lvl:"e",tag:"Prediction",q:"Will copper displace zinc from ZnSO₄ solution? Why?",given:"Cu + ZnSO₄",find:"yes/no",steps:["Cu is BELOW Zn in the reactivity series","A less reactive metal cannot displace a more reactive one"],ans:"No reaction"},
+ {lvl:"m",tag:"Water",q:"Which of Na, Mg, Fe, Cu react with cold water, hot water, steam, or never?",given:"Na, Mg, Fe, Cu",find:"match",steps:["Na → cold water (violent)","Mg → hot water","Fe → steam only","Cu → never"],ans:"Na-cold, Mg-hot, Fe-steam, Cu-never"},
+ {lvl:"m",tag:"Ionic",q:"Show electron transfer when Na reacts with Cl to form NaCl.",given:"Na (2,8,1), Cl (2,8,7)",find:"transfer",steps:["Na loses its 1 outer electron → Na⁺ (2,8)","Cl gains that electron → Cl⁻ (2,8,8)","Opposite ions attract → NaCl"],ans:"Na⁺ + Cl⁻ → NaCl"},
+ {lvl:"m",tag:"Oxide nature",q:"Classify these oxides: MgO, CO₂, Al₂O₃, SO₂.",given:"four oxides",find:"basic/acidic/amphoteric",steps:["MgO — metal oxide → basic","CO₂, SO₂ — non-metal → acidic","Al₂O₃ — amphoteric (reacts with both)"],ans:"MgO basic; CO₂ & SO₂ acidic; Al₂O₃ amphoteric"},
+ {lvl:"m",tag:"Extraction",q:"Match the extraction method: Na, Fe, Hg.",given:"Na, Fe, Hg",find:"method",steps:["Na (top) → electrolysis of molten NaCl","Fe (middle) → carbon reduction","Hg (bottom) → heating cinnabar (HgS) alone"],ans:"Na-electrolysis, Fe-carbon, Hg-heating"},
+ {lvl:"m",tag:"Corrosion",q:"Two iron nails: one in boiled water + oil layer, one in open moist air. Which rusts and why?",given:"two conditions",find:"which rusts",steps:["Boiled water has no dissolved O₂; oil blocks air → no rust","Open moist air has O₂ + H₂O → rust forms"],ans:"Only the nail in moist air rusts"},
+ {lvl:"h",tag:"Roast/Calcine",q:"Name the process and product: ZnCO₃ heated strongly in limited air.",given:"ZnCO₃ + heat",find:"process & product",steps:["Carbonate ore heated without air = CALCINATION","ZnCO₃ → ZnO + CO₂"],ans:"Calcination; ZnO + CO₂"},
+ {lvl:"h",tag:"Thermite",q:"The thermite reaction Fe₂O₃ + 2Al → ? is used for what?",given:"Fe₂O₃ + Al",find:"products & use",steps:["Al is more reactive → displaces Fe","Fe₂O₃ + 2Al → 2Fe + Al₂O₃ + huge heat","Molten iron produced → welding railway tracks"],ans:"2Fe + Al₂O₃; rail welding"},
+ {lvl:"h",tag:"Alloy logic",q:"Why is 24-carat gold alloyed with copper or silver for jewellery?",given:"pure gold jewellery problem",find:"reason",steps:["Pure gold (24K) is too soft to hold shape","Adding Cu/Ag makes it harder (22K)"],ans:"To harden it — pure gold is too soft"},
+ {lvl:"h",tag:"Reasoning",q:"Why are food cans tin-plated rather than zinc-plated?",given:"tin vs zinc coating",find:"reason",steps:["Zinc is MORE reactive than tin","If zinc reacted with food acids it would contaminate food","Tin is less reactive → safer lining"],ans:"Tin is less reactive than zinc (food safety)"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked reaction/reasoning problems graded easy→hard. Try first, then reveal. Mark solved for XP.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS (45) ===== */
+var FC=[
+ {q:"Malleability vs ductility?",a:"Malleable = beaten into sheets; ductile = drawn into wires."},
+ {q:"Most malleable & ductile metal?",a:"Gold."},
+ {q:"Best conductor of electricity?",a:"Silver (copper is second, used for cost)."},
+ {q:"What does 'sonorous' mean?",a:"Producing a ringing sound when struck — why bells are metal."},
+ {q:"Only liquid metal at room temperature?",a:"Mercury."},
+ {q:"Only liquid non-metal?",a:"Bromine."},
+ {q:"Non-metal that conducts electricity?",a:"Graphite (carbon)."},
+ {q:"Hardest natural substance?",a:"Diamond (a form of carbon)."},
+ {q:"Which metals can be cut with a knife?",a:"Sodium and potassium."},
+ {q:"Why is sodium stored under kerosene?",a:"To prevent violent reaction with air and moisture."},
+ {q:"Nature of metal oxides vs non-metal oxides?",a:"Metal oxides basic; non-metal oxides acidic."},
+ {q:"Two amphoteric oxides?",a:"Al₂O₃ and ZnO (react with both acids and bases)."},
+ {q:"Which metals react with cold water?",a:"Potassium and sodium (violently)."},
+ {q:"Which metal reacts only with steam?",a:"Iron (3Fe + 4H₂O → Fe₃O₄ + 4H₂)."},
+ {q:"Metal + dilute acid gives?",a:"Salt + hydrogen gas (if the metal is above H)."},
+ {q:"Which common metals give NO H₂ with dilute acid?",a:"Copper, silver, gold (below hydrogen)."},
+ {q:"State the reactivity series (top 5).",a:"K > Na > Ca > Mg > Al."},
+ {q:"State the reactivity series (bottom 4).",a:"Cu > Hg > Ag > Au."},
+ {q:"What is a displacement reaction?",a:"A more reactive metal displaces a less reactive one from its salt solution."},
+ {q:"Fe + CuSO₄ → ?",a:"FeSO₄ + Cu (blue solution fades; copper deposits)."},
+ {q:"Which metals occur free (native) in nature?",a:"Gold, silver, platinum (least reactive)."},
+ {q:"How do metals form ions?",a:"By LOSING electrons → positive cations."},
+ {q:"How do non-metals form ions?",a:"By GAINING electrons → negative anions."},
+ {q:"Why don't solid ionic compounds conduct?",a:"Ions are locked in the lattice; they conduct only when molten/dissolved."},
+ {q:"Three properties of ionic compounds?",a:"Hard crystals, high melting points, water-soluble &amp; conduct in solution."},
+ {q:"Difference between mineral and ore?",a:"Ore = mineral from which metal can be extracted profitably."},
+ {q:"Ores: bauxite, haematite, cinnabar, galena → metals?",a:"Al, Fe, Hg, Pb respectively."},
+ {q:"Extraction method for K, Na, Al?",a:"Electrolysis of molten compounds (too reactive for carbon)."},
+ {q:"Extraction method for Zn, Fe, Pb?",a:"Reduction of oxides with carbon (coke)."},
+ {q:"Roasting vs calcination?",a:"Roasting: sulphide ore + excess air. Calcination: carbonate ore, limited air."},
+ {q:"What is the thermite reaction used for?",a:"Fe₂O₃ + 2Al → 2Fe + Al₂O₃; welding railway tracks."},
+ {q:"Conditions needed for rusting?",a:"Both oxygen (air) AND moisture."},
+ {q:"Chemical name/formula of rust?",a:"Hydrated iron(III) oxide, Fe₂O₃·xH₂O."},
+ {q:"Why do copper vessels turn green?",a:"Basic copper carbonate forms in moist air."},
+ {q:"Why do silver items blacken?",a:"Silver sulphide (Ag₂S) forms from H₂S in air."},
+ {q:"What is galvanisation?",a:"Coating iron with zinc to prevent rust."},
+ {q:"Why does galvanisation work even when scratched?",a:"Zinc is more reactive — it corrodes first (sacrificial protection)."},
+ {q:"Why doesn't aluminium corrode away?",a:"A tough protective Al₂O₃ layer seals the surface."},
+ {q:"What is an alloy? Why alloy?",a:"A homogeneous metal mixture; harder, stronger, more corrosion-resistant."},
+ {q:"Brass and bronze compositions?",a:"Brass = Cu + Zn; Bronze = Cu + Sn."},
+ {q:"Stainless steel composition?",a:"Fe + Cr + Ni (rust-resistant)."},
+ {q:"Solder composition and use?",a:"Pb + Sn; joins electrical wires (low melting point)."},
+ {q:"What is an amalgam?",a:"An alloy of any metal with mercury."},
+ {q:"Most abundant metal in Earth's crust?",a:"Aluminium (oxygen is the most abundant element)."},
+ {q:"Metal with the highest melting point?",a:"Tungsten (~3400°C, bulb filaments)."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script src="/study/_cm-auto-track.js"></script>
+</body></html>

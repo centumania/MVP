@@ -1,0 +1,1055 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Periodic Classification — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"🧮";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:30px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.dia{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;text-align:center}
+.dia svg{max-width:100%;height:auto}
+.dia .cap{font-size:11px;color:var(--mut);font-weight:600;margin-top:7px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Chemistry · Mastery Pack</div>
+  <h1>Periodic Classification</h1>
+  <p>Early Attempts → Mendeleev → Modern Table → Periods &amp; Groups → Trends I → Trends II → Group Families → Key Elements &amp; Facts.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/40</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/60</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+
+  <h2 class="sec"><span class="em">🌐</span>The Big Picture</h2>
+  <div class="sec-sub">A 150-year quest to organise the elements: triads → octaves → Mendeleev's mass table → Moseley's number table — then read the trends off the map.</div>
+  <div class="flow">
+    <span class="step">Early patterns</span><span class="arw">→</span>
+    <span class="step">Mendeleev (mass)</span><span class="arw">→</span>
+    <span class="step">Modern table (Z)</span><span class="arw">→</span>
+    <span class="step">Trends predict chemistry</span>
+  </div>
+  <div class="note"><span class="t">Anchor idea</span>The periodic table is a <b>map where position predicts behaviour</b>. Period = number of shells; group = number of outer electrons. Once you can place an element, its size, valency, metallic character and reactivity all follow from two forces: <b>nuclear pull vs shell count</b>.</div>
+
+  <!-- 1 EARLY -->
+  <h2 class="sec"><span class="em">🏛️</span>1 · Early Attempts</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Dobereiner's triads:</b> sets of 3 similar elements, middle mass ≈ average of the outer two. <b>Newlands' octaves:</b> every 8th element resembles the first.</div></div>
+      <div class="row"><div class="lab l-why">Why they failed</div><div class="txt">Triads fit only a few elements; octaves collapsed after calcium and had no room for new discoveries or noble gases. But both proved <b>a pattern existed</b> — the crucial first clue.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Triads: Li(7)-Na(23)-K(39) — (7+39)/2 = 23 ✓. Also Cl-Br-I, Ca-Sr-Ba. Octaves: named after music's 8 notes (sa re ga…).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">History-of-science questions — author-idea matching.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Triads → Dobereiner; octaves → Newlands." "Octaves worked up to calcium." Triad averages as mini-numericals.</div></div>
+    </div>
+  </div>
+
+  <!-- 2 MENDELEEV -->
+  <h2 class="sec"><span class="em">🇷🇺</span>2 · Mendeleev's Periodic Table</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Mendeleev (1869) arranged the <b>63 known elements by increasing atomic mass</b> and similar properties (oxide/hydride formulas).</div></div>
+      <div class="row"><div class="lab l-why">Why the gaps made him great</div><div class="txt">Instead of forcing elements to fit, he <b>left gaps</b> and boldly predicted the missing elements' properties. When gallium and germanium were found matching his predictions, the table was vindicated.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Predicted: eka-boron (Sc), eka-aluminium (Ga), eka-silicon (Ge). <b>Anomalies:</b> hydrogen's position, isotopes, and pairs like Co/Ni &amp; Ar/K where mass order breaks property order.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">The most-asked history segment of this chapter.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Mendeleev used atomic MASS." "Eka-aluminium = gallium." "Anomalies: H position, isotopes, Co/Ni."</div></div>
+    </div>
+  </div>
+
+  <!-- 3 MODERN -->
+  <h2 class="sec"><span class="em">🆕</span>3 · The Modern Periodic Table</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Moseley (1913):</b> properties are a periodic function of <b>atomic number (Z)</b>, not mass. This is the modern periodic law.</div></div>
+      <div class="row"><div class="lab l-why">Why Z fixes everything</div><div class="txt">Chemistry is decided by <b>electrons</b>, and electron count equals proton count (Z). Order by Z and the Ar/K &amp; Co/Ni puzzles vanish; isotopes (same Z) share one box naturally.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt"><b>7 periods × 18 groups</b>; 118 elements (92 natural). Metals left, non-metals right, metalloids (B, Si, Ge, As, Sb, Te) on the zig-zag staircase.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">The framework for every question that follows.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Modern law → Moseley → atomic number." "7 periods, 18 groups, 118 elements." "Metalloids on the staircase."</div></div>
+    </div>
+  </div>
+
+  <!-- 4 PERIODS & GROUPS -->
+  <h2 class="sec"><span class="em">📐</span>4 · Periods &amp; Groups</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Periods</b> (rows): same number of shells. <b>Groups</b> (columns): same number of valence electrons.</div></div>
+      <div class="row"><div class="lab l-why">Why groups behave alike</div><div class="txt">Chemistry happens in the <b>outermost shell</b>. Same outer-electron count → same bonding behaviour → a family. That's the entire logic of the table.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Read any configuration: 2,8,7 → 3 shells (period 3), 7 valence electrons (group 17) → it's chlorine. Period sizes: 2, 8, 8, 18, 18, 32, 32.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Configuration → position questions, the exam's favourite puzzle type.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"2,8,2 → group 2, period 3 (Mg)." "H's position is debated (fits 1 and 17)." Period 1 has only 2 elements.</div></div>
+    </div>
+  </div>
+
+  <!-- 5 TRENDS I -->
+  <h2 class="sec"><span class="em">📏</span>5 · Trends I — Size &amp; Metallic Character</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Atomic size:</b> decreases across a period, increases down a group. <b>Metallic character:</b> the exact opposite pattern of non-metallic.</div></div>
+      <div class="row"><div class="lab l-why">Why</div><div class="txt">Across a period, protons increase but shells don't — stronger pull, smaller atom, harder to lose electrons (less metallic). Down a group, a whole new shell is added — bigger atom, looser outer electron, more metallic.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Na &gt; Mg &gt; Al (size, across); Li &lt; Na &lt; K (size, down). Most metallic: bottom-left (Cs). Most non-metallic: top-right (F).</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">"Arrange in order of size/metallic character" — a guaranteed question.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Size shrinks across, grows down." "Cs most metallic, F most electronegative." Ranking questions live here.</div></div>
+    </div>
+    <div class="dia"><svg viewBox="0 0 300 130" xmlns="http://www.w3.org/2000/svg">
+      <rect x="30" y="25" width="240" height="80" rx="8" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+      <line x1="50" y1="45" x2="250" y2="45" stroke="#B91C1C" stroke-width="2.5" marker-end="url(#a1)"/>
+      <line x1="45" y1="40" x2="45" y2="95" stroke="#1D4ED8" stroke-width="2.5" marker-end="url(#a2)"/>
+      <defs>
+        <marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#B91C1C" stroke-width="1.5"/></marker>
+        <marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#1D4ED8" stroke-width="1.5"/></marker>
+      </defs>
+      <text x="90" y="38" font-size="10" fill="#B91C1C" font-weight="800">size ↓ · metallic ↓ (across)</text>
+      <text x="55" y="112" font-size="10" fill="#1D4ED8" font-weight="800">size ↑ · metallic ↑ (down)</text>
+    </svg><div class="cap">The two master arrows — every trend question reduces to these.</div></div>
+  </div>
+
+  <!-- 6 TRENDS II -->
+  <h2 class="sec"><span class="em">⚡</span>6 · Trends II — Valency &amp; Reactivity</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt"><b>Valency</b> across a period: 1,2,3,4,3,2,1,0 (rises to Si, falls to Ar). Down a group it stays constant. <b>Electronegativity</b> peaks at fluorine.</div></div>
+      <div class="row"><div class="lab l-why">Why metals and halogens trend oppositely</div><div class="txt">Metals react by <b>losing</b> the outer electron — easier when it's farther (down the group). Halogens react by <b>gaining</b> one — easier when the nucleus is closer (up the group). Same table, mirror logic.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Alkali reactivity: K &gt; Na &gt; Li. Halogen reactivity: F &gt; Cl &gt; Br &gt; I.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Reactivity-ranking questions and the alkali/halogen mirror-trap.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Metal reactivity ↑ down; non-metal reactivity ↓ down" — the most-tested opposite pair in the chapter.</div></div>
+    </div>
+  </div>
+
+  <!-- 7 FAMILIES -->
+  <h2 class="sec"><span class="em">👪</span>7 · Group Families</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">Four named families: <b>alkali metals</b> (1), <b>alkaline earth metals</b> (2), <b>halogens</b> (17), <b>noble gases</b> (18).</div></div>
+      <div class="row"><div class="lab l-why">Why noble gases are lazy</div><div class="txt">Their outer shells are <b>already full</b> — no electron hunger, no reactions, valency 0. Every other element reacts precisely to reach a noble-gas configuration.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">Alkali: soft, valency 1, violent with water. Alkaline earth: valency 2, less reactive. Halogens: 'salt formers', valency 1. Noble: monoatomic, inert.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">Family-property matching; kerosene storage; why NaCl forms.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Group 1 = alkali, 2 = alkaline earth, 17 = halogens, 18 = noble." "Halogen means salt-former." "Noble valency = 0."</div></div>
+    </div>
+  </div>
+
+  <!-- 8 KEY -->
+  <h2 class="sec"><span class="em">⭐</span>8 · Key Elements &amp; Facts</h2>
+  <div class="card">
+    <div class="wbw">
+      <div class="row"><div class="lab l-what">What</div><div class="txt">The static-GK layer: the first 20 elements in order, record-holders, and element name origins.</div></div>
+      <div class="row"><div class="lab l-why">Why memorise the first 20</div><div class="txt">Every configuration puzzle (Z → group/period) draws from the first 20. Know them cold and those questions become free marks.</div></div>
+      <div class="row"><div class="lab l-how">How</div><div class="txt">H He Li Be B C N O F Ne · Na Mg Al Si P S Cl Ar K Ca. Records: He smallest atom, F most electronegative, Cs most metallic, U (92) largest natural Z.</div></div>
+      <div class="row"><div class="lab l-where">Where</div><div class="txt">One-markers on names: mendelevium, polonium (Poland), einsteinium, nihonium (Japan), moscovium.</div></div>
+      <div class="row"><div class="lab l-exam">Exam</div><div class="txt">"Z=17 → Cl; Z=20 → Ca." "Polonium named after Poland by Marie Curie." Lanthanides/actinides parked below the table.</div></div>
+    </div>
+  </div>
+
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 8 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+  <h2 class="sec"><span class="em">📊</span>Comparison &amp; Reference Tables</h2>
+  <div class="sec-sub">The trend arrows, families and first-20 bank — this chapter's cheat-sheets.</div>
+
+  <div class="card"><h3>Master Trends Table</h3>
+  <table class="tbl">
+    <tr><th>Property</th><th>Across a period (→)</th><th>Down a group (↓)</th></tr>
+    <tr><td class="h">Atomic size</td><td>Decreases</td><td>Increases</td></tr>
+    <tr><td class="h">Metallic character</td><td>Decreases</td><td>Increases</td></tr>
+    <tr><td class="h">Non-metallic character</td><td>Increases</td><td>Decreases</td></tr>
+    <tr><td class="h">Electronegativity</td><td>Increases</td><td>Decreases</td></tr>
+    <tr><td class="h">Valency</td><td>1→4→0</td><td>Constant</td></tr>
+    <tr><td class="h">Metal reactivity</td><td>Decreases</td><td>Increases</td></tr>
+    <tr><td class="h">Non-metal reactivity</td><td>Increases</td><td>Decreases</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Three Classifications Compared</h3>
+  <table class="tbl">
+    <tr><th>Attempt</th><th>Basis</th><th>Limitation</th></tr>
+    <tr><td class="h">Dobereiner (triads)</td><td>Groups of 3, middle = average</td><td>Fit very few elements</td></tr>
+    <tr><td class="h">Newlands (octaves)</td><td>Every 8th similar (by mass)</td><td>Broke after calcium</td></tr>
+    <tr><td class="h">Mendeleev</td><td>Atomic mass + properties</td><td>H position, isotopes, Co/Ni</td></tr>
+    <tr><td class="h">Modern (Moseley)</td><td>Atomic number (Z)</td><td>— (current standard)</td></tr>
+  </table></div>
+
+  <div class="card"><h3>The Four Families</h3>
+  <table class="tbl">
+    <tr><th>Group</th><th>Family</th><th>Members</th><th>Key traits</th></tr>
+    <tr><td class="h">1</td><td>Alkali metals</td><td>Li Na K Rb Cs</td><td>Soft, valency 1, violent with water</td></tr>
+    <tr><td class="h">2</td><td>Alkaline earth</td><td>Be Mg Ca Sr Ba</td><td>Valency 2, harder, less reactive</td></tr>
+    <tr><td class="h">17</td><td>Halogens</td><td>F Cl Br I</td><td>'Salt formers', valency 1, very reactive</td></tr>
+    <tr><td class="h">18</td><td>Noble gases</td><td>He Ne Ar Kr Xe Rn</td><td>Full shells, valency 0, inert</td></tr>
+  </table></div>
+
+  <div class="card"><h3>First 20 Elements (Z · symbol)</h3>
+  <table class="tbl">
+    <tr><th>1–5</th><th>6–10</th><th>11–15</th><th>16–20</th></tr>
+    <tr><td>1 H<br>2 He<br>3 Li<br>4 Be<br>5 B</td><td>6 C<br>7 N<br>8 O<br>9 F<br>10 Ne</td><td>11 Na<br>12 Mg<br>13 Al<br>14 Si<br>15 P</td><td>16 S<br>17 Cl<br>18 Ar<br>19 K<br>20 Ca</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Record Holders</h3>
+  <table class="tbl">
+    <tr><th>Record</th><th>Element</th></tr>
+    <tr><td class="h">Smallest atom</td><td>Helium</td></tr>
+    <tr><td class="h">Most electronegative</td><td>Fluorine</td></tr>
+    <tr><td class="h">Most reactive non-metal</td><td>Fluorine</td></tr>
+    <tr><td class="h">Most metallic (natural)</td><td>Caesium</td></tr>
+    <tr><td class="h">Largest natural Z</td><td>Uranium (92)</td></tr>
+    <tr><td class="h">Metalloids</td><td>B, Si, Ge, As, Sb, Te</td></tr>
+  </table></div>
+
+  <div class="card"><h3>Mendeleev's Predictions</h3>
+  <table class="tbl">
+    <tr><th>Predicted name</th><th>Actual element</th></tr>
+    <tr><td class="h">Eka-boron</td><td>Scandium (Sc)</td></tr>
+    <tr><td class="h">Eka-aluminium</td><td>Gallium (Ga)</td></tr>
+    <tr><td class="h">Eka-silicon</td><td>Germanium (Ge)</td></tr>
+  </table></div>
+</div>
+<div class="panel" id="p-memory">
+  <h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+  <div class="sec-sub">One hook per recall-worthy fact. Concept → hook → recall question.</div>
+
+  <div class="mem-card"><div class="cn">First 20 elements <span class="tag">mnemonic</span></div>
+    <div class="hk">"<b>H He Li Be B C N O F Ne</b> — then <b>Na</b>ughty <b>Mg</b>(magpies) <b>Al</b>ways <b>Si</b>ng <b>P</b>erfect <b>S</b>ongs, <b>Cl</b>everly <b>Ar</b>ranging <b>K</b>eys &amp; <b>Ca</b>dences."</div>
+    <div class="rq">Q: Element with Z = 14? → Silicon.</div></div>
+
+  <div class="mem-card"><div class="cn">History ladder <span class="tag">chain</span></div>
+    <div class="hk">"<b>3 → 8 → mass → number</b>": Dobereiner's 3s, Newlands' 8s, Mendeleev's mass, Moseley's number. The chapter in four beats.</div>
+    <div class="rq">Q: Who used atomic number? → Moseley.</div></div>
+
+  <div class="mem-card"><div class="cn">The two master arrows <span class="tag">visual</span></div>
+    <div class="hk">"<b>Across: smaller &amp; less metallic. Down: bigger &amp; more metallic.</b>" Every trend question is one of these arrows.</div>
+    <div class="rq">Q: Size of K vs Na? → K bigger (down the group).</div></div>
+
+  <div class="mem-card"><div class="cn">தமிழ் — வரிசை <span class="tag">tamil hook</span></div>
+    <div class="hk">"<b>கிடைவரிசை = period = கூடுகள் (shells); நெடுவரிசை = group = வெளி எலக்ட்ரான்கள்.</b>" வலப்பக்கம் போகும்போது அணு <b>சிறுத்து</b>, கீழே போகும்போது <b>பெருக்கும்</b>.</div>
+    <div class="rq">Q: Period எண் எதைக் காட்டும்? → கூடுகளின் எண்ணிக்கை.</div></div>
+
+  <div class="mem-card"><div class="cn">Mirror reactivity <span class="tag">trap-buster</span></div>
+    <div class="hk">"<b>Metals: down = danger. Halogens: up = uproar.</b>" Alkali reactivity grows downward (Cs wild); halogen reactivity grows upward (F wildest).</div>
+    <div class="rq">Q: Most reactive halogen? → Fluorine.</div></div>
+
+  <div class="mem-card"><div class="cn">Eka-predictions <span class="tag">peg</span></div>
+    <div class="hk">"<b>Boron→Scandium, Aluminium→Gallium, Silicon→Germanium</b>" — eka means 'one beyond' in Sanskrit; all three came true.</div>
+    <div class="rq">Q: Eka-silicon became? → Germanium.</div></div>
+
+  <div class="mem-card"><div class="cn">Valency mountain <span class="tag">visual</span></div>
+    <div class="hk">"<b>Climb 1-2-3-4, ski 3-2-1-0.</b>" Valency across a period peaks at silicon then slides to argon's zero.</div>
+    <div class="rq">Q: Valency of P (period 3)? → 3.</div></div>
+
+  <div class="mem-card"><div class="cn">Metalloid staircase <span class="tag">mnemonic</span></div>
+    <div class="hk">"<b>B</b>oring <b>Si</b>ngers <b>Ge</b>t <b>As</b>ked <b>Sb</b>(sober) <b>Te</b>a" — B Si Ge As Sb Te on the zig-zag.</div>
+    <div class="rq">Q: Is arsenic a metalloid? → Yes.</div></div>
+
+  <div class="mem-card"><div class="cn">Corner kings <span class="tag">peg</span></div>
+    <div class="hk">"<b>Cs bottom-left = metal king; F top-right = electron queen.</b>" Most metallic vs most electronegative — opposite corners.</div>
+    <div class="rq">Q: Most electronegative element? → Fluorine.</div></div>
+
+  <div class="mem-card"><div class="cn">Ar before K <span class="tag">story</span></div>
+    <div class="hk">"Heavier argon <b>politely steps ahead</b> of potassium" — because Z (18 &lt; 19) outranks mass. Moseley's signature fix.</div>
+    <div class="rq">Q: Why is Ar before K? → Atomic number order.</div></div>
+
+  <div class="mem-card"><div class="cn">Noble laziness <span class="tag">funny</span></div>
+    <div class="hk">"<b>Full stomach, no appetite.</b>" Complete outer shells → noble gases don't react; valency 0; they even live alone (monoatomic)."</div>
+    <div class="rq">Q: Valency of neon? → 0.</div></div>
+
+  <div class="mem-card"><div class="cn">Element name origins <span class="tag">story</span></div>
+    <div class="hk">"<b>Polonium = Poland (Curie's home), Mendelevium = the master himself, Nihonium = Japan, Moscovium = Moscow.</b>"</div>
+    <div class="rq">Q: Polonium honours which country? → Poland.</div></div>
+</div>
+<div class="panel" id="p-traps">
+  <h2 class="sec"><span class="em">⚠️</span>Exam Traps &amp; Confusion Pairs</h2>
+  <div class="sec-sub">Each has been set in real papers. Read the reality line and it dies.</div>
+
+  <div class="note trap"><span class="t">Trap 1 · Mass vs Number</span>Mendeleev used atomic <b>mass</b>; the modern table uses atomic <b>number</b> (Moseley). Swapping these is the most-set trap.</div>
+
+  <div class="note trap"><span class="t">Trap 2 · Size across a period DECREASES</span>More protons pull the same shells in tighter. "Size increases across a period" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 3 · Mirror reactivity</span>Metal reactivity <b>increases</b> down group 1; halogen reactivity <b>decreases</b> down group 17. Applying one rule to both is the classic error.</div>
+
+  <div class="note trap"><span class="t">Trap 4 · Fluorine vs Caesium corners</span>Most electronegative/reactive non-metal = <b>F</b> (top-right); most metallic = <b>Cs</b> (bottom-left). Don't mix the corners.</div>
+
+  <div class="note trap"><span class="t">Trap 5 · Triads vs Octaves authors</span>Triads → <b>Dobereiner</b>; octaves → <b>Newlands</b>. Octaves broke after calcium.</div>
+
+  <div class="note trap"><span class="t">Trap 6 · Valency is NOT 1–8 across</span>It rises 1→4 then <b>falls</b> to 0: 1,2,3,4,3,2,1,0. "Valency increases up to 8" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 7 · Period = shells, Group = valence electrons</span>Reversing the two definitions is a set statement-trap.</div>
+
+  <div class="note trap"><span class="t">Trap 8 · Eka-matching</span>Eka-aluminium = <b>gallium</b>, eka-silicon = <b>germanium</b>, eka-boron = <b>scandium</b>. Options shuffle the three.</div>
+
+  <div class="note trap"><span class="t">Trap 9 · 63 vs 92 vs 118</span>Mendeleev knew <b>63</b>; <b>92</b> occur naturally; <b>118</b> known today. Three numbers, three different questions.</div>
+
+  <div class="note trap"><span class="t">Trap 10 · Metalloids list</span>B, Si, Ge, As, Sb, Te. Sulphur and phosphorus are NOT metalloids — pure non-metals.</div>
+
+  <div class="note trap"><span class="t">Trap 11 · Noble gases are monoatomic</span>They exist as single atoms (He, not He₂). "Noble gases are diatomic" is false.</div>
+
+  <div class="note trap"><span class="t">Trap 12 · Same group, not same period, means similar</span>Elements with similar chemistry share a <b>group</b> (valence electrons), not a period. Z=9 resembles Z=17, not Z=10.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> Potassium is more reactive than sodium. <b>R:</b> Its outer electron is farther from the nucleus and easier to lose. → Both true, <b>R explains A</b>.</div>
+
+  <div class="note trap"><span class="t">Assertion–Reason</span><b>A:</b> Isotopes caused no problem in the modern table. <b>R:</b> They share the same atomic number, hence the same box. → Both true, <b>R explains A</b>.</div>
+</div>
+<div class="panel" id="p-rapid">
+  <h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-Liners</h2>
+  <div class="sec-sub"><span class="star">★</span> = highest-frequency in exams. Tap ☆ to flag any line for your FAA revisit list.</div>
+  <div class="ol">
+    <div><span class="n">1</span><span><span class="star">★</span> Dobereiner: triads (middle mass = average of outer two).</span></div>
+    <div><span class="n">2</span><span>Triad examples: Li-Na-K, Cl-Br-I, Ca-Sr-Ba.</span></div>
+    <div><span class="n">3</span><span><span class="star">★</span> Newlands: law of octaves (every 8th similar); broke after Ca.</span></div>
+    <div><span class="n">4</span><span><span class="star">★</span> Mendeleev (1869): 63 elements, ordered by atomic MASS.</span></div>
+    <div><span class="n">5</span><span><span class="star">★</span> Mendeleev left gaps; predicted Sc, Ga, Ge (eka-elements).</span></div>
+    <div><span class="n">6</span><span>Anomalies: hydrogen's position, isotopes, Co/Ni &amp; Ar/K.</span></div>
+    <div><span class="n">7</span><span><span class="star">★</span> Modern law (Moseley, 1913): periodic function of atomic NUMBER.</span></div>
+    <div><span class="n">8</span><span><span class="star">★</span> Modern table: 7 periods, 18 groups, 118 elements (92 natural).</span></div>
+    <div><span class="n">9</span><span><span class="star">★</span> Period number = electron shells; group = valence electrons.</span></div>
+    <div><span class="n">10</span><span>Period sizes: 2, 8, 8, 18, 18, 32, 32.</span></div>
+    <div><span class="n">11</span><span>Hydrogen's position is still debated (fits groups 1 and 17).</span></div>
+    <div><span class="n">12</span><span><span class="star">★</span> Metalloids: B, Si, Ge, As, Sb, Te (the staircase).</span></div>
+    <div><span class="n">13</span><span><span class="star">★</span> Atomic size: decreases across, increases down.</span></div>
+    <div><span class="n">14</span><span><span class="star">★</span> Metallic character: decreases across, increases down.</span></div>
+    <div><span class="n">15</span><span>Reason: nuclear pull (across) vs new shells (down).</span></div>
+    <div><span class="n">16</span><span><span class="star">★</span> Electronegativity: increases across, decreases down; F is max.</span></div>
+    <div><span class="n">17</span><span><span class="star">★</span> Valency across a period: 1,2,3,4,3,2,1,0.</span></div>
+    <div><span class="n">18</span><span>Valency down a group: constant.</span></div>
+    <div><span class="n">19</span><span><span class="star">★</span> Alkali reactivity increases down: K &gt; Na &gt; Li.</span></div>
+    <div><span class="n">20</span><span><span class="star">★</span> Halogen reactivity decreases down: F &gt; Cl &gt; Br &gt; I.</span></div>
+    <div><span class="n">21</span><span><span class="star">★</span> Group 1 = alkali metals (Li Na K Rb Cs).</span></div>
+    <div><span class="n">22</span><span>Group 2 = alkaline earth metals (Be Mg Ca Sr Ba).</span></div>
+    <div><span class="n">23</span><span><span class="star">★</span> Group 17 = halogens ('salt formers').</span></div>
+    <div><span class="n">24</span><span><span class="star">★</span> Group 18 = noble gases; valency 0; monoatomic.</span></div>
+    <div><span class="n">25</span><span>Noble gases are inert because their outer shells are full.</span></div>
+    <div><span class="n">26</span><span><span class="star">★</span> Most reactive non-metal: fluorine. Most metallic natural: caesium.</span></div>
+    <div><span class="n">27</span><span>Smallest atom: helium. Largest natural Z: uranium (92).</span></div>
+    <div><span class="n">28</span><span><span class="star">★</span> First 10: H He Li Be B C N O F Ne.</span></div>
+    <div><span class="n">29</span><span><span class="star">★</span> 11–20: Na Mg Al Si P S Cl Ar K Ca.</span></div>
+    <div><span class="n">30</span><span>2,8,7 → Cl (group 17, period 3); 2,8,2 → Mg (group 2, period 3).</span></div>
+    <div><span class="n">31</span><span>Same group (not same period) → similar chemistry.</span></div>
+    <div><span class="n">32</span><span>Ar (18) placed before K (19) — number beats mass.</span></div>
+    <div><span class="n">33</span><span>Lanthanides &amp; actinides sit in two rows below the table.</span></div>
+    <div><span class="n">34</span><span>Mendelevium (101) honours Mendeleev; polonium honours Poland.</span></div>
+    <div><span class="n">35</span><span>Nihonium = Japan; moscovium = Moscow (newest names).</span></div>
+    <div><span class="n">36</span><span>Eka-boron = Sc; eka-aluminium = Ga; eka-silicon = Ge.</span></div>
+    <div><span class="n">37</span><span>Mendeleev used oxide/hydride formulas to group elements.</span></div>
+    <div><span class="n">38</span><span>Octaves named after music's eight notes.</span></div>
+    <div><span class="n">39</span><span>Metals sit left/bottom; non-metals right/top.</span></div>
+    <div><span class="n">40</span><span>Alkali metals are stored under kerosene.</span></div>
+    <div><span class="n">41</span><span>Halogens exist as diatomic molecules (F₂, Cl₂…).</span></div>
+    <div><span class="n">42</span><span>Period 1 has only hydrogen and helium.</span></div>
+    <div><span class="n">43</span><span>Isotopes share one box — same Z, same element.</span></div>
+    <div><span class="n">44</span><span>Size order example: Na &gt; Mg &gt; Al; Li &lt; Na &lt; K.</span></div>
+    <div><span class="n">45</span><span>Position on the table predicts an element's whole chemistry.</span></div>
+  </div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Periodic Classification Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_chem_periodic_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:40;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:60;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA (8 hubs × 4 leaves) ===== */
+var MAP=[
+ {id:0,cat:null,icon:"🧮",label:"Periodic\nClassification",fact:"118 elements arranged by atomic number so that similar elements repeat at regular intervals — the periodic table, chemistry's master map."},
+ {id:1,cat:0,icon:"🏛️",label:"Early\nAttempts",fact:"Dobereiner's triads (groups of 3) and Newlands' octaves (every 8th similar) — the first patterns, both limited."},
+ {id:2,cat:0,icon:"🇷🇺",label:"Mendeleev's\nTable",fact:"Arranged by atomic MASS; left gaps and predicted missing elements (Ga, Sc, Ge) with stunning accuracy."},
+ {id:3,cat:0,icon:"🆕",label:"Modern\nPeriodic Table",fact:"Moseley (1913): properties repeat with atomic NUMBER (Z), not mass. Fixed Mendeleev's anomalies."},
+ {id:4,cat:0,icon:"📐",label:"Periods &\nGroups",fact:"7 horizontal periods (shells) and 18 vertical groups (same outer electrons → same behaviour)."},
+ {id:5,cat:0,icon:"📏",label:"Trends I —\nSize & Metal",fact:"Atomic size shrinks across a period, grows down a group; metallic character does the reverse of non-metallic."},
+ {id:6,cat:0,icon:"⚡",label:"Trends II —\nValency & More",fact:"Valency rises 1→4 then falls to 0 across a period; reactivity patterns differ for metals and non-metals."},
+ {id:7,cat:0,icon:"👪",label:"Group\nFamilies",fact:"Alkali metals (1), alkaline earth (2), halogens (17), noble gases (18) — the named families exams love."},
+ {id:8,cat:0,icon:"⭐",label:"Key Elements\n& Facts",fact:"First 20 elements, record-holders, and the famous exceptions — the static-GK layer."},
+ /* 1 Early */
+ {id:101,cat:1,icon:"3️⃣",label:"Dobereiner's\ntriads",fact:"Groups of 3 similar elements where the middle one's mass ≈ average of the other two (Li-Na-K; Cl-Br-I)."},
+ {id:102,cat:1,icon:"🎵",label:"Newlands'\noctaves",fact:"Arranged by mass, every 8th element resembled the first — like musical notes (sa re ga…). Worked only up to calcium."},
+ {id:103,cat:1,icon:"⚠️",label:"Limitations",fact:"Triads fit few elements; octaves broke after Ca and couldn't fit newly found elements or noble gases."},
+ {id:104,cat:1,icon:"🎼",label:"Why 'octaves'",fact:"Named after music's eight notes — the eighth element repeated like the eighth note repeats the first."},
+ /* 2 Mendeleev */
+ {id:201,cat:2,icon:"⚖️",label:"By atomic\nmass",fact:"Mendeleev (1869) ordered 63 elements by increasing atomic mass and by similar properties (oxide/hydride formulas)."},
+ {id:202,cat:2,icon:"🕳️",label:"Bold\ngaps",fact:"He left gaps for undiscovered elements — eka-boron (Sc), eka-aluminium (Ga), eka-silicon (Ge)."},
+ {id:203,cat:2,icon:"🎯",label:"Predictions\ncame true",fact:"Gallium and germanium matched his predicted properties almost exactly — the table's greatest triumph."},
+ {id:204,cat:2,icon:"❌",label:"Anomalies",fact:"Problems: hydrogen's position, isotopes, and pairs like Co/Ni or Ar/K where mass order breaks property order."},
+ /* 3 Modern */
+ {id:301,cat:3,icon:"🔬",label:"Moseley's\nlaw",fact:"1913: atomic NUMBER (protons), not mass, is the true basis — properties are periodic functions of Z."},
+ {id:302,cat:3,icon:"✅",label:"Anomalies\nfixed",fact:"Ordering by Z fixes Ar/K and Co/Ni, and isotopes cause no trouble (same Z, same box)."},
+ {id:303,cat:3,icon:"🗺️",label:"Layout",fact:"7 periods × 18 groups; metals left, non-metals right, metalloids on the zig-zag border."},
+ {id:304,cat:3,icon:"🔢",label:"118\nelements",fact:"Currently 118 elements; 92 natural (up to uranium), the rest man-made."},
+ /* 4 Periods & Groups */
+ {id:401,cat:4,icon:"↔️",label:"Periods =\nshells",fact:"Period number = number of electron shells. Period 1 has 2 elements; periods 2–3 have 8 each."},
+ {id:402,cat:4,icon:"↕️",label:"Groups = outer\nelectrons",fact:"Same group → same valence electrons → same chemical behaviour. That's why families exist."},
+ {id:403,cat:4,icon:"🧗",label:"Metalloid\nstaircase",fact:"B, Si, Ge, As, Sb, Te — the zig-zag border elements showing both metal and non-metal traits."},
+ {id:404,cat:4,icon:"❓",label:"Hydrogen's\ndilemma",fact:"H resembles both group 1 (one outer electron) and group 17 (one short of full) — its position is still debated."},
+ /* 5 Trends I */
+ {id:501,cat:5,icon:"➡️",label:"Size across\na period",fact:"Atomic radius DECREASES left→right: more protons pull the same shells in tighter."},
+ {id:502,cat:5,icon:"⬇️",label:"Size down\na group",fact:"Radius INCREASES downward: each period adds a whole new shell."},
+ {id:503,cat:5,icon:"🔩",label:"Metallic\ncharacter",fact:"Decreases across a period, increases down a group — metals live left &amp; low, non-metals right &amp; high."},
+ {id:504,cat:5,icon:"🧲",label:"Why the\ntrends",fact:"Everything follows nuclear pull vs shell count: more pull = smaller &amp; less metallic; more shells = bigger &amp; more metallic."},
+ /* 6 Trends II */
+ {id:601,cat:6,icon:"🤝",label:"Valency\npattern",fact:"Across a period: 1,2,3,4,3,2,1,0. Down a group valency stays the same."},
+ {id:602,cat:6,icon:"⚡",label:"Reactivity —\nmetals",fact:"Metal reactivity INCREASES down group 1 (K > Na > Li) — outer electron is farther and easier to lose."},
+ {id:603,cat:6,icon:"🧪",label:"Reactivity —\nnon-metals",fact:"Non-metal reactivity DECREASES down group 17 (F > Cl > Br > I) — gaining an electron gets harder."},
+ {id:604,cat:6,icon:"🔋",label:"Electro-\nnegativity",fact:"Tendency to attract electrons: increases across, decreases down. Fluorine is the most electronegative."},
+ /* 7 Families */
+ {id:701,cat:7,icon:"🔥",label:"Alkali metals\n(Group 1)",fact:"Li Na K Rb Cs — soft, valency 1, react violently with water; stored under kerosene."},
+ {id:702,cat:7,icon:"🌍",label:"Alkaline earth\n(Group 2)",fact:"Be Mg Ca Sr Ba — valency 2, harder and less reactive than group 1."},
+ {id:703,cat:7,icon:"🟢",label:"Halogens\n(Group 17)",fact:"F Cl Br I — 'salt formers', valency 1, most reactive non-metals; F is the most reactive of all."},
+ {id:704,cat:7,icon:"😴",label:"Noble gases\n(Group 18)",fact:"He Ne Ar Kr Xe Rn — full outer shells, valency 0, chemically inert; monoatomic gases."},
+ /* 8 Key facts */
+ {id:801,cat:8,icon:"🔢",label:"First 20\nelements",fact:"H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca — memorise in order with Z."},
+ {id:802,cat:8,icon:"🏆",label:"Record\nholders",fact:"Smallest atom: He (H has the smallest radius among period 1... exam answer: H). Most electronegative: F. Most metallic (natural): Cs. Largest natural Z: U (92)."},
+ {id:803,cat:8,icon:"❗",label:"Famous\nexceptions",fact:"Hydrogen's dual nature; lanthanides/actinides parked below; mercury the liquid metal in the d-block."},
+ {id:804,cat:8,icon:"🇮🇳",label:"Name\norigins",fact:"Elements named for places/people: Polonium (Poland), Einsteinium, Mendelevium, Curium — and Moscovium, Nihonium among the newest."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7,8];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK (60) ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"Dobereiner grouped similar elements into sets of:",o:["Two","Three (triads)","Eight","Ten"],a:1,e:"Triads — the middle element's mass ≈ average of the other two."},
+ {t:"Recall · TNPSC",q:"In Dobereiner's triad Li-Na-K, sodium's mass is approximately:",o:["The sum of Li and K","The average of Li and K","Double lithium's","Unrelated"],a:1,e:"(7+39)/2 = 23 — sodium's atomic mass."},
+ {t:"Recall · RRB",q:"The 'law of octaves' was given by:",o:["Dobereiner","Newlands","Mendeleev","Moseley"],a:1,e:"Newlands: every 8th element resembles the first, like musical notes."},
+ {t:"Conceptual · SSC",q:"Newlands' octaves worked well only up to:",o:["Oxygen","Calcium","Iron","Gold"],a:1,e:"Beyond calcium the pattern broke down."},
+ {t:"Recall · Banking",q:"Mendeleev arranged elements in increasing order of:",o:["Atomic number","Atomic mass","Density","Valency"],a:1,e:"Atomic mass (1869) — atomic number wasn't known yet."},
+ {t:"Recall · TNPSC",q:"How many elements were known in Mendeleev's time?",o:["30","63","92","118"],a:1,e:"63 elements were known in 1869."},
+ {t:"Conceptual · SSC",q:"Mendeleev's greatest achievement was:",o:["Discovering oxygen","Leaving gaps and predicting new elements","Naming hydrogen","Making the first atom model"],a:1,e:"His predicted eka-aluminium (Ga) and eka-silicon (Ge) matched reality."},
+ {t:"Recall · RRB",q:"Eka-aluminium and eka-silicon turned out to be:",o:["Gallium and germanium","Scandium and titanium","Indium and tin","Boron and carbon"],a:0,e:"Ga and Ge — discovered later with the predicted properties."},
+ {t:"Conceptual · Banking",q:"A problem in Mendeleev's table was the position of:",o:["Oxygen","Hydrogen","Carbon","Sodium"],a:1,e:"Hydrogen fits both group 1 and group 17 — no fixed position."},
+ {t:"Conceptual · SSC",q:"Isotopes posed a challenge to Mendeleev's table because they have:",o:["Same mass, different properties","Different masses but same properties","No mass","Different charges"],a:1,e:"Different masses would need different slots, yet they're the same element."},
+ {t:"Recall · TNPSC",q:"The modern periodic law is based on:",o:["Atomic mass","Atomic number","Density","Atomic volume"],a:1,e:"Moseley (1913): properties are periodic functions of atomic number."},
+ {t:"Recall · SSC",q:"The scientist behind the modern periodic law is:",o:["Mendeleev","Newlands","Moseley","Dalton"],a:2,e:"Henry Moseley established Z as the basis."},
+ {t:"Conceptual · RRB",q:"Ordering by atomic number fixed the anomaly of:",o:["Na and K","Ar and K","H and He","C and N"],a:1,e:"Ar (Z=18) before K (Z=19), though argon is heavier."},
+ {t:"Recall · Banking",q:"The modern periodic table has ___ periods and ___ groups:",o:["8, 18","7, 18","7, 8","18, 7"],a:1,e:"7 horizontal periods, 18 vertical groups."},
+ {t:"Recall · SSC",q:"The total number of elements known today is:",o:["92","103","118","126"],a:2,e:"118 elements; 92 occur naturally (up to uranium)."},
+ {t:"Conceptual · TNPSC",q:"The period number of an element equals its number of:",o:["Protons","Electron shells","Valence electrons","Neutrons"],a:1,e:"Period = shells. Period 3 elements have 3 shells."},
+ {t:"Conceptual · SSC",q:"Elements in the same group have the same:",o:["Atomic mass","Number of shells","Number of valence electrons","Density"],a:2,e:"Same outer electrons → same chemical behaviour."},
+ {t:"Recall · RRB",q:"Period 1 contains how many elements?",o:["2","8","18","32"],a:0,e:"Only H and He."},
+ {t:"Recall · Banking",q:"Periods 2 and 3 each contain how many elements?",o:["2","8","18","32"],a:1,e:"8 elements each (Li→Ne, Na→Ar)."},
+ {t:"Recall · SSC",q:"Elements showing both metal and non-metal properties are called:",o:["Alloys","Metalloids","Isotopes","Halogens"],a:1,e:"Metalloids: B, Si, Ge, As, Sb, Te — on the zig-zag border."},
+ {t:"Recall · TNPSC",q:"Which of these is a metalloid?",o:["Sodium","Silicon","Sulphur","Silver"],a:1,e:"Silicon sits on the metal/non-metal staircase."},
+ {t:"Conceptual · SSC",q:"Moving left to right across a period, atomic size:",o:["Increases","Decreases","Stays constant","First increases then decreases"],a:1,e:"More protons pull the same shells closer — radius shrinks."},
+ {t:"Conceptual · RRB",q:"Moving down a group, atomic size:",o:["Decreases","Increases","Stays the same","Becomes zero"],a:1,e:"Each row adds a new shell — radius grows."},
+ {t:"Conceptual · Banking",q:"Across a period, metallic character:",o:["Increases","Decreases","Is constant","Doubles"],a:1,e:"Losing electrons gets harder → metallic character falls."},
+ {t:"Conceptual · SSC",q:"Down a group, metallic character:",o:["Decreases","Increases","Is constant","Vanishes"],a:1,e:"Outer electrons get farther and easier to lose."},
+ {t:"Recall · TNPSC",q:"The most metallic naturally occurring element is:",o:["Sodium","Caesium","Iron","Gold"],a:1,e:"Cs — bottom-left of the table (francium is radioactive/rare)."},
+ {t:"Recall · SSC",q:"The most electronegative element is:",o:["Oxygen","Chlorine","Fluorine","Nitrogen"],a:2,e:"Fluorine — top-right (excluding noble gases)."},
+ {t:"Conceptual · RRB",q:"Valency across a period (Na to Ar) goes:",o:["1 to 8","1,2,3,4,3,2,1,0","0 to 7","4 to 1"],a:1,e:"Rises to 4 (Si) then falls to 0 (Ar)."},
+ {t:"Conceptual · Banking",q:"Valency down a group:",o:["Increases","Decreases","Remains the same","Alternates"],a:2,e:"Same valence electrons → same valency."},
+ {t:"Conceptual · SSC",q:"Reactivity of alkali metals down the group:",o:["Decreases","Increases","Constant","Zero"],a:1,e:"K > Na > Li — the outer electron is farther, easier to lose."},
+ {t:"Conceptual · TNPSC",q:"Reactivity of halogens down the group:",o:["Increases","Decreases","Constant","Doubles"],a:1,e:"F > Cl > Br > I — gaining an electron gets harder lower down."},
+ {t:"Recall · SSC",q:"Group 1 elements are called:",o:["Halogens","Alkali metals","Noble gases","Alkaline earth metals"],a:1,e:"Li, Na, K, Rb, Cs — the alkali metals."},
+ {t:"Recall · RRB",q:"Group 2 elements are called:",o:["Alkali metals","Alkaline earth metals","Halogens","Chalcogens"],a:1,e:"Be, Mg, Ca, Sr, Ba."},
+ {t:"Recall · Banking",q:"Group 17 elements are called:",o:["Noble gases","Halogens","Alkali metals","Metalloids"],a:1,e:"F, Cl, Br, I — the 'salt formers'."},
+ {t:"Recall · SSC",q:"Group 18 elements are called:",o:["Halogens","Noble (inert) gases","Alkali metals","Transition metals"],a:1,e:"He, Ne, Ar, Kr, Xe, Rn — full shells, inert."},
+ {t:"Conceptual · TNPSC",q:"Noble gases are chemically inert because they have:",o:["No electrons","Complete outer shells","High mass","Low density"],a:1,e:"Full octets — no need to gain or lose electrons."},
+ {t:"Recall · SSC",q:"The valency of noble gases is:",o:["1","2","8","0"],a:3,e:"Zero — they don't normally combine."},
+ {t:"Recall · RRB",q:"'Halogen' literally means:",o:["Water former","Salt former","Acid former","Gas former"],a:1,e:"Halo-gen = salt producer (NaCl from Na + Cl)."},
+ {t:"Recall · Banking",q:"The most reactive non-metal is:",o:["Oxygen","Chlorine","Fluorine","Nitrogen"],a:2,e:"Fluorine — the most reactive of all non-metals."},
+ {t:"Recall · SSC",q:"The most reactive metal (naturally occurring, group 1 bottom) is:",o:["Lithium","Sodium","Caesium","Calcium"],a:2,e:"Reactivity rises down group 1 → Cs."},
+ {t:"Recall · TNPSC",q:"The element with atomic number 20 is:",o:["Potassium","Calcium","Argon","Chlorine"],a:1,e:"Ca = 20 (K = 19, Ar = 18, Cl = 17)."},
+ {t:"Recall · SSC",q:"The element with atomic number 11 is:",o:["Magnesium","Sodium","Neon","Aluminium"],a:1,e:"Na = 11."},
+ {t:"Numerical · RRB",q:"An element has 2, 8, 7 electron arrangement. Its group and period are:",o:["Group 17, period 3","Group 7, period 2","Group 17, period 2","Group 2, period 7"],a:0,e:"7 valence electrons → group 17; 3 shells → period 3 (it's chlorine)."},
+ {t:"Numerical · Banking",q:"An element with configuration 2, 8, 2 belongs to:",o:["Group 2, period 3","Group 12, period 2","Group 2, period 2","Group 8, period 3"],a:0,e:"2 valence electrons → group 2; 3 shells → period 3 (magnesium)."},
+ {t:"Numerical · SSC",q:"Element X (Z = 17) will most resemble element with Z =:",o:["16","18","9","19"],a:2,e:"Z=9 (F) is in the same group 17 as Cl — same valence electrons."},
+ {t:"Conceptual · TNPSC",q:"Which is the smallest atom overall?",o:["Hydrogen","Helium","Lithium","Oxygen"],a:1,e:"He has the smallest atomic radius (strongest pull in period 1)."},
+ {t:"Conceptual · SSC",q:"Which has the largest atomic size: Na, Mg, Al, Si?",o:["Na","Mg","Al","Si"],a:0,e:"Size decreases across the period — Na is leftmost, largest."},
+ {t:"Conceptual · RRB",q:"Which is more metallic: Be or Ca?",o:["Be","Ca","Equal","Neither"],a:1,e:"Metallic character increases down the group."},
+ {t:"Recall · Banking",q:"Lanthanides and actinides are placed:",o:["In group 18","In two rows below the main table","In period 1","With the halogens"],a:1,e:"The f-block is parked below to keep the table compact."},
+ {t:"Recall · SSC",q:"Element 101, mendelevium, is named after:",o:["A country","Mendeleev","A planet","A city"],a:1,e:"Named to honour Dmitri Mendeleev."},
+ {t:"Recall · TNPSC",q:"Polonium was named by Marie Curie after:",o:["A scientist","Poland","The Sun","A mineral"],a:1,e:"Her homeland, Poland."},
+ {t:"Statement · SSC",q:"Consider: (1) Mendeleev used atomic mass. (2) The modern table uses atomic number. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both true — the key historical shift."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Atomic size increases across a period. (2) Atomic size increases down a group. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"Size DEcreases across; increases down. Only 2."},
+ {t:"Statement · RRB",q:"Consider: (1) Group 1 metals get more reactive downward. (2) Group 17 non-metals get more reactive downward. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Metals: more reactive down. Halogens: LESS reactive down. Only 1."},
+ {t:"Statement · Banking",q:"Consider: (1) Noble gases have valency 0. (2) Halogens have valency 1. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both true."},
+ {t:"Statement · SSC",q:"Consider: (1) Period number = number of shells. (2) Group members share valence-electron count. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both true — the two structural rules of the table."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Silicon is a metalloid. (2) Sulphur is a metalloid. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Si is a metalloid; S is a non-metal. Only 1."},
+ {t:"Assertion–Reason · SSC",q:"A: Argon is placed before potassium despite being heavier. R: The modern table orders by atomic number, not mass.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A — Moseley's fix."},
+ {t:"Assertion–Reason · RRB",q:"A: Elements of a group show similar chemical properties. R: They have the same number of valence electrons.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A."},
+ {t:"Assertion–Reason · Banking",q:"A: Fluorine is the most reactive halogen. R: Its incoming electron joins the shell closest to the nucleus among halogens.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true and R explains A — strongest pull on the gained electron."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, configuration-based, statement & assertion–reason. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS ===== */
+var PROB=[
+ {lvl:"e",tag:"Triads",q:"Verify Dobereiner's triad for Li(7), Na(23), K(39).",given:"masses 7, 23, 39",find:"middle ≈ average?",steps:["Average of Li and K = (7+39)/2","= 46/2 = 23 = Na ✓"],ans:"Yes — 23 equals sodium's mass"},
+ {lvl:"e",tag:"Configuration",q:"Element Z = 12: write its configuration, group and period.",given:"Z = 12 (Mg)",find:"config, group, period",steps:["Config: 2, 8, 2","2 valence electrons → group 2","3 shells → period 3"],ans:"2,8,2 · group 2 · period 3"},
+ {lvl:"e",tag:"Configuration",q:"Element Z = 17: configuration, group and period?",given:"Z = 17 (Cl)",find:"config, group, period",steps:["2, 8, 7","7 valence e⁻ → group 17","3 shells → period 3"],ans:"2,8,7 · group 17 · period 3"},
+ {lvl:"m",tag:"Similarity",q:"Which two of Z = 9, 14, 17 will show similar chemistry, and why?",given:"Z = 9, 14, 17",find:"similar pair",steps:["Z=9 → 2,7 (group 17); Z=17 → 2,8,7 (group 17)","Same valence count → same behaviour"],ans:"Z=9 (F) and Z=17 (Cl)"},
+ {lvl:"m",tag:"Size ranking",q:"Arrange Na, Mg, Al in decreasing atomic size.",given:"period-3 trio",find:"order",steps:["Size decreases across a period","Na (leftmost) largest"],ans:"Na > Mg > Al"},
+ {lvl:"m",tag:"Size ranking",q:"Arrange Li, Na, K in increasing atomic size.",given:"group-1 trio",find:"order",steps:["Size increases down a group"],ans:"Li < Na < K"},
+ {lvl:"m",tag:"Metallic",q:"Which is more metallic: Mg or Al? Na or Mg?",given:"two pairs",find:"answer",steps:["Metallic character falls across a period","Left element wins both times"],ans:"Mg > Al; Na > Mg"},
+ {lvl:"m",tag:"Valency",q:"Predict the valencies across period 3: Na, Mg, Al, Si, P, S, Cl, Ar.",given:"period 3",find:"valency list",steps:["Pattern rises 1→4 then falls to 0"],ans:"1, 2, 3, 4, 3, 2, 1, 0"},
+ {lvl:"h",tag:"Mendeleev logic",q:"Why did Mendeleev place Co (58.9) before Ni (58.7), breaking mass order?",given:"Co heavier than Ni",find:"reason",steps:["He prioritised PROPERTIES over strict mass order","Modern Z order (27, 28) proves him right"],ans:"Properties first; atomic number later justified it"},
+ {lvl:"h",tag:"Identify",q:"An element is in period 3, group 16. Find Z and name it.",given:"period 3, group 16",find:"element",steps:["Period 3 → 3 shells; group 16 → 6 valence e⁻","Config 2,8,6 → Z = 16"],ans:"Z = 16, sulphur"},
+ {lvl:"h",tag:"Reactivity",q:"Arrange F, Cl, Br in decreasing reactivity and explain.",given:"three halogens",find:"order + reason",steps:["Halogen reactivity falls down the group","Smaller atom → stronger pull on incoming electron"],ans:"F > Cl > Br"},
+ {lvl:"h",tag:"Prediction",q:"Element X forms X₂O and reacts violently with water. Which group is it in, and does reactivity grow up or down?",given:"oxide X₂O, violent with water",find:"group & trend",steps:["X₂O → valency 1 → group 1 (alkali metal)","Alkali reactivity increases DOWN the group"],ans:"Group 1; reactivity increases downward"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked configuration/trend problems graded easy→hard. Try first, then reveal. Mark solved for XP.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS (45) ===== */
+var FC=[
+ {q:"What are Dobereiner's triads?",a:"Groups of 3 similar elements; middle mass ≈ average of the outer two."},
+ {q:"Give two examples of triads.",a:"Li-Na-K and Cl-Br-I (also Ca-Sr-Ba)."},
+ {q:"State Newlands' law of octaves.",a:"Arranged by mass, every 8th element resembles the first — like musical notes."},
+ {q:"Limit of Newlands' octaves?",a:"Worked only up to calcium."},
+ {q:"How did Mendeleev arrange elements?",a:"By increasing atomic MASS and similar properties (1869, 63 elements)."},
+ {q:"What made Mendeleev's table famous?",a:"He left gaps and correctly predicted new elements."},
+ {q:"What were eka-boron, eka-aluminium, eka-silicon?",a:"Scandium, gallium and germanium — discovered later as predicted."},
+ {q:"Three anomalies in Mendeleev's table?",a:"Hydrogen's position, isotopes, and mass-order breaks (Co/Ni, Ar/K)."},
+ {q:"State the modern periodic law.",a:"Properties of elements are a periodic function of atomic NUMBER (Moseley)."},
+ {q:"Who gave the atomic-number basis and when?",a:"Henry Moseley, 1913."},
+ {q:"Periods and groups in the modern table?",a:"7 periods, 18 groups."},
+ {q:"Total elements known? Natural ones?",a:"118 total; 92 natural (up to uranium)."},
+ {q:"What does the period number tell you?",a:"The number of electron shells."},
+ {q:"What do same-group elements share?",a:"The same number of valence electrons → similar chemistry."},
+ {q:"Elements in period 1? In periods 2–3?",a:"2 (H, He); 8 each."},
+ {q:"What are metalloids? Name them.",a:"Elements with both metal & non-metal traits: B, Si, Ge, As, Sb, Te."},
+ {q:"Why is hydrogen's position debated?",a:"It resembles both group 1 (1 outer e⁻) and group 17 (1 short of full)."},
+ {q:"Atomic size trend across a period?",a:"Decreases (more protons pull shells closer)."},
+ {q:"Atomic size trend down a group?",a:"Increases (a new shell each period)."},
+ {q:"Metallic character trends?",a:"Falls across a period, rises down a group."},
+ {q:"Where do metals and non-metals sit?",a:"Metals left/bottom; non-metals right/top; metalloids on the staircase."},
+ {q:"Most metallic natural element?",a:"Caesium (bottom-left)."},
+ {q:"Most electronegative element?",a:"Fluorine."},
+ {q:"Valency pattern across a period?",a:"1, 2, 3, 4, 3, 2, 1, 0."},
+ {q:"Valency trend down a group?",a:"Stays the same."},
+ {q:"Alkali metal reactivity trend?",a:"Increases down the group (K > Na > Li)."},
+ {q:"Halogen reactivity trend?",a:"Decreases down the group (F > Cl > Br > I)."},
+ {q:"Group 1 family name & members?",a:"Alkali metals: Li, Na, K, Rb, Cs."},
+ {q:"Group 2 family name & members?",a:"Alkaline earth metals: Be, Mg, Ca, Sr, Ba."},
+ {q:"Group 17 family name & members?",a:"Halogens ('salt formers'): F, Cl, Br, I."},
+ {q:"Group 18 family name & members?",a:"Noble/inert gases: He, Ne, Ar, Kr, Xe, Rn."},
+ {q:"Why are noble gases inert?",a:"Complete outer shells — valency 0."},
+ {q:"Most reactive metal and non-metal?",a:"Caesium (metal); fluorine (non-metal)."},
+ {q:"First 10 elements in order?",a:"H He Li Be B C N O F Ne."},
+ {q:"Elements 11–20 in order?",a:"Na Mg Al Si P S Cl Ar K Ca."},
+ {q:"Z of Na, Cl, Ca?",a:"11, 17, 20."},
+ {q:"Configuration of chlorine (Z=17)?",a:"2, 8, 7 — group 17, period 3."},
+ {q:"Configuration of magnesium (Z=12)?",a:"2, 8, 2 — group 2, period 3."},
+ {q:"Which atom is the smallest?",a:"Helium (smallest radius)."},
+ {q:"Where are lanthanides & actinides shown?",a:"In two rows below the main table (f-block)."},
+ {q:"Which element honours Mendeleev?",a:"Mendelevium (Z = 101)."},
+ {q:"Which element did Marie Curie name for her homeland?",a:"Polonium (Poland)."},
+ {q:"'Halogen' means?",a:"Salt former."},
+ {q:"Which fixed anomaly: Ar before K?",a:"Ordering by atomic number (18 before 19)."},
+ {q:"Same-group prediction: F (Z=9) resembles which Z?",a:"Z = 17 (chlorine) — both group 17."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script src="/study/_cm-auto-track.js"></script>
+</body></html>

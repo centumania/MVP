@@ -1,0 +1,1026 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Structure of the Atom — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"⚛️";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:30px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.dia{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;text-align:center}
+.dia svg{max-width:100%;height:auto}
+.dia .cap{font-size:11px;color:var(--mut);font-weight:600;margin-top:7px}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Physics · Mastery Pack</div>
+  <h1>Structure of the Atom</h1>
+  <p>Subatomic particles → Thomson &amp; Rutherford → Bohr shells → Z and A → Electron configuration &amp; valency → Isotopes &amp; isobars → Radioactivity → Key numbers.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/40</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/60</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+<h2 class="sec"><span class="em">🌍</span>The Big Picture</h2>
+<div class="sec-sub">How scientists mapped something they could never see.</div>
+<div class="card">
+<p>An atom is a <b>tiny dense positive nucleus</b> (protons + neutrons) surrounded by electrons in shells — and it is <b>99.9% empty space</b>. This chapter is a detective story: Thomson found the electron, Rutherford found the nucleus, Chadwick found the neutron, and Bohr explained why the atom doesn't collapse.</p>
+<div class="dia">
+<svg viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="130" cy="80" rx="105" ry="55" fill="none" stroke="#93C5FD" stroke-width="1.4"/>
+<ellipse cx="130" cy="80" rx="70" ry="36" fill="none" stroke="#BB9AF7" stroke-width="1.4"/>
+<circle cx="130" cy="80" r="15" fill="#F7768E"/>
+<text x="130" y="84" font-size="9" fill="#fff" text-anchor="middle" font-weight="bold">Nucleus</text>
+<circle cx="235" cy="80" r="4" fill="#7AA2F7"/><circle cx="200" cy="44" r="4" fill="#BB9AF7"/>
+<circle cx="60" cy="80" r="4" fill="#7AA2F7"/>
+<text x="130" y="150" font-size="9" fill="#6B6B7B" text-anchor="middle">K, L shells hold electrons around a central nucleus</text>
+</svg>
+<div class="cap">The nuclear atom: dense centre, orbiting electrons, mostly empty space.</div>
+</div>
+<div class="note why"><span class="t">Why exams love it</span>Particle discoverers, gold-foil conclusions, Z/A calculations, 2n² and octet, isotope-vs-isobar, and α/β/γ penetration are guaranteed SSC/TNPSC/RRB material.</div>
+</div>
+
+<h2 class="sec"><span class="em">🔴</span>Branch 1 · Subatomic Particles</h2>
+<div class="card"><h3>The three building blocks</h3>
+<div class="wbw">
+<div class="row"><span class="lab l-what">What</span><span class="txt"><b>Electron</b> (−1, Thomson 1897), <b>proton</b> (+1, Goldstein/Rutherford), <b>neutron</b> (0, Chadwick 1932).</span></div>
+<div class="row"><span class="lab l-why">Why</span><span class="txt">Protons give the nucleus its positive charge; neutrons add mass and hold the nucleus together; electrons balance the charge and do the chemistry.</span></div>
+<div class="row"><span class="lab l-how">How</span><span class="txt">Proton ≈ neutron ≈ 1 u; the electron is ~<b>1836×</b> lighter, so nearly all mass sits in the nucleus.</span></div>
+<div class="row"><span class="lab l-exam">Exam</span><span class="txt">"Who discovered the neutron?" → Chadwick. "Which particle is neutral?" → neutron.</span></div>
+</div></div>
+
+<h2 class="sec"><span class="em">🔬</span>Branch 2 · Early Models</h2>
+<div class="card"><h3>🥇 The gold-foil experiment</h3>
+<p><b>Thomson</b> imagined a "plum pudding" — electrons dotted through a positive sphere. <b>Rutherford</b> tested it by firing <b>alpha particles</b> at thin gold foil. The result stunned everyone:</p>
+<div class="flow"><span class="step">Most pass straight through</span><span class="arw">→</span><span class="step">atom mostly empty</span><span class="arw">|</span><span class="step">a few bounce back</span><span class="arw">→</span><span class="step">tiny dense + nucleus</span></div>
+<div class="note trap"><span class="t">Rutherford's flaw</span>A revolving electron should continuously radiate energy, spiral inward and make the atom collapse in an instant. Classical physics couldn't save it — enter Bohr.</div>
+</div>
+
+<h2 class="sec"><span class="em">🪐</span>Branch 3 · Bohr Model</h2>
+<div class="card"><h3>Fixed shells fix the collapse</h3>
+<div class="wbw">
+<div class="row"><span class="lab l-what">What</span><span class="txt">Electrons revolve only in certain <b>stationary orbits</b> (shells K, L, M, N) <b>without radiating energy</b>.</span></div>
+<div class="row"><span class="lab l-how">How</span><span class="txt">Energy rises outward (K lowest). An electron <b>absorbs</b> energy to jump out and <b>emits a photon</b> to fall in — the origin of line spectra.</span></div>
+<div class="row"><span class="lab l-exam">Exam</span><span class="txt">"Shells are named…" → K, L, M, N. "Electron falling to a lower shell…" → emits energy.</span></div>
+</div></div>
+
+<h2 class="sec"><span class="em">🔢</span>Branch 4 · Atomic &amp; Mass Numbers</h2>
+<div class="card"><h3>Z, A and the neutron count</h3>
+<p><b>Atomic number Z</b> = number of protons — the element's fingerprint. In a neutral atom, electrons = protons = Z. <b>Mass number A</b> = protons + neutrons (the nucleons). So <b>neutrons = A − Z</b>.</p>
+<p>Notation: mass number on top, atomic number below — <b>²³₁₁Na</b> means sodium, 11 protons, 12 neutrons.</p>
+<div class="note"><span class="t">One equation, many questions</span>Give any two of (protons, neutrons, mass number) and you can always find the third.</div>
+</div>
+
+<h2 class="sec"><span class="em">🧅</span>Branch 5 · Shells, Configuration &amp; Valency</h2>
+<div class="card"><h3>🧮 2n² and the octet</h3>
+<p>Each shell holds a maximum of <b>2n²</b> electrons: K=2, L=8, M=18, N=32 — filling inner shells first. Atoms are stable with a full <b>octet</b> (8 in the outer shell; 2 for K = duplet), the noble-gas configuration.</p>
+<p><b>Valence electrons</b> (outermost) decide chemistry. <b>Valency</b> = outer electrons if ≤4, else <b>8 − outer electrons</b>. Noble gases: 0.</p>
+<table class="tbl"><tr><th>Element</th><th>Config</th><th>Valency</th></tr>
+<tr><td>Sodium (11)</td><td>2,8,1</td><td>1</td></tr>
+<tr><td>Magnesium (12)</td><td>2,8,2</td><td>2</td></tr>
+<tr><td>Chlorine (17)</td><td>2,8,7</td><td>1</td></tr>
+<tr><td>Argon (18)</td><td>2,8,8</td><td>0</td></tr></table>
+</div>
+
+<h2 class="sec"><span class="em">👬</span>Branch 6 · Isotopes &amp; Isobars</h2>
+<div class="card"><h3>Same-something, different-something</h3>
+<p><b>Isotopes:</b> same Z, different A (different neutrons) — chemically identical, physically different. Hydrogen's protium/deuterium/tritium; carbon-12/13/14. <b>Isobars:</b> same A, different Z (different elements) — ⁴⁰Ar and ⁴⁰Ca. <b>Isotones:</b> same neutron count.</p>
+<div class="note life"><span class="t">Why 35.5?</span>Chlorine's fractional atomic mass is the weighted average of Cl-35 (75%) and Cl-37 (25%): (75×35 + 25×37)/100 = 35.5 u.</div>
+</div>
+
+<h2 class="sec"><span class="em">☢️</span>Branch 7 · Radioactivity</h2>
+<div class="card"><h3>🔴🔵🟢 Alpha, beta, gamma</h3>
+<p>Discovered by <b>Becquerel (1896)</b>; the <b>Curies</b> found polonium and radium. Unstable nuclei emit three radiations:</p>
+<div class="eg">
+<div class="e"><div class="h">🔴 Alpha (α)</div><p>Helium nuclei, +2, heaviest, stopped by PAPER, most ionising</p></div>
+<div class="e"><div class="h">🔵 Beta (β)</div><p>Fast electrons, −1, stopped by ALUMINIUM</p></div>
+<div class="e"><div class="h">🟢 Gamma (γ)</div><p>EM waves, no charge, need thick LEAD, most penetrating</p></div>
+<div class="e"><div class="h">📏 Order</div><p>Penetration: γ &gt; β &gt; α · Ionising: α &gt; β &gt; γ</p></div>
+</div></div>
+
+<h2 class="sec"><span class="em">⭐</span>Branch 8 · Key Numbers &amp; Uses</h2>
+<div class="card"><h3>The applied fact bank</h3>
+<p><b>Cobalt-60</b> → cancer radiotherapy. <b>Iodine-131</b> → thyroid diagnosis/treatment. <b>Carbon-14</b> (half-life ~5730 yr) → dating fossils. <b>Uranium-235</b> → fissile nuclear fuel (U-238 is the abundant non-fissile isotope). The <b>Bohr–Bury</b> filling rule: outer shell ≤ 8, next-to-outer ≤ 18, and electrons enter a new shell only after these limits are met.</p>
+</div>
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 8 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+<h2 class="sec"><span class="em">📊</span>Master Comparison Tables</h2>
+<div class="sec-sub">The exact tables examiners build questions from.</div>
+
+<h2 class="sec" style="font-size:16px">🔴 Subatomic particles master table</h2>
+<table class="tbl"><tr><th>Particle</th><th>Charge</th><th>Relative mass</th><th>Discoverer</th><th>Year</th></tr>
+<tr><td class="h">Electron</td><td>−1</td><td>1/1836 u</td><td>J.J. Thomson</td><td>1897</td></tr>
+<tr><td class="h">Proton</td><td>+1</td><td>1 u</td><td>Goldstein / Rutherford</td><td>1886 / 1919</td></tr>
+<tr><td class="h">Neutron</td><td>0</td><td>1 u</td><td>James Chadwick</td><td>1932</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🔬 Atomic models timeline</h2>
+<table class="tbl"><tr><th>Scientist</th><th>Model / find</th><th>Key idea</th><th>Flaw</th></tr>
+<tr><td class="h">Thomson</td><td>Plum pudding</td><td>Electrons in a positive sphere</td><td>No nucleus; wrong</td></tr>
+<tr><td class="h">Rutherford</td><td>Nuclear model</td><td>Tiny dense +nucleus, empty atom</td><td>Electron should collapse in</td></tr>
+<tr><td class="h">Bohr</td><td>Shell model</td><td>Fixed energy orbits, no radiation</td><td>Only works well for hydrogen</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🧮 Shell capacity (2n²)</h2>
+<table class="tbl"><tr><th>Shell</th><th>n</th><th>Max electrons (2n²)</th></tr>
+<tr><td class="h">K</td><td>1</td><td>2</td></tr>
+<tr><td class="h">L</td><td>2</td><td>8</td></tr>
+<tr><td class="h">M</td><td>3</td><td>18</td></tr>
+<tr><td class="h">N</td><td>4</td><td>32</td></tr></table>
+<div class="note trap"><span class="t">Bohr–Bury cap</span>Regardless of 2n², the OUTERMOST shell never holds more than 8, and the next-to-outer never more than 18 until filling proceeds.</div>
+
+<h2 class="sec" style="font-size:16px">🔢 Z, A & neutron worked examples</h2>
+<table class="tbl"><tr><th>Atom</th><th>Z (p)</th><th>A</th><th>Neutrons (A−Z)</th><th>Config</th></tr>
+<tr><td class="h">Hydrogen ¹H</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+<tr><td class="h">Carbon ¹²C</td><td>6</td><td>12</td><td>6</td><td>2,4</td></tr>
+<tr><td class="h">Oxygen ¹⁶O</td><td>8</td><td>16</td><td>8</td><td>2,6</td></tr>
+<tr><td class="h">Sodium ²³Na</td><td>11</td><td>23</td><td>12</td><td>2,8,1</td></tr>
+<tr><td class="h">Chlorine ³⁵Cl</td><td>17</td><td>35</td><td>18</td><td>2,8,7</td></tr>
+<tr><td class="h">Calcium ⁴⁰Ca</td><td>20</td><td>40</td><td>20</td><td>2,8,8,2</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">👬 Isotopes vs Isobars vs Isotones</h2>
+<table class="tbl"><tr><th>Type</th><th>Same</th><th>Different</th><th>Example</th></tr>
+<tr><td class="h">Isotopes</td><td>Atomic number Z</td><td>Mass number A</td><td>¹²C, ¹³C, ¹⁴C</td></tr>
+<tr><td class="h">Isobars</td><td>Mass number A</td><td>Atomic number Z</td><td>⁴⁰Ar, ⁴⁰Ca</td></tr>
+<tr><td class="h">Isotones</td><td>Neutron number</td><td>Z and A</td><td>³⁶S, ³⁷Cl, ³⁸Ar (20 n)</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">☢️ Radiation comparison</h2>
+<table class="tbl"><tr><th>Property</th><th>Alpha (α)</th><th>Beta (β)</th><th>Gamma (γ)</th></tr>
+<tr><td class="h">Nature</td><td>He nucleus (2p+2n)</td><td>Fast electron</td><td>EM wave</td></tr>
+<tr><td class="h">Charge</td><td>+2</td><td>−1</td><td>0</td></tr>
+<tr><td class="h">Penetration</td><td>Lowest (paper)</td><td>Medium (aluminium)</td><td>Highest (thick lead)</td></tr>
+<tr><td class="h">Ionising power</td><td>Highest</td><td>Medium</td><td>Lowest</td></tr>
+<tr><td class="h">Deflected by field?</td><td>Yes (+)</td><td>Yes (−)</td><td>No</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">⚕️ Famous isotopes & uses</h2>
+<table class="tbl"><tr><th>Isotope</th><th>Use</th></tr>
+<tr><td class="h">Cobalt-60</td><td>Cancer radiotherapy (gamma source)</td></tr>
+<tr><td class="h">Iodine-131</td><td>Thyroid diagnosis and treatment</td></tr>
+<tr><td class="h">Carbon-14</td><td>Radiocarbon dating (half-life ~5730 yr)</td></tr>
+<tr><td class="h">Uranium-235</td><td>Nuclear fuel (fissile)</td></tr>
+<tr><td class="h">Sodium-24</td><td>Detecting leaks in pipelines; blood-flow studies</td></tr></table>
+</div>
+<div class="panel" id="p-memory">
+<h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+<div class="sec-sub">Hooks, mnemonics and Tamil tricks — one per hard-to-hold fact.</div>
+
+<div class="mem-card"><div class="cn">Discoverers TRC<span class="tag">Mnemonic</span></div>
+<div class="hk"><b>T</b>homson-electron, <b>R</b>utherford-nucleus, <b>C</b>hadwick-neutron. "தாம்சன் மின்னணு, ரூதர்போர்டு கரு, சாட்விக் நியூட்ரான்" — T-R-C in discovery order.</div>
+<div class="rq">Asked as: who discovered the neutron? Chadwick.</div></div>
+
+<div class="mem-card"><div class="cn">1836<span class="tag">Number hook</span></div>
+<div class="hk">Proton is <b>1836×</b> heavier than an electron. Think "18-36" like a countdown; the electron is the featherweight of the atom.</div>
+<div class="rq">Asked as: proton:electron mass ratio? ~1836.</div></div>
+
+<div class="mem-card"><div class="cn">Gold-foil result<span class="tag">Story</span></div>
+<div class="hk">Rutherford: "as if a shell fired at tissue paper bounced back." Most alphas pass (empty atom); a few rebound (tiny dense nucleus). "பெரும்பாலும் காலி, நடுவில் அடர் கரு."</div>
+<div class="rq">Asked as: gold-foil proved the existence of? The nucleus.</div></div>
+
+<div class="mem-card"><div class="cn">KLMN shells<span class="tag">Alphabet hook</span></div>
+<div class="hk">Shells start at <b>K</b> (not A) and go K-L-M-N. Why K? Historically the 11th letter left room for inner shells. Just remember "K comes first, closest to the கரு."</div>
+<div class="rq">Asked as: name of the first shell? K (n=1).</div></div>
+
+<div class="mem-card"><div class="cn">2n² capacities<span class="tag">Number hook</span></div>
+<div class="hk">2-8-18-32. Double the squares: 2×1², 2×2², 2×3², 2×4². "இரண்டு-எட்டு-பதினெட்டு-முப்பத்திரண்டு."</div>
+<div class="rq">Asked as: max electrons in M shell? 18.</div></div>
+
+<div class="mem-card"><div class="cn">A = p + n<span class="tag">Formula hook</span></div>
+<div class="hk">Mass number counts only the <b>heavy</b> nucleus dwellers (protons + neutrons). Electrons are too light to matter. Neutrons = A − Z. "கனமானவை மட்டும் எண்ணு."</div>
+<div class="rq">Asked as: neutrons in ²³Na? 23 − 11 = 12.</div></div>
+
+<div class="mem-card"><div class="cn">Z is identity<span class="tag">Concept hook</span></div>
+<div class="hk">Change protons → change element. Z is the atom's <b>ID card</b>; neutrons only change the "weight class" (isotope). "புரோட்டான் மாறினால் தனிமமே மாறும்."</div>
+<div class="rq">Asked as: what defines an element? Atomic number Z.</div></div>
+
+<div class="mem-card"><div class="cn">Valency mirror<span class="tag">Logic hook</span></div>
+<div class="hk">Outer ≤4 → valency = outer. Outer &gt;4 → valency = 8 − outer. Na(1)→1, Cl(7)→1. "நான்கு வரை நேரடி, மேலே 8 கழி."</div>
+<div class="rq">Asked as: valency of an atom with 6 outer electrons? 2.</div></div>
+
+<div class="mem-card"><div class="cn">Isotope vs Isobar<span class="tag">Word hook</span></div>
+<div class="hk">Iso<b>TOP</b>e — same <b>P</b>rotons (top of periodic identity). Iso<b>BAR</b> — same mass (a 'bar' of equal weight). "டோப்-புரோட்டான், பார்-நிறை."</div>
+<div class="rq">Asked as: same mass, different element = ? Isobars.</div></div>
+
+<div class="mem-card"><div class="cn">Cl = 35.5<span class="tag">Number hook</span></div>
+<div class="hk">75% of 35 + 25% of 37 = 35.5. The half comes from mixing two isotopes — no atom weighs 35.5, it's an average. "சராசரி, ஒரு அணுவும் அல்ல."</div>
+<div class="rq">Asked as: why is Cl mass 35.5? Isotope average.</div></div>
+
+<div class="mem-card"><div class="cn">α β γ penetration<span class="tag">Tamil hook</span></div>
+<div class="hk">Penetration <b>γ &gt; β &gt; α</b>; stoppers <b>paper → aluminium → lead</b>. "ஆல்பா-காகிதம், பீட்டா-அலுமினியம், காமா-ஈயம்." Heavy α is easiest to block.</div>
+<div class="rq">Asked as: which is stopped by paper? Alpha.</div></div>
+
+<div class="mem-card"><div class="cn">Isotope uses<span class="tag">Story</span></div>
+<div class="hk"><b>Co</b>balt-60 fights <b>C</b>ancer; <b>I</b>odine-131 for the thyroid (iodine loves thyroid); <b>C</b>arbon-14 for dating old <b>C</b>arbon-based life; <b>U</b>-235 for nuclear power.</div>
+<div class="rq">Asked as: isotope for cancer therapy? Cobalt-60.</div></div>
+
+<div class="mem-card"><div class="cn">Rutherford's crash<span class="tag">Concept hook</span></div>
+<div class="hk">A spinning charge <b>radiates and spirals in</b> — Rutherford's atom should die in 10⁻⁸ s. Bohr said "no, orbits are fixed and silent." "சுழலும் மின்னணு விழும்; போர் நிலையான ஓடு."</div>
+<div class="rq">Asked as: Bohr's fix to Rutherford? Fixed non-radiating orbits.</div></div>
+</div>
+<div class="panel" id="p-traps">
+<h2 class="sec"><span class="em">⚠️</span>Confusion Pairs &amp; Exam Traps</h2>
+<div class="sec-sub">Where examiners hide the wrong options.</div>
+
+<div class="card"><h3>1. Who discovered what</h3>
+<p>Electron = <b>Thomson</b>. Nucleus = <b>Rutherford</b>. Neutron = <b>Chadwick</b>. Bohr gave the SHELL model, not a particle. Options swap these names constantly.</p></div>
+
+<div class="card"><h3>2. Mass number vs atomic mass</h3>
+<p>Mass number (A) is a whole number (protons + neutrons). Atomic mass can be fractional (35.5 for Cl) because it averages isotopes. Don't equate them.</p></div>
+
+<div class="card"><h3>3. Mass number excludes electrons</h3>
+<p>A = protons + neutrons ONLY. Electrons are ~1/1836 u — too light to count. "Mass number = protons + electrons" is a planted error.</p></div>
+
+<div class="card"><h3>4. Neutrons = A − Z (not A + Z)</h3>
+<p>Subtract, never add. For ²³Na: 23 − 11 = 12 neutrons. Adding gives an impossible 34.</p></div>
+
+<div class="card"><h3>5. Isotope vs Isobar</h3>
+<p>Isotopes: same Z (element), different A. Isobars: same A, different Z (different elements). The word decides: TOPe = protons, BAR = mass.</p></div>
+
+<div class="card"><h3>6. Isotopes are chemically identical</h3>
+<p>Same electron arrangement → same chemistry. They differ only physically (mass, density, nuclear stability). "Isotopes react differently" = false.</p></div>
+
+<div class="card"><h3>7. 2n² vs outer-shell cap</h3>
+<p>2n² gives the theoretical maximum (M = 18), but the OUTERMOST shell never exceeds 8 at a time (Bohr–Bury). Both rules are true simultaneously — options exploit the tension.</p></div>
+
+<div class="card"><h3>8. Alpha is least penetrating but most ionising</h3>
+<p>Heavy, +2 alpha barely penetrates (paper stops it) yet ionises the most. Gamma is the reverse — deeply penetrating, weakly ionising. Options flip these.</p></div>
+
+<div class="card"><h3>9. Alpha = helium nucleus, not helium atom</h3>
+<p>Alpha is He²⁺ (2 protons + 2 neutrons, NO electrons). Calling it a "helium atom" or "proton" is wrong.</p></div>
+
+<div class="card"><h3>10. Radioactivity discoverer</h3>
+<p><b>Becquerel</b> discovered radioactivity (1896); the <b>Curies</b> discovered the elements polonium and radium. Don't credit the Curies with the phenomenon itself.</p></div>
+
+<div class="card"><h3>11. Absorb vs emit energy</h3>
+<p>Jump OUT (to higher shell) = <b>absorb</b> energy. Fall IN (to lower shell) = <b>emit</b> a photon. The direction and the verb must match.</p></div>
+
+<div class="card"><h3>12. Isotope-use mix-ups</h3>
+<p>Cobalt-60 = cancer (not power). Uranium-235 = fuel (not therapy). Carbon-14 = dating (not medicine). Iodine-131 = thyroid. Options rotate the pairings.</p></div>
+</div>
+<div class="panel" id="p-rapid">
+<h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-liners</h2>
+<div class="sec-sub">45 exam-ready facts. Tap ☆ to flag any as Frequently-Asked-Again.</div>
+<div class="ol">
+<div><span class="n">1</span><span>Electron (−), proton (+), neutron (0) — the three subatomic particles.</span></div>
+<div><span class="n">2</span><span>Electron discovered by J.J. Thomson (1897).</span></div>
+<div><span class="n">3</span><span>Neutron discovered by James Chadwick (1932).</span></div>
+<div><span class="n">4</span><span>Nucleus holds ~99.9% of the atom's mass.</span></div>
+<div><span class="n">5</span><span>A proton is ~1836× heavier than an electron.</span></div>
+<div><span class="n">6</span><span>Thomson's model = plum pudding.</span></div>
+<div><span class="n">7</span><span>Rutherford's gold-foil experiment discovered the nucleus.</span></div>
+<div><span class="n">8</span><span>Most alpha particles passed through — atom is mostly empty.</span></div>
+<div><span class="n">9</span><span>A few alphas bounced back → tiny dense positive nucleus.</span></div>
+<div><span class="n">10</span><span>Rutherford's flaw: orbiting electrons should radiate and collapse.</span></div>
+<div><span class="n">11</span><span>Bohr introduced fixed, non-radiating energy shells.</span></div>
+<div><span class="n">12</span><span>Shells are named K, L, M, N (n = 1, 2, 3, 4).</span></div>
+<div><span class="n">13</span><span>Electron falling to a lower shell EMITS a photon.</span></div>
+<div><span class="n">14</span><span>Max electrons in a shell = 2n².</span></div>
+<div><span class="n">15</span><span>K=2, L=8, M=18, N=32.</span></div>
+<div><span class="n">16</span><span>Atomic number Z = number of protons = element identity.</span></div>
+<div><span class="n">17</span><span>Mass number A = protons + neutrons.</span></div>
+<div><span class="n">18</span><span>Neutrons = A − Z.</span></div>
+<div><span class="n">19</span><span>Neutral atom: electrons = protons = Z.</span></div>
+<div><span class="n">20</span><span>Notation ²³₁₁Na: A on top, Z below.</span></div>
+<div><span class="n">21</span><span>Valence electrons = outermost shell electrons.</span></div>
+<div><span class="n">22</span><span>Octet rule: 8 electrons (2 for K) = stable.</span></div>
+<div><span class="n">23</span><span>Valency = outer electrons (≤4) or 8 − outer (&gt;4).</span></div>
+<div><span class="n">24</span><span>Noble gases have valency 0 (filled outer shell).</span></div>
+<div><span class="n">25</span><span>Bohr–Bury: outermost shell holds max 8.</span></div>
+<div><span class="n">26</span><span>Isotopes: same Z, different A (neutrons).</span></div>
+<div><span class="n">27</span><span>Isobars: same A, different Z (different elements).</span></div>
+<div><span class="n">28</span><span>Isotones: same number of neutrons.</span></div>
+<div><span class="n">29</span><span>Hydrogen isotopes: protium, deuterium, tritium.</span></div>
+<div><span class="n">30</span><span>Isotopes are chemically identical (same electrons).</span></div>
+<div><span class="n">31</span><span>Chlorine's 35.5 u = average of Cl-35 (75%) and Cl-37 (25%).</span></div>
+<div><span class="n">32</span><span>Radioactivity discovered by Becquerel (1896).</span></div>
+<div><span class="n">33</span><span>The Curies discovered polonium and radium.</span></div>
+<div><span class="n">34</span><span>Alpha = helium nuclei (2p+2n), charge +2.</span></div>
+<div><span class="n">35</span><span>Beta = fast electrons, charge −1.</span></div>
+<div><span class="n">36</span><span>Gamma = high-energy EM waves, no charge.</span></div>
+<div><span class="n">37</span><span>Penetration: γ &gt; β &gt; α.</span></div>
+<div><span class="n">38</span><span>Stoppers: paper (α), aluminium (β), thick lead (γ).</span></div>
+<div><span class="n">39</span><span>Alpha is the most ionising radiation.</span></div>
+<div><span class="n">40</span><span>Cobalt-60 → cancer radiotherapy.</span></div>
+<div><span class="n">41</span><span>Iodine-131 → thyroid diagnosis/treatment.</span></div>
+<div><span class="n">42</span><span>Carbon-14 → dating fossils (half-life ~5730 yr).</span></div>
+<div><span class="n">43</span><span>Uranium-235 → fissile nuclear fuel.</span></div>
+<div><span class="n">44</span><span>Sodium (2,8,1) valency 1; magnesium (2,8,2) valency 2.</span></div>
+<div><span class="n">45</span><span>Argon (2,8,8) valency 0 — a stable octet.</span></div>
+</div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Structure of the Atom Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_phys_atom_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:40;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:60;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA (8 hubs × 4 leaves) ===== */
+var MAP=[
+ {id:0,cat:null,icon:"⚛️",label:"Structure of\nthe Atom",fact:"A dense positive nucleus (protons + neutrons) with electrons in shells — 99.9% empty space, held by electric force."},
+ {id:1,cat:0,icon:"🔴",label:"Subatomic\nParticles",fact:"Electron (−, Thomson), proton (+, Goldstein/Rutherford), neutron (0, Chadwick) — the three building blocks."},
+ {id:2,cat:0,icon:"🔬",label:"Early\nModels",fact:"Thomson's plum-pudding, Rutherford's nuclear atom from the gold-foil experiment."},
+ {id:3,cat:0,icon:"🪐",label:"Bohr\nModel",fact:"Electrons orbit in fixed energy shells (K, L, M, N); jumps absorb or emit energy."},
+ {id:4,cat:0,icon:"🔢",label:"Z and A\nNumbers",fact:"Atomic number Z = protons; mass number A = protons + neutrons. Z defines the element."},
+ {id:5,cat:0,icon:"🧅",label:"Shells &\nValency",fact:"Fill shells by 2n²; valence electrons in the outer shell decide chemistry and valency."},
+ {id:6,cat:0,icon:"👬",label:"Isotopes &\nIsobars",fact:"Isotopes: same Z, different A. Isobars: same A, different Z. Isotones: same neutrons."},
+ {id:7,cat:0,icon:"☢️",label:"Radioactivity",fact:"Unstable nuclei emit alpha, beta, gamma rays — Becquerel and the Curies."},
+ {id:8,cat:0,icon:"⭐",label:"Key Numbers\n& Uses",fact:"Particle masses/charges, famous isotopes and their real-world uses — the fact bank."},
+ /* 1 Subatomic */
+ {id:101,cat:1,icon:"➖",label:"Electron",fact:"Charge −1.6×10⁻¹⁹ C, mass ~1/1836 u. Discovered by J.J. Thomson (1897) in cathode-ray tubes."},
+ {id:102,cat:1,icon:"➕",label:"Proton",fact:"Charge +1.6×10⁻¹⁹ C, mass ~1 u. Found in anode/canal rays (Goldstein); named by Rutherford."},
+ {id:103,cat:1,icon:"⚪",label:"Neutron",fact:"No charge, mass ~1 u. Discovered by James Chadwick (1932) — the last of the trio."},
+ {id:104,cat:1,icon:"⚖️",label:"Mass\ncomparison",fact:"Proton ≈ neutron ≈ 1 u; electron is ~1836× lighter. Nucleus holds nearly all the atom's mass."},
+ /* 2 Early models */
+ {id:201,cat:2,icon:"🍮",label:"Thomson's\nmodel",fact:"'Plum pudding': electrons stuck in a sphere of positive charge like seeds in a watermelon. Atom neutral overall."},
+ {id:202,cat:2,icon:"🥇",label:"Gold-foil\nexperiment",fact:"Rutherford fired alpha particles at thin gold foil — most passed straight through; a few bounced back."},
+ {id:203,cat:2,icon:"🎯",label:"Nucleus\ndiscovered",fact:"The rare large deflections proved a tiny, dense, positive centre — the nucleus. Atom is mostly empty."},
+ {id:204,cat:2,icon:"❌",label:"Rutherford's\nflaw",fact:"An orbiting electron should radiate energy, spiral in and collapse — the model couldn't explain stability."},
+ /* 3 Bohr */
+ {id:301,cat:3,icon:"🪐",label:"Fixed\norbits",fact:"Electrons revolve only in certain 'stationary' orbits (shells) without radiating energy — Bohr's fix."},
+ {id:302,cat:3,icon:"🔤",label:"K L M N\nshells",fact:"Shells numbered n=1,2,3,4 named K, L, M, N; energy rises outward. K is closest and lowest energy."},
+ {id:303,cat:3,icon:"⚡",label:"Quantum\njumps",fact:"Electron absorbs energy to jump OUT, emits a photon to fall IN. Line spectra come from these jumps."},
+ {id:304,cat:3,icon:"🌈",label:"Energy\nlevels",fact:"Each orbit is a fixed energy level; the energy difference sets the colour of light emitted/absorbed."},
+ /* 4 Z and A */
+ {id:401,cat:4,icon:"🆔",label:"Atomic number\nZ",fact:"Z = number of protons = the element's identity. In a neutral atom, electrons = protons = Z."},
+ {id:402,cat:4,icon:"⚖️",label:"Mass number\nA",fact:"A = protons + neutrons (both in nucleus, called nucleons). Electrons don't count — too light."},
+ {id:403,cat:4,icon:"➖",label:"Neutrons\n= A − Z",fact:"Number of neutrons = mass number − atomic number. E.g., carbon-14: 14 − 6 = 8 neutrons."},
+ {id:404,cat:4,icon:"✍️",label:"Notation\nᴬZ X",fact:"Written mass-number on top, atomic-number below the symbol: ¹²₆C reads carbon, Z=6, A=12."},
+ /* 5 Shells & valency */
+ {id:501,cat:5,icon:"🧮",label:"2n² rule",fact:"Max electrons in shell n = 2n². K=2, L=8, M=18, N=32. Fill inner shells first."},
+ {id:502,cat:5,icon:"8️⃣",label:"Octet &\nstability",fact:"Outermost shell wants 8 (or 2 for K) electrons — the stable noble-gas configuration atoms aim for."},
+ {id:503,cat:5,icon:"🔗",label:"Valence\nelectrons",fact:"Electrons in the outermost shell — they decide bonding, valency and chemical behaviour."},
+ {id:504,cat:5,icon:"🔢",label:"Valency\nrule",fact:"Valency = outer electrons (if ≤4) OR 8 − outer electrons (if >4). Noble gases: 0."},
+ /* 6 Isotopes */
+ {id:601,cat:6,icon:"👬",label:"Isotopes",fact:"Same element (same Z), different neutrons → different A. Chemically identical, physically different."},
+ {id:602,cat:6,icon:"🔀",label:"Isobars",fact:"Different elements (different Z) with the SAME mass number A. E.g., ⁴⁰Ar and ⁴⁰Ca."},
+ {id:603,cat:6,icon:"🧪",label:"Famous\nisotopes",fact:"Hydrogen: protium ¹H, deuterium ²H, tritium ³H. Carbon-12, -13, -14. Uranium-235, -238."},
+ {id:604,cat:6,icon:"⚖️",label:"Fractional\natomic mass",fact:"Chlorine's 35.5 u is the weighted average of Cl-35 (75%) and Cl-37 (25%) isotopes."},
+ /* 7 Radioactivity */
+ {id:701,cat:7,icon:"☢️",label:"Discovery",fact:"Henri Becquerel (1896) found uranium rays; Marie & Pierre Curie discovered polonium and radium."},
+ {id:702,cat:7,icon:"🔴",label:"Alpha (α)\nrays",fact:"Helium nuclei (2p+2n), +2 charge, heavy, least penetrating — stopped by paper. Most ionising."},
+ {id:703,cat:7,icon:"🔵",label:"Beta (β)\nrays",fact:"Fast electrons, −1 charge, medium penetration — stopped by aluminium sheet."},
+ {id:704,cat:7,icon:"🟢",label:"Gamma (γ)\nrays",fact:"High-energy EM waves, no charge, most penetrating — need thick lead/concrete. Least ionising."},
+ /* 8 Key numbers */
+ {id:801,cat:8,icon:"⚕️",label:"Medical\nisotopes",fact:"Cobalt-60 for cancer therapy; iodine-131 for thyroid; technetium-99m for scans."},
+ {id:802,cat:8,icon:"🕰️",label:"Carbon\ndating",fact:"Carbon-14 (half-life ~5730 years) dates fossils and archaeological remains."},
+ {id:803,cat:8,icon:"⚡",label:"Nuclear\nfuel",fact:"Uranium-235 undergoes fission in reactors and bombs; U-238 is the abundant non-fissile isotope."},
+ {id:804,cat:8,icon:"📐",label:"Bohr–Bury\nfilling",fact:"Outermost shell ≤ 8, next-to-outer ≤ 18; electrons enter a new shell only after the rule is met."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7,8];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK (60) ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"The negatively charged subatomic particle is the:",o:["Proton","Electron","Neutron","Positron"],a:1,e:"Electron: charge −1.6×10⁻¹⁹ C."},
+ {t:"Recall · TNPSC",q:"The electron was discovered by:",o:["Rutherford","J.J. Thomson","Chadwick","Bohr"],a:1,e:"Thomson (1897) using cathode-ray tubes."},
+ {t:"Recall · SSC",q:"The neutron was discovered by:",o:["Goldstein","Chadwick","Thomson","Bohr"],a:1,e:"James Chadwick, 1932 — the last of the three."},
+ {t:"Recall · RRB",q:"Which particle carries no charge?",o:["Proton","Electron","Neutron","Alpha"],a:2,e:"Neutron is electrically neutral."},
+ {t:"Conceptual · Banking",q:"Almost the entire mass of an atom is concentrated in the:",o:["Electron cloud","Nucleus","Outer shell","Empty space"],a:1,e:"Protons + neutrons (in the nucleus) carry ~99.9% of the mass."},
+ {t:"Numerical · SSC",q:"A proton is heavier than an electron by roughly a factor of:",o:["18","1836","100","10000"],a:1,e:"Proton ≈ 1836 × electron mass."},
+ {t:"Recall · TNPSC",q:"Thomson's model of the atom is called the:",o:["Planetary model","Plum-pudding model","Nuclear model","Quantum model"],a:1,e:"Electrons embedded in positive charge — 'plum pudding'."},
+ {t:"Recall · SSC",q:"The gold-foil (alpha-scattering) experiment was performed by:",o:["Bohr","Rutherford","Thomson","Dalton"],a:1,e:"Rutherford (with Geiger and Marsden), 1911."},
+ {t:"Conceptual · RRB",q:"In the gold-foil experiment, most alpha particles:",o:["Bounced back","Passed straight through","Stuck to the foil","Turned into electrons"],a:1,e:"The atom is mostly empty space — most passed undeflected."},
+ {t:"Conceptual · Banking",q:"The few alpha particles that bounced back proved the existence of:",o:["Electrons","A tiny dense positive nucleus","Neutrons","Shells"],a:1,e:"A small, dense, positively charged nucleus deflected them."},
+ {t:"Conceptual · SSC",q:"The main drawback of Rutherford's model was that:",o:["It had no nucleus","Orbiting electrons should radiate energy and collapse","It ignored protons","It had too many shells"],a:1,e:"Classical physics predicts a spiralling, unstable atom."},
+ {t:"Recall · TNPSC",q:"The model with electrons in fixed energy shells was given by:",o:["Thomson","Rutherford","Niels Bohr","Chadwick"],a:2,e:"Bohr (1913) introduced stationary orbits."},
+ {t:"Recall · SSC",q:"The shells around the nucleus are named:",o:["A, B, C, D","K, L, M, N","1, 2, 3, 4 only","X, Y, Z"],a:1,e:"K (n=1), L (n=2), M (n=3), N (n=4)."},
+ {t:"Conceptual · RRB",q:"An electron emits energy (a photon) when it:",o:["Jumps to a higher shell","Falls to a lower shell","Stays in orbit","Leaves the atom"],a:1,e:"Falling inward releases the energy difference as light."},
+ {t:"Recall · Banking",q:"The maximum number of electrons in a shell is given by:",o:["2n","n²","2n²","n/2"],a:2,e:"2n² rule: K=2, L=8, M=18, N=32."},
+ {t:"Numerical · SSC",q:"The maximum electrons the M shell (n=3) can hold is:",o:["8","18","32","2"],a:1,e:"2×3² = 18."},
+ {t:"Recall · TNPSC",q:"The atomic number (Z) of an element equals its number of:",o:["Neutrons","Protons","Nucleons","Electrons in the last shell"],a:1,e:"Z = number of protons; it defines the element."},
+ {t:"Recall · SSC",q:"The mass number (A) equals:",o:["Protons only","Protons + electrons","Protons + neutrons","Neutrons only"],a:2,e:"A = protons + neutrons (the nucleons)."},
+ {t:"Numerical · RRB",q:"An atom has Z = 11 and A = 23. Its number of neutrons is:",o:["11","12","23","34"],a:1,e:"Neutrons = A − Z = 23 − 11 = 12 (sodium)."},
+ {t:"Numerical · Banking",q:"A neutral atom has 17 protons. Its number of electrons is:",o:["16","17","18","34"],a:1,e:"Neutral atom: electrons = protons = 17 (chlorine)."},
+ {t:"Conceptual · SSC",q:"What defines the identity of an element?",o:["Mass number","Number of neutrons","Atomic number (protons)","Number of shells"],a:2,e:"Change protons and you change the element."},
+ {t:"Numerical · TNPSC",q:"Carbon-14 has 6 protons. How many neutrons does it have?",o:["6","8","14","20"],a:1,e:"14 − 6 = 8 neutrons."},
+ {t:"Recall · SSC",q:"The notation ¹⁶₈O tells us oxygen has:",o:["8 protons, 16 neutrons","8 protons, 8 neutrons","16 protons, 8 neutrons","16 electrons"],a:1,e:"Z=8 protons; neutrons = 16 − 8 = 8."},
+ {t:"Conceptual · RRB",q:"The outermost shell electrons of an atom are called:",o:["Core electrons","Valence electrons","Free electrons","Nucleons"],a:1,e:"Valence electrons decide chemical behaviour."},
+ {t:"Conceptual · Banking",q:"Atoms are chemically stable when the outer shell has:",o:["1 electron","4 electrons","8 electrons (octet)","18 electrons"],a:2,e:"The octet (or duplet for K) is the noble-gas stable configuration."},
+ {t:"Numerical · SSC",q:"Sodium (Z=11) has electron configuration 2,8,1. Its valency is:",o:["0","1","7","8"],a:1,e:"1 outer electron → valency 1 (loses it)."},
+ {t:"Numerical · TNPSC",q:"Chlorine (Z=17) is 2,8,7. Its valency is:",o:["7","1","8","0"],a:1,e:"8 − 7 = 1 (gains one electron)."},
+ {t:"Conceptual · SSC",q:"Noble gases are unreactive because their outer shell is:",o:["Empty","Half full","Completely filled (octet/duplet)","Missing"],a:2,e:"Full outer shell = maximum stability = valency 0."},
+ {t:"Recall · RRB",q:"Isotopes are atoms with:",o:["Same A, different Z","Same Z, different A","Same neutrons","Same electrons only"],a:1,e:"Same protons (element), different neutrons → different mass number."},
+ {t:"Recall · Banking",q:"Isobars are atoms with:",o:["Same Z","Same A, different Z","Same neutrons","Same shells"],a:1,e:"Same mass number but different elements — e.g., ⁴⁰Ar and ⁴⁰Ca."},
+ {t:"Recall · SSC",q:"Deuterium and tritium are isotopes of:",o:["Helium","Hydrogen","Carbon","Oxygen"],a:1,e:"¹H, ²H (deuterium), ³H (tritium) — same Z=1."},
+ {t:"Conceptual · TNPSC",q:"Isotopes of an element have identical:",o:["Mass numbers","Number of neutrons","Chemical properties","Densities"],a:2,e:"Same electrons → same chemistry; masses differ."},
+ {t:"Conceptual · SSC",q:"Chlorine's atomic mass is 35.5 u because:",o:["It has half a neutron","It is a weighted average of Cl-35 and Cl-37","Of measurement error","It has 35.5 protons"],a:1,e:"75% Cl-35 + 25% Cl-37 ≈ 35.5 u."},
+ {t:"Recall · RRB",q:"Radioactivity was discovered by:",o:["Marie Curie","Henri Becquerel","Rutherford","Bohr"],a:1,e:"Becquerel (1896) with uranium salts; the Curies followed."},
+ {t:"Recall · Banking",q:"The Curies discovered which two radioactive elements?",o:["Uranium and thorium","Polonium and radium","Radon and radium","Plutonium and polonium"],a:1,e:"Marie & Pierre Curie: polonium and radium."},
+ {t:"Recall · SSC",q:"Alpha particles are:",o:["Electrons","Helium nuclei (2p + 2n)","Photons","Protons"],a:1,e:"Charge +2, heavy, least penetrating, most ionising."},
+ {t:"Recall · TNPSC",q:"Beta particles are fast-moving:",o:["Protons","Electrons","Neutrons","Helium nuclei"],a:1,e:"Charge −1, medium penetration."},
+ {t:"Recall · SSC",q:"Gamma rays are:",o:["Charged particles","High-energy electromagnetic waves","Slow neutrons","Helium ions"],a:1,e:"No charge, most penetrating, least ionising."},
+ {t:"Conceptual · RRB",q:"Which radiation is the MOST penetrating?",o:["Alpha","Beta","Gamma","All equal"],a:2,e:"Gamma passes through all but thick lead/concrete."},
+ {t:"Conceptual · Banking",q:"Which radiation is stopped by a sheet of paper?",o:["Alpha","Beta","Gamma","X-ray"],a:0,e:"Alpha is the least penetrating."},
+ {t:"Conceptual · SSC",q:"Which radiation needs an aluminium sheet to stop it?",o:["Alpha","Beta","Gamma","None"],a:1,e:"Beta: paper won't stop it, but thin aluminium does."},
+ {t:"Application · TNPSC",q:"The isotope used to treat cancer (radiotherapy) is:",o:["Carbon-12","Cobalt-60","Sodium-23","Oxygen-16"],a:1,e:"Cobalt-60 gamma source destroys cancer cells."},
+ {t:"Application · SSC",q:"Radioactive carbon-14 is used for:",o:["Nuclear power","Carbon dating of fossils","Making steel","Treating goitre"],a:1,e:"Half-life ~5730 years — dates once-living material."},
+ {t:"Application · RRB",q:"The isotope used to diagnose and treat thyroid disorders is:",o:["Iodine-131","Uranium-235","Cobalt-60","Carbon-14"],a:0,e:"I-131 concentrates in the thyroid gland."},
+ {t:"Recall · Banking",q:"The isotope of uranium used as nuclear fuel (fissile) is:",o:["U-238","U-235","U-234","U-236"],a:1,e:"U-235 undergoes fission in reactors and bombs."},
+ {t:"Conceptual · SSC",q:"According to the Bohr–Bury scheme, the outermost shell cannot hold more than:",o:["2","8","18","32"],a:1,e:"Outer shell max = 8 electrons."},
+ {t:"Numerical · TNPSC",q:"Magnesium (Z=12) has the configuration:",o:["2,8,2","2,10","2,8,8","2,2,8"],a:0,e:"2 + 8 + 2 = 12; valency 2."},
+ {t:"Numerical · SSC",q:"An element with configuration 2,8,8 has valency:",o:["8","0","2","6"],a:1,e:"Full octet → noble gas (argon) → valency 0."},
+ {t:"Conceptual · RRB",q:"Which pair are isotopes?",o:["⁴⁰Ar and ⁴⁰Ca","¹²C and ¹⁴C","¹H and ⁴He","²³Na and ²⁴Mg"],a:1,e:"Same Z=6, different mass → carbon isotopes."},
+ {t:"Conceptual · Banking",q:"Which pair are isobars?",o:["¹²C and ¹⁴C","⁴⁰Ar and ⁴⁰Ca","¹H and ²H","³⁵Cl and ³⁷Cl"],a:1,e:"Same A=40, different elements → isobars."},
+ {t:"Numerical · SSC",q:"An ion X²⁺ has 10 electrons. Its atomic number is:",o:["8","10","12","14"],a:2,e:"It lost 2 electrons, so protons = 10 + 2 = 12 (magnesium)."},
+ {t:"Statement · SSC",q:"Consider: (1) Atomic number = number of protons. (2) Mass number = number of electrons. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Mass number = protons + neutrons; electrons are too light to count. Only 1."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Isotopes have the same chemical properties. (2) Isobars have the same atomic number. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Isobars have the same MASS number, not Z. Only 1."},
+ {t:"Statement · RRB",q:"Consider: (1) Gamma rays are most penetrating. (2) Alpha particles are most penetrating. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Alpha is the LEAST penetrating. Only 1."},
+ {t:"Statement · Banking",q:"Consider: (1) The neutron was discovered by Chadwick. (2) The electron was discovered by Rutherford. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Electron = Thomson; Rutherford found the nucleus. Only 1."},
+ {t:"Statement · SSC",q:"Consider: (1) The maximum electrons in the N shell is 32. (2) The outermost shell can hold up to 8. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"2n² gives N=32; the outer-shell cap is 8. Both correct."},
+ {t:"Statement · TNPSC",q:"Consider: (1) U-235 is fissile nuclear fuel. (2) Carbon-14 is used for radiotherapy. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Radiotherapy uses cobalt-60; C-14 is for dating. Only 1."},
+ {t:"Assertion–Reason · SSC",q:"A: Most alpha particles passed straight through the gold foil. R: An atom is largely empty space with a tiny nucleus.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Empty space lets most pass; R explains A."},
+ {t:"Assertion–Reason · RRB",q:"A: Noble gases are chemically inert. R: Their outermost shells are completely filled.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Full octet = stability = inertness. R explains A."},
+ {t:"Recall · TNPSC",q:"The positively charged particle in the nucleus is the:",o:["Electron","Proton","Neutron","Photon"],a:1,e:"Proton, charge +1.6×10⁻¹⁹ C; discovered via canal rays (Goldstein), named by Rutherford."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, numerical, statement & assertion–reason. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS ===== */
+var PROB=[
+ {lvl:"e",tag:"Neutrons",q:"Find the number of neutrons in an atom with Z = 19 and A = 39.",given:"Z = 19, A = 39",find:"neutrons",steps:["Neutrons = A − Z","39 − 19"],ans:"20 neutrons (potassium)"},
+ {lvl:"e",tag:"Electrons",q:"How many electrons are in a neutral atom of atomic number 20?",given:"Z = 20, neutral",find:"electrons",steps:["Neutral: electrons = protons = Z"],ans:"20 electrons (calcium)"},
+ {lvl:"e",tag:"Config",q:"Write the electron configuration of oxygen (Z = 8).",given:"Z = 8",find:"K,L filling",steps:["K holds 2, rest in L","2 + 6 = 8"],ans:"2,6 (valency 2)"},
+ {lvl:"m",tag:"Valency",q:"An element has configuration 2,8,7. Find its valency and predict its ion.",given:"2,8,7",find:"valency, ion",steps:["Outer shell has 7 (>4)","Valency = 8 − 7 = 1","Gains 1 electron → X⁻"],ans:"Valency 1; forms X⁻ (chlorine)"},
+ {lvl:"m",tag:"Shell",q:"Using 2n², how many electrons can the N shell (n = 4) hold?",given:"n = 4",find:"max electrons",steps:["2n² = 2 × 4²","= 2 × 16"],ans:"32 electrons"},
+ {lvl:"m",tag:"Config",q:"Write the configuration of calcium (Z = 20) and give its valency.",given:"Z = 20",find:"config, valency",steps:["Fill 2,8,8, then 2 in N","2,8,8,2","Outer 2 → valency 2"],ans:"2,8,8,2; valency 2"},
+ {lvl:"m",tag:"Isotope",q:"Chlorine is 75% Cl-35 and 25% Cl-37. Find the average atomic mass.",given:"75% × 35, 25% × 37",find:"average mass",steps:["(75×35 + 25×37)/100","(2625 + 925)/100 = 3550/100"],ans:"35.5 u"},
+ {lvl:"m",tag:"Ion",q:"A magnesium ion Mg²⁺ (Z = 12) — how many electrons and protons does it have?",given:"Z = 12, charge +2",find:"e and p",steps:["Protons unchanged = 12","Lost 2 electrons: 12 − 2 = 10"],ans:"12 protons, 10 electrons"},
+ {lvl:"h",tag:"Classify",q:"Classify each pair: (i) ¹²C & ¹⁴C, (ii) ⁴⁰Ar & ⁴⁰Ca.",given:"two pairs",find:"isotope/isobar",steps:["¹²C & ¹⁴C: same Z=6, different A → isotopes","⁴⁰Ar (Z=18) & ⁴⁰Ca (Z=20): same A=40 → isobars"],ans:"(i) isotopes (ii) isobars"},
+ {lvl:"h",tag:"Penetration",q:"Rank α, β, γ by penetrating power and name the stopper for each.",given:"three radiations",find:"order + stoppers",steps:["Penetration: γ > β > α","α stopped by paper","β stopped by aluminium","γ needs thick lead/concrete"],ans:"γ > β > α; paper / Al / lead"},
+ {lvl:"h",tag:"Reasoning",q:"Why did a few alpha particles bounce almost straight back in the gold-foil experiment, and what did Rutherford conclude?",given:"alpha scattering",find:"reason + conclusion",steps:["Alpha (+2) met a tiny, dense, positive region","Strong repulsion turned some sharply back","Most space is empty (most passed through)"],ans:"A small dense positive nucleus exists; atom is mostly empty"},
+ {lvl:"h",tag:"Reasoning",q:"Rutherford's model was rejected on stability grounds. Explain the problem and how Bohr fixed it.",given:"orbiting electron",find:"problem + fix",steps:["Accelerating charge radiates energy (classical EM)","Electron would spiral into the nucleus → atom collapses","Bohr: electrons occupy fixed 'stationary' orbits without radiating"],ans:"Bohr's quantised stable shells solved the collapse problem"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked Z/A, configuration, valency and reasoning problems graded easy→hard. Try first, then reveal.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS (45) ===== */
+var FC=[
+ {q:"Three subatomic particles and their charges?",a:"Electron (−), proton (+), neutron (0)."},
+ {q:"Who discovered the electron and when?",a:"J.J. Thomson, 1897 (cathode rays)."},
+ {q:"Who discovered the neutron?",a:"James Chadwick, 1932."},
+ {q:"Where is nearly all an atom's mass?",a:"In the nucleus (protons + neutrons)."},
+ {q:"How much heavier is a proton than an electron?",a:"About 1836 times."},
+ {q:"What is Thomson's model called?",a:"The plum-pudding model."},
+ {q:"Who did the gold-foil experiment?",a:"Rutherford (with Geiger and Marsden), 1911."},
+ {q:"What happened to most alpha particles in the gold foil?",a:"They passed straight through — atom is mostly empty."},
+ {q:"What did the bounced-back alphas prove?",a:"A tiny, dense, positively charged nucleus."},
+ {q:"Main flaw of Rutherford's model?",a:"Orbiting electrons should radiate energy and spiral into the nucleus."},
+ {q:"Who proposed fixed energy shells?",a:"Niels Bohr, 1913."},
+ {q:"Names of the first four shells?",a:"K, L, M, N (n = 1, 2, 3, 4)."},
+ {q:"When does an electron emit a photon?",a:"When it falls to a lower-energy shell."},
+ {q:"Maximum electrons in shell n?",a:"2n² (K=2, L=8, M=18, N=32)."},
+ {q:"Define atomic number Z.",a:"Number of protons — defines the element."},
+ {q:"Define mass number A.",a:"Protons + neutrons (nucleons)."},
+ {q:"Formula for number of neutrons?",a:"Neutrons = A − Z."},
+ {q:"In a neutral atom, electrons equal…?",a:"The number of protons (Z)."},
+ {q:"Read ²³₁₁Na.",a:"Sodium: Z = 11 protons, A = 23, neutrons = 12."},
+ {q:"What are valence electrons?",a:"Electrons in the outermost shell — decide chemistry."},
+ {q:"What is the octet rule?",a:"Atoms are stable with 8 electrons (2 for K) in the outer shell."},
+ {q:"Valency of sodium (2,8,1)?",a:"1 (loses one electron)."},
+ {q:"Valency of chlorine (2,8,7)?",a:"1 (8 − 7 = gains one)."},
+ {q:"Why is valency of noble gases zero?",a:"Their outer shell is completely filled — no tendency to react."},
+ {q:"Bohr–Bury rule for the outermost shell?",a:"It can hold a maximum of 8 electrons."},
+ {q:"Define isotopes.",a:"Atoms of the same element (same Z), different mass numbers (neutrons)."},
+ {q:"Define isobars.",a:"Atoms of different elements with the same mass number A."},
+ {q:"Three isotopes of hydrogen?",a:"Protium ¹H, deuterium ²H, tritium ³H."},
+ {q:"Do isotopes differ chemically?",a:"No — same electrons, so identical chemistry; only mass differs."},
+ {q:"Why is chlorine's mass 35.5 u?",a:"Weighted average of Cl-35 (75%) and Cl-37 (25%)."},
+ {q:"Give an isobar pair.",a:"⁴⁰Ar (Z=18) and ⁴⁰Ca (Z=20)."},
+ {q:"Who discovered radioactivity?",a:"Henri Becquerel, 1896 (uranium)."},
+ {q:"What did the Curies discover?",a:"Polonium and radium."},
+ {q:"What are alpha particles?",a:"Helium nuclei (2p + 2n), charge +2, least penetrating."},
+ {q:"What are beta particles?",a:"Fast electrons, charge −1, medium penetration."},
+ {q:"What are gamma rays?",a:"High-energy EM waves, no charge, most penetrating."},
+ {q:"Rank α, β, γ by penetrating power.",a:"γ > β > α."},
+ {q:"What stops alpha, beta, gamma?",a:"Paper, aluminium, thick lead/concrete."},
+ {q:"Which radiation is most ionising?",a:"Alpha (heavy, +2 charge)."},
+ {q:"Isotope used in cancer radiotherapy?",a:"Cobalt-60."},
+ {q:"Isotope used for carbon dating?",a:"Carbon-14 (half-life ~5730 years)."},
+ {q:"Isotope used for thyroid disorders?",a:"Iodine-131."},
+ {q:"Fissile uranium isotope (nuclear fuel)?",a:"Uranium-235."},
+ {q:"Configuration of magnesium (Z=12)?",a:"2,8,2 (valency 2)."},
+ {q:"What is an isotone?",a:"Atoms with the same number of neutrons (different Z and A)."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script src="/study/_cm-auto-track.js"></script>
+</body></html>

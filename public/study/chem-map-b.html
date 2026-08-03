@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Chem Map B — Acids, pH &amp; Periodic Table | Centumania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141f1c;--bg2:#111a17;--panel:#1a2a25;--panel2:#1e3029;--line:#254033;
+  --ink:#e8f5f0;--ink2:#9dc4b4;--ink3:#5a8070;
+  --green:#3dd68c;--green2:#2ab572;--green-glow:rgba(61,214,140,.13);
+  --teal:#22d3c8;--gold:#f0bc45;--gold-bg:rgba(240,188,69,.12);
+  --red:#f06b6b;--red-bg:rgba(240,107,107,.10);
+  --blue:#4f8ef7;--violet:#a78bfa;--violet-bg:rgba(167,139,250,.11);
+  --mono:"JetBrains Mono",monospace;--serif:"Instrument Serif",serif;--sans:"DM Sans",sans-serif;
+  --nav-h:52px;--bot-h:52px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px}
+.shell{display:grid;grid-template-rows:var(--nav-h) 1fr var(--bot-h);height:100dvh;overflow:hidden}
+.topbar{display:flex;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid var(--line);background:rgba(17,26,23,.97);backdrop-filter:blur(14px);z-index:60}
+.logo{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--green);display:flex;align-items:center;gap:7px}
+.logo-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 7px var(--green);flex-shrink:0}
+.logo sup{font-style:normal;font-size:9px;font-family:var(--mono);color:var(--ink3)}
+.nav-stats{display:none}
+.stat{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.stat b{font-size:13px}
+.stat.xp b{color:var(--gold)}.stat.vis b{color:var(--teal)}.stat.trap b{color:var(--red)}
+.body{grid-row:2;height:calc(100dvh - var(--nav-h) - var(--bot-h));overflow:hidden;display:grid;grid-template-columns:1fr}
+aside{display:none}
+main{overflow-y:auto;background:var(--bg);-webkit-overflow-scrolling:touch}
+main::-webkit-scrollbar{width:3px}main::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.mob-stats{display:flex;gap:14px;align-items:center;padding:7px 14px;background:var(--panel2);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;flex-shrink:0}
+.mob-stats::-webkit-scrollbar{display:none}
+.mob-stats .stat b{font-size:12px}
+.mob-bar{display:flex;grid-row:3;background:rgba(17,26,23,.98);backdrop-filter:blur(16px);border-top:1px solid var(--line);align-items:stretch;z-index:50}
+.mob-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:none;color:var(--ink3);cursor:pointer;padding:8px 4px;font-family:var(--mono);font-size:9px;letter-spacing:.5px;transition:.13s;position:relative}
+.mob-tab.active{color:var(--green)}.mob-tab .mt-ico{font-size:19px}
+.mob-tab .mt-badge{position:absolute;top:5px;right:calc(50% - 15px);background:var(--red);color:#fff;font-size:8px;font-family:var(--mono);padding:1px 4px;border-radius:10px;min-width:14px;text-align:center}
+.mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;opacity:0;pointer-events:none;transition:.2s}
+.mob-overlay.show{opacity:1;pointer-events:all}
+.mob-drawer{position:fixed;left:-100%;top:0;bottom:0;width:min(300px,88vw);background:var(--bg2);border-right:1px solid var(--line);z-index:101;transition:.28s cubic-bezier(.2,.8,.4,1);overflow-y:auto}
+.mob-drawer.open{left:0}
+.mob-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px;border-bottom:1px solid var(--line)}
+.mob-close{background:none;border:1px solid var(--line);color:var(--ink2);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.sidebar-inner{padding:10px 8px 60px}
+.ch-group{margin-bottom:3px}
+.ch-toggle{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink2);padding:9px 10px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:.13s;font-family:var(--sans)}
+.ch-toggle:hover,.ch-toggle.open{background:var(--panel);color:var(--ink)}
+.ch-toggle .cht-pct{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-left:auto}
+.ch-toggle.open .cht-pct{color:var(--green)}
+.node-items{display:none;padding:3px 4px 3px 10px}
+.ch-group.expanded .node-items{display:block}
+.ni-btn{display:flex;align-items:center;gap:7px;width:100%;text-align:left;background:none;border:1px solid transparent;color:var(--ink3);padding:7px 9px;border-radius:8px;cursor:pointer;font-size:13px;transition:.12s;font-family:var(--sans);margin-bottom:1px}
+.ni-btn:hover:not(.locked){background:var(--panel);color:var(--ink)}
+.ni-btn.current{background:var(--green-glow);border-color:var(--green2);color:var(--green)}
+.ni-btn.done:not(.current){color:var(--ink)}
+.ni-btn.locked{cursor:default;opacity:.4}
+.ni-tag{font-family:var(--mono);font-size:9px;padding:1px 5px;border-radius:4px;margin-left:auto;flex-shrink:0}
+.ni-tag.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.25)}
+.ni-tag.hidden{background:var(--violet-bg);color:var(--violet);border:1px solid rgba(167,139,250,.25)}
+.ni-tag.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(240,188,69,.25)}
+.node-view{padding:16px 14px 90px;max-width:900px;margin:0 auto}
+h1.nt{font-family:var(--serif);font-size:26px;font-style:italic;line-height:1.05;margin-bottom:6px}
+.node-hd{margin-bottom:18px}
+.node-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:10px}
+.node-badge.regular{background:var(--green-glow);color:var(--green);border:1px solid var(--green2)}
+.node-badge.trap{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.3)}
+.node-badge.hidden{background:var(--violet-bg);color:var(--violet);border:1px solid rgba(167,139,250,.3)}
+.node-badge.gold{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(240,188,69,.3)}
+.xp-pill{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--gold);background:var(--gold-bg);border:1px solid rgba(240,188,69,.2);border-radius:6px;padding:3px 8px}
+.section-lbl{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;margin:18px 0 8px;display:flex;align-items:center;gap:8px}
+.section-lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+.tabs{display:flex;gap:3px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:4px;margin-bottom:20px;width:100%;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:8px;cursor:pointer;border:0;background:none;color:var(--ink2);transition:.14s;white-space:nowrap;flex-shrink:0}
+.tab:hover:not(.on){color:var(--ink)}.tab.on{background:var(--green2);color:#fff;font-weight:700}
+.fact-block{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+.fb-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink2);border-bottom:1px solid var(--line);background:var(--panel2);display:flex;align-items:center;gap:7px}
+.fb-body{padding:14px 16px}
+ul.facts{list-style:none;padding:0}
+ul.facts li{padding:7px 0 7px 22px;border-bottom:1px dashed var(--line);font-size:14px;position:relative;line-height:1.55}
+ul.facts li:last-child{border-bottom:0}
+ul.facts li::before{content:"▸";position:absolute;left:3px;top:8px;color:var(--teal);font-size:11px}
+ul.facts b{color:var(--green)}
+.trap-block{background:var(--red-bg);border:1px solid rgba(240,107,107,.35);border-radius:12px;padding:16px;margin:10px 0}
+.trap-block .tb-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--red);margin-bottom:10px}
+.trap-block ul{list-style:none;padding:0}
+.trap-block li{padding:7px 0 7px 20px;position:relative;font-size:14px;border-bottom:1px dashed rgba(240,107,107,.18);line-height:1.5}
+.trap-block li:last-child{border-bottom:0}
+.trap-block li::before{content:"⚠";position:absolute;left:0;top:7px;font-size:11px;color:var(--red)}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--line);margin:10px 0}
+table.dt{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
+table.dt th{padding:9px 13px;text-align:left;background:var(--green2);color:#fff;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
+table.dt td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line);font-size:13px}
+table.dt tr:last-child td{border-bottom:0}
+table.dt td:first-child{color:var(--teal);font-weight:600;font-family:var(--mono);font-size:12px}
+.yes{color:var(--green);font-weight:700}.no{color:var(--red);font-weight:700}
+.diag-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:10px 0}
+.diag-head{padding:9px 14px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--teal);border-bottom:1px solid var(--line);background:var(--panel2)}
+.diag-body{padding:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.diag-body svg{display:block;width:100%;height:auto}
+.golden-block{background:linear-gradient(135deg,rgba(240,188,69,.09),rgba(61,214,140,.06));border:1px solid rgba(240,188,69,.3);border-radius:14px;padding:18px;margin:12px 0}
+.golden-block .gb-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:12px}
+.golden-block ul{list-style:none;padding:0}
+.golden-block li{padding:8px 0 8px 22px;position:relative;font-size:14px;border-bottom:1px dashed rgba(240,188,69,.15);line-height:1.5}
+.golden-block li:last-child{border-bottom:0}
+.golden-block li::before{content:"→";position:absolute;left:0;color:var(--gold)}
+.golden-block b{color:var(--green)}
+.insight-block{background:linear-gradient(135deg,rgba(167,139,250,.07),rgba(79,142,247,.06));border:1px solid rgba(167,139,250,.3);border-radius:12px;padding:16px;margin:10px 0;position:relative;overflow:hidden}
+.insight-block::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--violet),var(--blue),var(--violet));background-size:200%;animation:iShimmer 3s linear infinite}
+@keyframes iShimmer{0%{background-position:0%}100%{background-position:200%}}
+.ib-h{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--violet);margin-bottom:10px}
+.insight-block p{font-size:14px;line-height:1.6;color:var(--ink2)}
+/* pH bar */
+.ph-bar-wrap{margin:12px 0}
+.ph-bar{height:24px;border-radius:8px;background:linear-gradient(90deg,#c0392b 0%,#e67e22 14%,#f0bc45 29%,#3dd68c 50%,#22d3c8 64%,#4f8ef7 79%,#6d28d9 100%);position:relative;display:flex;align-items:center;padding:0 6px}
+.ph-labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--ink3);margin-top:4px;padding:0 2px}
+.ph-section-labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;font-weight:700;margin-bottom:4px}
+/* note inline box */
+.note-box{background:rgba(79,142,247,.07);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13.5px;line-height:1.6;color:var(--ink2)}
+.note-box b{color:var(--ink)}
+/* formula line */
+.formula-line{font-family:var(--mono);font-size:13px;color:var(--blue);background:rgba(79,142,247,.07);padding:8px 14px;border-radius:8px;margin:6px 0;line-height:1.6}
+/* mcq */
+.mcq-list{display:flex;flex-direction:column;gap:14px}
+.mcq-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.mcq-q{font-size:15px;font-weight:600;margin-bottom:12px;line-height:1.45}
+.mcq-qn{font-family:var(--mono);font-size:11px;color:var(--teal);margin-right:6px}
+.mcq-opts{display:grid;grid-template-columns:1fr;gap:8px}
+.mopt{padding:11px 14px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);color:var(--ink);font-size:14px;cursor:pointer;text-align:left;font-family:var(--sans);transition:.13s;-webkit-tap-highlight-color:transparent}
+.mopt:active:not([disabled]){border-color:var(--green2);background:var(--green-glow)}
+.mopt.correct{background:rgba(61,214,140,.12);border-color:var(--green);color:var(--green)}
+.mopt.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red)}
+.mopt.show-correct{background:rgba(61,214,140,.07);border-color:var(--green)}
+.mcq-fb{margin-top:10px;font-size:13px;padding:9px 12px;border-radius:8px;display:none;line-height:1.5}
+.mcq-fb.show{display:block}
+.mcq-fb.right{background:rgba(61,214,140,.10);color:var(--green);border:1px solid rgba(61,214,140,.25)}
+.mcq-fb.wrong{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,107,107,.25)}
+.mcq-score{font-family:var(--mono);font-size:12px;color:var(--ink2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.mcq-score span{color:var(--green)}
+.node-nav{display:flex;gap:10px;margin-top:24px;padding-top:16px;border-top:1px solid var(--line);align-items:center}
+.nnav{font-family:var(--sans);font-weight:600;font-size:14px;border-radius:9px;padding:10px 16px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:.14s;-webkit-tap-highlight-color:transparent}
+.nnav.primary{background:var(--green2);color:#fff;border-color:var(--green2);margin-left:auto}
+.locked-view{text-align:center;padding:60px 20px}
+.locked-view .lv-ico{font-size:48px;margin-bottom:14px;opacity:.3}
+.locked-view h2{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--ink2);margin-bottom:8px}
+.locked-view p{color:var(--ink2);font-size:14px;max-width:300px;margin:0 auto 18px;line-height:1.6}
+.lock-req-list{display:inline-flex;flex-direction:column;gap:8px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;max-width:280px}
+.lreq{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--ink3);line-height:1.5}
+.lreq.met{color:var(--green)}.lreq::before{content:"○";flex-shrink:0}.lreq.met::before{content:"✓"}
+.toast{position:fixed;top:calc(var(--nav-h) + 8px);left:50%;transform:translateX(-50%) translateY(-8px);background:linear-gradient(135deg,rgba(240,188,69,.18),rgba(61,214,140,.12));border:1px solid var(--gold);border-radius:12px;padding:10px 18px;display:flex;align-items:center;gap:10px;z-index:300;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast-val{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--gold)}
+.toast-msg{font-size:13px;font-weight:600}
+.dash{padding:18px 14px 90px;max-width:680px;margin:0 auto}
+.dash-t{font-family:var(--serif);font-size:32px;font-style:italic;margin-bottom:4px}
+.dash-s{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-bottom:22px;letter-spacing:1px}
+.dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+.dc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+.dc .dv{font-family:var(--mono);font-size:20px;font-weight:700;margin-bottom:4px}
+.dc .dl{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:1px;text-transform:uppercase}
+.dc.gold .dv{color:var(--gold)}.dc.g .dv{color:var(--green)}.dc.r .dv{color:var(--red)}.dc.b .dv{color:var(--teal)}
+.ch-prog{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
+.cpr{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.cpr:last-child{margin-bottom:0}
+.cpr-n{font-family:var(--mono);font-size:11px;color:var(--ink2);width:140px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cpr-bar{flex:1;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.cpr-fill{height:100%;background:var(--green);border-radius:3px;transition:.5s}
+.cpr-pct{font-family:var(--mono);font-size:10px;color:var(--green);width:28px;text-align:right;flex-shrink:0}
+.mentor-box{background:var(--red-bg);border:1px solid rgba(240,107,107,.3);border-radius:12px;padding:14px;margin-bottom:14px}
+.mentor-box h3{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--red);margin-bottom:8px}
+.mentor-box li{font-size:13px;color:var(--ink2);padding:4px 0 4px 16px;position:relative;list-style:none;line-height:1.5}
+.mentor-box li::before{content:"→";position:absolute;left:0;color:var(--red)}
+.start-btn{background:linear-gradient(135deg,var(--green2),var(--green));color:#fff;border:0;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:700;font-family:var(--sans);cursor:pointer;width:100%;-webkit-tap-highlight-color:transparent}
+@media(min-width:721px){
+  :root{--nav-h:56px;--bot-h:0px}
+  .shell{grid-template-rows:var(--nav-h) 1fr;height:100vh}
+  .body{grid-template-columns:260px 1fr;height:calc(100vh - var(--nav-h))}
+  aside{display:block;background:var(--bg2);border-right:1px solid var(--line);overflow-y:auto}
+  aside::-webkit-scrollbar{width:3px}aside::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+  .nav-stats{display:flex;gap:14px;align-items:center;margin-left:auto}
+  .mob-stats{display:none}
+  .mob-bar{display:none}
+  .mob-overlay{display:none !important}
+  .mob-drawer{display:none}
+  .node-view{padding:28px clamp(16px,3.5vw,52px) 80px}
+  h1.nt{font-size:clamp(26px,4vw,38px)}
+  .dash{padding:36px clamp(18px,4vw,56px) 80px}
+  .dash-t{font-size:clamp(32px,5vw,50px)}
+  .dash-grid{grid-template-columns:repeat(4,1fr)}
+  .mcq-opts{grid-template-columns:1fr 1fr}
+  .tabs{width:fit-content;overflow-x:visible}
+  .toast{left:auto;right:20px;transform:translateY(-8px)}
+  .toast.show{transform:translateY(0)}
+  .start-btn{width:auto}
+  .cpr-n{width:165px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="topbar">
+  <div class="logo"><span class="logo-dot"></span>Centumania <sup>CHEM B</sup></div>
+  <div class="nav-stats">
+    <div class="stat xp">XP <b id="hXP">0</b></div>
+    <div class="stat vis">Nodes <b id="hVis">0/0</b></div>
+    <div class="stat trap">Traps <b id="hTrap">0/0</b></div>
+  </div>
+</nav>
+<div class="mob-stats" id="mobStats">
+  <div class="stat xp">XP <b id="mhXP">0</b></div>
+  <div class="stat vis">Nodes <b id="mhVis">0/0</b></div>
+  <div class="stat trap">Traps <b id="mhTrap">0/0</b></div>
+</div>
+<div class="body">
+  <aside><div class="sidebar-inner" id="sideInner"></div></aside>
+  <main id="mainArea"><div id="viewWrap"></div></main>
+</div>
+<nav class="mob-bar" id="mobBar">
+  <button class="mob-tab active" id="mbt-dash" onclick="showDash()"><span class="mt-ico">◈</span>Home</button>
+  <button class="mob-tab" id="mbt-menu" onclick="openDrawer()"><span class="mt-ico">☰</span>Topics</button>
+  <button class="mob-tab" id="mbt-traps" onclick="goTraps()"><span class="mt-ico">⚠</span>Traps<span class="mt-badge" id="trapBadge">0</span></button>
+</nav>
+</div>
+<div class="mob-overlay" id="mobOverlay" onclick="closeDrawer()"></div>
+<div class="mob-drawer" id="mobDrawer">
+  <div class="mob-drawer-head">
+    <div class="logo"><span class="logo-dot"></span>Topics</div>
+    <button class="mob-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="sidebar-inner" id="mobSideInner"></div>
+</div>
+<div class="toast" id="toast"><div class="toast-val" id="toastVal"></div><div class="toast-msg" id="toastMsg"></div></div>
+<script>
+const DIAGRAMS={
+"ph-scale":`<svg viewBox="0 0 760 120" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<defs>
+<linearGradient id="phg" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0%" stop-color="#c0392b"/>
+<stop offset="21%" stop-color="#e67e22"/>
+<stop offset="43%" stop-color="#f0bc45"/>
+<stop offset="50%" stop-color="#3dd68c"/>
+<stop offset="64%" stop-color="#22d3c8"/>
+<stop offset="79%" stop-color="#4f8ef7"/>
+<stop offset="100%" stop-color="#6d28d9"/>
+</linearGradient>
+</defs>
+<text x="380" y="16" fill="#e8f5f0" font-size="12" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">pH SCALE — 0 to 14</text>
+<rect x="8" y="26" width="744" height="30" rx="8" fill="url(#phg)"/>
+<text x="14" y="47" fill="white" font-size="9" font-weight="bold" font-family="JetBrains Mono,monospace">← ACIDIC</text>
+<text x="380" y="47" fill="white" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">NEUTRAL</text>
+<text x="746" y="47" fill="white" font-size="9" font-weight="bold" text-anchor="end" font-family="JetBrains Mono,monospace">BASIC →</text>
+<line x1="8" y1="56" x2="8" y2="66" stroke="#9dc4b4" stroke-width="1"/>
+<line x1="62" y1="56" x2="62" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="116" y1="56" x2="116" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="170" y1="56" x2="170" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="224" y1="56" x2="224" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="278" y1="56" x2="278" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="332" y1="56" x2="332" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="386" y1="56" x2="386" y2="66" stroke="#3dd68c" stroke-width="1.5"/>
+<line x1="440" y1="56" x2="440" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="494" y1="56" x2="494" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="548" y1="56" x2="548" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="602" y1="56" x2="602" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="656" y1="56" x2="656" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="710" y1="56" x2="710" y2="63" stroke="#9dc4b4" stroke-width="0.7"/>
+<line x1="752" y1="56" x2="752" y2="66" stroke="#9dc4b4" stroke-width="1"/>
+<text x="8" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">0</text>
+<text x="62" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">1</text>
+<text x="116" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">2</text>
+<text x="170" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">3</text>
+<text x="224" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">4</text>
+<text x="278" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">5</text>
+<text x="332" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">6</text>
+<text x="386" y="76" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">7</text>
+<text x="440" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">8</text>
+<text x="494" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">9</text>
+<text x="548" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">10</text>
+<text x="602" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">11</text>
+<text x="656" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">12</text>
+<text x="710" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">13</text>
+<text x="752" y="76" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">14</text>
+<text x="62" y="93" fill="#f06b6b" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Gastric</text>
+<text x="62" y="103" fill="#f06b6b" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">1.2</text>
+<text x="116" y="93" fill="#e67e22" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Lemon</text>
+<text x="116" y="103" fill="#e67e22" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">2.2</text>
+<text x="224" y="93" fill="#f0bc45" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Coffee</text>
+<text x="224" y="103" fill="#f0bc45" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">5</text>
+<text x="308" y="93" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Milk</text>
+<text x="308" y="103" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">6.6</text>
+<text x="386" y="93" fill="#3dd68c" font-size="8" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">Pure Water</text>
+<text x="386" y="103" fill="#3dd68c" font-size="8" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">7.0</text>
+<text x="460" y="93" fill="#22d3c8" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Blood</text>
+<text x="460" y="103" fill="#22d3c8" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">7.4</text>
+<text x="548" y="93" fill="#4f8ef7" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Mg(OH)₂</text>
+<text x="548" y="103" fill="#4f8ef7" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">10</text>
+<text x="752" y="93" fill="#a78bfa" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">NaOH</text>
+<text x="752" y="103" fill="#a78bfa" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">14</text>
+</svg>`,
+"periodic-trends":`<svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="0" y="0" width="760" height="200" rx="10" fill="rgba(26,42,37,.8)" stroke="#254033" stroke-width="1"/>
+<text x="380" y="20" fill="#e8f5f0" font-size="12" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">PERIODIC TRENDS</text>
+<!-- Period arrow (top) -->
+<line x1="60" y1="36" x2="700" y2="36" stroke="#4f8ef7" stroke-width="2"/>
+<path d="M700,30 L714,36 L700,42 Z" fill="#4f8ef7"/>
+<text x="380" y="32" fill="#4f8ef7" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">ACROSS PERIOD →</text>
+<!-- Group arrow (left) -->
+<line x1="36" y1="60" x2="36" y2="170" stroke="#f06b6b" stroke-width="2"/>
+<path d="M30,170 L36,184 L42,170 Z" fill="#f06b6b"/>
+<text x="10" y="120" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif" transform="rotate(-90,10,120)">DOWN GROUP ↓</text>
+<!-- Grid -->
+<rect x="60" y="48" width="330" height="130" rx="6" fill="rgba(79,142,247,.06)" stroke="#4f8ef7" stroke-width="0.8"/>
+<rect x="400" y="48" width="350" height="130" rx="6" fill="rgba(240,107,107,.06)" stroke="#f06b6b" stroke-width="0.8"/>
+<text x="225" y="65" fill="#4f8ef7" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">ACROSS PERIOD</text>
+<text x="575" y="65" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">DOWN GROUP</text>
+<!-- Rows -->
+<text x="70" y="85" fill="#9dc4b4" font-size="9" font-family="DM Sans,sans-serif">Atomic Radius</text>
+<text x="295" y="85" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">DECREASES ↓</text>
+<text x="565" y="85" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">INCREASES ↑</text>
+<text x="70" y="103" fill="#9dc4b4" font-size="9" font-family="DM Sans,sans-serif">Ionization Energy</text>
+<text x="295" y="103" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">INCREASES ↑</text>
+<text x="565" y="103" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">DECREASES ↓</text>
+<text x="70" y="121" fill="#9dc4b4" font-size="9" font-family="DM Sans,sans-serif">Electronegativity</text>
+<text x="295" y="121" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">INCREASES ↑</text>
+<text x="565" y="121" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">DECREASES ↓</text>
+<text x="70" y="139" fill="#9dc4b4" font-size="9" font-family="DM Sans,sans-serif">Electron Affinity</text>
+<text x="295" y="139" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">INCREASES ↑</text>
+<text x="565" y="139" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">DECREASES ↓</text>
+<text x="70" y="157" fill="#9dc4b4" font-size="9" font-family="DM Sans,sans-serif">Metallic Character</text>
+<text x="295" y="157" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">DECREASES ↓</text>
+<text x="565" y="157" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">INCREASES ↑</text>
+<text x="70" y="173" fill="#9dc4b4" font-size="9" font-family="DM Sans,sans-serif">Non-metallic Char.</text>
+<text x="295" y="173" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">INCREASES ↑</text>
+<text x="565" y="173" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">DECREASES ↓</text>
+<!-- Exception note -->
+<rect x="410" y="150" width="330" height="18" rx="4" fill="rgba(240,188,69,.12)" stroke="rgba(240,188,69,.3)" stroke-width="0.8"/>
+<text x="575" y="163" fill="#f0bc45" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">⚠ Exception: Cl has higher EA than F (Group 17)</text>
+</svg>`,
+"acid-base-theories":`<svg viewBox="0 0 760 160" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<rect x="8" y="8" width="232" height="144" rx="10" fill="rgba(79,142,247,.07)" stroke="#4f8ef7" stroke-width="1.5"/>
+<text x="124" y="30" fill="#4f8ef7" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">ARRHENIUS (1884)</text>
+<text x="124" y="50" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">Acid → gives H⁺ in water</text>
+<text x="124" y="65" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">Base → gives OH⁻ in water</text>
+<text x="124" y="85" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">HCl → H⁺ + Cl⁻</text>
+<text x="124" y="99" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">NaOH → Na⁺ + OH⁻</text>
+<rect x="18" y="118" width="212" height="26" rx="5" fill="rgba(240,107,107,.12)" stroke="rgba(240,107,107,.3)" stroke-width="0.8"/>
+<text x="124" y="135" fill="#f06b6b" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Only in aqueous solutions</text>
+<rect x="264" y="8" width="232" height="144" rx="10" fill="rgba(61,214,140,.07)" stroke="#3dd68c" stroke-width="1.5"/>
+<text x="380" y="30" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">BRØNSTED-LOWRY (1923)</text>
+<text x="380" y="50" fill="#3dd68c" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">Acid → proton (H⁺) DONOR</text>
+<text x="380" y="65" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">Base → proton (H⁺) ACCEPTOR</text>
+<text x="380" y="85" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Conjugate acid-base pairs</text>
+<text x="380" y="99" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Works in non-aqueous too</text>
+<rect x="274" y="118" width="212" height="26" rx="5" fill="rgba(61,214,140,.1)" stroke="rgba(61,214,140,.3)" stroke-width="0.8"/>
+<text x="380" y="135" fill="#3dd68c" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Broader than Arrhenius</text>
+<rect x="520" y="8" width="232" height="144" rx="10" fill="rgba(167,139,250,.07)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="636" y="30" fill="#a78bfa" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">LEWIS (1923)</text>
+<text x="636" y="50" fill="#a78bfa" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">Acid → e⁻ pair ACCEPTOR</text>
+<text x="636" y="65" fill="#f06b6b" font-size="9" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">Base → e⁻ pair DONOR</text>
+<text x="636" y="85" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">BF₃ (acid) + NH₃ (base)</text>
+<text x="636" y="99" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Lewis adduct formed</text>
+<rect x="530" y="118" width="212" height="26" rx="5" fill="rgba(167,139,250,.1)" stroke="rgba(167,139,250,.3)" stroke-width="0.8"/>
+<text x="636" y="135" fill="#a78bfa" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Broadest definition (most modern)</text>
+</svg>`,
+"periodic-table-blocks":`<svg viewBox="0 0 760 180" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<text x="380" y="16" fill="#e8f5f0" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">MODERN PERIODIC TABLE — BLOCK STRUCTURE</text>
+<!-- s-block -->
+<rect x="8" y="24" width="90" height="140" rx="7" fill="rgba(61,214,140,.12)" stroke="#3dd68c" stroke-width="1.5"/>
+<text x="53" y="46" fill="#3dd68c" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">s-BLOCK</text>
+<text x="53" y="64" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Groups 1 &amp; 2</text>
+<text x="53" y="80" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Alkali Metals</text>
+<text x="53" y="94" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Alkaline Earth</text>
+<text x="53" y="115" fill="#3dd68c" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">ns¹⁻²</text>
+<text x="53" y="132" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Li Na K Rb</text>
+<text x="53" y="147" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Cs Fr</text>
+<text x="53" y="158" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Be Mg Ca Sr...</text>
+<!-- d-block -->
+<rect x="110" y="24" width="276" height="140" rx="7" fill="rgba(240,188,69,.08)" stroke="#f0bc45" stroke-width="1.5"/>
+<text x="248" y="46" fill="#f0bc45" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">d-BLOCK (Transition Metals)</text>
+<text x="248" y="64" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Groups 3–12</text>
+<text x="248" y="80" fill="#f0bc45" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">(n-1)d¹⁻¹⁰ ns¹⁻²</text>
+<text x="248" y="100" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Variable oxidation states · Good catalysts</text>
+<text x="248" y="118" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Sc Ti V Cr Mn Fe Co Ni Cu Zn</text>
+<text x="248" y="134" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Y Zr Nb Mo Tc Ru Rh Pd Ag Cd</text>
+<text x="248" y="150" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Hf Ta W Re Os Ir Pt Au Hg</text>
+<!-- p-block -->
+<rect x="398" y="24" width="270" height="140" rx="7" fill="rgba(34,211,200,.07)" stroke="#22d3c8" stroke-width="1.5"/>
+<text x="533" y="46" fill="#22d3c8" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">p-BLOCK</text>
+<text x="533" y="64" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Groups 13–18</text>
+<text x="533" y="80" fill="#22d3c8" font-size="8" font-weight="bold" text-anchor="middle" font-family="JetBrains Mono,monospace">ns²np¹⁻⁶</text>
+<text x="533" y="98" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Metals + Metalloids + Non-metals + Noble Gases</text>
+<text x="533" y="116" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">B C N O F Ne (Period 2)</text>
+<text x="533" y="132" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Al Si P S Cl Ar (Period 3)</text>
+<text x="533" y="148" fill="#f06b6b" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">⚠ He = Group 18 but s-block (1s²)</text>
+<!-- f-block -->
+<rect x="680" y="24" width="72" height="140" rx="7" fill="rgba(167,139,250,.09)" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="716" y="46" fill="#a78bfa" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">f-BLOCK</text>
+<text x="716" y="64" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Below table</text>
+<text x="716" y="82" fill="#a78bfa" font-size="8" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">4f series</text>
+<text x="716" y="96" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Lanthanides</text>
+<text x="716" y="112" fill="#a78bfa" font-size="8" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">5f series</text>
+<text x="716" y="126" fill="#9dc4b4" font-size="7.5" text-anchor="middle" font-family="DM Sans,sans-serif">Actinides</text>
+<text x="716" y="148" fill="#9dc4b4" font-size="7" text-anchor="middle" font-family="DM Sans,sans-serif">Inner transition</text>
+</svg>`,
+"nacl-chemicals":`<svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="max-width:760px;width:100%">
+<defs>
+<marker id="arr" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#3dd68c"/></marker>
+</defs>
+<rect x="310" y="8" width="140" height="46" rx="9" fill="rgba(61,214,140,.2)" stroke="#3dd68c" stroke-width="2"/>
+<text x="380" y="28" fill="#3dd68c" font-size="13" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">NaCl</text>
+<text x="380" y="46" fill="#9dc4b4" font-size="9" text-anchor="middle" font-family="DM Sans,sans-serif">Common Salt (Brine)</text>
+<line x1="310" y1="28" x2="188" y2="76" stroke="#3dd68c" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="380" y1="54" x2="380" y2="76" stroke="#3dd68c" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="450" y1="28" x2="572" y2="76" stroke="#3dd68c" stroke-width="1.5" marker-end="url(#arr)"/>
+<line x1="340" y1="54" x2="180" y2="148" stroke="#3dd68c" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+<rect x="88" y="76" width="200" height="56" rx="8" fill="rgba(240,188,69,.1)" stroke="#f0bc45" stroke-width="1.5"/>
+<text x="188" y="98" fill="#f0bc45" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">NaOH</text>
+<text x="188" y="114" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Caustic Soda</text>
+<text x="188" y="127" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Chlor-alkali process</text>
+<rect x="280" y="76" width="200" height="56" rx="8" fill="rgba(79,142,247,.1)" stroke="#4f8ef7" stroke-width="1.5"/>
+<text x="380" y="98" fill="#4f8ef7" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">NaHCO₃</text>
+<text x="380" y="114" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Baking Soda</text>
+<text x="380" y="127" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Solvay process</text>
+<rect x="472" y="76" width="216" height="56" rx="8" fill="rgba(240,107,107,.1)" stroke="#f06b6b" stroke-width="1.5"/>
+<text x="580" y="98" fill="#f06b6b" font-size="11" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">Ca(OCl)Cl</text>
+<text x="580" y="114" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Bleaching Powder</text>
+<text x="580" y="127" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Ca(OH)₂ + Cl₂</text>
+<rect x="80" y="152" width="200" height="40" rx="7" fill="rgba(34,211,200,.1)" stroke="#22d3c8" stroke-width="1.5"/>
+<text x="180" y="170" fill="#22d3c8" font-size="10" font-weight="bold" text-anchor="middle" font-family="DM Sans,sans-serif">Na₂CO₃·10H₂O</text>
+<text x="180" y="184" fill="#9dc4b4" font-size="8" text-anchor="middle" font-family="DM Sans,sans-serif">Washing Soda · Solvay process</text>
+</svg>`,
+};
+
+const SKEY="centumania_chem_b_v1";
+let S={xp:0,visited:{},mcq:{},curNode:null,chOpen:null};
+try{const r=localStorage.getItem(SKEY);if(r)S=Object.assign(S,JSON.parse(r));}catch(e){}
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
+
+const CHAPTERS=[
+{id:"acids_bases",title:"Acids, Bases & Salts",icon:"🧪",nodes:[
+ {id:"acid-base-intro",title:"Acids, Bases & Salts — Basics",xp:10,type:"regular",
+  facts:["<b>Acid</b>: Sour taste | Turns blue litmus <b>RED</b> | Neutralises bases | pH &lt; 7 | Increases H⁺ in solution","<b>Base</b>: Bitter taste | Turns red litmus <b>BLUE</b> | Neutralises acids | pH &gt; 7 | Increases OH⁻","<b>Salt</b>: Neutral | No effect on litmus | pH ≈ 7 | Product of acid + base reaction","<b>Alkali</b>: A base that dissolves in water to give OH⁻ ions. All alkalis are bases, but NOT all bases are alkalis","<b>Base vs Alkali</b>: CaCO₃ is a base (insoluble — NOT alkali). NaOH is both base AND alkali","Neutralisation: Acid + Base → Salt + Water (+Heat)"],
+  table:{h:["Property","Acid","Base","Salt"],r:[["Taste","Sour","Bitter","Neutral"],["Litmus","Blue → Red","Red → Blue","No change"],["pH","&lt; 7","&gt; 7","≈ 7"],["Examples","HCl, H₂SO₄, HNO₃","NaOH, KOH, Ca(OH)₂","NaCl, KNO₃, CaSO₄"]]},
+  traps:["All alkalis are bases — NOT all bases are alkalis","CaCO₃ = base but NOT alkali (insoluble in water)","Salt is neutral — it has NO effect on litmus"],
+  mcqs:[{q:"Which turns blue litmus paper red?",o:["NaOH solution","Salt solution","HCl solution","Pure water"],a:2,e:"Acids turn blue litmus red. HCl is an acid."},{q:"All alkalis are bases, but all bases are alkalis?",o:["True","False"],a:1,e:"FALSE. CaCO₃ is a base but NOT an alkali — it is insoluble in water."}]},
+ {id:"acid-base-theories",title:"Arrhenius, Brønsted-Lowry & Lewis",xp:20,type:"regular",diag:"acid-base-theories",
+  facts:["<b>Arrhenius (1884)</b>: Acid = gives H⁺ in water. Base = gives OH⁻ in water. Limitation: only aqueous solutions","<b>Brønsted-Lowry (1923)</b>: Acid = proton (H⁺) <b>DONOR</b>. Base = proton (H⁺) <b>ACCEPTOR</b>","<b>Conjugate pair</b>: when acid donates H⁺ → forms conjugate base. When base accepts H⁺ → forms conjugate acid","<b>Lewis (1923)</b>: Acid = electron pair <b>ACCEPTOR</b> (has empty orbital). Base = electron pair <b>DONOR</b> (has lone pair)","Lewis adduct: product of Lewis acid + Lewis base reaction (coordinate covalent bond)","Examples Lewis acid: BF₃, AlCl₃, Fe³⁺. Lewis base: NH₃, H₂O, Cl⁻","<b>Dilution rule</b>: Always add acid TO water — NEVER water to acid (exothermic, spattering risk)","Hydronium ion (H₃O⁺): formed when H⁺ accepts lone pair from O of water molecule"],
+  traps:["Arrhenius theory: ONLY aqueous solutions — limitation","Brønsted-Lowry is broader — works in non-aqueous solvents too","Lewis theory is BROADEST — includes reactions with no H⁺ transfer at all","Add ACID to WATER (not water to acid) — violent exothermic reaction otherwise"],
+  mcqs:[{q:"Brønsted-Lowry acid is defined as?",o:["H⁺ donor","H⁺ acceptor","OH⁻ donor","Electron pair acceptor"],a:0,e:"Brønsted-Lowry acid = proton (H⁺) DONOR. Base = H⁺ acceptor."},{q:"Lewis acid is?",o:["Electron pair donor","Proton donor","Electron pair acceptor","Proton acceptor"],a:2,e:"Lewis acid = electron pair ACCEPTOR. Has empty orbital (BF₃, AlCl₃)."}]},
+ {id:"indicators",title:"Indicators — Litmus, Methyl Orange, Phenolphthalein",xp:15,type:"trap",
+  facts:["<b>Indicator</b>: substance that changes colour (or odour) in contact with acid or base","<b>Litmus</b>: Neutral=Purple | Acid=Red | Base=Blue. Source: Lichens (a plant)","<b>Methyl Orange</b>: Neutral=Orange | Acid=Red | Base=Yellow","<b>Phenolphthalein</b>: Neutral=<b>Colourless</b> | Acid=<b>Colourless</b> (NO change) | Base=Pink/Magenta","<b>Universal Indicator</b>: Shows all pH 0–14. Neutral=Green | Acid=Red/Orange | Base=Blue/Violet","Natural indicators: Turmeric (yellow→red in base), China rose petals, Red cabbage juice"],
+  table:{h:["Indicator","Neutral","Acidic (pH&lt;7)","Basic (pH&gt;7)"],r:[["Litmus","Purple","Red","Blue"],["Red Litmus","—","Stays Red","Turns Blue"],["Blue Litmus","—","Turns Red","Stays Blue"],["Methyl Orange","Orange","Red","Yellow"],["Phenolphthalein","Colourless","Colourless (NO change!)","Pink / Magenta"],["Universal","Green","Red → Orange","Blue → Violet"]]},
+  traps:["Phenolphthalein = colourless in BOTH neutral AND acid — only turns pink in BASE","Methyl orange in base = YELLOW (not blue, not green)","Litmus source = Lichens. Turmeric and China rose are also natural indicators"],
+  mcqs:[{q:"Phenolphthalein in acidic solution?",o:["Turns red","Turns pink","Remains colourless","Turns yellow"],a:2,e:"Phenolphthalein stays COLOURLESS in both neutral and acid. Only turns pink in BASE."},{q:"Methyl orange in basic solution turns?",o:["Red","Orange","Yellow","Blue"],a:2,e:"Methyl Orange: Neutral=Orange | Acid=Red | Base=YELLOW"}]},
+ {id:"natural-acids-hidden",title:"Natural Acids — Hidden Examiner File",xp:25,type:"hidden",requires:["acid-base-intro","indicators"],
+  facts:["<b>Sour Milk / Curd</b> → Lactic Acid","<b>Apple</b> → Malic Acid","<b>Butter/Curd (rancid)</b> → Butyric Acid","<b>Ant sting / Bee sting</b> → Formic Acid (Methanoic Acid)","<b>Soda Water</b> → Carbonic Acid","<b>Batteries (car)</b> → Sulphuric Acid (H₂SO₄)","<b>Remove rust from clothes</b> → Oxalic Acid","<b>Vinegar</b> → Acetic Acid (Ethanoic Acid — CH₃COOH)","<b>Guava / Oranges / Amla</b> → Ascorbic Acid (Vitamin C)","<b>Tea / Tomatoes / Spinach</b> → Oxalic Acid","<b>Grapes / Tamarind / Gooseberries</b> → Tartaric Acid","<b>Citrus fruits</b> → Citric Acid","<b>Gastric juice</b> → Hydrochloric Acid (HCl) — pH 1.2","<b>Nettle plant sting</b> → Methanoic Acid (Formic Acid)"],
+  insight:[{h:"SSC 5-year PYQ pattern",body:"6 most tested: Formic (ants/bees) | Acetic (vinegar) | Lactic (sour milk) | Tartaric (grapes/tamarind) | Citric (citrus) | Ascorbic (guava/amla). These appear in nearly every SSC CGL/CHSL/MTS paper."}],
+  mcqs:[{q:"Which acid is present in vinegar?",o:["Citric acid","Lactic acid","Acetic acid","Tartaric acid"],a:2,e:"Vinegar = Acetic Acid (Ethanoic Acid, CH₃COOH)."},{q:"Formic acid is found in?",o:["Apples","Grapes","Ant/bee sting","Sour milk"],a:2,e:"Ant and bee stings contain Formic Acid (Methanoic Acid)."}]},
+]},
+{id:"ph_salts",title:"pH, Salts & NaCl",icon:"⚗️",nodes:[
+ {id:"ph-scale",title:"pH Scale & Daily Life",xp:15,type:"regular",diag:"ph-scale",
+  facts:["<b>pH = −log₁₀[H⁺]</b>. Scale runs 0 (strongly acidic) to 14 (strongly basic). Neutral = 7","Pure water: [H⁺] = [OH⁻] = 10⁻⁷ mol/L → pH = 7","<b>Strong acid/base</b>: completely dissociates. <b>Weak</b>: partially dissociates","<b>Dilute</b> ≠ Weak. Dilute = fewer H⁺ per volume. Strong/weak = about extent of dissociation","<b>Universal Indicator</b>: pH range 0–14. Neutral solution has pH = 7","pH of body fluids: Gastric juice=1.2 | Blood=7.35–7.45 | Saliva=6.5–7 | Urine=6","Optimal soil pH for crops: 6.5–7.0","Tooth decay begins below pH 5.5 (bacteria produce acid dissolving enamel)","Bee sting = acidic (formic acid) → treat with NaHCO₃ (baking soda). Wasp = alkaline → treat with vinegar"],
+  table:{h:["Substance","pH","Nature"],r:[["Gastric Juice","1.2","Strongly Acidic"],["Lemon Juice","2.2","Acidic"],["Vinegar","2.9","Acidic"],["Black Coffee","5","Weakly Acidic"],["Acid Rain","2–5.6","Acidic"],["Normal Rain","5.6–6","Slightly Acidic"],["Milk","6.5–6.7","Slightly Acidic"],["Pure Water","7","Neutral"],["Human Blood","7.35–7.45","Slightly Basic"],["Sea Water","7.5–8.4","Basic"],["Milk of Magnesia","10","Basic"],["Ammonia","10.6–11.6","Basic"],["NaOH Solution","14","Strongly Basic"]]},
+  traps:["pH 5.5 and below → tooth decay begins","Blood pH: even slight change → acidosis or alkalosis (life-threatening)","Strong acid ≠ Concentrated acid. These are different concepts!","Bee sting = ACIDIC → treat with BASE (baking soda). Wasp = ALKALINE → treat with ACID (vinegar)"],
+  mcqs:[{q:"Tooth decay starts at pH?",o:["Below 7","Below 6","Below 5.5","Below 4"],a:2,e:"Tooth decay begins when pH falls below 5.5 — bacteria produce acid that dissolves enamel."},{q:"Bee sting is treated with?",o:["Vinegar","Baking soda (NaHCO₃)","Lemon juice","Salt water"],a:1,e:"Bee sting is acidic (formic acid). Treat with base = baking soda (NaHCO₃)."}]},
+ {id:"salts-uses",title:"Important Bases & Salts",xp:15,type:"regular",
+  facts:["<b>NaOH (Caustic Soda)</b>: Soap, detergent, paper, artificial thread, petroleum purification","<b>Ca(OH)₂ (Slaked Lime)</b>: Bleaching powder, whitewash, tanning, softening hard water","<b>CaO (Quicklime)</b>: Bleaching powder, whitewash, cement","<b>Mg(OH)₂</b>: Milk of Magnesia — antacid for acid poisoning","<b>KOH</b>: Making soft soap, absorbs SO₂ and CO₂","<b>NaCl (Common Salt)</b>: Food, HCl in stomach, make Cl₂/NaOH/washing soda/baking soda","<b>NaHCO₃ (Baking Soda)</b>: Antacid, baking, fire extinguishers","<b>Na₂CO₃·10H₂O (Washing Soda)</b>: Remove permanent hardness of water, glass/soap/paper","<b>KNO₃ (Saltpetre)</b>: Gunpowder, explosives, firecrackers, fertilizers","<b>AgBr</b>: Photography negatives, photochromatic glass","<b>Hypo (Na₂S₂O₃)</b>: Photography fixing agent, separate gold/silver from minerals"],
+  table:{h:["Salt","Common Name","Key Uses"],r:[["NaCl","Common Salt","Food, HCl in stomach, make Cl₂, NaOH, washing soda, baking soda"],["NaHCO₃","Baking Soda","Antacid, baking, fire extinguishers"],["Na₂CO₃·10H₂O","Washing Soda","Remove hardness of water, glass, soap industries"],["Ca(OCl)Cl","Bleaching Powder","Bleach cotton/linen, disinfect water"],["CaSO₄·½H₂O","Plaster of Paris","Bone fracture casts, sculpting"],["KNO₃","Saltpetre","Gunpowder, explosives, fertilizers"],["KAl(SO₄)₂·12H₂O","Potash Alum","Stop bleeding, water purification, antiseptic"]]},
+  mcqs:[{q:"Washing Soda is used to?",o:["Bake bread","Remove permanent hardness of water","Treat bee stings","Disinfect wounds"],a:1,e:"Washing Soda (Na₂CO₃·10H₂O) removes permanent hardness of water."},{q:"Baking Soda (NaHCO₃) is used as?",o:["Bleaching agent","Photography fixer","Antacid","Disinfectant"],a:2,e:"NaHCO₃ (Baking Soda) neutralises excess HCl in stomach — used as antacid."}]},
+ {id:"nacl-chemicals",title:"Chemicals from Common Salt",xp:20,type:"trap",diag:"nacl-chemicals",
+  facts:["NaCl is starting material for 4 key industrial chemicals","<b>1. NaOH (Caustic Soda)</b>: Chlor-alkali process — electrolysis of brine. Anode: Cl₂ released. Cathode: H₂ released. NaOH stays in solution.","<b>2. NaHCO₃ (Baking Soda)</b>: Solvay process — CaCO₃→CaO+CO₂; then NaCl+NH₃+CO₂+H₂O→NaHCO₃+NH₄Cl","<b>3. Na₂CO₃·10H₂O (Washing Soda)</b>: NaHCO₃ heated → Na₂CO₃ + H₂O + CO₂. Recrystallise to get washing soda","<b>4. Ca(OCl)Cl (Bleaching Powder)</b>: Ca(OH)₂ + Cl₂ → CaOCl₂ + H₂O (chlorine gas on dry slaked lime)","<b>Plaster of Paris (POP)</b>: CaSO₄·½H₂O. Made from Gypsum (CaSO₄·2H₂O) heated at 100°C. Sets when water added."],
+  traps:["NaHCO₃ (Baking Soda) = antacid. Na₂CO₃ (Washing Soda) = NOT edible — two different compounds!","Gypsum = CaSO₄·<b>2</b>H₂O. Plaster of Paris = CaSO₄·<b>½</b>H₂O (half). POP sets when water added back","Chlor-alkali: Anode = Cl₂. Cathode = H₂. NaOH stays in solution","pH of salts: Strong acid + Strong base → Neutral (pH=7). Weak acid + Strong base → Basic (pH>7)"],
+  mcqs:[{q:"In chlor-alkali process, Cl₂ is released at?",o:["Cathode","Anode","Both electrodes","Neither"],a:1,e:"Chlor-alkali: Anode = Cl₂ released. Cathode = H₂ released. NaOH stays in solution."},{q:"Plaster of Paris formula?",o:["CaSO₄·2H₂O","CaSO₄·H₂O","CaSO₄·½H₂O","CaSO₄"],a:2,e:"POP = CaSO₄·½H₂O. Gypsum = CaSO₄·2H₂O. POP is made by heating gypsum at 100°C."}]},
+ {id:"salts-gold",title:"Salts Gold Node",xp:40,type:"gold",requires_pct:80,
+  golden:["<b>NaHCO₃ = Baking Soda (antacid)</b> | Na₂CO₃·10H₂O = Washing Soda (water softener) — NOT the same compound!","<b>Gypsum = CaSO₄·2H₂O</b> | Plaster of Paris = CaSO₄·½H₂O — heating gypsum at 100°C makes POP","<b>Chlor-alkali process</b>: Anode=Cl₂ | Cathode=H₂ | NaOH stays. From brine (NaCl solution)","<b>Bee sting = acidic → treat with baking soda (base)</b>. Wasp = alkaline → treat with vinegar (acid)","<b>Phenolphthalein = colourless in acid AND neutral</b> — turns pink ONLY in base (most common SSC trap)","<b>pH scale</b>: Tooth decay below 5.5 | Blood = 7.35–7.45 | Gastric juice = 1.2 | NaOH = 14","<b>Acid in ants = Formic (Methanoic)</b> | Vinegar = Acetic | Sour milk = Lactic | Grapes = Tartaric | Citrus = Citric","<b>Strong acid ≠ Concentrated acid</b>. Dilute ≠ Weak. These describe different properties."]},
+]},
+{id:"periodic",title:"Periodic Table",icon:"🔬",nodes:[
+ {id:"periodic-history",title:"History — Dobereiner to Moseley",xp:15,type:"regular",
+  facts:["<b>Dobereiner (1829)</b>: Triads — middle element's atomic mass ≈ average of other two. Li-Na-K, Ca-Sr-Ba, Cl-Br-I","<b>Newlands (1865)</b>: Law of Octaves — every 8th element repeats properties (like musical scale do-re-mi). Worked only up to Ca","<b>Mendeleev (1869)</b>: Periodic Law — properties are periodic function of <b>atomic mass</b>. Left gaps for undiscovered elements","Mendeleev's MERIT: predicted properties of Ga (Eka-Al), Ge (Eka-Si), Sc (Eka-Boron) correctly","Mendeleev's DEMERITS: could not place H. Isotopes violated law. Anomalous pairs: Ar/K, Co/Ni, Te/I","<b>Moseley (1913)</b>: Modern Periodic Law — properties are periodic function of <b>atomic NUMBER (Z)</b>. This is current law","Modern table: 7 periods (rows), 18 groups (columns), 118 elements (92 natural + 26 synthetic)"],
+  table:{h:["Scientist","Year","Key Contribution","Rule","Limitation"],r:[["Dobereiner","1829","Triads (3 elements)","Middle mass = average of 1st and 3rd","Only ~3 triads found"],["Newlands","1865","Law of Octaves","Every 8th element similar to 1st","Failed after Ca; noble gases unknown"],["Mendeleev","1869","Periodic Law (atomic mass)","Properties periodic w.r.t. atomic mass","Isotopes violated law; anomalous pairs"],["Moseley","1913","Modern Periodic Law","Properties periodic w.r.t. atomic NUMBER","Current law — valid"]]},
+  mcqs:[{q:"Moseley's periodic law is based on?",o:["Atomic mass","Atomic number","Valency","Electron configuration"],a:1,e:"Moseley (1913) — properties are periodic function of ATOMIC NUMBER. This is the modern periodic law."},{q:"Mendeleev could NOT place which element?",o:["Helium","Oxygen","Hydrogen","Carbon"],a:2,e:"Mendeleev could not place Hydrogen — it fits both Group 1 (alkali) and Group 17 (halogens)."}]},
+ {id:"modern-periodic",title:"Modern Periodic Table — Blocks & Groups",xp:20,type:"regular",diag:"periodic-table-blocks",
+  facts:["<b>s-block</b>: Groups 1 & 2 | Config: ns¹⁻² | Alkali metals (Grp 1) + Alkaline earth metals (Grp 2)","<b>p-block</b>: Groups 13–18 | Config: ns²np¹⁻⁶ | Contains metals, metalloids, non-metals, noble gases","<b>d-block</b>: Groups 3–12 | Config: (n-1)d¹⁻¹⁰ns¹⁻² | Transition metals | Variable oxidation states","<b>f-block</b>: Below main table | 4f = Lanthanides, 5f = Actinides | Inner transition elements","<b>Group 1</b> (Alkali Metals): Li Na K Rb Cs Fr | Oxidation state: +1 | Very reactive, stored in kerosene","<b>Group 2</b> (Alkaline Earth): Be Mg Ca Sr Ba Ra | Oxidation state: +2","<b>Group 17</b> (Halogens): F Cl Br I At | Oxidation state: −1 (mostly) | Strong oxidising agents","<b>Group 18</b> (Noble Gases): He Ne Ar Kr Xe Rn | Oxidation state: 0 | Completely filled shells","<b>Helium exception</b>: In Group 18 (noble gas) but is s-block element (config 1s²). All other noble gases = p-block"],
+  table:{h:["Group","Name","Key Elements","Ox. State"],r:[["1","Alkali Metals","Li, Na, K, Rb, Cs, Fr","+1"],["2","Alkaline Earth","Be, Mg, Ca, Sr, Ba, Ra","+2"],["13","Boron Family","B, Al, Ga, In, Tl","+3"],["14","Carbon Family","C, Si, Ge, Sn, Pb","+4, +2"],["15","Nitrogen Family","N, P, As, Sb, Bi","+5, +3, −3"],["16","Chalcogens","O, S, Se, Te, Po","+6, −2"],["17","Halogens","F, Cl, Br, I, At","−1 (mostly)"],["18","Noble Gases","He, Ne, Ar, Kr, Xe, Rn","0"]]},
+  traps:["Helium = Group 18 but s-block (config 1s²) — NOT p-block like other noble gases","Hydrogen = placed in Group 1 but is a NON-METAL, not an alkali metal","Period number = principal quantum number 'n' of outermost shell"],
+  mcqs:[{q:"Which block contains Transition Metals?",o:["s-block","p-block","d-block","f-block"],a:2,e:"d-block = Groups 3–12 = Transition metals. Config: (n-1)d¹⁻¹⁰ ns¹⁻²."},{q:"Helium (He) belongs to which block?",o:["p-block","s-block","d-block","f-block"],a:1,e:"He is Group 18 (noble gas) but is s-block because its config is 1s² — outermost electron in s-orbital."}]},
+ {id:"periodic-trends",title:"Periodic Trends",xp:25,type:"trap",diag:"periodic-trends",
+  facts:["<b>Atomic Radius</b>: Across period → DECREASES (more protons pull electrons closer). Down group → INCREASES (more shells)","<b>Ionization Energy (IE)</b>: Across period → INCREASES (smaller atom, harder to remove e⁻). Down group → DECREASES","<b>Electronegativity (EN)</b>: Across period → INCREASES. Down group → DECREASES (bottom to top increases)","<b>Electron Affinity (EA)</b>: Across period → INCREASES. Down group → DECREASES","EXCEPTION: <b>Cl has higher EA than F</b> (Group 17) — Cl has more space in outermost shell","<b>Metallic character</b>: Across period → DECREASES. Down group → INCREASES","<b>Non-metallic character</b>: Across period → INCREASES. Down group → DECREASES","<b>Most reactive metal</b>: Caesium (Cs) — bottom left of table","<b>Most reactive non-metal</b>: Fluorine (F) — most electronegative element in periodic table"],
+  traps:["Atomic radius DECREASES across period — do NOT say increases","Cl has HIGHER electron affinity than F — major exception to the trend","Most reactive METAL = Caesium | Most reactive NON-METAL = Fluorine | Most electronegative = Fluorine","Ionization energy: Period→ increases | Group↓ decreases (opposite to atomic radius trend)"],
+  mcqs:[{q:"Atomic radius across a period?",o:["Increases","Decreases","Remains same","First increases then decreases"],a:1,e:"Atomic radius DECREASES across a period — more protons pull electrons closer to nucleus."},{q:"Which halogen has HIGHER electron affinity than fluorine?",o:["Bromine","Iodine","Chlorine","Astatine"],a:2,e:"Chlorine has higher EA than Fluorine. Cl has more space in outermost shell to accommodate extra electron."}]},
+ {id:"periodic-hidden",title:"Periodic Table Intelligence Node",xp:30,type:"hidden",requires:["periodic-history","modern-periodic","periodic-trends"],
+  facts:["<b>Dobereiner's Triads:</b> Li(7)+K(39)/2=23=Na(23) ✓ | Cl(35.5)+I(127)/2=81.25≈Br(80) ✓","Newlands arranged 62 elements in 8 groups of 8 — worked ONLY up to Calcium","Mendeleev predicted: Eka-Boron=Sc, Eka-Aluminium=Ga, Eka-Silicon=Ge — all confirmed later","Anomalous pairs in Mendeleev's table: Ar(40)/K(39) | Co(58.9)/Ni(58.7) | Te(127.6)/I(126.9)","Moseley found: atomic number = number of protons = more fundamental property than mass","s-block elements: Hydration enthalpy order Li&gt;Na&gt;K&gt;Rb&gt;Cs (smaller ion = greater hydration)","Diagonal relationship: Li resembles Mg | Be resembles Al | B resembles Si","<b>Period 2 anomaly</b>: Li and Be show anomalous behaviour — smallest atoms, no d-orbitals, high electronegativity"],
+  insight:[{h:"SSC exam pattern — Periodic Table",body:"Dobereiner triads (Li/Na/K) + Moseley vs Mendeleev law asked every year. 'Who proposed Modern Periodic Law' = Moseley. 'Law of Octaves' = Newlands. 'Properties periodic function of atomic mass' = Mendeleev."}],
+  mcqs:[{q:"Law of Octaves was proposed by?",o:["Dobereiner","Newlands","Mendeleev","Moseley"],a:1,e:"J.A.R. Newlands (1865) proposed Law of Octaves — every 8th element resembles 1st, like musical notes."},{q:"Moseley arranged elements by?",o:["Atomic mass","Atomic number","Valency","Density"],a:1,e:"Moseley (1913) arranged by atomic NUMBER (Z). This is the basis of Modern Periodic Table."}]},
+]},
+{id:"metals_nonmetals",title:"Metals & Non-Metals",icon:"⚡",nodes:[
+ {id:"metals-properties",title:"Metals — Properties & Uses",xp:15,type:"regular",
+  facts:["<b>Physical properties</b>: Lustrous, malleable, ductile, sonorous, good conductor heat+electricity, solid at RT (except Hg)","<b>Chemical</b>: Alkali metals react vigorously with water. Mg reacts with hot water. Al/Fe/Zn react with steam. Cu/Ag/Au don't react with water","<b>Exceptions</b>: Mercury (Hg) = liquid metal | Na/K/Li = soft (cut with knife) | Osmium = highest density | Lithium = least dense","<b>Sodium (Na, 11)</b>: White, soft, reactive. Kept in kerosene. Na+air=explosive. Uses: reducing agent, sodium lamps","<b>Magnesium (Mg, 12)</b>: Component of chlorophyll. Burns white. Uses: flash bulbs, fire crackers, alloys","<b>Calcium (Ca, 20)</b>: Ca+H₂O→Ca(OH)₂+H₂. Uses: cement, glass, pottery, whitewash","<b>Aluminium (Al, 13)</b>: Not free state. Al+air→Al₂O₃ (protective layer). Uses: wires, foils, Duralumin","<b>Copper (Cu, 29)</b>: Red. Does NOT react with dil. HCl. Uses: electric wires, coins, alloys","<b>Gold (Au, 79)</b>: Soft, malleable. Soluble ONLY in aqua regia. Uses: ornaments, electroplating"],
+  table:{h:["Metal","At. No.","Key Property","Uses"],r:[["Sodium (Na)","11","White, soft, kept in kerosene, reacts with air","Reducing agent, sodium lamps"],["Magnesium (Mg)","12","Component of chlorophyll, burns white","Flash bulbs, fire crackers"],["Calcium (Ca)","20","Ca+H₂O→Ca(OH)₂+H₂","Cement, glass, whitewash"],["Aluminium (Al)","13","Al₂O₃ protective layer; not free state","Wires, foils, Duralumin (planes)"],["Copper (Cu)","29","Red; doesn't react with dil. HCl","Electric wires, alloys (brass, bronze)"],["Silver (Ag)","47","Best conductor; Ag+sulphur→black","Ornaments, photography, coins"],["Gold (Au)","79","Soluble only in aqua regia","Ornaments, electroplating"],["Lead (Pb)","82","Heavy, poisonous, bluish-brown","Bullets, solder, fuse wires"],["Uranium (U)","92","Radioactive, not free state","Nuclear reactors, atomic bombs"]]},
+  mcqs:[{q:"Which metal is stored in kerosene?",o:["Copper","Sodium","Calcium","Zinc"],a:1,e:"Sodium (Na) reacts explosively with air — stored in kerosene/paraffin."},{q:"Gold dissolves in?",o:["Dilute HCl","Concentrated H₂SO₄","Aqua regia only","Dilute HNO₃"],a:2,e:"Gold dissolves ONLY in aqua regia (3:1 conc. HCl:HNO₃). Highly corrosion resistant."}]},
+ {id:"nonmetals-properties",title:"Non-Metals — Properties & Uses",xp:15,type:"regular",
+  facts:["<b>Properties</b>: Brittle, non-malleable, non-ductile, non-sonorous, poor conductors (usually), various states at RT","<b>Exceptions</b>: Bromine = ONLY liquid non-metal | Iodine = non-metal but lustrous | Graphite = non-metal but conducts electricity | Diamond = hardest substance; conducts heat","<b>Hydrogen (H, 1)</b>: Lightest, future fuel. H₂+air=explosive. Isotopes: Protium, Deuterium, Tritium","<b>Carbon (C, 6)</b>: Diamond (hardest), Graphite (conductor, pencil lead). Allotropy. Carbon dating (C-14)","<b>Nitrogen (N, 7)</b>: 78% of air. Colourless, odourless. N₂ used in aeroplane tyres","<b>Oxygen (O, 8)</b>: Supports combustion. Neutral pH=7. O₃ (Ozone) allotrope — protects from UV","<b>Sulphur (S, 16)</b>: Yellow solid. S₈ form. Used in H₂SO₄, vulcanisation of rubber, fungicide","<b>Phosphorus (P, 15)</b>: White P (toxic, fire crackers), Red P (matchsticks), Black P (most stable)","<b>Silicon (Si, 14)</b>: 2nd most abundant non-metal. Semiconductor. IC chips, glass, cement","<b>Halogens (F,Cl,Br,I)</b>: Fluorine most reactive & electronegative. Cl/I used as disinfectants"],
+  traps:["Bromine = ONLY liquid non-metal at RT. Mercury = ONLY liquid metal","Iodine = non-metal but LUSTROUS (shiny like metals)","Graphite = non-metal but CONDUCTS ELECTRICITY","Diamond = non-metal but HARDEST substance and conducts HEAT"],
+  mcqs:[{q:"Which is the ONLY liquid non-metal at room temperature?",o:["Iodine","Mercury","Bromine","Phosphorus"],a:2,e:"Bromine (Br) = only liquid non-metal at RT. Mercury = only liquid metal."},{q:"Graphite is a non-metal that?",o:["Is lustrous like metals","Conducts electricity","Is the hardest substance","Floats on water"],a:1,e:"Graphite conducts electricity — used in electrodes. Diamond is the hardest, not graphite."}]},
+ {id:"metals-nonmetals-gold",title:"⚡ Metals & Exceptions Gold Node",xp:40,type:"gold",requires_pct:80,
+  golden:["<b>Bromine = only liquid non-metal</b> | Mercury = only liquid metal | Both are exceptions to state rules","<b>Iodine = lustrous non-metal</b> | Graphite = non-metal conducting electricity | Diamond = hardest substance","<b>Fluorine = most electronegative + most reactive non-metal</b> | Caesium = most reactive metal","<b>Osmium = highest density metal</b> | Lithium = lowest density metal (floats on water)","<b>Carbon (diamond)</b> = hardest | Carbon (graphite) = conductor | Allotropes of same element","<b>Sodium kept in kerosene</b> | Na+air = explosive (exothermic) | White, soft, can be cut","<b>Gold soluble only in aqua regia</b> (3HCl:1HNO₃ mixture). Corrosion-free otherwise","<b>Aluminium protective oxide layer (Al₂O₃)</b> makes it corrosion-resistant despite being reactive"]},
+]},
+{id:"pyq_master",title:"PYQ Command Centre",icon:"🎯",nodes:[
+ {id:"pyq-acids",title:"⚡ Acids & pH Gold Node",xp:50,type:"gold",requires_pct:80,
+  golden:["<b>Acid in ants/bees = Formic (Methanoic) Acid</b> — Vinegar = Acetic — Sour milk = Lactic — Grapes = Tartaric — Citrus = Citric","<b>Phenolphthalein = colourless in acid AND neutral</b> — turns PINK only in base (SSC CGL/CHSL classic trap)","<b>Bee sting = acidic → treat with baking soda (NaHCO₃)</b> — Wasp = alkaline → treat with vinegar","<b>Tooth decay below pH 5.5</b> — Blood = 7.35–7.45 — Gastric juice = 1.2 — NaOH solution = 14","<b>Dobereiner (1829) Triads → Newlands (1865) Octaves → Mendeleev (1869) atomic mass → Moseley (1913) atomic number</b>","<b>Chlor-alkali: Anode = Cl₂ | Cathode = H₂ | NaOH stays</b> in solution — from brine (NaCl)","<b>Gypsum = CaSO₄·2H₂O | POP = CaSO₄·½H₂O</b> — heating gypsum gives POP — POP sets when water added back","<b>Helium = Group 18 but s-block</b> (1s²) — all other noble gases are p-block — He exception","<b>Cl has higher electron affinity than F</b> — exception to general group trend — Cl has more space","<b>Atomic radius decreases across period | Ionization energy increases across period</b> — these are opposite trends","<b>Most reactive metal = Caesium</b> | Most reactive non-metal = Fluorine | Most electronegative = Fluorine","<b>Strong acid/base = completely dissociates | Weak = partially</b> — this is NOT the same as dilute/concentrated"]},
+]},
+];
+
+function allNodes(){return CHAPTERS.flatMap(c=>c.nodes)}
+function getNode(id){return allNodes().find(n=>n.id===id)}
+function isVisited(id){return!!S.visited[id]}
+function trapNodes(){return allNodes().filter(n=>n.type==="trap"||n.type==="hidden")}
+function trapVisited(){return trapNodes().filter(n=>isVisited(n.id)).length}
+function visitedCount(){return allNodes().filter(n=>isVisited(n.id)).length}
+function totalNodes(){return allNodes().length}
+function isUnlocked(node){
+  if(node.type==="hidden"&&node.requires)return node.requires.every(r=>isVisited(r));
+  if(node.type==="gold"){const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===node.id));if(ch){return chPct(ch)>=(node.requires_pct||80);}}
+  return true;
+}
+function chPct(ch){return Math.round(ch.nodes.filter(n=>isVisited(n.id)).length/ch.nodes.length*100);}
+function updateHeader(){
+  const vis=visitedCount(),tot=totalNodes(),xp=S.xp,tv=trapVisited(),tn=trapNodes().length;
+  ["hXP","mhXP"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=xp;});
+  ["hVis","mhVis"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=vis+"/"+tot;});
+  ["hTrap","mhTrap"].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=tv+"/"+tn;});
+  const tb=document.getElementById("trapBadge");if(tb)tb.textContent=tn-tv;
+}
+let _tt;
+function showToast(xp,msg){
+  const t=document.getElementById("toast"),v=document.getElementById("toastVal"),m=document.getElementById("toastMsg");
+  if(!t)return;v.textContent=xp?"+"+xp+" XP":"✓";m.textContent=msg;
+  t.classList.add("show");clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove("show"),2800);
+}
+function buildSidebar(){
+  ["sideInner","mobSideInner"].forEach(sid=>{
+    const el=document.getElementById(sid);if(!el)return;el.innerHTML="";
+    CHAPTERS.forEach(ch=>{
+      const pct=chPct(ch),isOpen=S.chOpen===ch.id;
+      const div=document.createElement("div");div.className="ch-group"+(isOpen?" expanded":"");
+      div.innerHTML=`<button class="ch-toggle${isOpen?" open":""}" data-ch="${ch.id}">
+        <span style="font-size:16px">${ch.icon}</span><span>${ch.title}</span>
+        <span class="cht-pct">${pct}%</span></button>
+      <div class="node-items">${ch.nodes.map(n=>{
+        const unl=isUnlocked(n),vis=isVisited(n.id),cur=S.curNode===n.id;
+        let ico=vis?"✓":"○",tag="";
+        if(!unl){ico="🔒";tag=`<span class="ni-tag hidden">LOCKED</span>`;}
+        else if(n.type==="gold"){ico="⚡";tag=`<span class="ni-tag gold">GOLD</span>`;}
+        else if(n.type==="trap"){ico=vis?"⚠️":"⚠";tag=`<span class="ni-tag trap">TRAP</span>`;}
+        else if(n.type==="hidden"){ico=vis?"🔓":"???";tag=`<span class="ni-tag hidden">SECRET</span>`;}
+        return `<button class="ni-btn${cur?" current":""}${vis?" done":""}${!unl?" locked":""}" data-nid="${n.id}" data-unl="${unl}">
+          <span style="width:15px;text-align:center;font-size:12px">${ico}</span>
+          <span>${!unl&&n.type==="hidden"?"??? Hidden Node":n.title}</span>${tag}</button>`;
+      }).join("")}</div>`;
+      el.appendChild(div);
+      div.querySelector(".ch-toggle").onclick=()=>{S.chOpen=isOpen?null:ch.id;save();buildSidebar();if(!isOpen){const first=ch.nodes.find(n=>isUnlocked(n));if(first)openNode(first.id);}};
+      div.querySelectorAll(".ni-btn[data-unl='true']").forEach(b=>b.onclick=()=>{openNode(b.dataset.nid);closeDrawer();});
+      div.querySelectorAll(".ni-btn[data-unl='false']").forEach(b=>b.onclick=()=>{openLocked(b.dataset.nid);closeDrawer();});
+    });
+  });
+}
+function openNode(id){
+  const node=getNode(id);if(!node||!isUnlocked(node))return openLocked(id);
+  const fresh=!isVisited(id);S.curNode=id;S.chOpen=CHAPTERS.find(c=>c.nodes.some(n=>n.id===id))?.id||S.chOpen;
+  if(fresh){S.visited[id]=Date.now();S.xp+=node.xp;const msgs={trap:"⚠ Exam Trap Revealed!",hidden:"🔓 Secret Unlocked!",gold:"⚡ Gold Node!"};showToast(node.xp,msgs[node.type]||"Node Visited");}
+  save();buildSidebar();updateHeader();renderNode(node);document.getElementById("mainArea").scrollTop=0;
+}
+function openLocked(id){
+  const node=getNode(id);if(!node)return;S.curNode=id;save();buildSidebar();
+  const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===id));let reqs="";
+  if(node.type==="hidden"&&node.requires)reqs=node.requires.map(rid=>{const rn=getNode(rid);return`<div class="lreq${isVisited(rid)?" met":""}">Visit: ${rn?.title||rid}</div>`;}).join("");
+  else if(node.type==="gold"){const pct=ch?chPct(ch):0;reqs=`<div class="lreq${pct>=(node.requires_pct||80)?" met":""}">Complete ${node.requires_pct||80}% of chapter (${pct}% done)</div>`;}
+  document.getElementById("viewWrap").innerHTML=`<div class="locked-view"><div class="lv-ico">🔒</div><h2>Locked</h2><p>${node.type==="hidden"?"Complete required nodes to unlock.":"Complete chapter to unlock Gold Node."}</p><div class="lock-req-list">${reqs}</div></div>`;
+}
+function buildTable(t){return`<div class="tbl-wrap"><table class="dt"><thead><tr>${t.h.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${t.r.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;}
+function renderNode(node){
+  const ch=CHAPTERS.find(c=>c.nodes.some(n=>n.id===node.id));
+  const bm={regular:["◇ LEARN","regular"],trap:["⚠ EXAM TRAP","trap"],hidden:["🔓 SECRET","hidden"],gold:["⚡ GOLD","gold"]};
+  const [bl,bc]=bm[node.type]||["◇","regular"];
+  let content="";
+  if(node.type==="gold"){
+    content=`<div class="golden-block"><div class="gb-h">⚡ GOLD NODE — HIGHEST YIELD EXAM FACTS</div><ul>${(node.golden||[]).map(g=>`<li>${g}</li>`).join("")}</ul></div>`;
+  } else {
+    if(node.diag&&DIAGRAMS[node.diag])content+=`<div class="diag-box"><div class="diag-head">📊 VISUAL DIAGRAM</div><div class="diag-body">${DIAGRAMS[node.diag]}</div></div>`;
+    if(node.facts)content+=`<div class="fact-block"><div class="fb-head">◇ KEY FACTS</div><div class="fb-body"><ul class="facts">${node.facts.map(f=>`<li>${f}</li>`).join("")}</ul></div></div>`;
+    if(node.table)content+=`<div class="section-lbl">◇ COMPARISON TABLE</div>${buildTable(node.table)}`;
+    if(node.traps)content+=`<div class="trap-block"><div class="tb-h">⚠ EXAM TRAPS — HIGH YIELD</div><ul>${node.traps.map(t=>`<li>${t}</li>`).join("")}</ul></div>`;
+    if(node.insight)content+=node.insight.map(i=>`<div class="insight-block"><div class="ib-h">💎 INSIGHT — ${i.h}</div><p>${i.body}</p></div>`).join("");
+  }
+  let mcqContent="";
+  if(node.mcqs?.length){
+    const best=S.mcq[node.id]||0;
+    mcqContent=`<div class="mcq-list">
+      ${best?`<div style="font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:8px">Best: <span style="color:var(--green)">${best}%</span></div>`:""}
+      ${node.mcqs.map((q,qi)=>`<div class="mcq-card" data-qi="${qi}" data-nid="${node.id}">
+        <div class="mcq-q"><span class="mcq-qn">Q${qi+1}</span>${q.q}</div>
+        <div class="mcq-opts">${q.o.map((op,oi)=>`<button class="mopt" data-oi="${oi}">${String.fromCharCode(65+oi)}. ${op}</button>`).join("")}</div>
+        <div class="mcq-fb" id="fb_${node.id}_${qi}"></div>
+      </div>`).join("")}
+      <div class="mcq-score" id="scr_${node.id}">Answer all questions to see score</div>
+    </div>`;
+  } else {
+    mcqContent=`<div style="text-align:center;padding:40px;color:var(--ink3);font-family:var(--mono);font-size:13px">No MCQs for this node</div>`;
+  }
+  const idx=ch?.nodes.findIndex(n=>n.id===node.id)??-1;
+  const prev=idx>0?ch.nodes[idx-1]:null;
+  const next=idx<(ch?.nodes.length-1)?ch.nodes[idx+1]:null;
+  const nav=`<div class="node-nav">
+    ${prev?`<button class="nnav" onclick="openNode('${prev.id}')">‹ ${prev.title.substring(0,22)}</button>`:""}
+    ${next&&isUnlocked(next)?`<button class="nnav primary" onclick="openNode('${next.id}')">Next ›</button>`:""}
+  </div>`;
+  document.getElementById("viewWrap").innerHTML=`<div class="node-view">
+    <div class="node-hd">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--ink3);margin-bottom:6px">${ch?.title||""} › ${node.title}</div>
+      <div class="node-badge ${bc}">${bl}</div>
+      <h1 class="nt">${node.title}</h1>
+      <div class="xp-pill">✦ +${node.xp} XP${isVisited(node.id)?" earned":""}</div>
+    </div>
+    <div class="tabs">
+      <button class="tab on" data-t="learn">📖 Learn</button>
+      <button class="tab" data-t="test">🎯 Test</button>
+    </div>
+    <div id="pane-learn">${content}${nav}</div>
+    <div id="pane-test" style="display:none">${mcqContent}${nav}</div>
+  </div>`;
+  document.querySelectorAll(".tab").forEach(btn=>{btn.onclick=()=>{const t=btn.dataset.t;document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on",b.dataset.t===t));["learn","test"].forEach(p=>{const e=document.getElementById("pane-"+p);if(e)e.style.display=p===t?"block":"none";});};});
+  bindMCQ(node);
+}
+function bindMCQ(node){
+  if(!node.mcqs)return;
+  let correct=0,answered=0,total=node.mcqs.length;
+  node.mcqs.forEach((q,qi)=>{
+    const card=document.querySelector(`.mcq-card[data-qi="${qi}"][data-nid="${node.id}"]`);if(!card)return;
+    card.querySelectorAll(".mopt").forEach(btn=>{
+      btn.onclick=()=>{
+        if(card.dataset.done)return;card.dataset.done=1;
+        const oi=+btn.dataset.oi,fb=document.getElementById(`fb_${node.id}_${qi}`);
+        card.querySelectorAll(".mopt").forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("show-correct");});
+        if(oi===q.a){btn.classList.add("correct");correct++;fb.className="mcq-fb show right";fb.innerHTML="✓ "+q.e;}
+        else{btn.classList.add("wrong");fb.className="mcq-fb show wrong";fb.innerHTML="✗ "+q.e;}
+        answered++;
+        if(answered===total){const pct=Math.round(correct/total*100);const scr=document.getElementById(`scr_${node.id}`);if(scr)scr.innerHTML=`Score: <span>${correct}/${total} = ${pct}%</span>`;if(pct>(S.mcq[node.id]||0)){S.mcq[node.id]=pct;save();}if(pct>=70)showToast(0,"MCQ Cleared 🎯");}
+      };
+    });
+  });
+}
+function showDash(){
+  S.curNode=null;save();buildSidebar();
+  document.querySelectorAll(".mob-tab").forEach(t=>t.classList.toggle("active",t.id==="mbt-dash"));
+  const vis=visitedCount(),tot=totalNodes(),pct=tot?Math.round(vis/tot*100):0;
+  const missed=trapNodes().filter(n=>!isVisited(n.id));
+  document.getElementById("viewWrap").innerHTML=`<div class="dash">
+    <div class="dash-t">Chem Map B</div>
+    <div class="dash-s">ACIDS · pH · PERIODIC TABLE · SSC / RRB / TNPSC / PUDUCHERRY LDC</div>
+    <div class="dash-grid">
+      <div class="dc gold"><div class="dv">${S.xp}</div><div class="dl">Total XP</div></div>
+      <div class="dc g"><div class="dv">${vis}/${tot}</div><div class="dl">Nodes</div></div>
+      <div class="dc r"><div class="dv">${trapVisited()}/${trapNodes().length}</div><div class="dl">Traps</div></div>
+      <div class="dc b"><div class="dv">${pct}%</div><div class="dl">Done</div></div>
+    </div>
+    <div class="ch-prog">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--ink3);margin-bottom:12px">CHAPTER PROGRESS</div>
+      ${CHAPTERS.map(ch=>{const p=chPct(ch);return`<div class="cpr"><span class="cpr-n">${ch.icon} ${ch.title}</span><div class="cpr-bar"><div class="cpr-fill" style="width:${p}%"></div></div><span class="cpr-pct">${p}%</span></div>`;}).join("")}
+    </div>
+    ${missed.length?`<div class="mentor-box"><h3>⚠ TRAPS NOT YET VISITED</h3><ul>${missed.map(n=>`<li>${n.title} — ${n.xp} XP waiting</li>`).join("")}</ul></div>`:""}
+    <button class="start-btn" onclick="startLearning()">${visitedCount()===0?"Start Learning →":"Continue →"}</button>
+  </div>`;
+}
+function startLearning(){const first=allNodes().find(n=>isUnlocked(n)&&!isVisited(n.id))||allNodes()[0];if(first){S.chOpen=CHAPTERS.find(c=>c.nodes.some(n=>n.id===first.id))?.id;openNode(first.id);}}
+function goTraps(){const t=trapNodes();if(!t.length)return;const next=t.find(n=>!isVisited(n.id))||t[0];openNode(next.id);}
+function openDrawer(){document.getElementById("mobDrawer").classList.add("open");document.getElementById("mobOverlay").classList.add("show");}
+function closeDrawer(){document.getElementById("mobDrawer").classList.remove("open");document.getElementById("mobOverlay").classList.remove("show");}
+if(!S.chOpen)S.chOpen=CHAPTERS[0].id;
+buildSidebar();updateHeader();showDash();
+</script><script src="/study/_cm-auto-track.js"></script>
+</body></html>

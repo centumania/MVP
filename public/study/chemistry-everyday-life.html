@@ -1,0 +1,1008 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chemistry in Everyday Life — Mastery Pack · CentuMania</title>
+<style>
+:root{
+  --bg:#F0EDE6; --ink:#1A1A2E; --mut:#6B6B7B; --card:#ffffff; --line:#E0DDD8;
+  --blue:#1D4ED8; --blueL:#93C5FD; --blueBg:#EFF4FF;
+  --amber:#B45309; --amberBg:#FEF6E7; --green:#15803D; --greenBg:#DCFCE7;
+  --red:#B91C1C; --redBg:#FEF2F2; --purp:#7C3AED; --purpBg:#F3EEFF;
+  --teal:#0F766E; --tealBg:#E7F6F4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px 80px}
+.hero{background:linear-gradient(135deg,#0B1020 0%,#141C3A 55%,#1D2B57 100%);color:#fff;border-radius:0 0 26px 26px;padding:46px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"🏠";position:absolute;font-size:150px;opacity:.07;right:-10px;bottom:-30px}
+.hero .kick{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blueL);margin-bottom:8px}
+.hero h1{font-size:30px;font-weight:900;line-height:1.02;margin-bottom:8px}
+.hero p{font-size:13px;color:rgba(255,255,255,.86);font-weight:600;max-width:560px;margin:0 auto}
+.hero .exams{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hero .exams span{font-size:10px;font-weight:800;padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff}
+.hud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:18px;position:relative;z-index:2}
+.hstat{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:7px 13px;text-align:center;min-width:74px}
+.hstat .hv{display:block;font-size:17px;font-weight:900;color:#fff;line-height:1}
+.hstat .hl{font-size:9px;font-weight:800;letter-spacing:.03em;color:rgba(255,255,255,.75);text-transform:uppercase}
+#hReset{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#hReset:active{transform:scale(.9)}
+.hud .hstat.pop{animation:pop .4s}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18);background:rgba(147,197,253,.35)}100%{transform:scale(1)}}
+.faa{cursor:pointer;font-size:15px;line-height:1;color:#CBD5E1;flex:0 0 auto;user-select:none;transition:.15s}
+.faa.on{color:#F59E0B;text-shadow:0 0 8px rgba(245,158,11,.5)}
+.ol div .faa{margin-left:auto;padding-left:8px}
+.mcq .faa{float:right;margin-top:-2px}
+.tabs{position:sticky;top:0;z-index:40;display:flex;gap:6px;overflow-x:auto;margin:0 -14px 8px;padding:10px 14px;background:rgba(240,237,230,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;background:#fff;border:1px solid var(--line);color:var(--mut);cursor:pointer;white-space:nowrap;transition:.15s}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.panel{display:none;animation:fade .25s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-size:20px;font-weight:900;margin:22px 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .em{font-size:22px}
+.sec-sub{font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card h3{font-size:16px;font-weight:900;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.card p{font-size:13.5px;margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+b{font-weight:800}
+.wbw{display:grid;gap:8px;margin:10px 0}
+.wbw .row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:start}
+.wbw .lab{font-size:9.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 6px;border-radius:8px;text-align:center;line-height:1.2}
+.wbw .l-what{background:var(--blueBg);color:var(--blue)}
+.wbw .l-why{background:var(--amberBg);color:var(--amber)}
+.wbw .l-how{background:var(--purpBg);color:var(--purp)}
+.wbw .l-where{background:var(--greenBg);color:var(--green)}
+.wbw .l-exam{background:var(--redBg);color:var(--red)}
+.wbw .txt{font-size:13px;padding-top:2px}
+.note{border-left:4px solid var(--blue);background:var(--blueBg);border-radius:0 12px 12px 0;padding:10px 13px;font-size:13px;margin:10px 0}
+.note.why{border-color:var(--amber);background:var(--amberBg)}
+.note.trap{border-color:var(--red);background:var(--redBg)}
+.note.mem{border-color:var(--purp);background:var(--purpBg)}
+.note.life{border-color:var(--green);background:var(--greenBg)}
+.note .t{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;opacity:.85}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.tbl th{background:#141C3A;color:#fff;font-size:11.5px;font-weight:800;padding:8px 10px;text-align:left}
+.tbl td{padding:7px 10px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:nth-child(even) td{background:#FAF9F6}
+.tbl .h{font-weight:800;color:var(--ink)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0;font-size:12px;font-weight:700}
+.flow .step{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 11px}
+.flow .arw{color:var(--blue);font-weight:900}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.eg .e{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 11px}
+.eg .e .h{font-size:12.5px;font-weight:900;display:flex;gap:6px;align-items:center;margin-bottom:3px}
+.eg .e p{font-size:11.5px;color:var(--mut);font-weight:600;margin:0}
+@media(max-width:420px){.eg{grid-template-columns:1fr}}
+.mem-card{background:linear-gradient(135deg,#F3EEFF,#fff);border:1px solid #DDD0F5;border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mem-card .cn{font-size:13px;font-weight:900;color:var(--purp);margin-bottom:4px}
+.mem-card .hk{font-size:13px;font-weight:600}
+.mem-card .rq{font-size:11px;color:var(--mut);font-weight:700;margin-top:6px;border-top:1px dashed #DDD0F5;padding-top:6px}
+.mem-card .tag{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--purp);border-radius:6px;padding:2px 6px;margin-left:6px}
+.ol{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 0;margin:10px 0}
+.ol div{font-size:12.5px;padding:8px 13px;border-top:1px solid var(--line);display:flex;gap:9px}
+.ol div:first-child{border-top:0}
+.ol .n{color:var(--blue);font-weight:900;flex:0 0 auto}
+.ol .star{color:var(--amber);font-weight:900}
+.mcq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.mcq .qh{font-size:11px;font-weight:800;color:var(--mut);margin-bottom:5px;display:flex;justify-content:space-between}
+.mcq .qh .badge{background:var(--blueBg);color:var(--blue);border-radius:6px;padding:1px 7px;font-size:9.5px}
+.mcq .q{font-size:14px;font-weight:700;margin-bottom:10px}
+.mcq .opt{display:block;width:100%;text-align:left;font-size:13px;font-weight:600;padding:9px 12px;margin-bottom:6px;border:1px solid var(--line);border-radius:10px;background:#FAF9F6;cursor:pointer;transition:.12s;color:var(--ink)}
+.mcq .opt:hover{border-color:var(--blueL)}
+.mcq .opt.correct{background:var(--greenBg);border-color:#86EFAC;color:var(--green);font-weight:800}
+.mcq .opt.wrong{background:var(--redBg);border-color:#FCA5A5;color:var(--red)}
+.mcq .exp{display:none;font-size:12.5px;background:var(--amberBg);border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:9px 12px;margin-top:6px}
+.mcq .exp.show{display:block}
+.mcq .exp b{color:var(--amber)}
+.fc{margin-bottom:9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fc-in{position:relative}
+.fc-f,.fc-b{position:relative;border-radius:13px;padding:14px 15px;min-height:76px;display:flex;align-items:center;font-size:13px;transition:opacity .18s}
+.fc-f{background:#fff;border:1px solid var(--line);font-weight:800}
+.fc-b{background:#141C3A;color:#fff;font-weight:600;font-size:12.5px;display:none}
+.fc.flip .fc-f{display:none}
+.fc.flip .fc-b{display:flex}
+.fc-f::after{content:"tap to flip ↻";position:absolute;right:12px;bottom:7px;font-size:9px;color:var(--mut);font-weight:800}
+.fc-b::after{content:"tap to flip back ↺";position:absolute;right:12px;bottom:7px;font-size:9px;color:rgba(255,255,255,.5);font-weight:800}
+.pill{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;background:var(--blueBg);color:var(--blue);margin:0 4px 4px 0}
+.foot{text-align:center;font-size:11px;color:var(--mut);font-weight:600;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+#mapStage{position:relative;width:100%;height:520px;border-radius:18px;overflow:hidden;background:#050510;border:1px solid #1a1a35;box-shadow:0 6px 26px rgba(0,0,0,.25)}
+#mapCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#mapCanvas.grab{cursor:grabbing}
+#mapCtrls{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px;z-index:6}
+.mctl{width:38px;height:38px;border-radius:50%;background:rgba(20,22,48,.9);border:1px solid rgba(122,162,247,.3);color:#9EB8FF;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mctl:active{transform:scale(.92)}
+#mapHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:rgba(10,12,30,.85);border:1px solid rgba(122,162,247,.3);color:#C7D2FE;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;z-index:5;transition:opacity .5s;pointer-events:none}
+#mapHint.gone{opacity:0}
+#mapPanel{position:absolute;top:0;right:0;bottom:0;width:min(300px,86%);background:rgba(8,9,26,.97);backdrop-filter:blur(16px);border-left:1px solid rgba(122,162,247,.22);transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);z-index:8;padding:22px 18px}
+#mapPanel.open{transform:translateX(0)}
+#mpClose{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#94A3B8;font-size:17px;cursor:pointer}
+#mpIcon{font-size:30px;margin-bottom:8px}
+#mpCat{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748B;margin-bottom:4px}
+#mpTitle{font-size:17px;font-weight:900;color:#F1F5F9;line-height:1.25;margin-bottom:12px}
+#mpFact{font-size:13px;color:#CBD5E1;line-height:1.65}
+#mpLock{margin-top:12px;font-size:12px;font-weight:700;color:#FCA5A5;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:9px 11px;display:none}
+#mpLock.show{display:block}
+#mapToast{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:rgba(180,40,50,.95);color:#fff;font-size:11.5px;font-weight:800;padding:8px 15px;border-radius:20px;z-index:9;opacity:0;transition:opacity .3s;pointer-events:none;text-align:center;max-width:88%}
+#mapToast.show{opacity:1}
+.prob{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:11px}
+.prob .ph{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:var(--mut);margin-bottom:6px}
+.prob .lvl{border-radius:6px;padding:2px 8px;font-size:9.5px;font-weight:900;text-transform:uppercase}
+.lvl.e{background:var(--greenBg);color:var(--green)}.lvl.m{background:var(--amberBg);color:var(--amber)}.lvl.h{background:var(--redBg);color:var(--red)}
+.prob .pq{font-size:14px;font-weight:700;margin-bottom:8px}
+.prob .gf{font-size:12px;color:var(--mut);font-weight:700;margin-bottom:8px}
+.prob .gf b{color:var(--ink)}
+.prob .sol{display:none;background:#FAF9F6;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 12px;font-size:12.5px}
+.prob .sol.show{display:block}
+.prob .sol .st{margin-bottom:4px}.prob .sol .st .n{color:var(--blue);font-weight:900;margin-right:6px}
+.prob .sol .fin{margin-top:6px;font-weight:900;color:var(--green)}
+.prob .btns{display:flex;gap:8px;margin-top:8px}
+.prob .pbtn{flex:1;font-size:12px;font-weight:800;padding:8px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.prob .pbtn.solved{background:var(--greenBg);border-color:#86EFAC;color:var(--green)}
+.prob .pbtn.rev{background:var(--blueBg);border-color:var(--blueL);color:var(--blue)}
+.pg-hero{background:linear-gradient(135deg,#141C3A,#1D2B57);border-radius:16px;padding:18px;color:#fff;margin-bottom:14px;text-align:center}
+.pg-hero .big{font-size:40px;font-weight:900;line-height:1}
+.pg-hero .lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blueL);margin-top:4px}
+.pg-hero .rank{font-size:13px;font-weight:800;margin-top:8px;color:#fff}
+.pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pg-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
+.pg-stat .v{font-size:24px;font-weight:900}
+.pg-stat .k{font-size:11px;font-weight:700;color:var(--mut)}
+.pg-bar{height:9px;border-radius:6px;background:#EDEAE3;overflow:hidden;margin-top:7px}
+.pg-bar span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--blue),var(--blueL));transition:width .6s}
+.pg-branch{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px}
+.pg-branch .bt{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:2px}
+.pg-branch .bt .pc{color:var(--mut)}
+.pg-section-h{font-size:15px;font-weight:900;margin:16px 0 8px}
+.pg-empty{font-size:12.5px;color:var(--mut);font-weight:600;text-align:center;padding:14px;background:#fff;border:1px dashed var(--line);border-radius:12px}
+.pg-faa{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:6px;display:flex;gap:8px}
+.pg-faa .s{color:#F59E0B}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="kick">Science · Chemistry · Mastery Pack</div>
+  <h1>Chemistry in Everyday Life</h1>
+  <p>Medicines → Food chemistry → Household chemicals → Cleansing agents → Personal care → Fuels &amp; fire → Farm chemicals → Safety &amp; adulteration.</p>
+  <div class="exams"><span>SSC</span><span>TNPSC</span><span>RRB / Railway</span><span>Banking</span><span>Police</span><span>State PSC</span><span>UPSC Foundation</span></div>
+  <div class="hud" id="hud">
+    <div class="hstat"><span class="hv" id="hXp">0</span><span class="hl">XP</span></div>
+    <div class="hstat"><span class="hv" id="hNodes">0/40</span><span class="hl">🧭 Nodes opened</span></div>
+    <div class="hstat"><span class="hv" id="hFaa">0</span><span class="hl">⭐ FAA saved</span></div>
+    <div class="hstat"><span class="hv" id="hMcq">0/60</span><span class="hl">📝 MCQ cleared</span></div>
+    <button id="hReset" title="Reset progress">↺</button>
+  </div>
+</div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+  <div class="tab active" data-p="learn">📖 Learn</div>
+  <div class="tab" data-p="map">🧭 Mind Map</div>
+  <div class="tab" data-p="tables">📊 Compare</div>
+  <div class="tab" data-p="memory">🧠 Memory</div>
+  <div class="tab" data-p="traps">⚠️ Traps</div>
+  <div class="tab" data-p="rapid">⚡ Rapid Revision</div>
+  <div class="tab" data-p="problems">🧮 Problems</div>
+  <div class="tab" data-p="mcq">📝 MCQ Bank</div>
+  <div class="tab" data-p="cards">🃏 Flashcards</div>
+  <div class="tab" data-p="progress">📈 Progress</div>
+</div>
+
+<div class="panel active" id="p-learn">
+<h2 class="sec"><span class="em">🌍</span>The Big Picture</h2>
+<div class="sec-sub">Your house is a chemistry lab — exams test whether you know what each bottle really is.</div>
+<div class="card">
+<p>The medicine cabinet, kitchen shelf, bathroom rack and farm shed are all stocked with chemicals wearing everyday names. Competitive exams love the translation game: <b>common name ↔ chemical identity ↔ why it works</b>. This chapter is that dictionary, organised for recall.</p>
+<div class="note why"><span class="t">Why exams love it</span>"Milk of magnesia is…", "LPG smell is due to…", "Iodised salt prevents…" — these one-line GK questions repeat across SSC, TNPSC, RRB and Police exams every year.</div>
+</div>
+
+<h2 class="sec"><span class="em">💊</span>Branch 1 · Drugs &amp; Medicines</h2>
+<div class="card"><h3>The four everyday drug classes</h3>
+<div class="wbw">
+<div class="row"><span class="lab l-what">What</span><span class="txt"><b>Analgesics</b> relieve pain (paracetamol, aspirin, ibuprofen). <b>Antibiotics</b> fight bacteria (penicillin — Fleming, 1928). <b>Antacids</b> neutralise stomach acid (Mg(OH)₂, NaHCO₃). <b>Antiseptics</b> protect wounds (Dettol, tincture of iodine).</span></div>
+<div class="row"><span class="lab l-why">Why</span><span class="txt">Antacids work by simple <b>neutralisation</b> — a weak base vs stomach HCl. Antibiotics attack bacterial machinery, which is why they do <b>nothing</b> against viral colds.</span></div>
+<div class="row"><span class="lab l-exam">Exam</span><span class="txt">Aspirin doubles as a <b>blood thinner</b> — given during heart attacks. Antiseptic (skin) vs disinfectant (floors — phenol, bleach) is a fixed question.</span></div>
+</div></div>
+
+<h2 class="sec"><span class="em">🍬</span>Branch 2 · Food Chemistry</h2>
+<div class="card"><h3>🧁 The kitchen shelf decoded</h3>
+<p><b>Preservatives:</b> salt, sugar, oil, vinegar traditionally; <b>sodium benzoate</b> and potassium metabisulphite in packaged food. <b>Artificial sweeteners</b> for diabetics: saccharin, aspartame, sucralose.</p>
+<p><b>Baking soda vs baking powder:</b> soda is plain NaHCO₃ — used alone it leaves bitter Na₂CO₃. Baking powder = NaHCO₃ + <b>tartaric acid</b>: on wetting/heating it releases CO₂ (the fluff) and the acid neutralises the bitterness.</p>
+<div class="note life"><span class="t">Fruit chemistry</span><b>Ethylene (ethene)</b> gas ripens fruit — one ripe banana ripens the bunch. Cut apples brown by enzyme oxidation; lemon juice (acid) slows the enzyme.</div>
+</div>
+
+<h2 class="sec"><span class="em">🧂</span>Branch 3 · Household Chemicals</h2>
+<div class="card"><h3>Common name → chemical identity</h3>
+<p><b>Washing soda</b> Na₂CO₃·10H₂O — laundry, softens hard water. <b>Bleaching powder</b> CaOCl₂ — bleaches cloth/paper, disinfects drinking water. <b>Plaster of Paris</b> CaSO₄·½H₂O — made by heating gypsum to <b>373 K</b>; sets with water into hard gypsum (casts, idols, ceilings). <b>Vinegar</b> = 5-8% acetic acid. <b>Common salt</b> is the industrial mother of NaOH, Cl₂, washing soda and baking soda.</p>
+<div class="note trap"><span class="t">Trap</span>PoP must be stored dry — moisture sets it into useless solid gypsum inside the bag.</div>
+</div>
+
+<h2 class="sec"><span class="em">🧼</span>Branch 4 · Cleansing Agents</h2>
+<div class="card"><h3>🫧 Surface chemistry that scrubs</h3>
+<p><b>Soap micelles:</b> hydrophobic tails bury into grease, hydrophilic heads face water — rinse and the dirt sails away. <b>Detergents</b> beat soap in hard/acidic water (their Ca/Mg salts stay soluble) but many resist biodegradation. <b>Toothpaste</b> is mildly <b>basic</b> — it neutralises the bacterial acid that dissolves enamel below pH 5.5; <b>fluoride</b> hardens enamel. <b>Shampoo</b> = mild detergent tuned for hair.</p>
+</div>
+
+<h2 class="sec"><span class="em">💄</span>Branch 5 · Personal Care</h2>
+<div class="card"><h3>The chemistry you wear</h3>
+<p><b>Hand sanitiser:</b> 60-70% alcohol denatures microbial proteins — pure alcohol works WORSE (evaporates before penetrating). <b>Perfumes</b> are largely <b>esters</b> — the sweet-smelling acid+alcohol compounds. <b>Talcum powder</b> = powdered talc, the <b>softest mineral</b> (Mohs 1). <b>Sunscreen:</b> ZnO/TiO₂ reflect UV; SPF rates UV-B protection.</p>
+</div>
+
+<h2 class="sec"><span class="em">🔥</span>Branch 6 · Fuels &amp; Fire Safety</h2>
+<div class="card"><h3>🧯 The fire triangle</h3>
+<div class="wbw">
+<div class="row"><span class="lab l-what">What</span><span class="txt">Fire needs <b>fuel + heat + oxygen</b>. Every extinguisher removes one corner: water removes heat, CO₂/blankets remove oxygen.</span></div>
+<div class="row"><span class="lab l-why">Why</span><span class="txt">LPG (butane) is odourless — <b>ethyl mercaptan</b> is added as a leak alarm. Yellow sooty flames mean <b>incomplete combustion</b> → soot + carbon monoxide.</span></div>
+<div class="row"><span class="lab l-where">Where</span><span class="txt">CO from heaters/geysers in closed rooms is the silent killer: odourless, binds haemoglobin ~200× more strongly than O₂.</span></div>
+<div class="row"><span class="lab l-exam">Exam</span><span class="txt">Electrical fire → CO₂ (never water: shock). Oil-pan fire → smother with lid (never water: steam explosion throws burning oil).</span></div>
+</div></div>
+
+<h2 class="sec"><span class="em">🌾</span>Branch 7 · Farm Chemicals</h2>
+<div class="card"><h3>🌱 NPK and its price</h3>
+<p><b>N</b>itrogen → leafy growth; <b>P</b>hosphorus → roots; <b>K</b> (potassium) → flowers, fruit, disease resistance. <b>Urea</b> CO(NH₂)₂ carries <b>46% N</b> — the world's favourite fertiliser, and historically the first organic compound made from inorganic matter (<b>Wöhler, 1828</b>).</p>
+<p><b>Pesticides:</b> insecticides (insects), herbicides (weeds), fungicides (fungi). <b>DDT is banned</b> — it persists and biomagnifies up food chains. Excess fertiliser runoff triggers <b>eutrophication</b>: algal bloom → decay → oxygen crash → dead fish.</p>
+</div>
+
+<h2 class="sec"><span class="em">⭐</span>Branch 8 · Safety &amp; Adulteration</h2>
+<div class="card"><h3>🕵️ Chemistry protecting health</h3>
+<p><b>Iodised salt</b> (KI/KIO₃) prevents <b>goitre</b>. <b>ORS</b> = salt + sugar + water — glucose co-transports sodium through the gut wall, pulling water in; it saves diarrhoea patients. <b>Adulteration tests:</b> iodine turns starch-in-milk <b>blue-black</b>; a <b>lactometer</b> exposes water in milk; <b>metanil yellow</b> in dal/turmeric is a toxic dye.</p>
+<div class="note trap"><span class="t">Never do this</span>Bleach + toilet acid = toxic <b>chlorine gas</b>. Fuel burning in closed rooms = CO. Store household chemicals away from food bottles.</div>
+</div>
+</div>
+<div class="panel" id="p-map">
+  <h2 class="sec"><span class="em">🧭</span>Neural Mind Map</h2>
+  <div class="sec-sub">Tap the centre → the 8 branches bloom. Tap a branch → its concepts unfold. Branches unlock in order as you complete the previous one. Drag to pan, pinch/scroll to zoom.</div>
+  <div id="mapStage">
+    <canvas id="mapCanvas"></canvas>
+    <div id="mapCtrls">
+      <button class="mctl" onclick="mapZoom(1.2)">+</button>
+      <button class="mctl" onclick="mapZoom(0.83)">−</button>
+      <button class="mctl" onclick="mapFit()">◉</button>
+      <button class="mctl" onclick="mapCollapseAll()">⤢</button>
+    </div>
+    <div id="mapHint">Tap the centre to begin</div>
+    <div id="mapToast"></div>
+    <div id="mapPanel">
+      <button id="mpClose" onclick="mpClose()">×</button>
+      <div id="mpIcon"></div>
+      <div id="mpCat"></div>
+      <div id="mpTitle"></div>
+      <div id="mpFact"></div>
+      <div id="mpLock"></div>
+    </div>
+  </div>
+</div>
+<div class="panel" id="p-tables">
+<h2 class="sec"><span class="em">📊</span>Master Comparison Tables</h2>
+<div class="sec-sub">The exact tables examiners build questions from.</div>
+
+<h2 class="sec" style="font-size:16px">🧂 Common name ↔ chemical identity</h2>
+<table class="tbl"><tr><th>Common name</th><th>Chemical name</th><th>Formula</th><th>Main use</th></tr>
+<tr><td class="h">Baking soda</td><td>Sodium hydrogencarbonate</td><td>NaHCO₃</td><td>Cooking, antacid</td></tr>
+<tr><td class="h">Washing soda</td><td>Sodium carbonate decahydrate</td><td>Na₂CO₃·10H₂O</td><td>Laundry, softening water</td></tr>
+<tr><td class="h">Bleaching powder</td><td>Calcium oxychloride</td><td>CaOCl₂</td><td>Bleaching, disinfecting water</td></tr>
+<tr><td class="h">Plaster of Paris</td><td>Calcium sulphate hemihydrate</td><td>CaSO₄·½H₂O</td><td>Casts, idols, ceilings</td></tr>
+<tr><td class="h">Gypsum</td><td>Calcium sulphate dihydrate</td><td>CaSO₄·2H₂O</td><td>PoP raw material, cement</td></tr>
+<tr><td class="h">Vinegar</td><td>Dilute acetic acid</td><td>CH₃COOH (5-8%)</td><td>Preservative, flavour</td></tr>
+<tr><td class="h">Milk of magnesia</td><td>Magnesium hydroxide</td><td>Mg(OH)₂</td><td>Antacid, laxative</td></tr>
+<tr><td class="h">Common salt</td><td>Sodium chloride</td><td>NaCl</td><td>Food; chlor-alkali feedstock</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">💊 Drug class matcher</h2>
+<table class="tbl"><tr><th>Class</th><th>Action</th><th>Examples</th><th>Exam hook</th></tr>
+<tr><td class="h">Analgesic</td><td>Relieves pain</td><td>Paracetamol, aspirin, ibuprofen</td><td>Aspirin also thins blood</td></tr>
+<tr><td class="h">Antibiotic</td><td>Kills/stops bacteria</td><td>Penicillin, amoxicillin</td><td>Useless on viruses; Fleming 1928</td></tr>
+<tr><td class="h">Antacid</td><td>Neutralises stomach HCl</td><td>Mg(OH)₂, Al(OH)₃, NaHCO₃</td><td>Weak BASES</td></tr>
+<tr><td class="h">Antiseptic</td><td>Kills microbes on skin</td><td>Dettol, iodine tincture, H₂O₂</td><td>Safe on living tissue</td></tr>
+<tr><td class="h">Disinfectant</td><td>Kills microbes on surfaces</td><td>Phenol, bleach</td><td>Too harsh for skin</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🧁 Baking soda vs baking powder</h2>
+<table class="tbl"><tr><th>Feature</th><th>Baking soda</th><th>Baking powder</th></tr>
+<tr><td class="h">Composition</td><td>NaHCO₃ only</td><td>NaHCO₃ + tartaric acid</td></tr>
+<tr><td class="h">Needs recipe acid?</td><td>Yes (curd/lemon)</td><td>No — self-acting</td></tr>
+<tr><td class="h">After-taste risk</td><td>Bitter Na₂CO₃</td><td>None (acid neutralises)</td></tr>
+<tr><td class="h">Gas released</td><td>CO₂</td><td>CO₂</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🔥 Fire &amp; extinguisher matcher</h2>
+<table class="tbl"><tr><th>Fire type</th><th>Right response</th><th>Never use</th></tr>
+<tr><td class="h">Paper/wood/cloth</td><td>Water (removes heat)</td><td>—</td></tr>
+<tr><td class="h">Electrical equipment</td><td>CO₂ extinguisher</td><td>Water (conducts — shock)</td></tr>
+<tr><td class="h">Cooking oil/petrol</td><td>Smother: lid, fire blanket, CO₂</td><td>Water (steam blast spreads oil)</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🌱 NPK role table</h2>
+<table class="tbl"><tr><th>Nutrient</th><th>Promotes</th><th>Deficiency sign</th><th>Fertiliser</th></tr>
+<tr><td class="h">Nitrogen (N)</td><td>Leafy green growth</td><td>Yellowing leaves</td><td>Urea (46% N), ammonium sulphate</td></tr>
+<tr><td class="h">Phosphorus (P)</td><td>Root development</td><td>Stunted roots, purple tinge</td><td>Superphosphate, DAP</td></tr>
+<tr><td class="h">Potassium (K)</td><td>Flowers, fruit, disease resistance</td><td>Scorched leaf edges</td><td>Potash (KCl)</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">🕵️ Adulteration test table</h2>
+<table class="tbl"><tr><th>Food</th><th>Adulterant</th><th>Test</th><th>Positive sign</th></tr>
+<tr><td class="h">Milk</td><td>Starch</td><td>Iodine drops</td><td>Blue-black colour</td></tr>
+<tr><td class="h">Milk</td><td>Water</td><td>Lactometer</td><td>Low density reading</td></tr>
+<tr><td class="h">Dal / turmeric</td><td>Metanil yellow</td><td>Drops of HCl</td><td>Pink/magenta colour</td></tr>
+<tr><td class="h">Honey</td><td>Sugar syrup</td><td>Water drop test</td><td>Pure honey doesn't disperse quickly</td></tr>
+<tr><td class="h">Chilli powder</td><td>Brick powder</td><td>Water settling</td><td>Grit sinks, colour streaks</td></tr></table>
+
+<h2 class="sec" style="font-size:16px">⭐ One-line GK bank</h2>
+<table class="tbl"><tr><th>Question stem</th><th>Answer</th></tr>
+<tr><td>LPG smell due to</td><td class="h">Ethyl mercaptan (added)</td></tr>
+<tr><td>CNG / biogas main gas</td><td class="h">Methane</td></tr>
+<tr><td>Fruit-ripening gas</td><td class="h">Ethylene (ethene)</td></tr>
+<tr><td>Perfume compounds</td><td class="h">Esters</td></tr>
+<tr><td>Sanitiser alcohol %</td><td class="h">60-70%</td></tr>
+<tr><td>Softest mineral (talc powder)</td><td class="h">Talc (Mohs 1)</td></tr>
+<tr><td>Sunscreen UV reflectors</td><td class="h">ZnO, TiO₂</td></tr>
+<tr><td>Iodised salt prevents</td><td class="h">Goitre</td></tr>
+<tr><td>First lab-made organic compound</td><td class="h">Urea (Wöhler, 1828)</td></tr>
+<tr><td>Banned biomagnifying pesticide</td><td class="h">DDT</td></tr></table>
+</div>
+<div class="panel" id="p-memory">
+<h2 class="sec"><span class="em">🧠</span>Memory Engine</h2>
+<div class="sec-sub">Hooks, mnemonics and Tamil tricks — one per hard-to-hold fact.</div>
+
+<div class="mem-card"><div class="cn">Drug classes AAAA<span class="tag">Mnemonic</span></div>
+<div class="hk"><b>A</b>nalgesic-<b>வலி</b>, <b>A</b>ntibiotic-<b>கிருமி</b>, <b>A</b>ntacid-<b>அமிலம்</b>, <b>A</b>ntiseptic-<b>காயம்</b>. Four A's, four enemies: pain, germs, acid, wounds.</div>
+<div class="rq">Asked as: milk of magnesia belongs to which class? Antacid.</div></div>
+
+<div class="mem-card"><div class="cn">Antibiotic ≠ antiviral<span class="tag">Trap killer</span></div>
+<div class="hk">"சளிக்கு ஆண்டிபயாடிக் வேண்டாம்" — colds are viral; antibiotics only fight <b>bacteria</b>. Fleming-1928-penicillin is the fixed trio.</div>
+<div class="rq">Asked as: antibiotics act on? Bacteria only.</div></div>
+
+<div class="mem-card"><div class="cn">Skin vs floor<span class="tag">Hook</span></div>
+<div class="hk">Anti<b>septic</b> = <b>skin</b>-safe (Dettol). Dis<b>infectant</b> = <b>floor</b> (phenol, bleach). "மென்மை உடம்புக்கு, வீரியம் தரைக்கு."</div>
+<div class="rq">Asked as: phenol on hospital floors is a…? Disinfectant.</div></div>
+
+<div class="mem-card"><div class="cn">Soda vs powder<span class="tag">Kitchen hook</span></div>
+<div class="hk">Powder = soda + <b>புளிப்பு</b> (tartaric acid) built in. Soda alone → bitter Na₂CO₃ cake. "பவுடரில் புளிப்பு உண்டு, கசப்பு இல்லை."</div>
+<div class="rq">Asked as: baking powder = NaHCO₃ + ? Tartaric acid.</div></div>
+
+<div class="mem-card"><div class="cn">Hydrate ladder<span class="tag">Number hook</span></div>
+<div class="hk">Gypsum <b>2</b>H₂O → (heat 373 K) → PoP <b>½</b>H₂O → (+water) → back to gypsum. "இரண்டில் இருந்து அரை, அரையில் இருந்து இரண்டு." Washing soda carries <b>10</b>H₂O.</div>
+<div class="rq">Asked as: water of crystallisation in washing soda? 10.</div></div>
+
+<div class="mem-card"><div class="cn">Mercaptan alarm<span class="tag">Story</span></div>
+<div class="hk">LPG is a <b>வாசனை இல்லாத</b> guest; the gas company pins a stink (ethyl mercaptan) on it so leaks shout "நான் இங்கே!"</div>
+<div class="rq">Asked as: why does cooking gas smell? Added mercaptan.</div></div>
+
+<div class="mem-card"><div class="cn">CO the silent killer<span class="tag">Number hook</span></div>
+<div class="hk">CO binds haemoglobin ~<b>200×</b> tighter than O₂ — no smell, no colour, no warning. Closed room + flame = danger. "மணமில்லா கொலைகாரன்."</div>
+<div class="rq">Asked as: why is CO more dangerous than CO₂?</div></div>
+
+<div class="mem-card"><div class="cn">Fire triangle<span class="tag">Visual</span></div>
+<div class="hk">Fuel + heat + O₂ — remove ANY side and fire dies. Water steals heat; CO₂/lid steals oxygen. Electrical → CO₂; oil pan → lid; "தண்ணீர் எண்ணெய்க்கு எதிரி."</div>
+<div class="rq">Asked as: why not water on oil fires? Steam blast spreads oil.</div></div>
+
+<div class="mem-card"><div class="cn">NPK body map<span class="tag">Tamil hook</span></div>
+<div class="hk">N-<b>இலை</b> (leaf), P-<b>வேர்</b> (root), K-<b>பூ/காய்</b> (flower/fruit). Top-to-bottom: N up, P down, K all-round protection.</div>
+<div class="rq">Asked as: root growth needs which nutrient? Phosphorus.</div></div>
+
+<div class="mem-card"><div class="cn">Urea 46<span class="tag">Number hook</span></div>
+<div class="hk">Urea = CO(NH₂)₂ = <b>46% N</b> — "நாற்பத்தி ஆறு நைட்ரஜன்." Bonus: Wöhler made it in <b>1828</b>, the first organic-from-inorganic.</div>
+<div class="rq">Asked as: N% in urea? 46.</div></div>
+
+<div class="mem-card"><div class="cn">ORS sugar secret<span class="tag">Logic hook</span></div>
+<div class="hk">Salt can't enter the gut alone — <b>glucose escorts sodium</b> (co-transport), water follows. "சர்க்கரை கூட்டிச் செல்லும், தண்ணீர் பின்தொடரும்."</div>
+<div class="rq">Asked as: why sugar in ORS? Glucose-sodium co-transport.</div></div>
+
+<div class="mem-card"><div class="cn">Iodine blue-black<span class="tag">Colour hook</span></div>
+<div class="hk">Iodine meets starch → <b>நீல-கருப்பு</b>. Works on milk (adulteration), potato (starch demo), leaves (photosynthesis test) — one reaction, three exams.</div>
+<div class="rq">Asked as: iodine turns starch what colour? Blue-black.</div></div>
+
+<div class="mem-card"><div class="cn">Goitre and iodine<span class="tag">Health hook</span></div>
+<div class="hk">"அயோடின் இல்லாத உப்பு = கழுத்து வீக்கம்" — iodised salt (KI/KIO₃) feeds the thyroid, preventing goitre. Cheapest public-health win.</div>
+<div class="rq">Asked as: iodised salt prevents which disease? Goitre.</div></div>
+</div>
+<div class="panel" id="p-traps">
+<h2 class="sec"><span class="em">⚠️</span>Confusion Pairs &amp; Exam Traps</h2>
+<div class="sec-sub">Where examiners hide the wrong options.</div>
+
+<div class="card"><h3>1. Antiseptic vs Disinfectant</h3>
+<p>Same job (kill microbes), different battlegrounds: antiseptic on <b>living skin</b> (Dettol, iodine), disinfectant on <b>non-living surfaces</b> (phenol, bleach). Concentration often decides — dilute phenol was once an antiseptic; strong phenol is a disinfectant.</p></div>
+
+<div class="card"><h3>2. Antibiotic vs Antiseptic</h3>
+<p>Antibiotics work <b>inside the body</b> against bacteria (swallowed/injected). Antiseptics work on <b>surfaces of the body</b>. And neither touches viruses.</p></div>
+
+<div class="card"><h3>3. Baking soda vs Washing soda</h3>
+<p>Baking = NaHCO₃ (hydrogencarbonate). Washing = Na₂CO₃·10H₂O (carbonate). Washing soda is stronger and inedible — the options always offer both formulas.</p></div>
+
+<div class="card"><h3>4. Plaster of Paris vs Gypsum</h3>
+<p>PoP = CaSO₄·<b>½</b>H₂O (active, powder). Gypsum = CaSO₄·<b>2</b>H₂O (set, hard). Heating gypsum makes PoP; water reverses it. Half vs two waters — that's the whole question.</p></div>
+
+<div class="card"><h3>5. LPG vs CNG</h3>
+<p>LPG = <b>butane</b> (liquefied, cylinders, heavier than air — sinks and pools). CNG = <b>methane</b> (compressed, vehicles, lighter than air — escapes upward). The smell in LPG is <b>added</b>, not natural.</p></div>
+
+<div class="card"><h3>6. CO vs CO₂</h3>
+<p>CO₂ suffocates only at high levels and puts OUT fires. CO is <b>toxic</b> at tiny levels — binds haemoglobin. Yellow flames and closed rooms produce CO; blue flames produce CO₂.</p></div>
+
+<div class="card"><h3>7. Water is not a universal extinguisher</h3>
+<p>Water on electrical fire = shock. Water on oil fire = steam explosion. Water is only for ordinary solids (paper, wood, cloth).</p></div>
+
+<div class="card"><h3>8. N-P-K job swap</h3>
+<p>N→leaves, P→roots, K→flowers/disease. Options rotate them ("potassium promotes root growth" — false, that's phosphorus).</p></div>
+
+<div class="card"><h3>9. Urea facts pair</h3>
+<p>46% nitrogen AND Wöhler's 1828 synthesis — two separate questions from one molecule. Don't attach Wöhler to any other compound.</p></div>
+
+<div class="card"><h3>10. Preservative vs Sweetener vs Colour</h3>
+<p>Sodium benzoate = <b>preservative</b>. Saccharin/aspartame = <b>sweetener</b>. Metanil yellow = illegal <b>colour</b>. Options shuffle these three roles.</p></div>
+
+<div class="card"><h3>11. Sanitiser strength paradox</h3>
+<p>60-70% alcohol beats 100% — some water is needed to penetrate and denature microbe proteins. "Stronger is better" is the planted wrong intuition.</p></div>
+
+<div class="card"><h3>12. Iodine's many tests</h3>
+<p>Iodine detects <b>starch</b> (blue-black) — in milk adulteration, potato, leaf-photosynthesis tests. But iodine in SALT is nutrition (goitre prevention), and tincture of iodine is an antiseptic. Same element, three exam roles.</p></div>
+</div>
+<div class="panel" id="p-rapid">
+<h2 class="sec"><span class="em">⚡</span>Rapid Revision — One-liners</h2>
+<div class="sec-sub">45 exam-ready facts. Tap ☆ to flag any as Frequently-Asked-Again.</div>
+<div class="ol">
+<div><span class="n">1</span><span>Analgesics relieve pain: paracetamol, aspirin, ibuprofen.</span></div>
+<div><span class="n">2</span><span>Aspirin also thins blood — given in heart attacks.</span></div>
+<div><span class="n">3</span><span>Penicillin: first antibiotic, Fleming, 1928.</span></div>
+<div><span class="n">4</span><span>Antibiotics fight bacteria — useless on viral colds.</span></div>
+<div><span class="n">5</span><span>Antacids are weak bases: Mg(OH)₂, Al(OH)₃, NaHCO₃.</span></div>
+<div><span class="n">6</span><span>Milk of magnesia = Mg(OH)₂.</span></div>
+<div><span class="n">7</span><span>Antiseptic = skin (Dettol, iodine); disinfectant = surfaces (phenol, bleach).</span></div>
+<div><span class="n">8</span><span>Commercial preservatives: sodium benzoate, potassium metabisulphite.</span></div>
+<div><span class="n">9</span><span>Artificial sweeteners: saccharin, aspartame, sucralose.</span></div>
+<div><span class="n">10</span><span>Baking powder = NaHCO₃ + tartaric acid.</span></div>
+<div><span class="n">11</span><span>Cakes rise on CO₂; plain soda leaves bitter Na₂CO₃.</span></div>
+<div><span class="n">12</span><span>Ethylene (ethene) gas ripens fruit.</span></div>
+<div><span class="n">13</span><span>Lemon juice slows apple browning (acid inhibits enzyme).</span></div>
+<div><span class="n">14</span><span>Washing soda = Na₂CO₃·10H₂O.</span></div>
+<div><span class="n">15</span><span>Bleaching powder = CaOCl₂ — bleaches and disinfects water.</span></div>
+<div><span class="n">16</span><span>Plaster of Paris = CaSO₄·½H₂O, from gypsum at 373 K.</span></div>
+<div><span class="n">17</span><span>PoP + water → hard gypsum (CaSO₄·2H₂O) — casts, idols.</span></div>
+<div><span class="n">18</span><span>Vinegar = 5-8% acetic acid.</span></div>
+<div><span class="n">19</span><span>NaCl feeds the chlor-alkali industry: NaOH, Cl₂, sodas.</span></div>
+<div><span class="n">20</span><span>Soap cleans via micelles: tails grab grease, heads face water.</span></div>
+<div><span class="n">21</span><span>Detergents work in hard water; many resist biodegradation.</span></div>
+<div><span class="n">22</span><span>Toothpaste is mildly basic; enamel dissolves below pH 5.5.</span></div>
+<div><span class="n">23</span><span>Fluoride strengthens tooth enamel.</span></div>
+<div><span class="n">24</span><span>Sanitiser = 60-70% alcohol (not 100%).</span></div>
+<div><span class="n">25</span><span>Perfume scents are mostly esters.</span></div>
+<div><span class="n">26</span><span>Talc = softest mineral (Mohs 1); diamond = 10.</span></div>
+<div><span class="n">27</span><span>Sunscreen reflectors: ZnO and TiO₂; SPF rates UV-B.</span></div>
+<div><span class="n">28</span><span>LPG = butane; smell = added ethyl mercaptan.</span></div>
+<div><span class="n">29</span><span>LPG sinks (heavier than air); CNG rises (methane).</span></div>
+<div><span class="n">30</span><span>Blue flame = complete combustion; yellow sooty = incomplete.</span></div>
+<div><span class="n">31</span><span>Incomplete combustion makes CO — odourless, binds haemoglobin ~200×.</span></div>
+<div><span class="n">32</span><span>Fire triangle: fuel + heat + oxygen.</span></div>
+<div><span class="n">33</span><span>Electrical fire → CO₂ extinguisher; never water.</span></div>
+<div><span class="n">34</span><span>Oil fire → smother with lid/blanket; never water.</span></div>
+<div><span class="n">35</span><span>NPK: N-leaves, P-roots, K-flowers/disease resistance.</span></div>
+<div><span class="n">36</span><span>Urea CO(NH₂)₂ = 46% nitrogen.</span></div>
+<div><span class="n">37</span><span>Wöhler (1828): urea — first organic compound from inorganic.</span></div>
+<div><span class="n">38</span><span>Insecticide-insects · herbicide-weeds · fungicide-fungi.</span></div>
+<div><span class="n">39</span><span>DDT banned — persists and biomagnifies.</span></div>
+<div><span class="n">40</span><span>Eutrophication: runoff → algal bloom → O₂ crash → dead fish.</span></div>
+<div><span class="n">41</span><span>Iodised salt (KI/KIO₃) prevents goitre.</span></div>
+<div><span class="n">42</span><span>ORS = salt + sugar + water; glucose co-transports sodium.</span></div>
+<div><span class="n">43</span><span>Iodine + starch = blue-black (milk adulteration test).</span></div>
+<div><span class="n">44</span><span>Lactometer detects water in milk; metanil yellow taints dal.</span></div>
+<div><span class="n">45</span><span>Bleach + acid = toxic chlorine gas — never mix cleaners.</span></div>
+</div>
+</div>
+<div class="panel" id="p-problems"></div>
+<div class="panel" id="p-mcq"></div>
+<div class="panel" id="p-cards"></div>
+<div class="panel" id="p-progress"></div>
+
+<div class="foot">CentuMania · Chemistry in Everyday Life Mastery Pack · Why-Before-What engine<br>Every concept: What → Why → How → Where → How an examiner asks it.</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  t.classList.add('active');
+  document.getElementById('p-'+t.dataset.p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(t.dataset.p==='map'){ if(!mapReady) mapInit(); else mapResize(); }
+  if(t.dataset.p==='progress'){ buildProgress(); }
+};});
+
+/* ===== PROGRESS STORE ===== */
+var LSKEY="sci_chem_everyday_enriched";
+var P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}};
+function loadP(){try{var s=localStorage.getItem(LSKEY);if(s){var o=JSON.parse(s);
+  P.xp=o.xp||0;P.opened=o.opened||{};P.solved=o.solved||{};P.flipped=o.flipped||{};P.faa=o.faa||{};
+  P.probs=o.probs||{};P.wrong=o.wrong||{};}}catch(e){}}
+function saveP(){try{localStorage.setItem(LSKEY,JSON.stringify(P));}catch(e){}}
+function award(bucket,key,xp){ if(P[bucket][key]) return false; P[bucket][key]=1; P.xp+=xp; saveP(); refreshHUD(true); return true; }
+function toggleFAA(key,el){ if(P.faa[key]){delete P.faa[key];el&&el.classList.remove('on');el&&(el.textContent='☆');}
+  else{P.faa[key]=1;el&&el.classList.add('on');el&&(el.textContent='★');} saveP(); refreshHUD(false); }
+function count(o){return Object.keys(o).length;}
+function refreshHUD(pop){ var e=function(id){return document.getElementById(id);}; if(!e('hXp'))return;
+  var nodesTotal=(typeof MAP!=='undefined')?MAP.length-1:40;
+  var mcqTotal=(typeof MCQ!=='undefined')?MCQ.length:60;
+  var openedNodes=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+  e('hXp').textContent=P.xp; e('hNodes').textContent=openedNodes+"/"+nodesTotal;
+  e('hFaa').textContent=count(P.faa); e('hMcq').textContent=count(P.solved)+"/"+mcqTotal;
+  if(pop){var s=e('hXp').parentElement;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop');} }
+loadP();
+
+/* ===== MIND-MAP DATA (8 hubs × 4 leaves) ===== */
+var MAP=[
+ {id:0,cat:null,icon:"🏠",label:"Chemistry in\nEveryday Life",fact:"Your kitchen, bathroom, medicine box and farm are all chemistry labs — exams love asking what each bottle really contains."},
+ {id:1,cat:0,icon:"💊",label:"Drugs &\nMedicines",fact:"Analgesics kill pain, antibiotics kill microbes, antacids kill acidity, antiseptics protect wounds."},
+ {id:2,cat:0,icon:"🍬",label:"Food\nChemistry",fact:"Preservatives, artificial sweeteners, baking soda vs baking powder — the chemistry of the kitchen shelf."},
+ {id:3,cat:0,icon:"🧂",label:"Household\nChemicals",fact:"Washing soda, bleaching powder, plaster of Paris, vinegar — common names hide chemical identities."},
+ {id:4,cat:0,icon:"🧼",label:"Cleansing\nAgents",fact:"Soap, detergent, shampoo, toothpaste — surface chemistry doing the scrubbing."},
+ {id:5,cat:0,icon:"💄",label:"Personal\nCare",fact:"Sanitisers, perfumes, talc, sunscreen — the chemistry you wear."},
+ {id:6,cat:0,icon:"🔥",label:"Fuels &\nFire Safety",fact:"LPG's smell is added, CNG is methane, and fire extinguishers throw CO₂ blankets."},
+ {id:7,cat:0,icon:"🌾",label:"Farm\nChemicals",fact:"NPK fertilisers feed plants; pesticides guard them; urea is the world's favourite nitrogen source."},
+ {id:8,cat:0,icon:"⭐",label:"Safety &\nAdulteration",fact:"Iodised salt, ORS, adulteration tests — chemistry protecting health."},
+ /* 1 Drugs */
+ {id:101,cat:1,icon:"🤕",label:"Analgesics",fact:"Pain relievers: paracetamol, aspirin, ibuprofen. Aspirin also thins blood — given in heart attacks."},
+ {id:102,cat:1,icon:"🦠",label:"Antibiotics",fact:"Kill or stop bacteria — penicillin (Fleming, 1928) was the first. Useless against viruses like colds!"},
+ {id:103,cat:1,icon:"🔥",label:"Antacids",fact:"Weak bases neutralising stomach HCl: milk of magnesia Mg(OH)₂, baking soda, aluminium hydroxide."},
+ {id:104,cat:1,icon:"🩹",label:"Antiseptics &\ndisinfectants",fact:"Antiseptics on skin (Dettol, iodine tincture); disinfectants on floors/toilets (phenol, bleach) — strength separates them."},
+ /* 2 Food */
+ {id:201,cat:2,icon:"🫙",label:"Preservatives",fact:"Salt, sugar, oil, vinegar traditionally; sodium benzoate and potassium metabisulphite commercially."},
+ {id:202,cat:2,icon:"🍭",label:"Artificial\nsweeteners",fact:"Saccharin, aspartame, sucralose — sweetness without calories, for diabetics."},
+ {id:203,cat:2,icon:"🧁",label:"Baking soda vs\nbaking powder",fact:"Soda = NaHCO₃ alone (needs acid in recipe). Powder = NaHCO₃ + tartaric acid built in → fluffy cakes, no soapy taste."},
+ {id:204,cat:2,icon:"🍎",label:"Fruit ripening\n& browning",fact:"Ethylene (ethene) gas ripens fruit; cut apples brown by enzyme oxidation — lemon juice (acid) slows it."},
+ /* 3 Household */
+ {id:301,cat:3,icon:"🧺",label:"Washing soda",fact:"Na₂CO₃·10H₂O — laundry booster, softens hard water, cleans grease."},
+ {id:302,cat:3,icon:"🦯",label:"Bleaching\npowder",fact:"CaOCl₂ — bleaches cotton/paper, disinfects drinking water and pools; chlorine smell."},
+ {id:303,cat:3,icon:"🦴",label:"Plaster of\nParis",fact:"CaSO₄·½H₂O — sets hard with water; fracture casts, idols, false ceilings. From gypsum at 373 K."},
+ {id:304,cat:3,icon:"🥗",label:"Vinegar &\ncommon salt",fact:"Vinegar = dilute acetic acid (preservative, cleaner). NaCl: food, preservation, and raw material for NaOH, Cl₂, soda."},
+ /* 4 Cleansing */
+ {id:401,cat:4,icon:"🧼",label:"How soap\ncleans",fact:"Micelles: hydrophobic tails grab grease, hydrophilic heads face water — dirt floats away on rinsing."},
+ {id:402,cat:4,icon:"🧴",label:"Detergents\nvs soap",fact:"Detergents lather in hard water (soluble Ca/Mg salts) and acidic water; soaps fail — but soaps biodegrade better."},
+ {id:403,cat:4,icon:"🦷",label:"Toothpaste",fact:"Mildly BASIC — neutralises acid from mouth bacteria that erodes enamel; fluoride strengthens teeth."},
+ {id:404,cat:4,icon:"💇",label:"Shampoo &\nconditioners",fact:"Mild detergents for hair; conditioners coat strands to reduce static and tangling."},
+ /* 5 Personal care */
+ {id:501,cat:5,icon:"🧴",label:"Hand\nsanitiser",fact:"60-70% ethanol/isopropanol denatures microbial proteins — works where soap-water isn't handy."},
+ {id:502,cat:5,icon:"🌹",label:"Perfumes =\nesters",fact:"Sweet-smelling esters (acid + alcohol) mimic fruit and flower scents; alcohol carries them."},
+ {id:503,cat:5,icon:"🪞",label:"Talc &\nfillers",fact:"Talcum powder is powdered talc — the SOFTEST mineral (Mohs 1); absorbs moisture."},
+ {id:504,cat:5,icon:"☀️",label:"Sunscreen",fact:"ZnO/TiO₂ reflect UV; organic filters absorb it. SPF measures UV-B protection."},
+ /* 6 Fuels */
+ {id:601,cat:6,icon:"⛽",label:"LPG &\nits smell",fact:"LPG (butane) is odourless — ethyl mercaptan is ADDED so leaks announce themselves."},
+ {id:602,cat:6,icon:"🚌",label:"CNG &\nbiogas",fact:"Both mainly methane — cleaner burning, used in buses and village digesters."},
+ {id:603,cat:6,icon:"🕯️",label:"Complete vs\nincomplete burning",fact:"Full O₂: blue flame, CO₂. Poor O₂: yellow sooty flame, deadly CO — never run heaters in closed rooms."},
+ {id:604,cat:6,icon:"🧯",label:"Fire\nextinguishers",fact:"Fire needs fuel+heat+O₂. CO₂ extinguishers smother O₂; water cools (but NEVER on electrical/oil fires)."},
+ /* 7 Farm */
+ {id:701,cat:7,icon:"🌱",label:"NPK\nfertilisers",fact:"Nitrogen for leaves, phosphorus for roots, potassium for flowers/disease resistance."},
+ {id:702,cat:7,icon:"💧",label:"Urea",fact:"CO(NH₂)₂ — 46% nitrogen, the most-used fertiliser; first organic compound made from inorganic (Wöhler, 1828)."},
+ {id:703,cat:7,icon:"🐛",label:"Pesticides",fact:"Insecticides, herbicides (weeds), fungicides. DDT is banned — it accumulates in food chains."},
+ {id:704,cat:7,icon:"🌍",label:"Overuse\nharms",fact:"Excess fertiliser washes into ponds → eutrophication: algae bloom, oxygen crash, fish die."},
+ /* 8 Safety */
+ {id:801,cat:8,icon:"🧂",label:"Iodised\nsalt",fact:"KI/KIO₃ added to NaCl prevents goitre (swollen thyroid) — a public-health triumph."},
+ {id:802,cat:8,icon:"🥤",label:"ORS",fact:"Oral Rehydration Solution = salt + sugar + water; glucose helps the gut absorb sodium — saves diarrhoea patients."},
+ {id:803,cat:8,icon:"🕵️",label:"Adulteration\ntests",fact:"Iodine turns starch-in-milk BLUE-BLACK; water in milk drops lactometer reading; metanil yellow in dal is toxic."},
+ {id:804,cat:8,icon:"☠️",label:"Household\ndangers",fact:"Never mix bleach + acid (chlorine gas!); CO from heaters is odourless and deadly; store chemicals away from food."}
+];
+
+/* ===== PROGRESSIVE RADIAL MAP ENGINE ===== */
+var PALETTE=["#7AA2F7","#BB9AF7","#7DCFFF","#73DACA","#9ECE6A","#E0AF68","#FF9E64","#F7768E"];
+var mapReady=false, mCanvas, mCtx, mDpr=1, mNodes=[], mById={}, mExp={0:false}, mSel=null;
+var mView={s:1,ox:0,oy:0}, mViewT={s:1,ox:0,oy:0}, mUserZoom=1, mRAF=null;
+var R1=210, R2=118;
+function lighten(hex,amt){ var c=parseInt(hex.slice(1),16),r=c>>16,g=(c>>8)&255,b=c&255;
+  r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+function childrenOf(id){return mNodes.filter(function(n){return n.cat===id;});}
+function isVisible(n){ if(n.cat===null) return true; return !!mExp[n.cat]; }
+var HUB_ORDER=[1,2,3,4,5,6,7,8];
+function hubName(id){var h=MAP.find(function(x){return x.id===id;});return h?h.label.replace(/\n/g,' '):'';}
+function branchComplete(hubId){var lv=MAP.filter(function(n){return n.cat===hubId;});return lv.length>0 && lv.every(function(l){return P.opened['n'+l.id];});}
+function hubUnlocked(hubId){var idx=HUB_ORDER.indexOf(hubId); if(idx<=0) return true; return branchComplete(HUB_ORDER[idx-1]);}
+function nodeLocked(n){ if(n.cat===null) return false; if(n.cat===0) return !hubUnlocked(n.id); return !hubUnlocked(n.cat); }
+function mapInit(){
+  mCanvas=document.getElementById('mapCanvas'); mCtx=mCanvas.getContext('2d');
+  mNodes=MAP.map(function(d){
+    var col;
+    if(d.cat===null) col='#E2E8F0';
+    else if(d.cat===0) col=PALETTE[(d.id-1)%PALETTE.length];
+    else { var hub=MAP.find(function(x){return x.id===d.cat;}); var hc=PALETTE[(hub.id-1)%PALETTE.length]; col=lighten(hc,0.42); }
+    return {id:d.id,cat:d.cat,icon:d.icon,label:d.label,fact:d.fact,col:col,
+            x:0,y:0,tx:0,ty:0,a:(d.cat===null?1:0),ta:(d.cat===null?1:0),
+            sc:(d.cat===null?1:0.35),tsc:(d.cat===null?1:0.35),r:(d.cat===null?30:d.cat===0?24:19)};
+  });
+  mById={}; mNodes.forEach(function(n){mById[n.id]=n;});
+  mExp={0:false}; mSel=null;
+  mapResize(); layout(); fitView(true); bindMap(); mapReady=true;
+  if(mRAF) cancelAnimationFrame(mRAF); mapLoop();
+}
+function mapResize(){ if(!mCanvas) return;
+  var st=document.getElementById('mapStage'); mDpr=Math.min(window.devicePixelRatio||1,2);
+  mCanvas.width=st.clientWidth*mDpr; mCanvas.height=st.clientHeight*mDpr; }
+function layout(){
+  var root=mById[0]; root.tx=0; root.ty=0;
+  var hubs=childrenOf(0), K=hubs.length;
+  hubs.forEach(function(h,i){
+    var ang=-Math.PI/2 + i*(2*Math.PI/K); h._ang=ang;
+    if(mExp[0]){ h.tx=Math.cos(ang)*R1; h.ty=Math.sin(ang)*R1; } else { h.tx=0; h.ty=0; }
+    var leaves=childrenOf(h.id), L=leaves.length;
+    var spread=Math.min(0.85*Math.PI, Math.max(0.5, L*0.5));
+    leaves.forEach(function(lf,j){
+      var frac=(L===1)?0.5:j/(L-1); var la=ang + (frac-0.5)*spread;
+      if(mExp[h.id]&&mExp[0]){ lf.tx=h.tx+Math.cos(la)*R2; lf.ty=h.ty+Math.sin(la)*R2; } else { lf.tx=h.tx; lf.ty=h.ty; }
+    });
+  });
+  mNodes.forEach(function(n){ var vis=isVisible(n); n.ta=vis?1:0; n.tsc=vis?1:0.35;
+    if(!vis){ var p=(n.cat===null)?null:mById[n.cat]; if(p){ n.tx=p.tx; n.ty=p.ty; } } });
+}
+function fitView(snap){
+  var vis=mNodes.filter(isVisible);
+  var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;
+  vis.forEach(function(n){ minX=Math.min(minX,n.tx-n.r);maxX=Math.max(maxX,n.tx+n.r);
+    minY=Math.min(minY,n.ty-n.r);maxY=Math.max(maxY,n.ty+n.r); });
+  var pad=60, w=(maxX-minX)+pad*2, h=(maxY-minY)+pad*2;
+  var cw=mCanvas.width/mDpr, ch=mCanvas.height/mDpr;
+  var s=Math.min(cw/w, ch/h); s=Math.min(s*mUserZoom, 1.5*mUserZoom);
+  var cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  mViewT.s=s; mViewT.ox=cw/2 - cx*s; mViewT.oy=ch/2 - cy*s;
+  if(snap){ mView.s=mViewT.s; mView.ox=mViewT.ox; mView.oy=mViewT.oy; }
+}
+function mapLoop(){
+  var e=0.15;
+  mNodes.forEach(function(n){ n.x+=(n.tx-n.x)*0.16; n.y+=(n.ty-n.y)*0.16;
+    n.a+=(n.ta-n.a)*0.13; n.sc+=(n.tsc-n.sc)*0.16; });
+  mView.s+=(mViewT.s-mView.s)*e; mView.ox+=(mViewT.ox-mView.ox)*e; mView.oy+=(mViewT.oy-mView.oy)*e;
+  drawMap(); mRAF=requestAnimationFrame(mapLoop);
+}
+function drawMap(){
+  var cw=mCanvas.width, ch=mCanvas.height;
+  mCtx.setTransform(1,0,0,1,0,0); mCtx.clearRect(0,0,cw,ch);
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,cw,ch);
+  mCtx.setTransform(mDpr,0,0,mDpr,0,0);
+  mCtx.translate(mView.ox,mView.oy); mCtx.scale(mView.s,mView.s);
+  mNodes.forEach(function(n){ if(n.cat===null) return;
+    var p=mById[n.cat]; var a=Math.min(n.a,p.a); if(a<0.02) return;
+    mCtx.globalAlpha=a*0.5; mCtx.strokeStyle=n.col; mCtx.lineWidth=1.6;
+    mCtx.beginPath(); mCtx.moveTo(p.x,p.y); mCtx.lineTo(n.x,n.y); mCtx.stroke(); });
+  mCtx.globalAlpha=1;
+  mNodes.slice().sort(function(a,b){return a.r-b.r;}).forEach(function(n){
+    if(n.a<0.02) return; var r=n.r*n.sc; mCtx.globalAlpha=n.a;
+    var g=mCtx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,r*1.9);
+    g.addColorStop(0,n.col); g.addColorStop(1,'rgba(5,5,16,0)');
+    mCtx.globalAlpha=n.a*0.45; mCtx.fillStyle=g;
+    mCtx.beginPath(); mCtx.arc(n.x,n.y,r*1.9,0,7); mCtx.fill();
+    mCtx.globalAlpha=n.a;
+    var bg=mCtx.createRadialGradient(n.x-r*0.4,n.y-r*0.4,r*0.1,n.x,n.y,r);
+    bg.addColorStop(0,lighten(n.col,0.35)); bg.addColorStop(0.6,n.col); bg.addColorStop(1,'#0A0A20');
+    mCtx.fillStyle=bg; mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill();
+    mCtx.lineWidth=1.7; mCtx.strokeStyle=n.col; mCtx.stroke();
+    if(childrenOf(n.id).length && !mExp[n.id] && n.a>0.6){
+      mCtx.strokeStyle='rgba(255,255,255,.5)'; mCtx.lineWidth=1.1;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+4,0,7); mCtx.stroke(); }
+    if(mSel===n.id){ mCtx.strokeStyle='#fff'; mCtx.lineWidth=2.6;
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r+3,0,7); mCtx.stroke(); }
+    if(nodeLocked(n) && n.a>0.4){
+      mCtx.globalAlpha=n.a*0.55; mCtx.fillStyle='#050510';
+      mCtx.beginPath(); mCtx.arc(n.x,n.y,r,0,7); mCtx.fill(); mCtx.globalAlpha=n.a;
+      mCtx.font=(n.cat===0?16:13)+'px serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.fillText('🔒',n.x,n.y); }
+    if(n.cat!==null && P.opened['n'+n.id] && n.a>0.6){
+      var mx=n.x+r*0.72, my=n.y-r*0.72;
+      mCtx.fillStyle='#F59E0B'; mCtx.beginPath(); mCtx.arc(mx,my,4.5,0,7); mCtx.fill();
+      mCtx.strokeStyle='#fff'; mCtx.lineWidth=1.4;
+      mCtx.beginPath(); mCtx.moveTo(mx-2,my); mCtx.lineTo(mx-0.4,my+1.8); mCtx.lineTo(mx+2.2,my-1.8); mCtx.stroke(); }
+    if(n.a>0.35 && n.sc>0.6 && !nodeLocked(n)){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 '+(n.cat===null?13:11)+'px Segoe UI,sans-serif';
+      mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines=n.label.split('\n'); var ly=n.y+r+11;
+      lines.forEach(function(ln,k){ var yy=ly+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); });
+      mCtx.font=(n.cat===null?20:15)+'px serif';
+      mCtx.strokeText(n.icon,n.x,n.y); mCtx.fillText(n.icon,n.x,n.y); }
+    else if(n.a>0.35 && n.sc>0.6){
+      mCtx.globalAlpha=n.a; mCtx.fillStyle='#fff';
+      mCtx.font='800 11px Segoe UI,sans-serif'; mCtx.textAlign='center'; mCtx.textBaseline='middle';
+      mCtx.lineJoin='round'; mCtx.lineWidth=3; mCtx.strokeStyle='rgba(4,4,14,.9)';
+      var lines2=n.label.split('\n'); var ly2=n.y+r+11;
+      lines2.forEach(function(ln,k){ var yy=ly2+k*12; mCtx.strokeText(ln,n.x,yy); mCtx.fillText(ln,n.x,yy); }); }
+  });
+  mCtx.globalAlpha=1;
+}
+var mDrag=false,mMoved=false,mLast={x:0,y:0},mDownPt=null,mPinch=null;
+function toWorld(px,py){return {x:(px-mView.ox)/mView.s, y:(py-mView.oy)/mView.s};}
+function hit(px,py){ var w=toWorld(px,py),best=null,bd=1e9;
+  mNodes.forEach(function(n){ if(n.a<0.4) return; var d=Math.hypot(w.x-n.x,w.y-n.y);
+    if(d<n.r*n.sc+8 && d<bd){bd=d;best=n;} }); return best; }
+function bindMap(){
+  var el=mCanvas;
+  el.onpointerdown=function(e){ el.setPointerCapture(e.pointerId); mDrag=true;mMoved=false;
+    mLast={x:e.clientX,y:e.clientY}; mDownPt={x:e.clientX,y:e.clientY}; el.classList.add('grab'); };
+  el.onpointermove=function(e){ if(!mDrag)return;
+    var dx=e.clientX-mLast.x, dy=e.clientY-mLast.y;
+    if(Math.abs(e.clientX-mDownPt.x)+Math.abs(e.clientY-mDownPt.y)>6) mMoved=true;
+    mViewT.ox+=dx; mViewT.oy+=dy; mView.ox+=dx; mView.oy+=dy; mLast={x:e.clientX,y:e.clientY}; };
+  el.onpointerup=function(e){ mDrag=false; el.classList.remove('grab');
+    if(!mMoved){ var rect=el.getBoundingClientRect();
+      var n=hit(e.clientX-rect.left, e.clientY-rect.top);
+      if(n) tapNode(n); else mpClose(); } };
+  el.onwheel=function(e){ e.preventDefault(); mapZoom(e.deltaY<0?1.1:0.9); };
+  el.addEventListener('touchmove',function(e){ if(e.touches.length===2){ e.preventDefault();
+    var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    if(mPinch) mapZoom(d/mPinch); mPinch=d; }},{passive:false});
+  el.addEventListener('touchend',function(){mPinch=null;});
+  window.addEventListener('resize',function(){ if(mapReady && document.getElementById('p-map').classList.contains('active')){ mapResize(); fitView(false);} });
+}
+function tapNode(n){
+  document.getElementById('mapHint').classList.add('gone');
+  if(nodeLocked(n)){
+    var idxL=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    mSel=n.id; mpShow(n);
+    mapToast('🔒 Locked — finish "'+hubName(HUB_ORDER[idxL-1])+'" first');
+    return;
+  }
+  mSel=n.id; mpShow(n);
+  if(n.cat!==null){ if(award('opened','n'+n.id,5)) checkUnlock(n); }
+  if(childrenOf(n.id).length){ mExp[n.id]=!mExp[n.id];
+    if(mExp[n.id]) childrenOf(n.id).forEach(function(c){c.x=n.x;c.y=n.y;});
+    layout(); fitView(false);
+  }
+}
+function checkUnlock(n){
+  if(n.cat && n.cat!==0 && branchComplete(n.cat)){
+    var idx=HUB_ORDER.indexOf(n.cat);
+    if(idx>=0 && idx<HUB_ORDER.length-1){ award('opened','_bonus'+n.cat,15);
+      mapToast('✅ "'+hubName(n.cat)+'" complete! Unlocked "'+hubName(HUB_ORDER[idx+1])+'" (+15 XP)');
+    } else if(idx===HUB_ORDER.length-1){ mapToast('🏆 All branches complete — topic mastered!'); }
+  }
+}
+function mapToast(msg){ var t=document.getElementById('mapToast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show'); clearTimeout(t._h);
+  t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+function mapZoom(f){ mUserZoom*=f; mUserZoom=Math.max(0.4,Math.min(3,mUserZoom)); fitView(false); }
+function mapFit(){ mUserZoom=1; fitView(false); }
+function mapCollapseAll(){ mExp={0:false}; mSel=null; mpClose(); mUserZoom=1; layout(); fitView(false);
+  document.getElementById('mapHint').classList.remove('gone'); }
+function mpShow(n){ var p=document.getElementById('mapPanel');
+  document.getElementById('mpIcon').textContent = nodeLocked(n)?'🔒':n.icon;
+  document.getElementById('mpCat').textContent = n.cat===null?'TOPIC CORE':(n.cat===0?'BRANCH':'CONCEPT');
+  document.getElementById('mpTitle').textContent=n.label.replace(/\n/g,' ');
+  document.getElementById('mpFact').textContent=n.fact;
+  var lk=document.getElementById('mpLock');
+  if(nodeLocked(n)){ var idx=HUB_ORDER.indexOf(n.cat===0?n.id:n.cat);
+    lk.textContent='🔒 Locked. Open all concepts under "'+hubName(HUB_ORDER[idx-1])+'" to unlock this branch.';
+    lk.classList.add('show'); } else lk.classList.remove('show');
+  p.classList.add('open'); }
+function mpClose(){ document.getElementById('mapPanel').classList.remove('open'); mSel=null; }
+
+/* ===== MCQ BANK (60) ===== */
+var MCQ=[
+ {t:"Recall · SSC",q:"Drugs that relieve pain are called:",o:["Antibiotics","Analgesics","Antacids","Antiseptics"],a:1,e:"Analgesics: paracetamol, aspirin, ibuprofen."},
+ {t:"Recall · TNPSC",q:"The first antibiotic, discovered by Alexander Fleming (1928), was:",o:["Streptomycin","Penicillin","Tetracycline","Ampicillin"],a:1,e:"Penicillin from the Penicillium mould."},
+ {t:"Conceptual · SSC",q:"Antibiotics are NOT effective against:",o:["Bacteria","Viruses","Both","Fungi only"],a:1,e:"Common cold and flu are viral — antibiotics are useless there."},
+ {t:"Conceptual · RRB",q:"Antacids relieve acidity because they are:",o:["Strong acids","Weak bases that neutralise stomach HCl","Salts","Enzymes"],a:1,e:"Mg(OH)₂ (milk of magnesia), Al(OH)₃, NaHCO₃."},
+ {t:"Recall · Banking",q:"Milk of magnesia is chemically:",o:["MgCl₂","Mg(OH)₂","MgSO₄","MgCO₃"],a:1,e:"Magnesium hydroxide — a mild base and antacid/laxative."},
+ {t:"Conceptual · SSC",q:"Antiseptics differ from disinfectants because antiseptics:",o:["Are stronger","Are safe on living skin","Kill only viruses","Are gases"],a:1,e:"Antiseptics (Dettol, iodine) go on skin; disinfectants (phenol, bleach) on floors."},
+ {t:"Recall · TNPSC",q:"Tincture of iodine is used as:",o:["An antacid","An antiseptic","An analgesic","A fertiliser"],a:1,e:"Iodine in alcohol — applied on wounds."},
+ {t:"Conceptual · SSC",q:"Aspirin is given during heart attacks because it:",o:["Kills pain only","Prevents blood clotting (thins blood)","Lowers sugar","Raises pressure"],a:1,e:"Its anti-clotting action keeps vessels open."},
+ {t:"Recall · RRB",q:"Sodium benzoate is used in food as a:",o:["Sweetener","Preservative","Colour","Flavour"],a:1,e:"With potassium metabisulphite — commercial preservatives."},
+ {t:"Recall · Banking",q:"Which is an artificial sweetener safe for diabetics?",o:["Glucose","Aspartame","Sucrose","Fructose"],a:1,e:"Aspartame, saccharin, sucralose add sweetness without sugar."},
+ {t:"Conceptual · SSC",q:"Baking powder = baking soda + :",o:["Salt","A mild edible acid (tartaric acid)","Yeast","Sugar"],a:1,e:"The built-in acid reacts on wetting/heating → CO₂ → fluffy cake, no bitter taste."},
+ {t:"Conceptual · TNPSC",q:"Cakes rise because baking powder releases:",o:["O₂","CO₂","H₂","N₂"],a:1,e:"CO₂ bubbles puff the batter."},
+ {t:"Conceptual · SSC",q:"Using only baking soda (no acid) in a cake leaves a ___ taste:",o:["Sweet","Bitter/soapy","Sour","Salty"],a:1,e:"Leftover Na₂CO₃ tastes bitter — why baking powder exists."},
+ {t:"Recall · RRB",q:"The gas used for artificial ripening of fruits is:",o:["Methane","Ethylene (ethene)","CO₂","N₂"],a:1,e:"Ethylene is the natural ripening hormone; calcium carbide misuse also releases it."},
+ {t:"Application · Banking",q:"Lemon juice slows the browning of cut apples because:",o:["It is cold","Its acid slows the oxidising enzyme","It adds colour","It dries the apple"],a:1,e:"Enzymatic browning is oxidation — acid inhibits the enzyme."},
+ {t:"Recall · SSC",q:"Washing soda is chemically:",o:["NaHCO₃","Na₂CO₃·10H₂O","NaOH","NaCl"],a:1,e:"Sodium carbonate decahydrate — laundry, softens hard water."},
+ {t:"Recall · TNPSC",q:"Bleaching powder is chemically:",o:["CaCO₃","CaOCl₂","CaSO₄","Ca(OH)₂"],a:1,e:"Calcium oxychloride — bleaching + water disinfection."},
+ {t:"Recall · SSC",q:"Plaster of Paris is chemically:",o:["CaSO₄·2H₂O","CaSO₄·½H₂O","CaCO₃","CaCl₂"],a:1,e:"Hemihydrate — sets to gypsum with water; casts and idols."},
+ {t:"Conceptual · RRB",q:"Plaster of Paris is made by heating gypsum to:",o:["273 K","373 K","573 K","1000 K"],a:1,e:"At 373 K gypsum loses ¾ of its water → hemihydrate."},
+ {t:"Conceptual · Banking",q:"Plaster of Paris must be stored in moisture-proof containers because moisture:",o:["Dissolves it","Sets it into hard gypsum","Colours it","Evaporates it"],a:1,e:"Water converts PoP back to dead-hard gypsum."},
+ {t:"Recall · SSC",q:"Vinegar used in pickles is dilute:",o:["Citric acid","Acetic acid","Nitric acid","Formic acid"],a:1,e:"5-8% acetic (ethanoic) acid — preservative + flavour."},
+ {t:"Conceptual · TNPSC",q:"Common salt is the raw material for making:",o:["Sugar and alcohol","NaOH, Cl₂ and washing soda","Urea","Cement"],a:1,e:"Chlor-alkali industry: brine → NaOH + Cl₂ + H₂; also soda ash."},
+ {t:"Conceptual · SSC",q:"Soap removes grease using structures called:",o:["Crystals","Micelles","Esters","Polymers"],a:1,e:"Hydrophobic tails trap oil; hydrophilic heads face water."},
+ {t:"Conceptual · RRB",q:"In hard water, detergents work but soaps don't because:",o:["Detergents are acidic","Detergent Ca/Mg salts stay soluble","Soap is too costly","Hard water is hot"],a:1,e:"Soap + Ca²⁺/Mg²⁺ → insoluble scum; detergent salts stay dissolved."},
+ {t:"Conceptual · Banking",q:"Toothpaste is mildly basic because it must:",o:["Taste good","Neutralise acids made by mouth bacteria","Whiten instantly","Dissolve enamel"],a:1,e:"Bacterial acid (pH < 5.5) erodes enamel; basic paste neutralises it."},
+ {t:"Recall · SSC",q:"The mineral added to toothpaste to strengthen enamel is:",o:["Iron","Fluoride","Iodine","Zinc"],a:1,e:"Fluoride converts enamel to harder fluorapatite."},
+ {t:"Recall · TNPSC",q:"Hand sanitisers typically contain what percentage of alcohol?",o:["5-10%","20-30%","60-70%","95-100%"],a:2,e:"60-70% ethanol/isopropanol — enough water helps it penetrate microbes."},
+ {t:"Conceptual · SSC",q:"The sweet smell of perfumes mainly comes from:",o:["Acids","Esters","Salts","Alkanes"],a:1,e:"Esters (acid + alcohol products) mimic fruit and flower scents."},
+ {t:"Recall · RRB",q:"Talcum powder comes from talc, which is:",o:["The hardest mineral","The softest mineral (Mohs 1)","A metal","A gas"],a:1,e:"Talc = Mohs hardness 1; diamond = 10."},
+ {t:"Recall · Banking",q:"Physical sunscreens reflect UV using:",o:["NaCl","ZnO and TiO₂","CaCO₃","Fe₂O₃"],a:1,e:"Zinc oxide and titanium dioxide are UV reflectors."},
+ {t:"Conceptual · SSC",q:"LPG leaks can be smelt because:",o:["Butane is smelly","Ethyl mercaptan is deliberately added","Cylinders leak perfume","CO₂ smells"],a:1,e:"LPG itself is odourless — the stench is a safety additive."},
+ {t:"Recall · TNPSC",q:"CNG used in buses is mainly:",o:["Butane","Methane","Propane","Ethyne"],a:1,e:"Compressed Natural Gas ≈ methane — cleaner than petrol/diesel."},
+ {t:"Conceptual · SSC",q:"A yellow sooty flame on a gas stove indicates:",o:["Perfect burning","Incomplete combustion","Water in gas","High-quality gas"],a:1,e:"Insufficient O₂ → soot + possibly CO; burners need cleaning."},
+ {t:"Conceptual · RRB",q:"Burning fuel in a closed room is dangerous mainly due to:",o:["CO₂","Odourless toxic CO","Smoke colour","Heat only"],a:1,e:"Incomplete combustion makes carbon monoxide — binds haemoglobin, silently kills."},
+ {t:"Conceptual · Banking",q:"CO is poisonous because it:",o:["Burns the lungs","Binds haemoglobin ~200× more strongly than O₂","Freezes blood","Is acidic"],a:1,e:"Carboxyhaemoglobin blocks oxygen transport."},
+ {t:"Conceptual · SSC",q:"CO₂ extinguishers put out fires by:",o:["Cooling only","Cutting off the oxygen supply","Adding fuel","Making noise"],a:1,e:"Dense CO₂ blankets the fire — removes the O₂ side of the fire triangle."},
+ {t:"Conceptual · TNPSC",q:"Water must NOT be used on electrical fires because:",o:["It is scarce","Water conducts electricity — shock risk","It boils","It stains"],a:1,e:"Use CO₂ extinguishers on electrical fires; water also spreads oil fires."},
+ {t:"Recall · SSC",q:"In NPK fertilisers, N, P and K stand for:",o:["Neon, platinum, krypton","Nitrogen, phosphorus, potassium","Nickel, phosphorus, calcium","Nitrogen, palladium, potassium"],a:1,e:"The three primary plant nutrients."},
+ {t:"Conceptual · RRB",q:"Nitrogen in fertilisers mainly promotes:",o:["Root growth","Leafy green growth","Flower colour","Fruit sweetness"],a:1,e:"N → leaves; P → roots; K → flowers/fruit and disease resistance."},
+ {t:"Recall · Banking",q:"Urea, CO(NH₂)₂, contains about what % nitrogen?",o:["10%","26%","46%","80%"],a:2,e:"46% — the richest solid N fertiliser, hence its popularity."},
+ {t:"Recall · SSC",q:"The first organic compound synthesised from inorganic material (Wöhler, 1828) was:",o:["Methane","Urea","Sugar","Alcohol"],a:1,e:"Urea from ammonium cyanate — killed the 'vital force' theory."},
+ {t:"Recall · TNPSC",q:"The banned pesticide notorious for accumulating in food chains is:",o:["Urea","DDT","NPK","Malathion"],a:1,e:"DDT persists and biomagnifies — banned in agriculture."},
+ {t:"Conceptual · SSC",q:"Excess fertiliser washing into ponds causes:",o:["Cleaner water","Eutrophication — algae bloom and oxygen crash","More fish","Salt formation"],a:1,e:"Nutrient overload → algal bloom → decay consumes O₂ → fish die."},
+ {t:"Recall · RRB",q:"Herbicides are chemicals that kill:",o:["Insects","Weeds","Fungi","Rats"],a:1,e:"Insecticide-insects, herbicide-weeds, fungicide-fungi."},
+ {t:"Recall · Banking",q:"Iodised salt prevents:",o:["Anaemia","Goitre","Rickets","Scurvy"],a:1,e:"KI/KIO₃ supplies iodine for the thyroid."},
+ {t:"Recall · SSC",q:"ORS (oral rehydration solution) is a mixture of:",o:["Salt + sugar + water","Milk + sugar","Salt + oil","Glucose only"],a:0,e:"Glucose helps the intestine absorb sodium — rehydrates diarrhoea patients."},
+ {t:"Conceptual · TNPSC",q:"Starch adulteration in milk is detected by iodine turning:",o:["Red","Blue-black","Green","Colourless"],a:1,e:"Iodine + starch = blue-black complex — the classic test."},
+ {t:"Recall · SSC",q:"Water added to milk is detected using a:",o:["Thermometer","Lactometer","Barometer","Hygrometer"],a:1,e:"Diluted milk has lower density — lactometer floats lower reading."},
+ {t:"Recall · RRB",q:"Metanil yellow, a toxic adulterant, is found in:",o:["Milk","Turmeric/dal","Salt","Water"],a:1,e:"An industrial dye illegally used to colour dal and turmeric."},
+ {t:"Conceptual · Banking",q:"Mixing toilet-bowl acid with bleach is dangerous because it releases:",o:["O₂","Toxic chlorine gas","H₂","Steam"],a:1,e:"Acid + hypochlorite bleach → Cl₂ gas — a serious household hazard."},
+ {t:"Recall · SSC",q:"Dettol and Savlon used on cuts are examples of:",o:["Disinfectants","Antiseptics","Antibiotics","Analgesics"],a:1,e:"Safe on living tissue = antiseptic."},
+ {t:"Conceptual · TNPSC",q:"Phenol (carbolic acid) used on hospital floors acts as a:",o:["Antiseptic","Disinfectant","Sweetener","Fuel"],a:1,e:"Too harsh for skin — used on non-living surfaces."},
+ {t:"Statement · SSC",q:"Consider: (1) Antibiotics cure viral colds. (2) Antibiotics act against bacteria. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"Colds are viral — antibiotics don't help. Only 2."},
+ {t:"Statement · TNPSC",q:"Consider: (1) Baking soda is NaHCO₃. (2) Baking powder is pure NaHCO₃. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Baking powder = NaHCO₃ + tartaric acid. Only 1."},
+ {t:"Statement · RRB",q:"Consider: (1) LPG has a natural strong odour. (2) CNG is mainly methane. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:1,e:"LPG is odourless; mercaptan is added. Only 2."},
+ {t:"Statement · Banking",q:"Consider: (1) Urea contains 46% nitrogen. (2) Potassium in NPK promotes root growth. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Roots are phosphorus's job; K handles flowers/disease resistance. Only 1."},
+ {t:"Statement · SSC",q:"Consider: (1) Antiseptics are used on living tissue. (2) Disinfectants are used on floors and drains. Which is/are correct?",o:["Only 1","Only 2","Both","Neither"],a:2,e:"Both correct — the strength/usage distinction."},
+ {t:"Statement · TNPSC",q:"Consider: (1) CO₂ extinguishers suit electrical fires. (2) Water suits oil fires. Which is correct?",o:["Only 1","Only 2","Both","Neither"],a:0,e:"Water spreads oil fires and conducts through electrical ones. Only 1."},
+ {t:"Assertion–Reason · SSC",q:"A: A foul smell is added to LPG cylinders. R: LPG is odourless, so leaks would otherwise go unnoticed.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Mercaptan = leak alarm. R explains A."},
+ {t:"Assertion–Reason · RRB",q:"A: Toothpaste prevents tooth decay. R: Being mildly basic, it neutralises the acid produced by mouth bacteria.",o:["Both true, R explains A","Both true, R doesn't explain A","A true, R false","A false, R true"],a:0,e:"Both true; R is the mechanism."}
+];
+(function(){
+ var box=document.getElementById('p-mcq');
+ var head='<h2 class="sec"><span class="em">📝</span>MCQ Bank</h2><div class="sec-sub">'+MCQ.length+' questions across recall, concept, application, statement & assertion–reason. Tap an option to check.</div>';
+ var html=MCQ.map(function(m,i){
+   var opts=m.o.map(function(o,j){return '<button class="opt" data-i="'+i+'" data-j="'+j+'">'+String.fromCharCode(65+j)+'. '+o+'</button>';}).join('');
+   var star=P.faa['q'+i]?'★':'☆'; var son=P.faa['q'+i]?' on':'';
+   return '<div class="mcq" id="mcq'+i+'"><div class="qh"><span class="badge">'+m.t+'</span>'+
+     '<span><span class="faa'+son+'" data-fk="q'+i+'" title="Mark Frequently-Asked-Again">'+star+'</span> Q'+(i+1)+'</span></div>'+
+     '<div class="q">'+m.q+'</div>'+opts+'<div class="exp" id="exp'+i+'"><b>Answer: '+String.fromCharCode(65+m.a)+'.</b> '+m.e+'</div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.opt').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i, j=+b.dataset.j, m=MCQ[i], card=document.getElementById('mcq'+i);
+   if(card.dataset.done) return; card.dataset.done=1;
+   card.querySelectorAll('.opt').forEach(function(o,k){ if(k===m.a)o.classList.add('correct'); });
+   if(j!==m.a){ b.classList.add('wrong'); P.wrong['q'+i]=m.t; saveP(); }
+   document.getElementById('exp'+i).classList.add('show');
+   if(j===m.a){ if(P.wrong['q'+i]){delete P.wrong['q'+i];} award('solved','q'+i,10); }
+ };});
+ box.querySelectorAll('.faa').forEach(function(s){ s.onclick=function(ev){ ev.stopPropagation();
+   toggleFAA(s.dataset.fk,s); };});
+})();
+
+/* ===== PROBLEMS ===== */
+var PROB=[
+ {lvl:"e",tag:"Identify",q:"Name the drug class for each: paracetamol, penicillin, milk of magnesia.",given:"3 medicines",find:"classes",steps:["Paracetamol relieves pain","Penicillin kills bacteria","Mg(OH)₂ neutralises stomach acid"],ans:"Analgesic, antibiotic, antacid"},
+ {lvl:"e",tag:"Formula",q:"Write the chemical names of baking soda, washing soda and bleaching powder.",given:"3 household names",find:"chemical identity",steps:["Baking soda = sodium hydrogencarbonate","Washing soda = sodium carbonate decahydrate","Bleaching powder = calcium oxychloride"],ans:"NaHCO₃, Na₂CO₃·10H₂O, CaOCl₂"},
+ {lvl:"e",tag:"Safety",q:"Why should you never mix toilet cleaner (acid) with bleach?",given:"acid + hypochlorite",find:"danger",steps:["Acid liberates chlorine from hypochlorite","Cl₂ gas damages lungs"],ans:"Toxic chlorine gas is released"},
+ {lvl:"m",tag:"Kitchen",q:"A cake made with plain baking soda tastes bitter. Explain and fix.",given:"NaHCO₃ only",find:"reason + fix",steps:["Heat: 2NaHCO₃ → Na₂CO₃ + H₂O + CO₂","Leftover Na₂CO₃ is bitter","Baking powder's tartaric acid neutralises it"],ans:"Use baking powder (soda + edible acid)"},
+ {lvl:"m",tag:"Antacid",q:"Write the neutralisation when milk of magnesia meets stomach acid.",given:"Mg(OH)₂ + HCl",find:"equation",steps:["Base + acid → salt + water","Mg(OH)₂ + 2HCl → MgCl₂ + 2H₂O"],ans:"MgCl₂ + 2H₂O — acidity relieved"},
+ {lvl:"m",tag:"PoP",q:"Write the setting reaction of plaster of Paris.",given:"CaSO₄·½H₂O + water",find:"reaction",steps:["Hemihydrate absorbs water","CaSO₄·½H₂O + 1½H₂O → CaSO₄·2H₂O"],ans:"Sets into hard gypsum (with slight expansion)"},
+ {lvl:"m",tag:"Fertiliser",q:"A farmer's crop has yellow leaves. Which NPK element is likely deficient and which fertiliser helps?",given:"yellowing leaves",find:"element + fix",steps:["Nitrogen builds chlorophyll/leaf growth","Yellow leaves = N deficiency"],ans:"Nitrogen — apply urea (46% N)"},
+ {lvl:"m",tag:"Adulteration",q:"Design a one-minute test for starch mixed into milk.",given:"suspect milk",find:"test",steps:["Boil and cool a sample","Add 2 drops of iodine solution","Blue-black colour = starch present"],ans:"Iodine test — blue-black confirms starch"},
+ {lvl:"h",tag:"Combustion",q:"A gas geyser in a closed bathroom caused fainting. Name the gas, why it forms, and why it's deadly.",given:"closed room + burning fuel",find:"gas + mechanism",steps:["Limited O₂ → incomplete combustion","2C + O₂ → 2CO instead of CO₂","CO binds haemoglobin ~200× more strongly than O₂"],ans:"Carbon monoxide — odourless blocker of oxygen transport"},
+ {lvl:"h",tag:"Fire",q:"Match extinguisher to fire: (a) paper fire, (b) electrical panel, (c) cooking-oil pan.",given:"3 fire types",find:"methods",steps:["Paper: water cools below ignition","Electrical: CO₂ (non-conducting)","Oil pan: smother with lid/blanket/CO₂ — water explodes the oil outward"],ans:"(a) water (b) CO₂ (c) smothering, never water"},
+ {lvl:"h",tag:"ORS",q:"Why does ORS use sugar + salt rather than salt alone?",given:"ORS composition",find:"reason",steps:["Intestines absorb Na⁺ efficiently only WITH glucose (co-transport)","Water follows the absorbed salt"],ans:"Glucose powers sodium absorption, pulling water in"},
+ {lvl:"h",tag:"Environment",q:"Trace the chain from over-fertilised field to dead fish.",given:"excess NPK runoff",find:"chain",steps:["Rain washes nutrients into pond","Algae bloom explosively","Algae die; decomposing bacteria consume dissolved O₂","Oxygen crash suffocates fish"],ans:"Eutrophication — nutrient → bloom → decay → O₂ crash"}
+];
+(function(){
+ var box=document.getElementById('p-problems');
+ var head='<h2 class="sec"><span class="em">🧮</span>Expected Problems</h2><div class="sec-sub">'+PROB.length+' worked identification, reaction and reasoning problems graded easy→hard. Try first, then reveal.</div>';
+ var html=PROB.map(function(p,i){
+   var solved=P.probs['p'+i]?' solved':'';
+   var lvlName=p.lvl==='e'?'Easy':p.lvl==='m'?'Medium':'Hard';
+   var steps=p.steps.map(function(s,k){return '<div class="st"><span class="n">'+(k+1)+'</span>'+s+'</div>';}).join('');
+   return '<div class="prob" id="prob'+i+'"><div class="ph"><span class="lvl '+p.lvl+'">'+lvlName+'</span><span>'+p.tag+' · P'+(i+1)+'</span></div>'+
+     '<div class="pq">'+p.q+'</div><div class="gf">Given: <b>'+p.given+'</b> &nbsp;·&nbsp; Find: <b>'+p.find+'</b></div>'+
+     '<div class="sol" id="sol'+i+'">'+steps+'<div class="fin">Answer: '+p.ans+'</div></div>'+
+     '<div class="btns"><button class="pbtn rev" data-i="'+i+'" data-a="rev">Reveal solution</button>'+
+     '<button class="pbtn'+solved+'" data-i="'+i+'" data-a="solve">'+(solved?'✓ Solved':'Mark solved')+'</button></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.pbtn').forEach(function(b){ b.onclick=function(){
+   var i=+b.dataset.i;
+   if(b.dataset.a==='rev'){ document.getElementById('sol'+i).classList.add('show'); b.style.display='none'; }
+   else { if(award('probs','p'+i,8)){ b.classList.add('solved'); b.textContent='✓ Solved'; } }
+ };});
+})();
+
+/* ===== FLASHCARDS (45) ===== */
+var FC=[
+ {q:"What are analgesics? Three examples?",a:"Pain relievers — paracetamol, aspirin, ibuprofen."},
+ {q:"Why is aspirin given during heart attacks?",a:"It prevents blood clotting (blood thinner)."},
+ {q:"First antibiotic, discoverer, year?",a:"Penicillin — Alexander Fleming, 1928."},
+ {q:"Do antibiotics work on viruses?",a:"No — colds and flu are viral; antibiotics target bacteria."},
+ {q:"What are antacids? Examples?",a:"Weak bases neutralising stomach HCl — Mg(OH)₂, Al(OH)₃, NaHCO₃."},
+ {q:"Milk of magnesia chemically?",a:"Magnesium hydroxide, Mg(OH)₂."},
+ {q:"Antiseptic vs disinfectant?",a:"Antiseptic: safe on skin (Dettol, iodine). Disinfectant: harsh, for floors (phenol, bleach)."},
+ {q:"Two commercial food preservatives?",a:"Sodium benzoate and potassium metabisulphite."},
+ {q:"Three artificial sweeteners?",a:"Saccharin, aspartame, sucralose."},
+ {q:"Baking soda vs baking powder?",a:"Soda = NaHCO₃ alone; powder = NaHCO₃ + tartaric acid (self-acting)."},
+ {q:"Which gas makes cakes rise?",a:"CO₂ from baking powder on heating."},
+ {q:"Which gas ripens fruit?",a:"Ethylene (ethene) — the natural ripening hormone."},
+ {q:"Why does lemon juice stop apple browning?",a:"Its acid inhibits the oxidising enzyme."},
+ {q:"Washing soda formula and use?",a:"Na₂CO₃·10H₂O — laundry, softens hard water."},
+ {q:"Bleaching powder formula and uses?",a:"CaOCl₂ — bleaching cotton/paper, disinfecting drinking water."},
+ {q:"Plaster of Paris formula and making?",a:"CaSO₄·½H₂O — heat gypsum to 373 K."},
+ {q:"PoP setting reaction?",a:"CaSO₄·½H₂O + 1½H₂O → CaSO₄·2H₂O (hard gypsum)."},
+ {q:"Uses of plaster of Paris?",a:"Fracture casts, idols/statues, false ceilings, moulds."},
+ {q:"Vinegar is dilute…?",a:"Acetic (ethanoic) acid, 5-8% in water."},
+ {q:"Three chemicals made from common salt?",a:"NaOH, chlorine, washing soda (also baking soda, HCl)."},
+ {q:"How does a micelle clean?",a:"Hydrophobic tails trap grease; hydrophilic heads face water; rinse carries it away."},
+ {q:"Why do detergents beat soap in hard water?",a:"Their Ca/Mg salts stay soluble — no scum."},
+ {q:"Why is toothpaste basic?",a:"To neutralise enamel-eroding acid from mouth bacteria."},
+ {q:"Role of fluoride in toothpaste?",a:"Strengthens enamel (fluorapatite), resists decay."},
+ {q:"Alcohol % in hand sanitiser?",a:"60-70% ethanol/isopropanol."},
+ {q:"Which compounds give perfumes their scent?",a:"Esters (acid + alcohol products)."},
+ {q:"Softest mineral (in talcum powder)?",a:"Talc — Mohs hardness 1."},
+ {q:"Two physical UV blockers in sunscreen?",a:"Zinc oxide (ZnO) and titanium dioxide (TiO₂)."},
+ {q:"Why does LPG smell?",a:"Ethyl mercaptan is added — LPG itself is odourless."},
+ {q:"Main gas in CNG?",a:"Methane."},
+ {q:"Blue flame vs yellow sooty flame?",a:"Blue = complete combustion; yellow = incomplete (soot + CO risk)."},
+ {q:"Why is CO deadly?",a:"Binds haemoglobin ~200× more strongly than O₂ — blocks oxygen transport."},
+ {q:"The fire triangle?",a:"Fuel + heat + oxygen — remove any one to stop fire."},
+ {q:"Which extinguisher for electrical fires?",a:"CO₂ — never water (conducts electricity)."},
+ {q:"Why never water on burning oil?",a:"Water sinks, boils, and blasts burning oil outward — smother instead."},
+ {q:"N, P, K roles in plants?",a:"N-leaves, P-roots, K-flowers/fruit and disease resistance."},
+ {q:"Urea's formula and N content?",a:"CO(NH₂)₂ — about 46% nitrogen."},
+ {q:"Wöhler's 1828 breakthrough?",a:"Synthesised urea from inorganic ammonium cyanate — first organic synthesis."},
+ {q:"Why is DDT banned?",a:"It persists and biomagnifies up food chains."},
+ {q:"What is eutrophication?",a:"Fertiliser runoff → algal bloom → decay consumes O₂ → aquatic life dies."},
+ {q:"Why iodise salt?",a:"KI/KIO₃ prevents goitre (thyroid iodine deficiency)."},
+ {q:"ORS composition and trick?",a:"Salt + sugar + water; glucose co-transports sodium into the body."},
+ {q:"Iodine test on milk detects?",a:"Starch adulteration — blue-black colour."},
+ {q:"Instrument for water-in-milk?",a:"Lactometer (density drops when diluted)."},
+ {q:"Why never mix bleach and acid?",a:"Releases toxic chlorine gas."}
+];
+(function(){
+ var box=document.getElementById('p-cards');
+ var head='<h2 class="sec"><span class="em">🃏</span>Flashcards</h2><div class="sec-sub">'+FC.length+' recall cards — tap to flip. Cover the concept, retrieve, then check.</div>';
+ var html=FC.map(function(c,i){
+   return '<div class="fc" id="fc'+i+'"><div class="fc-in"><div class="fc-f">'+c.q+'</div><div class="fc-b">'+c.a+'</div></div></div>';
+ }).join('');
+ box.innerHTML=head+html;
+ box.querySelectorAll('.fc').forEach(function(f,i){ f.onclick=function(){ f.classList.toggle('flip');
+   if(f.classList.contains('flip')) award('flipped','f'+i,2); }; });
+})();
+
+/* ===== FAA STARS ON RAPID + HUD INIT ===== */
+(function(){
+ document.querySelectorAll('#p-rapid .ol > div').forEach(function(row,i){
+   var fk='o'+i, on=P.faa[fk]?' on':'', ch=P.faa[fk]?'★':'☆';
+   var s=document.createElement('span'); s.className='faa'+on; s.dataset.fk=fk; s.textContent=ch;
+   s.title='Mark Frequently-Asked-Again'; s.onclick=function(){ toggleFAA(fk,s); };
+   row.appendChild(s);
+ });
+ var rb=document.getElementById('hReset');
+ if(rb) rb.onclick=function(){ if(confirm('Reset all XP, FAA and opened-node progress for this topic?')){
+   P={xp:0,opened:{},solved:{},flipped:{},faa:{},probs:{},wrong:{}}; saveP(); location.reload(); } };
+ refreshHUD(false);
+})();
+
+/* ===== PROGRESS DASHBOARD ===== */
+function buildProgress(){
+ var box=document.getElementById('p-progress'); if(!box) return;
+ var nodesTotal=MAP.length-1, mcqTotal=MCQ.length, fcTotal=FC.length, probTotal=PROB.length;
+ var opened=Object.keys(P.opened).filter(function(k){return k.indexOf('_bonus')<0;}).length;
+ var solved=Object.keys(P.solved).length, flipped=Object.keys(P.flipped).length, probs=Object.keys(P.probs).length;
+ var studyPct=Math.round(((opened/nodesTotal)+(flipped/fcTotal))/2*100);
+ var testPct=Math.round(((solved/mcqTotal)+(probs/probTotal))/2*100);
+ var overall=Math.round((studyPct+testPct)/2);
+ var rank = overall>=90?'🏆 Topper':overall>=70?'🥇 Strong':overall>=45?'🥈 Building':overall>=20?'🥉 Starter':'🌱 Beginner';
+ var wrong=P.wrong||{}, wrongKeys=Object.keys(wrong);
+ var branchHtml=HUB_ORDER.map(function(hid){
+   var lv=MAP.filter(function(n){return n.cat===hid;});
+   var done=lv.filter(function(l){return P.opened['n'+l.id];}).length;
+   var pct=lv.length?Math.round(done/lv.length*100):0;
+   var lock=hubUnlocked(hid)?'':' 🔒';
+   return '<div class="pg-branch"><div class="bt"><span>'+hubName(hid)+lock+'</span><span class="pc">'+done+'/'+lv.length+'</span></div>'+
+     '<div class="pg-bar"><span style="width:'+pct+'%"></span></div></div>';
+ }).join('');
+ var faaKeys=Object.keys(P.faa);
+ var faaHtml = faaKeys.length? faaKeys.map(function(k){
+   var label=k; if(k[0]==='q'){var qi=+k.slice(1); if(MCQ[qi]) label='MCQ Q'+(qi+1)+': '+MCQ[qi].q; }
+   else if(k[0]==='o'){ label='Rapid one-liner #'+(+k.slice(1)+1); }
+   return '<div class="pg-faa"><span class="s">★</span><span>'+label+'</span></div>';
+ }).join('') : '<div class="pg-empty">No flagged items yet. Tap ☆ on any one-liner or MCQ to build your revisit list.</div>';
+ var weakHtml = wrongKeys.length? wrongKeys.map(function(k){var qi=+k.slice(1);
+   return '<div class="pg-faa"><span class="s" style="color:#B91C1C">✗</span><span>'+(MCQ[qi]?MCQ[qi].q:k)+'</span></div>';
+ }).join('') : '<div class="pg-empty">No wrong answers recorded. 👍</div>';
+ box.innerHTML=
+  '<h2 class="sec"><span class="em">📈</span>Your Learning Tracker</h2>'+
+  '<div class="sec-sub">Study (materials) and testing (questions) tracked separately, then combined into mastery.</div>'+
+  '<div class="pg-hero"><div class="big">'+overall+'%</div><div class="lbl">Overall mastery</div><div class="rank">'+rank+' · '+P.xp+' XP</div></div>'+
+  '<div class="pg-grid">'+
+   '<div class="pg-stat"><div class="v">'+studyPct+'%</div><div class="k">📖 Study (nodes + cards)</div><div class="pg-bar"><span style="width:'+studyPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+testPct+'%</div><div class="k">🎯 Testing (MCQ + problems)</div><div class="pg-bar"><span style="width:'+testPct+'%"></span></div></div>'+
+   '<div class="pg-stat"><div class="v">'+opened+'/'+nodesTotal+'</div><div class="k">🧭 Nodes opened</div></div>'+
+   '<div class="pg-stat"><div class="v">'+flipped+'/'+fcTotal+'</div><div class="k">🃏 Cards reviewed</div></div>'+
+   '<div class="pg-stat"><div class="v">'+solved+'/'+mcqTotal+'</div><div class="k">📝 MCQs cleared</div></div>'+
+   '<div class="pg-stat"><div class="v">'+probs+'/'+probTotal+'</div><div class="k">🧮 Problems solved</div></div>'+
+  '</div>'+
+  '<div class="pg-section-h">🧭 Branch completion</div>'+branchHtml+
+  '<div class="pg-section-h">⭐ FAA revisit list ('+faaKeys.length+')</div>'+faaHtml+
+  '<div class="pg-section-h">⚠️ Weak areas — MCQs you missed ('+wrongKeys.length+')</div>'+weakHtml;
+}
+</script>
+<script src="/study/_cm-auto-track.js"></script>
+</body></html>
