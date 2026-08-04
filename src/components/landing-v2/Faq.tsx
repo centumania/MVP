@@ -14,20 +14,20 @@ import { useLang } from './lang'
 const FAQS = {
   en: [
     {
-      q: "What do I get with the subscription?",
+      q: "What do I get for the price?",
       a: "Everything, one price: a daily AI-personalised test, an AI mentor report after every attempt, the full classroom (video + notes per subject), interactive study modules, daily exam-tuned current affairs, a live batch leaderboard, and your Centum Index — all in English and Tamil. No add-ons, no upsells.",
     },
     {
       q: 'Is it a subscription or a one-time payment?',
-      a: "It's a subscription per exam — pay monthly, or go annual and get 2 months free. Billing is automatic and you can cancel anytime from your account; you keep full access until the end of the period you've paid for.",
+      a: "One-time. You pay once for your exam's full programme length — no auto-renewal, no recurring billing, nothing charged again after that.",
     },
     {
       q: 'Is there a free trial?',
-      a: "Yes — Day 1 is free, no card needed to start. Take a real daily test, open a classroom lesson and see your Centum Index move before you decide to subscribe.",
+      a: "Yes — Day 1 is free, no card needed to start. Take a real daily test, open a classroom lesson and see your Centum Index move before you pay to unlock the full cycle.",
     },
     {
-      q: 'Can I cancel anytime?',
-      a: "Anytime, in two taps, no lock-in and no cancellation fee. You won't be charged again, and your access stays live until your current month or year runs out.",
+      q: 'What if I don’t clear the exam?',
+      a: "If you attempt every daily exam, average below 50%, and request within 7 days of the final exam day, you get a full refund — verified automatically from your submission data. Score well and you can earn back up to 50% of your fee through the Centum Index reward tiers instead.",
     },
     {
       q: 'Which exams does CentuMania cover?',
@@ -44,20 +44,20 @@ const FAQS = {
   ],
   ta: [
     {
-      q: 'சந்தாவில் எனக்கு என்ன கிடைக்கும்?',
+      q: 'இந்த விலைக்கு எனக்கு என்ன கிடைக்கும்?',
       a: 'எல்லாமே, ஒரே விலையில்: தினசரி AI தனிப்பயன் தேர்வு, ஒவ்வொரு முயற்சிக்குப் பின் AI வழிகாட்டி அறிக்கை, முழு classroom (பாடத்திற்கு வீடியோ + குறிப்புகள்), ஊடாடும் படிப்பு பாடங்கள், தேர்வுக்கு ஏற்ற தினசரி நடப்பு நிகழ்வுகள், நேரடி batch தரவரிசை, மற்றும் உங்கள் Centum Index — ஆங்கிலம் & தமிழில். கூடுதல் கட்டணம் இல்லை.',
     },
     {
       q: 'இது சந்தாவா அல்லது ஒருமுறை கட்டணமா?',
-      a: 'ஒவ்வொரு தேர்வுக்கும் ஒரு சந்தா — மாதந்தோறும் செலுத்துங்கள், அல்லது ஆண்டுத் திட்டத்தில் 2 மாதம் இலவசம். கட்டணம் தானாகச் செலுத்தப்படும்; எப்போது வேண்டுமானாலும் கணக்கிலிருந்து நிறுத்தலாம். செலுத்திய காலம் முடியும் வரை முழு அணுகல் தொடரும்.',
+      a: 'ஒருமுறை கட்டணம். உங்கள் தேர்வின் முழு காலத்திற்கும் ஒரே முறை செலுத்துங்கள் — தானாக புதுப்பிக்கப்படாது, மீண்டும் கட்டணம் வசூலிக்கப்படாது.',
     },
     {
       q: 'இலவச முயற்சி உண்டா?',
-      a: 'ஆம் — முதல் நாள் இலவசம், தொடங்க கார்டு தேவையில்லை. உண்மையான தினசரி தேர்வை எழுதுங்கள், ஒரு classroom பாடத்தைத் திறங்கள், சந்தா செலுத்தும் முன் உங்கள் Centum Index நகர்வதைப் பாருங்கள்.',
+      a: 'ஆம் — முதல் நாள் இலவசம், தொடங்க கார்டு தேவையில்லை. உண்மையான தினசரி தேர்வை எழுதுங்கள், ஒரு classroom பாடத்தைத் திறங்கள், முழு அணுகலுக்கு செலுத்தும் முன் உங்கள் Centum Index நகர்வதைப் பாருங்கள்.',
     },
     {
-      q: 'எப்போது வேண்டுமானாலும் நிறுத்தலாமா?',
-      a: 'எப்போது வேண்டுமானாலும், இரண்டு தட்டுகளில் — கட்டுப்பாடு இல்லை, நிறுத்தக் கட்டணம் இல்லை. மீண்டும் கட்டணம் விதிக்கப்படாது; உங்கள் நடப்பு மாதம்/ஆண்டு முடியும் வரை அணுகல் தொடரும்.',
+      q: 'தேர்வில் தேர்ச்சி பெறவில்லை என்றால்?',
+      a: 'ஒவ்வொரு தினசரி தேர்வையும் எழுதி, சராசரி 50%க்குக் கீழ் பெற்று, இறுதித் தேர்வு நாளிலிருந்து 7 நாட்களுக்குள் கோரினால், முழு பணமும் திரும்பப் பெறலாம் — உங்கள் சமர்ப்பணத் தரவிலிருந்து தானாக சரிபார்க்கப்படும். நன்றாகச் செய்தால், Centum Index வெகுமதி நிலைகள் மூலம் உங்கள் கட்டணத்தில் 50% வரை திரும்பப் பெறலாம்.',
     },
     {
       q: 'CentuMania எந்தெந்தத் தேர்வுகளை உள்ளடக்குகிறது?',
