@@ -183,5 +183,15 @@ export function getLesson(slug: string, topicId: string): { course: Course; less
   return { course, lesson: course.lessons[index]!, index }
 }
 
+// Looks up a lesson by its global id alone — used by the module-scoped AI
+// assistant, which only knows which module it's embedded in, not the course slug.
+export function getLessonById(id: string): { course: Course; lesson: Lesson } | undefined {
+  for (const course of COURSES) {
+    const lesson = course.lessons.find(l => l.id === id)
+    if (lesson) return { course, lesson }
+  }
+  return undefined
+}
+
 // localStorage key for instant completion ticks (backend also gets node_completed).
 export const completionKey = (topicId: string) => `cm:classroom:done:${topicId}`
