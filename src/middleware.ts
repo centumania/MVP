@@ -77,12 +77,15 @@ export function middleware(request: NextRequest): NextResponse {
 
   // Cookie gate: /study/*, /content/*, /pdfs/* require cm_access cookie
   // (set by /api/materials/status after auth + payment check).
-  // Excluded: /study/daily-test — this is a Next.js app route that uses JWT auth,
+  // Excluded: the Next.js app routes that use JWT auth (Supabase session),
   // not the cm_access cookie used for static HTML study files. Must be an EXACT
   // route match (not a prefix): static files like /study/daily-test-engine.html
   // share the prefix but need the normal static-file treatment.
+  // /study/test-engine is the current route (src/app/study/test-engine/page.tsx);
+  // /study/daily-test is kept for any lingering links to the earlier name.
   const isDailyTestAppRoute =
-    pathname === '/study/daily-test' || pathname.startsWith('/study/daily-test/')
+    pathname === '/study/test-engine' || pathname.startsWith('/study/test-engine/') ||
+    pathname === '/study/daily-test'  || pathname.startsWith('/study/daily-test/')
   const isCookieGated =
     (pathname.startsWith('/study/') && !isDailyTestAppRoute) ||
     pathname.startsWith('/content/') ||

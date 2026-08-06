@@ -4,9 +4,11 @@
  * WelcomeFlow — the brand-first entry experience at "/welcome".
  *
  *   Step 0  Language gate  → English / தமிழ் (brand-decode + trust)
- *   Step 1-4 Auto-advancing onboarding MCQs (exam · stage · daily hours · source)
+ *   Step 1  Auto-advancing onboarding MCQ (exam only — kept deliberately short;
+ *           stage/hours/source used to be asked here too but that tax on a
+ *           first-time visitor wasn't worth what it captured)
  *            — selecting an option auto-advances; this is the lead/data capture.
- *   Done    → saves { lang, exam, stage, hours, source } to localStorage
+ *   Done    → saves { lang, exam } to localStorage
  *            (cm_lang + cm_onboarding), fires a best-effort POST to /api/leads,
  *            and returns to the landing "/". Returning visitors skip straight
  *            past the gate (the "/" guard only sends first-timers here).
@@ -31,7 +33,7 @@ const LANGS: { code: Lang; name: string; sample: string; aria: string }[] = [
 
 // Localised onboarding. `value` is the language-neutral key we store.
 type Opt = { value: string; en: string; ta: string; tanglish: string }
-type Q = { key: 'exam' | 'stage' | 'hours' | 'source'; en: string; ta: string; tanglish: string; opts: Opt[] }
+type Q = { key: 'exam'; en: string; ta: string; tanglish: string; opts: Opt[] }
 const QUESTIONS: Q[] = [
   {
     key: 'exam',
@@ -45,41 +47,6 @@ const QUESTIONS: Q[] = [
       { value: 'RRB',     en: 'Railways (RRB)',         ta: 'ரயில்வே (RRB)',          tanglish: 'Railways (RRB)' },
       { value: 'TNGovt',  en: 'TN Govt (TNPSC)',        ta: 'தமிழ்நாடு அரசு (TNPSC)',  tanglish: 'TN Govt (TNPSC)' },
       { value: 'Other',   en: 'Something else',         ta: 'வேறு ஏதேனும்',           tanglish: 'Vera edhachum' },
-    ],
-  },
-  {
-    key: 'stage',
-    en: 'Where are you in your preparation?',
-    ta: 'உங்கள் தயாரிப்பு எந்த நிலையில் உள்ளது?',
-    tanglish: 'Ungaloda prep eppo iruku?',
-    opts: [
-      { value: 'starting', en: 'Just starting out',   ta: 'இப்போதுதான் தொடங்குகிறேன்', tanglish: 'Ippo dhaan start panren' },
-      { value: 'months',   en: 'A few months in',      ta: 'சில மாதங்களாக',            tanglish: 'Konja months aachu' },
-      { value: 'near',     en: 'My exam is near',      ta: 'என் தேர்வு நெருங்கிவிட்டது', tanglish: 'Exam romba close-la iruku' },
-    ],
-  },
-  {
-    key: 'hours',
-    en: 'How many hours can you study daily?',
-    ta: 'தினமும் எத்தனை மணி நேரம் படிக்க முடியும்?',
-    tanglish: 'Dhinam evlo hours padikka mudiyum?',
-    opts: [
-      { value: 'lt1', en: 'Less than 1 hour', ta: '1 மணி நேரத்திற்கும் குறைவாக', tanglish: '1 hour-ku kammi' },
-      { value: '1-2', en: '1–2 hours',        ta: '1–2 மணி நேரம்',             tanglish: '1–2 hours' },
-      { value: '2-4', en: '2–4 hours',        ta: '2–4 மணி நேரம்',             tanglish: '2–4 hours' },
-      { value: '4+',  en: '4+ hours',         ta: '4+ மணி நேரம்',              tanglish: '4+ hours' },
-    ],
-  },
-  {
-    key: 'source',
-    en: 'How did you hear about CentuMania?',
-    ta: 'CentuMania பற்றி எப்படித் தெரிந்துகொண்டீர்கள்?',
-    tanglish: 'CentuMania-va epdi theriஞ்சuko?',
-    opts: [
-      { value: 'whatsapp',  en: 'WhatsApp',        ta: 'WhatsApp',    tanglish: 'WhatsApp' },
-      { value: 'instagram', en: 'Instagram',       ta: 'Instagram',   tanglish: 'Instagram' },
-      { value: 'friend',    en: 'A friend told me', ta: 'நண்பர் சொன்னார்', tanglish: 'Friend sonnaanga' },
-      { value: 'search',    en: 'Google / Search',  ta: 'Google / தேடல்', tanglish: 'Google / Search' },
     ],
   },
 ]

@@ -6,10 +6,14 @@
  * Mirrors the actual /dashboard (DashboardView): the ink-navy Today's Study
  * hero, the "no exam / AI revision test" cards and the Rank/Score/Streak/
  * Accuracy stat tiles — plus Modules (study material), Classroom and Daily Test.
- * Everything inside is reachable; nothing links out of the frame. Mock data,
- * self-contained. Bilingual via useLang.
+ * Mock data, self-contained, mostly nothing links out of the frame — with one
+ * deliberate exception: the Today's Study "Continue studying" button opens the
+ * real Acids, Bases & Salts module (/demo/chemistry, public, no signup) so a
+ * visitor can try the actual product, not just look at a picture of it.
+ * Bilingual via useLang.
  */
 import { useState } from 'react'
+import Link from 'next/link'
 import { ArrowRight, BarChart, BookOpen, Brain, Flame, Timer, Users } from './icons'
 import { useLang } from './lang'
 
@@ -86,17 +90,25 @@ export default function PhoneDemo() {
                         <span className="text-[8px] font-bold uppercase tracking-widest text-white/40">{t('Tracking live', 'நேரடி கண்காணிப்பு')}</span>
                       </span>
                     </div>
-                    <p className="mt-2.5 text-[9px] font-extrabold uppercase tracking-[0.16em] text-amber-400/90">{t('General Studies', 'பொது அறிவு')}</p>
-                    <h2 className="mt-0.5 text-[15px] font-extrabold leading-snug tracking-tight">{t('Daily Test Engine — GS Weighted', 'தினசரி தேர்வு இயந்திரம் — GS')}</h2>
+                    <p className="mt-2.5 text-[9px] font-extrabold uppercase tracking-[0.16em] text-amber-400/90">{t('Chemistry', 'வேதியியல்')}</p>
+                    <h2 className="mt-0.5 text-[15px] font-extrabold leading-snug tracking-tight">{t('Acids, Bases & Salts', 'அமிலங்கள், காரங்கள் & உப்புகள்')}</h2>
                     <div className="mt-2.5">
                       <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
-                        <div className="h-full rounded-full" style={{ width: '20%', background: 'linear-gradient(90deg,#4ADE80,#22D3EE)' }} />
+                        <div className="h-full rounded-full" style={{ width: '12%', background: 'linear-gradient(90deg,#4ADE80,#22D3EE)' }} />
                       </div>
-                      <p className="mt-1.5 text-[10px] font-semibold tabular-nums text-white/55">{t('1/30 nodes cleared · 0% first-attempt · 10 XP', '1/30 முடிந்தது · 0% முதல்-முயற்சி · 10 XP')}</p>
+                      <p className="mt-1.5 text-[10px] font-semibold tabular-nums text-white/55">{t('5/40 nodes cleared · 0% first-attempt · 40 XP', '5/40 முடிந்தது · 0% முதல்-முயற்சி · 40 XP')}</p>
                     </div>
-                    <button type="button" className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-white px-3.5 py-2 text-[12px] font-bold" style={{ color: INK }}>
+                    {/* Only real, out-of-frame link in this mock phone — opens the actual
+                        interactive module (public demo copy, no signup) in a new tab. */}
+                    <Link
+                      href="/demo/chemistry"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-white px-3.5 py-2 text-[12px] font-bold"
+                      style={{ color: INK }}
+                    >
                       {t('Continue studying', 'தொடர்ந்து படியுங்கள்')} <ArrowRight size={13} />
-                    </button>
+                    </Link>
                   </div>
                 </div>
 
