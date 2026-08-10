@@ -118,15 +118,15 @@ export default function Hero() {
             </div>
             <p className="mt-3 text-center text-[12.5px] font-medium text-gray-600 lg:text-left">
               <span className="font-semibold text-amber-600">{t('Founder pricing', 'Founder விலை')}</span>
-              {t(' — lock the lowest subscription rate CentuMania will ever offer.', ' — CentuMania என்றுமே வழங்கும் மிகக் குறைந்த சந்தா விலையைப் பிடித்துக்கொள்ளுங்கள்.')}
+              {t(' — lock the lowest one-time price CentuMania will ever offer.', ' — CentuMania என்றுமே வழங்கும் மிகக் குறைந்த ஒரே முறை விலையைப் பிடித்துக்கொள்ளுங்கள்.')}
             </p>
           </Reveal>
 
           <Reveal delay={320}>
             <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] font-medium text-gray-600 lg:justify-start">
               {(lang === 'ta'
-                ? ['எப்போது வேண்டுமானாலும் நிறுத்தலாம்', 'முதல் நாள் இலவசம்', 'English & தமிழ்']
-                : ['Cancel anytime', 'Day 1 free', 'English & Tamil']
+                ? ['ஒரே முறை கட்டணம்', 'முதல் நாள் இலவசம்', 'English & தமிழ்']
+                : ['One-time payment', 'Day 1 free', 'English & Tamil']
               ).map((chip) => (
                 <li key={chip} className="flex items-center gap-1.5">
                   <Check size={14} className="text-emerald-600" />

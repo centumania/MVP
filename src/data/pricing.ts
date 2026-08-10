@@ -16,10 +16,10 @@ export interface Programme {
 }
 
 export const PROGRAMMES: Programme[] = [
-  { value: 'UDC',     label: 'UDC — Upper Division Clerk',     exam: 'UDC',     full: 'Upper Division Clerk',       priceINR: 999,  originalINR: 1499, days: 30 },
-  { value: 'SSC',     label: 'SSC — CGL / CHSL / MTS / CPO',   exam: 'SSC',     full: 'Staff Selection Commission', priceINR: 1499, originalINR: 2499, days: 50 },
-  { value: 'RRB',     label: 'RRB — NTPC / Group D',           exam: 'RRB',     full: 'Railway Recruitment Board',  priceINR: 1299, originalINR: 2199, days: 45 },
-  { value: 'Banking', label: 'Banking — IBPS / SBI',           exam: 'Banking', full: 'IBPS / SBI',                 priceINR: 1799, originalINR: 2999, days: 60 },
+  { value: 'UDC',     label: 'UDC — Upper Division Clerk',     exam: 'UDC',     full: 'Upper Division Clerk',       priceINR: 1999, originalINR: 4999, days: 30 },
+  { value: 'SSC',     label: 'SSC — CGL / CHSL / MTS / CPO',   exam: 'SSC',     full: 'Staff Selection Commission', priceINR: 3499, originalINR: 8999, days: 50 },
+  { value: 'RRB',     label: 'RRB — NTPC / Group D',           exam: 'RRB',     full: 'Railway Recruitment Board',  priceINR: 2999, originalINR: 6999, days: 45 },
+  { value: 'Banking', label: 'Banking — IBPS / SBI',           exam: 'Banking', full: 'IBPS / SBI',                 priceINR: 3999, originalINR: 9999, days: 60 },
 ]
 
 // Founder-batch accounts predate programme selection (no user_metadata.program)

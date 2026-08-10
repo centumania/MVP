@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AppLayout } from '@/src/components/layout/AppLayout'
+import { ModuleAssistant } from '@/src/components/ai/ModuleAssistant'
 import { getCourse, getLesson, type Course, type Lesson } from '@/src/data/classroom'
 // Free-topic count lives in lib/access/free-content so this UI gate and the
 // middleware gate that serves the underlying /study files can never drift apart.
@@ -141,6 +142,9 @@ function LessonPane({
 
       {/* EXPLANATION below */}
       <article className="cm-lesson" dangerouslySetInnerHTML={{ __html: lesson.explanation }} />
+
+      {/* Ask about this lesson — strictly scoped to the notes above */}
+      <ModuleAssistant moduleId={lesson.id} token={token} />
 
       {/* Interactive module — EMBEDDED for non-video courses (their primary media) */}
       {lesson.practiceHtmlPath && !hasVideo && (
