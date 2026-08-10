@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CentuMania · Modal Verbs — 8 Micro-Classes</title>
+<style>
+:root{
+ --bg:#0e1120;--bg2:#151a2e;--card:#1a2038;--card2:#212844;--line:#2c3456;
+ --txt:#e9ecf8;--dim:#98a1c6;--acc:#ffb020;--acc2:#ff7a45;--ok:#3ddc97;--no:#ff5c7a;
+ --blue:#5aa9ff;--pur:#b07bff;--sh:0 8px 28px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"Segoe UI",system-ui,"Noto Sans Tamil",sans-serif;line-height:1.65}
+/* ---- LAYOUT ---- */
+.shell{display:flex;min-height:100vh}
+aside{width:270px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--line);
+ position:sticky;top:0;height:100vh;overflow-y:auto;padding:16px 12px}
+main{flex:1;min-width:0;padding:0 0 80px}
+.logo{font-size:11px;letter-spacing:4px;color:var(--acc);font-weight:800;text-transform:uppercase}
+aside h2{font-size:16px;margin:4px 0 3px;font-weight:800}
+aside .msub{font-size:11.5px;color:var(--dim);margin-bottom:14px}
+.rlist{display:grid;gap:4px}
+.rbtn{display:flex;gap:9px;align-items:flex-start;background:transparent;border:1px solid transparent;
+ color:var(--dim);text-align:left;padding:8px 9px;border-radius:9px;cursor:pointer;font-family:inherit;
+ font-size:12.5px;line-height:1.35;transition:.13s;width:100%}
+.rbtn:hover{background:var(--card);color:var(--txt)}
+.rbtn.on{background:var(--card2);border-color:var(--acc);color:var(--txt)}
+.rbtn b{min-width:22px;color:var(--acc);font-size:12px}
+.rbtn .dn{display:block;font-size:11px;color:var(--dim);margin-top:1px}
+.rbtn .tick{margin-left:auto;color:var(--ok);font-size:11px}
+/* ---- TOPBAR ---- */
+.top{position:sticky;top:0;z-index:40;background:rgba(14,17,32,.95);backdrop-filter:blur(10px);
+ border-bottom:1px solid var(--line);padding:13px 26px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.top h1{font-size:19px;font-weight:800}
+.top h1 em{font-style:normal;color:var(--acc)}
+.top .tta{font-size:13px;color:var(--pur);width:100%;margin-top:-4px}
+.badge{font-size:10.5px;padding:3px 9px;border-radius:20px;font-weight:800;letter-spacing:.4px}
+.b-Easy{background:rgba(61,220,151,.16);color:var(--ok)}
+.b-Medium{background:rgba(255,176,32,.16);color:var(--acc)}
+.b-Hard{background:rgba(255,92,122,.16);color:var(--no)}
+.mono{font-family:ui-monospace,Consolas,monospace;font-size:11px;color:var(--dim)}
+.navbtns{margin-left:auto;display:flex;gap:7px}
+.btn{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:7px 13px;
+ border-radius:8px;font-size:12.5px;cursor:pointer;font-family:inherit;transition:.13s;white-space:nowrap}
+.btn:hover{border-color:var(--acc);color:var(--acc)}
+.btn.pri{background:var(--acc);color:#1a1405;border-color:var(--acc);font-weight:700}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+/* ---- STEP ---- */
+.body{padding:22px 26px;max-width:940px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;
+ overflow:hidden;box-shadow:var(--sh)}
+.sh{display:flex;gap:12px;align-items:center;padding:13px 16px;cursor:pointer;user-select:none;transition:.13s}
+.sh:hover{background:var(--card2)}
+.sn{min-width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;
+ background:linear-gradient(135deg,var(--acc),var(--acc2));color:#1a1405;font-weight:800;font-size:13px}
+.st{flex:1;font-weight:700;font-size:15px}
+.st small{display:block;font-weight:400;font-size:12px;color:var(--dim);margin-top:1px}
+.cv{color:var(--dim);transition:.2s;font-size:13px}
+.step.open .cv{transform:rotate(180deg)}
+.sb{display:none;padding:4px 16px 18px;border-top:1px solid var(--line)}
+.step.open .sb{display:block}
+/* ---- CONTENT BLOCKS ---- */
+.en{font-size:15px;margin:11px 0 3px}
+.ta{font-size:15.5px;color:#dcd2ff;margin:2px 0 1px}
+.tl{font-size:12.5px;color:var(--dim);font-style:italic;margin-bottom:9px}
+.hd{font-size:12.5px;font-weight:800;color:var(--acc);letter-spacing:.6px;text-transform:uppercase;margin:16px 0 5px}
+.box{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:9px 0}
+.box.gold{border-left:3px solid var(--acc);background:rgba(255,176,32,.07)}
+.box.blue{border-left:3px solid var(--blue)}
+.box.red{border-left:3px solid var(--no);background:rgba(255,92,122,.07)}
+.box.grn{border-left:3px solid var(--ok);background:rgba(61,220,151,.07)}
+.box.pur{border-left:3px solid var(--pur)}
+pre.dia{background:#0a0d1a;border:1px solid var(--line);border-radius:10px;padding:14px 16px;
+ font-family:ui-monospace,Consolas,monospace;font-size:13px;line-height:1.5;color:var(--acc);
+ overflow-x:auto;margin:10px 0;white-space:pre}
+/* ---- TABLES ---- */
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{background:var(--card2);font-size:11.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim)}
+td.w{color:var(--no)}td.c{color:var(--ok)}
+td.tam{color:#dcd2ff}
+.lvl{font-size:10px;padding:2px 7px;border-radius:12px;font-weight:800;white-space:nowrap}
+.l-Easy{background:rgba(61,220,151,.15);color:var(--ok)}
+.l-Medium{background:rgba(90,169,255,.15);color:var(--blue)}
+.l-Hard{background:rgba(255,176,32,.15);color:var(--acc)}
+.l-Expert{background:rgba(255,92,122,.15);color:var(--no)}
+/* ---- QUIZ ---- */
+.qz{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin:8px 0}
+.qz .qn{font-size:14px;font-weight:600;margin-bottom:8px}
+.qz .qn i{font-style:normal;color:var(--acc);margin-right:6px;font-weight:800}
+.ops{display:flex;gap:6px;flex-wrap:wrap}
+.op{background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:8px;
+ padding:6px 14px;font-size:13.5px;cursor:pointer;font-family:inherit;transition:.12s;min-width:74px}
+.op:hover{border-color:var(--acc)}
+.op.right{background:rgba(61,220,151,.18);border-color:var(--ok);color:var(--ok);font-weight:700}
+.op.wrong{background:rgba(255,92,122,.18);border-color:var(--no);color:var(--no)}
+.sol{display:none;margin-top:8px;font-size:12.5px;color:var(--dim);border-left:2px solid var(--line);padding-left:10px}
+.qz.done .sol{display:block}
+.scorebar{display:flex;gap:10px;align-items:center;background:var(--bg2);border:1px solid var(--acc);
+ border-radius:10px;padding:10px 14px;margin:12px 0;font-size:13.5px;flex-wrap:wrap}
+.scorebar b{color:var(--acc);font-size:17px}
+.bar{flex:1;min-width:120px;height:7px;background:var(--card);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--ok));transition:.35s}
+/* ---- AI PANEL ---- */
+.ai{background:linear-gradient(135deg,rgba(176,123,255,.11),rgba(90,169,255,.07));
+ border:1px solid rgba(176,123,255,.35);border-radius:12px;padding:15px 17px;margin:10px 0}
+.ai .who{font-size:12px;font-weight:800;color:var(--pur);letter-spacing:.8px;margin-bottom:9px}
+.ai p{margin-bottom:11px}
+/* ---- REVISION SHEET ---- */
+.rev{display:grid;grid-template-columns:150px 1fr;gap:1px;background:var(--line);
+ border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:10px 0;font-size:13.5px}
+.rev div{background:var(--bg2);padding:9px 13px}
+.rev div:nth-child(odd){color:var(--acc);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+/* ---- MISC ---- */
+.wordgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;margin:10px 0}
+.wc{background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:9px 11px}
+.wc b{display:block;font-size:14px;color:var(--blue)}
+.wc span{display:block;font-size:13.5px;color:#dcd2ff;margin-top:3px}
+.wc em{display:block;font-size:11.5px;color:var(--dim);font-style:italic}
+.think{display:grid;gap:6px;margin:9px 0}
+.think div{padding:8px 12px;border-radius:8px;font-size:13.5px}
+.think .bad{background:rgba(255,92,122,.09);border-left:3px solid var(--no)}
+.think .good{background:rgba(61,220,151,.09);border-left:3px solid var(--ok)}
+footer{padding:26px;text-align:center;color:var(--dim);font-size:12px;border-top:1px solid var(--line)}
+@media(max-width:880px){
+ .shell{flex-direction:column}
+ aside{width:100%;height:auto;position:relative;max-height:250px}
+ .body{padding:16px}.top{padding:12px 16px}.rev{grid-template-columns:1fr}
+}
+@media print{aside,.top .navbtns,.cv{display:none!important}.sb{display:block!important}
+ body{background:#fff;color:#000}.step{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside>
+  <div class="logo">CentuMania</div>
+  <h2>Modal Verbs — Mood &amp; Attitude</h2>
+  <div class="msub">Module 6 · 8 Micro-Classes · Rules 63–70</div>
+  <div class="rlist" id="rlist"></div>
+</aside>
+<main>
+  <div class="top">
+    <h1 id="tt"></h1>
+    <span class="badge" id="tdiff"></span>
+    <span class="mono" id="trc"></span>
+    <div class="navbtns">
+      <button class="btn" id="prev">← Prev</button>
+      <button class="btn" id="allopen">Open all steps</button>
+      <button class="btn pri" id="next">Next →</button>
+    </div>
+    <div class="tta" id="tta"></div>
+  </div>
+  <div class="body" id="body"></div>
+  <footer>CentuMania · Modal Verbs Micro-Classes · 15-step teaching format · Tamil + Tanglish</footer>
+</main>
+</div>
+
+<script>
+/* ============ COMPACT DATA FORMAT ============
+   s7  solved examples : "sentence|answer|Level|why"
+   s8  wrong vs right  : "wrong|correct|why"
+   s9  PYQ             : "Type|question|optA;optB;optC|ansIdx|solution"
+   s12 practice        : "sentence with ____|optA;optB|ansIdx"
+   s13 challenge       : "question|optA;optB;optC|ansIdx|solution"
+   s6  word-by-word    : "word|tamil|tanglish"
+============================================== */
+const RULES=[
+/* ========== RULE 63 ========== */
+{n:63,rc:"MOD-01",d:"Easy",t:"A Modal is ALWAYS followed by the Bare Infinitive",
+ tam:"Modal-க்குப் பின் V1 மட்டுமே — -s இல்லை, -ed இல்லை, 'to' இல்லை",
+ s1:{en:"Can, could, may, might, shall, should, will, would and must are followed by the BASE FORM V1 — no -s, no -ed, no 'to'. The modal itself carries the tense, so the main verb stays uninflected.",
+  ta:"Can, could, may, might, shall, should, will, would, must ஆகியவற்றுக்குப் பின் அடிப்படை வடிவம் V1 வரும் — -s இல்லை, -ed இல்லை, 'to' இல்லை. Modal-ஏ tense-ஐச் சுமக்கிறது, எனவே முதன்மை வினைச்சொல் மாற்றமின்றி இருக்கும்.",
+  tl:"Can, could, may, might, shall, should, will, would, must aagiyavatrukkup pin adippadai vadivam V1 varum — -s illai, -ed illai, 'to' illai. Modal-e tense-aich sumakkiradhu.",
+  formula:"MODAL  +  V1  (bare infinitive)\n\n  He can SWIM well.        ✔  (not 'swims')\n  She must GO now.         ✔  (not 'to go')\n  They should STUDY hard.  ✔  (not 'studied')\n\nTHE THREE THAT KEEP 'TO':\n  ought TO · used TO · have TO\n  You ought TO apologise.  ✔"},
+
+ s2:[
+ {h:"The modal already carries the tense",
+  en:"'He can swim' — 'can' is already a present-tense form, and 'could' is already past. Since the modal shows the tense, the main verb has no work to do. It relaxes back to its plain base form.",
+  ta:"Modal ஏற்கனவே tense-ஐச் சுமக்கிறது. 'He can swim' — 'can' ஏற்கனவே ஒரு நிகழ்கால வடிவம், 'could' ஏற்கனவே கடந்தகாலம். Modal tense-ஐக் காட்டுவதால், முதன்மை வினைச்சொல்லுக்கு வேலை இல்லை. அது தன் எளிய அடிப்படை வடிவத்திற்குத் திரும்புகிறது.",
+  tl:"Modal erkanave tense-aich sumakkiradhu. 'He can swim' — 'can' erkanave oru nigazhgaala vadivam, 'could' erkanave kadandhagaalam. Modal tense-aik kaattuvadhaal, mudhanmai vinaicholukku velai illai."},
+ {h:"Modals never take -s in the third person",
+  en:"'He can', 'she must', 'it may' — never 'he cans' or 'she musts'. Modals are the one verb family that ignores subject-verb agreement completely. This is a relief after Module 4.",
+  ta:"Modal-கள் மூன்றாம் நபரில் ஒருபோதும் -s எடுப்பதில்லை. 'He can', 'she must', 'it may' — ஒருபோதும் 'he cans' அல்லது 'she musts' அல்ல. Subject-verb agreement-ஐ முற்றிலும் புறக்கணிக்கும் ஒரே வினைச்சொல் குடும்பம் Modal-கள்தான். Module 4-க்குப் பிறகு இது ஒரு நிம்மதி.",
+  tl:"Modal-kal moondraam nabaril orupodhum -s eduppadhillai. 'He can', 'she must', 'it may' — orupodhum 'he cans' alladhu 'she musts' alla. Subject-verb agreement-ai mutrilum purakkanikkum ore vinaichol kudumbam Modal-kal-dhaan."},
+ {h:"Two modals can never sit together",
+  en:"'He will can do it' is impossible. English allows only ONE modal per verb group. To express two ideas, replace one with a phrase: 'He will BE ABLE TO do it', 'You will HAVE TO go'.",
+  ta:"இரண்டு modal ஒருபோதும் சேர்ந்து வர முடியாது. 'He will can do it' சாத்தியமில்லை. ஒரு வினைச்சொல் குழுவுக்கு ஆங்கிலம் ஒரே ஒரு modal-ஐ மட்டுமே அனுமதிக்கிறது. இரண்டு கருத்துக்களை வெளிப்படுத்த, ஒன்றை ஒரு தொடரால் மாற்றுங்கள்: 'He will BE ABLE TO do it', 'You will HAVE TO go'.",
+  tl:"Irandu modal orupodhum serndhu vara mudiyaadhu. 'He will can do it' saadhiyamillai. Oru vinaichol kuzhuvukku Aangilam ore oru modal-ai mattume anumadhikkiradhu."},
+ {h:"MODAL + HAVE + V3 for the past",
+  en:"To talk about the past, add 'have + V3' after the modal: 'He must have gone', 'She should have told me', 'They might have missed the bus'. The modal still takes a base form — 'have' — and 'have' takes V3.",
+  ta:"கடந்தகாலத்திற்கு MODAL + HAVE + V3. கடந்தகாலத்தைப் பற்றிப் பேச, modal-க்குப் பின் 'have + V3' சேர்க்கவும்: 'He must have gone', 'She should have told me', 'They might have missed the bus'. Modal இன்னும் ஒரு அடிப்படை வடிவத்தை — 'have' — எடுக்கிறது, 'have' V3 எடுக்கிறது.",
+  tl:"Kadandhagaalaththirku MODAL + HAVE + V3. Kadandhagaalaththaip patrip pesa, modal-kkup pin 'have + V3' serkkavum: 'He must have gone', 'She should have told me'."}],
+
+ s3:[
+ {h:"The modal does the work",
+  d:"   He  CAN  SWIM.\n        ↑     ↑\n     carries  stays plain\n     the tense  (no -s, no -ed, no 'to')\n\n   he cans swim    ✘\n   he can swims    ✘\n   he can to swim  ✘\n   he can swim     ✔"},
+ {h:"The nine core modals",
+  d:"   can · could\n   may · might\n   shall · should\n   will · would\n   must\n\n   ALL take V1 directly.\n\n   THE THREE THAT KEEP 'TO':\n   ought TO · used TO · have TO"},
+ {h:"One modal per verb group",
+  d:"   He WILL CAN do it.        ✘  two modals\n   He WILL BE ABLE TO do it. ✔\n\n   You MUST WILL go.         ✘\n   You WILL HAVE TO go.      ✔\n\n   FOR THE PAST:\n   He MUST HAVE GONE.        ✔ modal + have + V3\n   She SHOULD HAVE TOLD me.  ✔"}],
+
+ s4:{
+ wrong:["\"'He can swims' shows the subject is third person.\" — Modals ignore subject-verb agreement.",
+  "\"'She must to go' sounds more complete.\" — Only 'ought' keeps the 'to'.",
+  "\"'He will can do it' expresses both future and ability.\" — Two modals cannot sit together.",
+  "\"Modals can take -ed for the past.\" — Use modal + have + V3 instead."],
+ right:["After any modal, write the plain base form V1.",
+  "Never add -s, even with he, she or it.",
+  "Only ought, used and have keep the 'to'.",
+  "For the past, write modal + have + V3."]},
+
+ s5:[
+ {en:"He can swim very well.",ta:"அவர் மிகச் சிறப்பாக நீந்த முடியும்.",tl:"Avar migach sirappaaga neendha mudiyum.",note:"'Can' takes the base form SWIM."},
+ {en:"She must go now without delay.",ta:"அவர் இப்போது தாமதமின்றிச் செல்ல வேண்டும்.",tl:"Avar ippodhu thaamadhamindrich sella vendum.",note:"'Must' takes the base form GO, never 'to go'."},
+ {en:"You ought to apologise to him.",ta:"நீங்கள் அவரிடம் மன்னிப்புக் கேட்க வேண்டும்.",tl:"Neengal avaridam mannippuk ketka vendum.",note:"'Ought' is the one modal that keeps 'to'."},
+ {en:"He will be able to finish it tomorrow.",ta:"அவரால் நாளை அதை முடிக்க முடியும்.",tl:"Avaraal naalai adhai mudikka mudiyum.",note:"Two modals are impossible, so 'be able to' replaces 'can'."},
+ {en:"She must have left before we arrived.",ta:"நாங்கள் வருவதற்கு முன்பே அவர் சென்றிருக்க வேண்டும்.",tl:"Naangal varuvadharku munbe avar sendrirukka vendum.",note:"Modal + have + V3 refers to the past."}],
+
+ s6:["modal verb|துணை நிலை வினைச்சொல்|Thunai nilai vinaichol",
+  "bare infinitive|அடிப்படை வடிவம்|Adippadai vadivam",
+  "can|முடியும்|Mudiyum",
+  "must|வேண்டும்|Vendum",
+  "should|வேண்டும் (அறிவுரை)|Vendum (arivurai)",
+  "ought to|வேண்டும் (கடமை)|Vendum (kadamai)",
+  "be able to|முடியும் என்ற நிலை|Mudiyum endra nilai",
+  "have to|வேண்டியிருக்கும்|Vendiyirukkum",
+  "must have gone|சென்றிருக்க வேண்டும்|Sendrirukka vendum",
+  "apologise|மன்னிப்புக் கேள்|Mannippuk kel",
+  "without delay|தாமதமின்றி|Thaamadhamindri"],
+
+ s7:[
+ "He can ____ very well.|swim|Easy|'Can' takes the base form.",
+ "She must ____ the report today.|submit|Easy|'Must' takes the base form.",
+ "They should ____ harder for the exam.|study|Easy|'Should' takes the base form.",
+ "You ought ____ respect your elders.|to|Medium|'Ought' keeps the 'to'.",
+ "He may ____ late this evening.|come|Medium|'May' takes the base form.",
+ "She will ____ able to help you.|be|Medium|Two modals are impossible, so 'be able to' is used.",
+ "We shall ____ the matter tomorrow.|discuss|Medium|'Shall' takes the base form.",
+ "He must ____ gone home already.|have|Hard|Modal + have + V3 for the past.",
+ "You should ____ informed me earlier.|have|Hard|Modal + have + V3 for an unfulfilled past duty.",
+ "She might ____ missed the train.|have|Hard|Modal + have + V3.",
+ "He will ____ to leave early tomorrow.|have|Hard|'Will have to' replaces 'must' in the future.",
+ "They could ____ the answer easily.|find|Expert|'Could' takes the base form.",
+ "One ought ____ do one's duty.|to|Expert|'Ought' keeps the 'to'.",
+ "He used ____ smoke in those days.|to|Expert|'Used' keeps the 'to'.",
+ "She would ____ us every Sunday then.|visit|Expert|'Would' takes the base form."],
+
+ s8:[
+ "He can swims very well.|He can swim very well.|Modals take the base form.",
+ "She must to go now.|She must go now.|'Must' does not take 'to'.",
+ "They should studied harder.|They should study harder.|Modals take the base form.",
+ "You ought respect your elders.|You ought to respect your elders.|'Ought' always keeps the 'to'.",
+ "He cans speak three languages.|He can speak three languages.|Modals never take -s.",
+ "He will can do it tomorrow.|He will be able to do it tomorrow.|Two modals cannot sit together.",
+ "She must has gone home.|She must have gone home.|Modal + have + V3, not 'has'.",
+ "You should informed me earlier.|You should have informed me earlier.|A past duty requires 'should have + V3'.",
+ "He used smoke in those days.|He used to smoke in those days.|'Used' keeps the 'to'.",
+ "You must will go there today.|You will have to go there today.|Two modals cannot sit together."],
+
+ s9:[
+ "Fill in the Blank|Every candidate must ____ the application form before the last date.|submits;submit|1|Modals take the base form.",
+ "Find the Error|He can speaks (A) three languages (B) fluently and (C) writes two of them (D).|A;B;C;D|0|Part A. Modals never take -s → 'can speak'.",
+ "Sentence Improvement|You ought respect the opinions of others even if you disagree with them.|ought respect;ought to respect;ought respecting|1|'Ought' always keeps the 'to'.",
+ "Fill in the Blank|She ____ have informed us earlier about the change in the timings.|should;should to|0|Modal + have + V3 needs no 'to'.",
+ "Find the Error|He will can (A) complete the project (B) before the deadline (C) next month (D).|A;B;C;D|0|Part A. Two modals cannot sit together → 'will be able to complete'."],
+
+ s10:{
+  en:"The exam plants 'he can swims' because Module 4 trained you to add -s for he, she and it. Modals are the exception — they ignore agreement completely. The second trap is 'must to go', which feels more complete because so many verbs do take 'to'. Only ought, used and have keep it. The third trap is the double modal: 'will can' looks logical but is impossible.",
+  ta:"தேர்வு 'he can swims' என்று நடுகிறது, ஏனெனில் he, she, it-க்கு -s சேர்க்க Module 4 உங்களைப் பயிற்றுவித்தது. Modal-கள் விதிவிலக்கு — அவை agreement-ஐ முற்றிலும் புறக்கணிக்கின்றன. இரண்டாவது பொறி 'must to go', அது முழுமையாகத் தோன்றுகிறது, ஏனெனில் பல வினைச்சொற்கள் 'to' எடுக்கின்றன. Ought, used, have மட்டுமே அதை வைத்திருக்கின்றன. மூன்றாவது பொறி இரட்டை modal: 'will can' தர்க்கரீதியாகத் தெரிகிறது ஆனால் சாத்தியமில்லை.",
+  tl:"Thervu 'he can swims' endru nadugiradhu, yenenil he, she, it-kku -s serkka Module 4 ungalaip payitruviththadhu. Modal-kal vidhivilakku. Irandaavadhu pori 'must to go'. Moondraavadhu pori irattai modal."},
+
+ s11:{
+  en:"MODAL + V1, ALWAYS. No -s, no -ed, no 'to'. Only OUGHT, USED and HAVE keep the 'to'.",
+  ta:"MODAL + V1, எப்போதும். -s இல்லை, -ed இல்லை, 'to' இல்லை. OUGHT, USED, HAVE மட்டுமே 'to' வைத்திருக்கும்.",
+  tl:"MODAL + V1, eppodhum. -s illai, -ed illai, 'to' illai. OUGHT, USED, HAVE mattume 'to' vaiththirukkum.",
+  vis:"      THE MODAL RULE IN ONE LINE\n\n        MODAL  +  V1\n\n   can · could · may · might\n   shall · should · will · would · must\n            ↓\n      all take the PLAIN verb\n\n   ⚠ THE THREE THAT KEEP 'TO':\n     ought TO · used TO · have TO\n\n   ⚠ NEVER TWO MODALS TOGETHER:\n     will can       ✘  →  will be able to  ✔\n     must will      ✘  →  will have to     ✔\n\n   ⚠ FOR THE PAST:\n     MODAL + HAVE + V3\n     must have gone · should have told"},
+
+ s12:[
+ "He can ____ very well.|swims;swim|1",
+ "She must ____ the report today.|submits;submit|1",
+ "They should ____ harder.|studied;study|1",
+ "You ought ____ respect elders.|to;—|0",
+ "He may ____ late this evening.|comes;come|1",
+ "She will ____ able to help you.|be;can|0",
+ "We shall ____ it tomorrow.|discuss;to discuss|0",
+ "He must ____ gone home already.|has;have|1",
+ "You should ____ informed me earlier.|have;had|0",
+ "She might ____ missed the train.|has;have|1",
+ "He will ____ to leave early.|have;must|0",
+ "They could ____ the answer easily.|found;find|1",
+ "One ought ____ do one's duty.|to;—|0",
+ "He used ____ smoke in those days.|to;—|0",
+ "She would ____ us every Sunday.|visits;visit|1",
+ "He ____ speak three languages.|cans;can|1",
+ "You must ____ the rules here.|follow;to follow|0",
+ "She may ____ the answer already.|knows;know|1",
+ "They should ____ told us before.|have;had|0",
+ "He might ____ at home right now.|is;be|1"],
+
+ s13:[
+ "He ____ swim well, but he ____ to leave before the pool ____.|can-will have-closes;cans-must will-will close;can-must-closes|0|Modal + V1 → CAN SWIM. Two modals are impossible → WILL HAVE TO. A time clause bans 'will' → CLOSES (Rule 55).",
+ "She must ____ left already, because the number of cars in the lot ____ fallen.|has-have;have-has;have-have|1|Modal + HAVE + V3 for the past. 'The number of' → HAS (SVA Rule 38).",
+ "You ought ____ apologise, and it is high time you ____ your mistake.|to-admitted;—-admit;to-admit|0|'Ought' keeps 'to'. 'It is high time' takes the past form → ADMITTED (Rule 60).",
+ "Neither of the boys ____ swim, so both of them ____ to learn before the trip.|can-will have;cans-must;can-must will|0|Modals ignore agreement → CAN. Two modals impossible → WILL HAVE TO.",
+ "He should ____ informed us, for by then we ____ already left ____ hotel.|have-had-the;had-have-a;have-have-the|0|Modal + HAVE + V3. The earlier past action → HAD left (Rule 54). 'Hotel' spoken H → THE for a specific one."],
+
+ s14:{
+  rule:"A modal is always followed by the bare infinitive V1 — no -s, no -ed, no 'to'.",
+  formula:"MODAL + V1\nOught TO · Used TO · Have TO keep the 'to'\nNever two modals: will be able to · will have to\nPast: MODAL + HAVE + V3",
+  memory:"The modal carries the tense, so the verb stays plain.",
+  ta:"Modal tense-ஐ சுமக்குது, அதனால verb எளிமையாவே இருக்கும்.",
+  tl:"Modal tense-ai sumakkudhu, adhanaala verb elimaiyaave irukkum.",
+  mistake:"Writing 'he can swims', 'she must to go' and 'he will can do it'.",
+  exam:"SSC CGL / CHSL / MTS and RRB — the foundation of every modal question."},
+
+ s15:[
+ {ta:"Modal Verbs module-ஐ ஆரம்பிக்கலாம். இது ஒரு நல்ல செய்தியோட ஆரம்பிக்குது — Module 4-ல நாம SVA படிச்சோம், 'he goes', 'she writes' அப்படின்னு -s போடணும்னு. Modal-க்கு அது கிடையாது!",
+  tl:"Modal Verbs module-ai aarambikkalaam. Idhu oru nalla seydhiyoda aarambikkudhu — Module 4-la naama SVA padichom, 'he goes', 'she writes' appadinnu -s podanumnu. Modal-kku adhu kidaiyaadhu!"},
+ {ta:"'He CAN swim.' 'She MUST go.' 'It MAY rain.' எங்கயுமே -s இல்ல. 'He cans', 'she musts' — இப்படி எல்லாம் ஆங்கிலத்துல கிடையவே கிடையாது. Modal-கள் agreement-ஐ முழுசா புறக்கணிக்குது.",
+  tl:"'He CAN swim.' 'She MUST go.' 'It MAY rain.' Engayume -s illa. 'He cans', 'she musts' — ippadi ellaam Aangilaththula kidaiyave kidaiyaadhu. Modal-kal agreement-ai muzhusaa purakkanikkudhu."},
+ {ta:"ஏன்? ஒரு எளிய காரணம் இருக்கு. Modal-ஏ tense-ஐ சுமக்குது. 'Can' நிகழ்காலம், 'could' கடந்தகாலம். 'Will' எதிர்காலம், 'would' கடந்தகாலம். Tense வேலையை modal செஞ்சுடுச்சு. அதனால main verb-க்கு வேலை இல்ல, அது எளிமையா அடிப்படை வடிவத்துல இருக்கும்.",
+  tl:"Yen? Oru eliya kaaranam irukku. Modal-e tense-ai sumakkudhu. 'Can' nigazhgaalam, 'could' kadandhagaalam. Tense velaiyai modal senjuduchu. Adhanaala main verb-kku velai illa."},
+ {ta:"இப்போ ரெண்டாவது பொறி — 'to'. 'She must TO go' அப்படின்னு நிறைய பேரு எழுதுவாங்க. ஏன்? ஏன்னா ஆங்கிலத்துல நிறைய வினைச்சொல்லுக்கு 'to' வரும் — 'want to go', 'need to go', 'try to go'. ஆனா modal-க்கு வராது. மூணு விதிவிலக்கு மட்டும்: ought TO, used TO, have TO.",
+  tl:"Ippo randaavadhu pori — 'to'. 'She must TO go' appadinnu neraiya peru ezhudhuvaanga. Aanaa modal-kku varaadhu. Moonu vidhivilakku mattum: ought TO, used TO, have TO."},
+ {ta:"மூணாவது பொறி — ரெண்டு modal சேர்ந்து வராது. 'He will can do it' — தப்பு! ஏன்? ஏன்னா ஆங்கிலம் ஒரு வினைச்சொல் குழுவுக்கு ஒரே ஒரு modal-தான் அனுமதிக்கும். ரெண்டு கருத்து சொல்லணும்னா, ஒண்ணை தொடரா மாத்துங்க. 'He will BE ABLE TO do it.' 'You will HAVE TO go.'",
+  tl:"Moonaavadhu pori — rendu modal serndhu varaadhu. 'He will can do it' — thappu! Rendu karuththu sollanumnaa, onnai thodaraa maaththunga. 'He will BE ABLE TO do it.' 'You will HAVE TO go.'"},
+ {ta:"கடைசியா ரொம்ப முக்கியமான ஒண்ணு — கடந்தகாலம் எப்படி சொல்றது? Modal-க்கு -ed போட முடியாது. அதுக்கு பதிலா 'MODAL + HAVE + V3'. 'He MUST HAVE GONE' — அவரு போயிருக்கணும். 'She SHOULD HAVE TOLD me' — அவரு சொல்லியிருக்கணும் (ஆனா சொல்லல). 'They MIGHT HAVE MISSED the bus.' இந்த அமைப்பு அடுத்த சில rule-ல ரொம்ப முக்கியமா வரும், நல்லா மனசுல வெச்சுக்கோங்க.",
+  tl:"Kadaisiyaa romba mukkiyamaana onnu — kadandhagaalam eppadi solradhu? Modal-kku -ed poda mudiyaadhu. Adhukku padhilaa 'MODAL + HAVE + V3'. 'He MUST HAVE GONE'. 'She SHOULD HAVE TOLD me'. Indha amaippu aduththa sila rule-la romba mukkiyamaa varum."}]},
+
+/* ========== RULE 64 ========== */
+{n:64,rc:"MOD-02",d:"Medium",t:"CAN for Ability, MAY for Permission and Possibility",
+ tam:"Can = திறன் · May = முறையான அனுமதி, சாத்தியம்",
+ s1:{en:"CAN expresses ABILITY or informal permission. MAY expresses FORMAL PERMISSION, POSSIBILITY or a WISH. In exams, a polite request for permission always takes MAY.",
+  ta:"CAN திறனையோ சாதாரண அனுமதியையோ வெளிப்படுத்துகிறது. MAY முறையான அனுமதி, சாத்தியம் அல்லது வாழ்த்தை வெளிப்படுத்துகிறது. தேர்வுகளில், அனுமதிக்கான ஒரு நாகரிகமான வேண்டுகோள் எப்போதும் MAY எடுக்கும்.",
+  tl:"CAN thiranaiyo saadhaarana anumadhiyaiyo velippaduththugiradhu. MAY muraiyaana anumadhi, saadhiyam alladhu vaazhththai velippaduththugiradhu.",
+  formula:"CAN  →  ABILITY\n  She CAN speak five languages.\n  He CAN lift that box.\n\nMAY  →  FORMAL PERMISSION\n  MAY I come in, sir?\n\nMAY  →  POSSIBILITY\n  It MAY rain tonight.\n\nMAY  →  WISH / BLESSING\n  MAY you live long!"},
+
+ s2:[
+ {h:"Ability versus permission",
+  en:"'Can I swim?' asks whether I am ABLE to swim. 'May I swim?' asks whether I am ALLOWED to swim. In a formal setting — asking a teacher, an officer, an examiner — the answer is always 'may'.",
+  ta:"திறன் மற்றும் அனுமதி. 'Can I swim?' நான் நீந்த முடியுமா என்று கேட்கிறது. 'May I swim?' நான் நீந்த அனுமதிக்கப்பட்டிருக்கிறேனா என்று கேட்கிறது. ஒரு முறையான சூழலில் — ஆசிரியரிடம், அதிகாரியிடம், தேர்வாளரிடம் கேட்கும்போது — பதில் எப்போதும் 'may'.",
+  tl:"Thiran matrum anumadhi. 'Can I swim?' naan neendha mudiyumaa endru ketkiradhu. 'May I swim?' naan neendha anumadhikkappattirukkirenaa endru ketkiradhu. Oru muraiyaana soozhalil padhil eppodhum 'may'."},
+ {h:"May for possibility, can for general capability",
+  en:"'It MAY rain tonight' — a specific possibility about tonight. 'It CAN rain heavily in this region' — a general capability of the place. 'May' predicts one occasion; 'can' describes what is generally possible.",
+  ta:"சாத்தியத்திற்கு may, பொதுத் திறனுக்கு can. 'It MAY rain tonight' — இன்றிரவு பற்றிய ஒரு குறிப்பிட்ட சாத்தியம். 'It CAN rain heavily in this region' — அந்த இடத்தின் ஒரு பொதுத் திறன். 'May' ஒரு சந்தர்ப்பத்தைக் கணிக்கிறது; 'can' பொதுவாக என்ன சாத்தியம் என்பதை விவரிக்கிறது.",
+  tl:"Saadhiyaththirku may, podhuth thiranukku can. 'It MAY rain tonight' — oru kurippitta saadhiyam. 'It CAN rain heavily in this region' — oru podhuth thiran."},
+ {h:"May for wishes and blessings",
+  en:"'May you live long!', 'May God bless you!', 'May your dreams come true!' — this is the optative use, where 'may' comes first in the sentence. It is common in narration questions too.",
+  ta:"வாழ்த்துக்களுக்கும் ஆசீர்வாதங்களுக்கும் may. 'May you live long!', 'May God bless you!', 'May your dreams come true!' — இது optative பயன்பாடு, இங்கே 'may' வாக்கியத்தில் முதலில் வருகிறது. Narration கேள்விகளிலும் இது பொதுவானது.",
+  tl:"Vaazhththukkalukkum aaseervaadhangalukkum may. 'May you live long!', 'May God bless you!' — idhu optative payanpaadu, inge 'may' vaakkiyaththil mudhalil varugiradhu."},
+ {h:"CANNOT is written as one word",
+  en:"'Cannot' is one word, not 'can not'. But 'may not' is always two words. This small spelling point appears in error-spotting questions.",
+  ta:"CANNOT ஒரே சொல்லாக எழுதப்படுகிறது. 'Cannot' ஒரே சொல், 'can not' அல்ல. ஆனால் 'may not' எப்போதும் இரண்டு சொற்கள். இந்தச் சிறிய எழுத்துக்கூட்டல் விஷயம் error-spotting கேள்விகளில் வருகிறது.",
+  tl:"CANNOT ore sollaaga ezhudhappadugiradhu. 'Cannot' ore sol, 'can not' alla. Aanaal 'may not' eppodhum irandu sorkal."}],
+
+ s3:[
+ {h:"Am I able, or am I allowed?",
+  d:"   CAN  →  Am I ABLE?     💪 capability\n     She CAN speak French.\n     He CAN lift 50 kilos.\n\n   MAY  →  Am I ALLOWED?   🙏 permission\n     MAY I come in, sir?\n     MAY I borrow your book?\n\n   In a formal setting, always MAY."},
+ {h:"The four uses of MAY",
+  d:"   🙏 PERMISSION  : May I come in?\n   🌧️ POSSIBILITY : It may rain tonight.\n   🎉 WISH        : May you live long!\n   ⚖️ CONCESSION  : He may be rich, but he is unhappy.\n\n   All four are formal, polite or tentative."},
+ {h:"Can versus may for possibility",
+  d:"   MAY  →  a specific occasion\n     It MAY rain tonight.  (this one night)\n\n   CAN  →  a general capability\n     It CAN rain heavily here in June.\n     (this is what the place is capable of)\n\n   ⚠ SPELLING:\n     cannot  → one word\n     may not → two words"}],
+
+ s4:{
+ wrong:["\"'Can I come in, sir?' is normal English.\" — In formal exam English, permission takes 'may'.",
+  "\"'Can' and 'may' mean the same thing.\" — One is ability, the other permission.",
+  "\"'It can rain tonight' predicts tonight's weather.\" — A specific prediction takes 'may'.",
+  "\"'Can not' and 'cannot' are both fine.\" — 'Cannot' is written as one word."],
+ right:["Ask: am I talking about ABILITY or PERMISSION?",
+  "Ability → can. Formal permission → may.",
+  "A specific possibility → may. A general capability → can.",
+  "Remember 'cannot' is one word."]},
+
+ s5:[
+ {en:"She can speak five languages fluently.",ta:"அவர் ஐந்து மொழிகளை சரளமாகப் பேச முடியும்.",tl:"Avar aindhu mozhigalai saralamaagap pesa mudiyum.",note:"Ability → CAN."},
+ {en:"May I come in, sir?",ta:"நான் உள்ளே வரலாமா, ஐயா?",tl:"Naan ulle varalaamaa, aiyaa?",note:"Formal permission → MAY."},
+ {en:"It may rain tonight, so carry an umbrella.",ta:"இன்றிரவு மழை பெய்யலாம், எனவே ஒரு குடையை எடுத்துச் செல்லுங்கள்.",tl:"Indriravu mazhai peyyalaam, enave oru kudaiyai eduththuch sellungal.",note:"A specific possibility → MAY."},
+ {en:"May you live long and prosper!",ta:"நீங்கள் நீண்ட காலம் வாழ்ந்து செழிக்க வாழ்த்துக்கள்!",tl:"Neengal neenda kaalam vaazhndhu sezhikka vaazhththukkal!",note:"A wish or blessing → MAY."},
+ {en:"He cannot lift this heavy box alone.",ta:"அவரால் இந்தக் கனமான பெட்டியைத் தனியாகத் தூக்க முடியாது.",tl:"Avaraal indhak kanamaana pettiyaith thaniyaagath thookka mudiyaadhu.",note:"'Cannot' is written as one word."}],
+
+ s6:["can|முடியும் (திறன்)|Mudiyum (thiran)",
+  "may|-லாம் (அனுமதி)|-laam (anumadhi)",
+  "ability|திறன்|Thiran",
+  "permission|அனுமதி|Anumadhi",
+  "possibility|சாத்தியம்|Saadhiyam",
+  "wish|வாழ்த்து|Vaazhththu",
+  "may I come in|நான் உள்ளே வரலாமா|Naan ulle varalaamaa",
+  "it may rain|மழை பெய்யலாம்|Mazhai peyyalaam",
+  "cannot|முடியாது|Mudiyaadhu",
+  "fluently|சரளமாக|Saralamaaga",
+  "prosper|செழிக்க|Sezhikka"],
+
+ s7:[
+ "She ____ speak five languages.|can|Easy|Ability.",
+ "____ I come in, sir?|May|Easy|Formal permission.",
+ "It ____ rain tonight.|may|Easy|A specific possibility.",
+ "____ you live long!|May|Easy|A wish or blessing.",
+ "He ____ lift that heavy box.|can|Medium|Ability.",
+ "____ I borrow your notes, madam?|May|Medium|Formal permission.",
+ "He ____ run ten kilometres easily.|can|Medium|Ability.",
+ "She ____ arrive late today.|may|Medium|A specific possibility.",
+ "____ God bless you always!|May|Hard|A blessing.",
+ "He ____ swim when he was five.|could|Hard|Past ability takes 'could'.",
+ "It ____ get very cold here in winter.|can|Hard|A general capability of the place.",
+ "____ I use your phone for a minute?|May|Hard|Formal permission.",
+ "He ____ be at home right now.|may|Expert|A tentative possibility.",
+ "She ____ not attend the meeting today.|may|Expert|Possibility, written as two words.",
+ "A trained athlete ____ run very fast.|can|Expert|General ability."],
+
+ s8:[
+ "Can I come in, sir?|May I come in, sir?|Formal permission requires 'may'.",
+ "She may speak five languages.|She can speak five languages.|Ability requires 'can'.",
+ "It can rain tonight, so take an umbrella.|It may rain tonight, so take an umbrella.|A specific possibility requires 'may'.",
+ "Can you live long and prosper!|May you live long and prosper!|A blessing requires 'may'.",
+ "Can I borrow your notes, madam?|May I borrow your notes, madam?|Formal permission requires 'may'.",
+ "He may lift fifty kilos without difficulty.|He can lift fifty kilos without difficulty.|Ability requires 'can'.",
+ "He can not lift this box alone.|He cannot lift this box alone.|'Cannot' is written as one word.",
+ "Can God bless you always!|May God bless you always!|A blessing requires 'may'.",
+ "He may swim when he was five years old.|He could swim when he was five years old.|Past ability requires 'could'.",
+ "May a trained athlete run very fast?|Can a trained athlete run very fast?|General ability requires 'can'."],
+
+ s9:[
+ "Fill in the Blank|____ I have your permission to leave the hall a little early today?|Can;May|1|Formal permission requires 'may'.",
+ "Find the Error|Can I come in (A), sir, (B) I have brought (C) the file you asked for (D)?|A;B;C;D|0|Part A. Formal permission requires 'May I come in'.",
+ "Sentence Improvement|She may play the violin beautifully, having learnt it for twelve years.|may play;can play;may to play|1|Ability requires 'can'.",
+ "Fill in the Blank|The sky is very dark, so it ____ rain heavily within the next hour.|can;may|1|A specific possibility requires 'may'.",
+ "Find the Error|He can not (A) complete the work (B) without the help (C) of his colleagues (D).|A;B;C;D|0|Part A. 'Cannot' is written as one word."],
+
+ s10:{
+  en:"Every Indian student says 'Can I come in, sir?' — it is what we are taught in school and what we hear every day. In formal exam English, permission takes 'may'. The exam plants this in almost every modal set. The second trap is possibility: 'It CAN rain tonight' looks fine but a specific forecast needs 'may'.",
+  ta:"ஒவ்வொரு இந்திய மாணவரும் 'Can I come in, sir?' என்று சொல்கிறார்கள் — அதுதான் பள்ளியில் நமக்குக் கற்பிக்கப்படுகிறது, அதுதான் தினமும் கேட்கிறோம். முறையான தேர்வு ஆங்கிலத்தில், அனுமதி 'may' எடுக்கிறது. தேர்வு இதை கிட்டத்தட்ட ஒவ்வொரு modal தொகுப்பிலும் நடுகிறது. இரண்டாவது பொறி சாத்தியம்: 'It CAN rain tonight' நன்றாகத் தெரிகிறது ஆனால் ஒரு குறிப்பிட்ட முன்னறிவிப்புக்கு 'may' தேவை.",
+  tl:"Ovvoru Indhiya maanavarum 'Can I come in, sir?' endru solgiraargal. Muraiyaana thervu Aangilaththil, anumadhi 'may' edukkiradhu. Irandaavadhu pori saadhiyam."},
+
+ s11:{
+  en:"AM I ABLE, OR AM I ALLOWED? Able → can. Allowed → may.",
+  ta:"என்னால் முடியுமா, இல்லை எனக்கு அனுமதி இருக்கிறதா? முடியும் → can. அனுமதி → may.",
+  tl:"Ennaal mudiyumaa, illai enakku anumadhi irukkiradhaa? Mudiyum → can. Anumadhi → may.",
+  vis:"      THE TWO-QUESTION TEST\n\n   💪 \"Am I ABLE to do it?\"    →  CAN\n      She can swim.\n      He can speak French.\n\n   🙏 \"Am I ALLOWED to do it?\" →  MAY\n      May I come in, sir?\n      May I borrow this book?\n\n   MEMORY LINE:\n   \"CAN = Capability.  MAY = May I please.\"\n\n   THE FOUR USES OF MAY:\n   permission · possibility · wish · concession\n\n   ⚠ SPELLING:  cannot (one word)\n                may not (two words)"},
+
+ s12:[
+ "She ____ speak five languages.|may;can|1",
+ "____ I come in, sir?|Can;May|1",
+ "It ____ rain tonight.|can;may|1",
+ "____ you live long!|Can;May|1",
+ "He ____ lift that heavy box.|may;can|1",
+ "____ I borrow your notes, madam?|Can;May|1",
+ "He ____ run ten kilometres easily.|may;can|1",
+ "She ____ arrive late today.|can;may|1",
+ "____ God bless you always!|Can;May|1",
+ "He ____ swim when he was five.|may;could|1",
+ "It ____ get very cold here in winter.|may;can|1",
+ "____ I use your phone, please?|Can;May|1",
+ "He ____ be at home right now.|can;may|1",
+ "He ____ lift this box alone.|can not;cannot|1",
+ "A trained athlete ____ run fast.|may;can|1",
+ "____ your dreams come true!|Can;May|1",
+ "She ____ play the violin very well.|may;can|1",
+ "The train ____ be late this evening.|can;may|1",
+ "____ I know your good name, sir?|Can;May|1",
+ "Birds ____ fly, but penguins ____.|can-cannot;may-may not|0"],
+
+ s13:[
+ "____ I come in, sir? I ____ speak English, but I ____ not write it well.|May-can-can;Can-may-may;May-can-may|0|Formal permission → MAY. Ability → CAN. Ability in the negative → CANNOT.",
+ "It ____ rain tonight, so it is high time we ____ for shelter.|can-look;may-looked;may-look|1|A specific possibility → MAY. 'It is high time' takes the past form → LOOKED (Rule 60).",
+ "____ God bless you, and ____ you ____ able to fulfil all your dreams.|May-may-be;Can-can-be;May-can-be|0|A blessing → MAY. Two modals impossible → 'may you be able to'.",
+ "She ____ speak French, and she ____ have learnt it when she ____ in Paris.|can-may-was;may-can-was;can-may-were|0|Ability → CAN. A past possibility → MAY HAVE. Past → WAS.",
+ "He ____ not attend today, because neither of the two buses ____ running.|may-is;can-are;may-are|0|Possibility → MAY not. 'Neither of' is fixed singular → IS (SVA Rule 50)."],
+
+ s14:{
+  rule:"CAN expresses ability, MAY expresses formal permission, possibility and wishes.",
+  formula:"CAN → ability, general capability\nMAY → formal permission, specific possibility, wish\ncannot = one word | may not = two words",
+  memory:"CAN = Capability. MAY = May I please.",
+  ta:"CAN = திறன். MAY = 'May I please' — அனுமதி.",
+  tl:"CAN = thiran. MAY = 'May I please' — anumadhi.",
+  mistake:"Writing 'Can I come in, sir?' for formal permission, and 'It can rain tonight'.",
+  exam:"SSC CGL / CHSL and Bank — appears in Fill in the Blank and Sentence Improvement."},
+
+ s15:[
+ {ta:"இந்த rule-ல ஒரு எளிய கேள்வி கேட்டா போதும் — 'என்னால முடியுமா, இல்ல எனக்கு அனுமதி இருக்கா?' முடியும்-ன்னா CAN. அனுமதி-ன்னா MAY.",
+  tl:"Indha rule-la oru eliya kelvi kettaa podhum — 'ennaala mudiyumaa, illa enakku anumadhi irukkaa?' Mudiyum-nnaa CAN. Anumadhi-nnaa MAY."},
+ {ta:"'She CAN speak five languages' — இது திறன். அவங்களால முடியும். 'MAY I come in, sir?' — இது அனுமதி. நான் உள்ள வரலாமா-ன்னு கேட்குறேன். ரெண்டும் வேற வேற விஷயம்.",
+  tl:"'She CAN speak five languages' — idhu thiran. Avangalaala mudiyum. 'MAY I come in, sir?' — idhu anumadhi. Naan ulla varalaamaa-nnu ketkuren."},
+ {ta:"ஆனா இங்க நமக்கு ஒரு பெரிய பிரச்சனை இருக்கு. நாம school-ல எல்லாருமே 'Can I come in, sir?' அப்படித்தான் சொல்லிட்டு வளர்ந்திருக்கோம். அது நம்ம காதுல ஆழமா பதிஞ்சிடுச்சு. ஆனா முறையான ஆங்கிலத்துல, தேர்வு ஆங்கிலத்துல, அனுமதிக்கு 'May I come in, sir?' தான் சரி.",
+  tl:"Aanaa inga namakku oru periya prachanai irukku. Naama school-la ellaarume 'Can I come in, sir?' appadidhaan sollittu valarndhirukkom. Aanaa muraiyaana Aangilaththula, thervu Aangilaththula, anumadhikku 'May I come in, sir?' dhaan sari."},
+ {ta:"MAY-க்கு நாலு பயன்பாடு இருக்கு. ஒண்ணு — அனுமதி: 'May I go?' ரெண்டு — சாத்தியம்: 'It may rain tonight.' மூணு — வாழ்த்து: 'May you live long!' நாலு — ஒப்புதல்: 'He may be rich, but he is not happy.' நாலுமே முறையானது அல்லது தயக்கமானது.",
+  tl:"MAY-kku naalu payanpaadu irukku. Onnu — anumadhi: 'May I go?' Rendu — saadhiyam: 'It may rain tonight.' Moonu — vaazhththu: 'May you live long!' Naalu — oppudhal."},
+ {ta:"இப்போ ஒரு நுட்பமான வித்தியாசம் — சாத்தியத்துக்கு may, பொதுத் திறனுக்கு can. 'It MAY rain tonight' — இன்னைக்கு இரவு பத்தி ஒரு குறிப்பிட்ட கணிப்பு. ஆனா 'It CAN rain heavily in this region during June' — இந்த இடத்தோட பொதுவான தன்மை. ஒண்ணு ஒரு நாள் பத்தி, இன்னொண்ணு பொதுவா.",
+  tl:"Ippo oru nutpamaana viththiyaasam — saadhiyaththukku may, podhuth thiranukku can. 'It MAY rain tonight' — oru kurippitta kanippu. Aanaa 'It CAN rain heavily in this region during June' — podhuvaana thanmai."},
+ {ta:"கடைசியா ஒரு சின்ன ஆனா முக்கியமான விஷயம் — எழுத்துக்கூட்டல். 'Cannot' ஒரே வார்த்தை! 'Can not' அப்படின்னு ரெண்டா எழுதக்கூடாது. ஆனா 'may not' எப்பவும் ரெண்டு வார்த்தை. SSC Error Spotting-ல இதை கேட்பாங்க. சின்ன விஷயம், ஆனா ஒரு mark.",
+  tl:"Kadaisiyaa oru chinna aanaa mukkiyamaana vishayam — ezhuththukkoottal. 'Cannot' ore vaarththai! 'Can not' appadinnu rendaa ezhudhakkoodaadhu. Aanaa 'may not' eppavum rendu vaarththai. SSC Error Spotting-la idhai ketpaanga."}]},
+
+/* ========== RULE 65 ========== */
+{n:65,rc:"MOD-03",d:"Medium",t:"COULD and MIGHT for Past, Politeness and Remote Possibility",
+ tam:"Could, Might = கடந்தகாலம், மரியாதை, குறைந்த சாத்தியம்",
+ s1:{en:"COULD and MIGHT are the PAST forms of can and may. They are also used for POLITE requests and for WEAKER, more remote possibility. English uses distance in tense to create distance in politeness and certainty.",
+  ta:"COULD மற்றும் MIGHT என்பவை can மற்றும் may-ன் கடந்தகால வடிவங்கள். அவை நாகரிகமான வேண்டுகோள்களுக்கும், பலவீனமான, தொலைவான சாத்தியத்திற்கும் பயன்படுத்தப்படுகின்றன. நாகரிகத்திலும் உறுதியிலும் தூரத்தை உருவாக்க ஆங்கிலம் tense-ல் தூரத்தைப் பயன்படுத்துகிறது.",
+  tl:"COULD matrum MIGHT enbavai can matrum may-in kadandhagaala vadivangal. Avai naagarigamaana vendugolgalukkum, palaveenamaana, tholaivaana saadhiyaththirkum payanpaduththappadugindrana.",
+  formula:"PAST FORM\n  He COULD swim when he was five.\n  She said she MIGHT come.\n\nPOLITE REQUEST\n  COULD you please help me?\n  MIGHT I make a suggestion?\n\nWEAKER POSSIBILITY\n  It MIGHT rain, but I doubt it.\n  (weaker than 'It may rain')"},
+
+ s2:[
+ {h:"Distance in tense means distance in tone",
+  en:"'Can you help me?' is direct. 'Could you help me?' is polite. The past form pushes the request one step away from the listener, which softens it. Every language has a politeness device; in English it is tense.",
+  ta:"Tense-ல் தூரம் என்றால் தொனியில் தூரம். 'Can you help me?' நேரடியானது. 'Could you help me?' நாகரிகமானது. கடந்தகால வடிவம் வேண்டுகோளைக் கேட்பவரிடமிருந்து ஒரு படி தள்ளிவைக்கிறது, அது அதை மென்மையாக்குகிறது. ஒவ்வொரு மொழிக்கும் ஒரு நாகரிக சாதனம் உண்டு; ஆங்கிலத்தில் அது tense.",
+  tl:"Tense-l dhooram endraal thoniyil dhooram. 'Can you help me?' neradiyaanadhu. 'Could you help me?' naagarigamaanadhu. Kadandhagaala vadivam vendugolaik ketpavaridamirundhu oru padi thallivaikkiradhu."},
+ {h:"MIGHT is weaker than MAY",
+  en:"'It MAY rain' — a real chance. 'It MIGHT rain' — a slimmer chance. When an exam offers both and the sentence contains words like 'slight', 'faint' or 'I doubt', choose 'might'.",
+  ta:"MIGHT, MAY-ஐ விட பலவீனமானது. 'It MAY rain' — ஒரு உண்மையான வாய்ப்பு. 'It MIGHT rain' — ஒரு மெலிதான வாய்ப்பு. ஒரு தேர்வு இரண்டையும் தந்து, வாக்கியத்தில் 'slight', 'faint' அல்லது 'I doubt' போன்ற சொற்கள் இருந்தால், 'might' தேர்ந்தெடுங்கள்.",
+  tl:"MIGHT, MAY-ai vida palaveenamaanadhu. 'It MAY rain' — oru unmaiyaana vaayppu. 'It MIGHT rain' — oru melidhaana vaayppu."},
+ {h:"COULD for general past ability, WAS ABLE TO for one occasion",
+  en:"'He COULD swim well as a boy' — a general past ability. But for one specific successful act, use 'was able to': 'The house was on fire, but he WAS ABLE TO escape' — not 'could escape'.",
+  ta:"பொதுவான கடந்தகாலத் திறனுக்கு COULD, ஒரு சந்தர்ப்பத்திற்கு WAS ABLE TO. 'He COULD swim well as a boy' — ஒரு பொதுவான கடந்தகாலத் திறன். ஆனால் ஒரு குறிப்பிட்ட வெற்றிகரமான செயலுக்கு 'was able to' பயன்படுத்துங்கள்: 'The house was on fire, but he WAS ABLE TO escape' — 'could escape' அல்ல.",
+  tl:"Podhuvaana kadandhagaalath thiranukku COULD, oru sandharppaththirku WAS ABLE TO. 'He COULD swim well as a boy' — podhuvaana kadandhagaalath thiran. Aanaal oru kurippitta vetrigaramaana seyalukku 'was able to' payanpaduththungal."},
+ {h:"COULD HAVE and MIGHT HAVE for unrealised past",
+  en:"'He could have passed' means he had the ability but did not pass. 'She might have missed the train' means it is possible that she missed it. Both use modal + have + V3 from Rule 63.",
+  ta:"நிறைவேறாத கடந்தகாலத்திற்கு COULD HAVE மற்றும் MIGHT HAVE. 'He could have passed' என்றால் அவருக்குத் திறன் இருந்தது ஆனால் தேர்ச்சி பெறவில்லை. 'She might have missed the train' என்றால் அவர் ரயிலைத் தவறவிட்டிருக்கலாம் என்று சாத்தியம். இரண்டும் Rule 63-லிருந்து modal + have + V3 பயன்படுத்துகின்றன.",
+  tl:"Niraiveraadha kadandhagaalaththirku COULD HAVE matrum MIGHT HAVE. 'He could have passed' endraal avarukkuth thiran irundhadhu aanaal thercchi peravillai. Irandum Rule 63-lirundhu modal + have + V3 payanpaduththugindrana."}],
+
+ s3:[
+ {h:"Past tense, softer tone",
+  d:"   DIRECT              POLITE\n   ──────              ──────\n   Can you help?   →   Could you help?\n   Will you come?  →   Would you come?\n   May I ask?      →   Might I ask?\n\n   The past form creates DISTANCE,\n   and distance sounds POLITE."},
+ {h:"Strength of possibility",
+  d:"   WILL     ████████████  certain\n   MUST     ██████████    almost certain\n   MAY      ██████        real chance\n   MIGHT    ███           slim chance\n   COULD    ███           slim chance\n\n   Look for 'slight', 'faint', 'I doubt'\n   → choose MIGHT"},
+ {h:"Could versus was able to",
+  d:"   GENERAL past ability  →  COULD\n     He COULD swim as a boy.\n     She COULD read at four.\n\n   ONE successful occasion →  WAS ABLE TO\n     The house was burning, but he\n     WAS ABLE TO escape.        ✔\n     ...but he COULD escape.    ✘"}],
+
+ s4:{
+ wrong:["\"'Could' is only the past tense of 'can'.\" — It is also the polite and tentative form.",
+  "\"'May' and 'might' are equally strong.\" — 'Might' is weaker.",
+  "\"'He could escape from the fire' is correct.\" — One specific success takes 'was able to'.",
+  "\"'Could you please helping me?' is polite.\" — After a modal, always use V1."],
+ right:["For a polite request, use could or would.",
+  "For a slim chance, use might.",
+  "For one specific past success, use 'was able to'.",
+  "For an unrealised past, use could have or might have + V3."]},
+
+ s5:[
+ {en:"He could swim well when he was five.",ta:"அவருக்கு ஐந்து வயதாக இருந்தபோதே நன்றாக நீந்த முடிந்தது.",tl:"Avarukku aindhu vayadhaaga irundhabodhe nandraaga neendha mudindhadhu.",note:"General past ability → COULD."},
+ {en:"Could you please pass me the file?",ta:"தயவுசெய்து அந்தக் கோப்பை எனக்குக் கொடுக்க முடியுமா?",tl:"Thayavuseydhu andhak koppai enakkuk kodukka mudiyumaa?",note:"A polite request → COULD."},
+ {en:"It might rain, but I doubt it.",ta:"மழை பெய்யலாம், ஆனால் எனக்குச் சந்தேகமாக இருக்கிறது.",tl:"Mazhai peyyalaam, aanaal enakkuch sandhegamaaga irukkiradhu.",note:"'I doubt it' signals a slim chance → MIGHT."},
+ {en:"The house was on fire, but he was able to escape.",ta:"வீடு தீப்பிடித்திருந்தது, ஆனால் அவரால் தப்பிக்க முடிந்தது.",tl:"Veedu theeppidiththirundhadhu, aanaal avaraal thappikka mudindhadhu.",note:"One specific success → WAS ABLE TO."},
+ {en:"He could have passed if he had worked harder.",ta:"அவர் கடினமாக உழைத்திருந்தால் தேர்ச்சி பெற்றிருக்க முடியும்.",tl:"Avar kadinamaaga uzhaiththirundhaal thercchi petrirukka mudiyum.",note:"An unrealised past ability → COULD HAVE + V3."}],
+
+ s6:["could|முடிந்தது / முடியுமா|Mudindhadhu / Mudiyumaa",
+  "might|-லாம் (குறைந்த சாத்தியம்)|-laam (kuraindha saadhiyam)",
+  "polite request|நாகரிகமான வேண்டுகோள்|Naagarigamaana vendugol",
+  "remote possibility|தொலைவான சாத்தியம்|Tholaivaana saadhiyam",
+  "was able to|முடிந்தது (ஒரு சந்தர்ப்பம்)|Mudindhadhu (oru sandharppam)",
+  "could have|முடிந்திருக்கும்|Mudindhirukkum",
+  "might have|இருந்திருக்கலாம்|Irundhirukkalaam",
+  "I doubt it|எனக்குச் சந்தேகம்|Enakkuch sandhegam",
+  "escape|தப்பி|Thappi",
+  "pass me|எனக்குக் கொடு|Enakkuk kodu"],
+
+ s7:[
+ "He ____ swim when he was five.|could|Easy|General past ability.",
+ "____ you please help me?|Could|Easy|A polite request.",
+ "It ____ rain, but I doubt it.|might|Easy|A slim chance.",
+ "She said she ____ come later.|might|Medium|The past form of 'may'.",
+ "He ____ read at the age of four.|could|Medium|General past ability.",
+ "____ you kindly pass the salt?|Could|Medium|A polite request.",
+ "There is a slight chance he ____ win.|might|Medium|A slim chance.",
+ "The building was burning, but they ____ escape.|were able to|Hard|One specific success.",
+ "He ____ have passed with more effort.|could|Hard|An unrealised past ability.",
+ "She ____ have missed the train.|might|Hard|A past possibility.",
+ "____ I make a small suggestion, sir?|Might|Hard|A very polite request.",
+ "He ____ not solve the puzzle yesterday.|could|Expert|Past inability.",
+ "They ____ have reached by now.|might|Expert|A tentative present deduction.",
+ "She ____ speak Tamil fluently as a child.|could|Expert|General past ability.",
+ "After many attempts, he ____ open the lock.|was able to|Expert|One specific success."],
+
+ s8:[
+ "He can swim when he was five.|He could swim when he was five.|Past ability requires 'could'.",
+ "Can you please pass me the file?|Could you please pass me the file?|A polite request requires 'could'.",
+ "It may rain, but I doubt it very much.|It might rain, but I doubt it very much.|'I doubt it' signals a slim chance.",
+ "She said she may come later.|She said she might come later.|After a past reporting verb, 'may' becomes 'might'.",
+ "The house was on fire, but he could escape.|The house was on fire, but he was able to escape.|One specific success requires 'was able to'.",
+ "He could passed if he had worked harder.|He could have passed if he had worked harder.|An unrealised past requires 'could have + V3'.",
+ "She might missed the train this morning.|She might have missed the train this morning.|A past possibility requires 'might have + V3'.",
+ "Could you please helping me with this?|Could you please help me with this?|A modal takes the base form.",
+ "Can I make a suggestion, sir?|Might I make a suggestion, sir?|A very polite request takes 'might'.",
+ "After many attempts he could open the lock.|After many attempts he was able to open the lock.|One specific success requires 'was able to'."],
+
+ s9:[
+ "Fill in the Blank|____ you kindly lend me your notes for a day or two?|Can;Could|1|A polite request requires 'could'.",
+ "Find the Error|There is only (A) a slight chance (B) that he may win (C) the first prize (D).|A;B;C;D|2|Part C. 'A slight chance' signals a slim possibility → 'might win'.",
+ "Sentence Improvement|The building was on fire, but all the residents could escape unhurt.|could escape;were able to escape;can escape|1|One specific successful act requires 'were able to'.",
+ "Fill in the Blank|He ____ have secured a much better rank if he had prepared systematically.|could;can|0|An unrealised past ability requires 'could have'.",
+ "Find the Error|She told me (A) that she may (B) come to the function (C) the next day (D).|A;B;C;D|1|Part B. After a past reporting verb, 'may' becomes 'might'."],
+
+ s10:{
+  en:"The exam tests three separate uses of the same two words, and students learn only one. They know 'could is the past of can' but not that it is also the polite form and the tentative form. The sharpest trap is 'could' versus 'was able to' — for ONE specific successful action, 'could' is wrong. 'He could escape from the fire' must be 'was able to escape'.",
+  ta:"தேர்வு அதே இரண்டு சொற்களின் மூன்று தனித்தனி பயன்பாடுகளைச் சோதிக்கிறது, மாணவர்கள் ஒன்றை மட்டுமே கற்கிறார்கள். 'Could என்பது can-ன் கடந்தகாலம்' என்று அவர்களுக்குத் தெரியும், ஆனால் அது நாகரிக வடிவமும் தயக்க வடிவமும் என்று தெரியாது. கூர்மையான பொறி 'could' மற்றும் 'was able to' — ஒரு குறிப்பிட்ட வெற்றிகரமான செயலுக்கு 'could' தவறு.",
+  tl:"Thervu adhe irandu sorkalin moondru thanithani payanpaadugalaich sodhikkiradhu, maanavargal ondrai mattume karkiraargal. Koormaiyaana pori 'could' matrum 'was able to' — oru kurippitta vetrigaramaana seyalukku 'could' thavaru."},
+
+ s11:{
+  en:"PAST TENSE = POLITE TONE = SLIM CHANCE. All three come from the same distance.",
+  ta:"கடந்தகால tense = நாகரிகத் தொனி = மெலிதான வாய்ப்பு. மூன்றுமே அதே தூரத்திலிருந்து வருகின்றன.",
+  tl:"Kadandhagaala tense = naagarigath thoni = melidhaana vaayppu. Moondrume adhe dhooraththilirundhu varugindrana.",
+  vis:"      ONE FORM, THREE JOBS\n\n   COULD / MIGHT\n        ↓\n   1️⃣ PAST     : He could swim as a boy.\n   2️⃣ POLITE   : Could you help me?\n   3️⃣ TENTATIVE: It might rain, but I doubt it.\n\n   All three come from the same idea:\n   the past form creates DISTANCE.\n\n   ⚠ COULD vs WAS ABLE TO:\n     general past ability  →  COULD\n     ONE specific success  →  WAS ABLE TO\n\n     He could swim well.           ✔\n     He was able to escape the fire. ✔\n     He could escape the fire.       ✘"},
+
+ s12:[
+ "He ____ swim when he was five.|can;could|1",
+ "____ you please help me?|Can;Could|1",
+ "It ____ rain, but I doubt it.|may;might|1",
+ "She said she ____ come later.|may;might|1",
+ "He ____ read at the age of four.|can;could|1",
+ "____ you kindly pass the salt?|Can;Could|1",
+ "There is a slight chance he ____ win.|may;might|1",
+ "The fire spread, but they ____ escape.|could;were able to|1",
+ "He ____ have passed with more effort.|can;could|1",
+ "She ____ have missed the train.|may;might|1",
+ "____ I make a suggestion, sir?|Can;Might|1",
+ "He ____ not solve the puzzle then.|can;could|1",
+ "They ____ have reached by now.|may;might|1",
+ "She ____ speak Tamil as a child.|can;could|1",
+ "At last he ____ open the lock.|could;was able to|1",
+ "____ you mind closing the door?|Will;Would|1",
+ "He ____ have told us, but he didn't.|can;could|1",
+ "There is a faint hope he ____ recover.|may;might|1",
+ "She ____ play chess very well then.|can;could|1",
+ "After hours of work, she ____ finish it.|could;was able to|1"],
+
+ s13:[
+ "____ you please tell me whether he ____ swim when he ____ a child?|Could-could-was;Can-can-was;Could-can-was|0|A polite request → COULD. Past ability → COULD. Past → WAS.",
+ "There is a slight chance he ____ come, but he ____ have forgotten the date.|may-can;might-might;might-may|1|'A slight chance' → MIGHT. A past possibility → MIGHT HAVE.",
+ "The house was burning, but each of the residents ____ to escape before help ____.|could-arrived;was able-arrived;were able-arrived|1|One specific success → WAS ABLE TO. 'Each of' is singular (SVA Rule 50).",
+ "He ____ have passed if he ____ harder, but it is high time he ____ this.|could-had worked-realised;can-worked-realises;could-worked-realised|0|Unrealised past → COULD HAVE. Type 3 conditional → HAD WORKED. 'It is high time' → REALISED (Rule 60).",
+ "She said she ____ come, and by now she ____ have reached ____ hotel.|may-may-a;might-might-the;might-may-the|1|A past reporting verb shifts 'may' to MIGHT (Rule 56). A tentative deduction → MIGHT HAVE. Specific hotel → THE."],
+
+ s14:{
+  rule:"Could and might are the past forms of can and may, and also express politeness and remote possibility.",
+  formula:"PAST: He could swim | POLITE: Could you help?\nSLIM CHANCE: It might rain\nONE SUCCESS: was able to (not could)\nUNREALISED PAST: could have / might have + V3",
+  memory:"Past tense = polite tone = slim chance. All three come from distance.",
+  ta:"கடந்தகால வடிவம் = மரியாதை = குறைந்த வாய்ப்பு. மூணுமே தூரத்துலருந்து வருது.",
+  tl:"Kadandhagaala vadivam = mariyaadhai = kuraindha vaayppu. Moonume dhooraththularundhu varudhu.",
+  mistake:"Writing 'he could escape the fire' for one specific success instead of 'was able to'.",
+  exam:"SSC CGL / CHSL and Bank — the could-versus-was-able-to distinction is the sharpest trap."},
+
+ s15:[
+ {ta:"இந்த rule-ல ஒரே ரெண்டு வார்த்தை — could, might — ஆனா மூணு வேலை செய்யுது. நிறைய பேரு ஒரே ஒரு வேலையை மட்டும் கத்துக்கிட்டு தேர்வுக்கு போவாங்க, அப்புறம் மத்த ரெண்டுல தப்பு பண்ணுவாங்க.",
+  tl:"Indha rule-la ore rendu vaarththai — could, might — aanaa moonu velai seyyudhu. Neraiya peru ore oru velaiyai mattum kaththukkittu thervukku povaanga."},
+ {ta:"முதல் வேலை — கடந்தகாலம். 'He COULD swim when he was five.' Can-ஓட கடந்தகாலம் could. May-ஓட கடந்தகாலம் might. இது எல்லாருக்கும் தெரியும்.",
+  tl:"Mudhal velai — kadandhagaalam. 'He COULD swim when he was five.' Can-oda kadandhagaalam could. May-oda kadandhagaalam might. Idhu ellaarukkum theriyum."},
+ {ta:"ரெண்டாவது வேலை — மரியாதை. 'Can you help me?' நேரடி. 'COULD you help me?' நாகரிகம். ஏன்? ஒரு அழகான காரணம் இருக்கு. கடந்தகால வடிவம் அந்த கேள்வியை கேட்பவரிடம் இருந்து கொஞ்சம் தள்ளி வைக்குது. தூரம் இருந்தா அது மென்மையா, மரியாதையா தோணும். ஆங்கிலத்துல மரியாதை காட்ட tense-ஐ பயன்படுத்துறாங்க.",
+  tl:"Randaavadhu velai — mariyaadhai. 'Can you help me?' neradi. 'COULD you help me?' naagarigam. Kadandhagaala vadivam andha kelviyai ketpavaridam irundhu konjam thalli vaikkudhu. Dhooram irundhaa adhu menmaiyaa, mariyaadhaiyaa thonum."},
+ {ta:"மூணாவது வேலை — குறைந்த சாத்தியம். 'It MAY rain' — நல்ல வாய்ப்பு இருக்கு. 'It MIGHT rain' — கொஞ்சம்தான் வாய்ப்பு. வாக்கியத்துல 'slight chance', 'faint hope', 'I doubt it' அப்படிங்கிற வார்த்தை இருந்தா, 'might' போடுங்க.",
+  tl:"Moonaavadhu velai — kuraindha saadhiyam. 'It MAY rain' — nalla vaayppu irukku. 'It MIGHT rain' — konjam-dhaan vaayppu. Vaakkiyaththula 'slight chance', 'faint hope', 'I doubt it' appadingira vaarththai irundhaa, 'might' podunga."},
+ {ta:"இப்போ மிக முக்கியமான பொறி சொல்லுறேன் — COULD மற்றும் WAS ABLE TO. 'He COULD swim well as a boy' — இது பொதுவான திறன், சரி. ஆனா 'The house was on fire, but he COULD escape' — இது தப்பு! ஏன்?",
+  tl:"Ippo miga mukkiyamaana pori solluren — COULD matrum WAS ABLE TO. 'He COULD swim well as a boy' — idhu podhuvaana thiran, sari. Aanaa 'The house was on fire, but he COULD escape' — idhu thappu! Yen?"},
+ {ta:"ஏன்னா ஒரு குறிப்பிட்ட சந்தர்ப்பத்துல, ஒரு தடவ மட்டும் வெற்றிகரமா செஞ்ச செயலுக்கு 'could' வராது. அதுக்கு 'WAS ABLE TO' வரும். 'He WAS ABLE TO escape.' 'Could' அப்படிங்கிறது பொதுவான, தொடர்ச்சியான திறனுக்கு மட்டும். ஒரு தடவ — was able to. பொதுவா — could. இந்த வித்தியாசம் SSC-ல ரொம்ப கூர்மையான பொறி.",
+  tl:"Yennaa oru kurippitta sandharppaththula, oru thadava mattum vetrigaramaa senja seyalukku 'could' varaadhu. Adhukku 'WAS ABLE TO' varum. 'Could' appadingiradhu podhuvaana, thodarchiyaana thiranukku mattum. Oru thadava — was able to. Podhuvaa — could."}]},
+
+/* ========== RULE 66 ========== */
+{n:66,rc:"MOD-04",d:"Hard",t:"MUST versus HAVE TO, MUSTN'T versus NEEDN'T",
+ tam:"Must = உள் கட்டாயம் · Have to = வெளி கட்டாயம் · Mustn't = தடை · Needn't = அவசியமில்லை",
+ s1:{en:"MUST shows the speaker's OWN strong obligation or a confident deduction. HAVE TO shows obligation imposed from OUTSIDE. In the negative they become opposites: MUSTN'T means PROHIBITION, NEEDN'T means NO OBLIGATION.",
+  ta:"MUST பேசுபவரின் சொந்தமான வலுவான கட்டாயத்தையோ உறுதியான ஊகத்தையோ காட்டுகிறது. HAVE TO வெளியிலிருந்து விதிக்கப்பட்ட கட்டாயத்தைக் காட்டுகிறது. எதிர்மறையில் அவை எதிரெதிராகின்றன: MUSTN'T என்றால் தடை, NEEDN'T என்றால் கட்டாயம் இல்லை.",
+  tl:"MUST pesubavarin sondhamaana valuvaana kattaayaththaiyo urudhiyaana oogaththaiyo kaattugiradhu. HAVE TO veliyilirundhu vidhikkappatta kattaayaththaik kaattugiradhu. Edhirmaraiyil avai edhiredhiraagindrana.",
+  formula:"MUST     →  my own decision / strong deduction\n  I MUST lose weight.  (I have decided)\n  He MUST be at home.  (I am sure)\n\nHAVE TO  →  an outside rule\n  I HAVE TO wear a uniform.  (school rule)\n\nNEGATIVES ARE OPPOSITES:\n  You MUSTN'T smoke here.  →  FORBIDDEN\n  You NEEDN'T come tomorrow. →  NOT NECESSARY"},
+
+ s2:[
+ {h:"Who is imposing the obligation?",
+  en:"'I must lose weight' — nobody is forcing me; I have decided. 'I have to wear a uniform' — the school forces me. Ask WHO is behind the obligation. Myself → must. Someone else or a rule → have to.",
+  ta:"கட்டாயத்தை யார் விதிக்கிறார்? 'I must lose weight' — யாரும் என்னைக் கட்டாயப்படுத்தவில்லை; நான் முடிவு செய்திருக்கிறேன். 'I have to wear a uniform' — பள்ளி என்னைக் கட்டாயப்படுத்துகிறது. கட்டாயத்தின் பின்னால் யார் இருக்கிறார் என்று கேளுங்கள். நானே → must. வேறு யாரோ அல்லது ஒரு விதி → have to.",
+  tl:"Kattaayaththai yaar vidhikkiraar? 'I must lose weight' — yaarum ennaik kattaayappaduththavillai; naan mudivu seydhirukkiren. 'I have to wear a uniform' — palli ennaik kattaayappaduththugiradhu."},
+ {h:"The negatives are complete opposites",
+  en:"This is the single most important point. 'You mustn't go' means you are FORBIDDEN to go. 'You needn't go' means you do not HAVE to go, but you may if you wish. Students treat them as the same and lose the mark.",
+  ta:"எதிர்மறைகள் முற்றிலும் எதிரானவை. இதுதான் மிக முக்கியமான ஒற்றைப் புள்ளி. 'You mustn't go' என்றால் நீங்கள் செல்லத் தடை செய்யப்பட்டிருக்கிறீர்கள். 'You needn't go' என்றால் நீங்கள் செல்ல வேண்டியதில்லை, ஆனால் விரும்பினால் செல்லலாம். மாணவர்கள் அவற்றை ஒன்றாகக் கருதி mark இழக்கிறார்கள்.",
+  tl:"Edhirmaraigal mutrilum edhiraanavai. Idhudhaan miga mukkiyamaana otraip pulli. 'You mustn't go' endraal neengal sellath thadai seyyappattirukkireergal. 'You needn't go' endraal neengal sella vendiyadhillai."},
+ {h:"MUST HAVE for a confident deduction about the past",
+  en:"'He must have gone home' means I am almost certain he went. Compare with 'He might have gone home' (possible) and 'He can't have gone home' (I am sure he did not). This is a scale of certainty.",
+  ta:"கடந்தகாலம் பற்றிய உறுதியான ஊகத்திற்கு MUST HAVE. 'He must have gone home' என்றால் அவர் சென்றுவிட்டார் என்று நான் கிட்டத்தட்ட உறுதியாக நம்புகிறேன். 'He might have gone home' (சாத்தியம்) மற்றும் 'He can't have gone home' (அவர் செல்லவில்லை என்று உறுதி) ஆகியவற்றுடன் ஒப்பிடுங்கள். இது ஒரு உறுதிப்பாட்டு அளவுகோல்.",
+  tl:"Kadandhagaalam patriya urudhiyaana oogaththirku MUST HAVE. 'He must have gone home' endraal avar sendruvittaar endru naan kittaththatta urudhiyaaga nambugiren. Idhu oru urudhippaattu alavugol."},
+ {h:"MUST has no past or future form of its own",
+  en:"You cannot say 'He musted' or 'He will must'. For the past use 'had to': 'He had to leave early yesterday'. For the future use 'will have to': 'You will have to submit it tomorrow'.",
+  ta:"MUST-க்கு சொந்தமாக கடந்தகால அல்லது எதிர்கால வடிவம் இல்லை. 'He musted' அல்லது 'He will must' என்று சொல்ல முடியாது. கடந்தகாலத்திற்கு 'had to' பயன்படுத்துங்கள்: 'He had to leave early yesterday'. எதிர்காலத்திற்கு 'will have to': 'You will have to submit it tomorrow'.",
+  tl:"MUST-kku sondhamaaga kadandhagaala alladhu edhirkaala vadivam illai. 'He musted' alladhu 'He will must' endru solla mudiyaadhu. Kadandhagaalaththirku 'had to' payanpaduththungal."}],
+
+ s3:[
+ {h:"Who is forcing you?",
+  d:"   🧍 MYSELF        →  MUST\n      I MUST lose weight.\n      (my own decision)\n\n   🏫 OUTSIDE RULE  →  HAVE TO\n      I HAVE TO wear a uniform.\n      (the school says so)\n\n   Ask: who is behind this obligation?"},
+ {h:"The negatives are opposites",
+  d:"   MUSTN'T  →  🚫 FORBIDDEN\n     You mustn't smoke here.\n     (it is not allowed at all)\n\n   NEEDN'T  →  🆓 OPTIONAL\n     You needn't come tomorrow.\n     (you may if you want, but no need)\n\n   ⚠ These are NOT the same.\n     Students lose marks here every year."},
+ {h:"The certainty scale for the past",
+  d:"   MUST HAVE  ████████  I am almost sure he did\n   MAY HAVE   █████     possibly he did\n   MIGHT HAVE ███       perhaps he did\n   CAN'T HAVE ░░░░░░░░  I am sure he did NOT\n\n   He MUST HAVE gone home.\n   He CAN'T HAVE finished so soon.\n\n   ⚠ NO PAST/FUTURE FOR 'MUST':\n     past   → had to\n     future → will have to"}],
+
+ s4:{
+ wrong:["\"'Mustn't' and 'needn't' both mean 'no need'.\" — 'Mustn't' means forbidden.",
+  "\"'Must' and 'have to' are interchangeable.\" — One is internal, one is external.",
+  "\"'He musted go yesterday' is the past form.\" — Use 'had to'.",
+  "\"'You will must come' expresses future obligation.\" — Use 'will have to'."],
+ right:["Ask who imposes the obligation: myself → must, an outside rule → have to.",
+  "MUSTN'T = forbidden. NEEDN'T = optional. They are opposites.",
+  "For the past use 'had to'; for the future use 'will have to'.",
+  "For a confident past deduction use 'must have + V3'."]},
+
+ s5:[
+ {en:"I must lose weight before the medical test.",ta:"மருத்துவ பரிசோதனைக்கு முன் நான் எடையைக் குறைக்க வேண்டும்.",tl:"Maruththuva parisodhanaikku mun naan edaiyaik kuraikka vendum.",note:"My own decision → MUST."},
+ {en:"I have to wear a uniform to school.",ta:"நான் பள்ளிக்குச் சீருடை அணிந்து செல்ல வேண்டும்.",tl:"Naan pallikkuch seerudai anindhu sella vendum.",note:"A school rule imposed from outside → HAVE TO."},
+ {en:"You mustn't touch that wire; it is live.",ta:"அந்தக் கம்பியைத் தொடக் கூடாது; அதில் மின்சாரம் இருக்கிறது.",tl:"Andhak kambiyaith thodak koodaadhu; adhil minsaaram irukkiradhu.",note:"MUSTN'T = prohibition."},
+ {en:"You needn't come tomorrow; the office is closed.",ta:"நீங்கள் நாளை வர வேண்டியதில்லை; அலுவலகம் மூடப்பட்டிருக்கும்.",tl:"Neengal naalai vara vendiyadhillai; aluvalagam moodappattirukkum.",note:"NEEDN'T = no obligation."},
+ {en:"He must have reached home by now.",ta:"அவர் இதற்குள் வீட்டை அடைந்திருக்க வேண்டும்.",tl:"Avar idharkul veettai adaindhirukka vendum.",note:"A confident deduction about the past → MUST HAVE."}],
+
+ s6:["must|வேண்டும் (உள் கட்டாயம்)|Vendum (ul kattaayam)",
+  "have to|வேண்டியிருக்கிறது (வெளி கட்டாயம்)|Vendiyirukkiradhu (veli kattaayam)",
+  "mustn't|கூடாது (தடை)|Koodaadhu (thadai)",
+  "needn't|வேண்டியதில்லை|Vendiyadhillai",
+  "had to|வேண்டியிருந்தது|Vendiyirundhadhu",
+  "will have to|வேண்டியிருக்கும்|Vendiyirukkum",
+  "must have|இருந்திருக்க வேண்டும்|Irundhirukka vendum",
+  "prohibition|தடை|Thadai",
+  "obligation|கட்டாயம்|Kattaayam",
+  "uniform|சீருடை|Seerudai",
+  "live wire|மின்சாரக் கம்பி|Minsaarak kambi"],
+
+ s7:[
+ "I ____ lose weight, I have decided.|must|Easy|My own decision.",
+ "I ____ wear a uniform to school.|have to|Easy|An outside rule.",
+ "You ____ smoke here; it is banned.|mustn't|Easy|Prohibition.",
+ "You ____ come tomorrow; it is a holiday.|needn't|Easy|No obligation.",
+ "He ____ be at home; his car is outside.|must|Medium|A confident deduction.",
+ "She ____ submit the form by Friday.|has to|Medium|An office rule.",
+ "You ____ touch that wire; it is live.|mustn't|Medium|Prohibition.",
+ "He ____ have reached by now.|must|Medium|A confident past deduction.",
+ "He ____ leave early yesterday.|had to|Hard|'Must' has no past form.",
+ "You ____ have to submit it tomorrow.|will|Hard|'Must' has no future form.",
+ "You ____ pay now; you can pay later.|needn't|Hard|No obligation.",
+ "Students ____ carry mobile phones inside.|mustn't|Hard|Prohibition.",
+ "He ____ have finished so soon; it is impossible.|can't|Expert|Certainty that it did not happen.",
+ "I ____ apologise to her, I feel guilty.|must|Expert|My own decision.",
+ "We ____ wait long; the doctor is free.|needn't|Expert|No obligation."],
+
+ s8:[
+ "You mustn't come tomorrow if you simply mean it is unnecessary.|You needn't come tomorrow if you simply mean it is unnecessary.|'Mustn't' means forbidden, not unnecessary.",
+ "You needn't smoke here because it is banned.|You mustn't smoke here because it is banned.|A ban requires 'mustn't'.",
+ "He musted leave early yesterday.|He had to leave early yesterday.|'Must' has no past form.",
+ "You will must submit it tomorrow.|You will have to submit it tomorrow.|'Must' has no future form.",
+ "I have to lose weight, I have decided myself.|I must lose weight, I have decided myself.|A personal decision requires 'must'.",
+ "I must wear a uniform because the school says so.|I have to wear a uniform because the school says so.|An outside rule requires 'have to'.",
+ "He must had reached home by now.|He must have reached home by now.|Modal + have + V3, not 'had'.",
+ "You needn't touch that live wire.|You mustn't touch that live wire.|Danger requires a prohibition.",
+ "He must have finished so soon, which is impossible.|He can't have finished so soon, which is impossible.|Certainty that it did not happen requires 'can't have'.",
+ "Students needn't carry mobile phones inside the hall.|Students mustn't carry mobile phones inside the hall.|A rule that forbids requires 'mustn't'."],
+
+ s9:[
+ "Fill in the Blank|You ____ worry about the fees; the scholarship will cover everything.|mustn't;needn't|1|No obligation requires 'needn't'.",
+ "Find the Error|Candidates needn't (A) carry mobile phones (B) into the examination hall (C) under any circumstances (D).|A;B;C;D|0|Part A. A strict ban requires 'mustn't carry'.",
+ "Sentence Improvement|He musted leave the office early yesterday because of a family emergency.|musted leave;had to leave;must leave|1|'Must' has no past form.",
+ "Fill in the Blank|His car is parked outside, so he ____ be at home right now.|must;needn't|0|A confident deduction requires 'must'.",
+ "Find the Error|You will must (A) submit the completed form (B) before the last date (C) mentioned here (D).|A;B;C;D|0|Part A. 'Must' has no future form → 'will have to submit'."],
+
+ s10:{
+  en:"MUSTN'T versus NEEDN'T is the sharpest trap in the whole module. In Tamil and Hindi both are often translated the same way, so students treat them as synonyms. They are opposites: 'mustn't' forbids, 'needn't' releases. The second trap is that 'must' has no past or future form — 'musted' and 'will must' are both impossible.",
+  ta:"MUSTN'T மற்றும் NEEDN'T முழு module-லும் மிகக் கூர்மையான பொறி. தமிழிலும் இந்தியிலும் இரண்டும் அடிக்கடி ஒரே மாதிரி மொழிபெயர்க்கப்படுகின்றன, எனவே மாணவர்கள் அவற்றை ஒரே பொருள் கொண்டவையாகக் கருதுகிறார்கள். அவை எதிரானவை: 'mustn't' தடை செய்கிறது, 'needn't' விடுவிக்கிறது. இரண்டாவது பொறி 'must'-க்கு கடந்தகால அல்லது எதிர்கால வடிவம் இல்லை — 'musted' மற்றும் 'will must' இரண்டுமே சாத்தியமில்லை.",
+  tl:"MUSTN'T matrum NEEDN'T muzhu module-lum migak koormaiyaana pori. Avai edhiraanavai: 'mustn't' thadai seygiradhu, 'needn't' viduvikkiradhu. Irandaavadhu pori 'must'-kku kadandhagaala alladhu edhirkaala vadivam illai."},
+
+ s11:{
+  en:"MUSTN'T = FORBIDDEN. NEEDN'T = OPTIONAL. They are opposites, not synonyms.",
+  ta:"MUSTN'T = தடை. NEEDN'T = விருப்பம். அவை எதிரானவை, ஒரே பொருள் அல்ல.",
+  tl:"MUSTN'T = thadai. NEEDN'T = viruppam. Avai edhiraanavai, ore porul alla.",
+  vis:"      THE NEGATIVE TRAP\n\n   🚫 MUSTN'T  =  FORBIDDEN\n      You mustn't smoke here.\n      = smoking is NOT ALLOWED\n\n   🆓 NEEDN'T  =  OPTIONAL\n      You needn't come tomorrow.\n      = come if you like, but no need\n\n   These are OPPOSITES.\n\n   WHO IS FORCING YOU?\n     myself      →  MUST\n     outside rule →  HAVE TO\n\n   ⚠ NO PAST / FUTURE FOR 'MUST':\n     past   →  had to\n     future →  will have to\n     musted ✘   will must ✘"},
+
+ s12:[
+ "I ____ lose weight, I decided.|have to;must|1",
+ "I ____ wear a uniform to school.|must;have to|1",
+ "You ____ smoke here; it is banned.|needn't;mustn't|1",
+ "You ____ come tomorrow; holiday.|mustn't;needn't|1",
+ "He ____ be at home; his car is here.|needn't;must|1",
+ "She ____ submit the form by Friday.|must;has to|1",
+ "You ____ touch that live wire.|needn't;mustn't|1",
+ "He ____ have reached by now.|can;must|1",
+ "He ____ leave early yesterday.|musted;had to|1",
+ "You ____ have to submit it tomorrow.|must;will|1",
+ "You ____ pay now; pay later.|mustn't;needn't|1",
+ "Students ____ carry phones inside.|needn't;mustn't|1",
+ "He ____ have finished so soon.|must;can't|1",
+ "I ____ apologise; I feel guilty.|have to;must|1",
+ "We ____ wait; the doctor is free.|mustn't;needn't|1",
+ "Soldiers ____ obey their orders.|needn't;must|1",
+ "You ____ worry; everything is fine.|mustn't;needn't|1",
+ "He ____ be very rich; look at his car.|needn't;must|1",
+ "You ____ park here; it is a no-parking zone.|needn't;mustn't|1",
+ "I ____ go now; the last bus is at nine.|needn't;must|1"],
+
+ s13:[
+ "You ____ smoke here, but you ____ leave the building if you want fresh air.|needn't-mustn't;mustn't-needn't;mustn't-must|1|A ban → MUSTN'T. No obligation → NEEDN'T.",
+ "He ____ have reached home, because his car ____ outside since morning.|can-is;must-has been;must-is|1|A confident deduction → MUST HAVE. 'Since morning' → HAS BEEN (Rule 53).",
+ "She ____ leave early yesterday, and tomorrow she ____ to attend a meeting.|must-must;had-will have;had-must|1|The past of 'must' → HAD TO. The future → WILL HAVE TO.",
+ "Every candidate ____ carry ____ own identity card, but ____ bring a calculator.|must-his-needn't;have to-their-mustn't;must-their-needn't|0|Obligation → MUST. Singular pronoun → HIS (Pronoun Rule 29). No obligation → NEEDN'T.",
+ "It is high time we ____ , for by six o'clock the shop ____ have closed.|left-will;leave-will;left-would|0|'It is high time' → LEFT (Rule 60). 'By six' → WILL HAVE closed (Rule 62)."],
+
+ s14:{
+  rule:"MUST is internal obligation, HAVE TO is external. MUSTN'T means forbidden, NEEDN'T means not necessary.",
+  formula:"MUST → my own decision / strong deduction\nHAVE TO → an outside rule\nMUSTN'T → forbidden | NEEDN'T → optional\nPast: had to | Future: will have to",
+  memory:"MUSTN'T forbids. NEEDN'T releases. They are opposites.",
+  ta:"MUSTN'T தடை செய்யுது. NEEDN'T விடுவிக்குது. ரெண்டும் எதிரானது.",
+  tl:"MUSTN'T thadai seyyudhu. NEEDN'T viduvikkudhu. Rendum edhiraanadhu.",
+  mistake:"Treating 'mustn't' and 'needn't' as the same, and writing 'musted' or 'will must'.",
+  exam:"SSC CGL / CHSL and Bank — the mustn't-versus-needn't pair is the most repeated modal trap."},
+
+ s15:[
+ {ta:"இந்த rule-ல ரெண்டு பகுதி இருக்கு, ரெண்டாவது பகுதிதான் SSC-ல mark இழக்க வைக்கிற இடம். முதல்ல எளிமையான பகுதி பார்ப்போம்.",
+  tl:"Indha rule-la rendu paguthi irukku, randaavadhu paguthidhaan SSC-la mark izhakka vaikkira idam. Mudhalla elimaiyaana paguthi paarpom."},
+ {ta:"MUST மற்றும் HAVE TO — ரெண்டுமே 'வேண்டும்' அப்படிங்கிற அர்த்தம். ஆனா யாரு கட்டாயப்படுத்துறாங்க அப்படிங்கிறதுல வித்தியாசம். 'I MUST lose weight' — யாரும் என்னை கட்டாயப்படுத்தல, நானே முடிவு பண்ணேன். 'I HAVE TO wear a uniform' — பள்ளி விதி, வெளியில இருந்து வர்ற கட்டாயம்.",
+  tl:"MUST matrum HAVE TO — rendume 'vendum' appadingira arththam. Aanaa yaaru kattaayappaduththuraanga appadingiradhula viththiyaasam. 'I MUST lose weight' — naane mudivu pannen. 'I HAVE TO wear a uniform' — palli vidhi."},
+ {ta:"இப்போ ரொம்ப முக்கியமான பகுதி — எதிர்மறை. இதுல நிறைய பேரு தப்பு பண்ணுவாங்க, ஏன்னா நம்ம மொழியில ரெண்டையும் ஒரே மாதிரி மொழிபெயர்ப்போம். ஆனா ஆங்கிலத்துல இது ரெண்டும் நேர் எதிரானது!",
+  tl:"Ippo romba mukkiyamaana paguthi — edhirmarai. Idhula neraiya peru thappu pannuvaanga, yennaa namma mozhiyila rendaiyum ore maadhiri mozhibeyarppom. Aanaa Aangilaththula idhu rendum ner edhiraanadhu!"},
+ {ta:"'You MUSTN'T smoke here' அப்படின்னா என்ன? 'இங்க புகைபிடிக்கவே கூடாது' — தடை. கண்டிப்பா முடியாது. ஆனா 'You NEEDN'T come tomorrow' அப்படின்னா என்ன? 'நாளைக்கு வர வேண்டிய அவசியம் இல்ல' — விருப்பம் இருந்தா வரலாம், ஆனா தேவையில்ல.",
+  tl:"'You MUSTN'T smoke here' appadinnaa enna? 'Inga pugaipidikkave koodaadhu' — thadai. Aanaa 'You NEEDN'T come tomorrow' appadinnaa enna? 'Naalaikku vara vendiya avasiyam illa' — viruppam irundhaa varalaam."},
+ {ta:"வித்தியாசம் தெரியுதா? ஒண்ணு கதவை மூடுது, இன்னொண்ணு கதவை திறக்குது. MUSTN'T = தடை. NEEDN'T = விடுதலை. SSC இதை ஒவ்வொரு வருஷமும் கேட்குது. வாக்கியத்துல clue இருக்கும் — 'it is banned', 'not allowed', 'under any circumstances' அப்படின்னா mustn't. 'it is a holiday', 'the scholarship covers it', 'you can pay later' அப்படின்னா needn't.",
+  tl:"Viththiyaasam theriyudhaa? Onnu kadhavai moodudhu, innonnu kadhavai thirakkudhu. MUSTN'T = thadai. NEEDN'T = vidudhalai. Vaakkiyaththula clue irukkum — 'it is banned', 'not allowed' appadinnaa mustn't."},
+ {ta:"கடைசியா ஒரு விஷயம் — MUST-க்கு கடந்தகாலமோ எதிர்காலமோ கிடையாது! 'He musted' அப்படின்னு வார்த்தையே இல்ல. 'He will must' அப்படின்னும் இல்ல (Rule 63-ல படிச்சோம், ரெண்டு modal சேராது). கடந்தகாலத்துக்கு 'HAD TO'. எதிர்காலத்துக்கு 'WILL HAVE TO'. 'He HAD TO leave early yesterday.' 'You WILL HAVE TO submit it tomorrow.' இந்த ரெண்டு வடிவமும் SSC-ல அடிக்கடி வரும்.",
+  tl:"Kadaisiyaa oru vishayam — MUST-kku kadandhagaalamo edhirkaalamo kidaiyaadhu! 'He musted' appadinnu vaarththaiye illa. Kadandhagaalaththukku 'HAD TO'. Edhirkaalaththukku 'WILL HAVE TO'."}]},
+/* ========== RULE 67 ========== */
+{n:67,rc:"MOD-05",d:"Medium",t:"SHOULD and OUGHT TO for Duty and Advice",
+ tam:"Should, Ought to = கடமை, அறிவுரை · Should have + V3 = செய்யாத கடந்தகால கடமை",
+ s1:{en:"SHOULD and OUGHT TO express MORAL DUTY, ADVICE or EXPECTATION. They are weaker than 'must' — they recommend rather than command. 'Ought' always keeps the 'to'.",
+  ta:"SHOULD மற்றும் OUGHT TO ஒழுக்கக் கடமை, அறிவுரை அல்லது எதிர்பார்ப்பை வெளிப்படுத்துகின்றன. அவை 'must'-ஐ விட பலவீனமானவை — அவை கட்டளையிடுவதற்குப் பதிலாக பரிந்துரைக்கின்றன. 'Ought' எப்போதும் 'to' வைத்திருக்கும்.",
+  tl:"SHOULD matrum OUGHT TO ozhukkak kadamai, arivurai alladhu edhirpaarppai velippaduththugindrana. Avai 'must'-ai vida palaveenamaanavai. 'Ought' eppodhum 'to' vaiththirukkum.",
+  formula:"SHOULD / OUGHT TO  →  advice, duty, expectation\n\n  You SHOULD consult a doctor.\n  We OUGHT TO help the poor.\n  The train SHOULD arrive by six. (expectation)\n\nSHOULD HAVE + V3  →  a PAST duty NOT performed\n  You SHOULD HAVE informed us earlier.\n  (but you did not)"},
+
+ s2:[
+ {h:"Advice, not command",
+  en:"'You must see a doctor' is an order. 'You should see a doctor' is advice. The speaker recommends but leaves the choice open. When an exam sentence gives friendly counsel, 'should' is the answer.",
+  ta:"அறிவுரை, கட்டளை அல்ல. 'You must see a doctor' ஒரு கட்டளை. 'You should see a doctor' ஒரு அறிவுரை. பேசுபவர் பரிந்துரைக்கிறார் ஆனால் தேர்வை திறந்தே விடுகிறார். ஒரு தேர்வு வாக்கியம் நட்பான ஆலோசனையைத் தரும்போது, 'should'தான் விடை.",
+  tl:"Arivurai, kattalai alla. 'You must see a doctor' oru kattalai. 'You should see a doctor' oru arivurai. Pesubavar parindhuraikkiraar aanaal thervai thirandhe vidugiraar."},
+ {h:"SHOULD HAVE + V3 is the tested form",
+  en:"'You should have informed us' means you had a duty to inform, and you FAILED to do it. This form carries regret or reproach. SSC tests this far more often than plain 'should'.",
+  ta:"SHOULD HAVE + V3 தான் சோதிக்கப்படும் வடிவம். 'You should have informed us' என்றால் உங்களுக்கு அறிவிக்கும் கடமை இருந்தது, நீங்கள் அதைச் செய்யத் தவறிவிட்டீர்கள். இந்த வடிவம் வருத்தத்தையோ கண்டனத்தையோ சுமக்கிறது. வெறும் 'should'-ஐ விட SSC இதை மிக அதிகமாகச் சோதிக்கிறது.",
+  tl:"SHOULD HAVE + V3 dhaan sodhikkappadum vadivam. 'You should have informed us' endraal ungalukku arivikkum kadamai irundhadhu, neengal adhaich seyyath thavarivitteergal. Verum 'should'-ai vida SSC idhai miga adhigamaagach sodhikkiradhu."},
+ {h:"SHOULD also expresses expectation",
+  en:"'The train should arrive by six' does not mean the train has a moral duty. It means we EXPECT it by six. This use is common in polite predictions: 'He should be home by now'.",
+  ta:"SHOULD எதிர்பார்ப்பையும் வெளிப்படுத்துகிறது. 'The train should arrive by six' என்றால் ரயிலுக்கு ஒழுக்கக் கடமை இருக்கிறது என்று அர்த்தமில்லை. ஆறு மணிக்குள் அதை நாம் எதிர்பார்க்கிறோம் என்று பொருள். இந்தப் பயன்பாடு நாகரிகமான கணிப்புகளில் பொதுவானது: 'He should be home by now'.",
+  tl:"SHOULD edhirpaarppaiyum velippaduththugiradhu. 'The train should arrive by six' endraal aaru manikkul adhai naam edhirpaarkkirom endru porul."},
+ {h:"OUGHT TO is slightly more formal",
+  en:"'We ought to help the poor' carries a stronger moral tone than 'we should help the poor'. In meaning they are almost identical, but 'ought' feels more like a principle. The 'to' is never dropped.",
+  ta:"OUGHT TO சற்று அதிக முறையானது. 'We ought to help the poor' என்பது 'we should help the poor'-ஐ விட வலுவான ஒழுக்கத் தொனியைச் சுமக்கிறது. பொருளில் அவை கிட்டத்தட்ட ஒரே மாதிரி, ஆனால் 'ought' ஒரு கொள்கை போலத் தோன்றுகிறது. 'To' ஒருபோதும் விடப்படுவதில்லை.",
+  tl:"OUGHT TO satru adhiga muraiyaanadhu. 'We ought to help the poor' enbadhu 'we should help the poor'-ai vida valuvaana ozhukkath thoniyaich sumakkiradhu. 'To' orupodhum vidappaduvadhillai."}],
+
+ s3:[
+ {h:"Strength of obligation",
+  d:"   MUST      ████████████  command, no choice\n   HAVE TO   ██████████    outside rule\n   SHOULD    ██████        advice, recommended\n   OUGHT TO  ██████        moral principle\n   COULD     ███           mere suggestion\n\n   'Should' leaves the choice with the listener."},
+ {h:"Present duty versus failed past duty",
+  d:"   SHOULD + V1  →  duty NOW\n     You SHOULD inform them.\n     (there is still time)\n\n   SHOULD HAVE + V3  →  duty NOT DONE\n     You SHOULD HAVE informed them.\n     (the chance has gone — regret)\n\n   ⚠ This second form is what SSC tests."},
+ {h:"The three jobs of SHOULD",
+  d:"   💡 ADVICE      : You should rest.\n   ⚖️ MORAL DUTY  : We should help the poor.\n   ⏰ EXPECTATION : The train should arrive by six.\n\n   ⚠ 'OUGHT' KEEPS ITS 'TO':\n     ought TO help  ✔\n     ought help     ✘"}],
+
+ s4:{
+ wrong:["\"'Should' and 'must' mean the same.\" — 'Must' commands; 'should' advises.",
+  "\"'You should informed me' is the past form.\" — It must be 'should have informed'.",
+  "\"'We ought help the poor' is fine.\" — 'Ought' always keeps the 'to'.",
+  "\"'The train should arrive' gives the train a duty.\" — Here 'should' expresses expectation."],
+ right:["Advice or recommendation → should or ought to.",
+  "A past duty that was NOT done → should have + V3.",
+  "'Ought' never drops the 'to'.",
+  "'Should' can also mean 'I expect'."]},
+
+ s5:[
+ {en:"You should consult a doctor immediately.",ta:"நீங்கள் உடனடியாக ஒரு மருத்துவரை அணுக வேண்டும்.",tl:"Neengal udanadiyaaga oru maruththuvarai anuga vendum.",note:"Advice → SHOULD."},
+ {en:"We ought to help the poor and the weak.",ta:"நாம் ஏழைகளுக்கும் பலவீனர்களுக்கும் உதவ வேண்டும்.",tl:"Naam ezhaigalukkum palaveenargalukkum udhava vendum.",note:"A moral principle → OUGHT TO, with the 'to' kept."},
+ {en:"You should have informed us earlier.",ta:"நீங்கள் எங்களுக்கு முன்பே தெரிவித்திருக்க வேண்டும்.",tl:"Neengal engalukku munbe theriviththirukka vendum.",note:"A past duty that was not performed → SHOULD HAVE + V3."},
+ {en:"The train should arrive by six o'clock.",ta:"ரயில் ஆறு மணிக்குள் வந்துவிட வேண்டும்.",tl:"Rayil aaru manikkul vandhuvida vendum.",note:"Expectation, not moral duty → SHOULD."},
+ {en:"Citizens ought to obey the law of the land.",ta:"குடிமக்கள் நாட்டின் சட்டத்திற்குக் கீழ்ப்படிய வேண்டும்.",tl:"Kudimakkal naattin sattaththirkuk keezhppadiya vendum.",note:"A civic principle → OUGHT TO."}],
+
+ s6:["should|வேண்டும் (அறிவுரை)|Vendum (arivurai)",
+  "ought to|வேண்டும் (கடமை)|Vendum (kadamai)",
+  "advice|அறிவுரை|Arivurai",
+  "moral duty|ஒழுக்கக் கடமை|Ozhukkak kadamai",
+  "expectation|எதிர்பார்ப்பு|Edhirpaarppu",
+  "should have informed|தெரிவித்திருக்க வேண்டும்|Theriviththirukka vendum",
+  "consult|அணுகு|Anugu",
+  "obey|கீழ்ப்படி|Keezhppadi",
+  "the law|சட்டம்|Sattam",
+  "regret|வருத்தம்|Varuththam",
+  "reproach|கண்டனம்|Kandanam"],
+
+ s7:[
+ "You ____ consult a doctor.|should|Easy|Advice.",
+ "We ought ____ help the poor.|to|Easy|'Ought' keeps the 'to'.",
+ "You ____ have informed us earlier.|should|Easy|A past duty not done.",
+ "The train ____ arrive by six.|should|Medium|Expectation.",
+ "Citizens ought ____ obey the law.|to|Medium|'Ought' keeps the 'to'.",
+ "You ____ take more rest these days.|should|Medium|Advice.",
+ "He ____ have submitted the form last week.|should|Medium|A missed past duty.",
+ "Students ____ respect their teachers.|should|Hard|Moral duty.",
+ "She ____ have told me about the change.|should|Hard|A missed past duty.",
+ "He ____ be home by now, it is very late.|should|Hard|Expectation.",
+ "We ought ____ be grateful to our parents.|to|Hard|'Ought' keeps the 'to'.",
+ "You ____ not have spoken so rudely.|should|Expert|A past action that was wrong.",
+ "Everyone ____ do his duty sincerely.|should|Expert|Moral duty with a singular pronoun.",
+ "They ____ have started earlier to avoid traffic.|should|Expert|A missed past duty.",
+ "One ought ____ keep one's promises.|to|Expert|'Ought' keeps the 'to'."],
+
+ s8:[
+ "We ought help the poor and the needy.|We ought to help the poor and the needy.|'Ought' always keeps the 'to'.",
+ "You should informed us earlier about it.|You should have informed us earlier about it.|A past duty requires 'should have + V3'.",
+ "He should submitted the form last week.|He should have submitted the form last week.|A missed past duty requires 'should have + V3'.",
+ "Citizens ought obey the law of the land.|Citizens ought to obey the law of the land.|'Ought' keeps the 'to'.",
+ "She should had told me about the change.|She should have told me about the change.|Modal + have + V3, not 'had'.",
+ "You should to take more rest these days.|You should take more rest these days.|'Should' does not take 'to'.",
+ "They should started earlier to avoid traffic.|They should have started earlier to avoid traffic.|A missed past duty requires 'should have + V3'.",
+ "One ought keep one's promises always.|One ought to keep one's promises always.|'Ought' keeps the 'to'.",
+ "You should not spoken so rudely to her.|You should not have spoken so rudely to her.|A past wrong requires 'should not have + V3'.",
+ "He ought to helped his friend in trouble.|He ought to have helped his friend in trouble.|A missed past duty requires 'ought to have + V3'."],
+
+ s9:[
+ "Fill in the Blank|You ____ have consulted a specialist before starting this medication.|should;should to|0|A past duty requires 'should have + V3'.",
+ "Find the Error|Every citizen ought (A) obey the laws (B) of the country (C) without exception (D).|A;B;C;D|0|Part A. 'Ought' always keeps the 'to' → 'ought to obey'.",
+ "Sentence Improvement|You should informed the office about your absence at least a day earlier.|should informed;should have informed;should had informed|1|A missed past duty requires 'should have + V3'.",
+ "Fill in the Blank|The parcel ____ reach you by Friday if it was posted on Monday.|must;should|1|A polite expectation requires 'should'.",
+ "Find the Error|She should had (A) told me about (B) the change in (C) the meeting timings (D).|A;B;C;D|0|Part A. Modal + have + V3 → 'should have told'."],
+
+ s10:{
+  en:"SHOULD HAVE + V3 is what the exam actually tests, not plain 'should'. Students write 'You should informed us' because the meaning is clearly past, forgetting that a modal cannot take -ed. The second trap is 'ought' losing its 'to' — since no other modal takes 'to', students drop it by analogy. Only 'ought' keeps it, always.",
+  ta:"SHOULD HAVE + V3-தான் தேர்வு உண்மையில் சோதிக்கிறது, வெறும் 'should' அல்ல. பொருள் தெளிவாகக் கடந்தகாலமாக இருப்பதால் மாணவர்கள் 'You should informed us' என்று எழுதுகிறார்கள், ஒரு modal -ed எடுக்க முடியாது என்பதை மறந்துவிடுகிறார்கள். இரண்டாவது பொறி 'ought' தன் 'to'-ஐ இழப்பது — வேறு எந்த modal-ம் 'to' எடுக்காததால், மாணவர்கள் ஒப்புமையால் அதை விட்டுவிடுகிறார்கள். 'Ought' மட்டுமே அதை வைத்திருக்கிறது, எப்போதும்.",
+  tl:"SHOULD HAVE + V3-dhaan thervu unmaiyil sodhikkiradhu, verum 'should' alla. Maanavargal 'You should informed us' endru ezhudhugiraargal, oru modal -ed edukka mudiyaadhu enbadhai marandhuvidugiraargal. Irandaavadhu pori 'ought' than 'to'-ai izhappadhu."},
+
+ s11:{
+  en:"SHOULD + V1 = duty now. SHOULD HAVE + V3 = duty missed. OUGHT always keeps its TO.",
+  ta:"SHOULD + V1 = இப்போதைய கடமை. SHOULD HAVE + V3 = தவறவிட்ட கடமை. OUGHT எப்போதும் தன் TO-ஐ வைத்திருக்கும்.",
+  tl:"SHOULD + V1 = ippodhaiya kadamai. SHOULD HAVE + V3 = thavaravitta kadamai. OUGHT eppodhum than TO-ai vaiththirukkum.",
+  vis:"      TWO FORMS, TWO TIMES\n\n   SHOULD + V1        →  duty NOW\n     You SHOULD inform them.\n     (there is still time to act)\n\n   SHOULD HAVE + V3   →  duty MISSED\n     You SHOULD HAVE informed them.\n     (the chance is gone — regret)\n\n   ⚠ 'OUGHT' IS THE ONLY MODAL WITH 'TO':\n     ought TO help      ✔\n     ought help         ✘\n     ought TO HAVE helped ✔ (missed duty)\n\n   ⚠ THE THREE JOBS OF 'SHOULD':\n     advice · moral duty · expectation"},
+
+ s12:[
+ "You ____ consult a doctor.|should;must|0",
+ "We ought ____ help the poor.|to;—|0",
+ "You ____ have informed us earlier.|should;should to|0",
+ "The train ____ arrive by six.|must;should|1",
+ "Citizens ought ____ obey the law.|to;—|0",
+ "You ____ take more rest.|should;should to|0",
+ "He ____ have submitted it last week.|should;should had|0",
+ "Students ____ respect teachers.|should;should to|0",
+ "She ____ have told me earlier.|should;should had|0",
+ "He ____ be home by now.|should;ought|0",
+ "We ought ____ be grateful.|to;—|0",
+ "You ____ not have spoken rudely.|should;should to|0",
+ "Everyone ____ do his duty.|should;should to|0",
+ "They ____ have started earlier.|should;should had|0",
+ "One ought ____ keep one's promises.|to;—|0",
+ "He ought to ____ helped his friend.|have;had|0",
+ "You ____ apologise to her at once.|should;ought|0",
+ "The results ____ be out by Monday.|must;should|1",
+ "We ____ have booked the tickets earlier.|should;should had|0",
+ "Children ought ____ obey their parents.|to;—|0"],
+
+ s13:[
+ "You ____ have informed us, and by then we ____ already left ____ station.|should-had-the;should-have-a;must-had-the|0|A missed past duty → SHOULD HAVE. The earlier past action → HAD left (Rule 54).",
+ "We ought ____ help the poor, for it is high time society ____ about them.|to-thought;—-thinks;to-thinks|0|'Ought' keeps 'to'. 'It is high time' → THOUGHT (Rule 60).",
+ "He ____ be home by now, because he ____ the office two hours ago.|must-has left;should-left;should-has left|1|A polite expectation → SHOULD. 'Ago' forbids the present perfect → LEFT (Rule 52).",
+ "Each of the candidates ____ have brought ____ own pen, but none of them ____.|should-his-did;should-their-did;must-his-do|0|A missed duty → SHOULD HAVE. 'Each of' → singular pronoun HIS (Pronoun Rule 29).",
+ "One ought ____ keep ____ promises, and one ____ never deceive ____.|to-one's-should-oneself;—-his-must-himself;to-his-should-oneself|0|'Ought' keeps 'to'. Impersonal 'one' → ONE'S and ONESELF (Pronoun Rule 27)."],
+
+ s14:{
+  rule:"SHOULD and OUGHT TO express advice, moral duty and expectation. SHOULD HAVE + V3 shows a past duty not performed.",
+  formula:"SHOULD / OUGHT TO + V1 → advice or duty now\nSHOULD HAVE + V3 → duty missed, regret\n'Ought' always keeps the 'to'",
+  memory:"Should + V1 is duty now. Should have + V3 is duty missed.",
+  ta:"Should + V1 = இப்போதைய கடமை. Should have + V3 = தவறவிட்ட கடமை.",
+  tl:"Should + V1 = ippodhaiya kadamai. Should have + V3 = thavaravitta kadamai.",
+  mistake:"Writing 'you should informed us' and dropping the 'to' after 'ought'.",
+  exam:"SSC CGL / CHSL and Bank — 'should have + V3' is tested far more often than plain 'should'."},
+
+ s15:[
+ {ta:"இந்த rule-ல SHOULD மற்றும் OUGHT TO பார்க்கப் போறோம். ரெண்டுமே அறிவுரை, கடமை சொல்லுது. ஆனா ரெண்டுமே MUST-ஐ விட மென்மையானது.",
+  tl:"Indha rule-la SHOULD matrum OUGHT TO paarkkap porom. Rendume arivurai, kadamai solludhu. Aanaa rendume MUST-ai vida menmaiyaanadhu."},
+ {ta:"ஒரு வித்தியாசம் பாருங்க. 'You MUST see a doctor' — இது கட்டளை, வேற வழி இல்ல. 'You SHOULD see a doctor' — இது அறிவுரை, நான் பரிந்துரைக்கிறேன், ஆனா முடிவு உங்களோடது. தேர்வுல நட்பான ஆலோசனை இருந்தா 'should' தான்.",
+  tl:"Oru viththiyaasam paarunga. 'You MUST see a doctor' — idhu kattalai. 'You SHOULD see a doctor' — idhu arivurai, naan parindhuraikkiren, aanaa mudivu ungalodadhu."},
+ {ta:"இப்போ ரொம்ப முக்கியமான வடிவம் — SHOULD HAVE + V3. SSC உண்மையில் இதைத்தான் அதிகமா கேட்குது. 'You SHOULD HAVE informed us earlier' அப்படின்னா என்ன? உங்களுக்கு தெரிவிக்கிற கடமை இருந்தது, ஆனா நீங்க தெரிவிக்கல. இப்போ நேரம் போயிடுச்சு. வருத்தம், கண்டனம் இதுல இருக்கு.",
+  tl:"Ippo romba mukkiyamaana vadivam — SHOULD HAVE + V3. SSC unmaiyil idhaith-thaan adhigamaa ketkudhu. 'You SHOULD HAVE informed us earlier' appadinnaa enna? Ungalukku therivikkira kadamai irundhadhu, aanaa neenga therivikkala."},
+ {ta:"நிறைய பேரு 'You should informed us' அப்படின்னு எழுதுவாங்க. ஏன்? ஏன்னா அர்த்தம் கடந்தகாலம். ஆனா Rule 63-ல படிச்சோம் — modal-க்கு -ed போட முடியாது! அதுக்கு பதிலா 'have + V3' போடணும். 'You should HAVE INFORMED us.'",
+  tl:"Neraiya peru 'You should informed us' appadinnu ezhudhuvaanga. Aanaa Rule 63-la padichom — modal-kku -ed poda mudiyaadhu! Adhukku padhilaa 'have + V3' podanum. 'You should HAVE INFORMED us.'"},
+ {ta:"இன்னொரு பொறி — OUGHT. இது ஒரே ஒரு modal, இதுக்கு மட்டும் 'to' வரும். 'We ought TO help the poor.' 'Citizens ought TO obey the law.' மத்த எல்லா modal-லயும் 'to' இல்லாததால, நாம ஒப்புமையா 'ought' -க்கும் 'to' போட மறந்துடுவோம். ஆனா 'ought' எப்பவும் 'to' வெச்சிருக்கும்.",
+  tl:"Innoru pori — OUGHT. Idhu ore oru modal, idhukku mattum 'to' varum. 'We ought TO help the poor.' Maththa ellaa modal-layum 'to' illaadhadhaala, naama oppumaiyaa 'ought'-kkum 'to' poda marandhuduvom. Aanaa 'ought' eppavum 'to' vechirukkum."},
+ {ta:"கடைசியா ஒரு கூடுதல் தகவல் — SHOULD எதிர்பார்ப்பையும் சொல்லும். 'The train SHOULD arrive by six' — ரயிலுக்கு ஒழுக்கக் கடமை இருக்கா? இல்ல! இங்க அர்த்தம் 'நாம ஆறு மணிக்குள்ள எதிர்பார்க்கிறோம்'. 'He should be home by now' — அவரு வீட்ல இருக்கணும்னு எதிர்பார்க்கிறோம். இது மூணாவது பயன்பாடு. அறிவுரை, கடமை, எதிர்பார்ப்பு — மூணும் should-ஓட வேலை.",
+  tl:"Kadaisiyaa oru koodudhal thagaval — SHOULD edhirpaarppaiyum sollum. 'The train SHOULD arrive by six' — inga arththam 'naama aaru manikkulla edhirpaarkkirom'. Arivurai, kadamai, edhirpaarppu — moonum should-oda velai."}]},
+
+/* ========== RULE 68 ========== */
+{n:68,rc:"MOD-06",d:"Hard",t:"NEED and DARE work as BOTH Modal and Main Verb",
+ tam:"Need, Dare — modal-ஆ, main verb-ஆ ரெண்டு வழியிலும் வரும்",
+ s1:{en:"NEED and DARE sit on the border between modals and ordinary verbs. As MODALS (in negatives and questions) they take NO -s and NO 'to'. As MAIN VERBS they take -s, -ed and 'to'. Never mix the two patterns.",
+  ta:"NEED மற்றும் DARE modal-களுக்கும் சாதாரண வினைச்சொற்களுக்கும் இடையிலான எல்லையில் இருக்கின்றன. MODAL-ஆக (எதிர்மறை மற்றும் கேள்விகளில்) அவை -s எடுக்காது, 'to' எடுக்காது. MAIN VERB-ஆக அவை -s, -ed மற்றும் 'to' எடுக்கும். இரண்டு அமைப்புகளையும் ஒருபோதும் கலக்காதீர்கள்.",
+  tl:"NEED matrum DARE modal-galukkum saadhaarana vinaichorkalukkum idaiyilaana ellaiyil irukkindrana. MODAL-aaga avai -s edukkaadhu, 'to' edukkaadhu. MAIN VERB-aaga avai -s, -ed matrum 'to' edukkum.",
+  formula:"AS A MODAL (negatives and questions)\n  He NEED NOT go.          ✔  (no -s, no 'to')\n  NEED he go?              ✔\n  How DARE you speak so?   ✔\n\nAS A MAIN VERB\n  He DOES NOT NEED TO go.  ✔  (-s and 'to')\n  Does he NEED TO go?      ✔\n  He DARED TO challenge me. ✔\n\n⚠ NEVER MIX:  He need not TO go.  ✘\n              He needs not go.    ✘"},
+
+ s2:[
+ {h:"The modal form appears only in negatives and questions",
+  en:"'He need not go' and 'Need he go?' are modal uses — and these only exist in the negative and the interrogative. In a plain positive statement, 'need' is always a main verb: 'He needs to go'.",
+  ta:"Modal வடிவம் எதிர்மறை மற்றும் கேள்விகளில் மட்டுமே தோன்றுகிறது. 'He need not go' மற்றும் 'Need he go?' modal பயன்பாடுகள் — இவை எதிர்மறையிலும் வினாவிலும் மட்டுமே இருக்கின்றன. வெறும் நேர்மறைக் கூற்றில், 'need' எப்போதும் ஒரு main verb: 'He needs to go'.",
+  tl:"Modal vadivam edhirmarai matrum kelvigalil mattume thondrugiradhu. 'He need not go' matrum 'Need he go?' modal payanpaadugal. Verum nermaraik kootril, 'need' eppodhum oru main verb: 'He needs to go'."},
+ {h:"The mixing error is what SSC plants",
+  en:"'He need not to go' takes the modal form 'need not' but adds the main-verb 'to'. 'He needs not go' takes the main-verb -s but drops the 'to'. Both are hybrids and both are wrong. Choose one pattern and stay with it.",
+  ta:"கலக்கும் தவறுதான் SSC நடுவது. 'He need not to go' modal வடிவமான 'need not'-ஐ எடுத்து, main-verb 'to'-ஐச் சேர்க்கிறது. 'He needs not go' main-verb -s-ஐ எடுத்து 'to'-ஐ விடுகிறது. இரண்டுமே கலப்பினங்கள், இரண்டுமே தவறு. ஒரு அமைப்பைத் தேர்ந்தெடுத்து அதிலேயே இருங்கள்.",
+  tl:"Kalakkum thavarudhaan SSC naduvadhu. 'He need not to go' modal vadivaththai eduththu, main-verb 'to'-aich serkkiradhu. 'He needs not go' main-verb -s-ai eduththu 'to'-ai vidugiradhu. Irandume kalappinangal."},
+ {h:"NEED NOT HAVE + V3 versus DID NOT NEED TO",
+  en:"'You need not have waited' means you waited but it was unnecessary. 'You did not need to wait' means it was unnecessary, and you probably did not wait. A fine distinction that exams enjoy.",
+  ta:"NEED NOT HAVE + V3 மற்றும் DID NOT NEED TO. 'You need not have waited' என்றால் நீங்கள் காத்திருந்தீர்கள் ஆனால் அது தேவையற்றது. 'You did not need to wait' என்றால் அது தேவையற்றது, மேலும் நீங்கள் காத்திருக்கவில்லை. தேர்வுகள் விரும்பும் ஒரு நுட்பமான வேறுபாடு.",
+  tl:"NEED NOT HAVE + V3 matrum DID NOT NEED TO. 'You need not have waited' endraal neengal kaaththirundheergal aanaal adhu thevaiyatradhu. 'You did not need to wait' endraal adhu thevaiyatradhu, melum neengal kaaththirukkavillai."},
+ {h:"HOW DARE is a fixed exclamation",
+  en:"'How dare you speak to me like that!' is a fixed modal pattern — no -s, no 'to', and no auxiliary. Compare with the main verb: 'He dared to contradict the officer'.",
+  ta:"HOW DARE ஒரு நிலையான ஆச்சரியக் குறிப்பு. 'How dare you speak to me like that!' ஒரு நிலையான modal அமைப்பு — -s இல்லை, 'to' இல்லை, துணை வினைச்சொல் இல்லை. Main verb-உடன் ஒப்பிடுங்கள்: 'He dared to contradict the officer'.",
+  tl:"HOW DARE oru nilaiyaana aachariyak kurippu. 'How dare you speak to me like that!' oru nilaiyaana modal amaippu. Main verb-udan oppidungal: 'He dared to contradict the officer'."}],
+
+ s3:[
+ {h:"Two complete patterns",
+  d:"   MODAL PATTERN            MAIN-VERB PATTERN\n   ─────────────            ─────────────────\n   He NEED NOT go.          He DOES NOT NEED TO go.\n   NEED he go?              DOES he NEED TO go?\n   He DARE NOT speak.       He DOES NOT DARE TO speak.\n   How DARE you!            He DARED TO ask.\n\n   ⚠ Pick one column. Never mix them."},
+ {h:"The hybrid errors",
+  d:"   He need not TO go.     ✘  modal + 'to'\n   He needS not go.       ✘  -s without 'to'\n   Does he need go?       ✘  auxiliary without 'to'\n   He dare to speak.      ✘  modal + 'to'\n\n   Each of these takes half of one pattern\n   and half of the other."},
+ {h:"Need not have versus did not need to",
+  d:"   You NEED NOT HAVE waited.\n     → you DID wait, but it was pointless\n\n   You DID NOT NEED TO wait.\n     → it was unnecessary\n       (and you probably did not wait)\n\n   One reports a wasted action.\n   The other reports an absent obligation."}],
+
+ s4:{
+ wrong:["\"'He need not to go' is complete and polite.\" — The modal form takes no 'to'.",
+  "\"'He needs not go' shows the third person.\" — With -s you must add 'to'.",
+  "\"'Need' is always a main verb.\" — In negatives and questions it can be a modal.",
+  "\"'How dares he speak?' shows agreement.\" — 'How dare you' is a fixed modal pattern."],
+ right:["Decide first: modal pattern or main-verb pattern.",
+  "Modal → need not go, need he go, dare not speak.",
+  "Main verb → does not need to go, dared to ask.",
+  "Never take half of one pattern and half of the other."]},
+
+ s5:[
+ {en:"He need not go there today.",ta:"அவர் இன்று அங்கே செல்ல வேண்டியதில்லை.",tl:"Avar indru ange sella vendiyadhillai.",note:"The modal pattern — no -s, no 'to'."},
+ {en:"He does not need to go there today.",ta:"அவர் இன்று அங்கே செல்ல வேண்டிய அவசியம் இல்லை.",tl:"Avar indru ange sella vendiya avasiyam illai.",note:"The main-verb pattern — auxiliary and 'to'."},
+ {en:"How dare you speak to me like that?",ta:"என்னிடம் அப்படிப் பேச உனக்கு எப்படித் துணிவு வந்தது?",tl:"Ennidam appadip pesa unakku eppadith thunivu vandhadhu?",note:"A fixed modal exclamation — no 'to', no auxiliary."},
+ {en:"He dared to contradict the senior officer.",ta:"மூத்த அதிகாரியை மறுத்துப் பேச அவர் துணிந்தார்.",tl:"Mooththa adhigaariyai maruththup pesa avar thunindhaar.",note:"The main-verb pattern — -ed and 'to'."},
+ {en:"You need not have waited for me so long.",ta:"நீங்கள் எனக்காக இவ்வளவு நேரம் காத்திருக்க வேண்டியதில்லை.",tl:"Neengal enakkaaga ivvalavu neram kaaththirukka vendiyadhillai.",note:"You did wait, but it was unnecessary."}],
+
+ s6:["need|தேவை / வேண்டும்|Thevai / Vendum",
+  "dare|துணி|Thuni",
+  "need not|வேண்டியதில்லை|Vendiyadhillai",
+  "does not need to|தேவை இல்லை|Thevai illai",
+  "dare not|துணிய மாட்டார்|Thuniya maattaar",
+  "how dare you|உனக்கு எப்படித் துணிவு|Unakku eppadith thunivu",
+  "dared to|துணிந்தார்|Thunindhaar",
+  "need not have waited|காத்திருக்க வேண்டியதில்லை|Kaaththirukka vendiyadhillai",
+  "contradict|மறுத்துப் பேசு|Maruththup pesu",
+  "unnecessary|தேவையற்ற|Thevaiyatra",
+  "modal pattern|Modal அமைப்பு|Modal amaippu"],
+
+ s7:[
+ "He need not ____ there today.|go|Easy|The modal pattern takes no 'to'.",
+ "He does not need ____ go there.|to|Easy|The main-verb pattern takes 'to'.",
+ "How dare you ____ to me like that?|speak|Easy|A fixed modal pattern.",
+ "He dared ____ contradict the officer.|to|Medium|The main-verb pattern takes 'to'.",
+ "____ he go now, or can he wait?|Need|Medium|The modal pattern in a question.",
+ "She ____ not dare to answer back.|does|Medium|The main-verb pattern needs an auxiliary.",
+ "You need not ____ waited so long.|have|Medium|A wasted past action.",
+ "He ____ not need to attend the meeting.|does|Hard|The main-verb pattern.",
+ "Nobody dare ____ question his authority.|—|Hard|The modal pattern takes no 'to'.",
+ "You ____ not worry about the fees.|need|Hard|The modal pattern in the negative.",
+ "Did he ____ to ask such a question?|dare|Hard|The main-verb pattern after 'did'.",
+ "One need not ____ afraid of hard work.|be|Expert|The modal pattern takes the base form.",
+ "He ____ not have brought the file at all.|need|Expert|A wasted past action.",
+ "She did not need ____ come so early.|to|Expert|The main-verb pattern takes 'to'.",
+ "How dare he ____ my decision publicly?|question|Expert|A fixed modal pattern."],
+
+ s8:[
+ "He need not to go there today.|He need not go there today.|The modal 'need' takes no 'to'.",
+ "He needs not go there today.|He does not need to go there today.|With -s you must use the full main-verb pattern.",
+ "Does he need go there today?|Does he need to go there today?|The main-verb pattern requires 'to'.",
+ "How dares he speak to me like that?|How dare he speak to me like that?|'How dare' is a fixed modal pattern.",
+ "He dared contradict the senior officer.|He dared to contradict the senior officer.|The main verb 'dare' takes 'to'.",
+ "She do not dare to answer back.|She does not dare to answer back.|The auxiliary must agree with the subject.",
+ "You need not waited for me so long.|You need not have waited for me so long.|A wasted past action requires 'need not have + V3'.",
+ "Nobody dare to question his authority.|Nobody dare question his authority.|The modal 'dare' takes no 'to'.",
+ "He need not attends the meeting tomorrow.|He need not attend the meeting tomorrow.|The modal takes the base form.",
+ "She did not need come so early today.|She did not need to come so early today.|The main-verb pattern requires 'to'."],
+
+ s9:[
+ "Fill in the Blank|You ____ not worry about the fees, as the scholarship covers everything.|need;needs|0|The modal 'need' takes no -s.",
+ "Find the Error|He need not (A) to attend the meeting (B) tomorrow as (C) it has been postponed (D).|A;B;C;D|1|Part B. The modal 'need' takes no 'to' → 'need not attend'.",
+ "Sentence Improvement|How dares he question my decision in front of the whole department?|How dares he question;How dare he question;How dares he to question|1|'How dare' is a fixed modal pattern with no -s.",
+ "Fill in the Blank|She does not ____ to submit the form again since it is already on file.|need;needs|0|After 'does not', use the base form.",
+ "Find the Error|Nobody dared (A) question his authority (B) in the office (C) that morning (D).|A;B;C;D|0|Part A. The main verb 'dared' requires 'to' → 'dared to question'."],
+
+ s10:{
+  en:"The exam never gives you a clean modal or a clean main verb — it gives you a HYBRID. 'He need not to go' and 'He needs not go' each take half of one pattern and half of the other, and both look plausible. The cure is to decide the pattern FIRST and then complete it consistently.",
+  ta:"தேர்வு உங்களுக்கு ஒரு தூய modal-ஐயோ தூய main verb-ஐயோ ஒருபோதும் தருவதில்லை — அது உங்களுக்கு ஒரு கலப்பினத்தைத் தருகிறது. 'He need not to go' மற்றும் 'He needs not go' ஒவ்வொன்றும் ஒரு அமைப்பின் பாதியையும் மற்றொன்றின் பாதியையும் எடுக்கின்றன, இரண்டுமே நம்பத்தகுந்ததாகத் தெரிகின்றன. தீர்வு முதலில் அமைப்பைத் தீர்மானித்து, பிறகு அதை நிலையாக முடிப்பதுதான்.",
+  tl:"Thervu ungalukku oru thooya modal-aiyo thooya main verb-aiyo orupodhum tharuvadhillai — adhu ungalukku oru kalappinaththaith tharugiradhu. Theervu mudhalil amaippaith theermaaniththu, piragu adhai nilaiyaaga mudippadhudhaan."},
+
+ s11:{
+  en:"PICK ONE PATTERN AND FINISH IT. Modal: need not go. Main verb: does not need to go.",
+  ta:"ஒரு அமைப்பைத் தேர்ந்தெடுத்து அதை முடியுங்கள். Modal: need not go. Main verb: does not need to go.",
+  tl:"Oru amaippaith therndhedhuththu adhai mudiyungal. Modal: need not go. Main verb: does not need to go.",
+  vis:"      TWO COLUMNS — NEVER MIX\n\n   ┌──────────────────┬──────────────────────┐\n   │ MODAL            │ MAIN VERB            │\n   ├──────────────────┼──────────────────────┤\n   │ need not go      │ does not need to go  │\n   │ Need he go?      │ Does he need to go?  │\n   │ dare not speak   │ does not dare to speak│\n   │ How dare you!    │ He dared to ask.     │\n   └──────────────────┴──────────────────────┘\n\n   ⚠ THE HYBRIDS SSC PLANTS:\n     need not TO go     ✘\n     needS not go       ✘\n     Does he need go?   ✘\n     dared question     ✘\n\n   ⚠ NEED NOT HAVE + V3:\n     You need not have waited.\n     (you waited — it was pointless)"},
+
+ s12:[
+ "He need not ____ there today.|to go;go|1",
+ "He does not need ____ go there.|—;to|1",
+ "How dare you ____ to me like that?|speaking;speak|1",
+ "He dared ____ contradict the officer.|—;to|1",
+ "____ he go now, or can he wait?|Needs;Need|1",
+ "She ____ not dare to answer back.|do;does|1",
+ "You need not ____ waited so long.|—;have|1",
+ "He ____ not need to attend.|do;does|1",
+ "Nobody dare ____ question him.|to;—|1",
+ "You ____ not worry about the fees.|needs;need|1",
+ "Did he ____ to ask that question?|dared;dare|1",
+ "One need not ____ afraid of work.|to be;be|1",
+ "He ____ not have brought the file.|needs;need|1",
+ "She did not need ____ come early.|—;to|1",
+ "How dare he ____ my decision?|questions;question|1",
+ "He ____ not go if he is unwell.|needs;need|1",
+ "Does she need ____ sign the form?|—;to|1",
+ "They dare not ____ against him.|to speak;speak|1",
+ "You ____ not have paid the fine.|needs;need|1",
+ "He ____ to challenge the verdict.|dare;dared|1"],
+
+ s13:[
+ "He need not ____ , since the meeting ____ already been postponed.|to attend-has;attend-has;attend-had|1|The modal takes no 'to'. 'Already' with no past marker → HAS BEEN.",
+ "How dare he ____ my decision, when neither of the officers ____ objected?|questions-have;question-has;question-have|1|A fixed modal pattern → QUESTION. 'Neither of' is singular → HAS (SVA Rule 50).",
+ "You need not ____ waited, for I ____ told you that I ____ be late.|have-had-would;—-have-will;have-had-will|0|A wasted past action → NEED NOT HAVE. A past reporting verb shifts 'will' → WOULD (Rule 56).",
+ "She does not need ____ come early, but she ought ____ inform the office.|to-to;—-—;to-—|0|The main-verb pattern takes 'to'. 'Ought' also keeps its 'to'.",
+ "Nobody dared ____ him, and each of the clerks ____ silent throughout ____ meeting.|question-remained-the;to question-remained-the;to question-remain-a|1|The main verb 'dared' takes 'to'. 'Each of' is singular → REMAINED."],
+
+ s14:{
+  rule:"NEED and DARE work as modals in negatives and questions, and as main verbs elsewhere. Never mix the patterns.",
+  formula:"MODAL: need not go · Need he go? · dare not speak · How dare you\nMAIN VERB: does not need to go · Does he need to go? · dared to ask\nNEED NOT HAVE + V3 = a wasted past action",
+  memory:"Pick one column and finish it. Modal takes no 'to'; main verb takes 'to'.",
+  ta:"ஒரு column-ஐ தேர்ந்தெடுத்து முடிங்க. Modal-க்கு 'to' இல்ல; main verb-க்கு 'to' வரும்.",
+  tl:"Oru column-ai therndhedhuththu mudinga. Modal-kku 'to' illa; main verb-kku 'to' varum.",
+  mistake:"Writing 'He need not to go' or 'He needs not go' — half of each pattern.",
+  exam:"SSC CGL / CHSL and Bank — the hybrid form is what is always planted."},
+
+ s15:[
+ {ta:"இந்த rule கொஞ்சம் வித்தியாசமானது. NEED மற்றும் DARE — இந்த ரெண்டு வார்த்தையும் ரெண்டு வேடம் போடும். சில நேரம் modal மாதிரி, சில நேரம் சாதாரண வினைச்சொல் மாதிரி.",
+  tl:"Indha rule konjam viththiyaasamaanadhu. NEED matrum DARE — indha rendu vaarththaiyum rendu vedam podum. Sila neram modal maadhiri, sila neram saadhaarana vinaichol maadhiri."},
+ {ta:"Modal-ஆ வரும்போது: 'He NEED NOT go.' கவனிங்க — -s இல்ல, 'to' இல்ல. Rule 63-ல படிச்ச modal விதி அப்படியே பொருந்துது. 'NEED he go?' — கேள்வியிலயும் அப்படித்தான்.",
+  tl:"Modal-aa varumbodhu: 'He NEED NOT go.' Kavaninga — -s illa, 'to' illa. Rule 63-la padicha modal vidhi appadiye porundhudhu. 'NEED he go?' — kelviyilayum appadidhaan."},
+ {ta:"சாதாரண வினைச்சொல்லா வரும்போது: 'He DOES NOT NEED TO go.' இப்போ 'does' வந்திடுச்சு, 'to'-ம் வந்திடுச்சு. இது சாதாரண வினைச்சொல் அமைப்பு. 'Does he NEED TO go?' — கேள்வியிலயும் அப்படித்தான்.",
+  tl:"Saadhaarana vinaicholaa varumbodhu: 'He DOES NOT NEED TO go.' Ippo 'does' vandhidichu, 'to'-um vandhidichu. Idhu saadhaarana vinaichol amaippu."},
+ {ta:"இப்போ SSC-ஓட உண்மையான தந்திரம் சொல்லுறேன். அவங்க தூய modal-ஐயோ, தூய main verb-ஐயோ தர மாட்டாங்க. அவங்க கலப்பினம் தருவாங்க! 'He need not TO go' — 'need not' modal, ஆனா 'to' main verb. பாதி பாதி. தப்பு!",
+  tl:"Ippo SSC-oda unmaiyaana thandhiram solluren. Avanga thooya modal-aiyo, thooya main verb-aiyo thara maattaanga. Avanga kalappinam tharuvaanga! 'He need not TO go' — paadhi paadhi. Thappu!"},
+ {ta:"இன்னொரு கலப்பினம்: 'He needS not go' — 's' main verb, ஆனா 'to' இல்ல. இதுவும் பாதி பாதி. தப்பு! சரியான வழி — ஒரு அமைப்பை தேர்ந்தெடுத்து அதை முழுசா முடிங்க. Modal-னா 'need not go'. Main verb-னா 'does not need to go'. நடுவுல நிக்காதீங்க.",
+  tl:"Innoru kalappinam: 'He needS not go' — 's' main verb, aanaa 'to' illa. Idhuvum paadhi paadhi. Thappu! Sariyaana vazhi — oru amaippai therndhedhuththu adhai muzhusaa mudinga."},
+ {ta:"கடைசியா 'DARE' பத்தி. 'How DARE you speak to me like that!' — இது ஒரு நிலையான modal அமைப்பு. -s இல்ல, 'to' இல்ல, auxiliary இல்ல. 'How dares he' அப்படின்னு எழுதக்கூடாது. ஆனா main verb-ஆ வரும்போது: 'He DARED TO contradict the officer' — 'dared' மற்றும் 'to' ரெண்டும் வரும். மேலும் ஒரு நுட்பமான வடிவம் — 'You NEED NOT HAVE waited' அப்படின்னா நீங்க காத்திருந்தீங்க, ஆனா தேவையில்லாம. வீணா போன செயல். இதை SSC அடிக்கடி கேட்கும்.",
+  tl:"Kadaisiyaa 'DARE' paththi. 'How DARE you speak to me like that!' — idhu oru nilaiyaana modal amaippu. Aanaa main verb-aa varumbodhu: 'He DARED TO contradict the officer'. Melum oru nutpamaana vadivam — 'You NEED NOT HAVE waited' appadinnaa neenga kaaththirundheenga, aanaa thevaiyillaama."}]},
+
+/* ========== RULE 69 ========== */
+{n:69,rc:"MOD-07",d:"Hard",t:"USED TO for Past Habits, BE USED TO for Being Accustomed",
+ tam:"Used to + V1 = முன்பு இருந்த பழக்கம் · Be used to + V-ing = பழகிவிட்ட நிலை",
+ s1:{en:"USED TO + V1 describes a DISCONTINUED past habit. BE or GET USED TO + V-ing means to be ACCUSTOMED to something. In the second structure 'to' is a preposition, so a gerund follows it.",
+  ta:"USED TO + V1 நிறுத்தப்பட்ட ஒரு கடந்தகாலப் பழக்கத்தை விவரிக்கிறது. BE அல்லது GET USED TO + V-ing என்றால் ஒன்றுக்குப் பழகியிருத்தல். இரண்டாவது அமைப்பில் 'to' ஒரு முன்னுருபு, எனவே அதற்குப் பின் ஒரு gerund வருகிறது.",
+  tl:"USED TO + V1 niruththappatta oru kadandhagaalap pazhakkaththai vivarikkiradhu. BE alladhu GET USED TO + V-ing endraal ondrukkup pazhagiyiruththal. Irandaavadhu amaippil 'to' oru munnurubu.",
+  formula:"USED TO + V1  →  a past habit, now stopped\n  He USED TO smoke, but he quit.\n  She USED TO live in Delhi.\n\nBE / GET USED TO + V-ing  →  accustomed\n  I AM USED TO waking up early.\n  She GOT USED TO living alone.\n\n⚠ THE SWITCH: is there am/is/are/get before it?"},
+
+ s2:[
+ {h:"The presence of BE changes everything",
+  en:"'He used to smoke' — no 'be', so it is a past habit. 'He is used to smoking' — 'is' appears, so it means he is accustomed to it. Look for am, is, are, was, were or get immediately before 'used to'.",
+  ta:"BE இருப்பது எல்லாவற்றையும் மாற்றுகிறது. 'He used to smoke' — 'be' இல்லை, எனவே இது ஒரு கடந்தகாலப் பழக்கம். 'He is used to smoking' — 'is' தோன்றுகிறது, எனவே அவர் அதற்குப் பழகியிருக்கிறார் என்று பொருள். 'Used to'-க்கு உடனே முன் am, is, are, was, were அல்லது get இருக்கிறதா என்று பாருங்கள்.",
+  tl:"BE iruppadhu ellaavatraiyum maatrugiradhu. 'He used to smoke' — 'be' illai, enave idhu oru kadandhagaalap pazhakkam. 'He is used to smoking' — 'is' thondrugiradhu."},
+ {h:"Why the second takes a gerund",
+  en:"In 'be used to', the word 'to' is a PREPOSITION, not part of an infinitive. Prepositions are always followed by gerunds — 'used to WAKING', 'accustomed to WORKING', 'look forward to MEETING'. Same rule every time.",
+  ta:"இரண்டாவது ஏன் gerund எடுக்கிறது? 'Be used to'-ல், 'to' என்ற சொல் ஒரு முன்னுருபு, ஒரு infinitive-ன் பகுதி அல்ல. முன்னுருபுகளுக்குப் பின் எப்போதும் gerund வரும் — 'used to WAKING', 'accustomed to WORKING', 'look forward to MEETING'. ஒவ்வொரு முறையும் அதே விதி.",
+  tl:"Irandaavadhu yen gerund edukkiradhu? 'Be used to'-l, 'to' endra sol oru munnurubu, oru infinitive-in paguthi alla. Munnurubugalukkup pin eppodhum gerund varum."},
+ {h:"WOULD also expresses past habits",
+  en:"'He would visit us every Sunday' means the same as 'He used to visit us'. But 'would' works only for repeated ACTIONS, not for past STATES. 'He used to be rich' is correct; 'He would be rich' is not.",
+  ta:"WOULD-ம் கடந்தகாலப் பழக்கங்களை வெளிப்படுத்துகிறது. 'He would visit us every Sunday' என்பது 'He used to visit us' என்பதற்குச் சமம். ஆனால் 'would' மீண்டும் மீண்டும் நிகழும் செயல்களுக்கு மட்டுமே வேலை செய்யும், கடந்தகால நிலைகளுக்கு அல்ல. 'He used to be rich' சரி; 'He would be rich' சரி அல்ல.",
+  tl:"WOULD-um kadandhagaalap pazhakkangalai velippaduththugiradhu. Aanaal 'would' meendum meendum nigazhum seyalgalukku mattume velai seyyum, kadandhagaala nilaigalukku alla."},
+ {h:"The negative and question forms",
+  en:"'He did not use to smoke' and 'Did he use to smoke?' — after 'did', the -d is dropped: 'use to', not 'used to'. This is the same base-form rule from Rule 57.",
+  ta:"எதிர்மறை மற்றும் கேள்வி வடிவங்கள். 'He did not use to smoke' மற்றும் 'Did he use to smoke?' — 'did'-க்குப் பின், -d விடப்படுகிறது: 'use to', 'used to' அல்ல. இது Rule 57-லிருந்து அதே அடிப்படை வடிவ விதி.",
+  tl:"Edhirmarai matrum kelvi vadivangal. 'He did not use to smoke' matrum 'Did he use to smoke?' — 'did'-kkup pin, -d vidappadugiradhu: 'use to', 'used to' alla."}],
+
+ s3:[
+ {h:"Look for BE before USED TO",
+  d:"   NO 'be' before it   →  PAST HABIT  →  + V1\n     He USED TO smoke.\n     (he does not smoke now)\n\n   'be' or 'get' before it →  ACCUSTOMED →  + V-ing\n     He IS USED TO smoking.\n     She GOT USED TO living alone.\n\n   ⚠ am · is · are · was · were · get\n     Any of these = the -ing version."},
+ {h:"Why one takes V1 and the other -ing",
+  d:"   USED TO smoke\n     'to' = part of the INFINITIVE\n     → base form follows\n\n   USED TO smokING\n     'to' = a PREPOSITION\n     → gerund follows\n\n   Same three letters, two different jobs."},
+ {h:"Used to versus would",
+  d:"   REPEATED ACTION  →  both work\n     He USED TO visit us.   ✔\n     He WOULD visit us.     ✔\n\n   PAST STATE       →  only 'used to'\n     He USED TO be rich.    ✔\n     He WOULD be rich.      ✘\n\n   ⚠ AFTER 'DID', DROP THE -D:\n     Did he USE TO smoke?   ✔"}],
+
+ s4:{
+ wrong:["\"'Used to' always takes -ing.\" — Only when 'be' or 'get' comes before it.",
+  "\"'I am used to wake up early' is correct.\" — After 'be used to', use a gerund.",
+  "\"'He would be rich in those days' is fine.\" — 'Would' cannot express a past state.",
+  "\"'Did he used to smoke?' keeps the past tense.\" — After 'did', use 'use to'."],
+ right:["Look for am, is, are, was, were or get before 'used to'.",
+  "Found one → gerund. Not found → base form V1.",
+  "'Would' works only for repeated actions, not for states.",
+  "After 'did', write 'use to' without the -d."]},
+
+ s5:[
+ {en:"He used to smoke, but he quit last year.",ta:"அவர் முன்பு புகைபிடிப்பார், ஆனால் கடந்த ஆண்டு விட்டுவிட்டார்.",tl:"Avar munbu pugaipidippaar, aanaal kadandha aandu vittuvittaar.",note:"A discontinued past habit → USED TO + V1."},
+ {en:"I am used to waking up early every day.",ta:"தினமும் சீக்கிரம் எழுவது எனக்குப் பழகிவிட்டது.",tl:"Dhinamum seekkiram ezhuvadhu enakkup pazhagividdadhu.",note:"'Am' before it → accustomed → gerund WAKING."},
+ {en:"She got used to living alone after some time.",ta:"சிறிது காலத்திற்குப் பிறகு தனியாக வாழ்வது அவருக்குப் பழகிவிட்டது.",tl:"Siridhu kaalaththirkup piragu thaniyaaga vaazhvadhu avarukkup pazhagividdadhu.",note:"'Got' before it → accustomed → gerund LIVING."},
+ {en:"He would visit us every Sunday in those days.",ta:"அந்த நாட்களில் அவர் ஒவ்வொரு ஞாயிற்றுக்கிழமையும் எங்களைப் பார்க்க வருவார்.",tl:"Andha naatkalil avar ovvoru gnaayitrukkizhamaiyum engalaip paarkka varuvaar.",note:"A repeated past action → WOULD also works."},
+ {en:"Did he use to play cricket in college?",ta:"அவர் கல்லூரியில் கிரிக்கெட் விளையாடுவாரா?",tl:"Avar kalluriyil cricket vilaiyaaduvaaraa?",note:"After 'did', the -d is dropped → USE TO."}],
+
+ s6:["used to|முன்பு வழக்கமாக|Munbu vazhakkamaaga",
+  "be used to|பழகிவிட்ட நிலை|Pazhagividda nilai",
+  "get used to|பழகிக்கொள்|Pazhagikkol",
+  "accustomed|பழகிய|Pazhagiya",
+  "past habit|கடந்தகாலப் பழக்கம்|Kadandhagaalap pazhakkam",
+  "would|வழக்கமாகச் செய்வார்|Vazhakkamaagach seyvaar",
+  "gerund|-ing வடிவம்|-ing vadivam",
+  "preposition|முன்னுருபு|Munnurubu",
+  "quit|விட்டுவிட்டார்|Vittuvittaar",
+  "waking up early|சீக்கிரம் எழுவது|Seekkiram ezhuvadhu",
+  "living alone|தனியாக வாழ்வது|Thaniyaaga vaazhvadhu"],
+
+ s7:[
+ "He used to ____ in those days.|smoke|Easy|A past habit → base form.",
+ "I am used to ____ up early.|waking|Easy|'Am' before it → gerund.",
+ "She got used to ____ alone.|living|Easy|'Got' before it → gerund.",
+ "He would ____ us every Sunday.|visit|Medium|A repeated past action.",
+ "Did he ____ to play cricket?|use|Medium|After 'did', drop the -d.",
+ "They used to ____ in that village.|live|Medium|A past habit → base form.",
+ "He is used to ____ hard all day.|working|Medium|'Is' before it → gerund.",
+ "She used to ____ very shy as a child.|be|Hard|A past state → only 'used to' works.",
+ "We are getting used to ____ in a city.|living|Hard|'Getting' before it → gerund.",
+ "He did not ____ to drink coffee.|use|Hard|After 'did not', drop the -d.",
+ "I am not used to ____ so late.|sleeping|Hard|'Am not' before it → gerund.",
+ "My grandfather used to ____ us stories.|tell|Expert|A past habit → base form.",
+ "She has got used to ____ Tamil now.|speaking|Expert|'Got' before it → gerund.",
+ "They would ____ to the temple daily then.|go|Expert|A repeated past action.",
+ "He is used to ____ criticised in public.|being|Expert|'Is used to' plus the passive gerund."],
+
+ s8:[
+ "He used to smoking in those days.|He used to smoke in those days.|A past habit takes the base form.",
+ "I am used to wake up early every day.|I am used to waking up early every day.|'Be used to' takes a gerund.",
+ "She got used to live alone after a while.|She got used to living alone after a while.|'Get used to' takes a gerund.",
+ "Did he used to play cricket in college?|Did he use to play cricket in college?|After 'did', drop the -d.",
+ "He would be rich in those days.|He used to be rich in those days.|'Would' cannot express a past state.",
+ "He is used to work hard all day long.|He is used to working hard all day long.|'Be used to' takes a gerund.",
+ "He did not used to drink coffee then.|He did not use to drink coffee then.|After 'did not', drop the -d.",
+ "I am not used to sleep so late at night.|I am not used to sleeping so late at night.|'Be used to' takes a gerund.",
+ "She has got used to speak Tamil now.|She has got used to speaking Tamil now.|'Get used to' takes a gerund.",
+ "He use to visit us every Sunday.|He used to visit us every Sunday.|In a positive statement, keep the -d."],
+
+ s9:[
+ "Fill in the Blank|My grandfather ____ tell us wonderful stories when we were small children.|used to;was used to|0|A past habit takes 'used to + V1'.",
+ "Find the Error|She is used to (A) wake up at four (B) in the morning (C) for her studies (D).|A;B;C;D|1|Part B. 'Be used to' requires a gerund → 'waking up'.",
+ "Sentence Improvement|Did he used to work in this office before he was transferred to Chennai?|Did he used to work;Did he use to work;Did he uses to work|1|After 'did', drop the -d.",
+ "Fill in the Blank|After living in Delhi for a year, she finally got used to ____ Hindi.|speak;speaking|1|'Get used to' requires a gerund.",
+ "Find the Error|He would be (A) very rich (B) in those days (C) but lost everything later (D).|A;B;C;D|0|Part A. 'Would' cannot express a past state → 'He used to be'."],
+
+ s10:{
+  en:"The whole question is whether a form of BE stands before 'used to'. 'He used to smoke' and 'He is used to smoking' look almost identical, and the difference is one tiny word. The exam removes or adds that word and offers the wrong verb form. The second trap is 'Did he used to...' — after 'did', the -d must go.",
+  ta:"முழு கேள்வியும் 'used to'-க்கு முன் BE-ன் ஒரு வடிவம் நிற்கிறதா என்பதுதான். 'He used to smoke' மற்றும் 'He is used to smoking' கிட்டத்தட்ட ஒரே மாதிரி தெரிகின்றன, வித்தியாசம் ஒரு சிறிய சொல். தேர்வு அந்தச் சொல்லை நீக்குகிறது அல்லது சேர்க்கிறது, தவறான வினைச்சொல் வடிவத்தைத் தருகிறது. இரண்டாவது பொறி 'Did he used to...' — 'did'-க்குப் பின் -d போக வேண்டும்.",
+  tl:"Muzhu kelviyum 'used to'-kku mun BE-in oru vadivam nirkiradhaa enbadhudhaan. 'He used to smoke' matrum 'He is used to smoking' kittaththatta ore maadhiri therigindrana. Irandaavadhu pori 'Did he used to...'."},
+
+ s11:{
+  en:"IS THERE A 'BE' BEFORE IT? Yes → gerund. No → base form V1.",
+  ta:"அதற்கு முன் ஒரு 'BE' இருக்கிறதா? ஆம் → gerund. இல்லை → அடிப்படை வடிவம் V1.",
+  tl:"Adharku mun oru 'BE' irukkiradhaa? Aam → gerund. Illai → adippadai vadivam V1.",
+  vis:"      THE 'BE' TEST\n\n   Look immediately BEFORE 'used to':\n\n   ❌ NOTHING there\n      → PAST HABIT → base form V1\n      He USED TO smoke.\n\n   ✅ am · is · are · was · were · get\n      → ACCUSTOMED → gerund\n      He IS USED TO smokING.\n      She GOT USED TO livING alone.\n\n   ⚠ AFTER 'DID', DROP THE -D:\n      Did he USE TO smoke?   ✔\n      Did he USED TO smoke?  ✘\n\n   ⚠ 'WOULD' FOR ACTIONS ONLY:\n      He would visit us.     ✔ action\n      He would be rich.      ✘ state"},
+
+ s12:[
+ "He used to ____ in those days.|smoking;smoke|1",
+ "I am used to ____ up early.|wake;waking|1",
+ "She got used to ____ alone.|live;living|1",
+ "He would ____ us every Sunday.|visiting;visit|1",
+ "Did he ____ to play cricket?|used;use|1",
+ "They used to ____ in that village.|living;live|1",
+ "He is used to ____ hard all day.|work;working|1",
+ "She used to ____ very shy then.|being;be|1",
+ "We are getting used to ____ here.|live;living|1",
+ "He did not ____ to drink coffee.|used;use|1",
+ "I am not used to ____ so late.|sleep;sleeping|1",
+ "Grandfather used to ____ us stories.|telling;tell|1",
+ "She has got used to ____ Tamil.|speak;speaking|1",
+ "They would ____ to the temple then.|going;go|1",
+ "He is used to ____ criticised.|be;being|1",
+ "He ____ to be very rich once.|would;used|1",
+ "Are you used to ____ in cold weather?|work;working|1",
+ "She used to ____ long letters then.|writing;write|1",
+ "I got used to ____ the new software.|use;using|1",
+ "Did she ____ to live in Delhi?|used;use|1"],
+
+ s13:[
+ "He used to ____ heavily, but now he is used to ____ without cigarettes.|smoke-living;smoking-live;smoke-live|0|A past habit → SMOKE. 'Is used to' → LIVING.",
+ "She got used to ____ alone after her children ____ abroad.|live-had settled;living-had settled;living-settled|1|'Got used to' → LIVING. The earlier past action → HAD SETTLED (Rule 54).",
+ "Did he ____ to work here before he ____ transferred to ____ Delhi office?|used-was-the;use-was-the;use-were-a|1|After 'did', drop the -d. Passive past → WAS. Specific office → THE.",
+ "My grandfather used to ____ us stories, and he would ____ for hours together.|tell-talking;telling-talk;tell-talk|2|Both 'used to' and 'would' take the base form.",
+ "I am not used to ____ so late, and it is high time I ____ my routine.|sleep-changed;sleeping-changed;sleeping-change|1|'Am used to' → SLEEPING. 'It is high time' → CHANGED (Rule 60)."],
+
+ s14:{
+  rule:"USED TO + V1 is a discontinued past habit. BE or GET USED TO + V-ing means accustomed.",
+  formula:"USED TO + V1 → past habit (He used to smoke)\nBE / GET USED TO + V-ing → accustomed (He is used to smoking)\nAfter 'did' → use to (drop the -d)",
+  memory:"Is there a 'be' before it? Yes means -ing. No means V1.",
+  ta:"அதுக்கு முன்னாடி 'be' இருக்கா? இருந்தா -ing. இல்லைன்னா V1.",
+  tl:"Adhukku munnaadi 'be' irukkaa? Irundhaa -ing. Illainnaa V1.",
+  mistake:"Writing 'I am used to wake up early' and 'Did he used to smoke?'.",
+  exam:"SSC CGL / CHSL and Bank — the be-versus-no-be distinction is tested every year."},
+
+ s15:[
+ {ta:"இந்த rule-ல ஒரே வார்த்தை 'used to' ரெண்டு முழுக்க வேற அர்த்தம் தரும். வித்தியாசம் ஒரே ஒரு சின்ன வார்த்தை — அதுக்கு முன்னாடி 'be' இருக்கா இல்லையா.",
+  tl:"Indha rule-la ore vaarththai 'used to' rendu muzhukka veru arththam tharum. Viththiyaasam ore oru chinna vaarththai — adhukku munnaadi 'be' irukkaa illaiyaa."},
+ {ta:"'He USED TO smoke.' — இங்க 'be' இல்ல. அர்த்தம்? முன்னாடி புகைபிடிப்பாரு, இப்போ விட்டுட்டாரு. கடந்தகாலப் பழக்கம், இப்போ நிறுத்திட்டாரு. இதுக்கு அப்பறம் அடிப்படை வடிவம் — 'smoke'.",
+  tl:"'He USED TO smoke.' — inga 'be' illa. Arththam? Munnaadi pugaipidippaaru, ippo vittuttaaru. Kadandhagaalap pazhakkam. Idhukku apparam adippadai vadivam — 'smoke'."},
+ {ta:"இப்போ 'He IS used to smoking.' — இங்க 'is' வந்திடுச்சு! அர்த்தம் முழுசா மாறிடுச்சு. இப்போ அர்த்தம் — புகைபிடிக்கிறது அவருக்கு பழகிடுச்சு, அது அவருக்கு சாதாரணம். மேலும் இப்போ 'smoking' — -ing வடிவம்!",
+  tl:"Ippo 'He IS used to smoking.' — inga 'is' vandhidichu! Arththam muzhusaa maaridichu. Ippo arththam — pugaipidikkiradhu avarukku pazhagidichu. Melum ippo 'smoking' — -ing vadivam!"},
+ {ta:"ஏன் -ing? ஒரு அழகான காரணம் இருக்கு. 'Be used to'-ல இருக்கிற 'to' அப்படிங்கிறது முன்னுருபு (preposition), infinitive-ஓட பகுதி இல்ல. முன்னுருபுக்கு அப்பறம் எப்பவும் -ing வரும். 'Look forward to meetING', 'accustomed to workING', 'used to wakING'. அதே விதி.",
+  tl:"Yen -ing? Oru azhagaana kaaranam irukku. 'Be used to'-la irukkira 'to' appadingiradhu munnurubu (preposition), infinitive-oda paguthi illa. Munnurubukku apparam eppavum -ing varum."},
+ {ta:"அதனால ஒரு எளிய சோதனை — 'used to'-க்கு உடனே முன்னாடி பாருங்க. am, is, are, was, were, get, getting, got — இதுல ஏதாவது இருக்கா? இருந்தா -ing போடுங்க. இல்லைன்னா அடிப்படை வடிவம் V1 போடுங்க. இந்த ஒரு சோதனை போதும்.",
+  tl:"Adhanaala oru eliya sodhanai — 'used to'-kku udane munnaadi paarunga. am, is, are, was, were, get, getting, got — idhula edhaavadhu irukkaa? Irundhaa -ing podunga. Illainnaa adippadai vadivam V1 podunga."},
+ {ta:"கடைசியா ரெண்டு கூடுதல் விஷயம். ஒண்ணு — 'did'-க்கு அப்பறம் -d போடக்கூடாது. 'Did he USE to smoke?' — 'used' இல்ல. இது Rule 57-ல படிச்ச அதே விதி, did-க்கு அப்பறம் அடிப்படை வடிவம். ரெண்டு — 'would'-ம் கடந்தகாலப் பழக்கம் சொல்லும், ஆனா செயலுக்கு மட்டும்தான். 'He WOULD visit us every Sunday' சரி. ஆனா 'He WOULD be rich' தப்பு! நிலைக்கு (state) 'used to' மட்டும்தான் — 'He USED TO be rich.'",
+  tl:"Kadaisiyaa rendu koodudhal vishayam. Onnu — 'did'-kku apparam -d podakkoodaadhu. 'Did he USE to smoke?' Rendu — 'would'-um kadandhagaalap pazhakkam sollum, aanaa seyalukku mattum-dhaan. 'He WOULD visit us' sari. Aanaa 'He WOULD be rich' thappu! Nilaikku 'used to' mattum-dhaan."}]},
+
+/* ========== RULE 70 ========== */
+{n:70,rc:"MOD-08",d:"Medium",t:"SHALL and WILL in Offers, Suggestions and Determination",
+ tam:"Shall = I/We உடன் ஆலோசனை · Will = சாதாரண எதிர்காலம்",
+ s1:{en:"SHALL is used with I and WE for OFFERS and SUGGESTIONS. With the second and third person it expresses COMMAND, PROMISE or DETERMINATION. WILL is the ordinary future marker everywhere else.",
+  ta:"OFFERS மற்றும் SUGGESTIONS-க்கு I மற்றும் WE-உடன் SHALL பயன்படுத்தப்படுகிறது. இரண்டாம் மற்றும் மூன்றாம் நபருடன் அது கட்டளை, வாக்குறுதி அல்லது உறுதியை வெளிப்படுத்துகிறது. மற்ற எல்லா இடங்களிலும் WILL சாதாரண எதிர்காலக் குறியீடு.",
+  tl:"OFFERS matrum SUGGESTIONS-kku I matrum WE-udan SHALL payanpaduththappadugiradhu. Irandaam matrum moondraam nabarudan adhu kattalai, vaakkurudhi alladhu urudhiyai velippaduththugiradhu.",
+  formula:"SHALL with I / WE  →  offer or suggestion\n  SHALL I open the window?     (offer)\n  SHALL we begin the meeting?  (suggestion)\n\nSHALL with you / he / they  →  command, promise\n  You SHALL not enter this room. (command)\n  You SHALL be rewarded.         (promise)\n\nWILL  →  ordinary future\n  He WILL arrive tomorrow."},
+
+ s2:[
+ {h:"The classical rule reverses for emphasis",
+  en:"In plain future, 'shall' goes with I and we, and 'will' with the rest. But when strong intention, command or promise is expressed, the pattern REVERSES: 'I WILL succeed' (determination), 'You SHALL obey' (command).",
+  ta:"வலியுறுத்தலுக்கு பாரம்பரிய விதி தலைகீழாகிறது. வெறும் எதிர்காலத்தில், 'shall' I மற்றும் we-உடன், 'will' மற்றவற்றுடன். ஆனால் வலுவான நோக்கம், கட்டளை அல்லது வாக்குறுதி வெளிப்படுத்தப்படும்போது, அமைப்பு தலைகீழாகிறது: 'I WILL succeed' (உறுதி), 'You SHALL obey' (கட்டளை).",
+  tl:"Valiyuruththalukku paaramparya vidhi thalaigeezhaagiradhu. Verum edhirkaalaththil, 'shall' I matrum we-udan, 'will' matravatrudan. Aanaal valuvaana nokkam, kattalai alladhu vaakkurudhi velippaduththappadumbodhu, amaippu thalaigeezhaagiradhu."},
+ {h:"SHALL I and SHALL WE are the tested forms",
+  en:"'Shall I open the window?' offers help. 'Shall we begin?' suggests an action together. These two are what SSC actually tests — questions with I and we always take 'shall', never 'will'.",
+  ta:"SHALL I மற்றும் SHALL WE-தான் சோதிக்கப்படும் வடிவங்கள். 'Shall I open the window?' உதவியை முன்வைக்கிறது. 'Shall we begin?' ஒன்றாகச் செய்யும் ஒரு செயலைப் பரிந்துரைக்கிறது. SSC உண்மையில் இவை இரண்டையும்தான் சோதிக்கிறது — I மற்றும் we-உடன் வரும் கேள்விகள் எப்போதும் 'shall' எடுக்கும், ஒருபோதும் 'will' அல்ல.",
+  tl:"SHALL I matrum SHALL WE-dhaan sodhikkappadum vadivangal. 'Shall I open the window?' udhaviyai munvaikkiradhu. 'Shall we begin?' ondraagach seyyum oru seyalaip parindhuraikkiradhu."},
+ {h:"The question tag for LET US is SHALL WE",
+  en:"'Let us go, shall we?' — this fixed tag comes straight from this rule. It appears in question-tag questions as well as modal questions, so learn it here.",
+  ta:"LET US-க்கான கேள்விக் குறிப்பு SHALL WE. 'Let us go, shall we?' — இந்த நிலையான குறிப்பு நேரடியாக இந்த விதியிலிருந்து வருகிறது. இது modal கேள்விகளிலும் question-tag கேள்விகளிலும் வருகிறது, எனவே இங்கேயே கற்றுக்கொள்ளுங்கள்.",
+  tl:"LET US-kkaana kelvik kurippu SHALL WE. 'Let us go, shall we?' — indha nilaiyaana kurippu neradiyaaga indha vidhiyilirundhu varugiradhu."},
+ {h:"Modern spoken English uses WILL almost everywhere",
+  en:"In everyday speech 'Will I open the window?' would be unusual, and most people simply say 'I'll' for everything. But SSC, Banking and CDS still follow the classical rule, so learn it for the exam.",
+  ta:"நவீன பேச்சு ஆங்கிலம் கிட்டத்தட்ட எல்லா இடத்திலும் WILL பயன்படுத்துகிறது. அன்றாடப் பேச்சில் 'Will I open the window?' அசாதாரணமாக இருக்கும், பெரும்பாலானவர்கள் எல்லாவற்றுக்கும் 'I'll' என்று சொல்கிறார்கள். ஆனால் SSC, Banking, CDS இன்னும் பாரம்பரிய விதியைப் பின்பற்றுகின்றன, எனவே தேர்வுக்காக அதைக் கற்றுக்கொள்ளுங்கள்.",
+  tl:"Naveena pechu Aangilam kittaththatta ellaa idaththilum WILL payanpaduththugiradhu. Aanaal SSC, Banking, CDS innum paaramparya vidhiyaip pinpatrugindrana, enave thervukkaaga adhaik katrukkollungal."}],
+
+ s3:[
+ {h:"The classical table",
+  d:"   PLAIN FUTURE\n     I / We        →  SHALL\n     You/He/They   →  WILL\n\n   EMPHASIS (determination, command, promise)\n     I / We        →  WILL     ← reversed\n     You/He/They   →  SHALL    ← reversed\n\n   I WILL succeed.     (determination)\n   You SHALL obey.     (command)"},
+ {h:"Offers and suggestions",
+  d:"   🤝 OFFER      : SHALL I carry your bag?\n                   SHALL I open the window?\n\n   💡 SUGGESTION : SHALL we begin?\n                   SHALL we go for a walk?\n\n   Both use I or WE, both take SHALL.\n   'Will I open the window?' sounds wrong."},
+ {h:"The Let us tag",
+  d:"   Let us go, SHALL WE?        ✔\n   Let us go, WILL WE?         ✘\n\n   This fixed tag comes from the same rule\n   and appears in question-tag questions too.\n\n   ⚠ MODERN SPEECH USES 'WILL' EVERYWHERE,\n     but SSC follows the classical rule."}],
+
+ s4:{
+ wrong:["\"'Will I open the window?' is a normal offer.\" — Offers with I take 'shall'.",
+  "\"'Shall' is old-fashioned and never used.\" — SSC still tests it.",
+  "\"'Let us go, will we?' is the correct tag.\" — The fixed tag is 'shall we'.",
+  "\"'I shall succeed whatever happens' shows determination.\" — Determination with I takes 'will'."],
+ right:["An offer or suggestion with I or we → shall.",
+  "Plain future with he, she, they, you → will.",
+  "Strong determination with I → will. A command to you → shall.",
+  "The tag for 'let us' is always 'shall we'."]},
+
+ s5:[
+ {en:"Shall I carry your bag for you?",ta:"உங்கள் பையை நான் தூக்கிச் செல்லட்டுமா?",tl:"Ungal paiyai naan thookkich sellattumaa?",note:"An offer with I → SHALL."},
+ {en:"Shall we go for a walk this evening?",ta:"இன்று மாலை நாம் நடைப்பயிற்சிக்குச் செல்லலாமா?",tl:"Indru maalai naam nadaippayirchikkuch sellalaamaa?",note:"A suggestion with we → SHALL."},
+ {en:"He will arrive tomorrow morning by train.",ta:"அவர் நாளை காலை ரயிலில் வருவார்.",tl:"Avar naalai kaalai rayilil varuvaar.",note:"Plain future with 'he' → WILL."},
+ {en:"You shall not enter this room without permission.",ta:"அனுமதி இல்லாமல் நீங்கள் இந்த அறைக்குள் நுழையக் கூடாது.",tl:"Anumadhi illaamal neengal indha araikkul nuzhaiyak koodaadhu.",note:"A command to 'you' → SHALL."},
+ {en:"Let us begin the meeting, shall we?",ta:"கூட்டத்தைத் தொடங்குவோமா?",tl:"Koottaththaith thodanguvomaa?",note:"The fixed tag for 'let us' is 'shall we'."}],
+
+ s6:["shall|-லாமா / வேண்டும்|-laamaa / Vendum",
+  "will|-வார் / -வேன்|-vaar / -ven",
+  "offer|முன்வைத்தல்|Munvaiththal",
+  "suggestion|பரிந்துரை|Parindhurai",
+  "command|கட்டளை|Kattalai",
+  "promise|வாக்குறுதி|Vaakkurudhi",
+  "determination|உறுதி|Urudhi",
+  "shall I|நான் ... செய்யட்டுமா|Naan ... seyyattumaa",
+  "shall we|நாம் ... செய்யலாமா|Naam ... seyyalaamaa",
+  "let us go|நாம் போவோம்|Naam povom",
+  "without permission|அனுமதி இல்லாமல்|Anumadhi illaamal"],
+
+ s7:[
+ "____ I carry your bag?|Shall|Easy|An offer with I.",
+ "____ we go for a walk?|Shall|Easy|A suggestion with we.",
+ "He ____ arrive tomorrow.|will|Easy|Plain future with 'he'.",
+ "____ I open the window, sir?|Shall|Medium|An offer with I.",
+ "You ____ not enter without permission.|shall|Medium|A command to 'you'.",
+ "Let us begin, ____ we?|shall|Medium|The fixed tag for 'let us'.",
+ "They ____ reach Delhi by night.|will|Medium|Plain future.",
+ "____ we start the programme now?|Shall|Hard|A suggestion with we.",
+ "I ____ succeed whatever happens.|will|Hard|Determination with I.",
+ "You ____ be rewarded for your honesty.|shall|Hard|A promise to 'you'.",
+ "____ I help you with the luggage?|Shall|Hard|An offer with I.",
+ "She ____ join the office next week.|will|Expert|Plain future.",
+ "We ____ overcome all these problems.|shall|Expert|A determined 'we' in formal usage.",
+ "Let us go home, ____ we?|shall|Expert|The fixed tag.",
+ "____ I bring you a cup of tea?|Shall|Expert|An offer with I."],
+
+ s8:[
+ "Will I carry your bag for you?|Shall I carry your bag for you?|An offer with I requires 'shall'.",
+ "Will we go for a walk this evening?|Shall we go for a walk this evening?|A suggestion with we requires 'shall'.",
+ "Shall he arrive tomorrow morning?|Will he arrive tomorrow morning?|Plain future with 'he' requires 'will'.",
+ "Will I open the window, sir?|Shall I open the window, sir?|An offer with I requires 'shall'.",
+ "Let us begin the meeting, will we?|Let us begin the meeting, shall we?|The fixed tag for 'let us' is 'shall we'.",
+ "Shall they reach Delhi by night?|Will they reach Delhi by night?|Plain future requires 'will'.",
+ "Will we start the programme now?|Shall we start the programme now?|A suggestion with we requires 'shall'.",
+ "I shall succeed whatever may happen.|I will succeed whatever may happen.|Determination with I requires 'will'.",
+ "You will be rewarded, I promise you.|You shall be rewarded, I promise you.|A promise to 'you' requires 'shall'.",
+ "Will I bring you a cup of tea?|Shall I bring you a cup of tea?|An offer with I requires 'shall'."],
+
+ s9:[
+ "Fill in the Blank|____ I fetch you a glass of water, madam, before we start?|Will;Shall|1|An offer with I requires 'shall'.",
+ "Find the Error|Will we begin (A) the meeting now (B) since everyone (C) has arrived (D)?|A;B;C;D|0|Part A. A suggestion with 'we' requires 'Shall we begin'.",
+ "Sentence Improvement|Let us go for a picnic next Sunday, will we, if the weather is fine?|will we;shall we;won't we|1|The fixed tag for 'let us' is 'shall we'.",
+ "Fill in the Blank|You ____ be rewarded suitably for the courage you showed that day.|shall;will|0|A promise to 'you' requires 'shall'.",
+ "Find the Error|Shall he reach (A) the station (B) before the train (C) departs tonight (D)?|A;B;C;D|0|Part A. Plain future with 'he' requires 'Will he reach'."],
+
+ s10:{
+  en:"Modern English has almost abandoned 'shall', so 'Will I open the window?' feels perfectly normal. SSC still follows the classical rule, and 'Shall I' and 'Shall we' are what it tests. The second trap is the reversal: for plain future, 'I shall' is right, but for determination, 'I will' is right. The third is the 'let us' tag, which is always 'shall we'.",
+  ta:"நவீன ஆங்கிலம் 'shall'-ஐ கிட்டத்தட்ட கைவிட்டுவிட்டது, எனவே 'Will I open the window?' முற்றிலும் இயல்பாகத் தோன்றுகிறது. SSC இன்னும் பாரம்பரிய விதியைப் பின்பற்றுகிறது, 'Shall I' மற்றும் 'Shall we'-தான் அது சோதிக்கிறது. இரண்டாவது பொறி தலைகீழாக்கம்: வெறும் எதிர்காலத்திற்கு 'I shall' சரி, ஆனால் உறுதிக்கு 'I will' சரி. மூன்றாவது 'let us' குறிப்பு, அது எப்போதும் 'shall we'.",
+  tl:"Naveena Aangilam 'shall'-ai kittaththatta kaivittuvittadhu, enave 'Will I open the window?' mutrilum iyalbaagath thondrugiradhu. SSC innum paaramparya vidhiyaip pinpatrugiradhu."},
+
+ s11:{
+  en:"OFFER OR SUGGESTION WITH I OR WE → SHALL. Everything else → WILL.",
+  ta:"I அல்லது WE-உடன் முன்வைத்தல் அல்லது பரிந்துரை → SHALL. மற்ற அனைத்தும் → WILL.",
+  tl:"I alladhu WE-udan munvaiththal alladhu parindhurai → SHALL. Matra anaiththum → WILL.",
+  vis:"      THE CLASSICAL TABLE\n\n   PLAIN FUTURE\n   ┌──────────────┬────────┐\n   │ I / We       │ SHALL  │\n   │ You/He/They  │ WILL   │\n   └──────────────┴────────┘\n\n   EMPHASIS — the table REVERSES\n   ┌──────────────┬────────┐\n   │ I / We       │ WILL   │ determination\n   │ You/He/They  │ SHALL  │ command, promise\n   └──────────────┴────────┘\n\n   ⚠ WHAT SSC ACTUALLY TESTS:\n     SHALL I ...?   (offer)\n     SHALL WE ...?  (suggestion)\n     Let us go, SHALL WE?  (fixed tag)"},
+
+ s12:[
+ "____ I carry your bag?|Will;Shall|1",
+ "____ we go for a walk?|Will;Shall|1",
+ "He ____ arrive tomorrow.|shall;will|1",
+ "____ I open the window, sir?|Will;Shall|1",
+ "You ____ not enter without leave.|will;shall|1",
+ "Let us begin, ____ we?|will;shall|1",
+ "They ____ reach Delhi by night.|shall;will|1",
+ "____ we start the programme?|Will;Shall|1",
+ "I ____ succeed whatever happens.|shall;will|1",
+ "You ____ be rewarded, I promise.|will;shall|1",
+ "____ I help you with the bags?|Will;Shall|1",
+ "She ____ join the office next week.|shall;will|1",
+ "Let us go home, ____ we?|will;shall|1",
+ "____ I bring you some tea?|Will;Shall|1",
+ "He ____ be here by five o'clock.|shall;will|1",
+ "____ we take a short break now?|Will;Shall|1",
+ "They ____ finish the work today.|shall;will|1",
+ "____ I close the door, madam?|Will;Shall|1",
+ "Let us start early, ____ we?|will;shall|1",
+ "You ____ obey the rules of the hostel.|will;shall|1"],
+
+ s13:[
+ "____ I open the window, or ____ you prefer that it ____ closed?|Shall-would-stayed;Will-will-stays;Shall-would-stays|2|An offer with I → SHALL. A polite question → WOULD. A time clause takes the present → STAYS.",
+ "____ we begin now, since neither of the guests ____ arrived yet?|Shall-have;Will-has;Shall-has|2|A suggestion with we → SHALL. 'Neither of' is fixed singular → HAS (SVA Rule 50).",
+ "Let us go for a walk, ____ we, before ____ sun ____?|shall-the-sets;will-a-sets;shall-the-will set|0|The fixed tag → SHALL WE. Unique object → THE sun. A time clause bans 'will' → SETS (Rule 55).",
+ "You ____ be rewarded, and by next month you ____ have received ____ cheque.|will-shall-a;shall-will-the;shall-will-a|1|A promise to 'you' → SHALL. Future perfect → WILL HAVE received. Specific cheque → THE.",
+ "____ I help you, or ____ you rather that I ____ you alone?|Shall-would-left;Will-would-leave;Shall-would-left|0|An offer → SHALL I. 'Would rather' takes the past form → LEFT."],
+
+ s14:{
+  rule:"SHALL goes with I and we for offers and suggestions; WILL is the ordinary future elsewhere.",
+  formula:"SHALL I ...? → offer | SHALL WE ...? → suggestion\nPlain future: I/we shall · you/he/they will\nEmphasis reverses: I WILL (determination) · you SHALL (command)\nLet us go, SHALL WE?",
+  memory:"Offer or suggestion with I or we takes SHALL. Everything else takes WILL.",
+  ta:"I அல்லது We-ஓட முன்வைப்பு அல்லது பரிந்துரை-ன்னா SHALL. மத்ததெல்லாம் WILL.",
+  tl:"I alladhu We-oda munvaippu alladhu parindhurai-nnaa SHALL. Maththadhellaam WILL.",
+  mistake:"Writing 'Will I open the window?' and 'Let us go, will we?'.",
+  exam:"SSC CGL / CHSL and Bank — 'Shall I' and 'Shall we' are the tested forms."},
+
+ s15:[
+ {ta:"நாம Modal Verbs module-ஓட கடைசி rule-க்கு வந்துட்டோம். இது கொஞ்சம் பழைய பாணி விதி, ஆனா SSC இன்னும் இதைத்தான் பின்பற்றுது.",
+  tl:"Naama Modal Verbs module-oda kadaisi rule-kku vandhuttom. Idhu konjam pazhaiya paani vidhi, aanaa SSC innum idhaith-thaan pinpatrudhu."},
+ {ta:"பாரம்பரிய விதி இதுதான்: வெறும் எதிர்காலத்துக்கு — I மற்றும் We-க்கு 'shall', மத்த எல்லாத்துக்கும் 'will'. 'I shall go tomorrow.' 'He will go tomorrow.'",
+  tl:"Paaramparya vidhi idhudhaan: verum edhirkaalaththukku — I matrum We-kku 'shall', maththa ellaaththukkum 'will'. 'I shall go tomorrow.' 'He will go tomorrow.'"},
+ {ta:"ஆனா SSC உண்மையில் என்ன கேட்குது தெரியுமா? கேள்வி வடிவம். 'SHALL I open the window?' — நான் ஜன்னலை திறக்கட்டுமா? இது ஒரு முன்வைப்பு (offer). 'SHALL WE begin?' — நாம ஆரம்பிக்கலாமா? இது ஒரு பரிந்துரை (suggestion). இந்த ரெண்டும்தான் அதிகமா வரும்.",
+  tl:"Aanaa SSC unmaiyil enna ketkudhu theriyumaa? Kelvi vadivam. 'SHALL I open the window?' — idhu oru offer. 'SHALL WE begin?' — idhu oru suggestion. Indha rendum-dhaan adhigamaa varum."},
+ {ta:"நமக்கு இது கஷ்டமா இருக்கும், ஏன்னா நவீன ஆங்கிலத்துல 'shall' கிட்டத்தட்ட காணாம போயிடுச்சு. நாம 'Will I open the window?' அப்படித்தான் சொல்லுவோம், 'I'll' அப்படித்தான் சொல்லுவோம். ஆனா தேர்வுல பாரம்பரிய விதிதான்.",
+  tl:"Namakku idhu kashtamaa irukkum, yennaa naveena Aangilaththula 'shall' kittaththatta kaanaama poyidichu. Naama 'Will I open the window?' appadidhaan solluvom. Aanaa thervula paaramparya vidhidhaan."},
+ {ta:"இப்போ ஒரு சுவாரஸ்யமான விஷயம் — வலியுறுத்தல் வரும்போது அட்டவணை தலைகீழாகும்! வெறும் எதிர்காலம்: 'I shall go.' ஆனா உறுதி: 'I WILL succeed whatever happens!' — இங்க 'will' வரும். அதே மாதிரி வெறும் எதிர்காலம்: 'You will go.' ஆனா கட்டளை: 'You SHALL obey!' — இங்க 'shall' வரும்.",
+  tl:"Ippo oru suvaarasyamaana vishayam — valiyuruththal varumbodhu attavanai thalaigeezhaagum! Verum edhirkaalam: 'I shall go.' Aanaa urudhi: 'I WILL succeed!' Adhe maadhiri 'You will go' aanaa kattalai: 'You SHALL obey!'"},
+ {ta:"கடைசியா ஒரு நிலையான வடிவம் ஞாபகம் வெச்சுக்கோங்க — 'Let us go, SHALL WE?' இது ஒரு fixed tag. 'Will we' அப்படின்னு ஒருபோதும் வராது. இது Module 10-ல question tags படிக்கும்போதும் வரும். இப்பவே கத்துக்கிட்டா, அப்போ சுலபமா இருக்கும். Modal Verbs module இத்தோட முடிஞ்சது — எட்டு rule-ம் நீங்க கத்துக்கிட்டீங்க.",
+  tl:"Kadaisiyaa oru nilaiyaana vadivam gnaabagam vechukkonga — 'Let us go, SHALL WE?' Idhu oru fixed tag. 'Will we' appadinnu orupodhum varaadhu. Idhu Module 10-la question tags padikkumbodhum varum. Modal Verbs module iththoda mudinjadhu."}]}
+];
+
+/* ================== ENGINE ================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const P=(s,n)=>String(s).split("|").concat(Array(n).fill("")).slice(0,n);
+let cur=0, done={}, ansd={}, sc={};
+
+const STEPS=[
+ ["What is the Rule?","விதி என்ன? · Vidhi enna?"],
+ ["Why does this rule exist?","ஏன் இந்த விதி? · Yen indha vidhi?"],
+ ["Visual Diagram","படம் மூலம் புரிதல் · Padam moolam purithal"],
+ ["Wrong Thinking vs Right Thinking","தவறான சிந்தனை · Thavaraana sinthanai"],
+ ["Tamil Translation of Examples","உதாரணங்களின் தமிழ் · Udhaaranangalin Tamil"],
+ ["Word-by-Word Meaning","சொல்லுக்குச் சொல் · Sollukku sol"],
+ ["Solved Examples — Easy to Hard","தீர்க்கப்பட்ட உதாரணங்கள்"],
+ ["Wrong vs Correct","தவறு vs சரி · Thavaru vs Sari"],
+ ["SSC / Bank PYQ Style","முந்தைய வினாத்தாள் பாணி"],
+ ["Exam Trap","தேர்வு பொறி · Thervu pori"],
+ ["Memory Trick","நினைவு உத்தி · Ninaivu utthi"],
+ ["Practice Set — 20 Questions","பயிற்சி தொகுப்பு"],
+ ["Challenge Round","சவால் சுற்று · Savaal sutru"],
+ ["One-Page Revision Sheet","ஒரு பக்க மறுபார்வை"],
+ ["Centu AI Explains","சென்டு AI விளக்கம்"]
+];
+
+function tri(en,ta,tl){
+ let h="";
+ if(en) h+=`<div class="en">${esc(en)}</div>`;
+ if(ta) h+=`<div class="ta">${esc(ta)}</div>`;
+ if(tl) h+=`<div class="tl">${esc(tl)}</div>`;
+ return h;
+}
+
+function buildStep(i,r){
+ let c="";
+ if(i===0){
+   c=`<div class="box gold">${tri(r.s1.en,r.s1.ta,r.s1.tl)}</div>`;
+   if(r.s1.formula) c+=`<div class="hd">Formula</div><pre class="dia">${esc(r.s1.formula)}</pre>`;
+ }
+ if(i===1) c=r.s2.map(b=>`<div class="hd">${esc(b.h)}</div><div class="box blue">${tri(b.en,b.ta,b.tl)}</div>`).join("");
+ if(i===2) c=r.s3.map(d=>`<div class="hd">${esc(d.h)}</div><pre class="dia">${esc(d.d)}</pre>`).join("");
+ if(i===3){
+   c=`<div class="hd">How students think — and why it fails</div><div class="think">`+
+     r.s4.wrong.map(x=>`<div class="bad">✘ ${esc(x)}</div>`).join("")+`</div>`+
+     `<div class="hd">How you must think</div><div class="think">`+
+     r.s4.right.map(x=>`<div class="good">✔ ${esc(x)}</div>`).join("")+`</div>`;
+ }
+ if(i===4) c=r.s5.map(x=>`<div class="box pur"><div class="en"><b>${esc(x.en)}</b></div>
+   <div class="ta">${esc(x.ta)}</div><div class="tl">${esc(x.tl)}</div>
+   ${x.note?`<div style="font-size:12.5px;color:var(--acc);margin-top:6px">▸ ${esc(x.note)}</div>`:""}</div>`).join("");
+ if(i===5){
+   c=`<div class="wordgrid">`+r.s6.map(w=>{const[a,b,d]=P(w,3);
+     return `<div class="wc"><b>${esc(a)}</b><span>${esc(b)}</span><em>${esc(d)}</em></div>`;}).join("")+`</div>`;
+ }
+ if(i===6){
+   c=`<table><tr><th style="width:46px">#</th><th>Sentence</th><th style="width:80px">Answer</th><th style="width:78px">Level</th><th>Why</th></tr>`+
+     r.s7.map((x,k)=>{const[s,a,l,w]=P(x,4);
+       return `<tr><td>${k+1}</td><td>${esc(s)}</td><td class="c"><b>${esc(a)}</b></td>
+       <td><span class="lvl l-${esc(l)}">${esc(l)}</span></td><td style="color:var(--dim)">${esc(w)}</td></tr>`;}).join("")+`</table>`;
+ }
+ if(i===7){
+   c=`<table><tr><th style="width:40px">#</th><th>✘ Wrong</th><th>✔ Correct</th><th>Reason</th></tr>`+
+     r.s8.map((x,k)=>{const[w,g,y]=P(x,3);
+       return `<tr><td>${k+1}</td><td class="w">${esc(w)}</td><td class="c">${esc(g)}</td>
+       <td style="color:var(--dim)">${esc(y)}</td></tr>`;}).join("")+`</table>`;
+ }
+ if(i===8) c=r.s9.map((x,k)=>{const[t,q,o,a,s]=P(x,5);
+   return qzHtml(r.n,"p"+k,q,o.split(";"),+a,s,t);}).join("");
+ if(i===9) c=`<div class="box red">${tri(r.s10.en,r.s10.ta,r.s10.tl)}</div>`;
+ if(i===10){
+   c=`<div class="box gold">${tri(r.s11.en,r.s11.ta,r.s11.tl)}</div>`;
+   if(r.s11.vis) c+=`<pre class="dia">${esc(r.s11.vis)}</pre>`;
+ }
+ if(i===11){
+   c=scoreBar(r.n,"q",r.s12.length)+r.s12.map((x,k)=>{const[q,o,a]=P(x,3);
+     return qzHtml(r.n,"q"+k,q,o.split(";"),+a,"",""+(k+1));}).join("");
+ }
+ if(i===12) c=`<div class="box gold" style="margin-bottom:12px"><b>Mixed with Tense, Pronoun, Article and Preposition — real SSC difficulty.</b></div>`+
+   r.s13.map((x,k)=>{const[q,o,a,s]=P(x,4);
+     return qzHtml(r.n,"c"+k,q,o.split(";"),+a,s,"C"+(k+1));}).join("");
+ if(i===13){
+   const v=r.s14;
+   c=`<div class="rev">
+     <div>Rule</div><div>${esc(v.rule)}</div>
+     <div>Formula</div><div><code>${esc(v.formula)}</code></div>
+     <div>Memory</div><div>${esc(v.memory)}</div>
+     <div>Tamil</div><div class="tam">${esc(v.ta)}<br><em style="color:var(--dim);font-size:12px">${esc(v.tl)}</em></div>
+     <div>Common Mistake</div><div style="color:var(--no)">${esc(v.mistake)}</div>
+     <div>Exam Value</div><div>${esc(v.exam)}</div></div>`;
+ }
+ if(i===14){
+   c=`<div class="ai"><div class="who">🎙️ CENTU AI EXPLAINS — வகுப்பு நேரம்</div>`+
+     r.s15.map(p=>`<p class="ta">${esc(p.ta)}</p><p class="tl">${esc(p.tl)}</p>`).join("")+`</div>`;
+ }
+ return `<div class="step" data-s="${i}">
+   <div class="sh"><div class="sn">${i+1}</div>
+   <div class="st">${esc(STEPS[i][0])}<small>${esc(STEPS[i][1])}</small></div>
+   <span class="cv">▼</span></div>
+   <div class="sb">${c}</div></div>`;
+}
+
+function qzHtml(rn,id,q,opts,ans,sol,tag){
+ const key=rn+"-"+id;
+ return `<div class="qz" id="z-${key}" data-a="${ans}" data-k="${key}">
+   <div class="qn">${tag?`<i>${esc(tag)}.</i>`:""}${esc(q)}</div>
+   <div class="ops">${opts.map((o,j)=>`<button class="op" data-k="${key}" data-j="${j}">${esc(o.trim())}</button>`).join("")}</div>
+   ${sol?`<div class="sol">💡 ${esc(sol)}</div>`:`<div class="sol">💡 Correct answer: <b>${esc(opts[ans]||"")}</b></div>`}</div>`;
+}
+function scoreBar(rn,pre,total){
+ return `<div class="scorebar" id="sb-${rn}-${pre}">Your score: <b id="sv-${rn}-${pre}">0</b> / ${total}
+   <span class="bar"><i id="sp-${rn}-${pre}"></i></span>
+   <span style="color:var(--dim);font-size:12px">Tap an option to check instantly</span></div>`;
+}
+
+function renderRule(){
+ const r=RULES[cur];
+ $("#tt").innerHTML=`Rule ${r.n} · <em>${esc(r.t)}</em>`;
+ $("#tta").textContent=r.tam;
+ $("#tdiff").textContent=r.d; $("#tdiff").className="badge b-"+r.d;
+ $("#trc").textContent=r.rc;
+ $("#body").innerHTML=STEPS.map((_,i)=>buildStep(i,r)).join("");
+ document.querySelector('.step[data-s="0"]').classList.add("open");
+ $("#prev").disabled=cur===0; $("#next").disabled=cur===RULES.length-1;
+ document.querySelectorAll(".rbtn").forEach((b,i)=>b.classList.toggle("on",i===cur));
+ window.scrollTo({top:0,behavior:"smooth"});
+ // restore answers
+ Object.keys(ansd).forEach(k=>{ if(k.startsWith(r.n+"-")) paint(k,ansd[k]); });
+ ["q","c","p"].forEach(pre=>updBar(r.n,pre));
+}
+function paint(key,chosen){
+ const box=document.getElementById("z-"+key); if(!box) return;
+ const ans=+box.dataset.a;
+ box.querySelectorAll(".op").forEach((b,j)=>{
+   if(j===ans) b.classList.add("right"); else if(j===chosen) b.classList.add("wrong");});
+ box.classList.add("done");
+}
+function updBar(rn,pre){
+ const el=document.getElementById("sv-"+rn+"-"+pre); if(!el) return;
+ const tot=document.querySelectorAll(`[id^="z-${rn}-${pre}"]`).length;
+ let got=0; Object.keys(ansd).forEach(k=>{
+   if(k.startsWith(rn+"-"+pre)){const b=document.getElementById("z-"+k); if(b&&ansd[k]===+b.dataset.a) got++;}});
+ el.textContent=got;
+ const bar=document.getElementById("sp-"+rn+"-"+pre); if(bar) bar.style.width=(tot?got/tot*100:0)+"%";
+}
+
+document.addEventListener("click",e=>{
+ const sh=e.target.closest(".sh"); if(sh){sh.parentElement.classList.toggle("open");return;}
+ const op=e.target.closest(".op");
+ if(op){
+   const k=op.dataset.k; if(ansd[k]!==undefined) return;
+   ansd[k]=+op.dataset.j; paint(k,+op.dataset.j);
+   const rn=k.split("-")[0], pre=k.split("-")[1][0];
+   updBar(rn,pre);
+   if(pre==="q"){done[rn]=true; drawList();}
+   return;
+ }
+ const rb=e.target.closest(".rbtn"); if(rb){cur=+rb.dataset.i;renderRule();}
+});
+$("#prev").onclick=()=>{if(cur>0){cur--;renderRule();}};
+$("#next").onclick=()=>{if(cur<RULES.length-1){cur++;renderRule();}};
+$("#allopen").onclick=()=>{
+ const all=document.querySelectorAll(".step"), anyClosed=[...all].some(s=>!s.classList.contains("open"));
+ all.forEach(s=>s.classList.toggle("open",anyClosed));
+ $("#allopen").textContent=anyClosed?"Close all steps":"Open all steps";
+};
+window.addEventListener("beforeprint",()=>document.querySelectorAll(".step").forEach(s=>s.classList.add("open")));
+
+function drawList(){
+ $("#rlist").innerHTML=RULES.map((r,i)=>
+  `<button class="rbtn ${i===cur?"on":""}" data-i="${i}">
+    <b>${r.n}</b><span>${esc(r.t)}<span class="dn">${esc(r.rc)} · ${r.d}</span></span>
+    ${done[r.n]?'<span class="tick">✔</span>':''}</button>`).join("");
+}
+drawList();
+renderRule();
+</script>
+<script>
+/* ===== CentuMania metrics — universal v2 (generator-agnostic; additive) =====
+ * Handles three different option-rendering engines seen across this batch:
+ *  A) .opts[data-a] container + .opt[data-j] options (class8-12 MASTER packs)
+ *  B) .qz/.opts[data-a] container + .op/.opt[data-j] options, .right/.wrong
+ *     classes applied on click (MicroClasses, Grammar Bible)
+ *  C) .opt-btn[data-oi] with no DOM-exposed answer key; correctness read
+ *     back from the inline background-color the module sets on click
+ *     (Geography / Polity / GK / Art & Culture)
+ * Detection cascades: explicit data-a/data-ans first (most reliable), then
+ * known correct/wrong class names, then the inline-style colour signature.
+ */
+(function(){
+  if(window.__cmTrackU||window.__cmTrackInit)return; window.__cmTrackU=1;
+  var CM_DEFAULT='eng-micro-modals', CM_T0=Date.now(), CM_ACTIVE=0, _vt=Date.now(), _lastQ=0;
+  function tok(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function mat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function sid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'a'+Date.now();}}
+  function inter(t,n,m){try{var k=tok();if(!k||!n)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({interaction_type:t,node_id:String(n),material_id:mat(),session_id:sid(),timestamp:new Date().toISOString(),metadata:m||{}})}).catch(function(){});}catch(e){}}
+  function ev(name,m){try{var k=tok();if(!k)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})})}).catch(function(){});}catch(e){}}
+  function beacon(name,m){try{var k=tok();if(!k)return;var p=JSON.stringify({_token:k,event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_vt;beacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_vt=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_vt;beacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  ev('material_opened',{});ev('session_start',{});
+  /* chapter/section navigation (Engine A's .cn-pill) counts as node_opened */
+  document.addEventListener('click',function(e){
+    var p=e.target&&e.target.closest&&e.target.closest('.cn-pill[data-ci]');
+    if(!p||p._cmOpened)return; p._cmOpened=1;
+    var ci=p.getAttribute('data-ci');
+    inter('node_opened','ch'+ci,{}); ev('node_open',{node_id:'ch'+ci});
+  });
+  /* answer clicks across all three engines */
+  var _cmCardIdx=0, _cmCardMap=(typeof WeakMap!=='undefined')?new WeakMap():null;
+  function cmCardIndex(card){
+    if(!card)return -1;
+    if(_cmCardMap){ if(_cmCardMap.has(card))return _cmCardMap.get(card); var i=_cmCardIdx++; _cmCardMap.set(card,i); return i; }
+    return -1;
+  }
+  document.addEventListener('click',function(e){
+    var o=e.target&&e.target.closest&&e.target.closest('.opt,.op,.mopt,.opt-btn,.option,[data-oi]');
+    if(!o||o._cmSeen)return; o._cmSeen=1;
+    var container=o.closest('.opts,.qz,.mcq-card,.mcq,[data-nid],[data-qi]')||o.parentElement;
+    var card=o.closest('.mcq-card,.mcq,.qz,.opts')||container;
+    var nid=(container&&(container.getAttribute('data-nid')||container.getAttribute('data-node')||container.getAttribute('data-k')||container.id))||o.getAttribute('data-r');
+    var qiRaw=(container&&container.getAttribute('data-qi'))||o.getAttribute('data-q')||o.getAttribute('data-j');
+    var qi=qiRaw!=null?parseInt(qiRaw,10):NaN;
+    var correctAttr=container&&(container.getAttribute('data-a')||container.getAttribute('data-ans'));
+    var myIdx=o.getAttribute('data-j')!=null?o.getAttribute('data-j'):(o.getAttribute('data-o')!=null?o.getAttribute('data-o'):o.getAttribute('data-oi'));
+    // No usable identifier anywhere in the DOM (Engine C): fall back to a
+    // per-card sequential index so distinct questions in the same file never
+    // collide on the same synthetic node_id (which would silently drop every
+    // answer after the first under the server's first-attempt lock).
+    if(!nid||isNaN(qi)){ var ci=cmCardIndex(card); if(!nid)nid='q'+ci; if(isNaN(qi))qi=ci; }
+    var now=Date.now(),dt=_lastQ?now-_lastQ:0;_lastQ=now;
+    setTimeout(function(){
+      var isCorrect;
+      if(correctAttr!=null&&myIdx!=null){
+        isCorrect=(parseInt(correctAttr,10)===parseInt(myIdx,10));
+      } else {
+        var cl=o.classList;
+        if(cl.contains('right')||cl.contains('ok')||cl.contains('correct'))isCorrect=true;
+        else if(cl.contains('wrong')||cl.contains('bad')||cl.contains('incorrect'))isCorrect=false;
+        else {
+          var bg=(o.style&&o.style.backgroundColor)||'';
+          if(!bg&&window.getComputedStyle)bg=getComputedStyle(o).backgroundColor;
+          if(bg.indexOf('220, 252, 231')!==-1)isCorrect=true;
+          else if(bg.indexOf('254, 226, 226')!==-1)isCorrect=false;
+          else isCorrect=false;
+        }
+      }
+      inter('mcq_attempt',String(nid),{question_index:qi,is_correct:!!isCorrect});
+      ev('answer',{node_id:String(nid),question_index:qi,is_correct:!!isCorrect,time_spent_ms:dt});
+    },90);
+  });
+})();
+</script>
+</body>
+</html>

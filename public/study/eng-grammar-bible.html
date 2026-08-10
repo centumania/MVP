@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CentuMania English Grammar Bible — 120 Rules</title>
+<style>
+:root{
+  --bg:#0f1220; --bg2:#171b2e; --card:#1c2138; --card2:#232945;
+  --line:#2e3557; --txt:#e8ebf7; --dim:#9aa3c7; --acc:#ffb020; --acc2:#ff7a45;
+  --ok:#3ddc97; --no:#ff5c7a; --blue:#5aa9ff; --purple:#b07bff;
+  --shadow:0 8px 28px rgba(0,0,0,.38);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:linear-gradient(160deg,#0f1220 0%,#141830 55%,#0f1220 100%);
+  color:var(--txt);font-family:"Segoe UI",system-ui,-apple-system,"Noto Sans Tamil",sans-serif;
+  line-height:1.6;min-height:100vh;padding-bottom:60px;
+}
+a{color:var(--acc)}
+/* ---------- HEADER ---------- */
+header{
+  background:linear-gradient(120deg,#1a1f3a,#242a4d 60%,#2c2148);
+  border-bottom:2px solid var(--acc);padding:26px 20px 22px;text-align:center;
+  position:relative;overflow:hidden;
+}
+header:before{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 15% 20%,rgba(255,176,32,.16),transparent 45%),
+             radial-gradient(circle at 85% 80%,rgba(90,169,255,.14),transparent 45%);}
+header>*{position:relative}
+.brand{font-size:13px;letter-spacing:5px;color:var(--acc);font-weight:700;text-transform:uppercase}
+h1{font-size:30px;margin:6px 0 4px;font-weight:800;letter-spacing:.4px}
+h1 span{background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--dim);font-size:14px}
+.tag-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.tag{background:rgba(255,255,255,.06);border:1px solid var(--line);padding:4px 12px;border-radius:20px;font-size:12px;color:var(--dim)}
+/* ---------- CONTROLS ---------- */
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+.controls{
+  position:sticky;top:0;z-index:50;background:rgba(15,18,32,.94);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  padding:12px 0;margin-bottom:18px;
+}
+.ctl-inner{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input[type=search],select{
+  background:var(--card);border:1px solid var(--line);color:var(--txt);
+  padding:9px 12px;border-radius:9px;font-size:14px;font-family:inherit;outline:none;
+}
+input[type=search]{flex:1;min-width:190px}
+input[type=search]:focus,select:focus{border-color:var(--acc)}
+.btn{
+  background:var(--card);border:1px solid var(--line);color:var(--txt);
+  padding:9px 14px;border-radius:9px;font-size:13px;cursor:pointer;font-family:inherit;
+  transition:.15s;white-space:nowrap;
+}
+.btn:hover{border-color:var(--acc);color:var(--acc)}
+.btn.on{background:var(--acc);color:#1a1405;border-color:var(--acc);font-weight:700}
+.count{color:var(--dim);font-size:13px;margin-left:auto}
+/* ---------- MODULE NAV ---------- */
+.modnav{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 22px}
+.modnav .btn{font-size:12px;padding:7px 11px}
+/* ---------- MODULE HEADING ---------- */
+.modhead{
+  margin:34px 0 16px;padding:14px 18px;border-radius:12px;
+  background:linear-gradient(90deg,rgba(255,176,32,.14),rgba(255,176,32,0));
+  border-left:4px solid var(--acc);
+}
+.modhead h2{font-size:20px;font-weight:700}
+.modhead p{color:var(--dim);font-size:13px}
+/* ---------- RULE CARD ---------- */
+.rule{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow);
+}
+.rhead{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;
+  transition:.15s;user-select:none;
+}
+.rhead:hover{background:var(--card2)}
+.rnum{
+  min-width:46px;height:46px;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));color:#1a1405;
+  font-weight:800;font-size:15px;flex-shrink:0;
+}
+.rtitle{flex:1;font-weight:650;font-size:15.5px}
+.rtitle small{display:block;color:var(--dim);font-weight:400;font-size:12.5px;margin-top:2px}
+.pill{font-size:10.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.4px;flex-shrink:0}
+.d-Easy{background:rgba(61,220,151,.16);color:var(--ok)}
+.d-Medium{background:rgba(255,176,32,.16);color:var(--acc)}
+.d-Hard{background:rgba(255,92,122,.16);color:var(--no)}
+.code{font-family:ui-monospace,Consolas,monospace;font-size:11px;color:var(--dim);flex-shrink:0}
+.chev{color:var(--dim);font-size:14px;transition:.2s;flex-shrink:0}
+.rule.open .chev{transform:rotate(180deg)}
+.rbody{display:none;padding:0 16px 18px;border-top:1px solid var(--line)}
+.rule.open .rbody{display:block}
+/* ---------- BLOCKS ---------- */
+.blk{margin-top:15px}
+.lbl{
+  font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--dim);font-weight:700;margin-bottom:6px;
+}
+.box{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:11px 14px;font-size:14.5px}
+.box.rule-txt{border-left:3px solid var(--blue)}
+.box.tamil{border-left:3px solid var(--purple);font-size:15px}
+.box.why{border-left:3px solid var(--dim);color:var(--dim);font-size:13.5px}
+.box.trap{border-left:3px solid var(--no);background:rgba(255,92,122,.07)}
+.box.trick{border-left:3px solid var(--acc);background:rgba(255,176,32,.07);font-weight:600}
+ul.ex{list-style:none;display:grid;gap:5px}
+ul.ex li{padding:7px 11px;border-radius:8px;font-size:14px}
+li.ok{background:rgba(61,220,151,.09);border-left:3px solid var(--ok)}
+li.no{background:rgba(255,92,122,.09);border-left:3px solid var(--no)}
+li.ok:before{content:"✔  ";color:var(--ok);font-weight:800}
+li.no:before{content:"✘  ";color:var(--no);font-weight:800}
+.pyq{display:flex;gap:6px;flex-wrap:wrap}
+.pyq span{background:rgba(90,169,255,.12);color:var(--blue);border:1px solid rgba(90,169,255,.28);
+  padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.two{grid-template-columns:1fr}h1{font-size:23px}.count{margin-left:0;width:100%}}
+/* ---------- QUIZ ---------- */
+.quiz{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:9px}
+.qtxt{font-size:14.5px;margin-bottom:9px;font-weight:600}
+.opts{display:grid;gap:6px}
+.opt{
+  background:var(--bg2);border:1px solid var(--line);border-radius:8px;
+  padding:8px 12px;font-size:14px;cursor:pointer;transition:.13s;text-align:left;
+  color:var(--txt);font-family:inherit;
+}
+.opt:hover{border-color:var(--acc)}
+.opt.right{background:rgba(61,220,151,.16);border-color:var(--ok);color:var(--ok);font-weight:700}
+.opt.wrong{background:rgba(255,92,122,.16);border-color:var(--no);color:var(--no)}
+.expl{margin-top:8px;font-size:13px;color:var(--dim);display:none}
+.quiz.done .expl{display:block}
+/* ---------- SCORE + MISC ---------- */
+.score{
+  position:fixed;right:16px;bottom:16px;z-index:80;
+  background:var(--card);border:1px solid var(--acc);border-radius:12px;
+  padding:9px 15px;font-size:13px;box-shadow:var(--shadow);
+}
+.score b{color:var(--acc)}
+.empty{text-align:center;color:var(--dim);padding:50px 20px}
+footer{text-align:center;color:var(--dim);font-size:12.5px;padding:34px 16px 10px;border-top:1px solid var(--line);margin-top:40px}
+.flow{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:18px 0}
+.flow ol{margin-left:18px;font-size:14px;color:var(--dim)}
+.flow ol li{margin:3px 0}
+.flow h3{font-size:15px;margin-bottom:8px;color:var(--acc)}
+@media print{
+  .controls,.modnav,.score,.chev{display:none!important}
+  body{background:#fff;color:#000}
+  .rbody{display:block!important}
+  .rule{break-inside:avoid;border:1px solid #ccc;box-shadow:none}
+  .box,.quiz{background:#f7f7f7;color:#000}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">CentuMania</div>
+  <h1>English Grammar <span>Bible</span></h1>
+  <div class="sub">120 Exam-Oriented Rules · SSC · RRB · Banking · CDS · TNPSC · State PSC</div>
+  <div class="tag-row">
+    <span class="tag">Tamil one-liner for every rule</span>
+    <span class="tag">Exam traps</span>
+    <span class="tag">Memory tricks</span>
+    <span class="tag">240 practice questions</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="controls">
+    <div class="ctl-inner">
+      <input type="search" id="q" placeholder="Search a rule, keyword or revision code (e.g. 'either', 'SVA-07')…">
+      <select id="diff">
+        <option value="">All difficulty</option>
+        <option>Easy</option><option>Medium</option><option>Hard</option>
+      </select>
+      <select id="pyqf">
+        <option value="">All PYQ types</option>
+        <option>Find the Error</option><option>Sentence Improvement</option>
+        <option>Fill in the Blank</option><option>Cloze Test</option>
+      </select>
+      <button class="btn" id="expand">Expand all</button>
+      <button class="btn" id="collapse">Collapse all</button>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <div class="flow">
+    <h3>How to use this book — 7-step learning flow</h3>
+    <ol>
+      <li>Read the rule.</li>
+      <li>Read the Tamil one-liner.</li>
+      <li>Compare correct vs. wrong examples.</li>
+      <li>Study the exam trap — this is where marks are lost.</li>
+      <li>Memorise the shortcut trick.</li>
+      <li>Solve the 2 mini-quiz questions.</li>
+      <li>Revise later using the revision code (e.g. SVA-07).</li>
+    </ol>
+  </div>
+
+  <div class="modnav" id="modnav"></div>
+  <div id="out"></div>
+</div>
+
+<div class="score" id="score">Quiz: <b id="sc">0</b> / <span id="tot">0</span></div>
+
+<footer>
+  CentuMania English Grammar Bible · 120 Rules · Original content built for Tamil-medium government exam aspirants.<br>
+  Click any rule to open it. Use Ctrl+P to print or save as PDF (all rules expand automatically).
+</footer>
+
+<script>
+const MODULES=[
+ {id:1,name:"Articles",range:[1,10],desc:"A, An, The — omission, repetition and the sound rule."},
+ {id:2,name:"Nouns",range:[11,20],desc:"Number, case, collective nouns and uncountables."},
+ {id:3,name:"Pronouns",range:[21,30],desc:"Case, reflexives, order of pronouns and antecedent agreement."},
+ {id:4,name:"Subject-Verb Agreement",range:[31,50],desc:"The single highest-yield topic in every exam. 20 rules."},
+ {id:5,name:"Tenses",range:[51,62],desc:"Sequence of tenses, time clauses and the perfect forms."},
+ {id:6,name:"Modal Verbs",range:[63,70],desc:"Can, could, may, might, must, ought, need, dare."},
+ {id:7,name:"Prepositions",range:[71,85],desc:"Time, place, appropriate prepositions and fixed collocations."},
+ {id:8,name:"Conjunctions",range:[86,93],desc:"Correlatives, parallelism and the classic double-conjunction error."},
+ {id:9,name:"Adjectives & Adverbs",range:[94,103],desc:"Degrees of comparison, placement and confusable pairs."},
+ {id:10,name:"Voice, Narration & Miscellaneous",range:[104,120],desc:"Active/passive, direct/indirect, conditionals, question tags and more."}
+];
+const RULES=[
+/* MODULE 1 — ARTICLES (1-10) */
+{n:1,m:1,rc:"ART-01",d:"Easy",t:"Use A before a consonant SOUND",
+ r:"Use the article 'a' before a word that begins with a consonant sound, not merely a consonant letter.",
+ ta:"மெய் ஒலியில் தொடங்கும் சொல்லுக்கு முன் 'a' வரும் — எழுத்து அல்ல, ஒலி முக்கியம்.",
+ w:"English articles follow pronunciation, not spelling. The ear decides, not the eye.",
+ ok:["I saw a dog near the gate.","He bought a pen yesterday.","She is a brilliant officer."],
+ no:["He bought an pen.","I saw an dog."],
+ trap:"Candidates look at the first letter of the word. SSC checks the first SOUND of the word.",
+ trick:"A = Consonant Sound. Say the word aloud before choosing.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"He is ____ honourable man in our village.",o:["a","an"],a:1,e:"'Honourable' begins with a silent H, so the sound is a vowel sound — 'an'."},
+    {t:"She wants to buy ____ car next month.",o:["a","an"],a:0,e:"'Car' begins with the /k/ consonant sound — 'a'."}]},
+
+{n:2,m:1,rc:"ART-02",d:"Easy",t:"Use AN before a vowel SOUND",
+ r:"Use the article 'an' before a word that begins with a vowel sound (a, e, i, o, u sounds).",
+ ta:"உயிர் ஒலியில் தொடங்கும் சொல்லுக்கு முன் 'an' வரும்.",
+ w:"'An' exists purely to avoid two vowel sounds colliding, which is hard to pronounce.",
+ ok:["I ate an apple.","He bought an umbrella.","It was an excellent answer."],
+ no:["I ate a apple.","He bought a umbrella."],
+ trap:"Abbreviations trip students up: an MLA, an MP, an FIR, an SSC exam — because M is read as 'em'.",
+ trick:"An = Vowel Sound. For abbreviations, spell the letter aloud: M = 'em' = vowel sound.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"He is ____ MLA from our district.",o:["a","an"],a:1,e:"M is pronounced 'em', a vowel sound, so 'an MLA'."},
+    {t:"They waited for ____ hour outside.",o:["a","an"],a:1,e:"H in 'hour' is silent, so the sound is /au/ — 'an hour'."}]},
+
+{n:3,m:1,rc:"ART-03",d:"Medium",t:"Vowel LETTER but consonant sound takes A",
+ r:"Words beginning with U, E or O that are pronounced with a /yu/ or /w/ sound take 'a', not 'an'.",
+ ta:"University, European, One போன்ற சொற்கள் உயிரெழுத்தில் தொடங்கினாலும் ஒலி மெய்யாக இருப்பதால் 'a' வரும்.",
+ w:"'University' is pronounced 'yu-ni-ver-si-ty' and 'one' is pronounced 'wun' — both start with consonant sounds.",
+ ok:["He studies in a university.","A European delegation arrived.","It was a one-day match.","A useful book."],
+ no:["He studies in an university.","An European tour.","An one-rupee coin."],
+ trap:"The single most repeated article question in SSC: 'an university' is planted as a wrong option.",
+ trick:"U that sounds like 'YOU' takes A. O that sounds like 'WUN' takes A.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Delhi has ____ university of national importance.",o:["a","an"],a:0,e:"'University' begins with the /yu/ consonant sound."},
+    {t:"He gave me ____ useful suggestion.",o:["a","an"],a:0,e:"'Useful' = 'yoos-ful', a consonant sound."}]},
+
+{n:4,m:1,rc:"ART-04",d:"Medium",t:"Silent H takes AN",
+ r:"Words with a silent initial H — hour, honest, honour, heir, honorary — take 'an'.",
+ ta:"Hour, Honest, Honour, Heir ஆகியவற்றில் H ஒலிக்காது; எனவே 'an' வரும்.",
+ w:"The H is not pronounced, so the word effectively begins with a vowel sound.",
+ ok:["An honest officer never takes bribes.","He is an heir to the property.","She received an honorary degree."],
+ no:["A honest officer.","A heir to the throne.","A hour later."],
+ trap:"'Hotel', 'historic' and 'hospital' DO pronounce the H — so they take 'a', not 'an'.",
+ trick:"Silent H family = HOUR, HONEST, HONOUR, HEIR, HONORARY. Only these five need 'an'.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"He stayed in ____ hotel near the station.",o:["a","an"],a:0,e:"The H in 'hotel' is pronounced, so 'a hotel'."},
+    {t:"It is ____ honour to meet you.",o:["a","an"],a:1,e:"Silent H in 'honour' gives a vowel sound."}]},
+
+{n:5,m:1,rc:"ART-05",d:"Easy",t:"THE before superlatives and ordinals",
+ r:"Use 'the' before superlative degrees and before ordinal numbers.",
+ ta:"Superlative மற்றும் வரிசை எண்களுக்கு முன் 'the' கட்டாயம்.",
+ w:"A superlative points to one unique item, and articles mark uniqueness.",
+ ok:["He is the best student in the class.","She was the first woman to win it.","This is the tallest building here."],
+ no:["He is best student in the class.","She came first in the race and won first prize."],
+ trap:"Superlatives used without comparison (as pure adjectives) can drop 'the': 'He is most intelligent' means 'very intelligent'.",
+ trick:"Superlative or Ordinal = THE is compulsory.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"He is ____ tallest boy in the team.",o:["a","the"],a:1,e:"Superlative degree always takes 'the'."},
+    {t:"She sat in ____ second row.",o:["a","the"],a:1,e:"'Second' is an ordinal number, so 'the'."}]},
+
+{n:6,m:1,rc:"ART-06",d:"Medium",t:"THE before unique and named things",
+ r:"Use 'the' before rivers, seas, oceans, deserts, mountain ranges, groups of islands, holy books, newspapers and unique objects.",
+ ta:"நதி, கடல், பாலைவனம், மலைத்தொடர், புனித நூல், செய்திதாள் ஆகியவற்றுக்கு முன் 'the' வரும்.",
+ w:"There is only one of each, so the article of definiteness is required.",
+ ok:["The Ganga flows through the north.","The Himalayas are majestic.","He reads the Hindu daily.","The sun rises in the east."],
+ no:["Ganga is a holy river.","He reads Hindu daily.","Sun rises in east."],
+ trap:"Single mountains and single islands take NO article: Mount Everest, Sri Lanka. Only ranges and groups take 'the'.",
+ trick:"Range = THE. Peak = no article. (The Himalayas but Mount Everest.)",
+ pyq:["Find the Error","Fill in the Blank","Cloze Test"],
+ q:[{t:"____ Everest was first climbed in 1953.",o:["The","No article"],a:1,e:"A single peak takes no article — Mount Everest."},
+    {t:"____ Arabian Sea lies to the west of India.",o:["The","No article"],a:0,e:"Seas always take 'the'."}]},
+
+{n:7,m:1,rc:"ART-07",d:"Medium",t:"No article before general proper, material and abstract nouns",
+ r:"Do not use an article before proper nouns, material nouns and abstract nouns used in a general sense.",
+ ta:"பொதுவான பொருள்பெயர், சிறப்புப்பெயர், கருத்துப்பெயர் ஆகியவற்றுக்கு முன் article தேவையில்லை.",
+ w:"These nouns already refer to the whole class or substance, so no limiting article is needed.",
+ ok:["Honesty is the best policy.","Gold is a precious metal.","Ram lives in Chennai."],
+ no:["The honesty is the best policy.","The gold is precious.","The Ram lives in the Chennai."],
+ trap:"When the abstract noun becomes specific, 'the' returns: 'The honesty of the officer surprised us.'",
+ trick:"General = no article. Specific (with of-phrase or clause) = THE.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"____ patience of the teacher was admirable.",o:["The","No article"],a:0,e:"The of-phrase makes it specific, so 'the'."},
+    {t:"____ milk is good for health.",o:["The","No article"],a:1,e:"A material noun in a general sense takes no article."}]},
+
+{n:8,m:1,rc:"ART-08",d:"Medium",t:"THE + adjective = a whole class of people",
+ r:"'The' placed before an adjective turns it into a plural noun denoting a class, and it takes a plural verb.",
+ ta:"'The' + பெயரடை = அந்த வகை மக்கள் அனைவரும்; வினைச்சொல் பன்மையாக வரும்.",
+ w:"'The poor' means 'poor people' as a group, which is plural in meaning.",
+ ok:["The poor are often ignored.","The rich have their own problems.","The blind need our support."],
+ no:["The poor is often ignored.","The rich has many problems."],
+ trap:"The verb is the trap, not the article. Exams plant a singular verb after 'the poor'.",
+ trick:"THE + adjective = plural people = plural verb.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"The elderly ____ special care in winter.",o:["needs","need"],a:1,e:"'The elderly' is plural in sense, so 'need'."},
+    {t:"The unemployed ____ demanding jobs.",o:["is","are"],a:1,e:"Class nouns formed with 'the' take a plural verb."}]},
+
+{n:9,m:1,rc:"ART-09",d:"Hard",t:"Omit the article when the place serves its primary purpose",
+ r:"Words like school, college, church, hospital, court, prison and bed take no article when used for their primary purpose.",
+ ta:"School, Hospital, Prison போன்ற இடங்கள் அவற்றின் முதன்மை நோக்கத்திற்குப் பயன்படும்போது article வராது.",
+ w:"The focus is on the activity (studying, worshipping, being treated), not on the building.",
+ ok:["He goes to school every day.","The thief was sent to prison.","She went to bed early."],
+ no:["He goes to the school every day to study.","The thief was sent to the prison as a convict."],
+ trap:"If you visit the building itself, 'the' returns: 'I went to the school to meet the principal.'",
+ trick:"Purpose = no article. Building = THE.",
+ pyq:["Find the Error","Fill in the Blank","Cloze Test"],
+ q:[{t:"His father went to ____ hospital to see the patient.",o:["the","no article"],a:0,e:"He is a visitor, not a patient — the building is meant, so 'the'."},
+    {t:"My brother is in ____ hospital with a fracture.",o:["the","no article"],a:1,e:"He is there as a patient, its primary purpose, so no article."}]},
+
+{n:10,m:1,rc:"ART-10",d:"Hard",t:"Repeat the article for two different persons or things",
+ r:"One article before two nouns means one person or thing; repeating the article means two separate persons or things.",
+ ta:"ஒரே நபர் என்றால் ஒரு article; வெவ்வேறு நபர்கள் என்றால் ஒவ்வொருவருக்கும் தனி article.",
+ w:"The article count signals how many entities are being described.",
+ ok:["The secretary and treasurer is present. (one person holding both posts)","The secretary and the treasurer are present. (two people)"],
+ no:["The secretary and treasurer are present, one being Ram and the other Shyam."],
+ trap:"The verb must match the article count. One article = singular verb; two articles = plural verb.",
+ trick:"One article = one person = singular verb. Two articles = two persons = plural verb.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"The principal and the vice-principal ____ attending the meeting.",o:["is","are"],a:1,e:"Two articles mean two persons, so a plural verb."},
+    {t:"The poet and philosopher ____ dead.",o:["is","are"],a:0,e:"One article means one person who is both, so a singular verb."}]},
+
+/* MODULE 2 — NOUNS (11-20) */
+{n:11,m:2,rc:"NOU-01",d:"Easy",t:"Nouns that are always plural",
+ r:"Scissors, trousers, spectacles, tongs, scales, pincers, shorts, jeans and binoculars are always plural and take a plural verb.",
+ ta:"Scissors, Trousers, Spectacles போன்றவை எப்போதும் பன்மை; வினைச்சொல்லும் பன்மை.",
+ w:"These objects have two matching parts, so English treats them as inherently plural.",
+ ok:["My spectacles are broken.","These trousers are too tight.","The scissors are on the table."],
+ no:["My spectacle is broken.","This trouser is too tight."],
+ trap:"To make them singular, use 'a pair of': 'A pair of scissors is missing' — now the verb is singular.",
+ trick:"Two-part objects = plural. Add 'a pair of' to make the verb singular.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"A pair of shoes ____ kept outside.",o:["was","were"],a:0,e:"'Pair' is the subject and it is singular."},
+    {t:"His spectacles ____ very expensive.",o:["is","are"],a:1,e:"'Spectacles' is always plural."}]},
+
+{n:12,m:2,rc:"NOU-02",d:"Medium",t:"Plural in form but singular in meaning",
+ r:"News, mathematics, physics, economics, politics, ethics, athletics, innings and measles look plural but take a singular verb.",
+ ta:"News, Mathematics, Physics போன்றவை பன்மை போலத் தோன்றினாலும் ஒருமை வினைச்சொல் எடுக்கும்.",
+ w:"They name a single subject, disease or event, not a countable group.",
+ ok:["No news is good news.","Mathematics is my favourite subject.","Politics is a dirty game."],
+ no:["The news are shocking.","Mathematics are difficult."],
+ trap:"When 'politics' or 'statistics' means someone's views or actual figures, it becomes plural: 'His politics are unclear.'",
+ trick:"Subject name = singular. Personal views or actual data = plural.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"The news ____ broadcast at nine.",o:["is","are"],a:0,e:"'News' is always singular."},
+    {t:"Statistics ____ a branch of mathematics.",o:["is","are"],a:0,e:"As a subject name it is singular."}]},
+
+{n:13,m:2,rc:"NOU-03",d:"Medium",t:"No plural after a definite number",
+ r:"Dozen, score, gross, hundred, thousand, million, pair and stone do not take -s when preceded by a definite number.",
+ ta:"குறிப்பிட்ட எண்ணுக்குப் பின் Dozen, Hundred, Thousand ஆகியவை பன்மை விகுதி எடுக்காது.",
+ w:"With a number they act as measuring adjectives, not as countable nouns.",
+ ok:["He bought two dozen eggs.","Three hundred students attended.","She owns four pairs of shoes."],
+ no:["He bought two dozens eggs.","Three hundreds students attended."],
+ trap:"Without a number, and with 'of', the plural returns: 'dozens of eggs', 'hundreds of people'.",
+ trick:"Number before = no -s. 'Of' after with no number = add -s.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"____ of people gathered at the rally.",o:["Hundred","Hundreds"],a:1,e:"No definite number precedes it, so 'Hundreds of'."},
+    {t:"I need five ____ of bananas.",o:["dozen","dozens"],a:0,e:"A definite number precedes it, so no -s."}]},
+
+{n:14,m:2,rc:"NOU-04",d:"Hard",t:"Collective nouns: unit vs. individuals",
+ r:"A collective noun takes a singular verb when the group acts as one unit and a plural verb when its members act individually.",
+ ta:"கூட்டுப்பெயர் ஒரே அலகாக செயல்பட்டால் ஒருமை; உறுப்பினர்கள் தனித்தனியாக செயல்பட்டால் பன்மை.",
+ w:"The verb reflects the meaning intended, not the form of the noun.",
+ ok:["The committee has taken a decision. (as one body)","The committee are divided in their opinions. (individually)","The jury was unanimous."],
+ no:["The committee have taken a unanimous decision."],
+ trap:"Words like 'divided', 'disagree' and 'quarrel' signal individual action and therefore a plural verb.",
+ trick:"United = singular verb. Divided = plural verb.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"The jury ____ divided in their verdict.",o:["was","were"],a:1,e:"'Divided' shows individual members, so a plural verb."},
+    {t:"The team ____ won the championship.",o:["has","have"],a:0,e:"The team acted as one unit."}]},
+
+{n:15,m:2,rc:"NOU-05",d:"Medium",t:"Uncountable nouns take no plural and no A/AN",
+ r:"Information, furniture, luggage, baggage, advice, equipment, machinery, poetry, scenery, stationery, work and bread are uncountable.",
+ ta:"Information, Furniture, Advice போன்ற சொற்களுக்கு பன்மை விகுதியோ 'a/an'-ஓ வராது.",
+ w:"They name a mass or category, not separate countable items.",
+ ok:["He gave me useful information.","We bought new furniture.","She gave me a piece of advice."],
+ no:["He gave me useful informations.","We bought new furnitures.","She gave me an advice."],
+ trap:"To count them, use a unit phrase: a piece of advice, an item of furniture, a bit of information.",
+ trick:"Cannot count = no -s, no a/an. Use 'a piece of'.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"He carried too much ____ to the station.",o:["luggage","luggages"],a:0,e:"'Luggage' is uncountable."},
+    {t:"Let me give you ____ advice.",o:["an","a piece of"],a:1,e:"'Advice' is uncountable and needs a unit phrase."}]},
+
+{n:16,m:2,rc:"NOU-06",d:"Medium",t:"Use OF, not apostrophe-S, for lifeless things",
+ r:"The possessive apostrophe is used mainly with living beings; lifeless objects normally take the 'of' form.",
+ ta:"உயிரற்ற பொருட்களுக்கு apostrophe-s அல்ல, 'of' பயன்படுத்த வேண்டும்.",
+ w:"Ownership belongs to living things; inanimate objects merely have parts or qualities.",
+ ok:["The leg of the table is broken.","The roof of the house leaks.","Ram's book is on the desk."],
+ no:["The table's leg is broken.","The house's roof leaks."],
+ trap:"Time, distance, weight, personified nouns and country names are exceptions: a day's journey, India's history, Nature's law.",
+ trick:"Living = apostrophe-s. Lifeless = OF. Exceptions: time, distance, countries, personification.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Which is correct?",o:["The door's handle is loose.","The handle of the door is loose."],a:1,e:"A door is lifeless, so the 'of' form is preferred."},
+    {t:"They completed ____ journey.",o:["a day's","a day"],a:0,e:"Time nouns are an accepted exception and take apostrophe-s."}]},
+
+{n:17,m:2,rc:"NOU-07",d:"Hard",t:"The double possessive",
+ r:"When 'of' expresses possession before a possessive noun or pronoun, use the double possessive form.",
+ ta:"'a friend of mine', 'a friend of my father's' — இது double possessive அமைப்பு.",
+ w:"The construction means 'one of my friends', so both the 'of' and the possessive form are required.",
+ ok:["He is a friend of mine.","That is a book of my brother's.","A cousin of hers visited us."],
+ no:["He is a friend of me.","That is a book of my brother."],
+ trap:"'A friend of me' looks natural to Tamil-medium learners but is always wrong.",
+ trick:"of + MINE / YOURS / HIS / HERS / OURS / THEIRS — never of + me/you/him.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"She is a colleague of ____.",o:["me","mine"],a:1,e:"The double possessive requires the possessive pronoun 'mine'."},
+    {t:"This is a painting of ____.",o:["my uncle","my uncle's"],a:1,e:"Possession requires the possessive form after 'of'."}]},
+
+{n:18,m:2,rc:"NOU-08",d:"Hard",t:"Compound nouns: pluralise the principal word",
+ r:"In a compound noun, add the plural marker to the main word, not the last word.",
+ ta:"கூட்டுப்பெயரில் முக்கிய சொல்லுக்கே பன்மை விகுதி சேர்க்க வேண்டும்.",
+ w:"The principal word carries the meaning; the rest are modifiers.",
+ ok:["sons-in-law","passers-by","commanders-in-chief","lookers-on","stepsons"],
+ no:["son-in-laws","passer-bys","commander-in-chiefs"],
+ trap:"When there is no clear principal noun, the -s goes at the end: forget-me-nots, higher-ups, good-for-nothings.",
+ trick:"Find the head noun and pluralise that one.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"Both his ____ live abroad.",o:["son-in-laws","sons-in-law"],a:1,e:"'Son' is the principal word."},
+    {t:"The two ____ were arrested.",o:["passers-by","passer-bys"],a:0,e:"'Passer' is the principal word."}]},
+
+{n:19,m:2,rc:"NOU-09",d:"Medium",t:"A noun used as an adjective stays singular",
+ r:"When a noun of number or measure is used before another noun as a compound adjective, it remains singular and is hyphenated.",
+ ta:"எண்ணைக் குறிக்கும் பெயர்ச்சொல் பெயரடையாக வரும்போது ஒருமையிலேயே இருக்கும்.",
+ w:"As a modifier it describes a type, not a quantity.",
+ ok:["a ten-rupee note","a five-year plan","a three-hour journey","a six-foot wall"],
+ no:["a ten-rupees note","a five-years plan","a three-hours journey"],
+ trap:"Remove the hyphen and the plural returns: 'a journey of three hours' is correct.",
+ trick:"Hyphenated before a noun = singular. Standing alone after 'of' = plural.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"He handed over a ____ note.",o:["five-hundred-rupees","five-hundred-rupee"],a:1,e:"As a compound adjective it stays singular."},
+    {t:"It was a ____ delay.",o:["two-hour","two-hours"],a:0,e:"Compound adjectives before a noun are singular."}]},
+
+{n:20,m:2,rc:"NOU-10",d:"Hard",t:"Nouns that change meaning in the plural",
+ r:"Some nouns carry a completely different meaning in the plural: air/airs, good/goods, wood/woods, pain/pains, force/forces, respect/respects, quarter/quarters.",
+ ta:"சில பெயர்ச்சொற்கள் பன்மையில் வேறு பொருள் தரும் — pain (வலி), pains (முயற்சி).",
+ w:"Historical usage fixed separate meanings for the plural forms.",
+ ok:["He takes great pains over his work. (effort)","The goods arrived today. (merchandise)","She puts on airs. (arrogance)"],
+ no:["He takes great pain over his work, meaning effort.","The good arrived by train."],
+ trap:"'Pain' means physical suffering; 'pains' means careful effort. Exams test this pair most often.",
+ trick:"Pains = effort. Airs = pride. Goods = items. Woods = forest. Forces = army.",
+ pyq:["Find the Error","Fill in the Blank","Sentence Improvement"],
+ q:[{t:"He took great ____ to finish the project on time.",o:["pain","pains"],a:1,e:"'Pains' means careful effort."},
+    {t:"She always puts on ____ in front of guests.",o:["air","airs"],a:1,e:"'Airs' means an arrogant manner."}]},
+
+/* MODULE 3 — PRONOUNS (21-30) */
+{n:21,m:3,rc:"PRO-01",d:"Medium",t:"Order of pronouns: 231 for good, 123 for bad",
+ r:"In a positive statement the order is second person, third person, first person (You, he and I). When admitting a fault, the order is first, second, third (I, you and he).",
+ ta:"நல்ல செய்திக்கு 231 வரிசை; தவறை ஒப்புக்கொள்ளும்போது 123 வரிசை.",
+ w:"Politeness places others first, but responsibility places oneself first.",
+ ok:["You, he and I will go to Delhi.","I, you and he are responsible for the loss."],
+ no:["I, you and he will go for the picnic.","You, he and I have made a mistake."],
+ trap:"Exams place a fault or a confession in the sentence and still use the 231 order.",
+ trick:"Good news = 231 (YOU first). Bad news = 123 (I first, taking the blame).",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Which order is correct for admitting guilt?",o:["You, he and I are guilty.","I, you and he are guilty."],a:1,e:"For faults the speaker comes first."},
+    {t:"____ will receive the prize.",o:["You, he and I","I, he and you"],a:0,e:"A positive statement takes the 231 order."}]},
+
+{n:22,m:3,rc:"PRO-02",d:"Hard",t:"Case after THAN and AS",
+ r:"After 'than' or 'as' in a comparison, use the subjective case if a verb is understood after the pronoun.",
+ ta:"'than' / 'as' பின் வினைச்சொல் மறைந்திருந்தால் subjective case (he, she, I) வரும்.",
+ w:"The full sentence is 'He is taller than I am', so the pronoun is a subject.",
+ ok:["He is taller than I (am).","She works as hard as he (does).","No one is wiser than she (is)."],
+ no:["He is taller than me in the class comparison.","She works as hard as him."],
+ trap:"Spoken English accepts 'than me', but SSC and Banking exams follow the formal rule.",
+ trick:"Add the hidden verb mentally. If it fits, use I / he / she / they.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"My brother is smarter than ____.",o:["me","I"],a:1,e:"The hidden verb 'am' makes it a subject."},
+    {t:"She sings as sweetly as ____.",o:["he","him"],a:0,e:"'As he does' is understood, so the subjective case."}]},
+
+{n:23,m:3,rc:"PRO-03",d:"Easy",t:"Objective case after a preposition",
+ r:"A pronoun that follows a preposition must be in the objective case: me, him, her, us, them.",
+ ta:"முன்னுருபுக்குப் பின் வரும் பிரதிபெயர் objective case-ல் இருக்க வேண்டும்.",
+ w:"Prepositions govern objects, and objects require the objective form.",
+ ok:["Between you and me, this is a secret.","This gift is for her and me.","Divide it among them."],
+ no:["Between you and I, this is a secret.","This gift is for she and I."],
+ trap:"'Between you and I' is the classic hypercorrection planted in every exam.",
+ trick:"After a preposition, always ME — never I.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"The matter was settled between him and ____.",o:["I","me"],a:1,e:"'Between' is a preposition and needs the objective case."},
+    {t:"There is no quarrel between you and ____.",o:["me","I"],a:0,e:"Objective case follows a preposition."}]},
+
+{n:24,m:3,rc:"PRO-04",d:"Hard",t:"Verbs that require a reflexive pronoun",
+ r:"Absent, avail, enjoy, apply, adapt, adjust, resign, acquit, pride, avenge and overreach must be followed by a reflexive pronoun.",
+ ta:"Absent, Avail, Enjoy, Apply போன்ற வினைச்சொற்களுக்குப் பின் reflexive pronoun கட்டாயம்.",
+ w:"The action turns back on the doer, which is exactly what a reflexive pronoun expresses.",
+ ok:["He absented himself from class.","Avail yourself of this offer.","They enjoyed themselves at the party.","She applied herself to the task."],
+ no:["He absented from class.","Avail of this offer.","They enjoyed at the party."],
+ trap:"Verbs like keep, hide, qualify, rest, stop and turn do NOT take a reflexive pronoun: 'Keep quiet', not 'Keep yourself quiet'.",
+ trick:"AAEAARAP: Absent, Avail, Enjoy, Apply, Adapt, Resign, Acquit, Pride — all need SELF.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"You must avail ____ of this opportunity.",o:["yourself","—"],a:0,e:"'Avail' requires a reflexive pronoun."},
+    {t:"The children enjoyed ____ at the fair.",o:["themselves","—"],a:0,e:"'Enjoy' is used reflexively when no object follows."}]},
+
+{n:25,m:3,rc:"PRO-05",d:"Medium",t:"LET, LIKE, BUT and EXCEPT take the objective case",
+ r:"Pronouns following let, like, but (meaning except) and except must be in the objective case.",
+ ta:"Let, Like, But, Except ஆகியவற்றுக்குப் பின் objective case (him, me, them) வரும்.",
+ w:"These words function as verbs or prepositions that govern objects.",
+ ok:["Let him go now.","Nobody but me knew the answer.","All except her attended."],
+ no:["Let he go.","Nobody but I knew the answer.","All except she attended."],
+ trap:"'But' meaning 'except' feels like a conjunction, so students wrongly use the subjective case.",
+ trick:"LET, LIKE, BUT, EXCEPT = objective case. Remember the sentence 'Let him but me'.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Everyone attended the seminar except ____.",o:["he","him"],a:1,e:"'Except' behaves as a preposition."},
+    {t:"Let ____ complete the work.",o:["they","them"],a:1,e:"'Let' is followed by the objective case."}]},
+
+{n:26,m:3,rc:"PRO-06",d:"Easy",t:"Each other for two, one another for more than two",
+ r:"Use 'each other' when only two persons or things are involved and 'one another' when more than two are involved.",
+ ta:"இருவருக்கு 'each other'; இரண்டுக்கு மேற்பட்டோருக்கு 'one another'.",
+ w:"English keeps a formal distinction between a pair and a group.",
+ ok:["The two brothers love each other.","All the students helped one another.","Ram and Shyam blamed each other."],
+ no:["The two brothers love one another in formal usage.","All fifty students helped each other."],
+ trap:"The number is usually hidden earlier in the sentence — 'the two', 'both', 'all the members'.",
+ trick:"Two = EACH other. Team = ONE another.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"The two sisters quarrelled with ____.",o:["each other","one another"],a:0,e:"Only two persons are involved."},
+    {t:"The team members supported ____ throughout.",o:["each other","one another"],a:1,e:"More than two persons are involved."}]},
+
+{n:27,m:3,rc:"PRO-07",d:"Medium",t:"ONE must be followed by ONE'S",
+ r:"If a sentence begins with the pronoun 'one', continue with one's and oneself, never with his or himself.",
+ ta:"'One' என்று தொடங்கினால் 'one's', 'oneself' என்றே தொடர வேண்டும்.",
+ w:"'One' is deliberately impersonal, so switching to a gendered pronoun breaks consistency.",
+ ok:["One must do one's duty.","One should not deceive oneself.","One should respect one's parents."],
+ no:["One must do his duty.","One should not deceive himself."],
+ trap:"American usage allows 'one ... his', but Indian competitive exams follow British usage strictly.",
+ trick:"ONE stays with ONE throughout the sentence.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"One should keep ____ promises.",o:["his","one's"],a:1,e:"'One' must continue as 'one's'."},
+    {t:"One must not praise ____ too much.",o:["oneself","himself"],a:0,e:"'One' takes 'oneself'."}]},
+
+{n:28,m:3,rc:"PRO-08",d:"Hard",t:"Choosing the right relative pronoun",
+ r:"Use 'who' for persons, 'which' for animals and things, and 'that' after superlatives, and after all, only, same, none, nothing and any.",
+ ta:"நபருக்கு who; பொருளுக்கு which; superlative, all, only, same-க்குப் பின் that.",
+ w:"Each relative pronoun has a fixed antecedent type, and 'that' is preferred where the reference is already limited.",
+ ok:["This is the boy who won the prize.","The book which you gave me is useful.","It is the best film that I have seen.","All that glitters is not gold."],
+ no:["It is the best film which I have seen.","All which glitters is not gold."],
+ trap:"After a superlative, students naturally write 'which'. The exam expects 'that'.",
+ trick:"Superlative, ALL, ONLY, SAME, NONE, ANY = THAT.",
+ pyq:["Find the Error","Fill in the Blank","Cloze Test"],
+ q:[{t:"This is the only book ____ I possess.",o:["which","that"],a:1,e:"'Only' requires 'that'."},
+    {t:"The girl ____ won the medal is my cousin.",o:["who","which"],a:0,e:"'Who' is used for persons."}]},
+
+{n:29,m:3,rc:"PRO-09",d:"Hard",t:"A pronoun must agree with its antecedent",
+ r:"A pronoun must agree with its antecedent in number, gender and person. Everyone, everybody, each, either and neither are singular.",
+ ta:"Everyone, Each, Either, Neither ஆகியவை ஒருமை; அவற்றைக் குறிக்கும் பிரதிபெயரும் ஒருமையாக இருக்க வேண்டும்.",
+ w:"These indefinite pronouns refer to one member at a time, however large the group.",
+ ok:["Everyone must do his duty.","Each of the boys has finished his work.","Neither of the girls has brought her book."],
+ no:["Everyone must do their duty in formal exam English.","Each of the boys has finished their work."],
+ trap:"Modern spoken English uses singular 'they', but SSC and Banking answer keys still mark 'his' or 'his or her' as correct.",
+ trick:"EVERY / EACH / EITHER / NEITHER = singular pronoun.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Each of the students submitted ____ assignment.",o:["their","his"],a:1,e:"'Each' is singular in exam English."},
+    {t:"Neither of the men remembered ____ password.",o:["his","their"],a:0,e:"'Neither' is singular."}]},
+
+{n:30,m:3,rc:"PRO-10",d:"Medium",t:"WHOSE for persons, OF WHICH for things",
+ r:"Use 'whose' for living beings and 'of which' for lifeless things, though 'whose' is now accepted for things in informal usage.",
+ ta:"உயிருள்ளவற்றுக்கு 'whose'; உயிரற்றவற்றுக்கு 'of which'.",
+ w:"'Whose' is the possessive of 'who', which refers to persons.",
+ ok:["This is the boy whose father is a doctor.","The house, the roof of which is red, is mine."],
+ no:["This is the boy of which the father is a doctor."],
+ trap:"Exams test the reverse pairing — 'the man of which' is always wrong.",
+ trick:"Person = WHOSE. Thing = OF WHICH.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"I met a girl ____ brother is an IAS officer.",o:["whose","of which"],a:0,e:"A person requires 'whose'."},
+    {t:"The building, the walls ____ are cracked, will be demolished.",o:["of which","whose"],a:0,e:"A lifeless thing takes 'of which' in formal usage."}]},
+/* MODULE 4 — SUBJECT-VERB AGREEMENT (31-50) */
+{n:31,m:4,rc:"SVA-01",d:"Hard",t:"The verb ignores words placed between subject and verb",
+ r:"Phrases introduced by with, along with, as well as, together with, besides, in addition to, accompanied by, including and rather than do not change the number of the verb.",
+ ta:"'with', 'as well as', 'along with' போன்ற சொற்றொடர்கள் வினைச்சொல்லை மாற்றாது; உண்மையான subject-ஐப் பார்க்கவும்.",
+ w:"These are parenthetical additions, not part of the grammatical subject.",
+ ok:["The captain, along with his players, was felicitated.","Ram, as well as his brothers, has gone.","The teacher with her students is coming."],
+ no:["The captain along with his players were felicitated.","Ram as well as his brothers have gone."],
+ trap:"The plural noun sitting just before the verb tempts you into a plural verb. Cover that phrase with your finger.",
+ trick:"Cross out everything between the commas. Whatever remains is the subject.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"The manager, along with his assistants, ____ arrived.",o:["have","has"],a:1,e:"'Manager' is the real subject and is singular."},
+    {t:"Sita as well as her friends ____ invited.",o:["was","were"],a:0,e:"'As well as' does not make the subject plural."}]},
+
+{n:32,m:4,rc:"SVA-02",d:"Easy",t:"Two subjects joined by AND take a plural verb",
+ r:"When two or more distinct subjects are joined by 'and', the verb is plural.",
+ ta:"'and' -ஆல் இணைக்கப்பட்ட இரு தனித்தனி subject-களுக்கு பன்மை வினைச்சொல்.",
+ w:"Two separate entities add up to more than one.",
+ ok:["Ram and Shyam are friends.","Honesty and hard work bring success.","The boy and the girl were selected."],
+ no:["Ram and Shyam is friends.","The boy and the girl was selected."],
+ trap:"Check first whether the two nouns describe the SAME person or a single idea — then the verb turns singular (Rule 33).",
+ trick:"Two different things + AND = plural verb.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"Rice and dal ____ available in the shop.",o:["is","are"],a:1,e:"Two distinct items joined by 'and'."},
+    {t:"My father and my uncle ____ arriving today.",o:["is","are"],a:1,e:"Two different persons take a plural verb."}]},
+
+{n:33,m:4,rc:"SVA-03",d:"Hard",t:"AND joining one person or one idea takes a singular verb",
+ r:"When two nouns joined by 'and' refer to the same person, thing or a single idea, the verb is singular.",
+ ta:"'and'-ஆல் இணைந்த இரு சொற்கள் ஒரே நபரையோ ஒரே கருத்தையோ குறித்தால் ஒருமை வினைச்சொல்.",
+ w:"Grammatically there is only one subject, even though two words describe it.",
+ ok:["Slow and steady wins the race.","Bread and butter is my breakfast.","The poet and novelist is dead. (one person)"],
+ no:["Slow and steady win the race.","Bread and butter are my breakfast."],
+ trap:"The article is the clue. One article before both nouns means one person; two articles mean two persons.",
+ trick:"One idea, one dish, one person = one verb.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Rice and curry ____ served at noon.",o:["is","are"],a:0,e:"They form a single dish."},
+    {t:"The Collector and District Magistrate ____ inspecting the site.",o:["is","are"],a:0,e:"One article means one person holding both posts."}]},
+
+{n:34,m:4,rc:"SVA-04",d:"Medium",t:"EACH, EVERY and NO force a singular verb",
+ r:"When 'each', 'every' or 'no' precedes singular nouns, the verb is singular even if the nouns are joined by 'and'.",
+ ta:"Each, Every, No முன்னால் வந்தால், 'and' இருந்தாலும் வினைச்சொல் ஒருமையே.",
+ w:"These determiners pick out members one at a time.",
+ ok:["Each boy and each girl was given a prize.","Every man and woman has a duty.","No student and no teacher was absent."],
+ no:["Each boy and each girl were given a prize.","Every man and woman have a duty."],
+ trap:"The 'and' between the nouns makes the sentence look plural. The determiner overrides it.",
+ trick:"EACH / EVERY / NO in front = singular verb, always.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Every man, woman and child ____ counted.",o:["was","were"],a:0,e:"'Every' forces a singular verb."},
+    {t:"Each of the answers ____ correct.",o:["is","are"],a:0,e:"'Each' is singular."}]},
+
+{n:35,m:4,rc:"SVA-05",d:"Hard",t:"EITHER...OR and NEITHER...NOR: the nearest subject wins",
+ r:"With either...or, neither...nor, not only...but also, or, and nor, the verb agrees with the subject nearest to it, in both number and person.",
+ ta:"Either...or, Neither...nor பயன்படுத்தும்போது, வினைச்சொல் அருகில் உள்ள subject-ஐப் பொறுத்தே வரும்.",
+ w:"Only one of the alternatives is being asserted, so the closer one governs the verb.",
+ ok:["Either Ram or his friends are coming.","Either the boys or Ram is coming.","Neither he nor I am responsible."],
+ no:["Either Ram or his friends is coming.","Neither he nor I is responsible."],
+ trap:"Person agreement is also tested: 'Neither he nor I am' — the verb matches 'I', not 'he'.",
+ trick:"Nearest Wins — check both number and person of the last subject.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Either the teacher or the students ____ absent.",o:["is","are"],a:1,e:"'Students' is nearest and plural."},
+    {t:"Neither you nor he ____ to blame.",o:["are","is"],a:1,e:"'He' is nearest and singular."}]},
+
+{n:36,m:4,rc:"SVA-06",d:"Easy",t:"Indefinite pronouns are singular",
+ r:"Everyone, everybody, everything, someone, somebody, anyone, anybody, nobody, none, each, either, neither and one take singular verbs.",
+ ta:"Everyone, Somebody, Anybody, Nobody, Each, Either, Neither — அனைத்தும் ஒருமை.",
+ w:"Despite covering many people, they refer to individuals one at a time.",
+ ok:["Everyone is welcome here.","Nobody knows the answer.","Somebody has taken my pen."],
+ no:["Everyone are welcome here.","Nobody know the answer."],
+ trap:"'Everyone' feels plural in meaning, so students choose 'are'. It is grammatically singular.",
+ trick:"Any word ending in -ONE, -BODY or -THING = singular verb.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"Everybody in the class ____ passed.",o:["have","has"],a:1,e:"'Everybody' is singular."},
+    {t:"Nothing ____ been decided yet.",o:["has","have"],a:0,e:"'Nothing' is singular."}]},
+
+{n:37,m:4,rc:"SVA-07",d:"Hard",t:"NONE OF, SOME OF, MOST OF, ALL OF, HALF OF follow the noun",
+ r:"With these quantifiers, the verb agrees with the noun that comes after 'of'.",
+ ta:"None of, Some of, Most of, All of, Half of — 'of'-க்குப் பின் வரும் பெயர்ச்சொல்லைப் பொறுத்தே வினைச்சொல்.",
+ w:"The quantifier has no number of its own; it borrows the number of the noun it measures.",
+ ok:["Most of the water is polluted.","Most of the students are present.","Half of the cake was eaten.","Half of the mangoes were rotten."],
+ no:["Most of the students is present.","Half of the mangoes was rotten."],
+ trap:"Students memorise 'none is singular'. In modern usage 'none of the boys are' is accepted when the noun is plural.",
+ trick:"Look past 'of' and copy the number of that noun.",
+ pyq:["Find the Error","Fill in the Blank","Cloze Test"],
+ q:[{t:"Some of the milk ____ spilt.",o:["has","have"],a:0,e:"'Milk' is uncountable and singular."},
+    {t:"All of the chairs ____ broken.",o:["is","are"],a:1,e:"'Chairs' is plural."}]},
+
+{n:38,m:4,rc:"SVA-08",d:"Hard",t:"A NUMBER OF is plural; THE NUMBER OF is singular",
+ r:"'A number of' means 'many' and takes a plural verb. 'The number of' refers to the total figure and takes a singular verb.",
+ ta:"'A number of' = பலர் → பன்மை. 'The number of' = மொத்த எண்ணிக்கை → ஒருமை.",
+ w:"In the first, 'number' is a quantifier; in the second, 'number' is the actual subject.",
+ ok:["A number of students are absent.","The number of students is fifty.","A large number of files were destroyed."],
+ no:["A number of students is absent.","The number of students are fifty."],
+ trap:"Only the article changes — A versus THE — but the verb flips completely.",
+ trick:"A number = All (plural). The number = Total (singular).",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"The number of applicants ____ increased.",o:["have","has"],a:1,e:"'The number of' takes a singular verb."},
+    {t:"A number of candidates ____ failed.",o:["has","have"],a:1,e:"'A number of' means 'many' and takes a plural verb."}]},
+
+{n:39,m:4,rc:"SVA-09",d:"Medium",t:"MANY A takes a singular noun and a singular verb",
+ r:"'Many a' is followed by a singular noun and a singular verb, though the meaning is plural.",
+ ta:"'Many a' -க்குப் பின் ஒருமை பெயர்ச்சொல்லும் ஒருமை வினைச்சொல்லும் வரும்.",
+ w:"It is an emphatic literary construction that counts one at a time.",
+ ok:["Many a student has failed this year.","Many a man dreams of success.","Many a flower blooms unseen."],
+ no:["Many a students have failed.","Many a men dream of success."],
+ trap:"'Many students have' is correct, but 'Many a student has' is also correct. The article 'a' is the switch.",
+ trick:"MANY A = singular everything. MANY = plural everything.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Many a soldier ____ laid down his life.",o:["have","has"],a:1,e:"'Many a' takes a singular verb."},
+    {t:"Many ____ have applied for the post.",o:["candidate","candidates"],a:1,e:"'Many' without 'a' takes a plural noun."}]},
+
+{n:40,m:4,rc:"SVA-10",d:"Hard",t:"MORE THAN ONE takes a singular verb",
+ r:"'More than one' followed by a singular noun takes a singular verb, but 'more than two' and 'more than a hundred' take plural verbs.",
+ ta:"'More than one' → ஒருமை வினைச்சொல். 'More than two' → பன்மை.",
+ w:"The word closest to the noun is 'one', which is singular, so the verb follows it.",
+ ok:["More than one candidate was rejected.","More than one house has been damaged.","More than two boys were absent."],
+ no:["More than one candidate were rejected.","More than one house have been damaged."],
+ trap:"The meaning is clearly plural, which pulls students to the wrong verb. Follow the form, not the sense.",
+ trick:"ONE at the end = singular verb. Any bigger number = plural verb.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"More than one player ____ injured.",o:["was","were"],a:0,e:"'More than one + singular noun' takes a singular verb."},
+    {t:"More than fifty people ____ present.",o:["was","were"],a:1,e:"A number greater than one takes a plural verb."}]},
+
+{n:41,m:4,rc:"SVA-11",d:"Medium",t:"Plural-looking names and titles take a singular verb",
+ r:"Names of countries, books, films, organisations and diseases that are plural in form take a singular verb.",
+ ta:"நாடு, நூல், நோய் ஆகியவற்றின் பெயர்கள் பன்மை போலத் தோன்றினாலும் ஒருமை வினைச்சொல் எடுக்கும்.",
+ w:"Each name refers to one single entity.",
+ ok:["The United States is a superpower.","Gulliver's Travels is a classic.","Measles is contagious.","The Arabian Nights is famous."],
+ no:["The United States are a superpower.","Gulliver's Travels are a classic."],
+ trap:"'The Netherlands', 'The Philippines' and 'The United Arab Emirates' all take singular verbs.",
+ trick:"One name = one thing = one verb.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"The Philippines ____ many islands.",o:["has","have"],a:0,e:"A country name takes a singular verb."},
+    {t:"Mumps ____ common among children.",o:["is","are"],a:0,e:"Disease names ending in -s are singular."}]},
+
+{n:42,m:4,rc:"SVA-12",d:"Medium",t:"Money, distance, time and weight as one unit are singular",
+ r:"When an amount of money, a period of time, a distance or a weight is treated as a single quantity, the verb is singular.",
+ ta:"பணம், தூரம், நேரம், எடை ஒரே அளவாகக் கருதப்படும்போது ஒருமை வினைச்சொல்.",
+ w:"The plural noun names one measurement, not separate items.",
+ ok:["Ten thousand rupees is a big amount.","Five kilometres is a long walk.","Two hours is enough for the test."],
+ no:["Ten thousand rupees are a big amount.","Five kilometres are a long walk."],
+ trap:"If the individual notes or units are meant, the verb becomes plural: 'The rupees were scattered on the floor.'",
+ trick:"One total amount = one verb.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Twenty kilograms ____ too heavy for her.",o:["is","are"],a:0,e:"It is one measured quantity."},
+    {t:"Three years ____ a long time to wait.",o:["is","are"],a:0,e:"The period is treated as a single unit."}]},
+
+{n:43,m:4,rc:"SVA-13",d:"Easy",t:"THERE IS / THERE ARE follow the real subject",
+ r:"In sentences beginning with 'there', the verb agrees with the noun that comes after it, which is the real subject.",
+ ta:"'There' -ஆல் தொடங்கும் வாக்கியத்தில், அதற்குப் பின் வரும் பெயர்ச்சொல்லே உண்மையான subject.",
+ w:"'There' is only an introductory word with no number of its own.",
+ ok:["There is a book on the table.","There are many books on the table.","There have been several complaints."],
+ no:["There are a book on the table.","There is many books on the table."],
+ trap:"With a list, the verb follows the FIRST item: 'There is a pen and two books on the desk.'",
+ trick:"Read the sentence backwards to find the real subject.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"There ____ several reasons for the delay.",o:["is","are"],a:1,e:"'Reasons' is plural."},
+    {t:"There ____ a boy and two girls in the room.",o:["is","are"],a:0,e:"The verb follows the first item, 'a boy'."}]},
+
+{n:44,m:4,rc:"SVA-14",d:"Hard",t:"ONE OF THE + plural noun + WHO + plural verb",
+ r:"In 'one of the + plural noun + who/that', the relative clause verb agrees with the plural noun, not with 'one'.",
+ ta:"'One of the boys who...' — who-க்குப் பின் வரும் வினைச்சொல் பன்மையாக இருக்கும்.",
+ w:"'Who' refers back to the plural noun immediately before it, not to 'one'.",
+ ok:["He is one of the boys who have passed.","She is one of those women who work hard.","It is one of the books that are missing."],
+ no:["He is one of the boys who has passed.","She is one of those women who works hard."],
+ trap:"Add 'the only' and everything flips: 'He is the only one of the boys who HAS passed.'",
+ trick:"ONE OF THE + who = plural verb. THE ONLY ONE OF THE + who = singular verb.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"He is one of the students who ____ won a scholarship.",o:["has","have"],a:1,e:"'Who' refers to 'students', which is plural."},
+    {t:"She is the only one of the candidates who ____ qualified.",o:["has","have"],a:0,e:"'The only one' makes it singular."}]},
+
+{n:45,m:4,rc:"SVA-15",d:"Medium",t:"Infinitives, gerunds and clauses as subjects are singular",
+ r:"When the subject is an infinitive, a gerund or a noun clause, the verb is singular.",
+ ta:"To-infinitive, -ing வடிவம், அல்லது clause subject-ஆக வந்தால் ஒருமை வினைச்சொல்.",
+ w:"Each of these names one single action or idea.",
+ ok:["To err is human.","Swimming is good exercise.","Reading and writing are two skills.","What he says is true."],
+ no:["To err are human.","What he says are true."],
+ trap:"Two gerunds joined by 'and' become plural: 'Reading and writing ARE useful.'",
+ trick:"One action = singular. Two actions joined by AND = plural.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"Walking in the morning ____ beneficial.",o:["is","are"],a:0,e:"A gerund subject is singular."},
+    {t:"What the witnesses said ____ recorded.",o:["was","were"],a:0,e:"A noun clause subject is singular."}]},
+
+{n:46,m:4,rc:"SVA-16",d:"Medium",t:"Fractions and percentages follow the noun after OF",
+ r:"With fractions and percentages, the verb agrees with the noun that follows 'of'.",
+ ta:"பின்னம் அல்லது சதவீதத்திற்குப் பின் வரும் பெயர்ச்சொல்லைப் பொறுத்தே வினைச்சொல் அமையும்.",
+ w:"A fraction has no number of its own; it takes the number of what it measures.",
+ ok:["Two-thirds of the work is done.","Two-thirds of the workers are absent.","Sixty per cent of the population lives in villages."],
+ no:["Two-thirds of the work are done.","Fifty per cent of the students is present."],
+ trap:"The fraction itself looks plural. Ignore it and look at the noun after 'of'.",
+ trick:"Same as Rule 37 — jump past 'of' and copy that noun.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"Three-fourths of the land ____ been sold.",o:["has","have"],a:0,e:"'Land' is uncountable and singular."},
+    {t:"Forty per cent of the voters ____ turned up.",o:["has","have"],a:1,e:"'Voters' is plural."}]},
+
+{n:47,m:4,rc:"SVA-17",d:"Medium",t:"People, police, cattle and their family always take plural verbs",
+ r:"People, police, cattle, poultry, gentry, clergy, vermin, folk and offspring are plural in form and take plural verbs.",
+ ta:"People, Police, Cattle, Poultry, Gentry, Clergy — இவை எப்போதும் பன்மை வினைச்சொல் எடுக்கும்.",
+ w:"These nouns already denote a group of individuals, so no -s is added and no singular verb is used.",
+ ok:["The police have arrested the thief.","Cattle are grazing in the field.","Many people were injured."],
+ no:["The police has arrested the thief.","Cattle is grazing in the field.","Many peoples were injured."],
+ trap:"'Peoples' is correct only when it means nations or races: 'the peoples of Asia'.",
+ trick:"No -s, but always a plural verb.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"The police ____ investigating the case.",o:["is","are"],a:1,e:"'Police' always takes a plural verb."},
+    {t:"The clergy ____ opposed the new law.",o:["has","have"],a:1,e:"'Clergy' is plural in form and sense."}]},
+
+{n:48,m:4,rc:"SVA-18",d:"Easy",t:"A LOT OF, PLENTY OF and LOTS OF follow the noun",
+ r:"With a lot of, lots of, plenty of and the rest of, the verb agrees with the noun that follows 'of'.",
+ ta:"A lot of, Plenty of, Rest of — 'of'-க்குப் பின் வரும் பெயர்ச்சொல்லே வினைச்சொல்லைத் தீர்மானிக்கும்.",
+ w:"These are quantity phrases with no fixed number.",
+ ok:["A lot of money was wasted.","A lot of people were waiting.","The rest of the chairs are broken."],
+ no:["A lot of people was waiting.","The rest of the chairs is broken."],
+ trap:"'A lot of' looks plural but can be singular when the noun is uncountable.",
+ trick:"Uncountable noun = singular verb. Countable plural noun = plural verb.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"A lot of sugar ____ needed for this recipe.",o:["is","are"],a:0,e:"'Sugar' is uncountable."},
+    {t:"Plenty of seats ____ still vacant.",o:["is","are"],a:1,e:"'Seats' is plural."}]},
+
+{n:49,m:4,rc:"SVA-19",d:"Hard",t:"Inversion does not change the agreement",
+ r:"When a sentence is inverted after here, there, never, seldom, hardly, rarely or an adverbial phrase, the verb still agrees with the real subject.",
+ ta:"Here, Never, Seldom போன்றவற்றால் வாக்கியம் தலைகீழாக மாறினாலும் வினைச்சொல் உண்மையான subject-ஐப் பின்பற்றும்.",
+ w:"Word order changes but grammatical relationships do not.",
+ ok:["Here comes the bus.","Never have I seen such a sight.","On the wall hang two paintings.","Seldom does he complain."],
+ no:["Here come the bus.","Never has I seen such a sight.","On the wall hangs two paintings."],
+ trap:"Because the subject arrives last, students match the verb to the introductory word instead.",
+ trick:"Rewrite the sentence in normal order, then choose the verb.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Under the tree ____ two dogs.",o:["sits","sit"],a:1,e:"The real subject 'two dogs' is plural."},
+    {t:"Rarely ____ she late for work.",o:["is","are"],a:0,e:"The subject 'she' is singular."}]},
+
+{n:50,m:4,rc:"SVA-20",d:"Hard",t:"EITHER OF, NEITHER OF, EACH OF, ONE OF, ANY OF are singular",
+ r:"Either of, neither of, each of, one of, every one of and any one of, followed by a plural noun, always take a singular verb.",
+ ta:"Either of, Neither of, Each of, One of — பன்மை பெயர்ச்சொல் வந்தாலும் வினைச்சொல் ஒருமை.",
+ w:"They select one member out of the group, so only one thing is being spoken about.",
+ ok:["Either of the two answers is correct.","Neither of the boys was present.","Each of the players has a jersey.","One of my friends lives here."],
+ no:["Either of the two answers are correct.","Neither of the boys were present.","One of my friends live here."],
+ trap:"The plural noun sits right before the verb and pulls you toward a plural verb. The determiner decides.",
+ trick:"EITHER / NEITHER / EACH / ONE + OF = singular verb. No exceptions in exams.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Neither of the sisters ____ come yet.",o:["have","has"],a:1,e:"'Neither of' takes a singular verb."},
+    {t:"One of the windows ____ broken.",o:["is","are"],a:0,e:"'One of' is singular."}]},
+
+/* MODULE 5 — TENSES (51-62) */
+{n:51,m:5,rc:"TEN-01",d:"Easy",t:"Simple present for universal truths and habits",
+ r:"Use the simple present for universal truths, scientific facts, habitual actions and fixed timetables.",
+ ta:"நிரந்தர உண்மை, அறிவியல் உண்மை, வழக்கமான செயல் ஆகியவற்றுக்கு simple present.",
+ w:"These facts are not tied to any particular moment, so no continuous or perfect form is needed.",
+ ok:["The sun rises in the east.","Water boils at 100 degrees Celsius.","He goes to office at nine daily.","The train leaves at 6 p.m."],
+ no:["The sun is rising in the east as a fact.","Water is boiling at 100 degrees as a rule."],
+ trap:"Even inside a past-tense sentence, a universal truth stays in the present: 'The teacher said that the earth IS round.'",
+ trick:"Always true or always done = simple present.",
+ pyq:["Find the Error","Fill in the Blank","Cloze Test"],
+ q:[{t:"Our teacher told us that light ____ faster than sound.",o:["travelled","travels"],a:1,e:"A scientific truth stays in the present tense."},
+    {t:"He ____ tea every morning at six.",o:["is drinking","drinks"],a:1,e:"A habitual action takes the simple present."}]},
+
+{n:52,m:5,rc:"TEN-02",d:"Hard",t:"Never use the present perfect with a definite past time",
+ r:"The present perfect cannot be used with adverbs of definite past time such as yesterday, last week, in 1999 or two days ago. Use the simple past instead.",
+ ta:"Yesterday, Last year, Ago போன்ற சொற்களுடன் present perfect வராது; simple past-ஐப் பயன்படுத்தவும்.",
+ w:"The present perfect links the past to now; a fixed past time cuts that link.",
+ ok:["He went to Delhi yesterday.","She completed the project last month.","I have already finished my work."],
+ no:["He has gone to Delhi yesterday.","She has completed the project last month."],
+ trap:"This is one of the two or three most repeated tense errors in SSC papers.",
+ trick:"See a past time marker, use V2. No time marker, present perfect is allowed.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"I ____ him at the station yesterday.",o:["have met","met"],a:1,e:"'Yesterday' requires the simple past."},
+    {t:"She ____ her homework already.",o:["has finished","finished"],a:0,e:"'Already' with no definite past time suits the present perfect."}]},
+
+{n:53,m:5,rc:"TEN-03",d:"Medium",t:"SINCE for a point of time, FOR for a period",
+ r:"Use 'since' with a point of time and 'for' with a length of time, normally with the present perfect or present perfect continuous.",
+ ta:"'Since' = குறிப்பிட்ட நேரப்புள்ளி; 'For' = கால அளவு.",
+ w:"'Since' marks where the action started; 'for' measures how long it has lasted.",
+ ok:["He has been ill since Monday.","She has lived here for ten years.","I have been waiting since morning."],
+ no:["He has been ill for Monday.","She has lived here since ten years."],
+ trap:"'Since ten years' is the single commonest Indian English error and appears in every error-spotting set.",
+ trick:"Since + WHEN it started. For + HOW LONG it lasted.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"They have been friends ____ 2010.",o:["for","since"],a:1,e:"2010 is a point of time."},
+    {t:"He has been sleeping ____ three hours.",o:["since","for"],a:1,e:"Three hours is a duration."}]},
+
+{n:54,m:5,rc:"TEN-04",d:"Hard",t:"Past perfect for the earlier of two past actions",
+ r:"When two actions happened in the past, the earlier one takes the past perfect and the later one takes the simple past.",
+ ta:"இரு கடந்தகால செயல்களில் முதலில் நடந்ததற்கு past perfect; பின்னர் நடந்ததற்கு simple past.",
+ w:"The past perfect exists purely to show which action came first.",
+ ok:["The train had left before I reached the station.","He had finished his work when I called.","She had already eaten when the guests arrived."],
+ no:["The train left before I had reached the station.","He finished his work when I had called."],
+ trap:"Which clause gets 'had' is decided by time order, not by which clause comes first in the sentence.",
+ trick:"First action = HAD + V3. Second action = V2.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"When we arrived, the film ____ already started.",o:["has","had"],a:1,e:"Starting happened first, so the past perfect is used."},
+    {t:"He told me that he ____ the letter the previous day.",o:["posted","had posted"],a:1,e:"The posting was earlier than the telling."}]},
+
+{n:55,m:5,rc:"TEN-05",d:"Hard",t:"No WILL in time clauses",
+ r:"After when, until, till, before, after, as soon as, by the time and if, use the present tense even for future meaning.",
+ ta:"When, Until, As soon as, If — இவற்றுக்குப் பின் எதிர்காலமாக இருந்தாலும் present tense-ஐப் பயன்படுத்தவும்.",
+ w:"The main clause already carries the future meaning; repeating it in the subordinate clause is redundant in English.",
+ ok:["I will call you when I reach home.","Wait until he comes.","As soon as the bell rings, we will leave."],
+ no:["I will call you when I will reach home.","Wait until he will come."],
+ trap:"Tamil and Hindi both allow the future in such clauses, so this error feels natural to Indian learners.",
+ trick:"Two 'wills' in one sentence with when/if is almost always wrong.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"I shall inform you as soon as he ____.",o:["will arrive","arrives"],a:1,e:"Time clauses take the present tense."},
+    {t:"If it ____ tomorrow, we will cancel the trip.",o:["rains","will rain"],a:0,e:"'If' clauses use the present tense for future meaning."}]},
+
+{n:56,m:5,rc:"TEN-06",d:"Hard",t:"Sequence of tenses: past follows past",
+ r:"If the main clause is in the past tense, the subordinate clause is normally also in the past tense — except for universal truths and habitual facts.",
+ ta:"Main clause கடந்தகாலமாக இருந்தால், subordinate clause-ம் கடந்தகாலமாக இருக்கும்; ஆனால் நிரந்தர உண்மைக்கு விதிவிலக்கு.",
+ w:"Reported thought and speech are anchored to the time of the main verb.",
+ ok:["He said that he was busy.","She told me that she would come.","He said that honesty is the best policy. (universal truth)"],
+ no:["He said that he is busy.","She told me that she will come."],
+ trap:"The universal-truth exception is the tested part. Facts, proverbs and habitual truths stay in the present.",
+ trick:"Past main verb = past everywhere, unless it is a permanent truth.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"The teacher said that the earth ____ round the sun.",o:["moved","moves"],a:1,e:"A scientific truth remains in the present."},
+    {t:"He informed me that he ____ leaving the next day.",o:["is","was"],a:1,e:"A past main verb requires a past subordinate verb."}]},
+
+{n:57,m:5,rc:"TEN-07",d:"Easy",t:"Simple past for a finished action at a definite past time",
+ r:"Use the simple past for an action completed at a stated time in the past, with no connection to the present.",
+ ta:"கடந்த காலத்தில் குறிப்பிட்ட நேரத்தில் முடிந்த செயலுக்கு simple past.",
+ w:"The action is closed; nothing continues into the present.",
+ ok:["Gandhi was born in 1869.","I met him last Sunday.","She wrote the exam two days ago."],
+ no:["Gandhi has been born in 1869.","I have met him last Sunday."],
+ trap:"Do not mix V2 with 'did': 'Did he went?' is wrong; the correct form is 'Did he go?'.",
+ trick:"After DID, DIDN'T or DOES, always use the base form V1.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"Did he ____ the letter yesterday?",o:["wrote","write"],a:1,e:"After 'did', use the base form."},
+    {t:"She ____ to Chennai in 2019.",o:["shifted","has shifted"],a:0,e:"A definite past year requires the simple past."}]},
+
+{n:58,m:5,rc:"TEN-08",d:"Medium",t:"Present continuous for a fixed near-future plan",
+ r:"The present continuous is used for planned future arrangements, usually with a future time expression.",
+ ta:"திட்டமிடப்பட்ட எதிர்கால ஏற்பாட்டிற்கு present continuous பயன்படுத்தலாம்.",
+ w:"The arrangement already exists now, even though the event happens later.",
+ ok:["I am meeting the collector tomorrow.","We are leaving for Delhi next week.","She is getting married in June."],
+ no:["I meet the collector tomorrow as a fixed plan."],
+ trap:"Do not confuse this with the simple present used for timetables: 'The train leaves at six' is a schedule, not a personal plan.",
+ trick:"Personal arrangement = am/is/are + -ing. Public timetable = simple present.",
+ pyq:["Fill in the Blank","Cloze Test"],
+ q:[{t:"We ____ to Goa next Friday; the tickets are booked.",o:["fly","are flying"],a:1,e:"A fixed personal arrangement takes the present continuous."},
+    {t:"The bus ____ at 7 a.m. every day.",o:["is leaving","leaves"],a:1,e:"A timetable takes the simple present."}]},
+
+{n:59,m:5,rc:"TEN-09",d:"Hard",t:"Stative verbs are not used in continuous form",
+ r:"Verbs of perception, emotion, thought and possession — know, believe, understand, love, hate, see, hear, own, belong, contain, seem, resemble, need, prefer — are not used in the continuous form.",
+ ta:"Know, Believe, Love, Own, Belong போன்ற நிலைவினைச்சொற்கள் -ing வடிவில் வராது.",
+ w:"They describe states, not actions in progress, so there is nothing to be 'in progress'.",
+ ok:["I know the answer.","She owns two houses.","This box contains books.","He seems tired."],
+ no:["I am knowing the answer.","She is owning two houses.","This box is containing books."],
+ trap:"Some verbs change meaning and then allow -ing: 'I am seeing the doctor' means meeting; 'I am thinking' means considering.",
+ trick:"State = no -ing. Action = -ing allowed.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Which is correct?",o:["I am understanding your point.","I understand your point."],a:1,e:"'Understand' is a stative verb."},
+    {t:"This bottle ____ one litre of water.",o:["is containing","contains"],a:1,e:"'Contain' is stative."}]},
+
+{n:60,m:5,rc:"TEN-10",d:"Hard",t:"IT IS TIME and IT IS HIGH TIME take the past form",
+ r:"After 'it is time', 'it is high time' and 'it is about time', use the past tense form, even though the meaning is present or future.",
+ ta:"'It is high time' -க்குப் பின் past tense வடிவம் வரும், பொருள் நிகழ்காலமாக இருந்தாலும்.",
+ w:"This is a subjunctive construction expressing urgency about something not yet done.",
+ ok:["It is high time we started the work.","It is time you went to bed.","It is about time he realised his mistake."],
+ no:["It is high time we start the work.","It is time you go to bed."],
+ trap:"An infinitive is also allowed when no subject follows: 'It is time to go' is correct.",
+ trick:"It is high time + subject + V2. It is time + to + V1.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"It is high time you ____ smoking.",o:["quit","quitted"],a:1,e:"The past form is required; 'quitted' is the past form here."},
+    {t:"It is time we ____ for the station.",o:["leave","left"],a:1,e:"'It is time' takes the past form."}]},
+
+{n:61,m:5,rc:"TEN-11",d:"Hard",t:"HARDLY...WHEN, SCARCELY...WHEN, NO SOONER...THAN",
+ r:"Hardly and scarcely are followed by 'when', and 'no sooner' is followed by 'than'. The first clause takes the past perfect and the sentence is inverted.",
+ ta:"Hardly/Scarcely + when; No sooner + than. முதல் clause-ல் had + V3 வரும்.",
+ w:"These structures emphasise that the second action followed instantly.",
+ ok:["Hardly had he arrived when it began to rain.","No sooner had she spoken than the crowd cheered.","Scarcely had we sat down when the bell rang."],
+ no:["Hardly had he arrived than it began to rain.","No sooner had she spoken when the crowd cheered."],
+ trap:"The pairing is swapped in the options: 'hardly...than' and 'no sooner...when' are both wrong.",
+ trick:"HARDLY and SCARCELY marry WHEN. NO SOONER marries THAN.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"No sooner had the match ended ____ the fans rushed in.",o:["when","than"],a:1,e:"'No sooner' pairs with 'than'."},
+    {t:"Scarcely had he entered ____ the lights went off.",o:["than","when"],a:1,e:"'Scarcely' pairs with 'when'."}]},
+
+{n:62,m:5,rc:"TEN-12",d:"Medium",t:"Future perfect for an action completed by a future time",
+ r:"Use 'will have + V3' for an action that will be finished before a stated point in the future, usually with 'by'.",
+ ta:"எதிர்காலத்தில் ஒரு குறிப்பிட்ட நேரத்திற்குள் முடியப்போகும் செயலுக்கு 'will have + V3'.",
+ w:"It looks back at a completed action from a future viewpoint.",
+ ok:["By next June, I will have completed my course.","They will have reached Delhi by midnight.","She will have been working here for ten years by 2027."],
+ no:["By next June, I will complete my course as a finished result.","They will reach Delhi by midnight already finished."],
+ trap:"The word 'by' followed by a future time is the signal for the future perfect.",
+ trick:"BY + future time = WILL HAVE + V3.",
+ pyq:["Fill in the Blank","Cloze Test","Sentence Improvement"],
+ q:[{t:"By the time you return, I ____ dinner.",o:["will cook","will have cooked"],a:1,e:"The action is completed before a future point."},
+    {t:"By 2030, the city ____ its metro network.",o:["will have expanded","expands"],a:0,e:"'By + future time' calls for the future perfect."}]},
+/* MODULE 6 — MODAL VERBS (63-70) */
+{n:63,m:6,rc:"MOD-01",d:"Easy",t:"A modal is always followed by the bare infinitive",
+ r:"Can, could, may, might, shall, should, will, would, must and ought are followed by the base form of the verb — no -s, no -ed, no 'to' (except after 'ought').",
+ ta:"Modal-க்குப் பின் வினைச்சொல்லின் அடிப்படை வடிவம் (V1) மட்டுமே வரும்; -s, -ed, 'to' சேர்க்கக் கூடாது.",
+ w:"Modals already carry tense and mood, so the main verb stays uninflected.",
+ ok:["He can swim well.","She must go now.","They should study harder.","You ought to apologise."],
+ no:["He can swims well.","She must to go now.","They should studied harder."],
+ trap:"'Ought' is the one modal that keeps 'to'. 'Used to' and 'have to' also keep 'to'.",
+ trick:"Modal + V1. Only OUGHT, USED and HAVE keep the 'to'.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"He must ____ the report today.",o:["submits","submit"],a:1,e:"A modal takes the base form."},
+    {t:"You ought ____ respect your elders.",o:["to","—"],a:0,e:"'Ought' is always followed by 'to'."}]},
+
+{n:64,m:6,rc:"MOD-02",d:"Medium",t:"CAN for ability, MAY for permission and possibility",
+ r:"'Can' expresses ability or informal permission; 'may' expresses formal permission, possibility or a wish.",
+ ta:"Can = திறன் / சாதாரண அனுமதி. May = முறையான அனுமதி / சாத்தியம் / வாழ்த்து.",
+ w:"'Can' asks whether something is possible for you; 'may' asks whether it is allowed.",
+ ok:["She can speak five languages. (ability)","May I come in, sir? (formal permission)","It may rain tonight. (possibility)","May you live long! (wish)"],
+ no:["Can I come in, sir? in a formal examination answer.","It can rain tonight as a prediction."],
+ trap:"In formal writing and exam keys, permission requests use 'may', not 'can'.",
+ trick:"CAN = capability. MAY = may I please, maybe, may you be blessed.",
+ pyq:["Fill in the Blank","Sentence Improvement"],
+ q:[{t:"____ I borrow your notes, madam?",o:["Can","May"],a:1,e:"Formal permission uses 'may'."},
+    {t:"He ____ run ten kilometres without stopping.",o:["may","can"],a:1,e:"Ability uses 'can'."}]},
+
+{n:65,m:6,rc:"MOD-03",d:"Medium",t:"COULD and MIGHT for the past, politeness and remote possibility",
+ r:"'Could' and 'might' are the past forms of can and may, and are also used for polite requests and for weaker, more remote possibility.",
+ ta:"Could, Might = கடந்தகால வடிவம்; மேலும் மரியாதை மற்றும் குறைந்த சாத்தியத்தைக் குறிக்கும்.",
+ w:"Distance in tense is used in English to create distance in politeness and certainty.",
+ ok:["He could swim when he was five.","Could you please help me?","It might rain, but I doubt it.","She said she might come."],
+ no:["Could you please helping me?","He can swim when he was five."],
+ trap:"'Might' shows a weaker possibility than 'may'. Exams test which is more or less certain.",
+ trick:"Could and Might = softer, politer, less certain.",
+ pyq:["Fill in the Blank","Sentence Improvement"],
+ q:[{t:"____ you kindly pass me the file?",o:["Can","Could"],a:1,e:"'Could' is the polite form."},
+    {t:"There is only a slim chance; he ____ turn up.",o:["may","might"],a:1,e:"'Might' expresses remote possibility."}]},
+
+{n:66,m:6,rc:"MOD-04",d:"Hard",t:"MUST versus HAVE TO, and MUSTN'T versus NEEDN'T",
+ r:"'Must' shows the speaker's own strong obligation or certainty; 'have to' shows obligation imposed from outside. 'Mustn't' means prohibition; 'needn't' means no obligation.",
+ ta:"Must = உள்ளிருந்து வரும் கட்டாயம். Have to = வெளியில் இருந்து வரும் கட்டாயம். Mustn't = தடை. Needn't = அவசியமில்லை.",
+ w:"The negatives of must and need have completely different meanings, unlike their positives.",
+ ok:["I must lose weight. (my own decision)","I have to wear a uniform. (school rule)","You mustn't smoke here. (forbidden)","You needn't come tomorrow. (not necessary)"],
+ no:["You mustn't come tomorrow if you simply mean it is unnecessary."],
+ trap:"Students treat 'mustn't' and 'needn't' as the same. They are opposites in meaning.",
+ trick:"MUSTN'T = forbidden. NEEDN'T = optional.",
+ pyq:["Fill in the Blank","Sentence Improvement"],
+ q:[{t:"You ____ touch that wire; it is live.",o:["needn't","mustn't"],a:1,e:"It is a prohibition."},
+    {t:"You ____ pay now; you can pay next month.",o:["mustn't","needn't"],a:1,e:"There is no obligation."}]},
+
+{n:67,m:6,rc:"MOD-05",d:"Medium",t:"SHOULD and OUGHT TO for duty and advice",
+ r:"'Should' and 'ought to' express moral duty, advice or expectation. 'Ought' is always followed by 'to'.",
+ ta:"Should, Ought to = கடமை, அறிவுரை. 'Ought' -க்குப் பின் 'to' கட்டாயம்.",
+ w:"Both are weaker than 'must' — they recommend rather than command.",
+ ok:["You should consult a doctor.","We ought to help the poor.","He should have informed us earlier."],
+ no:["We ought help the poor.","You should to consult a doctor."],
+ trap:"'Should have + V3' expresses a past duty that was NOT performed. That nuance is frequently tested.",
+ trick:"Should + V1 = advice now. Should have + V3 = regret about the past.",
+ pyq:["Find the Error","Fill in the Blank","Sentence Improvement"],
+ q:[{t:"You ____ have submitted the form last week.",o:["should","must"],a:0,e:"'Should have' expresses an unfulfilled past duty."},
+    {t:"Citizens ought ____ obey the law.",o:["—","to"],a:1,e:"'Ought' always takes 'to'."}]},
+
+{n:68,m:6,rc:"MOD-06",d:"Hard",t:"NEED and DARE work as both modal and main verb",
+ r:"As modals in negatives and questions, need and dare take no -s and no 'to'. As main verbs they take -s, -ed and 'to'.",
+ ta:"Need, Dare — modal-ஆக வரும்போது 'to' இல்லை; main verb-ஆக வரும்போது 'to' வரும்.",
+ w:"These two verbs sit on the border between modal and ordinary verbs.",
+ ok:["He need not go. (modal)","He does not need to go. (main verb)","How dare you speak like that? (modal)","He dared to challenge the officer. (main verb)"],
+ no:["He need not to go.","He does not need go.","How dares you speak like that?"],
+ trap:"Mixing the two patterns — 'He needs not to go' — is the planted error.",
+ trick:"NEED NOT + V1 or DOES NOT NEED TO + V1. Never mix them.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Which is correct?",o:["He need not to worry.","He need not worry."],a:1,e:"As a modal, 'need' takes the bare infinitive."},
+    {t:"She ____ not dare to contradict him.",o:["do","does"],a:1,e:"As a main verb, 'dare' takes normal auxiliaries."}]},
+
+{n:69,m:6,rc:"MOD-07",d:"Hard",t:"USED TO for past habits, BE USED TO for being accustomed",
+ r:"'Used to + V1' describes a discontinued past habit. 'Be or get used to + V-ing' means to be accustomed to something.",
+ ta:"Used to + V1 = முன்பு இருந்த பழக்கம். Be used to + V-ing = பழகிவிட்ட நிலை.",
+ w:"In the second structure 'to' is a preposition, and prepositions are followed by gerunds.",
+ ok:["He used to smoke, but he quit.","I am used to waking up early.","She got used to living alone."],
+ no:["He used to smoking.","I am used to wake up early."],
+ trap:"The presence or absence of 'am/is/are/get' before 'used to' completely changes what follows.",
+ trick:"USED TO + V1 (past habit). BE USED TO + V-ing (habit now).",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"She is used to ____ in a noisy city.",o:["live","living"],a:1,e:"'Be used to' is followed by a gerund."},
+    {t:"He used to ____ cricket every evening.",o:["play","playing"],a:0,e:"'Used to' for a past habit takes the base form."}]},
+
+{n:70,m:6,rc:"MOD-08",d:"Medium",t:"SHALL and WILL in offers, suggestions and determination",
+ r:"'Shall' is used with I and we for offers and suggestions, and with second and third persons for command, promise or determination. 'Will' is the normal future marker elsewhere.",
+ ta:"Shall = I/We உடன் ஆலோசனை, முன்வரல்; மற்ற நபர்களுடன் கட்டளை அல்லது உறுதி.",
+ w:"The traditional shall/will distinction reverses when strong intention is expressed.",
+ ok:["Shall we begin the meeting?","Shall I open the window?","You shall not enter this room. (command)","He will arrive tomorrow."],
+ no:["Will we begin the meeting? as a polite suggestion.","Shall he arrive tomorrow? as a simple future question."],
+ trap:"Exams still test the classical rule, even though modern spoken English uses 'will' almost everywhere.",
+ trick:"Suggestion or offer with I/We = SHALL. Plain future = WILL.",
+ pyq:["Fill in the Blank","Sentence Improvement"],
+ q:[{t:"____ I carry your bag for you?",o:["Will","Shall"],a:1,e:"An offer with 'I' uses 'shall'."},
+    {t:"____ we go for a walk this evening?",o:["Shall","Will"],a:0,e:"A suggestion with 'we' uses 'shall'."}]},
+
+/* MODULE 7 — PREPOSITIONS (71-85) */
+{n:71,m:7,rc:"PRE-01",d:"Easy",t:"IN, ON and AT for time",
+ r:"Use 'in' for months, years, seasons and long periods; 'on' for days and dates; 'at' for exact clock times and festivals.",
+ ta:"In = மாதம், ஆண்டு, பருவம். On = நாள், தேதி. At = நேரம், பண்டிகை.",
+ w:"The three prepositions form a scale from the largest to the smallest unit of time.",
+ ok:["He was born in 1998.","The exam is on Monday.","We met at 6 p.m.","She visits at Diwali."],
+ no:["He was born on 1998.","The exam is in Monday.","We met on 6 p.m."],
+ trap:"'In the morning' but 'on Monday morning' — adding a day changes 'in' to 'on'.",
+ trick:"Big time IN, Day ON, Clock AT.",
+ pyq:["Fill in the Blank","Find the Error","Cloze Test"],
+ q:[{t:"The results will be declared ____ 15 August.",o:["in","on"],a:1,e:"Dates take 'on'."},
+    {t:"She wakes up ____ five in the morning.",o:["at","in"],a:0,e:"Clock time takes 'at'."}]},
+
+{n:72,m:7,rc:"PRE-02",d:"Easy",t:"IN, ON and AT for place",
+ r:"Use 'in' for enclosed spaces and large areas, 'on' for surfaces, and 'at' for specific points or addresses.",
+ ta:"In = உள்ளே / பெரிய இடம். On = மேற்பரப்பு. At = குறிப்பிட்ட புள்ளி.",
+ w:"'In' is three-dimensional, 'on' is two-dimensional, and 'at' is a single point.",
+ ok:["He lives in Chennai.","The book is on the table.","Wait at the gate.","She is at 12 Anna Salai."],
+ no:["He lives at Chennai as his city.","The book is in the table."],
+ trap:"Large city or country takes 'in'; small village or exact address takes 'at'.",
+ trick:"IN = inside. ON = surface. AT = exact point.",
+ pyq:["Fill in the Blank","Find the Error"],
+ q:[{t:"The picture is hanging ____ the wall.",o:["in","on"],a:1,e:"A wall is a surface."},
+    {t:"They arrived ____ the airport at noon.",o:["at","in"],a:0,e:"An airport is treated as a point of arrival."}]},
+
+{n:73,m:7,rc:"PRE-03",d:"Medium",t:"SINCE, FOR and FROM",
+ r:"'Since' marks a starting point with a perfect tense, 'for' marks duration, and 'from' marks a starting point with past or future tenses.",
+ ta:"Since = தொடங்கிய புள்ளி (perfect tense). For = கால அளவு. From = தொடக்கம் (past/future).",
+ w:"'Since' inherently links to the present, which is why it needs a perfect tense.",
+ ok:["I have known him since 2015.","She waited for two hours.","The shop is open from 9 a.m.","He worked there from 2010 to 2014."],
+ no:["I have known him from 2015.","The shop is open since 9 a.m. tomorrow."],
+ trap:"'Since' with a simple present or simple future is wrong. It needs a perfect tense.",
+ trick:"SINCE needs HAVE or HAS or HAD. FROM does not.",
+ pyq:["Fill in the Blank","Find the Error","Sentence Improvement"],
+ q:[{t:"He has been ill ____ last Friday.",o:["from","since"],a:1,e:"A perfect tense with a point of time takes 'since'."},
+    {t:"The new rule applies ____ next month.",o:["since","from"],a:1,e:"A future starting point takes 'from'."}]},
+
+{n:74,m:7,rc:"PRE-04",d:"Medium",t:"BY for a deadline, UNTIL for a continuing state",
+ r:"'By' means not later than a given time; 'until' or 'till' means up to and continuing to that time.",
+ ta:"By = அந்த நேரத்திற்குள். Until/Till = அந்த நேரம் வரை தொடர்ந்து.",
+ w:"'By' points to a single deadline; 'until' covers the whole stretch of time.",
+ ok:["Submit the form by Friday.","Wait until Friday.","He will be back by six.","The office remains open till nine."],
+ no:["Submit the form until Friday.","Wait by Friday for me."],
+ trap:"'By' goes with a completed action; 'until' goes with a continuing state or a negative.",
+ trick:"BY = deadline. UNTIL = duration.",
+ pyq:["Fill in the Blank","Sentence Improvement"],
+ q:[{t:"You must finish the work ____ Monday.",o:["until","by"],a:1,e:"It is a deadline."},
+    {t:"She stayed at the hospital ____ midnight.",o:["by","till"],a:1,e:"A continuing stay takes 'till'."}]},
+
+{n:75,m:7,rc:"PRE-05",d:"Easy",t:"BETWEEN for two, AMONG for more than two",
+ r:"Use 'between' for two persons or things and 'among' for more than two.",
+ ta:"இரண்டுக்கு 'between'; இரண்டுக்கு மேற்பட்டவற்றுக்கு 'among'.",
+ w:"'Between' comes from a word meaning 'by two'.",
+ ok:["Divide the mango between the two boys.","Distribute the sweets among all the children.","Choose between tea and coffee."],
+ no:["Divide the mango among the two boys.","Distribute the sweets between all the children."],
+ trap:"'Between' is correct for more than two when distinct individual relationships are meant: 'a treaty between the five nations'.",
+ trick:"Two = BETWEEN (both have 'tw'). Many = AMONG.",
+ pyq:["Fill in the Blank","Find the Error"],
+ q:[{t:"The property was shared ____ the four brothers.",o:["between","among"],a:1,e:"More than two persons requires 'among'."},
+    {t:"There is a wall ____ the two houses.",o:["among","between"],a:1,e:"Only two houses are involved."}]},
+
+{n:76,m:7,rc:"PRE-06",d:"Medium",t:"BESIDE means next to, BESIDES means in addition to",
+ r:"'Beside' is a preposition of place meaning 'by the side of'. 'Besides' means 'in addition to' or 'apart from'.",
+ ta:"Beside = அருகில். Besides = கூடுதலாக, தவிர.",
+ w:"One letter changes the meaning completely from location to addition.",
+ ok:["She sat beside her mother.","Besides English, he knows French.","Nobody was present besides me."],
+ no:["She sat besides her mother.","Beside English, he knows French."],
+ trap:"Tamil-medium learners routinely write 'besides' for 'next to'. The extra S means extra thing.",
+ trick:"Extra S = extra thing. No S = by the side.",
+ pyq:["Find the Error","Fill in the Blank","Sentence Improvement"],
+ q:[{t:"____ his salary, he earns from tuition.",o:["Beside","Besides"],a:1,e:"'In addition to' requires 'besides'."},
+    {t:"The dog slept ____ the fire.",o:["besides","beside"],a:1,e:"'By the side of' requires 'beside'."}]},
+
+{n:77,m:7,rc:"PRE-07",d:"Medium",t:"IN versus INTO, ON versus ONTO",
+ r:"'In' and 'on' show position; 'into' and 'onto' show movement from outside to inside or onto a surface.",
+ ta:"In/On = நிலை. Into/Onto = உள்ளே அல்லது மேலே செல்லும் இயக்கம்.",
+ w:"The -to ending adds the idea of direction and movement.",
+ ok:["He is in the room. (position)","He walked into the room. (movement)","The cat jumped onto the table."],
+ no:["He walked in the room from outside meaning entry.","The cat jumped on to be exact onto the table incorrectly written."],
+ trap:"Verbs of motion — jump, walk, fall, throw, dive, put — usually require 'into' or 'onto'.",
+ trick:"Movement = INTO or ONTO. Rest = IN or ON.",
+ pyq:["Fill in the Blank","Find the Error"],
+ q:[{t:"The boy dived ____ the swimming pool.",o:["in","into"],a:1,e:"Diving is movement from outside to inside."},
+    {t:"The keys are ____ my pocket.",o:["into","in"],a:1,e:"This describes position, not movement."}]},
+
+{n:78,m:7,rc:"PRE-08",d:"Hard",t:"Verbs that take NO preposition",
+ r:"Discuss, marry, resemble, reach, order, attack, accompany, comprise, resemble, lack, enter and emphasise are transitive and need no preposition after them.",
+ ta:"Discuss, Marry, Resemble, Reach, Enter, Comprise — இவற்றுக்குப் பின் preposition தேவையில்லை.",
+ w:"These verbs already take a direct object, so an extra preposition is redundant.",
+ ok:["We discussed the matter.","She married a doctor.","He resembles his father.","They reached Delhi."],
+ no:["We discussed about the matter.","She married with a doctor.","He resembles to his father.","They reached at Delhi."],
+ trap:"'Discuss about' and 'reach at' are the two most frequently planted errors in error-spotting sets.",
+ trick:"DMR-RACE: Discuss, Marry, Resemble, Reach, Attack, Comprise, Enter — no preposition.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Which is correct?",o:["Let us discuss about the plan.","Let us discuss the plan."],a:1,e:"'Discuss' takes a direct object."},
+    {t:"The committee ____ ten members.",o:["comprises of","comprises"],a:1,e:"'Comprise' needs no preposition."}]},
+
+{n:79,m:7,rc:"PRE-09",d:"Hard",t:"Verbs with a fixed preposition",
+ r:"Many verbs are locked to one preposition: depend on, insist on, consist of, comply with, deprive of, accuse of, charge with, prefer to, congratulate on, apologise for, believe in.",
+ ta:"சில வினைச்சொற்களுக்கு நிலையான preposition உண்டு — depend on, insist on, consist of, comply with.",
+ w:"These are fixed collocations that must be memorised as single units.",
+ ok:["Success depends on hard work.","He insisted on paying the bill.","The team consists of ten players.","She was accused of theft."],
+ no:["Success depends upon nothing but is written as depends in.","He insisted for paying the bill.","The team consists ten players."],
+ trap:"'Prefer' takes 'to', never 'than': 'I prefer tea to coffee.'",
+ trick:"Learn verb and preposition together as one word, like 'depend-on'.",
+ pyq:["Find the Error","Fill in the Blank","Sentence Improvement"],
+ q:[{t:"I prefer coffee ____ tea.",o:["than","to"],a:1,e:"'Prefer' takes 'to'."},
+    {t:"All members must comply ____ the rules.",o:["to","with"],a:1,e:"'Comply' takes 'with'."}]},
+
+{n:80,m:7,rc:"PRE-10",d:"Hard",t:"Adjectives with a fixed preposition",
+ r:"Afraid of, angry with a person, angry at a thing, good at, bad at, jealous of, capable of, confident of, fond of, proud of, ashamed of, aware of, similar to and different from are fixed pairs.",
+ ta:"Afraid of, Good at, Angry with (நபர்), Angry at (பொருள்) — இவை நிலையான இணைகள்.",
+ w:"Adjective and preposition combinations are idiomatic and cannot be worked out logically.",
+ ok:["She is afraid of the dark.","He is good at mathematics.","I am angry with him.","They were angry at his rudeness."],
+ no:["She is afraid from the dark.","He is good in mathematics.","I am angry on him."],
+ trap:"'Angry with' takes a person; 'angry at or about' takes a thing or situation. Both appear as options.",
+ trick:"With a PERSON, use WITH. With a THING, use AT.",
+ pyq:["Find the Error","Fill in the Blank","Sentence Improvement"],
+ q:[{t:"She is very good ____ playing chess.",o:["in","at"],a:1,e:"'Good at' is the fixed pair."},
+    {t:"He was angry ____ his careless driver.",o:["with","on"],a:0,e:"A person takes 'angry with'."}]},
+
+{n:81,m:7,rc:"PRE-11",d:"Medium",t:"Nouns with a fixed preposition",
+ r:"Need of, thirst for, cause of, reason for, remedy for, solution to, key to, answer to, attitude towards and access to are fixed noun-preposition pairs.",
+ ta:"Reason for, Solution to, Cause of, Remedy for — இவை நிலையான பெயர்ச்சொல் இணைகள்.",
+ w:"Each abstract noun has an idiomatic preposition that native usage has fixed.",
+ ok:["There is no solution to this problem.","What is the reason for the delay?","She has a thirst for knowledge.","He has access to the files."],
+ no:["There is no solution for this problem.","What is the reason of the delay?"],
+ trap:"'Reason for' but 'cause of' — the two look interchangeable but are not.",
+ trick:"Reason FOR. Cause OF. Solution TO. Remedy FOR.",
+ pyq:["Find the Error","Fill in the Blank"],
+ q:[{t:"The doctor found a remedy ____ the disease.",o:["of","for"],a:1,e:"'Remedy for' is the fixed pair."},
+    {t:"What was the cause ____ the accident?",o:["for","of"],a:1,e:"'Cause of' is the fixed pair."}]},
+
+{n:82,m:7,rc:"PRE-12",d:"Hard",t:"A preposition is followed by a gerund, not an infinitive",
+ r:"Expressions ending in the preposition 'to' — look forward to, be accustomed to, object to, with a view to, be addicted to, be averse to, devoted to, given to — are followed by V-ing.",
+ ta:"'Look forward to', 'accustomed to' — இவற்றில் 'to' preposition; எனவே அதற்குப் பின் -ing வடிவம்.",
+ w:"Here 'to' is a preposition, not part of an infinitive, and prepositions always take gerunds.",
+ ok:["I look forward to hearing from you.","He is accustomed to working late.","She objected to being questioned.","He came with a view to meeting the manager."],
+ no:["I look forward to hear from you.","He is accustomed to work late.","She objected to be questioned."],
+ trap:"'Look forward to hear from you' appears in almost every letter-writing and error-spotting question.",
+ trick:"If you can put a noun after 'to', it is a preposition — so use -ING.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"We look forward to ____ you soon.",o:["meet","meeting"],a:1,e:"'Look forward to' is followed by a gerund."},
+    {t:"He is addicted to ____ video games.",o:["play","playing"],a:1,e:"'Addicted to' takes a gerund."}]},
+
+{n:83,m:7,rc:"PRE-13",d:"Medium",t:"ABOVE and OVER, BELOW and UNDER",
+ r:"'Over' and 'under' suggest vertical contact, covering or direct position; 'above' and 'below' suggest a higher or lower level without contact.",
+ ta:"Over/Under = நேரடியாக மேலே/கீழே. Above/Below = உயரம்/தாழ்வு அளவில்.",
+ w:"Over and under imply a direct vertical relationship; above and below imply relative level.",
+ ok:["The plane flew over the city.","He put a blanket over the child.","The temperature is below zero.","Her marks are above average."],
+ no:["The temperature is under zero.","Her marks are over average."],
+ trap:"With numbers and measurements, use above and below. With physical covering, use over and under.",
+ trick:"Numbers = ABOVE and BELOW. Physical covering = OVER and UNDER.",
+ pyq:["Fill in the Blank","Sentence Improvement"],
+ q:[{t:"The village lies 200 metres ____ sea level.",o:["over","above"],a:1,e:"Measurement takes 'above'."},
+    {t:"The cat slept ____ the table.",o:["below","under"],a:1,e:"Physical position takes 'under'."}]},
+
+{n:84,m:7,rc:"PRE-14",d:"Hard",t:"DIFFERENT FROM, COMPARE TO and COMPARE WITH",
+ r:"Use 'different from' in formal English. 'Compare to' shows likeness; 'compare with' examines similarities and differences side by side.",
+ ta:"Different from (சரி). Compare to = ஒப்பிட்டு உவமை; Compare with = ஒப்பீட்டு ஆய்வு.",
+ w:"'Compare to' makes a metaphor; 'compare with' makes an analysis.",
+ ok:["His answer is different from mine.","The poet compared her to a rose.","Compare this year's figures with last year's."],
+ no:["His answer is different than mine in formal exam English.","The poet compared her with a rose as a metaphor."],
+ trap:"'Different than' is accepted in American usage but marked wrong in Indian competitive exams.",
+ trick:"Different FROM. Metaphor = TO. Analysis = WITH.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Her style is quite different ____ his.",o:["than","from"],a:1,e:"'Different from' is the formally correct pair."},
+    {t:"Shakespeare compared the world ____ a stage.",o:["to","with"],a:0,e:"A metaphor uses 'compare to'."}]},
+
+{n:85,m:7,rc:"PRE-15",d:"Hard",t:"IN TIME versus ON TIME, IN THE END versus AT THE END",
+ r:"'In time' means early enough; 'on time' means exactly at the scheduled time. 'In the end' means finally; 'at the end' refers to the final point of something.",
+ ta:"In time = நேரத்திற்கு முன்பே. On time = சரியான நேரத்தில். In the end = இறுதியில். At the end = முடிவுப் புள்ளியில்.",
+ w:"These fixed phrases carry precise meanings that a literal reading misses.",
+ ok:["We reached the station in time to catch the train.","The train arrived on time.","In the end, he agreed.","There is a summary at the end of the chapter."],
+ no:["The train arrived in time exactly at 6 as scheduled.","At the end, he agreed after long arguments."],
+ trap:"'At last' is correct; 'atlast' as one word does not exist.",
+ trick:"IN time = with time to spare. ON time = punctual. IN THE END = finally. AT THE END = the last point.",
+ pyq:["Fill in the Blank","Sentence Improvement","Cloze Test"],
+ q:[{t:"The flight took off ____ at 9.00 sharp.",o:["in time","on time"],a:1,e:"Exactly at the scheduled time means 'on time'."},
+    {t:"____ of the film, the hero dies.",o:["In the end","At the end"],a:1,e:"It refers to the final part of the film."}]},
+
+/* MODULE 8 — CONJUNCTIONS (86-93) */
+{n:86,m:8,rc:"CON-01",d:"Medium",t:"Correlative conjunctions must be used in their correct pairs",
+ r:"Fixed pairs: either...or, neither...nor, both...and, not only...but also, whether...or, so...that, such...that, hardly...when, scarcely...when, no sooner...than.",
+ ta:"இணைச் சொற்கள் சரியான ஜோடியில் மட்டுமே வர வேண்டும் — either...or, neither...nor, both...and.",
+ w:"Each pair is a fixed grammatical unit; mixing them breaks the structure.",
+ ok:["Either he or his brother will come.","Neither the teacher nor the students were present.","Not only did he fail, but he also lost interest."],
+ no:["Either he nor his brother will come.","Neither the teacher or the students were present.","Not only he failed but also lost interest."],
+ trap:"The second half of the pair is swapped in the options — 'either...nor' and 'neither...or' are the standard traps.",
+ trick:"EITHER goes with OR. NEITHER goes with NOR. Both begin with the same letter as their partner sound.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Neither the manager ____ the clerk was available.",o:["or","nor"],a:1,e:"'Neither' pairs with 'nor'."},
+    {t:"Both the students ____ the teacher were praised.",o:["as well as","and"],a:1,e:"'Both' pairs with 'and', never with 'as well as'."}]},
+
+{n:87,m:8,rc:"CON-02",d:"Hard",t:"Parallel structure after correlatives",
+ r:"The words following each half of a correlative pair must belong to the same grammatical class — noun with noun, verb with verb, phrase with phrase.",
+ ta:"இணைச் சொற்களுக்குப் பின் ஒரே இலக்கண வகை சொற்கள் வர வேண்டும்.",
+ w:"Balanced structure is what makes a correlative sentence grammatical.",
+ ok:["He is not only intelligent but also hardworking.","She likes both singing and dancing.","He wants either to study or to work."],
+ no:["He is not only intelligent but also works hard.","She likes both singing and to dance."],
+ trap:"An adjective on one side and a verb phrase on the other is the standard planted error.",
+ trick:"Cover the correlative words. What remains on both sides must match.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"She is not only a singer but also ____.",o:["dances well","a dancer"],a:1,e:"A noun must be balanced with a noun."},
+    {t:"He prefers both reading ____.",o:["and to write","and writing"],a:1,e:"A gerund must be balanced with a gerund."}]},
+
+{n:88,m:8,rc:"CON-03",d:"Hard",t:"Never use two conjunctions for one relationship",
+ r:"Do not use although with but, though with yet in a redundant way, because with so, or as with therefore in the same sentence.",
+ ta:"ஒரே தொடர்புக்கு இரு இணைப்புச் சொற்கள் பயன்படுத்தக் கூடாது — Although...but தவறு.",
+ w:"One conjunction is enough to express one logical relationship; two create redundancy.",
+ ok:["Although he was tired, he continued working.","He was tired, but he continued working.","Because it rained, the match was cancelled."],
+ no:["Although he was tired, but he continued working.","Because it rained, so the match was cancelled."],
+ trap:"Hindi and Tamil both allow the double structure, so this error is extremely common among Indian learners.",
+ trick:"ALTHOUGH or BUT — pick one. BECAUSE or SO — pick one.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Which is correct?",o:["Though he is poor, but he is honest.","Though he is poor, he is honest."],a:1,e:"One conjunction is sufficient."},
+    {t:"____ she studied hard, she failed.",o:["Although","Although but"],a:0,e:"Only one conjunction is needed."}]},
+
+{n:89,m:8,rc:"CON-04",d:"Hard",t:"LEST is always followed by SHOULD and never by NOT",
+ r:"'Lest' already contains a negative meaning, so it is followed by 'should' and never by 'not'.",
+ ta:"'Lest' -ல் ஏற்கனவே எதிர்மறை உள்ளது; எனவே 'not' சேர்க்கக் கூடாது, 'should' மட்டுமே வரும்.",
+ w:"'Lest' means 'so that ... not', so adding 'not' creates a double negative.",
+ ok:["Walk carefully lest you should fall.","Study hard lest you should fail.","He hid the letter lest it should be seen."],
+ no:["Walk carefully lest you should not fall.","Study hard lest you will fail."],
+ trap:"Both 'lest...not' and 'lest...will' appear as options. Only 'lest...should' is correct.",
+ trick:"LEST + SHOULD. Never NOT, never WILL.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Run fast lest you ____ miss the bus.",o:["should not","should"],a:1,e:"'Lest' carries the negative meaning itself."},
+    {t:"He whispered lest the baby ____ wake up.",o:["would","should"],a:1,e:"'Lest' is followed by 'should'."}]},
+
+{n:90,m:8,rc:"CON-05",d:"Hard",t:"UNLESS and UNTIL do not take another negative",
+ r:"'Unless' means 'if not' and 'until' means 'up to the time that', so neither takes an additional negative word.",
+ ta:"Unless = if not; எனவே அதனுடன் மற்றொரு எதிர்மறை வரக்கூடாது.",
+ w:"The negative is already built into the conjunction.",
+ ok:["You will fail unless you work hard.","Wait here until I return.","Unless he apologises, I will not forgive him."],
+ no:["You will fail unless you do not work hard.","Wait here until I do not return."],
+ trap:"'Unless you do not' is one of the most heavily repeated SSC error-spotting items.",
+ trick:"UNLESS already means IF NOT. Adding NOT makes it wrong.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Which is correct?",o:["Unless you do not hurry, you will be late.","Unless you hurry, you will be late."],a:1,e:"'Unless' already contains the negative."},
+    {t:"Do not leave the room until I ____.",o:["do not come","come"],a:1,e:"'Until' needs no extra negative."}]},
+
+{n:91,m:8,rc:"CON-06",d:"Medium",t:"THE REASON IS THAT, not THE REASON IS BECAUSE",
+ r:"Use 'the reason is that' or simply 'because'. Never write 'the reason is because'.",
+ ta:"'The reason is that' சரி; 'The reason is because' தவறு.",
+ w:"'Reason' and 'because' express the same idea, so using both is redundant.",
+ ok:["The reason is that he was ill.","He was absent because he was ill.","The reason for his absence was illness."],
+ no:["The reason is because he was ill.","The reason why he was absent is because he was ill."],
+ trap:"The phrase sounds natural in speech, which is exactly why it is tested.",
+ trick:"REASON goes with THAT. BECAUSE stands alone.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"The reason for the delay is ____ the roads were flooded.",o:["because","that"],a:1,e:"'Reason is that' is the correct structure."},
+    {t:"Which is correct?",o:["He failed because he was careless.","The reason he failed is because he was careless."],a:0,e:"'Because' alone is sufficient."}]},
+
+{n:92,m:8,rc:"CON-07",d:"Medium",t:"BOTH pairs only with AND",
+ r:"'Both' must be followed by 'and', never by 'as well as' or 'along with'.",
+ ta:"'Both' -க்குப் பின் 'and' மட்டுமே வரும்; 'as well as' வரக்கூடாது.",
+ w:"'Both...and' is a fixed correlative pair.",
+ ok:["Both Ram and Shyam were selected.","She is both talented and hardworking."],
+ no:["Both Ram as well as Shyam were selected.","She is both talented as well as hardworking."],
+ trap:"'Both...as well as' looks emphatic and is therefore a very tempting wrong option.",
+ trick:"BOTH always marries AND.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Both the principal ____ the staff attended.",o:["as well as","and"],a:1,e:"'Both' pairs only with 'and'."},
+    {t:"Which is correct?",o:["He is both wise and kind.","He is both wise as well as kind."],a:0,e:"'Both...and' is the correct pair."}]},
+
+{n:93,m:8,rc:"CON-08",d:"Hard",t:"SO...THAT, SUCH...THAT and TOO...TO",
+ r:"'So' is followed by an adjective or adverb and then 'that'. 'Such' is followed by a noun phrase and then 'that'. 'Too...to' expresses an excess that prevents an action.",
+ ta:"So + adjective + that. Such + noun + that. Too + adjective + to.",
+ w:"'So' modifies adjectives and adverbs, while 'such' modifies nouns.",
+ ok:["He is so weak that he cannot walk.","It was such a hot day that we stayed indoors.","He is too weak to walk."],
+ no:["He is such weak that he cannot walk.","It was so hot day that we stayed indoors.","He is too weak that he cannot walk."],
+ trap:"'Too...that' is always wrong. 'Too' pairs only with 'to'.",
+ trick:"SO + adjective. SUCH + noun. TOO + to.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"It was ____ a beautiful painting that everyone stared.",o:["so","such"],a:1,e:"A noun phrase follows, so 'such' is used."},
+    {t:"The tea is too hot ____ drink.",o:["that I cannot","to"],a:1,e:"'Too' pairs with 'to'."}]},
+/* MODULE 9 — ADJECTIVES & ADVERBS (94-103) */
+{n:94,m:9,rc:"ADJ-01",d:"Easy",t:"Comparative for two, superlative for more than two",
+ r:"Use the comparative degree when comparing two persons or things and the superlative degree when comparing more than two.",
+ ta:"இரண்டை ஒப்பிட comparative; இரண்டுக்கு மேற்பட்டவற்றை ஒப்பிட superlative.",
+ w:"The superlative singles out one from a group, which requires at least three members.",
+ ok:["He is the taller of the two brothers.","She is the tallest of the five girls.","Which is the better of these two options?"],
+ no:["He is the tallest of the two brothers.","She is the taller of the five girls."],
+ trap:"'Of the two' is the signal for the comparative, and it always carries 'the': 'the taller of the two'.",
+ trick:"TWO = comparative with THE. THREE or more = superlative.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Ravi is the ____ of the two candidates.",o:["strongest","stronger"],a:1,e:"Only two are compared, so the comparative is used."},
+    {t:"This is the ____ building in the city.",o:["taller","tallest"],a:1,e:"A whole city implies more than two."}]},
+
+{n:95,m:9,rc:"ADJ-02",d:"Easy",t:"Never double the comparative or superlative",
+ r:"Do not use 'more' or 'most' with an adjective that already carries -er or -est.",
+ ta:"-er / -est உள்ள சொல்லுடன் more / most சேர்க்கக் கூடாது.",
+ w:"One marker of degree is enough; two are redundant.",
+ ok:["He is better than his brother.","This is the best solution.","She is more intelligent than him."],
+ no:["He is more better than his brother.","This is the most best solution."],
+ trap:"'More better' and 'most easiest' are inserted in improvement questions because they sound emphatic.",
+ trick:"One degree marker only — either -er or MORE, never both.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Which is correct?",o:["This road is more safer.","This road is safer."],a:1,e:"'-er' already marks the comparative."},
+    {t:"That was the ____ question in the paper.",o:["most easiest","easiest"],a:1,e:"'-est' already marks the superlative."}]},
+
+{n:96,m:9,rc:"ADJ-03",d:"Hard",t:"Latin comparatives take TO, not THAN",
+ r:"Superior, inferior, senior, junior, prior, posterior, anterior, prefer and preferable are followed by 'to', never by 'than'.",
+ ta:"Superior, Inferior, Senior, Junior, Prior, Prefer — இவற்றுக்குப் பின் 'to' வரும், 'than' அல்ல.",
+ w:"These words come from Latin, where the comparative was expressed with a dative, not with 'than'.",
+ ok:["He is senior to me by two years.","This cloth is superior to that one.","I prefer coffee to tea.","Health is preferable to wealth."],
+ no:["He is senior than me.","This cloth is superior than that one.","I prefer coffee than tea."],
+ trap:"'Senior than' and 'prefer than' are two of the most repeated errors across SSC, RRB and Banking.",
+ trick:"SIJ-SPP: Senior, Inferior, Junior, Superior, Prior, Prefer — all take TO.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"He is junior ____ me in service.",o:["than","to"],a:1,e:"Latin comparatives take 'to'."},
+    {t:"Death is preferable ____ dishonour.",o:["than","to"],a:1,e:"'Preferable' takes 'to'."}]},
+
+{n:97,m:9,rc:"ADJ-04",d:"Hard",t:"Use ANY OTHER when comparing within the same class",
+ r:"When a comparative compares a member with the rest of its own group, use 'any other'. When the groups are different, use 'any'.",
+ ta:"ஒரே குழுவிற்குள் ஒப்பிடும்போது 'any other'; வெவ்வேறு குழுக்களாக இருந்தால் 'any'.",
+ w:"Without 'other', the sentence illogically compares a thing with itself.",
+ ok:["Delhi is larger than any other city in India.","Delhi is larger than any city in Sri Lanka.","He is wiser than any other man in the village."],
+ no:["Delhi is larger than any city in India.","He is wiser than any man in his own village."],
+ trap:"The exam plants the same-group sentence without 'other'. Check whether the subject belongs to the group named.",
+ trick:"Same group = ANY OTHER. Different group = ANY.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Sachin scored more runs than ____ batsman in his team.",o:["any","any other"],a:1,e:"He belongs to the same team."},
+    {t:"Indian tea is better than ____ tea grown in Europe.",o:["any other","any"],a:1,e:"The two groups are different."}]},
+
+{n:98,m:9,rc:"ADJ-05",d:"Hard",t:"Absolute adjectives cannot be compared",
+ r:"Unique, perfect, complete, universal, round, square, eternal, supreme, extreme, ideal and impossible are already absolute and take no comparative or superlative.",
+ ta:"Unique, Perfect, Complete போன்ற சொற்களுக்கு comparative / superlative வடிவம் இல்லை.",
+ w:"These adjectives describe a state that admits no degrees — something is either unique or it is not.",
+ ok:["His style is unique.","The circle is round.","It was a perfect answer.","His idea is almost unique."],
+ no:["His style is more unique.","It was the most perfect answer.","The circle is rounder."],
+ trap:"The accepted modifiers are 'almost', 'nearly' and 'quite' — not 'more' or 'most'.",
+ trick:"Absolute words take ALMOST, never MORE.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Which is correct?",o:["This design is more unique.","This design is quite unique."],a:1,e:"'Unique' cannot be compared."},
+    {t:"His command over English is ____ perfect.",o:["more","almost"],a:1,e:"Absolute adjectives take 'almost'."}]},
+
+{n:99,m:9,rc:"ADJ-06",d:"Hard",t:"Place ONLY, HARDLY, ALMOST and NEARLY next to the word they modify",
+ r:"Limiting adverbs such as only, even, almost, nearly, hardly, merely and just must be placed immediately before the word or phrase they qualify.",
+ ta:"Only, Even, Almost போன்ற சொற்கள் எந்தச் சொல்லை விளக்குகிறதோ அதற்கு அருகிலேயே வர வேண்டும்.",
+ w:"Moving the adverb changes the meaning of the whole sentence.",
+ ok:["He eats only vegetables. (nothing but vegetables)","Only he eats vegetables. (nobody else does)","I have read only two chapters."],
+ no:["He only eats vegetables when the meaning is that he eats nothing else."],
+ trap:"Sentence-improvement questions present four placements of 'only' and ask which conveys the intended meaning.",
+ trick:"Put the adverb directly in front of what it limits.",
+ pyq:["Sentence Improvement","Find the Error"],
+ q:[{t:"To mean he lost nothing but his pen, write:",o:["He only lost his pen.","He lost only his pen."],a:1,e:"'Only' must sit before 'his pen'."},
+    {t:"I ____ finished the work when the bell rang.",o:["hardly had","had hardly"],a:1,e:"The adverb goes after the auxiliary."}]},
+
+{n:100,m:9,rc:"ADJ-07",d:"Hard",t:"Use an adjective, not an adverb, after linking verbs",
+ r:"After be, seem, appear, look, feel, taste, smell, sound, become, grow, turn and remain, use an adjective because it describes the subject.",
+ ta:"Look, Feel, Taste, Sound போன்ற linking verb-க்குப் பின் adjective வரும், adverb அல்ல.",
+ w:"A linking verb connects the subject to a description of the subject, and descriptions of nouns are adjectives.",
+ ok:["The soup tastes good.","She looks beautiful.","He feels bad about it.","The music sounds sweet."],
+ no:["The soup tastes well.","She looks beautifully.","He feels badly about it."],
+ trap:"'I feel badly' is wrong when describing emotion; 'badly' would describe your sense of touch.",
+ trick:"If the word describes the SUBJECT, use an adjective. If it describes the ACTION, use an adverb.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"The flowers smell ____.",o:["sweetly","sweet"],a:1,e:"'Smell' is a linking verb here."},
+    {t:"He looked at me ____.",o:["angry","angrily"],a:1,e:"Here 'looked at' is an action verb, so an adverb is needed."}]},
+
+{n:101,m:9,rc:"ADJ-08",d:"Hard",t:"Confusable adverb pairs: hard/hardly, late/lately, near/nearly",
+ r:"Hard means with effort, hardly means scarcely. Late means not early, lately means recently. Near means close, nearly means almost. High means position, highly means very much.",
+ ta:"Hard = கடினமாக; Hardly = அரிதாக. Late = தாமதமாக; Lately = சமீபத்தில். Near = அருகில்; Nearly = கிட்டத்தட்ட.",
+ w:"Adding -ly to these adverbs creates a completely different meaning, not a stronger one.",
+ ok:["He works hard.","He hardly works. (almost never)","She came late.","I have not seen him lately.","He is highly respected."],
+ no:["He works hardly, meaning he works with effort.","I have not seen him late, meaning recently."],
+ trap:"'He works hardly' is planted to look like praise when it actually means the opposite.",
+ trick:"Adding -LY flips the meaning here; it does not intensify it.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"He is ____ qualified for this post.",o:["high","highly"],a:1,e:"'Highly' means 'very much'."},
+    {t:"I could ____ hear his voice in the noise.",o:["hard","hardly"],a:1,e:"'Hardly' means 'scarcely'."}]},
+
+{n:102,m:9,rc:"ADJ-09",d:"Hard",t:"Order of adjectives before a noun",
+ r:"When several adjectives modify one noun, the order is Opinion, Size, Age, Shape, Colour, Origin, Material, Purpose.",
+ ta:"பல adjective வரும்போது வரிசை: கருத்து, அளவு, வயது, வடிவம், நிறம், தோற்றம், பொருள், நோக்கம்.",
+ w:"English follows a fixed, largely unconscious sequence that exams test explicitly.",
+ ok:["a beautiful small old round brown Indian wooden dining table","a lovely little red car","an expensive new leather jacket"],
+ no:["a wooden brown old small beautiful table","a red little lovely car"],
+ trap:"The options differ only in the order of the same adjectives, so the sequence must be memorised.",
+ trick:"OSASCOMP: Opinion, Size, Age, Shape, Colour, Origin, Material, Purpose.",
+ pyq:["Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Which order is correct?",o:["a green large old vase","a large old green vase"],a:1,e:"Size comes before age, and age before colour."},
+    {t:"Choose the correct order:",o:["an ugly plastic small chair","an ugly small plastic chair"],a:1,e:"Opinion, then size, then material."}]},
+
+{n:103,m:9,rc:"ADJ-10",d:"Hard",t:"LESS/FEWER, MUCH/MANY, LITTLE/A LITTLE, FEW/A FEW",
+ r:"Use fewer and many with countable nouns and less and much with uncountable nouns. 'A few' and 'a little' are positive; 'few' and 'little' are negative; 'the few' and 'the little' mean whatever small amount exists.",
+ ta:"Fewer/Many = எண்ணக்கூடியவை. Less/Much = எண்ண முடியாதவை. A few = சில (நேர்மறை); Few = கிட்டத்தட்ட இல்லை.",
+ w:"Countability decides the quantifier, and the article decides whether the meaning is positive or negative.",
+ ok:["Fewer students attended this year.","There is less water in the tank.","He has a few friends. (some)","He has few friends. (almost none)","The little money I had is gone."],
+ no:["Less students attended this year.","There is fewer water in the tank."],
+ trap:"'Few' without the article carries a negative meaning. Exams test whether you notice the missing 'a'.",
+ trick:"Countable = FEWER and MANY. Uncountable = LESS and MUCH. Article A makes it positive.",
+ pyq:["Find the Error","Fill in the Blank","Sentence Improvement"],
+ q:[{t:"There were ____ mistakes in his essay this time.",o:["less","fewer"],a:1,e:"'Mistakes' is countable."},
+    {t:"He has ____ friends, so he is never lonely.",o:["few","a few"],a:1,e:"The positive meaning requires 'a few'."}]},
+
+/* MODULE 10 — VOICE, NARRATION & MISCELLANEOUS (104-120) */
+{n:104,m:10,rc:"MIS-01",d:"Medium",t:"Forming the passive voice",
+ r:"In the passive, the object becomes the subject, the verb becomes the correct form of 'be' plus the past participle, and the original subject follows 'by'.",
+ ta:"Passive-ல் object முதன்மையாகும்; வினைச்சொல் be + V3 ஆக மாறும்; பழைய subject 'by' -உடன் வரும்.",
+ w:"The passive shifts the focus from the doer to the receiver of the action.",
+ ok:["Active: He writes a letter. Passive: A letter is written by him.","Active: They built the bridge. Passive: The bridge was built by them.","Active: She has finished the work. Passive: The work has been finished by her."],
+ no:["A letter is write by him.","The bridge was build by them."],
+ trap:"The tense of 'be' must match the original tense exactly, and the main verb must be V3.",
+ trick:"Object first, correct BE form, then V3, then BY plus doer.",
+ pyq:["Sentence Improvement","Fill in the Blank","Find the Error"],
+ q:[{t:"Passive of 'The chef is cooking the meal':",o:["The meal is being cooked by the chef.","The meal is cooking by the chef."],a:0,e:"Present continuous passive is 'is being + V3'."},
+    {t:"Passive of 'They will announce the result':",o:["The result will announce.","The result will be announced."],a:1,e:"Future simple passive is 'will be + V3'."}]},
+
+{n:105,m:10,rc:"MIS-02",d:"Hard",t:"Passive of imperative sentences",
+ r:"An order or request becomes 'Let + object + be + V3'. A request may become 'You are requested to...' and advice 'You are advised to...'.",
+ ta:"கட்டளை வாக்கியத்தின் passive: Let + object + be + V3.",
+ w:"An imperative has no stated subject, so 'let' supplies the passive frame.",
+ ok:["Active: Shut the door. Passive: Let the door be shut.","Active: Do not touch the wires. Passive: Let the wires not be touched.","Active: Please help me. Passive: You are requested to help me."],
+ no:["Shut the door is passivised as The door is shut by you.","Let the door is shut."],
+ trap:"Negative imperatives take 'Let ... not be + V3', with 'not' before 'be'.",
+ trick:"Order = LET + object + BE + V3. Request = YOU ARE REQUESTED TO.",
+ pyq:["Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Passive of 'Open the window':",o:["The window is opened.","Let the window be opened."],a:1,e:"Imperatives take the 'Let' construction."},
+    {t:"Passive of 'Kindly submit the form':",o:["You are requested to submit the form.","Let the form submit."],a:0,e:"A polite request uses 'You are requested to'."}]},
+
+{n:106,m:10,rc:"MIS-03",d:"Hard",t:"Passive of interrogative sentences",
+ r:"The passive keeps the question form: the auxiliary comes first, and question words such as who become 'by whom'.",
+ ta:"கேள்வி வாக்கியத்தின் passive-லும் கேள்வி வடிவம் தொடரும்; 'Who' → 'By whom'.",
+ w:"Voice change does not alter sentence type; a question stays a question.",
+ ok:["Active: Who broke the glass? Passive: By whom was the glass broken?","Active: Did he write the letter? Passive: Was the letter written by him?","Active: What are you doing? Passive: What is being done by you?"],
+ no:["Who was the glass broken by him?","Was written the letter by him?"],
+ trap:"Students forget to keep the auxiliary at the front, producing a statement instead of a question.",
+ trick:"WHO becomes BY WHOM. WHOM becomes WHO. Keep the auxiliary first.",
+ pyq:["Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Passive of 'Who taught you English?':",o:["By whom were you taught English?","Who were you taught English by whom?"],a:0,e:"'Who' becomes 'By whom' and the auxiliary comes first."},
+    {t:"Passive of 'Has she completed the task?':",o:["Has the task been completed by her?","Has been the task completed by her?"],a:0,e:"The auxiliary stays first, then subject, then 'been + V3'."}]},
+
+{n:107,m:10,rc:"MIS-04",d:"Medium",t:"Verbs with two objects allow two passives",
+ r:"Give, offer, teach, tell, send, lend, pay, promise and show take an indirect and a direct object, so two passive forms are possible.",
+ ta:"Give, Teach, Offer போன்ற வினைச்சொற்களுக்கு இரண்டு object உள்ளதால் இரு passive வடிவங்கள் சாத்தியம்.",
+ w:"Either object can be promoted to subject position.",
+ ok:["Active: He gave me a book. Passive 1: I was given a book by him. Passive 2: A book was given to me by him."],
+ no:["A book was given me by him without the preposition 'to'."],
+ trap:"When the direct object becomes the subject, the indirect object needs 'to' or 'for' before it.",
+ trick:"Two objects = two passives. Add TO before the person when the thing becomes the subject.",
+ pyq:["Sentence Improvement","Fill in the Blank"],
+ q:[{t:"Passive of 'They offered him a job':",o:["He was offered a job.","He was offered a job by them.","Both are acceptable"],a:2,e:"Both forms are correct; the agent may be omitted."},
+    {t:"Passive of 'She taught us grammar':",o:["We were taught grammar by her.","Grammar was taught us by her."],a:0,e:"The second needs 'to us'."}]},
+
+{n:108,m:10,rc:"MIS-05",d:"Hard",t:"Intransitive verbs have no passive",
+ r:"Verbs with no object — sleep, die, arrive, happen, go, come, rise, fall — cannot be made passive. Some verbs are active in form but passive in sense.",
+ ta:"Object இல்லாத வினைச்சொற்களுக்கு passive வடிவம் இல்லை.",
+ w:"The passive works by promoting an object, so a verb without an object has nothing to promote.",
+ ok:["He slept well. (no passive possible)","The book sells well. (active form, passive sense)","The house is building. (older usage) / The house is being built. (modern)"],
+ no:["He was slept well.","The accident was happened yesterday."],
+ trap:"'The accident was happened' is a classic error; 'happen' is intransitive.",
+ trick:"No object means no passive. Test by asking 'what?' after the verb.",
+ pyq:["Find the Error","Sentence Improvement"],
+ q:[{t:"Which is correct?",o:["The incident was happened at noon.","The incident happened at noon."],a:1,e:"'Happen' is intransitive and has no passive."},
+    {t:"Which is correct?",o:["He was died last year.","He died last year."],a:1,e:"'Die' is intransitive."}]},
+
+{n:109,m:10,rc:"MIS-06",d:"Hard",t:"Narration: tense changes in indirect speech",
+ r:"If the reporting verb is in the past, the reported verb moves one tense back: present becomes past, past becomes past perfect, will becomes would, can becomes could, may becomes might.",
+ ta:"Reporting verb கடந்தகாலமாக இருந்தால், reported verb ஒரு படி பின்னோக்கி நகரும்.",
+ w:"The report is made later than the original speech, so the tenses shift backwards in time.",
+ ok:["He said, 'I am busy.' becomes He said that he was busy.","She said, 'I wrote a letter.' becomes She said that she had written a letter.","He said, 'I will come.' becomes He said that he would come."],
+ no:["He said that he is busy.","She said that she wrote a letter as a direct backshift."],
+ trap:"If the reporting verb is in the present or future, the tense does not change at all.",
+ trick:"Past reporting verb = shift back one step. Present reporting verb = no change.",
+ pyq:["Sentence Improvement","Fill in the Blank"],
+ q:[{t:"He said, 'I can swim.' becomes:",o:["He said that he can swim.","He said that he could swim."],a:1,e:"'Can' becomes 'could' after a past reporting verb."},
+    {t:"She says, 'I am tired.' becomes:",o:["She says that she is tired.","She says that she was tired."],a:0,e:"A present reporting verb causes no tense change."}]},
+
+{n:110,m:10,rc:"MIS-07",d:"Medium",t:"Narration: changing the pronouns",
+ r:"In indirect speech, first-person pronouns change according to the subject of the reporting verb, second-person pronouns according to the object, and third-person pronouns do not change.",
+ ta:"முதல் நபர் → reporting verb-ன் subject படி; இரண்டாம் நபர் → object படி; மூன்றாம் நபர் → மாற்றமில்லை.",
+ w:"The perspective shifts from the original speaker to the reporter.",
+ ok:["He said to me, 'I know you.' becomes He told me that he knew me.","She said, 'We are ready.' becomes She said that they were ready."],
+ no:["He told me that I knew you."],
+ trap:"When there is no object after the reporting verb, second-person pronouns become third person.",
+ trick:"SON rule: Subject controls the first person, Object controls the second person, No change for the third.",
+ pyq:["Sentence Improvement","Fill in the Blank"],
+ q:[{t:"He said to her, 'I trust you.' becomes:",o:["He told her that he trusted her.","He told her that I trusted you."],a:0,e:"First person follows the subject, second person follows the object."},
+    {t:"They said, 'We have won.' becomes:",o:["They said that we had won.","They said that they had won."],a:1,e:"'We' becomes 'they', matching the subject."}]},
+
+{n:111,m:10,rc:"MIS-08",d:"Medium",t:"Narration: changing time and place words",
+ r:"Now becomes then, today becomes that day, tomorrow becomes the next day, yesterday becomes the previous day, here becomes there, this becomes that, ago becomes before, and thus becomes so.",
+ ta:"Now → then, Today → that day, Tomorrow → the next day, Here → there, This → that.",
+ w:"The reporter speaks at a different time and place from the original speaker.",
+ ok:["He said, 'I am leaving today.' becomes He said that he was leaving that day.","She said, 'I met him yesterday.' becomes She said that she had met him the previous day."],
+ no:["He said that he was leaving today.","She said that she had met him yesterday."],
+ trap:"If the report is made on the same day, the time words may remain unchanged. Exams normally expect the standard change.",
+ trick:"Move every word one step away from 'now' and 'here'.",
+ pyq:["Sentence Improvement","Fill in the Blank"],
+ q:[{t:"He said, 'I will go tomorrow.' becomes:",o:["He said that he would go the next day.","He said that he would go tomorrow."],a:0,e:"'Tomorrow' becomes 'the next day'."},
+    {t:"She said, 'I bought this here.' becomes:",o:["She said that she had bought that there.","She said that she had bought this here."],a:0,e:"'This' becomes 'that' and 'here' becomes 'there'."}]},
+
+{n:112,m:10,rc:"MIS-09",d:"Hard",t:"Narration of questions",
+ r:"Use 'asked', 'enquired' or 'wanted to know'. Yes-no questions take 'if' or 'whether'; wh-questions keep the question word. The word order becomes that of a statement and the question mark is dropped.",
+ ta:"கேள்விக்கு asked / enquired; yes-no கேள்விக்கு 'if' அல்லது 'whether'; கேள்விக்குறி நீக்கப்படும்.",
+ w:"An indirect question is no longer a question but a reported clause.",
+ ok:["He said, 'Are you ready?' becomes He asked if I was ready.","She said, 'Where do you live?' becomes She asked where I lived."],
+ no:["He asked if was I ready?","She asked where did I live."],
+ trap:"Retaining the inverted word order or the auxiliary 'do' is the standard planted error.",
+ trick:"Drop the question mark, drop DO/DOES/DID, use statement order.",
+ pyq:["Sentence Improvement","Find the Error"],
+ q:[{t:"She said, 'What is your name?' becomes:",o:["She asked what my name was.","She asked what was my name."],a:0,e:"Indirect questions use statement word order."},
+    {t:"He said, 'Did you finish?' becomes:",o:["He asked if I had finished.","He asked did I finish."],a:0,e:"'Did' is dropped and 'if' is added."}]},
+
+{n:113,m:10,rc:"MIS-10",d:"Hard",t:"Narration of orders, requests and advice",
+ r:"Use ordered, commanded, requested, advised, forbade or urged, followed by 'to + V1'. Negative commands take 'not to + V1'.",
+ ta:"கட்டளைக்கு ordered; வேண்டுகோளுக்கு requested; அறிவுரைக்கு advised — பின் 'to + V1'.",
+ w:"An imperative becomes an infinitive phrase in reported speech.",
+ ok:["He said, 'Go away.' becomes He ordered me to go away.","She said, 'Please help me.' becomes She requested me to help her.","He said, 'Do not smoke.' becomes He advised me not to smoke."],
+ no:["He ordered me that I should go away as the expected exam answer.","He forbade me not to smoke."],
+ trap:"'Forbid' already means 'order not to', so 'forbade not to' is a double negative and is wrong.",
+ trick:"Command = ORDERED TO. Request = REQUESTED TO. Negative = NOT TO.",
+ pyq:["Sentence Improvement","Find the Error"],
+ q:[{t:"He said to me, 'Shut the door.' becomes:",o:["He ordered me to shut the door.","He said me to shut the door."],a:0,e:"Orders use 'ordered + object + to + V1'."},
+    {t:"She said, 'Do not disturb me.' becomes:",o:["She asked me not to disturb her.","She asked me to not disturbing her."],a:0,e:"Negative imperatives take 'not to + V1'."}]},
+
+{n:114,m:10,rc:"MIS-11",d:"Hard",t:"Narration of exclamations and wishes",
+ r:"Use exclaimed with joy, exclaimed with sorrow, exclaimed with surprise, or prayed or wished, and turn the exclamation into a statement.",
+ ta:"ஆச்சரிய வாக்கியத்திற்கு exclaimed with joy / sorrow; வாழ்த்துக்கு prayed அல்லது wished.",
+ w:"The reporting verb must carry the emotion that the exclamation mark carried.",
+ ok:["He said, 'What a beautiful sight!' becomes He exclaimed with joy that it was a very beautiful sight.","She said, 'Alas! I have failed.' becomes She exclaimed with sorrow that she had failed.","He said, 'May you succeed!' becomes He wished that I might succeed."],
+ no:["He exclaimed that what a beautiful sight it was with the exclamation mark retained."],
+ trap:"'What a' and 'How' must be converted to 'very' or 'a great' in the reported clause.",
+ trick:"Emotion goes into the reporting verb. WHAT A and HOW become VERY.",
+ pyq:["Sentence Improvement","Fill in the Blank"],
+ q:[{t:"He said, 'Hurrah! We have won.' becomes:",o:["He exclaimed with joy that they had won.","He said that hurrah they had won."],a:0,e:"The emotion moves into the reporting verb."},
+    {t:"She said, 'How lovely the garden is!' becomes:",o:["She exclaimed that the garden was very lovely.","She exclaimed how lovely the garden was."],a:0,e:"'How' becomes 'very' in the statement form."}]},
+
+{n:115,m:10,rc:"MIS-12",d:"Hard",t:"The three types of conditional sentences",
+ r:"Type 1: If + present, will + V1 (real future). Type 2: If + past, would + V1 (unreal present). Type 3: If + past perfect, would have + V3 (unreal past).",
+ ta:"Type 1: If + present → will. Type 2: If + past → would. Type 3: If + had + V3 → would have + V3.",
+ w:"Each type marks a different distance from reality — possible, unlikely, and impossible.",
+ ok:["If it rains, we will cancel the trip.","If I had money, I would buy a car.","If he had studied, he would have passed."],
+ no:["If it will rain, we will cancel the trip.","If I would have money, I would buy a car.","If he would have studied, he would have passed."],
+ trap:"'Would' never appears in the if-clause. That is the single most tested point in conditionals.",
+ trick:"No WILL and no WOULD inside the IF clause.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"If she ____ harder, she would have won.",o:["had worked","would have worked"],a:0,e:"Type 3 takes 'had + V3' in the if-clause."},
+    {t:"If you heat ice, it ____.",o:["will melt","melts"],a:1,e:"A universal truth uses the zero conditional with the present tense."}]},
+
+{n:116,m:10,rc:"MIS-13",d:"Hard",t:"WERE in unreal conditions and wishes",
+ r:"Use 'were' for all subjects after if, wish, as if, as though and suppose, when the situation is imaginary.",
+ ta:"கற்பனையான நிலைமைகளில் எல்லா subject-க்கும் 'were' பயன்படுத்த வேண்டும்.",
+ w:"This is the past subjunctive, which English preserves only in this one form.",
+ ok:["If I were you, I would accept the offer.","I wish I were a bird.","He talks as if he were the boss."],
+ no:["If I was you, I would accept the offer.","I wish I was a bird.","He talks as if he was the boss."],
+ trap:"'If I was' is common in speech but is marked wrong when the condition is contrary to fact.",
+ trick:"Imaginary situation = WERE for every subject, including I and he.",
+ pyq:["Find the Error","Sentence Improvement","Fill in the Blank"],
+ q:[{t:"I wish I ____ taller.",o:["was","were"],a:1,e:"A wish about an unreal situation takes 'were'."},
+    {t:"She behaves as if she ____ a queen.",o:["is","were"],a:1,e:"'As if' with an imaginary comparison takes 'were'."}]},
+
+{n:117,m:10,rc:"MIS-14",d:"Medium",t:"Question tags reverse the polarity",
+ r:"A positive statement takes a negative tag and a negative statement takes a positive tag. The tag uses the same auxiliary and a pronoun subject.",
+ ta:"நேர்மறை வாக்கியத்திற்கு எதிர்மறை tag; எதிர்மறை வாக்கியத்திற்கு நேர்மறை tag.",
+ w:"The tag seeks confirmation, so it mirrors the statement in the opposite polarity.",
+ ok:["He is a doctor, isn't he?","She does not like tea, does she?","They have finished, haven't they?"],
+ no:["He is a doctor, is he? as a neutral confirmation.","She does not like tea, doesn't she?"],
+ trap:"If the sentence has no auxiliary, supply do, does or did based on the tense.",
+ trick:"Positive sentence = negative tag, and vice versa. Same auxiliary, pronoun subject.",
+ pyq:["Fill in the Blank","Find the Error"],
+ q:[{t:"You finished the work, ____?",o:["did you","didn't you"],a:1,e:"A positive statement takes a negative tag."},
+    {t:"He cannot swim, ____?",o:["can he","can't he"],a:0,e:"A negative statement takes a positive tag."}]},
+
+{n:118,m:10,rc:"MIS-15",d:"Hard",t:"Special question tags",
+ r:"Let us takes 'shall we'. An imperative takes 'will you'. 'I am' takes 'aren't I'. Words such as never, hardly, seldom, rarely, scarcely, little and few make a sentence negative, so the tag becomes positive.",
+ ta:"Let us → shall we. Imperative → will you. I am → aren't I. Never, Hardly ஆகியவை எதிர்மறையாகக் கருதப்படும்.",
+ w:"These structures do not follow the ordinary auxiliary pattern.",
+ ok:["Let us go, shall we?","Open the door, will you?","I am right, aren't I?","He hardly speaks, does he?","Nobody came, did they?"],
+ no:["Let us go, shall not we?","I am right, amn't I?","He hardly speaks, doesn't he?"],
+ trap:"Hidden negatives such as 'hardly', 'seldom' and 'nobody' are the main trap in this rule.",
+ trick:"LET US = shall we. IMPERATIVE = will you. I AM = aren't I. Hidden negative = positive tag.",
+ pyq:["Fill in the Blank","Find the Error","Sentence Improvement"],
+ q:[{t:"Let us start the class, ____?",o:["will we","shall we"],a:1,e:"'Let us' always takes 'shall we'."},
+    {t:"She seldom complains, ____?",o:["doesn't she","does she"],a:1,e:"'Seldom' is a hidden negative, so the tag is positive."}]},
+
+{n:119,m:10,rc:"MIS-16",d:"Hard",t:"Misplaced and dangling modifiers",
+ r:"A participial phrase at the beginning of a sentence must refer to the subject that immediately follows it.",
+ ta:"வாக்கியத்தின் தொடக்கத்தில் வரும் -ing தொடர், உடனே வரும் subject-ஐயே குறிக்க வேண்டும்.",
+ w:"If the subject does not match, the sentence says something illogical.",
+ ok:["Walking down the road, I saw an accident.","Having finished his work, he went home.","Being tired, she went to bed early."],
+ no:["Walking down the road, an accident was seen by me.","Having finished his work, the house was locked."],
+ trap:"The wrong version often reads smoothly, so the logical subject must be checked deliberately.",
+ trick:"Ask who is doing the -ing action. That person must be the subject right after the comma.",
+ pyq:["Sentence Improvement","Find the Error"],
+ q:[{t:"Which is correct?",o:["Running fast, the bus was missed by him.","Running fast, he still missed the bus."],a:1,e:"'He' is the one running, so he must be the subject."},
+    {t:"Which is correct?",o:["Being a holiday, the office was closed.","Being a holiday, we closed the office."],a:0,e:"'Being a holiday' logically refers to the day, and this is the accepted idiomatic form."}]},
+
+{n:120,m:10,rc:"MIS-17",d:"Medium",t:"Avoid redundancy and Indian-English pairs",
+ r:"Remove repeated meaning: return back, repeat again, revert back, join together, cousin brother, discuss about, more superior, ascend up, descend down, final conclusion and free gift are all redundant.",
+ ta:"Return back, Repeat again, Cousin brother — இவை மிகைப்படுத்தல்; ஒரு சொல்லே போதும்.",
+ w:"The second word repeats a meaning already contained in the first.",
+ ok:["He returned home yesterday.","Please repeat the question.","My cousin lives in Delhi.","They reached the final conclusion after debate."],
+ no:["He returned back home yesterday.","Please repeat the question again.","My cousin brother lives in Delhi.","It was a free gift."],
+ trap:"These phrases are so common in Indian speech that they feel correct. Every one of them is marked wrong.",
+ trick:"If the second word adds no new meaning, delete it.",
+ pyq:["Find the Error","Sentence Improvement","Cloze Test"],
+ q:[{t:"Which is correct?",o:["He reverted back to me quickly.","He reverted to me quickly."],a:1,e:"'Revert' already means 'come back'."},
+    {t:"Which is correct?",o:["Let us discuss the issue.","Let us discuss about the issue."],a:0,e:"'Discuss' needs no preposition."}]}
+];
+
+/* ================= RENDER ================= */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+let answered={}, score=0;
+
+function card(r){
+  const okList=r.ok.map(x=>`<li class="ok">${esc(x)}</li>`).join("");
+  const noList=r.no.map(x=>`<li class="no">${esc(x)}</li>`).join("");
+  const pyq=r.pyq.map(p=>`<span>${esc(p)}</span>`).join("");
+  const quiz=r.q.map((qq,i)=>{
+    const opts=qq.o.map((o,j)=>`<button class="opt" data-r="${r.n}" data-q="${i}" data-o="${j}">${esc(o)}</button>`).join("");
+    return `<div class="quiz" id="qz-${r.n}-${i}">
+      <div class="qtxt">Q${i+1}. ${esc(qq.t)}</div>
+      <div class="opts">${opts}</div>
+      <div class="expl">${esc(qq.e)}</div></div>`;
+  }).join("");
+  return `<div class="rule" data-n="${r.n}">
+    <div class="rhead">
+      <div class="rnum">${r.n}</div>
+      <div class="rtitle">${esc(r.t)}<small>${esc(r.r)}</small></div>
+      <span class="code">${esc(r.rc)}</span>
+      <span class="pill d-${r.d}">${r.d}</span>
+      <span class="chev">▼</span>
+    </div>
+    <div class="rbody">
+      <div class="blk"><div class="lbl">The Rule</div><div class="box rule-txt">${esc(r.r)}</div></div>
+      <div class="blk"><div class="lbl">தமிழ் விளக்கம்</div><div class="box tamil">${esc(r.ta)}</div></div>
+      <div class="blk"><div class="lbl">Why?</div><div class="box why">${esc(r.w)}</div></div>
+      <div class="two">
+        <div class="blk"><div class="lbl">Correct</div><ul class="ex">${okList}</ul></div>
+        <div class="blk"><div class="lbl">Wrong</div><ul class="ex">${noList}</ul></div>
+      </div>
+      <div class="two">
+        <div class="blk"><div class="lbl">Exam Trap</div><div class="box trap">${esc(r.trap)}</div></div>
+        <div class="blk"><div class="lbl">Shortcut Trick</div><div class="box trick">${esc(r.trick)}</div></div>
+      </div>
+      <div class="blk"><div class="lbl">PYQ Pattern</div><div class="pyq">${pyq}</div></div>
+      <div class="blk"><div class="lbl">Mini Quiz</div>${quiz}</div>
+    </div>
+  </div>`;
+}
+
+function render(){
+  const term=$("#q").value.trim().toLowerCase();
+  const d=$("#diff").value, p=$("#pyqf").value;
+  let shown=0, html="";
+  MODULES.forEach(m=>{
+    const list=RULES.filter(r=>r.m===m.id)
+      .filter(r=>!d||r.d===d)
+      .filter(r=>!p||r.pyq.includes(p))
+      .filter(r=>{
+        if(!term) return true;
+        return (r.t+" "+r.r+" "+r.ta+" "+r.trap+" "+r.trick+" "+r.rc+" "+r.ok.join(" ")+" "+r.no.join(" ")).toLowerCase().includes(term);
+      });
+    if(!list.length) return;
+    shown+=list.length;
+    html+=`<div class="modhead" id="m${m.id}"><h2>Module ${m.id} · ${m.name} <span style="color:var(--dim);font-weight:400;font-size:14px">(Rules ${m.range[0]}–${m.range[1]})</span></h2><p>${m.desc}</p></div>`;
+    html+=list.map(card).join("");
+  });
+  $("#out").innerHTML = shown ? html : `<div class="empty">No rule matches that filter. Try clearing the search box.</div>`;
+  $("#count").textContent = shown+" of "+RULES.length+" rules shown";
+}
+
+function buildNav(){
+  $("#modnav").innerHTML = MODULES.map(m=>
+    `<button class="btn" data-m="${m.id}">M${m.id} · ${m.name}</button>`).join("");
+}
+
+document.addEventListener("click",e=>{
+  const h=e.target.closest(".rhead");
+  if(h){ h.parentElement.classList.toggle("open"); return; }
+  const o=e.target.closest(".opt");
+  if(o){
+    const rn=o.dataset.r, qi=o.dataset.q, key=rn+"-"+qi;
+    if(answered[key]) return;
+    answered[key]=true;
+    const box=document.getElementById("qz-"+key);
+    const rule=RULES.find(x=>x.n==rn), correct=rule.q[qi].a;
+    box.querySelectorAll(".opt").forEach((b,j)=>{
+      if(j===correct) b.classList.add("right");
+      else if(b===o) b.classList.add("wrong");
+    });
+    if(Number(o.dataset.o)===correct){ score++; $("#sc").textContent=score; }
+    box.classList.add("done");
+    return;
+  }
+  const nav=e.target.closest("#modnav .btn");
+  if(nav){
+    const t=document.getElementById("m"+nav.dataset.m);
+    if(t) t.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+});
+
+$("#q").addEventListener("input",render);
+$("#diff").addEventListener("change",render);
+$("#pyqf").addEventListener("change",render);
+$("#expand").addEventListener("click",()=>document.querySelectorAll(".rule").forEach(r=>r.classList.add("open")));
+$("#collapse").addEventListener("click",()=>document.querySelectorAll(".rule").forEach(r=>r.classList.remove("open")));
+window.addEventListener("beforeprint",()=>document.querySelectorAll(".rule").forEach(r=>r.classList.add("open")));
+
+$("#tot").textContent = RULES.reduce((a,r)=>a+r.q.length,0);
+buildNav();
+render();
+</script>
+<script>
+/* ===== CentuMania metrics — universal v2 (generator-agnostic; additive) =====
+ * Handles three different option-rendering engines seen across this batch:
+ *  A) .opts[data-a] container + .opt[data-j] options (class8-12 MASTER packs)
+ *  B) .qz/.opts[data-a] container + .op/.opt[data-j] options, .right/.wrong
+ *     classes applied on click (MicroClasses, Grammar Bible)
+ *  C) .opt-btn[data-oi] with no DOM-exposed answer key; correctness read
+ *     back from the inline background-color the module sets on click
+ *     (Geography / Polity / GK / Art & Culture)
+ * Detection cascades: explicit data-a/data-ans first (most reliable), then
+ * known correct/wrong class names, then the inline-style colour signature.
+ */
+(function(){
+  if(window.__cmTrackU||window.__cmTrackInit)return; window.__cmTrackU=1;
+  var CM_DEFAULT='eng-grammar-bible', CM_T0=Date.now(), CM_ACTIVE=0, _vt=Date.now(), _lastQ=0;
+  function tok(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function mat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function sid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'a'+Date.now();}}
+  function inter(t,n,m){try{var k=tok();if(!k||!n)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({interaction_type:t,node_id:String(n),material_id:mat(),session_id:sid(),timestamp:new Date().toISOString(),metadata:m||{}})}).catch(function(){});}catch(e){}}
+  function ev(name,m){try{var k=tok();if(!k)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})})}).catch(function(){});}catch(e){}}
+  function beacon(name,m){try{var k=tok();if(!k)return;var p=JSON.stringify({_token:k,event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_vt;beacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_vt=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_vt;beacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  ev('material_opened',{});ev('session_start',{});
+  /* chapter/section navigation (Engine A's .cn-pill) counts as node_opened */
+  document.addEventListener('click',function(e){
+    var p=e.target&&e.target.closest&&e.target.closest('.cn-pill[data-ci]');
+    if(!p||p._cmOpened)return; p._cmOpened=1;
+    var ci=p.getAttribute('data-ci');
+    inter('node_opened','ch'+ci,{}); ev('node_open',{node_id:'ch'+ci});
+  });
+  /* answer clicks across all three engines */
+  var _cmCardIdx=0, _cmCardMap=(typeof WeakMap!=='undefined')?new WeakMap():null;
+  function cmCardIndex(card){
+    if(!card)return -1;
+    if(_cmCardMap){ if(_cmCardMap.has(card))return _cmCardMap.get(card); var i=_cmCardIdx++; _cmCardMap.set(card,i); return i; }
+    return -1;
+  }
+  document.addEventListener('click',function(e){
+    var o=e.target&&e.target.closest&&e.target.closest('.opt,.op,.mopt,.opt-btn,.option,[data-oi]');
+    if(!o||o._cmSeen)return; o._cmSeen=1;
+    var container=o.closest('.opts,.qz,.mcq-card,.mcq,[data-nid],[data-qi]')||o.parentElement;
+    var card=o.closest('.mcq-card,.mcq,.qz,.opts')||container;
+    var nid=(container&&(container.getAttribute('data-nid')||container.getAttribute('data-node')||container.getAttribute('data-k')||container.id))||o.getAttribute('data-r');
+    var qiRaw=(container&&container.getAttribute('data-qi'))||o.getAttribute('data-q')||o.getAttribute('data-j');
+    var qi=qiRaw!=null?parseInt(qiRaw,10):NaN;
+    var correctAttr=container&&(container.getAttribute('data-a')||container.getAttribute('data-ans'));
+    var myIdx=o.getAttribute('data-j')!=null?o.getAttribute('data-j'):(o.getAttribute('data-o')!=null?o.getAttribute('data-o'):o.getAttribute('data-oi'));
+    // No usable identifier anywhere in the DOM (Engine C): fall back to a
+    // per-card sequential index so distinct questions in the same file never
+    // collide on the same synthetic node_id (which would silently drop every
+    // answer after the first under the server's first-attempt lock).
+    if(!nid||isNaN(qi)){ var ci=cmCardIndex(card); if(!nid)nid='q'+ci; if(isNaN(qi))qi=ci; }
+    var now=Date.now(),dt=_lastQ?now-_lastQ:0;_lastQ=now;
+    setTimeout(function(){
+      var isCorrect;
+      if(correctAttr!=null&&myIdx!=null){
+        isCorrect=(parseInt(correctAttr,10)===parseInt(myIdx,10));
+      } else {
+        var cl=o.classList;
+        if(cl.contains('right')||cl.contains('ok')||cl.contains('correct'))isCorrect=true;
+        else if(cl.contains('wrong')||cl.contains('bad')||cl.contains('incorrect'))isCorrect=false;
+        else {
+          var bg=(o.style&&o.style.backgroundColor)||'';
+          if(!bg&&window.getComputedStyle)bg=getComputedStyle(o).backgroundColor;
+          if(bg.indexOf('220, 252, 231')!==-1)isCorrect=true;
+          else if(bg.indexOf('254, 226, 226')!==-1)isCorrect=false;
+          else isCorrect=false;
+        }
+      }
+      inter('mcq_attempt',String(nid),{question_index:qi,is_correct:!!isCorrect});
+      ev('answer',{node_id:String(nid),question_index:qi,is_correct:!!isCorrect,time_spent_ms:dt});
+    },90);
+  });
+})();
+</script>
+</body>
+</html>

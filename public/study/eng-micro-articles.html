@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CentuMania · Articles (A, An, The) — 10 Micro-Classes</title>
+<style>
+:root{
+ --bg:#0e1120;--bg2:#151a2e;--card:#1a2038;--card2:#212844;--line:#2c3456;
+ --txt:#e9ecf8;--dim:#98a1c6;--acc:#ffb020;--acc2:#ff7a45;--ok:#3ddc97;--no:#ff5c7a;
+ --blue:#5aa9ff;--pur:#b07bff;--sh:0 8px 28px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"Segoe UI",system-ui,"Noto Sans Tamil",sans-serif;line-height:1.65}
+/* ---- LAYOUT ---- */
+.shell{display:flex;min-height:100vh}
+aside{width:270px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--line);
+ position:sticky;top:0;height:100vh;overflow-y:auto;padding:16px 12px}
+main{flex:1;min-width:0;padding:0 0 80px}
+.logo{font-size:11px;letter-spacing:4px;color:var(--acc);font-weight:800;text-transform:uppercase}
+aside h2{font-size:16px;margin:4px 0 3px;font-weight:800}
+aside .msub{font-size:11.5px;color:var(--dim);margin-bottom:14px}
+.rlist{display:grid;gap:4px}
+.rbtn{display:flex;gap:9px;align-items:flex-start;background:transparent;border:1px solid transparent;
+ color:var(--dim);text-align:left;padding:8px 9px;border-radius:9px;cursor:pointer;font-family:inherit;
+ font-size:12.5px;line-height:1.35;transition:.13s;width:100%}
+.rbtn:hover{background:var(--card);color:var(--txt)}
+.rbtn.on{background:var(--card2);border-color:var(--acc);color:var(--txt)}
+.rbtn b{min-width:22px;color:var(--acc);font-size:12px}
+.rbtn .dn{display:block;font-size:11px;color:var(--dim);margin-top:1px}
+.rbtn .tick{margin-left:auto;color:var(--ok);font-size:11px}
+/* ---- TOPBAR ---- */
+.top{position:sticky;top:0;z-index:40;background:rgba(14,17,32,.95);backdrop-filter:blur(10px);
+ border-bottom:1px solid var(--line);padding:13px 26px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.top h1{font-size:19px;font-weight:800}
+.top h1 em{font-style:normal;color:var(--acc)}
+.top .tta{font-size:13px;color:var(--pur);width:100%;margin-top:-4px}
+.badge{font-size:10.5px;padding:3px 9px;border-radius:20px;font-weight:800;letter-spacing:.4px}
+.b-Easy{background:rgba(61,220,151,.16);color:var(--ok)}
+.b-Medium{background:rgba(255,176,32,.16);color:var(--acc)}
+.b-Hard{background:rgba(255,92,122,.16);color:var(--no)}
+.mono{font-family:ui-monospace,Consolas,monospace;font-size:11px;color:var(--dim)}
+.navbtns{margin-left:auto;display:flex;gap:7px}
+.btn{background:var(--card);border:1px solid var(--line);color:var(--txt);padding:7px 13px;
+ border-radius:8px;font-size:12.5px;cursor:pointer;font-family:inherit;transition:.13s;white-space:nowrap}
+.btn:hover{border-color:var(--acc);color:var(--acc)}
+.btn.pri{background:var(--acc);color:#1a1405;border-color:var(--acc);font-weight:700}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+/* ---- STEP ---- */
+.body{padding:22px 26px;max-width:940px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;
+ overflow:hidden;box-shadow:var(--sh)}
+.sh{display:flex;gap:12px;align-items:center;padding:13px 16px;cursor:pointer;user-select:none;transition:.13s}
+.sh:hover{background:var(--card2)}
+.sn{min-width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;
+ background:linear-gradient(135deg,var(--acc),var(--acc2));color:#1a1405;font-weight:800;font-size:13px}
+.st{flex:1;font-weight:700;font-size:15px}
+.st small{display:block;font-weight:400;font-size:12px;color:var(--dim);margin-top:1px}
+.cv{color:var(--dim);transition:.2s;font-size:13px}
+.step.open .cv{transform:rotate(180deg)}
+.sb{display:none;padding:4px 16px 18px;border-top:1px solid var(--line)}
+.step.open .sb{display:block}
+/* ---- CONTENT BLOCKS ---- */
+.en{font-size:15px;margin:11px 0 3px}
+.ta{font-size:15.5px;color:#dcd2ff;margin:2px 0 1px}
+.tl{font-size:12.5px;color:var(--dim);font-style:italic;margin-bottom:9px}
+.hd{font-size:12.5px;font-weight:800;color:var(--acc);letter-spacing:.6px;text-transform:uppercase;margin:16px 0 5px}
+.box{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:9px 0}
+.box.gold{border-left:3px solid var(--acc);background:rgba(255,176,32,.07)}
+.box.blue{border-left:3px solid var(--blue)}
+.box.red{border-left:3px solid var(--no);background:rgba(255,92,122,.07)}
+.box.grn{border-left:3px solid var(--ok);background:rgba(61,220,151,.07)}
+.box.pur{border-left:3px solid var(--pur)}
+pre.dia{background:#0a0d1a;border:1px solid var(--line);border-radius:10px;padding:14px 16px;
+ font-family:ui-monospace,Consolas,monospace;font-size:13px;line-height:1.5;color:var(--acc);
+ overflow-x:auto;margin:10px 0;white-space:pre}
+/* ---- TABLES ---- */
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{background:var(--card2);font-size:11.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim)}
+td.w{color:var(--no)}td.c{color:var(--ok)}
+td.tam{color:#dcd2ff}
+.lvl{font-size:10px;padding:2px 7px;border-radius:12px;font-weight:800;white-space:nowrap}
+.l-Easy{background:rgba(61,220,151,.15);color:var(--ok)}
+.l-Medium{background:rgba(90,169,255,.15);color:var(--blue)}
+.l-Hard{background:rgba(255,176,32,.15);color:var(--acc)}
+.l-Expert{background:rgba(255,92,122,.15);color:var(--no)}
+/* ---- QUIZ ---- */
+.qz{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin:8px 0}
+.qz .qn{font-size:14px;font-weight:600;margin-bottom:8px}
+.qz .qn i{font-style:normal;color:var(--acc);margin-right:6px;font-weight:800}
+.ops{display:flex;gap:6px;flex-wrap:wrap}
+.op{background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:8px;
+ padding:6px 14px;font-size:13.5px;cursor:pointer;font-family:inherit;transition:.12s;min-width:74px}
+.op:hover{border-color:var(--acc)}
+.op.right{background:rgba(61,220,151,.18);border-color:var(--ok);color:var(--ok);font-weight:700}
+.op.wrong{background:rgba(255,92,122,.18);border-color:var(--no);color:var(--no)}
+.sol{display:none;margin-top:8px;font-size:12.5px;color:var(--dim);border-left:2px solid var(--line);padding-left:10px}
+.qz.done .sol{display:block}
+.scorebar{display:flex;gap:10px;align-items:center;background:var(--bg2);border:1px solid var(--acc);
+ border-radius:10px;padding:10px 14px;margin:12px 0;font-size:13.5px;flex-wrap:wrap}
+.scorebar b{color:var(--acc);font-size:17px}
+.bar{flex:1;min-width:120px;height:7px;background:var(--card);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--ok));transition:.35s}
+/* ---- AI PANEL ---- */
+.ai{background:linear-gradient(135deg,rgba(176,123,255,.11),rgba(90,169,255,.07));
+ border:1px solid rgba(176,123,255,.35);border-radius:12px;padding:15px 17px;margin:10px 0}
+.ai .who{font-size:12px;font-weight:800;color:var(--pur);letter-spacing:.8px;margin-bottom:9px}
+.ai p{margin-bottom:11px}
+/* ---- REVISION SHEET ---- */
+.rev{display:grid;grid-template-columns:150px 1fr;gap:1px;background:var(--line);
+ border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:10px 0;font-size:13.5px}
+.rev div{background:var(--bg2);padding:9px 13px}
+.rev div:nth-child(odd){color:var(--acc);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+/* ---- MISC ---- */
+.wordgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;margin:10px 0}
+.wc{background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:9px 11px}
+.wc b{display:block;font-size:14px;color:var(--blue)}
+.wc span{display:block;font-size:13.5px;color:#dcd2ff;margin-top:3px}
+.wc em{display:block;font-size:11.5px;color:var(--dim);font-style:italic}
+.think{display:grid;gap:6px;margin:9px 0}
+.think div{padding:8px 12px;border-radius:8px;font-size:13.5px}
+.think .bad{background:rgba(255,92,122,.09);border-left:3px solid var(--no)}
+.think .good{background:rgba(61,220,151,.09);border-left:3px solid var(--ok)}
+footer{padding:26px;text-align:center;color:var(--dim);font-size:12px;border-top:1px solid var(--line)}
+@media(max-width:880px){
+ .shell{flex-direction:column}
+ aside{width:100%;height:auto;position:relative;max-height:250px}
+ .body{padding:16px}.top{padding:12px 16px}.rev{grid-template-columns:1fr}
+}
+@media print{aside,.top .navbtns,.cv{display:none!important}.sb{display:block!important}
+ body{background:#fff;color:#000}.step{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside>
+  <div class="logo">CentuMania</div>
+  <h2>Articles — A, An, The</h2>
+  <div class="msub">Module 1 · 10 Micro-Classes · Rules 1–10</div>
+  <div class="rlist" id="rlist"></div>
+</aside>
+<main>
+  <div class="top">
+    <h1 id="tt"></h1>
+    <span class="badge" id="tdiff"></span>
+    <span class="mono" id="trc"></span>
+    <div class="navbtns">
+      <button class="btn" id="prev">← Prev</button>
+      <button class="btn" id="allopen">Open all steps</button>
+      <button class="btn pri" id="next">Next →</button>
+    </div>
+    <div class="tta" id="tta"></div>
+  </div>
+  <div class="body" id="body"></div>
+  <footer>CentuMania · Articles Micro-Classes · 15-step teaching format · Tamil + Tanglish</footer>
+</main>
+</div>
+
+<script>
+/* ============ COMPACT DATA FORMAT ============
+   s7  solved examples : "sentence|answer|Level|why"
+   s8  wrong vs right  : "wrong|correct|why"
+   s9  PYQ             : "Type|question|optA;optB;optC|ansIdx|solution"
+   s12 practice        : "sentence with ____|optA;optB|ansIdx"
+   s13 challenge       : "question|optA;optB;optC|ansIdx|solution"
+   s6  word-by-word    : "word|tamil|tanglish"
+============================================== */
+const RULES=[
+/* ========== RULE 1 ========== */
+{n:1,rc:"ART-01",d:"Easy",t:"Use A before a CONSONANT SOUND — not a consonant letter",
+ tam:"மெய் ஒலிக்கு முன் 'A' — எழுத்து அல்ல, ஒலி · Mey olikku mun 'A' — ezhuththu alla, oli",
+ s1:{en:"Use the article 'A' before a word that BEGINS WITH A CONSONANT SOUND. English articles follow the EAR, not the EYE. What matters is how the word is pronounced, not which letter it is spelt with.",
+  ta:"மெய் ஒலியில் தொடங்கும் சொல்லுக்கு முன் 'A' பயன்படுத்த வேண்டும். ஆங்கில article-கள் காதைப் பின்பற்றுகின்றன, கண்ணை அல்ல. அந்தச் சொல் எப்படி உச்சரிக்கப்படுகிறது என்பதுதான் முக்கியம், எந்த எழுத்தில் எழுதப்படுகிறது என்பது அல்ல.",
+  tl:"Mey oliyil thodangum sollukku mun 'A' payanpaduththa vendum. Aangila article-kal kaadhaip pinpatrugindrana, kannai alla. Andhach sol eppadi uchcharikkappadugiradhu enbadhudhaan mukkiyam.",
+  formula:"A  +  word beginning with a CONSONANT SOUND\n\n  a boy      (b sound)\n  a cat      (k sound)\n  a pen      (p sound)\n  a house    (h sound — H is pronounced here)\n\n  RULE: say the word aloud FIRST, then choose."},
+
+ s2:[
+ {h:"The ear decides, not the eye",
+  en:"This is the single most important idea in the whole Articles module. Do not look at the first LETTER. Say the word aloud and listen to the first SOUND. If your mouth makes a consonant sound, use A.",
+  ta:"இது முழு Articles module-லும் மிக முக்கியமான கருத்து. முதல் எழுத்தைப் பார்க்காதீர்கள். சொல்லை உரக்கச் சொல்லி முதல் ஒலியைக் கேளுங்கள். உங்கள் வாய் ஒரு மெய் ஒலியை உருவாக்கினால், A பயன்படுத்துங்கள்.",
+  tl:"Idhu muzhu Articles module-lum miga mukkiyamaana karuththu. Mudhal ezhuththaip paarkkaadheergal. Sollai urakkach solli mudhal oliyaik kelungal. Ungal vaay oru mey oliyai uruvaakkinaal, A payanpaduththungal."},
+ {h:"Why 'a' exists at all",
+  en:"'A' and 'AN' are the same word. English split them only to make speech smooth. Saying 'a apple' forces two vowel sounds to collide, which is hard for the mouth. So English inserts an N. That is the entire origin of the rule.",
+  ta:"'A' மற்றும் 'AN' ஒரே சொல்தான். பேச்சு மென்மையாக இருக்க வேண்டும் என்பதற்காக மட்டுமே ஆங்கிலம் அவற்றைப் பிரித்தது. 'a apple' என்று சொல்வது இரண்டு உயிர் ஒலிகளை மோதவைக்கிறது, அது வாய்க்குக் கடினம். எனவே ஆங்கிலம் ஒரு N-ஐச் சேர்க்கிறது. இதுதான் இந்த விதியின் முழு தோற்றம்.",
+  tl:"'A' matrum 'AN' ore sol-dhaan. Pechu menmaiyaaga irukka vendum enbadharkaaga mattume Aangilam avatraip piriththadhu. 'a apple' endru solvadhu irandu uyir oligalai modhavaikkiradhu, adhu vaaykkuk kadinam. Enave Aangilam oru N-aich serkkiradhu."},
+ {h:"A / AN is used only with SINGULAR COUNTABLE nouns",
+  en:"'A' and 'an' mean 'one'. So they can never be used with plural nouns ('a books' is impossible) or with uncountable nouns ('an advice', 'a furniture' are both wrong). This is worth remembering before you even reach the sound question.",
+  ta:"'A' மற்றும் 'an' என்றால் 'ஒன்று' என்று பொருள். எனவே அவை ஒருபோதும் பன்மைப் பெயர்ச்சொற்களுடன் ('a books' சாத்தியமில்லை) அல்லது எண்ண முடியாத பெயர்ச்சொற்களுடன் ('an advice', 'a furniture' இரண்டுமே தவறு) பயன்படுத்தப்பட முடியாது. ஒலி கேள்விக்கு வருவதற்கு முன்பே இதை நினைவில் வைக்க வேண்டும்.",
+  tl:"'A' matrum 'an' endraal 'ondru' endru porul. Enave avai orupodhum panmaip peyarchorkaludan ('a books' saadhiyamillai) alladhu enna mudiyaadha peyarchorkaludan ('an advice', 'a furniture' irandume thavaru) payanpaduththappada mudiyaadhu."}],
+
+ s3:[
+ {h:"Ear over eye",
+  d:"           👁️  EYE  says: look at the LETTER   ✘\n           👂  EAR  says: listen to the SOUND   ✔\n\n   a  boy      →  /b/  consonant sound  →  A  ✔\n   a  cat      →  /k/  consonant sound  →  A  ✔\n   a  house    →  /h/  consonant sound  →  A  ✔\n\n   ALWAYS SAY THE WORD ALOUD FIRST."},
+ {h:"Why the N was invented",
+  d:"   a  apple   →  \"uh-apple\"   😖  two vowels collide\n   an apple   →  \"un-apple\"   😊  smooth\n\n   The N is a bridge between two vowel sounds.\n   That is the ONLY reason AN exists."}],
+
+ s4:{
+ wrong:["\"The word starts with the letter B, so use A.\" — Correct answer, but WRONG reasoning. It works by accident here and will fail you on 'university' and 'hour'.",
+  "\"I will memorise which words take A and which take AN.\" — There are thousands of words. Learn the SOUND principle instead.",
+  "\"A and AN are different words with different meanings.\" — They are the same word. Only pronunciation splits them.",
+  "\"I can use 'a' with any noun.\" — Only with singular countable nouns. 'A furniture' and 'a books' are both impossible."],
+ right:["Say the word aloud in your head before choosing.",
+  "Ask: is the FIRST SOUND a consonant sound or a vowel sound?",
+  "Consonant sound → A. Vowel sound → AN. Spelling is irrelevant.",
+  "Also check: is the noun singular and countable? If not, no a/an at all."]},
+
+ s5:[
+ {en:"I saw a dog near the gate.",ta:"வாசலுக்கு அருகில் ஒரு நாயைப் பார்த்தேன்.",tl:"Vaasalukku arugil oru naayaip paarththen.",note:"'Dog' begins with the /d/ consonant sound → A."},
+ {en:"He bought a pen yesterday.",ta:"அவர் நேற்று ஒரு பேனா வாங்கினார்.",tl:"Avar netru oru penaa vaanginaar.",note:"'Pen' begins with /p/ → A."},
+ {en:"She is a brilliant officer.",ta:"அவர் ஒரு சிறந்த அதிகாரி.",tl:"Avar oru sirandha adhigaari.",note:"'Brilliant' begins with /b/ → A. The adjective, not the noun, decides."},
+ {en:"They live in a house near the temple.",ta:"அவர்கள் கோயிலுக்கு அருகில் ஒரு வீட்டில் வசிக்கிறார்கள்.",tl:"Avargal koyilukku arugil oru veettil vasikkiraargal.",note:"The H in 'house' IS pronounced → consonant sound → A."}],
+
+ s6:["a|ஒரு|Oru",
+  "an|ஒரு (உயிர் ஒலிக்கு முன்)|Oru (uyir olikku mun)",
+  "consonant sound|மெய் ஒலி|Mey oli",
+  "vowel sound|உயிர் ஒலி|Uyir oli",
+  "boy|பையன்|Paiyan",
+  "cat|பூனை|Poonai",
+  "dog|நாய்|Naay",
+  "pen|பேனா|Penaa",
+  "house|வீடு|Veedu",
+  "brilliant|சிறந்த|Sirandha",
+  "officer|அதிகாரி|Adhigaari",
+  "bought|வாங்கினார்|Vaanginaar"],
+
+ s7:[
+ "He has ____ book in his bag.|a|Easy|'Book' begins with /b/.",
+ "She saw ____ cat on the wall.|a|Easy|'Cat' begins with /k/.",
+ "I need ____ pen to write.|a|Easy|'Pen' begins with /p/.",
+ "That is ____ tall building.|a|Easy|'Tall' begins with /t/.",
+ "He is ____ good teacher.|a|Medium|The adjective 'good' decides, not 'teacher'.",
+ "They bought ____ new car.|a|Medium|'New' begins with /n/.",
+ "She wore ____ beautiful saree.|a|Medium|'Beautiful' begins with /b/.",
+ "He gave me ____ hundred rupees.|a|Medium|'Hundred' begins with the /h/ sound.",
+ "It was ____ historic decision.|a|Hard|The H in 'historic' is pronounced.",
+ "This is ____ hotel, not a lodge.|a|Hard|The H in 'hotel' is pronounced.",
+ "He is ____ member of parliament.|a|Hard|'Member' begins with /m/.",
+ "She has ____ unique talent.|a|Hard|'Unique' begins with the /yu/ consonant sound.",
+ "It was ____ one-day match.|a|Expert|'One' is pronounced 'wun' — a consonant sound.",
+ "He works in ____ European company.|a|Expert|'European' begins with /yu/.",
+ "That was ____ useful suggestion.|a|Expert|'Useful' begins with /yu/."],
+
+ s8:[
+ "He bought an pen.|He bought a pen.|'Pen' begins with a consonant sound.",
+ "I saw an dog.|I saw a dog.|'Dog' begins with /d/.",
+ "She is an brilliant student.|She is a brilliant student.|'Brilliant' begins with /b/.",
+ "It was an tall building.|It was a tall building.|'Tall' begins with /t/.",
+ "He stayed in an hotel.|He stayed in a hotel.|The H in 'hotel' is pronounced.",
+ "It was an historic day.|It was a historic day.|The H in 'historic' is pronounced.",
+ "He gave me an hundred rupees.|He gave me a hundred rupees.|The H in 'hundred' is pronounced.",
+ "She has an unique voice.|She has a unique voice.|'Unique' begins with the /yu/ sound.",
+ "He bought a books yesterday.|He bought a book yesterday.|'A' is used only with singular countable nouns.",
+ "She gave me a advice.|She gave me a piece of advice.|'Advice' is uncountable and takes no article."],
+
+ s9:[
+ "Fill in the Blank|He is ____ member of the state legislative assembly.|a;an|0|'Member' begins with the /m/ consonant sound.",
+ "Find the Error|She checked into (A) an hotel (B) near the railway station (C) last night (D).|A;B;C;D|1|Part B. The H in 'hotel' is pronounced → 'a hotel'.",
+ "Sentence Improvement|It was an historic victory for the Indian team.|an historic;a historic;the historic|1|The H in 'historic' is pronounced.",
+ "Fill in the Blank|The minister made ____ one-hour speech at the function.|a;an|0|'One' is pronounced 'wun', a consonant sound.",
+ "Find the Error|He gave me (A) an useful book (B) on Indian history (C) last week (D).|A;B;C;D|1|Part B. 'Useful' begins with /yu/ → 'a useful book'."],
+
+ s10:{
+  en:"The exam NEVER tests the obvious case. It will not ask you about 'a boy'. It will pick words where the LETTER and the SOUND disagree — university, one, European, useful, hour, honest, MLA, hotel, historic. Students who learnt the rule as 'consonant LETTER takes A' get every single one of these wrong. Students who learnt it as 'consonant SOUND takes A' get every one right.",
+  ta:"தேர்வு ஒருபோதும் வெளிப்படையான வழக்கைச் சோதிப்பதில்லை. 'a boy' பற்றி கேட்காது. எழுத்தும் ஒலியும் ஒத்துப்போகாத சொற்களைத்தான் தேர்ந்தெடுக்கும் — university, one, European, useful, hour, honest, MLA, hotel, historic. 'மெய் எழுத்துக்கு A' என்று விதியைக் கற்றுக்கொண்ட மாணவர்கள் இவை ஒவ்வொன்றையும் தவறாகச் செய்வார்கள். 'மெய் ஒலிக்கு A' என்று கற்றுக்கொண்டவர்கள் ஒவ்வொன்றையும் சரியாகச் செய்வார்கள்.",
+  tl:"Thervu orupodhum velippadaiyaana vazhakkaich sodhippadhillai. 'a boy' patri ketkaadhu. Ezhuththum oliyum oththuppogaadha sorkalaith-thaan therndhedukkum — university, one, European, useful, hour, honest, MLA, hotel, historic."},
+
+ s11:{
+  en:"SAY IT ALOUD. Your mouth already knows the answer. A = Consonant Sound.",
+  ta:"உரக்கச் சொல்லிப் பாருங்கள். உங்கள் வாய்க்கு ஏற்கனவே பதில் தெரியும். A = மெய் ஒலி.",
+  tl:"Urakkach sollip paarungal. Ungal vaaykku erkanave padhil theriyum. A = Mey oli.",
+  vis:"      THE ALOUD TEST\n\n   Step 1: cover the blank with your finger\n   Step 2: say the NEXT WORD out loud\n   Step 3: listen to the very first sound\n\n   Mouth closes / touches → CONSONANT → A\n   Mouth opens wide      → VOWEL     → AN\n\n   b, k, p, t, d, m, n, s, h(spoken), y, w  →  A\n\n   MEMORY LINE:  \"A = Consonant Sound.\""},
+
+ s12:[
+ "He has ____ book in his hand.|a;an|0",
+ "She saw ____ cat in the garden.|a;an|0",
+ "I need ____ pen right now.|a;an|0",
+ "That is ____ tall tower.|a;an|0",
+ "He is ____ good doctor.|a;an|0",
+ "They bought ____ new house.|a;an|0",
+ "She wore ____ red dress.|a;an|0",
+ "He gave me ____ hundred rupees.|a;an|0",
+ "It was ____ historic moment.|a;an|0",
+ "He stayed in ____ hotel.|a;an|0",
+ "She is ____ member of the club.|a;an|0",
+ "He has ____ unique style.|a;an|0",
+ "It was ____ one-day tour.|a;an|0",
+ "He works for ____ European firm.|a;an|0",
+ "That is ____ useful idea.|a;an|0",
+ "I met ____ young boy there.|a;an|0",
+ "She is ____ university student.|a;an|0",
+ "He made ____ wise decision.|a;an|0",
+ "It is ____ national holiday.|a;an|0",
+ "He is ____ famous writer.|a;an|0"],
+
+ s13:[
+ "He is ____ honest man who works in ____ university near our town.|a-an;an-a;an-an|1|'Honest' has a silent H → AN. 'University' begins with /yu/ → A.",
+ "She gave ____ useful suggestion, but nobody paid ____ attention to it.|a-an;a-no article;an-the|1|'Useful' → A. 'Attention' here is uncountable and needs no article.",
+ "It was ____ one-hour meeting attended by ____ MLA from our district.|a-an;an-a;a-a|0|'One' sounds like 'wun' → A. 'MLA' is read 'em-el-ay' → AN.",
+ "He checked into ____ hotel and stayed there for ____ hour before leaving.|an-a;a-an;a-a|1|The H in 'hotel' is spoken → A. The H in 'hour' is silent → AN.",
+ "____ European delegation visited ____ historic fort last Sunday.|An-an;A-a;A-an|1|'European' → A. 'Historic' has a spoken H → A."],
+
+ s14:{
+  rule:"Use A before a word beginning with a CONSONANT SOUND.",
+  formula:"A + consonant SOUND (not consonant letter)",
+  memory:"A = Consonant Sound. Say the word aloud before choosing.",
+  ta:"A = மெய் ஒலி. சொல்லை உரக்கச் சொல்லிட்டு அப்புறம் தேர்ந்தெடுங்க.",
+  tl:"A = Mey oli. Sollai urakkach sollittu appuram therndhedunga.",
+  mistake:"Looking at the first LETTER instead of listening to the first SOUND.",
+  exam:"SSC CGL / CHSL / MTS, RRB NTPC, Bank — the foundation of every article question."},
+
+ s15:[
+ {ta:"வாங்க, Articles-ஐ ஆரம்பிக்கலாம். இது ரொம்ப எளிமையான rule மாதிரி தெரியும், ஆனா SSC-ல ஒவ்வொரு வருஷமும் நிறைய பேரு இதுல mark இழக்கிறாங்க. ஏன் தெரியுமா? ஏன்னா நாம school-ல ஒரு தப்பான rule கத்துக்கிட்டோம்.",
+  tl:"Vaanga, Articles-ai aarambikkalaam. Idhu romba elimaiyaana rule maadhiri theriyum, aanaa SSC-la ovvoru varushamum neraiya peru idhula mark izhakkiraanga. Yen theriyumaa? Yennaa naama school-la oru thappaana rule kaththukkittom."},
+ {ta:"நமக்கு சொல்லிக் கொடுத்தது என்ன? 'a, e, i, o, u-க்கு முன்னாடி AN, மத்ததுக்கு A.' இது எழுத்தை வெச்சு சொல்லப்பட்ட rule. இது 80% நேரம் வேலை செய்யும். ஆனா SSC அந்த மீதி 20%-ஐ மட்டும்தான் கேட்குது.",
+  tl:"Namakku sollik koduththadhu enna? 'a, e, i, o, u-kku munnaadi AN, maththadhukku A.' Idhu ezhuththai vechu sollappatta rule. Idhu 80% neram velai seyyum. Aanaa SSC andha meedhi 20%-ai mattum-dhaan ketkudhu."},
+ {ta:"சரியான rule என்னன்னா — எழுத்து இல்ல, ஒலி. உங்க கண்ணை நம்பாதீங்க, உங்க காதை நம்புங்க. ஒரு சொல்லை பார்த்தவுடனே மனசுக்குள்ள உரக்கச் சொல்லிப் பாருங்க. முதல்ல வர்ற ஒலி என்ன? அது மெய் ஒலியா, உயிர் ஒலியா?",
+  tl:"Sariyaana rule ennannaa — ezhuththu illa, oli. Unga kannai nambaadheenga, unga kaadhai nambunga. Oru sollai paarththavudane manasukkulla urakkach sollip paarunga. Mudhalla varra oli enna? Adhu mey oliyaa, uyir oliyaa?"},
+ {ta:"'Boy' — 'ப்' அப்படிங்கிற ஒலியில ஆரம்பிக்குது. உதடு மூடுது. மெய் ஒலி. A. 'Cat' — 'க்'. நாக்கு தொடுது. மெய் ஒலி. A. 'Apple' — 'அ'. வாய் திறக்குது, எதுவும் தொடல. உயிர் ஒலி. AN. இதை உங்க வாயே சொல்லிடும். மனப்பாடம் பண்ண வேணாம்.",
+  tl:"'Boy' — 'p' appadingira oliyila aarambikkudhu. Udhadu moodudhu. Mey oli. A. 'Cat' — 'k'. Naakku thodudhu. Mey oli. A. 'Apple' — 'a'. Vaay thirakkudhu, edhuvum thodala. Uyir oli. AN."},
+ {ta:"ஏன் இப்படி ஒரு விதி இருக்கு? ஒரு சின்ன வரலாறு சொல்லுறேன். 'A' மற்றும் 'AN' ரெண்டும் உண்மையில ஒரே வார்த்தைதான். 'a apple' அப்படின்னு சொல்லிப் பாருங்க — 'உ-ஆப்பிள்'. ரெண்டு உயிர் ஒலி மோதுது, வாய்க்கு கஷ்டமா இருக்கு. அதனால ஆங்கிலம் ஒரு 'n' நடுவுல போட்டு 'an apple' ஆக்கிடுச்சு. அவ்ளோதான். இந்த rule முழுக்க முழுக்க வசதிக்காக உருவானது, தர்க்கத்துக்காக இல்ல.",
+  tl:"Yen ippadi oru vidhi irukku? Oru chinna varalaaru solluren. 'A' matrum 'AN' rendum unmaiyila ore vaarththai-dhaan. 'a apple' appadinnu sollip paarunga — 'u-apple'. Rendu uyir oli modhudhu, vaaykku kashtamaa irukku. Adhanaala Aangilam oru 'n' naduvula pottu 'an apple' aakkiduchu."},
+ {ta:"கடைசியா ஒரு எச்சரிக்கை. 'A' மற்றும் 'AN' அப்படின்னா 'ஒன்று' அப்படிங்கிற அர்த்தம். அதனால ஒருமை மற்றும் எண்ணக்கூடிய பெயர்ச்சொல்லோட மட்டும்தான் வரும். 'a books' — தப்பு, பன்மை. 'an advice' — தப்பு, advice எண்ண முடியாதது. 'a furniture' — தப்பு. இதையும் மனசுல வெச்சுக்கோங்க, ஏன்னா SSC இதையும் சேர்த்து கேட்கும்.",
+  tl:"Kadaisiyaa oru echcharikkai. 'A' matrum 'AN' appadinnaa 'ondru' appadingira arththam. Adhanaala orumai matrum ennakkoodiya peyarcholoda mattum-dhaan varum. 'a books' — thappu, panmai. 'an advice' — thappu, advice enna mudiyaadhadhu."}]},
+
+/* ========== RULE 2 ========== */
+{n:2,rc:"ART-02",d:"Easy",t:"Use AN before a VOWEL SOUND",
+ tam:"உயிர் ஒலிக்கு முன் 'AN' · Uyir olikku mun 'AN'",
+ s1:{en:"Use the article 'AN' before a word that BEGINS WITH A VOWEL SOUND — the sounds of a, e, i, o, u. Again, it is the SOUND that matters, not the letter.",
+  ta:"உயிர் ஒலியில் தொடங்கும் சொல்லுக்கு முன் 'AN' பயன்படுத்த வேண்டும் — a, e, i, o, u ஆகியவற்றின் ஒலிகள். மீண்டும், ஒலிதான் முக்கியம், எழுத்து அல்ல.",
+  tl:"Uyir oliyil thodangum sollukku mun 'AN' payanpaduththa vendum — a, e, i, o, u aagiyavatrin oligal. Meendum, oli-dhaan mukkiyam, ezhuththu alla.",
+  formula:"AN  +  word beginning with a VOWEL SOUND\n\n  an apple     (a sound)\n  an egg       (e sound)\n  an idea      (i sound)\n  an orange    (o sound)\n  an umbrella  (u sound)\n  an MLA       (spelt M, but read 'EM')"},
+
+ s2:[
+ {h:"Abbreviations are the real test",
+  en:"When a word is an abbreviation, you read the LETTER NAME aloud. M is read 'em', F is read 'ef', S is read 'es', L is read 'el', N is read 'en', X is read 'ex', R is read 'ar'. All of these begin with a vowel sound, so they take AN.",
+  ta:"சுருக்கெழுத்துக்கள்தான் உண்மையான சோதனை. ஒரு சொல் சுருக்கெழுத்தாக இருந்தால், நீங்கள் எழுத்தின் பெயரை உரக்கப் படிக்கிறீர்கள். M = 'எம்', F = 'எஃப்', S = 'எஸ்', L = 'எல்', N = 'என்', X = 'எக்ஸ்', R = 'ஆர்'. இவை அனைத்தும் உயிர் ஒலியில் தொடங்குகின்றன, எனவே AN எடுக்கும்.",
+  tl:"Surukkezhuththukkal-dhaan unmaiyaana sodhanai. Oru sol surukkezhuththaaga irundhaal, neengal ezhuththin peyarai urakkap padikkireergal. M = 'em', F = 'ef', S = 'es', L = 'el', N = 'en', X = 'ex', R = 'ar'."},
+ {h:"The high-frequency AN abbreviations",
+  en:"an MLA, an MP, an MBA, an MBBS, an FIR, an SDM, an SP, an SSC exam, an NGO, an LIC policy, an X-ray, an RTI application, an IAS officer, an IPS officer, an ATM card, an HR manager, an NCC cadet.",
+  ta:"அடிக்கடி வரும் AN சுருக்கெழுத்துக்கள்: an MLA, an MP, an MBA, an MBBS, an FIR, an SDM, an SP, an SSC exam, an NGO, an LIC policy, an X-ray, an RTI application, an IAS officer, an ATM card, an HR manager.",
+  tl:"Adikkadi varum AN surukkezhuththukkal: an MLA, an MP, an MBA, an MBBS, an FIR, an SDM, an SP, an NGO, an LIC policy, an X-ray, an RTI application, an IAS officer, an ATM card."},
+ {h:"But some abbreviations take A",
+  en:"B, C, D, G, J, K, P, Q, T, U, V, W, Y, Z all begin with consonant sounds when read aloud. So: a BA degree, a CBI enquiry, a PhD, a TV set, a UPSC exam, a UN report, a VIP, a BSc degree.",
+  ta:"ஆனால் சில சுருக்கெழுத்துக்கள் A எடுக்கும். B, C, D, G, J, K, P, Q, T, U, V, W, Y, Z — இவை உரக்கப் படிக்கும்போது மெய் ஒலியில் தொடங்குகின்றன. எனவே: a BA degree, a CBI enquiry, a PhD, a TV set, a UPSC exam, a UN report, a VIP.",
+  tl:"Aanaal sila surukkezhuththukkal A edukkum. B, C, D, G, J, K, P, Q, T, U, V, W, Y, Z — ivai urakkap padikkumbodhu mey oliyil thodangugindrana. Enave: a BA degree, a CBI enquiry, a PhD, a TV set, a UPSC exam."}],
+
+ s3:[
+ {h:"Say the letter name, not the letter",
+  d:"   MLA   →  read aloud  →  \"EM-el-ay\"   →  E sound  →  AN ✔\n   BA    →  read aloud  →  \"BEE-ay\"     →  B sound  →  A  ✔\n   FIR   →  read aloud  →  \"EF-eye-ar\"  →  E sound  →  AN ✔\n   TV    →  read aloud  →  \"TEE-vee\"    →  T sound  →  A  ✔\n\n   ALWAYS SPELL THE FIRST LETTER OUT LOUD."},
+ {h:"The two abbreviation families",
+  d:"  TAKE 'AN' (letter name starts with a vowel)\n  A, E, F, H, I, L, M, N, O, R, S, X\n  → an MLA, an FIR, an SP, an NGO, an X-ray, an RTI\n\n  TAKE 'A' (letter name starts with a consonant)\n  B, C, D, G, J, K, P, Q, T, U, V, W, Y, Z\n  → a BA, a CBI case, a PhD, a TV, a UPSC exam, a VIP"}],
+
+ s4:{
+ wrong:["\"MLA starts with M, and M is a consonant letter, so use A.\" — You do not say 'muh-LA'. You say 'EM-el-ay'.",
+  "\"All abbreviations take the same article.\" — It depends entirely on how the first letter is pronounced.",
+  "\"'An' is only for a, e, i, o, u letters.\" — It is for a, e, i, o, u SOUNDS, wherever they come from."],
+ right:["Spell the first letter aloud: M is 'em', F is 'ef', S is 'es'.",
+  "If the letter name begins with a vowel sound → AN.",
+  "Memorise the AN family: A E F H I L M N O R S X."]},
+
+ s5:[
+ {en:"I ate an apple after lunch.",ta:"மதிய உணவுக்குப் பிறகு ஒரு ஆப்பிள் சாப்பிட்டேன்.",tl:"Madhiya unavukkup piragu oru apple saappitten.",note:"'Apple' begins with the /a/ vowel sound → AN."},
+ {en:"He bought an umbrella before the rain started.",ta:"மழை தொடங்குவதற்கு முன் அவர் ஒரு குடை வாங்கினார்.",tl:"Mazhai thodanguvadharku mun avar oru kudai vaanginaar.",note:"'Umbrella' begins with /u/ → AN."},
+ {en:"He is an MLA from our district.",ta:"அவர் எங்கள் மாவட்டத்தின் ஒரு சட்டமன்ற உறுப்பினர்.",tl:"Avar engal maavattaththin oru sattamandra uruppinar.",note:"M is read 'em' — a vowel sound → AN."},
+ {en:"The police registered an FIR against him.",ta:"காவல்துறை அவருக்கு எதிராக ஒரு முதல் தகவல் அறிக்கையைப் பதிவு செய்தது.",tl:"Kaavalthurai avarukku edhiraaga oru mudhal thagaval arikkaiyaip padhivu seydhadhu.",note:"F is read 'ef' → AN."},
+ {en:"She is doing a BA in Economics.",ta:"அவர் பொருளியலில் இளங்கலைப் பட்டம் படித்து வருகிறார்.",tl:"Avar poruliyalil ilangalaip pattam padiththu varugiraar.",note:"B is read 'bee' — a consonant sound → A."}],
+
+ s6:["an apple|ஒரு ஆப்பிள்|Oru apple",
+  "an egg|ஒரு முட்டை|Oru muttai",
+  "an idea|ஒரு யோசனை|Oru yosanai",
+  "an orange|ஒரு ஆரஞ்சு|Oru orange",
+  "an umbrella|ஒரு குடை|Oru kudai",
+  "an MLA|ஒரு சட்டமன்ற உறுப்பினர்|Oru sattamandra uruppinar",
+  "an FIR|ஒரு முதல் தகவல் அறிக்கை|Oru mudhal thagaval arikkai",
+  "an NGO|ஒரு தன்னார்வ அமைப்பு|Oru thannaarva amaippu",
+  "an X-ray|ஒரு எக்ஸ்-ரே|Oru X-ray",
+  "a BA|ஒரு இளங்கலைப் பட்டம்|Oru ilangalaip pattam",
+  "a TV|ஒரு தொலைக்காட்சி|Oru tholaikkaatchi",
+  "registered|பதிவு செய்தது|Padhivu seydhadhu"],
+
+ s7:[
+ "I ate ____ apple this morning.|an|Easy|Vowel sound /a/.",
+ "She has ____ idea about it.|an|Easy|Vowel sound /i/.",
+ "He bought ____ umbrella.|an|Easy|Vowel sound /u/.",
+ "There is ____ egg in the basket.|an|Easy|Vowel sound /e/.",
+ "He is ____ MLA from Salem.|an|Medium|M is read 'em'.",
+ "They filed ____ FIR yesterday.|an|Medium|F is read 'ef'.",
+ "She works for ____ NGO.|an|Medium|N is read 'en'.",
+ "He took ____ X-ray of his leg.|an|Medium|X is read 'ex'.",
+ "She completed ____ MBA last year.|an|Hard|M is read 'em'.",
+ "He is doing ____ BA in History.|a|Hard|B is read 'bee'.",
+ "It is ____ UPSC examination.|a|Hard|U here is read 'yu'.",
+ "He filed ____ RTI application.|an|Hard|R is read 'ar'.",
+ "She bought ____ TV set yesterday.|a|Expert|T is read 'tee'.",
+ "He is ____ IAS officer of this district.|an|Expert|I is read 'eye'.",
+ "The CBI began ____ enquiry into the case.|an|Expert|'Enquiry' begins with /e/."],
+
+ s8:[
+ "I ate a apple.|I ate an apple.|'Apple' begins with a vowel sound.",
+ "He bought a umbrella.|He bought an umbrella.|'Umbrella' begins with /u/.",
+ "She has a idea.|She has an idea.|'Idea' begins with /i/.",
+ "He is a MLA.|He is an MLA.|M is read 'em', a vowel sound.",
+ "They filed a FIR.|They filed an FIR.|F is read 'ef'.",
+ "She works for a NGO.|She works for an NGO.|N is read 'en'.",
+ "He took a X-ray.|He took an X-ray.|X is read 'ex'.",
+ "She completed an BA degree.|She completed a BA degree.|B is read 'bee', a consonant sound.",
+ "He is preparing for an UPSC exam.|He is preparing for a UPSC exam.|U here is read 'yu'.",
+ "He bought an TV.|He bought a TV.|T is read 'tee'."],
+
+ s9:[
+ "Fill in the Blank|The victim lodged ____ FIR at the local police station.|a;an|1|F is read 'ef', a vowel sound.",
+ "Find the Error|He is (A) a MLA (B) who has represented (C) this constituency twice (D).|A;B;C;D|1|Part B. M is read 'em' → 'an MLA'.",
+ "Sentence Improvement|She is preparing for an UPSC examination next year.|an UPSC;a UPSC;the UPSC|1|U in UPSC is read 'yu', a consonant sound.",
+ "Fill in the Blank|The doctor advised him to take ____ X-ray of his chest.|a;an|1|X is read 'ex'.",
+ "Find the Error|He completed (A) an BA degree (B) before joining (C) the army (D).|A;B;C;D|1|Part B. B is read 'bee' → 'a BA degree'."],
+
+ s10:{
+  en:"Abbreviations are where this rule is actually tested. 'An MLA', 'an FIR', 'an SP', 'an NGO' all look wrong to the eye because they begin with consonant letters. Meanwhile 'a UPSC exam' and 'a BA degree' look wrong for the opposite reason. The exam picks exactly these. The fix is mechanical: spell the first letter out loud before you choose.",
+  ta:"சுருக்கெழுத்துக்களில்தான் இந்த விதி உண்மையில் சோதிக்கப்படுகிறது. 'An MLA', 'an FIR', 'an SP', 'an NGO' — இவை அனைத்தும் மெய் எழுத்தில் தொடங்குவதால் கண்ணுக்குத் தவறாகத் தெரியும். அதே சமயம் 'a UPSC exam' மற்றும் 'a BA degree' நேர் எதிர் காரணத்தால் தவறாகத் தெரியும். தேர்வு சரியாக இவற்றைத்தான் தேர்ந்தெடுக்கும். தீர்வு எந்திரத்தனமானது: தேர்ந்தெடுப்பதற்கு முன் முதல் எழுத்தை உரக்கச் சொல்லுங்கள்.",
+  tl:"Surukkezhuththukkalil-dhaan indha vidhi unmaiyil sodhikkappadugiradhu. 'An MLA', 'an FIR', 'an SP', 'an NGO' — ivai anaiththum mey ezhuththil thodanguvadhaal kannukkuth thavaraagath theriyum. Theervu endhiraththanamaanadhu: therndhedupparku mun mudhal ezhuththai urakkach sollungal."},
+
+ s11:{
+  en:"SPELL THE LETTER ALOUD. M is 'EM'. F is 'EF'. S is 'ES'. All vowel sounds → AN.",
+  ta:"எழுத்தை உரக்கச் சொல்லுங்கள். M = 'எம்'. F = 'எஃப்'. S = 'எஸ்'. எல்லாம் உயிர் ஒலிகள் → AN.",
+  tl:"Ezhuththai urakkach sollungal. M = 'em'. F = 'ef'. S = 'es'. Ellaam uyir oligal → AN.",
+  vis:"     THE AN-FAMILY OF LETTERS\n\n     A  E  F  H  I  L  M  N  O  R  S  X\n     ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓  ↓\n    ay ee ef aitch eye el em en oh ar es ex\n         ALL START WITH A VOWEL SOUND\n\n  MEMORY SENTENCE (say it daily):\n  \"AN MLA filed AN FIR with AN SP of AN NGO.\"\n\n  EVERYTHING ELSE (B C D G J K P Q T U V W Y Z) → A\n  \"A BA, A CBI case, A PhD, A TV, A UPSC exam.\""},
+
+ s12:[
+ "I ate ____ apple today.|a;an|1",
+ "She has ____ excellent plan.|a;an|1",
+ "He opened ____ umbrella.|a;an|1",
+ "There is ____ egg on the plate.|a;an|1",
+ "He is ____ MLA from Trichy.|a;an|1",
+ "They lodged ____ FIR at once.|a;an|1",
+ "She works in ____ NGO.|a;an|1",
+ "He took ____ X-ray yesterday.|a;an|1",
+ "She has ____ MBA from Delhi.|a;an|1",
+ "He is doing ____ BA in Tamil.|a;an|0",
+ "It is ____ UPSC examination.|a;an|0",
+ "He filed ____ RTI application.|a;an|1",
+ "She bought ____ TV last month.|a;an|0",
+ "He is ____ IAS officer.|a;an|1",
+ "The bank issued ____ ATM card.|a;an|1",
+ "He met ____ SP of the district.|a;an|1",
+ "She holds ____ PhD in Physics.|a;an|0",
+ "It was ____ ordinary day.|a;an|1",
+ "He is ____ VIP guest here.|a;an|0",
+ "She gave ____ honest answer.|a;an|1"],
+
+ s13:[
+ "He is ____ MLA who once worked as ____ SDM in this district.|a-a;an-an;an-a|1|M is 'em' → AN. S is 'es' → AN.",
+ "She completed ____ MBA after finishing ____ BA in Economics.|an-a;a-an;an-an|0|M is 'em' → AN. B is 'bee' → A.",
+ "The victim filed ____ FIR, and ____ SP ordered ____ enquiry immediately.|a-a-an;an-an-an;an-a-an|1|F is 'ef', S is 'es', and 'enquiry' begins with /e/ — all AN.",
+ "He is ____ IAS officer preparing ____ RTI reply for ____ NGO.|an-an-an;a-a-a;an-a-an|0|I is 'eye', R is 'ar', N is 'en' — all vowel sounds.",
+ "She bought ____ TV and ____ AC before ____ UPSC result was declared.|an-a-a;a-an-the;a-an-a|1|T is 'tee' → A. A is 'ay' → AN. 'The UPSC result' is a specific known result → THE."],
+
+ s14:{
+  rule:"Use AN before a word beginning with a VOWEL SOUND, including abbreviations read as letters.",
+  formula:"AN + vowel SOUND. Letters A E F H I L M N O R S X → AN",
+  memory:"Spell the letter aloud. 'AN MLA filed AN FIR with AN SP.'",
+  ta:"எழுத்தை உரக்கச் சொல்லுங்க. 'AN MLA filed AN FIR with AN SP.'",
+  tl:"Ezhuththai urakkach sollunga. 'AN MLA filed AN FIR with AN SP.'",
+  mistake:"Writing 'a MLA' and 'a FIR' because the words begin with consonant letters.",
+  exam:"SSC CGL / CHSL / MTS, RRB, Bank — abbreviations appear almost every year."},
+
+ s15:[
+ {ta:"Rule 1-ல நாம கத்துக்கிட்டோம் — ஒலிதான் முக்கியம், எழுத்து இல்ல. இப்போ அதே கொள்கையை AN-க்கு பயன்படுத்தலாம். ஆனா இங்க ஒரு புது விஷயம் இருக்கு — சுருக்கெழுத்து. இதுதான் SSC-ஓட உண்மையான களம்.",
+  tl:"Rule 1-la naama kaththukkittom — oli-dhaan mukkiyam, ezhuththu illa. Ippo adhe kolgaiyai AN-kku payanpaduththalaam. Aanaa inga oru pudhu vishayam irukku — surukkezhuththu. Idhudhaan SSC-oda unmaiyaana kalam."},
+ {ta:"ஒரு உதாரணம் பார்ப்போம். 'He is ____ MLA.' இப்போ என்ன போடுவீங்க? நிறைய பேரு A போடுவாங்க. ஏன்? ஏன்னா 'MLA' M-ல ஆரம்பிக்குது, M ஒரு மெய் எழுத்து. logic சரிதான், ஆனா முடிவு தப்பு.",
+  tl:"Oru udhaaranam paarpom. 'He is ____ MLA.' Ippo enna poduveenga? Neraiya peru A poduvaanga. Yennaa 'MLA' M-la aarambikkudhu, M oru mey ezhuththu. Logic saridhaan, aanaa mudivu thappu."},
+ {ta:"ஏன் தப்பு? ஏன்னா நீங்க 'MLA'-ஐ எப்படி படிக்கிறீங்க? 'ம்-லா' அப்படின்னா? இல்ல. 'எம்-எல்-ஏ' அப்படித்தான் படிக்கிறீங்க. முதல் ஒலி என்ன? 'எ'. அது உயிர் ஒலி! அதனால AN. 'An MLA'. சரி.",
+  tl:"Yen thappu? Yennaa neenga 'MLA'-ai eppadi padikkireenga? 'm-laa' appadinnaa? Illa. 'em-el-ay' appadidhaan padikkireenga. Mudhal oli enna? 'e'. Adhu uyir oli! Adhanaala AN. 'An MLA'. Sari."},
+ {ta:"இதே வழியில எல்லாத்தையும் சரிபாருங்க. FIR — 'எஃப்-ஐ-ஆர்'. 'எ'. AN. SP — 'எஸ்-பி'. 'எ'. AN. NGO — 'என்-ஜி-ஓ'. 'எ'. AN. X-ray — 'எக்ஸ்-ரே'. 'எ'. AN. இதெல்லாம் கண்ணுக்கு தப்பா தெரியும், ஆனா காதுக்கு சரியா இருக்கும்.",
+  tl:"Idhe vazhiyila ellaaththaiyum saripaarunga. FIR — 'ef-eye-ar'. 'e'. AN. SP — 'es-pee'. 'e'. AN. NGO — 'en-jee-oh'. 'e'. AN. X-ray — 'ex-ray'. 'e'. AN."},
+ {ta:"இப்போ தலைகீழ் பக்கம் பாருங்க. 'BA' — 'பீ-ஏ'. 'ப்' ஒலி. மெய். A. 'a BA degree'. 'TV' — 'டீ-வீ'. 'ட்'. மெய். A. 'UPSC' — 'யூ-பி-எஸ்-சி'. 'ய்'. மெய்! A. 'a UPSC exam'. இது கண்ணுக்கு தப்பா தெரியும், ஏன்னா U ஒரு உயிரெழுத்து. ஆனா ஒலி 'யூ' — அது மெய் ஒலி.",
+  tl:"Ippo thalaigeezh pakkam paarunga. 'BA' — 'bee-ay'. 'b' oli. Mey. A. 'TV' — 'tee-vee'. 'T'. Mey. A. 'UPSC' — 'yu-pee-es-see'. 'y'. Mey! A. 'a UPSC exam'."},
+ {ta:"இதை எளிமையா நினைவுல வெச்சுக்க ஒரு வாக்கியம் தாறேன். தினமும் ஒரு தடவ சொல்லுங்க: 'AN MLA filed AN FIR with AN SP of AN NGO.' இந்த ஒரு வாக்கியத்துல நாலு முக்கியமான சுருக்கெழுத்து இருக்கு. இதை மனப்பாடம் பண்ணிட்டா, தேர்வுல இந்த மாதிரி கேள்வி வந்தா உடனே பதில் தெரியும்.",
+  tl:"Idhai elimaiyaa ninaivula vechukka oru vaakkiyam thaaren. Dhinamum oru thadava sollunga: 'AN MLA filed AN FIR with AN SP of AN NGO.' Indha oru vaakkiyaththula naalu mukkiyamaana surukkezhuththu irukku."}]},
+
+/* ========== RULE 3 ========== */
+{n:3,rc:"ART-03",d:"Medium",t:"Vowel LETTER but Consonant SOUND takes A",
+ tam:"University, One, European — உயிரெழுத்தில் தொடங்கினாலும் 'A'",
+ s1:{en:"Words beginning with U, E or O that are PRONOUNCED with a /yu/ sound or a /w/ sound take A, not AN — because /y/ and /w/ are consonant sounds.",
+  ta:"U, E அல்லது O-வில் தொடங்கும் சொற்கள், /யூ/ ஒலியுடனோ /வ்/ ஒலியுடனோ உச்சரிக்கப்பட்டால் A எடுக்கும், AN அல்ல — ஏனெனில் /ய்/ மற்றும் /வ்/ மெய் ஒலிகள்.",
+  tl:"U, E alladhu O-vil thodangum sorkal, /yu/ oliyudano /w/ oliyudano uchcharikkappattaal A edukkum, AN alla — yenenil /y/ matrum /w/ mey oligal.",
+  formula:"U pronounced 'YU'   →  A\n  a university, a useful book, a uniform, a union,\n  a unit, a universal truth, a European, a ewe\n\nO pronounced 'WUN'  →  A\n  a one-day match, a one-rupee coin, a one-way street"},
+
+ s2:[
+ {h:"Why /yu/ is a consonant sound",
+  en:"Say 'university' slowly: yu-ni-ver-si-ty. The first sound is /y/, exactly the same sound as in 'yes' and 'young'. /y/ is a consonant sound. So the word takes A, even though it is spelt with a U.",
+  ta:"/யூ/ ஏன் மெய் ஒலி? 'University'-ஐ மெதுவாகச் சொல்லுங்கள்: யூ-னி-வெர்-சி-டி. முதல் ஒலி /ய்/, 'yes' மற்றும் 'young'-ல் இருக்கும் அதே ஒலி. /ய்/ ஒரு மெய் ஒலி. எனவே அந்தச் சொல் U-வில் எழுதப்பட்டாலும் A எடுக்கிறது.",
+  tl:"/yu/ yen mey oli? 'University'-ai medhuvaagach sollungal: yu-ni-ver-si-ty. Mudhal oli /y/, 'yes' matrum 'young'-l irukkum adhe oli. /y/ oru mey oli. Enave andhach sol U-vil ezhudhappattaalum A edukkiradhu."},
+ {h:"But not every U is /yu/",
+  en:"'Umbrella' is 'um-brella' — a pure /u/ vowel sound, so AN. 'Uncle' is 'un-cle' — AN. 'Ugly' is AN. Compare with 'university', 'uniform', 'union', 'useful', 'unique' — all /yu/, so A. Say the word, do not guess.",
+  ta:"ஆனால் ஒவ்வொரு U-வும் /யூ/ அல்ல. 'Umbrella' என்பது 'அம்-ப்ரெல்லா' — தூய /அ/ உயிர் ஒலி, எனவே AN. 'Uncle' — AN. 'Ugly' — AN. 'University', 'uniform', 'union', 'useful', 'unique' ஆகியவற்றுடன் ஒப்பிடுங்கள் — அனைத்தும் /யூ/, எனவே A. சொல்லைச் சொல்லுங்கள், யூகிக்காதீர்கள்.",
+  tl:"Aanaal ovvoru U-vum /yu/ alla. 'Umbrella' enbadhu 'um-brella' — thooya /u/ uyir oli, enave AN. 'Uncle' — AN. 'Ugly' — AN. Oppidungal: 'university', 'uniform', 'union', 'useful', 'unique' — anaiththum /yu/, enave A."},
+ {h:"O pronounced as W",
+  en:"'One' is pronounced 'WUN' and 'once' is pronounced 'WUNS'. The /w/ sound is a consonant sound, so both take A: 'a one-day match', 'a one-rupee note', 'a once-in-a-lifetime chance'.",
+  ta:"W-ஆக உச்சரிக்கப்படும் O. 'One' என்பது 'வன்' என்று உச்சரிக்கப்படுகிறது, 'once' என்பது 'வன்ஸ்'. /வ்/ ஒலி ஒரு மெய் ஒலி, எனவே இரண்டும் A எடுக்கும்: 'a one-day match', 'a one-rupee note', 'a once-in-a-lifetime chance'.",
+  tl:"W-aaga uchcharikkappadum O. 'One' enbadhu 'wun' endru uchcharikkappadugiradhu, 'once' enbadhu 'wuns'. /w/ oli oru mey oli, enave irandum A edukkum."}],
+
+ s3:[
+ {h:"The two sound families of U",
+  d:"  U pronounced 'YU' (consonant sound) → A\n  ──────────────────────────────────────\n   a university   a uniform    a union\n   a useful book  a unique idea  a unit\n   a universal law  a European   a user\n\n  U pronounced 'UH' (vowel sound) → AN\n  ──────────────────────────────────────\n   an umbrella   an uncle    an ugly dog\n   an unusual case  an understanding  an uprising"},
+ {h:"ONE sounds like WUN",
+  d:"   ONE  →  spelt with O   👁️  looks like a vowel\n        →  said as 'WUN'  👂  sounds like /w/\n\n   /w/ is a CONSONANT sound.\n\n   a one-day match      ✔\n   a one-rupee coin     ✔\n   an one-day match     ✘"}],
+
+ s4:{
+ wrong:["\"University starts with U, and U is a vowel, so AN.\" — This is THE most planted error in SSC article questions.",
+  "\"All words starting with U behave the same way.\" — 'A university' but 'an umbrella'. The sound differs.",
+  "\"'One' starts with O, a vowel, so AN.\" — 'One' is said 'wun', a consonant sound.",
+  "\"'European' starts with E, so AN.\" — 'European' is said 'yu-ro-pean'."],
+ right:["Say the word aloud. Does it start with 'YOU' or 'WUH'? Then use A.",
+  "Compare: university (yu) → A, but umbrella (uh) → AN.",
+  "Memorise the /yu/ family: university, uniform, union, unique, useful, unit, universal, European, user."]},
+
+ s5:[
+ {en:"He studies in a university in Chennai.",ta:"அவர் சென்னையில் ஒரு பல்கலைக்கழகத்தில் படிக்கிறார்.",tl:"Avar Chennaiyil oru palkalaikkazhagaththil padikkiraar.",note:"'University' is said 'yu-ni-versity' → consonant sound → A."},
+ {en:"A European delegation arrived this morning.",ta:"ஒரு ஐரோப்பியக் குழு இன்று காலை வந்தது.",tl:"Oru Iroppiyak kuzhu indru kaalai vandhadhu.",note:"'European' is said 'yu-ro-pean' → A."},
+ {en:"It was a one-day match between the two teams.",ta:"அது இரு அணிகளுக்கு இடையேயான ஒரு நாள் போட்டி.",tl:"Adhu iru anigalukku idaiyeyaana oru naal potti.",note:"'One' is said 'wun' → consonant sound → A."},
+ {en:"He gave me a useful suggestion.",ta:"அவர் எனக்கு ஒரு பயனுள்ள ஆலோசனை தந்தார்.",tl:"Avar enakku oru payanulla aalosanai thandhaar.",note:"'Useful' is said 'yoos-ful' → A."},
+ {en:"She opened an umbrella when it started raining.",ta:"மழை பெய்யத் தொடங்கியபோது அவர் ஒரு குடையை விரித்தார்.",tl:"Mazhai peyyath thodangiyabodhu avar oru kudaiyai viriththaar.",note:"'Umbrella' is said 'um-brella' → pure vowel sound → AN."}],
+
+ s6:["university|பல்கலைக்கழகம்|Palkalaikkazhagam",
+  "uniform|சீருடை|Seerudai",
+  "union|சங்கம் / ஒன்றியம்|Sangam / Ondriyam",
+  "unique|தனித்துவமான|Thaniththuvamaana",
+  "useful|பயனுள்ள|Payanulla",
+  "unit|அலகு|Alagu",
+  "universal|உலகளாவிய|Ulagalaaviya",
+  "European|ஐரோப்பிய|Iroppiya",
+  "one-day|ஒரு நாள்|Oru naal",
+  "umbrella|குடை|Kudai",
+  "uncle|மாமா / சித்தப்பா|Maamaa / Siththappaa",
+  "ugly|அசிங்கமான|Asingamaana",
+  "delegation|குழு / தூதுக்குழு|Kuzhu / Thoodhukkuzhu"],
+
+ s7:[
+ "He studies in ____ university.|a|Easy|'University' is said 'yu-ni-versity'.",
+ "She opened ____ umbrella.|an|Easy|'Umbrella' is said 'um-brella'.",
+ "He wore ____ uniform to school.|a|Medium|'Uniform' is said 'yu-ni-form'.",
+ "It was ____ one-day tour.|a|Medium|'One' is said 'wun'.",
+ "She gave me ____ useful tip.|a|Medium|'Useful' is said 'yoos-ful'.",
+ "He is ____ European by birth.|a|Medium|'European' is said 'yu-ro-pean'.",
+ "That is ____ unique painting.|a|Hard|'Unique' is said 'yu-neek'.",
+ "He is ____ ugly-looking man.|an|Hard|'Ugly' is said 'ug-ly', a pure vowel sound.",
+ "It was ____ unusual request.|an|Hard|'Unusual' is said 'un-usual', a pure vowel sound.",
+ "The workers formed ____ union.|a|Hard|'Union' is said 'yu-nion'.",
+ "This is ____ universal truth.|a|Hard|'Universal' is said 'yu-ni-versal'.",
+ "He handed me ____ one-rupee coin.|a|Expert|'One' is said 'wun'.",
+ "It happened ____ once in a lifetime.|—|Expert|No article is used before 'once' as an adverb here.",
+ "She is ____ user of this app.|a|Expert|'User' is said 'yoo-ser'.",
+ "He gave ____ unanimous verdict.|a|Expert|'Unanimous' is said 'yu-nanimous'."],
+
+ s8:[
+ "He studies in an university.|He studies in a university.|'University' begins with the /yu/ consonant sound.",
+ "An European tour was arranged.|A European tour was arranged.|'European' begins with /yu/.",
+ "It was an one-day match.|It was a one-day match.|'One' is said 'wun', a consonant sound.",
+ "He gave me an useful book.|He gave me a useful book.|'Useful' begins with /yu/.",
+ "She has an unique voice.|She has a unique voice.|'Unique' begins with /yu/.",
+ "He wore an uniform.|He wore a uniform.|'Uniform' begins with /yu/.",
+ "The workers formed an union.|The workers formed a union.|'Union' begins with /yu/.",
+ "She opened a umbrella.|She opened an umbrella.|'Umbrella' begins with a pure vowel sound.",
+ "It was a unusual request.|It was an unusual request.|'Unusual' begins with a pure vowel sound.",
+ "He handed me an one-rupee note.|He handed me a one-rupee note.|'One' is said 'wun'."],
+
+ s9:[
+ "Fill in the Blank|Delhi has ____ university of national importance in the north campus.|a;an|0|'University' begins with the /yu/ consonant sound.",
+ "Find the Error|The board arranged (A) an European tour (B) for the toppers (C) of the school (D).|A;B;C;D|1|Part B. 'European' begins with /yu/ → 'a European tour'.",
+ "Sentence Improvement|It was an one-day cricket match played under lights.|an one-day;a one-day;the one-day|1|'One' is said 'wun', a consonant sound.",
+ "Fill in the Blank|He gave the committee ____ unanimous recommendation on the matter.|a;an|0|'Unanimous' is said 'yu-nanimous'.",
+ "Find the Error|She opened (A) a umbrella (B) as soon as (C) the rain started (D).|A;B;C;D|1|Part B. 'Umbrella' begins with a pure vowel sound → 'an umbrella'."],
+
+ s10:{
+  en:"'An university' is the single most planted error in the entire Articles section of SSC. It appears year after year because it looks completely correct to the eye — U is a vowel letter, so AN feels right. The paper also mixes it with 'an umbrella' in the same question set, so you cannot survive by memorising 'U always takes A'. You must actually hear the difference: yu versus uh.",
+  ta:"'An university' என்பது SSC-ன் முழு Articles பகுதியிலும் மிக அதிகமாக நடப்படும் தவறு. வருடம் வருடம் இது வருகிறது, ஏனெனில் இது கண்ணுக்கு முற்றிலும் சரியாகத் தெரிகிறது — U ஒரு உயிரெழுத்து, எனவே AN சரியெனத் தோன்றுகிறது. தேர்வுத்தாள் இதை 'an umbrella'-உடன் ஒரே கேள்வித் தொகுப்பில் கலக்கும், எனவே 'U எப்போதும் A எடுக்கும்' என்று மனப்பாடம் செய்து தப்பிக்க முடியாது. நீங்கள் உண்மையிலேயே வித்தியாசத்தைக் கேட்க வேண்டும்: யூ மற்றும் அ.",
+  tl:"'An university' enbadhu SSC-in muzhu Articles paguthiyilum miga adhigamaaga nadappadum thavaru. Varudam varudam idhu varugiradhu, yenenil idhu kannukku mutrilum sariyaagath therigiradhu. Neengal unmaiyileye viththiyaasaththaik ketka vendum: yu matrum uh."},
+
+ s11:{
+  en:"Does it start with 'YOU' or 'WUH'? Then A. Sound matters, not spelling.",
+  ta:"அது 'யூ'-வில் தொடங்குகிறதா, 'வ'-வில் தொடங்குகிறதா? அப்படியானால் A. ஒலி முக்கியம், எழுத்துக்கூட்டல் அல்ல.",
+  tl:"Adhu 'yu'-vil thodangugiradhaa, 'wu'-vil thodangugiradhaa? Appadiyaanaal A. Oli mukkiyam, ezhuththukkoottal alla.",
+  vis:"        THE 'YU' FAMILY — ALL TAKE A\n\n   a UNIversity   a UNIform    a UNIon\n   a UNIque       a USEful     a UNIt\n   a UNIversal    a EURopean   a USEr\n            ↑\n     see 'UNI' or 'EUR' or 'USE' → say 'YOU' → A\n\n        THE 'UH' FAMILY — ALL TAKE AN\n\n   an UMbrella   an UNcle   an UGly dog\n   an UNusual case   an UPrising\n\n   ONE / ONCE  →  said 'WUN' / 'WUNS'  →  A"},
+
+ s12:[
+ "He studies in ____ university.|a;an|0",
+ "She opened ____ umbrella.|a;an|1",
+ "He wore ____ uniform.|a;an|0",
+ "It was ____ one-day trip.|a;an|0",
+ "She gave ____ useful tip.|a;an|0",
+ "He is ____ European.|a;an|0",
+ "That is ____ unique design.|a;an|0",
+ "He is ____ ugly-looking man.|a;an|1",
+ "It was ____ unusual request.|a;an|1",
+ "They formed ____ union.|a;an|0",
+ "This is ____ universal truth.|a;an|0",
+ "He gave me ____ one-rupee coin.|a;an|0",
+ "She is ____ user of this service.|a;an|0",
+ "It was ____ unanimous decision.|a;an|0",
+ "He is ____ uncle of mine.|a;an|1",
+ "That was ____ unfair remark.|a;an|1",
+ "He joined ____ united front.|a;an|0",
+ "It is ____ one-way street.|a;an|0",
+ "She had ____ upset stomach.|a;an|1",
+ "He made ____ useless attempt.|a;an|0"],
+
+ s13:[
+ "He is ____ honest man studying at ____ university in ____ European city.|an-a-a;a-an-a;an-an-a|0|Silent H → AN. 'University' /yu/ → A. 'European' /yu/ → A.",
+ "She opened ____ umbrella and waited ____ hour for ____ one-day pass.|an-an-a;a-an-an;an-a-a|0|'Umbrella' pure vowel → AN. 'Hour' silent H → AN. 'One' = 'wun' → A.",
+ "It was ____ unusual request from ____ MLA who wanted ____ uniform for his son.|an-an-a;a-an-a;an-a-a|0|'Unusual' → AN. 'MLA' = 'em' → AN. 'Uniform' /yu/ → A.",
+ "He made ____ unanimous appeal to ____ union at ____ ordinary meeting.|an-a-an;a-a-an;a-an-a|1|'Unanimous' /yu/ → A. 'Union' /yu/ → A. 'Ordinary' pure vowel → AN.",
+ "____ European scholar gave ____ useful lecture at ____ NGO conference.|An-an-a;A-a-an;A-an-an|1|'European' → A. 'Useful' → A. 'NGO' = 'en' → AN."],
+
+ s14:{
+  rule:"U or O with a /yu/ or /w/ sound takes A, not AN.",
+  formula:"'YU' sound → A  (university, uniform, useful, European)\n'WUN' sound → A  (one-day, one-rupee)\n'UH' sound → AN  (umbrella, uncle, ugly, unusual)",
+  memory:"Does it start with 'YOU' or 'WUH'? Then A.",
+  ta:"'யூ'-ன்னு ஆரம்பிக்குதா, 'வ'-ன்னு ஆரம்பிக்குதா? அப்படின்னா A.",
+  tl:"'YU'-nnu aarambikkudhaa, 'wu'-nnu aarambikkudhaa? Appadinnaa A.",
+  mistake:"Writing 'an university' and 'an one-day match' because U and O are vowel letters.",
+  exam:"The single most repeated article error in SSC CGL and CHSL Tier-1."},
+
+ s15:[
+ {ta:"இப்போ நாம SSC-ஓட மிக முக்கியமான Article கேள்விக்கு வந்துட்டோம். இதை நான் 'ஒரு mark rule' அப்படின்னு சொல்லுவேன், ஏன்னா ஒவ்வொரு வருஷமும் இது வரும், தெரிஞ்சவங்க எடுத்துப்பாங்க, தெரியாதவங்க இழப்பாங்க.",
+  tl:"Ippo naama SSC-oda miga mukkiyamaana Article kelvikku vandhuttom. Idhai naan 'oru mark rule' appadinnu solluven, yennaa ovvoru varushamum idhu varum, therinjavanga eduththuppaanga, theriyaadhavanga izhappaanga."},
+ {ta:"கேள்வி இதுதான்: 'He studies in ____ university.' A-வா AN-ஆ? நான் இதை நூறு class-ல கேட்டிருக்கேன். 90% பேரு AN-ன்னு சொல்லுவாங்க. ஏன்? ஏன்னா 'university' U-ல ஆரம்பிக்குது, U ஒரு உயிரெழுத்து. School-ல அப்படித்தான் சொல்லிக் கொடுத்தாங்க.",
+  tl:"Kelvi idhudhaan: 'He studies in ____ university.' A-vaa AN-aa? Naan idhai nooru class-la kettirukken. 90% peru AN-nnu solluvaanga. Yennaa 'university' U-la aarambikkudhu, U oru uyirezhuththu."},
+ {ta:"ஆனா சரியான பதில் A. இப்போ ஏன்னு பாருங்க. 'University'-ஐ மெதுவா சொல்லுங்க — யூ-னி-வெர்-சி-டி. முதல் ஒலி என்ன? 'ய்'. இப்போ 'yes' அப்படின்னு சொல்லுங்க — 'ய்-எஸ்'. அதே ஒலி இல்லையா? 'ய்' ஒரு மெய் ஒலி. அதனால A.",
+  tl:"Aanaa sariyaana padhil A. Ippo yennu paarunga. 'University'-ai medhuvaa sollunga — yu-ni-ver-si-ty. Mudhal oli enna? 'y'. Ippo 'yes' appadinnu sollunga — 'y-es'. Adhe oli illaiyaa? 'y' oru mey oli. Adhanaala A."},
+ {ta:"இப்போ ஒரு முக்கியமான எச்சரிக்கை. எல்லா U-வும் இப்படி இல்ல. 'Umbrella' சொல்லிப் பாருங்க — 'அம்-ப்ரெல்லா'. இங்க 'ய்' ஒலி இல்ல, தூய 'அ' ஒலி. உயிர் ஒலி. அதனால AN. அதே மாதிரி 'uncle' — 'அங்-கிள்'. AN. 'Ugly' — 'அக்-லி'. AN.",
+  tl:"Ippo oru mukkiyamaana echcharikkai. Ellaa U-vum ippadi illa. 'Umbrella' sollip paarunga — 'um-brella'. Inga 'y' oli illa, thooya 'u' oli. Uyir oli. Adhanaala AN. Adhe maadhiri 'uncle' — AN. 'Ugly' — AN."},
+ {ta:"அப்போ எப்படி நினைவு வெச்சுக்கிறது? ஒரு எளிய pattern இருக்கு. UNI-ன்னு ஆரம்பிச்சா 'யூ' ஒலி — university, uniform, union, unique, unit, universal, unanimous. USE-ன்னு ஆரம்பிச்சா 'யூ' — useful, user, useless. EUR-ன்னு ஆரம்பிச்சா 'யூ' — European, Europe. இந்த மூணு pattern-ஐ பார்த்தா உடனே A போடுங்க.",
+  tl:"Appo eppadi ninaivu vechukkiradhu? Oru eliya pattern irukku. UNI-nnu aarambichaa 'yu' oli — university, uniform, union, unique, unit, universal. USE-nnu aarambichaa 'yu' — useful, user, useless. EUR-nnu aarambichaa 'yu' — European."},
+ {ta:"கடைசியா 'ONE'. இது இன்னும் தந்திரமானது. O-ல ஆரம்பிக்குது, ஆனா நாம எப்படி சொல்லுறோம்? 'வன்'. 'ஓன்' இல்ல, 'வன்'. 'வ்' ஒரு மெய் ஒலி. அதனால 'a one-day match', 'a one-rupee coin'. 'An one-day' அப்படின்னு எழுதினா அது தப்பு. இது SSC-ல அடிக்கடி வரும் pattern.",
+  tl:"Kadaisiyaa 'ONE'. Idhu innum thandhiramaanadhu. O-la aarambikkudhu, aanaa naama eppadi sollurom? 'Wun'. 'On' illa, 'wun'. 'w' oru mey oli. Adhanaala 'a one-day match', 'a one-rupee coin'."}]},
+
+/* ========== RULE 4 ========== */
+{n:4,rc:"ART-04",d:"Medium",t:"Silent H takes AN",
+ tam:"H ஒலிக்காத சொற்களுக்கு 'AN' · H olikkaadha sorkalukku 'AN'",
+ s1:{en:"Words with a SILENT initial H — hour, honest, honour, heir, honorary — take AN, because the word effectively begins with a vowel sound. But when the H IS pronounced (hotel, historic, hospital, house), use A.",
+  ta:"தொடக்கத்தில் H ஒலிக்காத சொற்கள் — hour, honest, honour, heir, honorary — AN எடுக்கும், ஏனெனில் அந்தச் சொல் உண்மையில் உயிர் ஒலியில் தொடங்குகிறது. ஆனால் H உச்சரிக்கப்படும்போது (hotel, historic, hospital, house), A பயன்படுத்தவும்.",
+  tl:"Thodakkaththil H olikkaadha sorkal — hour, honest, honour, heir, honorary — AN edukkum, yenenil andhach sol unmaiyil uyir oliyil thodangugiradhu. Aanaal H uchcharikkappadumbodhu (hotel, historic, hospital, house), A payanpaduththavum.",
+  formula:"SILENT H  →  AN\n  an hour, an honest man, an honour,\n  an heir, an honorary degree, an heiress\n\nSPOKEN H  →  A\n  a hotel, a historic day, a hospital,\n  a house, a horse, a hundred, a habit"},
+
+ s2:[
+ {h:"Only five words in the silent-H family",
+  en:"The good news is that this family is tiny. HOUR, HONEST, HONOUR, HEIR, HONORARY — plus their relatives (hourly, honestly, honourable, heiress, honorarium). Learn these five and you have learnt the entire rule.",
+  ta:"நல்ல செய்தி என்னவென்றால் இந்தக் குடும்பம் மிகச் சிறியது. HOUR, HONEST, HONOUR, HEIR, HONORARY — மேலும் அவற்றின் உறவினர்கள் (hourly, honestly, honourable, heiress, honorarium). இந்த ஐந்தைக் கற்றுக்கொண்டால் முழு விதியையும் கற்றுக்கொண்டீர்கள்.",
+  tl:"Nalla seydhi ennavendraal indhak kudumbam migach siriyadhu. HOUR, HONEST, HONOUR, HEIR, HONORARY — melum avatrin uravinargal (hourly, honestly, honourable, heiress). Indha aindhaik katrukkondaal muzhu vidhiyaiyum katrukkondeergal."},
+ {h:"Everything else with H is pronounced",
+  en:"Hotel, historic, history, hospital, house, horse, hundred, habit, holiday, husband, hero, human — every one of these has a spoken H, so every one takes A. Do not overapply the silent-H rule.",
+  ta:"H-உடன் உள்ள மற்ற அனைத்தும் உச்சரிக்கப்படுகின்றன. Hotel, historic, history, hospital, house, horse, hundred, habit, holiday, husband, hero, human — இவை ஒவ்வொன்றிலும் H ஒலிக்கிறது, எனவே ஒவ்வொன்றும் A எடுக்கும். silent-H விதியை அளவுக்கு அதிகமாகப் பயன்படுத்தாதீர்கள்.",
+  tl:"H-udan ulla matra anaiththum uchcharikkappadugindrana. Hotel, historic, history, hospital, house, horse, hundred, habit, holiday, husband, hero, human — ivai ovvondrilum H olikkiradhu, enave ovvondrum A edukkum."},
+ {h:"'An historic' — the famous exception that is now wrong",
+  en:"Older British writers wrote 'an historic occasion'. Modern standard English and every Indian exam key now require 'A historic occasion', because the H is pronounced. If you see 'an historic' as an option, it is the wrong answer.",
+  ta:"'An historic' — இப்போது தவறான புகழ்பெற்ற விதிவிலக்கு. பழைய பிரிட்டிஷ் எழுத்தாளர்கள் 'an historic occasion' என்று எழுதினார்கள். நவீன தரநிலை ஆங்கிலமும் ஒவ்வொரு இந்தியத் தேர்வு விடைத்தாளும் இப்போது 'A historic occasion' என்றே கேட்கின்றன, ஏனெனில் H உச்சரிக்கப்படுகிறது. 'an historic' ஒரு option-ஆகத் தெரிந்தால், அதுதான் தவறான விடை.",
+  tl:"'An historic' — ippodhu thavaraana pugazhpetra vidhivilakku. Pazhaiya British ezhuththaalargal 'an historic occasion' endru ezhudhinaargal. Naveena tharanilai Aangilamum ovvoru Indhiyath thervu vidaiththaalum ippodhu 'A historic occasion' endre ketkindrana."}],
+
+ s3:[
+ {h:"The H disappears",
+  d:"   HOUR    →  say it  →  \"OUR\"     →  H is gone  →  AN ✔\n   HONEST  →  say it  →  \"ONEST\"   →  H is gone  →  AN ✔\n   HEIR    →  say it  →  \"AIR\"     →  H is gone  →  AN ✔\n\n   HOTEL   →  say it  →  \"HO-tel\"  →  H is there →  A  ✔\n   HISTORIC→  say it  →  \"HIS-toric\"→ H is there →  A  ✔"},
+ {h:"The complete silent-H family",
+  d:"   ONLY FIVE ROOTS — memorise them\n\n   1. HOUR      →  an hour, an hourly wage\n   2. HONEST    →  an honest man, an honest reply\n   3. HONOUR    →  an honour, an honourable judge\n   4. HEIR      →  an heir, an heiress\n   5. HONORARY  →  an honorary degree, an honorarium\n\n   EVERY OTHER H-WORD TAKES 'A'."}],
+
+ s4:{
+ wrong:["\"H is a consonant letter, so all H-words take A.\" — Five words have a silent H.",
+  "\"'Hotel' is like 'honest', so 'an hotel'.\" — The H in hotel is clearly pronounced.",
+  "\"'An historic' is more elegant.\" — It is archaic and marked wrong in Indian exams.",
+  "\"Hospital and honest both start with 'ho', so both take AN.\" — Spelling similarity means nothing. Sound decides."],
+ right:["Say the word aloud. Can you hear the H? If yes → A. If no → AN.",
+  "Memorise the five silent-H roots: hour, honest, honour, heir, honorary.",
+  "Treat every other H-word as taking A."]},
+
+ s5:[
+ {en:"An honest officer never takes a bribe.",ta:"ஒரு நேர்மையான அதிகாரி ஒருபோதும் லஞ்சம் வாங்க மாட்டார்.",tl:"Oru nermaiyaana adhigaari orupodhum lanjam vaanga maattaar.",note:"The H in 'honest' is silent → AN."},
+ {en:"He waited for an hour outside the office.",ta:"அவர் அலுவலகத்திற்கு வெளியே ஒரு மணி நேரம் காத்திருந்தார்.",tl:"Avar aluvalagaththirku veliye oru mani neram kaaththirundhaar.",note:"The H in 'hour' is silent → AN."},
+ {en:"He is an heir to a large property.",ta:"அவர் ஒரு பெரிய சொத்துக்கு வாரிசு.",tl:"Avar oru periya soththukku vaarisu.",note:"The H in 'heir' is silent → AN."},
+ {en:"She stayed in a hotel near the station.",ta:"அவர் நிலையத்திற்கு அருகில் ஒரு விடுதியில் தங்கினார்.",tl:"Avar nilaiyaththirku arugil oru vidudhiyil thanginaar.",note:"The H in 'hotel' IS pronounced → A."},
+ {en:"It was a historic day for our country.",ta:"அது நம் நாட்டிற்கு ஒரு வரலாற்று சிறப்புமிக்க நாள்.",tl:"Adhu nam naattirku oru varalaatru sirappumikka naal.",note:"The H in 'historic' IS pronounced → A."}],
+
+ s6:["hour|மணி நேரம்|Mani neram",
+  "honest|நேர்மையான|Nermaiyaana",
+  "honour|மரியாதை / கௌரவம்|Mariyaadhai / Gauravam",
+  "heir|வாரிசு|Vaarisu",
+  "honorary|கௌரவ (ஊதியமில்லா)|Gaurava (oodhiyamillaa)",
+  "honourable|மாண்புமிகு|Maanbumigu",
+  "hotel|விடுதி|Vidudhi",
+  "historic|வரலாற்று சிறப்புமிக்க|Varalaatru sirappumikka",
+  "hospital|மருத்துவமனை|Maruththuvamanai",
+  "hundred|நூறு|Nooru",
+  "bribe|லஞ்சம்|Lanjam",
+  "property|சொத்து|Soththu"],
+
+ s7:[
+ "He is ____ honest man.|an|Easy|Silent H.",
+ "She waited for ____ hour.|an|Easy|Silent H.",
+ "It is ____ honour to meet you.|an|Easy|Silent H.",
+ "He is ____ heir to the throne.|an|Medium|Silent H.",
+ "She received ____ honorary degree.|an|Medium|Silent H.",
+ "He stayed in ____ hotel.|a|Medium|The H is pronounced.",
+ "It was ____ historic decision.|a|Medium|The H is pronounced.",
+ "He was admitted to ____ hospital.|a|Hard|The H is pronounced.",
+ "He gave me ____ hundred rupees.|a|Hard|The H is pronounced.",
+ "She is ____ honourable judge.|an|Hard|Silent H.",
+ "It is ____ hourly service to the airport.|an|Hard|Silent H in 'hourly'.",
+ "He has ____ habit of arriving late.|a|Expert|The H is pronounced.",
+ "She is ____ heiress to a fortune.|an|Expert|Silent H.",
+ "He received ____ honorarium for the lecture.|an|Expert|Silent H.",
+ "That is ____ horrible thing to say.|a|Expert|The H is pronounced."],
+
+ s8:[
+ "He is a honest man.|He is an honest man.|The H in 'honest' is silent.",
+ "She waited for a hour.|She waited for an hour.|The H in 'hour' is silent.",
+ "It is a honour to meet you.|It is an honour to meet you.|The H in 'honour' is silent.",
+ "He is a heir to the property.|He is an heir to the property.|The H in 'heir' is silent.",
+ "She got a honorary doctorate.|She got an honorary doctorate.|The H in 'honorary' is silent.",
+ "He stayed in an hotel.|He stayed in a hotel.|The H in 'hotel' is pronounced.",
+ "It was an historic victory.|It was a historic victory.|The H in 'historic' is pronounced.",
+ "He was taken to an hospital.|He was taken to a hospital.|The H in 'hospital' is pronounced.",
+ "He gave me an hundred rupees.|He gave me a hundred rupees.|The H in 'hundred' is pronounced.",
+ "She has an habit of reading at night.|She has a habit of reading at night.|The H in 'habit' is pronounced."],
+
+ s9:[
+ "Fill in the Blank|It is ____ honour for me to address this gathering today.|a;an|1|The H in 'honour' is silent.",
+ "Find the Error|He was admitted (A) to an hospital (B) after the accident (C) last night (D).|A;B;C;D|1|Part B. The H in 'hospital' is pronounced → 'a hospital'.",
+ "Sentence Improvement|The university conferred a honorary doctorate on the scientist.|a honorary;an honorary;the honorary|1|The H in 'honorary' is silent.",
+ "Fill in the Blank|The meeting lasted for ____ hour and ____ half before it ended.|a-a;an-a;an-an|1|'Hour' has a silent H → AN. 'Half' has a spoken H → A.",
+ "Find the Error|It was (A) an historic moment (B) when the flag (C) was hoisted (D).|A;B;C;D|1|Part B. The H in 'historic' is pronounced → 'a historic moment'."],
+
+ s10:{
+  en:"The exam puts 'an hour' and 'a hotel' in the same question so that a memorised rule fails. Students who learnt 'H words take AN' write 'an hotel' and lose the mark. Students who learnt 'H words take A' write 'a hour' and lose it too. Only the sound test survives. And 'an historic' is offered as an elegant-looking trap — it is archaic and marked wrong.",
+  ta:"தேர்வு 'an hour' மற்றும் 'a hotel' இரண்டையும் ஒரே கேள்வியில் வைக்கும், அதனால் மனப்பாடம் செய்த விதி தோற்றுவிடும். 'H சொற்கள் AN எடுக்கும்' என்று கற்றவர்கள் 'an hotel' எழுதி mark இழப்பார்கள். 'H சொற்கள் A எடுக்கும்' என்று கற்றவர்கள் 'a hour' எழுதி இழப்பார்கள். ஒலிச் சோதனை மட்டுமே தப்பிக்கும். மேலும் 'an historic' ஒரு நேர்த்தியாகத் தோன்றும் பொறியாகத் தரப்படும் — அது பழமையானது, தவறாகக் குறிக்கப்படும்.",
+  tl:"Thervu 'an hour' matrum 'a hotel' irandaiyum ore kelviyil vaikkum, adhanaal manappaadam seydha vidhi thotruvidum. Oli sodhanai mattume thappikkum. Melum 'an historic' oru nerththiyaagath thondrum poriyaagath tharappadum."},
+
+ s11:{
+  en:"CAN YOU HEAR THE H? Yes → A. No → AN. Only five words have a silent H.",
+  ta:"H ஒலி கேட்கிறதா? கேட்டால் → A. கேட்கவில்லை என்றால் → AN. ஐந்து சொற்களுக்கு மட்டுமே H ஒலிக்காது.",
+  tl:"H oli ketkiradhaa? Kettaal → A. Ketkavillai endraal → AN. Aindhu sorkalukku mattume H olikkaadhu.",
+  vis:"      THE FAMOUS FIVE — SILENT H\n\n   ┌────────────────────────────────┐\n   │  HOUR      →  an hour          │\n   │  HONEST    →  an honest man    │\n   │  HONOUR    →  an honour        │\n   │  HEIR      →  an heir          │\n   │  HONORARY  →  an honorary post │\n   └────────────────────────────────┘\n\n   MEMORY SENTENCE:\n   \"AN HONEST HEIR waited AN HOUR\n    for AN HONORARY HONOUR.\"\n\n   Every other H-word → A\n   (a hotel, a historic day, a hospital, a hundred)"},
+
+ s12:[
+ "He is ____ honest officer.|a;an|1",
+ "She waited for ____ hour.|a;an|1",
+ "It is ____ honour to be here.|a;an|1",
+ "He is ____ heir to the estate.|a;an|1",
+ "She got ____ honorary degree.|a;an|1",
+ "He stayed in ____ hotel.|a;an|0",
+ "It was ____ historic day.|a;an|0",
+ "He went to ____ hospital.|a;an|0",
+ "He gave me ____ hundred rupees.|a;an|0",
+ "She is ____ honourable member.|a;an|1",
+ "There is ____ hourly bus service.|a;an|1",
+ "He has ____ bad habit.|a;an|0",
+ "She is ____ heiress to the property.|a;an|1",
+ "He received ____ honorarium.|a;an|1",
+ "That is ____ horrible idea.|a;an|0",
+ "He is ____ hero of this film.|a;an|0",
+ "It took ____ half hour to finish.|a;an|0",
+ "He is ____ human being after all.|a;an|0",
+ "She made ____ honest mistake.|a;an|1",
+ "He is ____ history teacher.|a;an|0"],
+
+ s13:[
+ "____ honest man waited ____ hour outside ____ hotel near the station.|An-an-a;A-a-an;An-a-a|0|Silent H → AN, silent H → AN, spoken H → A.",
+ "It was ____ honour to meet ____ historic figure at ____ university function.|an-a-a;a-an-a;an-an-a|0|'Honour' silent H → AN. 'Historic' spoken H → A. 'University' /yu/ → A.",
+ "He is ____ heir who holds ____ honorary post in ____ NGO.|a-a-an;an-an-an;an-a-an|1|'Heir' → AN, 'honorary' → AN, 'NGO' = 'en' → AN.",
+ "She spent ____ hour in ____ hospital before ____ MLA arrived.|a-a-an;an-a-an;an-an-a|1|'Hour' → AN, 'hospital' → A, 'MLA' → AN.",
+ "____ honest reply is worth ____ hundred excuses and ____ useless promise.|An-a-a;A-an-a;An-an-an|0|'Honest' → AN, 'hundred' spoken H → A, 'useless' /yu/ → A."],
+
+ s14:{
+  rule:"Words with a silent initial H take AN. Words with a spoken H take A.",
+  formula:"SILENT H → AN  (hour, honest, honour, heir, honorary)\nSPOKEN H → A   (hotel, historic, hospital, hundred, habit)",
+  memory:"An honest heir waited an hour for an honorary honour.",
+  ta:"H ஒலி கேட்குதா? கேட்டா A, கேட்கலைன்னா AN. ஐந்து சொல் மட்டும்தான் silent.",
+  tl:"H oli ketkudhaa? Kettaa A, ketkalainnaa AN. Aindhu sol mattum-dhaan silent.",
+  mistake:"Writing 'an hotel', 'an historic' or 'a hour' by applying a memorised letter rule.",
+  exam:"SSC CGL / CHSL, RRB, Bank — appears alongside Rule 3 in the same question sets."},
+
+ s15:[
+ {ta:"இந்த rule Rule 3-ஓட மறுபக்கம். Rule 3-ல உயிரெழுத்து ஆனா மெய் ஒலி பார்த்தோம். இப்போ மெய் எழுத்து ஆனா உயிர் ஒலி பார்க்குறோம். ரெண்டுமே ஒரே கொள்கை — ஒலிதான் ராஜா.",
+  tl:"Indha rule Rule 3-oda marupakkam. Rule 3-la uyirezhuththu aanaa mey oli paarththom. Ippo mey ezhuththu aanaa uyir oli paarkkurom. Rendume ore kolgai — oli-dhaan raaja."},
+ {ta:"நல்ல செய்தி என்னன்னா — இந்த குடும்பம் ரொம்ப சின்னது. வெறும் அஞ்சு வேர் சொல்: HOUR, HONEST, HONOUR, HEIR, HONORARY. இந்த அஞ்சு மட்டும்தான் H ஒலிக்காம இருக்கும். மத்த எல்லா H சொல்லும் H ஒலிக்கும்.",
+  tl:"Nalla seydhi ennannaa — indha kudumbam romba chinnadhu. Verum anju ver sol: HOUR, HONEST, HONOUR, HEIR, HONORARY. Indha anju mattum-dhaan H olikkaama irukkum."},
+ {ta:"சோதிச்சுப் பாருங்க. 'Hour' — நீங்க எப்படி சொல்றீங்க? 'ஹவர்' இல்ல, 'அவர்'. H காணாம போச்சு. அதனால 'an hour'. 'Honest' — 'ஹானெஸ்ட்' இல்ல, 'ஆனெஸ்ட்'. H இல்ல. 'an honest man'. 'Heir' — 'ஹேர்' இல்ல, 'ஏர்' (air மாதிரி). 'an heir'.",
+  tl:"Sodhichup paarunga. 'Hour' — neenga eppadi solreenga? 'Hawar' illa, 'awar'. H kaanaama pochu. Adhanaala 'an hour'. 'Honest' — 'haanest' illa, 'aanest'. 'an honest man'. 'Heir' — 'her' illa, 'air'. 'an heir'."},
+ {ta:"இப்போ மறுபக்கம். 'Hotel' — 'ஹோ-டெல்'. H தெளிவா கேட்குது. அதனால 'a hotel'. 'Hospital' — 'ஹாஸ்பிடல்'. H இருக்கு. 'a hospital'. 'Hundred' — 'ஹண்ட்ரெட்'. H இருக்கு. 'a hundred rupees'. 'Historic' — 'ஹிஸ்டாரிக்'. H இருக்கு. 'a historic day'.",
+  tl:"Ippo marupakkam. 'Hotel' — 'ho-tel'. H thelivaa ketkudhu. Adhanaala 'a hotel'. 'Hospital' — 'haaspital'. 'a hospital'. 'Hundred' — 'handred'. 'a hundred rupees'. 'Historic' — 'historic'. 'a historic day'."},
+ {ta:"இங்க SSC-ஓட ஒரு கெட்ட புத்தி சொல்லுறேன். அவங்க ஒரே கேள்விய 'an hour' மற்றும் 'a hotel' ரெண்டையும் சேர்த்து வெப்பாங்க. ஏன்? ஏன்னா நீங்க ஒரு rule-ஐ மனப்பாடம் பண்ணி இருந்தா, ஒண்ணு சரியா வரும், இன்னொண்ணு தப்பா வரும். ஒலி சோதனை மட்டும்தான் ரெண்டையும் சரியா தரும்.",
+  tl:"Inga SSC-oda oru ketta puththi solluren. Avanga ore kelviya 'an hour' matrum 'a hotel' rendaiyum serthu veppaanga. Yennaa neenga oru rule-ai manappaadam panni irundhaa, onnu sariyaa varum, innonnu thappaa varum."},
+ {ta:"கடைசியா 'an historic' பத்தி சொல்லணும். பழைய பிரிட்டிஷ் புத்தகங்கள்ல 'an historic occasion' அப்படின்னு எழுதி இருப்பாங்க. அது பழைய பாணி. இப்போ நவீன ஆங்கிலத்துலயும், எல்லா இந்திய தேர்வுலயும் 'a historic occasion'-தான் சரி. Option-ல 'an historic' தெரிஞ்சா, அது தப்பான பதில். இதை நல்லா மனசுல வெச்சுக்கோங்க.",
+  tl:"Kadaisiyaa 'an historic' paththi sollanum. Pazhaiya British puththagangalla 'an historic occasion' appadinnu ezhudhi iruppaanga. Adhu pazhaiya paani. Ippo naveena Aangilaththulayum, ellaa Indhiya thervulayum 'a historic occasion'-dhaan sari."}]},
+
+/* ========== RULE 5 ========== */
+{n:5,rc:"ART-05",d:"Easy",t:"THE before Superlatives and Ordinals",
+ tam:"Superlative மற்றும் வரிசை எண்களுக்கு முன் 'THE'",
+ s1:{en:"Use THE before superlative degrees (best, tallest, most beautiful) and before ordinal numbers (first, second, third, last). Both point to ONE unique item, and THE is the article of uniqueness.",
+  ta:"Superlative நிலைகளுக்கு முன் (best, tallest, most beautiful) மற்றும் வரிசை எண்களுக்கு முன் (first, second, third, last) THE பயன்படுத்த வேண்டும். இரண்டுமே ஒரே ஒரு தனித்துவமான பொருளைச் சுட்டுகின்றன, THE என்பது தனித்துவத்தின் article.",
+  tl:"Superlative nilaigalukku mun (best, tallest, most beautiful) matrum varisai engalukku mun (first, second, third, last) THE payanpaduththa vendum. Irandume ore oru thaniththuvamaana porulaich suttugindrana.",
+  formula:"THE  +  SUPERLATIVE\n  the best student, the tallest boy,\n  the most beautiful painting, the worst result\n\nTHE  +  ORDINAL\n  the first day, the second row,\n  the third attempt, the last chapter"},
+
+ s2:[
+ {h:"Why uniqueness demands THE",
+  en:"'A tall boy' could be any of many tall boys. But 'THE tallest boy' can only be ONE person in the whole group. When there is only one possible referent, English marks it with THE.",
+  ta:"தனித்துவம் ஏன் THE-ஐக் கோருகிறது? 'A tall boy' என்றால் பல உயரமான பையன்களில் யாராகவும் இருக்கலாம். ஆனால் 'THE tallest boy' என்றால் முழுக் குழுவிலும் ஒரே ஒரு நபராகத்தான் இருக்க முடியும். ஒரே ஒரு சாத்தியம் மட்டுமே இருக்கும்போது, ஆங்கிலம் அதை THE-ஆல் குறிக்கிறது.",
+  tl:"Thaniththuvam yen THE-aik korugiradhu? 'A tall boy' endraal pala uyaramaana paiyangalil yaaraagavum irukkalaam. Aanaal 'THE tallest boy' endraal muzhuk kuzhuvilum ore oru nabaraagath-thaan irukka mudiyum."},
+ {h:"The comparative of two also takes THE",
+  en:"When you compare exactly TWO things, you use the comparative WITH the: 'He is THE taller of the two brothers.' This surprises many students, because comparatives usually take no article.",
+  ta:"இரண்டைக் கொண்ட comparative-ம் THE எடுக்கும். சரியாக இரண்டு பொருட்களை ஒப்பிடும்போது, comparative-ஐ THE-உடன் பயன்படுத்துகிறீர்கள்: 'He is THE taller of the two brothers.' இது பல மாணவர்களை ஆச்சரியப்படுத்தும், ஏனெனில் comparative-கள் பொதுவாக article எடுப்பதில்லை.",
+  tl:"Irandaik konda comparative-um THE edukkum. Sariyaaga irandu porutkalai oppidumbodhu, comparative-ai THE-udan payanpaduththugireergal: 'He is THE taller of the two brothers.'"},
+ {h:"The one case where a superlative drops THE",
+  en:"When 'most' means simply 'very' and no comparison is being made, THE is dropped: 'He is most intelligent' means 'He is very intelligent'. Compare with 'He is THE most intelligent boy in the class', which is a real comparison.",
+  ta:"Superlative THE-ஐ விடும் ஒரே சூழல். 'Most' என்பது வெறுமனே 'மிகவும்' என்று பொருள்பட்டு எந்த ஒப்பீடும் இல்லாதபோது, THE விடப்படுகிறது: 'He is most intelligent' என்றால் 'அவர் மிகவும் புத்திசாலி'. 'He is THE most intelligent boy in the class' என்பதுடன் ஒப்பிடுங்கள் — அது ஒரு உண்மையான ஒப்பீடு.",
+  tl:"Superlative THE-ai vidum ore soozhal. 'Most' enbadhu verumane 'migavum' endru porulpattu endha oppeedum illaadhabodhu, THE vidappadugiradhu: 'He is most intelligent' endraal 'avar migavum puththisaali'."}],
+
+ s3:[
+ {h:"Only one can be the best",
+  d:"   👦 👦 👦 👦 👦   ← many tall boys\n                 ↑\n         only ONE is the TALLEST\n\n   a tall boy      →  any one of many   →  A\n   THE tallest boy →  exactly one       →  THE"},
+ {h:"Two versus three",
+  d:"  TWO things   →  THE + comparative\n    He is THE taller of the two brothers.  ✔\n\n  THREE or more →  THE + superlative\n    He is THE tallest of the five boys.    ✔\n\n  Note: 'of the two' ALWAYS carries THE."}],
+
+ s4:{
+ wrong:["\"Superlatives are adjectives, so they need no article.\" — Superlatives always take THE.",
+  "\"'He is best student' sounds fine in speech.\" — In writing and in exams it needs THE.",
+  "\"'The taller of the two' — comparatives never take THE.\" — With 'of the two' they always do.",
+  "\"'He is most intelligent' is always wrong.\" — It is correct when 'most' simply means 'very'."],
+ right:["See -est or 'most' → write THE.",
+  "See first, second, third, last, next → write THE.",
+  "See 'of the two' → write THE + comparative.",
+  "Only drop THE when 'most' means 'very' with no comparison."]},
+
+ s5:[
+ {en:"He is the best student in the class.",ta:"அவன் வகுப்பிலேயே சிறந்த மாணவன்.",tl:"Avan vagupileye sirandha maanavan.",note:"Superlative 'best' → THE."},
+ {en:"She was the first woman to win this award.",ta:"இந்த விருதை வென்ற முதல் பெண் அவர்தான்.",tl:"Indha virudhai vendra mudhal pen avardhaan.",note:"Ordinal 'first' → THE."},
+ {en:"This is the tallest building in the city.",ta:"இதுதான் நகரத்திலேயே உயரமான கட்டிடம்.",tl:"Idhudhaan nagaraththileye uyaramaana kattidam.",note:"Superlative 'tallest' → THE."},
+ {en:"He is the taller of the two brothers.",ta:"இரண்டு சகோதரர்களில் அவன்தான் உயரமானவன்.",tl:"Irandu sagodharargalil avandhaan uyaramaanavan.",note:"'Of the two' takes THE + comparative."},
+ {en:"He is most intelligent.",ta:"அவர் மிகவும் புத்திசாலி.",tl:"Avar migavum puththisaali.",note:"Here 'most' means 'very', so no THE."}],
+
+ s6:["the best|சிறந்த|Sirandha",
+  "the tallest|மிக உயரமான|Miga uyaramaana",
+  "the worst|மிக மோசமான|Miga mosamaana",
+  "the first|முதல்|Mudhal",
+  "the second|இரண்டாவது|Irandaavadhu",
+  "the last|கடைசி|Kadaisi",
+  "the taller of the two|இருவரில் உயரமானவர்|Iruvaril uyaramaanavar",
+  "superlative|உயர்நிலை|Uyarnilai",
+  "ordinal|வரிசை எண்|Varisai en",
+  "most intelligent|மிகவும் புத்திசாலி|Migavum puththisaali",
+  "award|விருது|Virudhu",
+  "building|கட்டிடம்|Kattidam"],
+
+ s7:[
+ "He is ____ tallest boy in the class.|the|Easy|Superlative.",
+ "She sat in ____ second row.|the|Easy|Ordinal.",
+ "This is ____ best film of the year.|the|Easy|Superlative.",
+ "He came ____ first in the race.|—|Medium|'First' as an adverb after 'came' takes no article.",
+ "That was ____ worst decision he made.|the|Medium|Superlative.",
+ "She is ____ most talented singer here.|the|Medium|Superlative with comparison.",
+ "He is ____ taller of the two boys.|the|Hard|'Of the two' takes THE + comparative.",
+ "This is ____ third time he has failed.|the|Hard|Ordinal.",
+ "He is ____ most helpful person I know.|the|Hard|Superlative with comparison.",
+ "She is ____ most obliging, always ready to help.|—|Hard|Here 'most' means 'very', so no article.",
+ "Read ____ last chapter of the book.|the|Expert|Ordinal-type word.",
+ "He was ____ better of the two candidates.|the|Expert|'Of the two' takes THE.",
+ "This is ____ least expensive option available.|the|Expert|Superlative.",
+ "He finished ____ second in the competition.|—|Expert|Adverbial use after 'finished' takes no article.",
+ "She holds ____ highest post in this office.|the|Expert|Superlative."],
+
+ s8:[
+ "He is best student in the class.|He is the best student in the class.|Superlatives take THE.",
+ "She sat in second row.|She sat in the second row.|Ordinals take THE.",
+ "This is tallest building here.|This is the tallest building here.|Superlatives take THE.",
+ "That was worst film I have seen.|That was the worst film I have seen.|Superlatives take THE.",
+ "He is taller of the two brothers.|He is the taller of the two brothers.|'Of the two' takes THE.",
+ "This is third time he is late.|This is the third time he is late.|Ordinals take THE.",
+ "She is a best singer in the group.|She is the best singer in the group.|A superlative cannot take A.",
+ "Read last chapter carefully.|Read the last chapter carefully.|'Last' takes THE.",
+ "He is a most intelligent boy in the class.|He is the most intelligent boy in the class.|With a comparison, use THE.",
+ "He won a first prize.|He won the first prize.|Ordinals take THE."],
+
+ s9:[
+ "Fill in the Blank|He is ____ best cricketer this state has produced in fifty years.|a;the|1|Superlatives take THE.",
+ "Find the Error|She was (A) first woman (B) to be appointed (C) as a district judge here (D).|A;B;C;D|0|Part A. Ordinals take THE → 'the first woman'.",
+ "Sentence Improvement|Ravi is taller of the two brothers who joined the army.|taller;the taller;tallest|1|'Of the two' takes THE + comparative.",
+ "Fill in the Blank|This is ____ third time he has been warned by the principal.|a;the|1|Ordinals take THE.",
+ "Find the Error|He was awarded (A) a first prize (B) in the singing competition (C) held last week (D).|A;B;C;D|1|Part B. Ordinals take THE → 'the first prize'."],
+
+ s10:{
+  en:"Two traps sit inside this simple rule. First, 'of the two' takes THE with a COMPARATIVE, not a superlative — 'the taller of the two', never 'the tallest of the two'. Second, the adverbial uses drop the article entirely: 'He came first', 'He finished second'. Here 'first' and 'second' describe HOW he ran, not WHICH one he is, so no article.",
+  ta:"இந்த எளிய விதிக்குள் இரண்டு பொறிகள் இருக்கின்றன. முதலாவது, 'of the two' என்பது superlative அல்ல, COMPARATIVE-உடன் THE எடுக்கும் — 'the taller of the two', ஒருபோதும் 'the tallest of the two' அல்ல. இரண்டாவது, வினையுரிச்சொல் பயன்பாடுகள் article-ஐ முற்றிலும் விட்டுவிடுகின்றன: 'He came first', 'He finished second'. இங்கே 'first' மற்றும் 'second' அவர் எப்படி ஓடினார் என்பதை விவரிக்கின்றன, அவர் எந்த ஒருவர் என்பதை அல்ல, எனவே article இல்லை.",
+  tl:"Indha eliya vidhikkul irandu porigal irukkindrana. Mudhalaavadhu, 'of the two' enbadhu superlative alla, COMPARATIVE-udan THE edukkum. Irandaavadhu, vinaiyurichol payanpaadugal article-ai mutrilum vittuvidugindrana: 'He came first', 'He finished second'."},
+
+ s11:{
+  en:"SEE -EST OR AN ORDINAL → WRITE THE. Only one can be the best.",
+  ta:"-EST அல்லது வரிசை எண் பார்த்தால் → THE எழுதுங்கள். ஒருவரால் மட்டுமே சிறந்தவராக இருக்க முடியும்.",
+  tl:"-EST alladhu varisai en paarththaal → THE ezhudhungal. Oruvaraal mattume sirandhavaraaga irukka mudiyum.",
+  vis:"     TRIGGERS THAT DEMAND 'THE'\n\n   -est      →  the tallest, the best, the worst\n   most      →  the most beautiful (with comparison)\n   least     →  the least expensive\n   first     →  the first day\n   second    →  the second row\n   last      →  the last chapter\n   next      →  the next station\n   same      →  the same book\n   only      →  the only son\n   of the two→  the taller of the two\n\n   ⚠ NO ARTICLE when used as an ADVERB:\n     He came first.   He finished second."},
+
+ s12:[
+ "He is ____ tallest boy here.|a;the|1",
+ "She sat in ____ second row.|a;the|1",
+ "This is ____ best film I have seen.|a;the|1",
+ "That was ____ worst day of my life.|a;the|1",
+ "She is ____ most talented singer.|a;the|1",
+ "He is ____ taller of the two boys.|a;the|1",
+ "This is ____ third attempt.|a;the|1",
+ "Read ____ last chapter now.|a;the|1",
+ "He won ____ first prize.|a;the|1",
+ "She is ____ youngest in the family.|a;the|1",
+ "This is ____ cheapest option available.|a;the|1",
+ "He holds ____ highest rank here.|a;the|1",
+ "She is ____ better of the two players.|a;the|1",
+ "That is ____ oldest temple in the town.|a;the|1",
+ "He gave ____ shortest reply possible.|a;the|1",
+ "She sits in ____ front row every day.|a;the|1",
+ "It is ____ largest state in India.|a;the|1",
+ "He is ____ only son of his parents.|a;the|1",
+ "This is ____ same book I read.|a;the|1",
+ "He caught ____ next train to Madurai.|a;the|1"],
+
+ s13:[
+ "He is ____ tallest of the five boys, but Ravi is ____ taller of the two twins.|the-the;a-the;the-a|0|Superlative for five → THE tallest. Comparative for two → THE taller.",
+ "She was ____ first woman to head ____ university in ____ European country.|the-a-a;a-the-an;the-an-a|0|Ordinal → THE. 'University' /yu/ → A. 'European' /yu/ → A.",
+ "He is ____ most honest officer here, though he holds only ____ honorary post.|the-an;a-a;the-a|0|Superlative with comparison → THE. 'Honorary' silent H → AN.",
+ "It was ____ best decision, taken after ____ hour-long meeting at ____ hotel.|the-an-a;a-a-an;the-a-a|0|Superlative → THE. 'Hour' silent H → AN. 'Hotel' spoken H → A.",
+ "He came ____ first in ____ one-day race and won ____ MLA's special prize.|the-a-an;—-a-an;—-an-a|1|Adverbial 'came first' → no article. 'One-day' = 'wun' → A. 'MLA' = 'em' → AN."],
+
+ s14:{
+  rule:"Use THE before superlatives and ordinals, and with a comparative after 'of the two'.",
+  formula:"THE + -est / most / least\nTHE + first / second / last / next / same / only\nTHE + comparative + of the two",
+  memory:"Only one can be the best. Uniqueness needs THE.",
+  ta:"ஒருத்தர் மட்டும்தான் சிறந்தவரா இருக்க முடியும். தனித்துவத்துக்கு THE வேணும்.",
+  tl:"Oruththar mattum-dhaan sirandhavaraa irukka mudiyum. Thaniththuvaththukku THE venum.",
+  mistake:"Dropping THE before superlatives, and using 'the tallest of the two' instead of 'the taller of the two'.",
+  exam:"SSC CGL / CHSL and Bank — often combined with the degrees-of-comparison rules."},
+
+ s15:[
+ {ta:"இந்த rule ரொம்ப எளிது, ஆனா நாம பேச்சுல அடிக்கடி THE-ஐ விட்டுடுவோம். 'He is best student in the class' அப்படின்னு சொல்லுவோம். ஆனா எழுத்துல, தேர்வுல, 'the' கண்டிப்பா வேணும்.",
+  tl:"Indha rule romba eladhu, aanaa naama pechula adikkadi THE-ai vittuduvom. 'He is best student in the class' appadinnu solluvom. Aanaa ezhuththula, thervula, 'the' kandippaa venum."},
+ {ta:"ஏன் THE? ஒரு படம் மனசுல வெச்சுக்கோங்க. Class-ல 50 பையன் இருக்காங்க. 'A tall boy' அப்படின்னா — யாரு? தெரியாது, யாரோ ஒரு உயரமான பையன். பலர் இருக்கலாம். ஆனா 'THE tallest boy' அப்படின்னா — ஒரே ஒருத்தர்தான். எல்லாரையும் அளந்து பார்த்தா, ஒருத்தர்தான் மிக உயரமானவர். ஒரே ஒருத்தர்னா THE.",
+  tl:"Yen THE? Oru padam manasula vechukkonga. Class-la 50 paiyan irukkaanga. 'A tall boy' appadinnaa — yaaru? Theriyaadhu. Aanaa 'THE tallest boy' appadinnaa — ore oruththar-dhaan. Ore oruththarnaa THE."},
+ {ta:"வரிசை எண்ணும் அப்படித்தான். 'The first day' — முதல் நாள் ஒண்ணுதான். 'The second row' — ரெண்டாவது வரிசை ஒண்ணுதான். 'The last chapter' — கடைசி அத்தியாயம் ஒண்ணுதான். எல்லாமே தனித்துவம். எல்லாத்துக்கும் THE.",
+  tl:"Varisai ennum appadidhaan. 'The first day' — mudhal naal onnu-dhaan. 'The second row' — randaavadhu varisai onnu-dhaan. Ellaame thaniththuvam. Ellaaththukkum THE."},
+ {ta:"இப்போ ஒரு முக்கியமான பொறி. 'He is the taller of the two brothers.' கவனிங்க — 'tallest' இல்ல, 'taller'. ஏன்? ஏன்னா ரெண்டு பேரு மட்டும்தான். ரெண்டு பேருன்னா comparative (taller), மூணு பேருக்கு மேல superlative (tallest). ஆனா ரெண்டு சூழல்லயும் THE வரும். 'of the two' அப்படிங்கிற வார்த்தை பார்த்தா, உடனே 'the + comparative' போடுங்க.",
+  tl:"Ippo oru mukkiyamaana pori. 'He is the taller of the two brothers.' Kavaninga — 'tallest' illa, 'taller'. Yennaa rendu peru mattum-dhaan. Rendu perunnaa comparative, moonu perukku mela superlative. Aanaa rendu soozhallayum THE varum."},
+ {ta:"இன்னொரு நுட்பமான விஷயம். 'He came first in the race' — இங்க 'the' இல்ல. ஏன்? ஏன்னா இங்க 'first' ஒரு adverb, adjective இல்ல. அவர் எப்படி ஓடினார்? முதலாவதா. இது செயலை விவரிக்குது, நபரை இல்ல. அதனால article இல்ல. ஆனா 'He won the first prize' — இங்க 'first' ஒரு adjective, 'prize'-ஐ விவரிக்குது. அதனால THE.",
+  tl:"Innoru nutpamaana vishayam. 'He came first in the race' — inga 'the' illa. Yennaa inga 'first' oru adverb. Avar eppadi odinaar? Mudhalaavadhaa. Aanaa 'He won the first prize' — inga 'first' oru adjective. Adhanaala THE."},
+ {ta:"கடைசியா ஒரு விதிவிலக்கு. 'He is most intelligent' — இங்க THE இல்ல, ஆனா தப்பும் இல்ல. ஏன்? ஏன்னா இங்க 'most' அப்படின்னா 'மிகவும்' அப்படிங்கிற அர்த்தம், ஒப்பீடு இல்ல. 'அவர் மிகவும் புத்திசாலி.' ஆனா 'He is the most intelligent boy in the class' — இங்க ஒப்பீடு இருக்கு, class-ல எல்லாரையும் விட. அதனால THE. ஒப்பீடு இருந்தா THE, இல்லாட்டி இல்ல.",
+  tl:"Kadaisiyaa oru vidhivilakku. 'He is most intelligent' — inga THE illa, aanaa thappum illa. Yennaa inga 'most' appadinnaa 'migavum' appadingira arththam, oppeedu illa. Aanaa 'He is the most intelligent boy in the class' — inga oppeedu irukku. Oppeedu irundhaa THE, illaatti illa."}]},
+/* ========== RULE 6 ========== */
+{n:6,rc:"ART-06",d:"Medium",t:"THE before Unique and Named Things",
+ tam:"நதி, கடல், மலைத்தொடர், புனித நூல், செய்தித்தாள் — அனைத்துக்கும் 'THE'",
+ s1:{en:"Use THE before rivers, seas, oceans, deserts, mountain RANGES, GROUPS of islands, holy books, newspapers, historical buildings, and unique natural objects like the sun, the moon, the earth and the sky.",
+  ta:"நதிகள், கடல்கள், பெருங்கடல்கள், பாலைவனங்கள், மலைத்தொடர்கள், தீவுக் கூட்டங்கள், புனித நூல்கள், செய்தித்தாள்கள், வரலாற்றுக் கட்டிடங்கள், மற்றும் சூரியன், நிலா, பூமி, வானம் போன்ற தனித்துவமான இயற்கைப் பொருட்களுக்கு முன் THE பயன்படுத்தவும்.",
+  tl:"Nadhigal, kadalgal, perungadalgal, paalaivanangal, malaiththodargal, theevuk koottangal, punidha noolgal, seydhiththaalgal, varalaatruk kattidangal, matrum sooriyan, nilaa, boomi, vaanam pondra thaniththuvamaana iyarkaip porutkalukku mun THE payanpaduththavum.",
+  formula:"THE  +  unique or named thing\n\n  RIVERS   : the Ganga, the Kaveri, the Nile\n  SEAS     : the Arabian Sea, the Bay of Bengal\n  OCEANS   : the Indian Ocean, the Pacific\n  DESERTS  : the Thar, the Sahara\n  RANGES   : the Himalayas, the Western Ghats\n  ISLANDS  : the Andamans, the West Indies\n  BOOKS    : the Ramayana, the Quran, the Bible\n  PAPERS   : the Hindu, the Times of India\n  UNIQUE   : the sun, the moon, the earth, the sky"},
+
+ s2:[
+ {h:"Range takes THE, single peak does not",
+  en:"This is the most tested distinction in the rule. A mountain RANGE is a group, so it takes THE: the Himalayas, the Alps, the Western Ghats. A single PEAK is one named mountain and takes NO article: Mount Everest, Kanchenjunga, Mount Fuji.",
+  ta:"மலைத்தொடர் THE எடுக்கும், தனி சிகரம் எடுக்காது. இதுதான் இந்த விதியில் மிக அதிகமாகச் சோதிக்கப்படும் வேறுபாடு. ஒரு மலைத்தொடர் ஒரு குழு, எனவே அது THE எடுக்கும்: the Himalayas, the Alps, the Western Ghats. ஒரு தனி சிகரம் ஒரே ஒரு பெயரிடப்பட்ட மலை, அதற்கு article இல்லை: Mount Everest, Kanchenjunga.",
+  tl:"Malaiththodar THE edukkum, thani sigaram edukkaadhu. Idhudhaan indha vidhiyil miga adhigamaagach sodhikkappadum verupaadu. Oru malaiththodar oru kuzhu, enave adhu THE edukkum. Oru thani sigaram ore oru peyaridappatta malai, adharku article illai."},
+ {h:"Island group takes THE, single island does not",
+  en:"Same logic. The Andamans, the Maldives, the West Indies, the Philippines — all groups, all take THE. But Sri Lanka, Java, Sumatra, Cuba — single islands, no article.",
+  ta:"தீவுக் கூட்டம் THE எடுக்கும், தனித் தீவு எடுக்காது. அதே தர்க்கம். The Andamans, the Maldives, the West Indies, the Philippines — அனைத்தும் கூட்டங்கள், அனைத்தும் THE எடுக்கும். ஆனால் Sri Lanka, Java, Sumatra, Cuba — தனித் தீவுகள், article இல்லை.",
+  tl:"Theevuk koottam THE edukkum, thanith theevu edukkaadhu. Adhe tharkkam. The Andamans, the Maldives, the West Indies, the Philippines — anaiththum koottangal. Aanaal Sri Lanka, Java, Cuba — thanith theevugal, article illai."},
+ {h:"Countries: most take no article, a few take THE",
+  en:"Ordinary country names take NO article: India, China, Japan, France. But countries whose names describe a political structure take THE: the United States, the United Kingdom, the Netherlands, the Philippines, the UAE, the USSR.",
+  ta:"நாடுகள்: பெரும்பாலானவை article எடுப்பதில்லை, சில THE எடுக்கும். சாதாரண நாட்டுப் பெயர்கள் article எடுப்பதில்லை: India, China, Japan, France. ஆனால் அரசியல் அமைப்பை விவரிக்கும் பெயர்கள் THE எடுக்கும்: the United States, the United Kingdom, the Netherlands, the Philippines, the UAE.",
+  tl:"Naadugal: perumbaalaanavai article eduppadhillai, sila THE edukkum. Saadhaarana naattup peyargal article eduppadhillai: India, China, Japan, France. Aanaal arasiyal amaippai vivarikkum peyargal THE edukkum."},
+ {h:"One of a kind in the whole world",
+  en:"The sun, the moon, the earth, the sky, the sea, the world, the universe, the equator, the North Pole — there is only one of each, so THE is compulsory.",
+  ta:"உலகில் ஒரே ஒன்று. The sun, the moon, the earth, the sky, the sea, the world, the universe, the equator, the North Pole — ஒவ்வொன்றும் ஒன்றுதான் இருக்கிறது, எனவே THE கட்டாயம்.",
+  tl:"Ulagil ore ondru. The sun, the moon, the earth, the sky, the world, the universe, the equator, the North Pole — ovvondrum ondru-dhaan irukkiradhu, enave THE kattaayam."}],
+
+ s3:[
+ {h:"Group takes THE, single does not",
+  d:"   MOUNTAINS\n   the Himalayas    (a whole RANGE)   →  THE  ✔\n   Mount Everest    (ONE peak)        →  none ✔\n\n   ISLANDS\n   the Andamans     (a GROUP)         →  THE  ✔\n   Sri Lanka        (ONE island)      →  none ✔\n\n   RULE: many = THE,  one named = no article"},
+ {h:"The whole THE family",
+  d:"  🌊 the Ganga · the Kaveri · the Nile\n  🌊 the Arabian Sea · the Bay of Bengal\n  🌊 the Indian Ocean · the Pacific Ocean\n  🏜️ the Thar Desert · the Sahara\n  ⛰️ the Himalayas · the Western Ghats\n  🏝️ the Andamans · the West Indies\n  📖 the Ramayana · the Quran · the Bible\n  📰 the Hindu · the Times of India\n  🏛️ the Taj Mahal · the Red Fort\n  ☀️ the sun · the moon · the earth · the sky"}],
+
+ s4:{
+ wrong:["\"Everest is a mountain, and mountains take THE.\" — Only RANGES take THE. Single peaks take none.",
+  "\"India is a country, and the United States is a country, so both behave the same.\" — Only descriptive names like 'the United States' take THE.",
+  "\"'Sun rises in east' is fine.\" — Both 'sun' and 'east' are unique, so both need THE.",
+  "\"Newspapers are just names, so no article.\" — Newspaper titles always take THE."],
+ right:["Ask: is this a GROUP (range, island group) or ONE named thing?",
+  "Group → THE. Single named peak or island → no article.",
+  "Rivers, seas, oceans, deserts, holy books and newspapers ALWAYS take THE.",
+  "Anything there is only one of in the world → THE."]},
+
+ s5:[
+ {en:"The Ganga flows through the northern plains.",ta:"கங்கை நதி வடக்குச் சமவெளிகள் வழியாகப் பாய்கிறது.",tl:"Gangai nadhi vadakkuch samavelgal vazhiyaagap paaygiradhu.",note:"Rivers always take THE."},
+ {en:"The Himalayas are the highest mountains in the world.",ta:"இமயமலைத் தொடர்தான் உலகின் மிக உயரமான மலைகள்.",tl:"Imayamalaith thodardhaan ulagin miga uyaramaana malaigal.",note:"A range → THE. Also note the plural verb ARE."},
+ {en:"Mount Everest was first climbed in 1953.",ta:"எவரெஸ்ட் சிகரம் 1953-ல் முதன்முதலில் ஏறப்பட்டது.",tl:"Everest sigaram 1953-l mudhanmudhalil erappattadhu.",note:"A single peak → NO article."},
+ {en:"He reads the Hindu every morning.",ta:"அவர் தினமும் காலையில் தி இந்து படிக்கிறார்.",tl:"Avar dhinamum kaalaiyil The Hindu padikkiraar.",note:"Newspaper titles → THE."},
+ {en:"The sun rises in the east.",ta:"சூரியன் கிழக்கில் உதிக்கிறது.",tl:"Sooriyan kizhakkil udhikkiradhu.",note:"Both 'sun' and 'east' are unique → THE."}],
+
+ s6:["the Ganga|கங்கை நதி|Gangai nadhi",
+  "the Himalayas|இமயமலைத் தொடர்|Imayamalaith thodar",
+  "Mount Everest|எவரெஸ்ட் சிகரம்|Everest sigaram",
+  "the Arabian Sea|அரபிக் கடல்|Arabik kadal",
+  "the Indian Ocean|இந்தியப் பெருங்கடல்|Indhiyap perungadal",
+  "the Thar Desert|தார் பாலைவனம்|Thar paalaivanam",
+  "the Andamans|அந்தமான் தீவுகள்|Andaman theevugal",
+  "the Ramayana|இராமாயணம்|Iraamaayanam",
+  "the Hindu|தி இந்து (செய்தித்தாள்)|The Hindu (seydhiththaal)",
+  "the sun|சூரியன்|Sooriyan",
+  "the moon|நிலா|Nilaa",
+  "the east|கிழக்கு|Kizhakku",
+  "range|மலைத்தொடர்|Malaiththodar",
+  "peak|சிகரம்|Sigaram"],
+
+ s7:[
+ "____ Ganga is a holy river.|The|Easy|Rivers take THE.",
+ "____ Himalayas are covered with snow.|The|Easy|A range takes THE.",
+ "____ Everest is the highest peak.|Mount|Easy|A single peak takes no article.",
+ "____ sun rises in the east.|The|Easy|Unique object.",
+ "He reads ____ Times of India.|the|Medium|Newspapers take THE.",
+ "____ Arabian Sea lies west of India.|The|Medium|Seas take THE.",
+ "She has read ____ Ramayana twice.|the|Medium|Holy books take THE.",
+ "____ Sri Lanka is south of India.|—|Hard|A single island takes no article.",
+ "____ Andamans are a group of islands.|The|Hard|An island group takes THE.",
+ "____ United States has fifty states.|The|Hard|A descriptive country name takes THE.",
+ "____ India gained independence in 1947.|—|Hard|An ordinary country name takes no article.",
+ "____ Taj Mahal was built by Shah Jahan.|The|Expert|Historical buildings take THE.",
+ "____ Netherlands is famous for tulips.|The|Expert|A descriptive country name takes THE.",
+ "____ Thar Desert lies in Rajasthan.|The|Expert|Deserts take THE.",
+ "____ Kanchenjunga is in Sikkim.|—|Expert|A single peak takes no article."],
+
+ s8:[
+ "Ganga is a holy river.|The Ganga is a holy river.|Rivers take THE.",
+ "Himalayas are very high.|The Himalayas are very high.|A range takes THE.",
+ "The Mount Everest is the highest peak.|Mount Everest is the highest peak.|A single peak takes no article.",
+ "Sun rises in east.|The sun rises in the east.|Both are unique objects.",
+ "He reads Hindu daily.|He reads the Hindu daily.|Newspaper titles take THE.",
+ "Arabian Sea is to our west.|The Arabian Sea is to our west.|Seas take THE.",
+ "She has read Ramayana.|She has read the Ramayana.|Holy books take THE.",
+ "The Sri Lanka is an island nation.|Sri Lanka is an island nation.|A single island takes no article.",
+ "United States is a superpower.|The United States is a superpower.|A descriptive country name takes THE.",
+ "The India won the match.|India won the match.|An ordinary country name takes no article."],
+
+ s9:[
+ "Fill in the Blank|____ Kaveri is one of the most important rivers of South India.|A;The|1|Rivers always take THE.",
+ "Find the Error|The Mount Everest (A) was first climbed (B) by Tenzing and Hillary (C) in 1953 (D).|A;B;C;D|0|Part A. A single peak takes no article → 'Mount Everest'.",
+ "Sentence Improvement|Sun rises in east and sets in west every single day.|Sun rises in east;The sun rises in the east;A sun rises in an east|1|Unique objects and directions take THE.",
+ "Fill in the Blank|____ Andamans are administered as a union territory of India.|A;The|1|An island group takes THE.",
+ "Find the Error|He reads (A) Times of India (B) every morning (C) before going to office (D).|A;B;C;D|0|Part A. Newspaper titles take THE → 'the Times of India'."],
+
+ s10:{
+  en:"The exam almost never asks about 'the Ganga'. It asks about the BORDER cases: 'the Himalayas' versus 'Mount Everest', 'the Andamans' versus 'Sri Lanka', 'the United States' versus 'India'. In each pair one takes THE and the other takes nothing, and they look identical in kind. The test is always: is it a GROUP or a SINGLE named thing?",
+  ta:"தேர்வு 'the Ganga' பற்றி கிட்டத்தட்ட ஒருபோதும் கேட்பதில்லை. எல்லைப்புற வழக்குகளைத்தான் கேட்கும்: 'the Himalayas' மற்றும் 'Mount Everest', 'the Andamans' மற்றும் 'Sri Lanka', 'the United States' மற்றும் 'India'. ஒவ்வொரு ஜோடியிலும் ஒன்று THE எடுக்கும், மற்றொன்று எதுவும் எடுக்காது, இரண்டுமே ஒரே வகையாகத் தெரியும். சோதனை எப்போதும் இதுதான்: இது ஒரு குழுவா, அல்லது ஒரே ஒரு பெயரிடப்பட்ட பொருளா?",
+  tl:"Thervu 'the Ganga' patri kittaththatta orupodhum ketpadhillai. Ellaippura vazhakkugalaith-thaan ketkum: 'the Himalayas' matrum 'Mount Everest', 'the Andamans' matrum 'Sri Lanka'. Sodhanai eppodhum idhudhaan: idhu oru kuzhuvaa, alladhu ore oru peyaridappatta porulaa?"},
+
+ s11:{
+  en:"RANGE = THE. PEAK = none. GROUP = THE. SINGLE = none.",
+  ta:"மலைத்தொடர் = THE. சிகரம் = இல்லை. கூட்டம் = THE. தனி = இல்லை.",
+  tl:"Malaiththodar = THE. Sigaram = illai. Koottam = THE. Thani = illai.",
+  vis:"       THE GROUP TEST\n\n   Is it MANY things under one name?\n            ↓ YES\n         use THE\n   the Himalayas · the Andamans · the West Indies\n   the United States · the Netherlands\n\n   Is it ONE named thing?\n            ↓ YES\n        use NOTHING\n   Mount Everest · Sri Lanka · India · Japan\n\n   ALWAYS THE (no exceptions):\n   rivers · seas · oceans · deserts\n   holy books · newspapers · the sun/moon/earth"},
+
+ s12:[
+ "____ Ganga is a sacred river.|The;A|0",
+ "____ Himalayas are snow-covered.|The;A|0",
+ "____ Everest is in Nepal.|The Mount;Mount|1",
+ "____ sun gives us light.|The;A|0",
+ "He reads ____ Hindu daily.|the;a|0",
+ "____ Arabian Sea is calm today.|The;A|0",
+ "She recites ____ Bhagavad Gita.|the;a|0",
+ "____ Sri Lanka is our neighbour.|The;—|1",
+ "____ Andamans attract many tourists.|The;—|0",
+ "____ United States is a large country.|The;—|0",
+ "____ India is a democracy.|The;—|1",
+ "____ Taj Mahal is in Agra.|The;—|0",
+ "____ Netherlands exports flowers.|The;—|0",
+ "____ Sahara is the largest desert.|The;—|0",
+ "____ Kanchenjunga lies in Sikkim.|The;—|1",
+ "____ moon revolves round the earth.|The;A|0",
+ "____ Pacific Ocean is very deep.|The;—|0",
+ "____ Japan is an island country.|The;—|1",
+ "____ Western Ghats run along the coast.|The;—|0",
+ "____ Red Fort was built in Delhi.|The;—|0"],
+
+ s13:[
+ "____ Ganga rises in ____ Himalayas near ____ Gangotri glacier.|The-the-—;The-the-the;A-the-—|0|River → THE. Range → THE. A single named glacier → no article.",
+ "____ Everest lies in ____ Himalayas, which separate ____ India from ____ Tibet.|The-the-the-the;—-the-—-—;Mount-the-the-—|1|A single peak takes no article. Range → THE. Ordinary country names → no article.",
+ "He read about ____ Andamans in ____ Hindu while flying over ____ Bay of Bengal.|the-the-the;—-a-the;the-a-a|0|Island group, newspaper and sea — all take THE.",
+ "____ United States and ____ Netherlands signed a treaty concerning ____ Pacific Ocean.|—-—-the;The-the-the;The-—-the|1|Both descriptive country names take THE, and oceans take THE.",
+ "____ sun was setting behind ____ Western Ghats as we crossed ____ Kaveri.|The-the-the;A-the-a;The-—-the|0|Unique object, range and river — all take THE."],
+
+ s14:{
+  rule:"Rivers, seas, oceans, deserts, ranges, island groups, holy books, newspapers and unique objects take THE.",
+  formula:"GROUP or UNIQUE → THE\nSINGLE named peak / island / ordinary country → no article",
+  memory:"Range = THE, Peak = none. Group = THE, Single = none.",
+  ta:"மலைத்தொடர் = THE, சிகரம் = இல்ல. கூட்டம் = THE, தனி = இல்ல.",
+  tl:"Malaiththodar = THE, sigaram = illa. Koottam = THE, thani = illa.",
+  mistake:"Writing 'the Mount Everest' and 'the Sri Lanka', or dropping THE before rivers and newspapers.",
+  exam:"SSC CGL / CHSL, RRB NTPC — very frequent in Fill in the Blank and Cloze Test."},
+
+ s15:[
+ {ta:"இந்த rule ஒரு பட்டியல் rule மாதிரி தெரியும், ஆனா உண்மையில ஒரே ஒரு கொள்கைதான் — தனித்துவம். உலகத்துல ஒண்ணுதான் இருக்குன்னா, அல்லது பல விஷயங்கள் ஒரே பெயர்ல இருக்குன்னா, THE வரும்.",
+  tl:"Indha rule oru pattiyal rule maadhiri theriyum, aanaa unmaiyila ore oru kolgai-dhaan — thaniththuvam. Ulagaththula onnu-dhaan irukkunnaa, alladhu pala vishayangal ore peyarla irukkunnaa, THE varum."},
+ {ta:"நதி, கடல், பெருங்கடல், பாலைவனம் — இதெல்லாம் எப்பவும் THE. 'The Ganga', 'The Arabian Sea', 'The Indian Ocean', 'The Thar Desert'. இதுல குழப்பமே இல்ல. புனித நூல்களும் அப்படித்தான் — 'The Ramayana', 'The Quran', 'The Bible'. செய்திதாளும் — 'The Hindu', 'The Times of India'.",
+  tl:"Nadhi, kadal, perungadal, paalaivanam — idhellaam eppavum THE. 'The Ganga', 'The Arabian Sea', 'The Indian Ocean'. Idhula kuzhappame illa. Punidha noolgalum appadidhaan — 'The Ramayana', 'The Quran'."},
+ {ta:"இப்போ SSC-ஓட உண்மையான களத்துக்கு வரலாம். அவங்க இதெல்லாம் கேட்க மாட்டாங்க. அவங்க கேட்குறது எல்லைக் கேள்விதான். உதாரணம்: 'The Himalayas' சரி. ஆனா 'The Mount Everest' சரியா? இல்ல! 'Mount Everest' — article இல்ல.",
+  tl:"Ippo SSC-oda unmaiyaana kalaththukku varalaam. Avanga idhellaam ketka maattaanga. Avanga ketkuradhu ellaik kelvi-dhaan. Udhaaranam: 'The Himalayas' sari. Aanaa 'The Mount Everest' sariyaa? Illa! 'Mount Everest' — article illa."},
+ {ta:"ஏன் இந்த வித்தியாசம்? யோசிச்சுப் பாருங்க. 'Himalayas' அப்படின்னா என்ன? ஒரு மலையா? இல்ல — நூற்றுக்கணக்கான மலைகள் சேர்ந்த ஒரு தொடர். பல. கூட்டம். கூட்டத்துக்கு THE. ஆனா 'Everest' அப்படின்னா? ஒரே ஒரு சிகரம். ஒரு பெயர். அதனால article இல்ல.",
+  tl:"Yen indha viththiyaasam? Yosichup paarunga. 'Himalayas' appadinnaa enna? Oru malaiyaa? Illa — nootrukkanakkaana malaigal serndha oru thodar. Pala. Koottam. Koottaththukku THE. Aanaa 'Everest' appadinnaa? Ore oru sigaram. Adhanaala article illa."},
+ {ta:"இதே logic தீவுக்கும் பொருந்தும். 'The Andamans' — பல தீவுகள் சேர்ந்த கூட்டம். THE. 'Sri Lanka' — ஒரே ஒரு தீவு. article இல்ல. 'The Maldives' — கூட்டம். THE. 'Java' — தனி. இல்ல. கூட்டமா தனியா அப்படின்னு கேளுங்க, பதில் தானா வரும்.",
+  tl:"Idhe logic theevukkum porundhum. 'The Andamans' — pala theevugal serndha koottam. THE. 'Sri Lanka' — ore oru theevu. Article illa. Koottamaa thaniyaa appadinnu kelunga, padhil thaanaa varum."},
+ {ta:"கடைசியா நாடுகள். 'India', 'China', 'Japan', 'France' — சாதாரண பெயர், article இல்ல. ஆனா 'The United States', 'The United Kingdom', 'The Netherlands', 'The Philippines' — இவை THE எடுக்கும். ஏன்? ஏன்னா இந்த பெயர்கள் ஒரு அமைப்பை விவரிக்குது — 'ஐக்கிய மாநிலங்கள்', 'ஐக்கிய இராச்சியம்'. பல பகுதிகள் சேர்ந்த ஒண்ணு. அதனால THE. இதே கொள்கை மறுபடியும்.",
+  tl:"Kadaisiyaa naadugal. 'India', 'China', 'Japan' — saadhaarana peyar, article illa. Aanaa 'The United States', 'The United Kingdom', 'The Netherlands' — ivai THE edukkum. Yennaa indha peyargal oru amaippai vivarikkudhu. Pala paguthigal serndha onnu. Adhanaala THE."}]},
+
+/* ========== RULE 7 ========== */
+{n:7,rc:"ART-07",d:"Medium",t:"NO Article before General Proper, Material and Abstract Nouns",
+ tam:"பொதுவான சிறப்புப்பெயர், பொருள்பெயர், கருத்துப்பெயருக்கு article இல்லை",
+ s1:{en:"Do NOT use an article before proper nouns (Ram, Chennai), material nouns (gold, water, milk) and abstract nouns (honesty, courage, beauty) when they are used in a GENERAL sense. But when they become SPECIFIC, THE returns.",
+  ta:"சிறப்புப்பெயர்கள் (Ram, Chennai), பொருள்பெயர்கள் (gold, water, milk), கருத்துப்பெயர்கள் (honesty, courage, beauty) — இவை பொதுவான பொருளில் பயன்படுத்தப்படும்போது article பயன்படுத்தக் கூடாது. ஆனால் அவை குறிப்பிட்டவையாக மாறும்போது, THE திரும்பி வரும்.",
+  tl:"Sirappuppeyargal (Ram, Chennai), porulpeyargal (gold, water, milk), karuththuppeyargal (honesty, courage, beauty) — ivai podhuvaana porulil payanpaduththappadumbodhu article payanpaduththak koodaadhu. Aanaal avai kurippittavaiyaaga maarumbodhu, THE thirumbi varum.",
+  formula:"GENERAL  →  NO ARTICLE\n  Honesty is the best policy.\n  Gold is a precious metal.\n  Ram lives in Chennai.\n\nSPECIFIC (with 'of' or a clause)  →  THE\n  THE honesty of the officer surprised us.\n  THE gold in this ring is pure.\n  THE Chennai of my childhood was quieter."},
+
+ s2:[
+ {h:"Why general nouns need no article",
+  en:"An article LIMITS a noun. 'Honesty' in general already means all honesty everywhere — there is nothing left to limit. Adding THE would wrongly suggest one particular honesty. So English uses no article at all.",
+  ta:"பொதுவான பெயர்ச்சொற்களுக்கு ஏன் article தேவையில்லை? ஒரு article பெயர்ச்சொல்லை வரையறுக்கிறது. பொதுவாக 'honesty' என்றால் எல்லா இடத்திலும் உள்ள எல்லா நேர்மையையும் குறிக்கிறது — வரையறுக்க எதுவும் மிச்சமில்லை. THE சேர்த்தால் ஒரு குறிப்பிட்ட நேர்மையைத் தவறாகச் சுட்டும். எனவே ஆங்கிலம் எந்த article-ஐயும் பயன்படுத்துவதில்லை.",
+  tl:"Podhuvaana peyarchorkalukku yen article thevaiyillai? Oru article peyarcholai varaiyarukkiradhu. Podhuvaaga 'honesty' endraal ellaa idaththilum ulla ellaa nermaiyaiyum kurikkiradhu. THE serthaal oru kurippitta nermaiyaith thavaraaych suttum."},
+ {h:"The of-phrase switch",
+  en:"The moment you add 'of + something', the noun becomes specific and THE appears. 'Honesty is rare' but 'THE honesty OF this man is rare'. 'Water is life' but 'THE water OF this well is salty'. Look for 'of' — it is the switch.",
+  ta:"'of' தொடர் என்பது ஒரு switch. நீங்கள் 'of + ஏதோ ஒன்று' சேர்க்கும் தருணத்தில், அந்தப் பெயர்ச்சொல் குறிப்பிட்டதாகி THE தோன்றுகிறது. 'Honesty is rare' ஆனால் 'THE honesty OF this man is rare'. 'Water is life' ஆனால் 'THE water OF this well is salty'. 'of'-ஐத் தேடுங்கள் — அதுதான் switch.",
+  tl:"'of' thodar enbadhu oru switch. Neengal 'of + edho ondru' serkkum tharunaththil, andhap peyarchol kurippittadhaagi THE thondrugiradhu. 'of'-aith thedungal — adhudhaan switch."},
+ {h:"Proper nouns can take THE when made specific",
+  en:"'Shakespeare wrote plays' — no article. But 'He is THE Shakespeare of India' means he plays that role, so THE appears. Similarly 'THE Mr Sharma who called yesterday' points to one particular Mr Sharma.",
+  ta:"சிறப்புப்பெயர்கள் குறிப்பிட்டதாக்கப்படும்போது THE எடுக்கலாம். 'Shakespeare wrote plays' — article இல்லை. ஆனால் 'He is THE Shakespeare of India' என்றால் அவர் அந்தப் பாத்திரத்தை வகிக்கிறார், எனவே THE தோன்றுகிறது. அதேபோல 'THE Mr Sharma who called yesterday' ஒரு குறிப்பிட்ட Mr Sharma-ஐச் சுட்டுகிறது.",
+  tl:"Sirappuppeyargal kurippittadhaakkappadumbodhu THE edukkalaam. 'Shakespeare wrote plays' — article illai. Aanaal 'He is THE Shakespeare of India' endraal avar andhap paaththiraththai vagikkiraar, enave THE thondrugiradhu."},
+ {h:"Meals, languages, subjects and games take no article",
+  en:"Breakfast, lunch, dinner; English, Tamil, Hindi; mathematics, history; cricket, football, chess — all take no article in general use. 'He plays cricket', not 'the cricket'. 'She teaches English', not 'the English'.",
+  ta:"உணவு, மொழி, பாடம், விளையாட்டு ஆகியவை article எடுப்பதில்லை. Breakfast, lunch, dinner; English, Tamil, Hindi; mathematics, history; cricket, football, chess — அனைத்தும் பொது பயன்பாட்டில் article எடுப்பதில்லை. 'He plays cricket', 'the cricket' அல்ல. 'She teaches English', 'the English' அல்ல.",
+  tl:"Unavu, mozhi, paadam, vilaiyaattu aagiyavai article eduppadhillai. Breakfast, lunch, dinner; English, Tamil, Hindi; mathematics, history; cricket, football, chess — anaiththum podhu payanpaattil article eduppadhillai."}],
+
+ s3:[
+ {h:"General versus specific",
+  d:"  GENERAL (all of it, everywhere)  →  NO ARTICLE\n     Honesty is the best policy.\n     Gold is precious.\n     Water is life.\n\n  SPECIFIC (this particular one)   →  THE\n     THE honesty OF the officer surprised us.\n     THE gold IN this ring is pure.\n     THE water OF this well is salty.\n              ↑\n     'of' or 'in' or a clause = the switch"},
+ {h:"Four families that take no article",
+  d:"  🍽️ MEALS     : breakfast, lunch, dinner, supper\n  🗣️ LANGUAGES : English, Tamil, Hindi, French\n  📚 SUBJECTS   : mathematics, history, physics\n  🏏 GAMES      : cricket, football, chess, hockey\n\n  He plays cricket after dinner.        ✔\n  He plays the cricket after the dinner. ✘"}],
+
+ s4:{
+ wrong:["\"Every noun needs an article.\" — General abstract, material and proper nouns take none.",
+  "\"'The honesty is the best policy' sounds more complete.\" — The extra THE makes it wrong.",
+  "\"'He plays the cricket' — cricket is a specific game.\" — Games take no article.",
+  "\"Abstract nouns never take THE.\" — They do, the moment an of-phrase or clause makes them specific."],
+ right:["Ask: am I talking about ALL of it, or THIS particular one?",
+  "All of it → no article. This particular one → THE.",
+  "Look for 'of', 'in' or a which/that clause — those force THE.",
+  "Meals, languages, subjects and games take no article in general use."]},
+
+ s5:[
+ {en:"Honesty is the best policy.",ta:"நேர்மையே சிறந்த கொள்கை.",tl:"Nermaiye sirandha kolgai.",note:"General abstract noun → no article."},
+ {en:"The honesty of that officer surprised everyone.",ta:"அந்த அதிகாரியின் நேர்மை அனைவரையும் ஆச்சரியப்படுத்தியது.",tl:"Andha adhigaariyin nermai anaivaraiyum aachariyappaduththiyadhu.",note:"'Of that officer' makes it specific → THE."},
+ {en:"Gold is a precious metal.",ta:"தங்கம் ஒரு விலைமதிப்புமிக்க உலோகம்.",tl:"Thangam oru vilaimadhippumikka ulogam.",note:"General material noun → no article."},
+ {en:"He plays cricket every evening after dinner.",ta:"அவர் தினமும் மாலை இரவு உணவுக்குப் பிறகு கிரிக்கெட் விளையாடுகிறார்.",tl:"Avar dhinamum maalai iravu unavukkup piragu cricket vilaiyaadugiraar.",note:"Games and meals take no article."},
+ {en:"She teaches English at a government school.",ta:"அவர் ஒரு அரசுப் பள்ளியில் ஆங்கிலம் கற்பிக்கிறார்.",tl:"Avar oru arasup palliyil Aangilam karpikkiraar.",note:"Languages take no article."}],
+
+ s6:["honesty|நேர்மை|Nermai",
+  "courage|தைரியம்|Thairiyam",
+  "beauty|அழகு|Azhagu",
+  "gold|தங்கம்|Thangam",
+  "silver|வெள்ளி|Velli",
+  "water|தண்ணீர்|Thanneer",
+  "milk|பால்|Paal",
+  "policy|கொள்கை|Kolgai",
+  "precious metal|விலைமதிப்புமிக்க உலோகம்|Vilaimadhippumikka ulogam",
+  "breakfast|காலை உணவு|Kaalai unavu",
+  "dinner|இரவு உணவு|Iravu unavu",
+  "cricket|கிரிக்கெட்|Cricket",
+  "abstract noun|கருத்துப்பெயர்|Karuththuppeyar",
+  "material noun|பொருள்பெயர்|Porulpeyar"],
+
+ s7:[
+ "____ honesty is the best policy.|—|Easy|General abstract noun.",
+ "____ gold is a precious metal.|—|Easy|General material noun.",
+ "____ Ram lives in Chennai.|—|Easy|Proper noun.",
+ "____ milk is good for health.|—|Easy|General material noun.",
+ "____ honesty of the officer impressed us.|The|Medium|'Of the officer' makes it specific.",
+ "____ gold in this ring is pure.|The|Medium|'In this ring' makes it specific.",
+ "He plays ____ cricket every Sunday.|—|Medium|Games take no article.",
+ "She teaches ____ English in a college.|—|Medium|Languages take no article.",
+ "We had ____ breakfast at seven.|—|Hard|Meals take no article.",
+ "____ breakfast she cooked was delicious.|The|Hard|The clause makes it specific.",
+ "____ patience is a great virtue.|—|Hard|General abstract noun.",
+ "____ patience of the teacher was admirable.|The|Hard|'Of the teacher' makes it specific.",
+ "____ water of this well is salty.|The|Expert|'Of this well' makes it specific.",
+ "He is ____ Newton of our age.|the|Expert|A proper noun made specific takes THE.",
+ "____ mathematics is my favourite subject.|—|Expert|Subjects take no article."],
+
+ s8:[
+ "The honesty is the best policy.|Honesty is the best policy.|A general abstract noun takes no article.",
+ "The gold is a precious metal.|Gold is a precious metal.|A general material noun takes no article.",
+ "The Ram lives in the Chennai.|Ram lives in Chennai.|Proper nouns take no article.",
+ "Honesty of the officer surprised us.|The honesty of the officer surprised us.|The of-phrase makes it specific.",
+ "He plays the cricket every day.|He plays cricket every day.|Games take no article.",
+ "She teaches the English in a college.|She teaches English in a college.|Languages take no article.",
+ "We had the breakfast at seven.|We had breakfast at seven.|Meals take no article in general use.",
+ "The patience is a virtue.|Patience is a virtue.|A general abstract noun takes no article.",
+ "Water of this well is salty.|The water of this well is salty.|The of-phrase makes it specific.",
+ "The mathematics is difficult for me.|Mathematics is difficult for me.|Subjects take no article."],
+
+ s9:[
+ "Fill in the Blank|____ honesty of the young clerk impressed the entire department.|A;The|1|The of-phrase makes the abstract noun specific.",
+ "Find the Error|The honesty (A) is the best policy (B), as our elders (C) always told us (D).|A;B;C;D|0|Part A. A general abstract noun takes no article → 'Honesty is the best policy'.",
+ "Sentence Improvement|He plays the cricket every Sunday morning with his friends.|the cricket;cricket;a cricket|1|Games take no article.",
+ "Fill in the Blank|____ water in this tank has not been changed for a month.|A;The|1|'In this tank' makes it specific.",
+ "Find the Error|She teaches (A) the English (B) at a government school (C) in our town (D).|A;B;C;D|1|Part B. Languages take no article → 'English'."],
+
+ s10:{
+  en:"The exam puts the SAME abstract noun in two sentences — one general, one specific — and asks you to article them differently. 'Honesty is the best policy' takes nothing, but 'THE honesty of the officer' takes THE. Students who learnt 'abstract nouns never take THE' get the second one wrong. The switch is always an of-phrase, an in-phrase, or a which/that clause.",
+  ta:"தேர்வு ஒரே கருத்துப்பெயரை இரண்டு வாக்கியங்களில் வைக்கும் — ஒன்று பொதுவானது, ஒன்று குறிப்பிட்டது — மேலும் அவற்றுக்கு வெவ்வேறு article கேட்கும். 'Honesty is the best policy' எதுவும் எடுக்காது, ஆனால் 'THE honesty of the officer' THE எடுக்கும். 'கருத்துப்பெயர்கள் ஒருபோதும் THE எடுக்காது' என்று கற்றவர்கள் இரண்டாவதைத் தவறாகச் செய்வார்கள். switch எப்போதும் ஒரு of-தொடர், in-தொடர், அல்லது which/that clause.",
+  tl:"Thervu ore karuththuppeyarai irandu vaakkiyangalil vaikkum — ondru podhuvaanadhu, ondru kurippittadhu. 'Honesty is the best policy' edhuvum edukkaadhu, aanaal 'THE honesty of the officer' THE edukkum. Switch eppodhum oru of-thodar, in-thodar, alladhu which/that clause."},
+
+ s11:{
+  en:"ALL OF IT → no article. THIS PARTICULAR ONE → THE. Look for 'of'.",
+  ta:"முழுவதும் → article இல்லை. இந்தக் குறிப்பிட்ட ஒன்று → THE. 'of'-ஐத் தேடுங்கள்.",
+  tl:"Muzhuvadhum → article illai. Indhak kurippitta ondru → THE. 'of'-aith thedungal.",
+  vis:"        THE 'OF' SWITCH\n\n   Honesty is the best policy.\n      ↑\n   no 'of' → GENERAL → no article\n\n   THE honesty OF the officer surprised us.\n                ↑\n   'of' present → SPECIFIC → THE\n\n   NEVER TAKE AN ARTICLE (general use):\n   🍽️ meals      🗣️ languages\n   📚 subjects    🏏 games\n   💎 materials   💭 abstract nouns\n   👤 proper nouns"},
+
+ s12:[
+ "____ honesty is the best policy.|The;—|1",
+ "____ gold is very costly now.|The;—|1",
+ "____ Ram works in Chennai.|The;—|1",
+ "____ milk is good for children.|The;—|1",
+ "____ honesty of that clerk amazed us.|The;—|0",
+ "____ gold in this chain is pure.|The;—|0",
+ "He plays ____ cricket on Sundays.|the;—|1",
+ "She teaches ____ Tamil in school.|the;—|1",
+ "We had ____ dinner at nine.|the;—|1",
+ "____ dinner she cooked was superb.|The;—|0",
+ "____ patience is a rare virtue.|The;—|1",
+ "____ patience of the nurse was praised.|The;—|0",
+ "____ water of this river is clean.|The;—|0",
+ "He is ____ Gandhi of our times.|the;—|0",
+ "____ mathematics is a hard subject.|The;—|1",
+ "____ courage he showed was remarkable.|The;—|0",
+ "____ iron is a useful metal.|The;—|1",
+ "____ iron in this bar is rusted.|The;—|0",
+ "She loves ____ music very much.|the;—|1",
+ "____ music of that film was excellent.|The;—|0"],
+
+ s13:[
+ "____ honesty is a virtue, but ____ honesty of this officer is ____ rare quality.|—-the-a;The-the-a;—-a-the|0|General → none. Of-phrase → THE. 'Rare' begins with /r/ → A.",
+ "He had ____ breakfast at ____ hotel before catching ____ 8 o'clock train.|—-a-the;the-a-the;—-an-the|0|Meals → none. 'Hotel' spoken H → A. A specific train → THE.",
+ "She teaches ____ English at ____ university and plays ____ cricket on Sundays.|the-a-the;—-a-—;—-an-—|1|Languages → none. 'University' /yu/ → A. Games → none.",
+ "____ gold in this ring came from ____ mine near ____ Kolar.|The-a-—;The-the-the;A-a-—|0|Specific gold → THE. 'Mine' → A. Place name → none.",
+ "____ courage of ____ soldiers who fought on ____ Himalayas was praised by all.|The-the-the;A-the-the;The-a-the|0|Of-phrase → THE. Specific soldiers → THE. A range → THE."],
+
+ s14:{
+  rule:"General proper, material and abstract nouns take no article. Specific ones take THE.",
+  formula:"GENERAL → no article\nSPECIFIC (with of / in / clause) → THE",
+  memory:"All of it = no article. This particular one = THE. Look for 'of'.",
+  ta:"முழுவதும்னா article இல்ல. இந்த குறிப்பிட்டதுன்னா THE. 'of'-ஐ தேடுங்க.",
+  tl:"Muzhuvadhumnaa article illa. Indha kurippittadhunnaa THE. 'of'-ai thedunga.",
+  mistake:"Adding THE to general abstract nouns, and dropping THE when an of-phrase makes them specific.",
+  exam:"SSC CGL / CHSL and Bank — common in Cloze Test and Fill in the Blank."},
+
+ s15:[
+ {ta:"இந்த rule-ஐ புரிஞ்சுக்க ஒரு அடிப்படை கேள்வி கேட்டுக்கணும்: 'நான் இதைப் பத்தி பொதுவா பேசுறேனா, இல்ல ஒரு குறிப்பிட்ட ஒண்ணைப் பத்தி பேசுறேனா?'",
+  tl:"Indha rule-ai purinjukka oru adippadai kelvi kettukkanum: 'naan idhaip paththi podhuvaa pesurenaa, illa oru kurippitta onnaip paththi pesurenaa?'"},
+ {ta:"'Honesty is the best policy' — இங்க எந்த நேர்மையைப் பத்தி பேசுறீங்க? ஒரு குறிப்பிட்ட மனுஷனோட நேர்மையா? இல்ல. உலகத்துல இருக்கிற எல்லா நேர்மையையும் பத்தி. பொதுவானது. அதனால article இல்ல.",
+  tl:"'Honesty is the best policy' — inga endha nermaiyaip paththi pesureenga? Oru kurippitta manushanoda nermaiyaa? Illa. Ulagaththula irukkira ellaa nermaiyaiyum paththi. Podhuvaanadhu. Adhanaala article illa."},
+ {ta:"ஆனா 'The honesty of that officer surprised us' — இங்க எந்த நேர்மை? அந்த அதிகாரியோட நேர்மை. குறிப்பிட்டது. ஒரே ஒரு நபரோடது. அதனால THE. வித்தியாசம் தெரியுதா?",
+  tl:"Aanaa 'The honesty of that officer surprised us' — inga endha nermai? Andha adhigaariyoda nermai. Kurippittadhu. Ore oru nabarodadhu. Adhanaala THE. Viththiyaasam theriyudhaa?"},
+ {ta:"இதை எப்படி உடனே கண்டுபிடிக்கிறது? ஒரு switch இருக்கு — 'of'. வாக்கியத்துல 'of' இருக்கா? அல்லது 'in this...', 'which...', 'that...' இருக்கா? அப்படின்னா அது குறிப்பிட்டது, THE வரும். இல்லைன்னா பொதுவானது, article இல்ல. இந்த ஒரு சோதனை போதும்.",
+  tl:"Idhai eppadi udane kandupidikkiradhu? Oru switch irukku — 'of'. Vaakkiyaththula 'of' irukkaa? Alladhu 'in this...', 'which...', 'that...' irukkaa? Appadinnaa adhu kurippittadhu, THE varum. Illainnaa podhuvaanadhu, article illa."},
+ {ta:"இப்போ இன்னொரு பகுதி — நாலு குடும்பம் article-ஏ எடுக்காது. உணவு: breakfast, lunch, dinner. மொழி: English, Tamil, Hindi. பாடம்: mathematics, history. விளையாட்டு: cricket, football, chess. இதெல்லாம் பொதுவா பயன்படுத்தும்போது article இல்ல.",
+  tl:"Ippo innoru paguthi — naalu kudumbam article-e edukkaadhu. Unavu: breakfast, lunch, dinner. Mozhi: English, Tamil, Hindi. Paadam: mathematics, history. Vilaiyaattu: cricket, football, chess."},
+ {ta:"நாம தமிழ்ல பேசும்போது 'the' அப்படிங்கிற ஒரு வார்த்தையே கிடையாது. அதனால நமக்கு எப்போ போடணும், எப்போ போடக்கூடாது அப்படின்னு குழப்பம் வரும். இந்த rule-ஐ மனப்பாடம் பண்ணாதீங்க — புரிஞ்சுக்கோங்க. 'எல்லாத்தையும் பத்தியா, இல்ல இதை மட்டும் பத்தியா?' இந்த ஒரு கேள்வி உங்களுக்கு எப்பவும் பதில் தரும்.",
+  tl:"Naama Tamil-la pesumbodhu 'the' appadingira oru vaarththaiye kidaiyaadhu. Adhanaala namakku eppo podanum, eppo podakkoodaadhu appadinnu kuzhappam varum. Indha rule-ai manappaadam pannaadheenga — purinjukkonga. 'Ellaaththaiyum paththiyaa, illa idhai mattum paththiyaa?'"}]},
+
+/* ========== RULE 8 ========== */
+{n:8,rc:"ART-08",d:"Medium",t:"THE + Adjective = A Whole Class of People",
+ tam:"'THE' + பெயரடை = அந்த வகை மக்கள் அனைவரும் (பன்மை வினைச்சொல்)",
+ s1:{en:"When THE is placed before an adjective, the adjective becomes a PLURAL NOUN meaning the whole class of people with that quality — and it takes a PLURAL VERB.",
+  ta:"ஒரு பெயரடைக்கு முன் THE வைக்கப்படும்போது, அந்தப் பெயரடை ஒரு பன்மைப் பெயர்ச்சொல்லாக மாறி, அந்தப் பண்பைக் கொண்ட முழு வகை மக்களையும் குறிக்கிறது — மேலும் அது பன்மை வினைச்சொல்லை எடுக்கும்.",
+  tl:"Oru peyaradaikku mun THE vaikkappadumbodhu, andhap peyaradai oru panmaip peyarcholaaga maari, andhap panbaik konda muzhu vagai makkalaiyum kurikkiradhu — melum adhu panmai vinaicholai edukkum.",
+  formula:"THE  +  adjective  =  PLURAL NOUN  →  PLURAL VERB\n\n  the poor   ARE  often ignored.   (= poor people)\n  the rich   HAVE their problems.  (= rich people)\n  the blind  NEED our support.     (= blind people)\n  the elderly NEED care.           (= elderly people)"},
+
+ s2:[
+ {h:"The verb is the real question",
+  en:"Almost every exam question on this rule tests the VERB, not the article. 'The poor IS ignored' is the planted error. Because 'the poor' means 'poor people' — many people — the verb must be plural.",
+  ta:"வினைச்சொல்தான் உண்மையான கேள்வி. இந்த விதி மீதான கிட்டத்தட்ட ஒவ்வொரு தேர்வுக் கேள்வியும் article-ஐ அல்ல, வினைச்சொல்லைச் சோதிக்கிறது. 'The poor IS ignored' என்பதுதான் நடப்பட்ட தவறு. 'The poor' என்றால் 'ஏழை மக்கள்' — பல மக்கள் — எனவே வினைச்சொல் பன்மையாக இருக்க வேண்டும்.",
+  tl:"Vinaichol-dhaan unmaiyaana kelvi. Indha vidhi meedhaana kittaththatta ovvoru thervuk kelviyum article-ai alla, vinaicholaich sodhikkiradhu. 'The poor IS ignored' enbadhudhaan nadappatta thavaru."},
+ {h:"The common members of this family",
+  en:"the poor, the rich, the young, the old, the elderly, the blind, the deaf, the dumb, the sick, the wounded, the injured, the dead, the unemployed, the homeless, the educated, the illiterate, the brave, the weak, the strong, the accused.",
+  ta:"இந்தக் குடும்பத்தின் பொதுவான உறுப்பினர்கள்: the poor, the rich, the young, the old, the elderly, the blind, the deaf, the sick, the wounded, the injured, the dead, the unemployed, the homeless, the educated, the illiterate, the brave, the accused.",
+  tl:"Indhak kudumbaththin podhuvaana uruppinargal: the poor, the rich, the young, the old, the elderly, the blind, the deaf, the sick, the wounded, the injured, the dead, the unemployed, the homeless, the educated, the illiterate."},
+ {h:"An abstract exception",
+  en:"A few of these take a SINGULAR verb because they name an abstract quality, not people: 'The beautiful IS not always the good.' Here 'the beautiful' means 'beauty as a concept'. This is rare in exams but worth knowing.",
+  ta:"ஒரு கருத்தியல் விதிவிலக்கு. இவற்றில் சில ஒருமை வினைச்சொல்லை எடுக்கும், ஏனெனில் அவை மக்களை அல்ல, ஒரு கருத்துப் பண்பைக் குறிக்கின்றன: 'The beautiful IS not always the good.' இங்கே 'the beautiful' என்றால் 'ஒரு கருத்தாக அழகு'. இது தேர்வுகளில் அரிது, ஆனால் தெரிந்திருக்க வேண்டியது.",
+  tl:"Oru karuththiyal vidhivilakku. Ivatril sila orumai vinaicholai edukkum, yenenil avai makkalai alla, oru karuththup panbaik kurikkindrana: 'The beautiful IS not always the good.'"},
+ {h:"Nationality adjectives work the same way",
+  en:"'The English are hardworking', 'the French are artistic', 'the Chinese are industrious', 'the Japanese are disciplined'. All mean the people of that nation, all take plural verbs.",
+  ta:"தேசியப் பெயரடைகளும் இதேபோலவே செயல்படுகின்றன. 'The English are hardworking', 'the French are artistic', 'the Chinese are industrious', 'the Japanese are disciplined'. அனைத்தும் அந்த நாட்டு மக்களைக் குறிக்கின்றன, அனைத்தும் பன்மை வினைச்சொல் எடுக்கும்.",
+  tl:"Desiyap peyaradaigalum idhepolave seyalpadugindrana. 'The English are hardworking', 'the French are artistic', 'the Chinese are industrious'. Anaiththum panmai vinaichol edukkum."}],
+
+ s3:[
+ {h:"One word becomes many people",
+  d:"   THE  +  POOR  =  poor PEOPLE  =  many  →  ARE\n            ↑\n      an adjective becomes a plural noun\n\n   The poor ARE often ignored.        ✔\n   The poor IS often ignored.         ✘\n\n   Mentally add the word PEOPLE:\n   \"The poor [people] are ignored.\"  ✔"},
+ {h:"Never add -s",
+  d:"   the poor    ✔        the poors    ✘\n   the rich    ✔        the riches   ✘\n   the blind   ✔        the blinds   ✘\n   the young   ✔        the youngs   ✘\n\n   The plural is in the MEANING, not in the spelling.\n   (Compare this with Rule 47 of the SVA module:\n    people, police, cattle — same idea.)"}],
+
+ s4:{
+ wrong:["\"'The poor' is one phrase, so singular verb.\" — It means many people.",
+  "\"I should write 'the poors' to make it plural.\" — Never add -s. The plural is in the meaning.",
+  "\"'The rich has many problems' sounds fine.\" — It must be 'have'.",
+  "\"This is an article rule, so only the article is being tested.\" — The verb is what is actually tested."],
+ right:["Mentally insert the word PEOPLE after the adjective.",
+  "'The poor [people] are ignored' — now the plural verb is obvious.",
+  "Never add -s to the adjective.",
+  "Nationality words behave the same way: the English ARE, the French ARE."]},
+
+ s5:[
+ {en:"The poor are often ignored by the system.",ta:"ஏழை மக்கள் அமைப்பால் அடிக்கடி புறக்கணிக்கப்படுகிறார்கள்.",tl:"Ezhai makkal amaippaal adikkadi purakkanikkappadugiraargal.",note:"'The poor' = poor people → ARE."},
+ {en:"The rich have their own problems.",ta:"பணக்கார மக்களுக்கும் அவர்களுடைய சொந்தப் பிரச்சனைகள் உண்டு.",tl:"Panakkaara makkalukkum avargaludaiya sondhap prachanaigal undu.",note:"'The rich' = rich people → HAVE."},
+ {en:"The blind need our support and understanding.",ta:"பார்வையற்றவர்களுக்கு நமது ஆதரவும் புரிதலும் தேவை.",tl:"Paarvaiyatravargalukku namadhu aadharavum purithalum thevai.",note:"'The blind' = blind people → NEED."},
+ {en:"The wounded were taken to the nearest hospital.",ta:"காயமடைந்தவர்கள் அருகிலுள்ள மருத்துவமனைக்கு அழைத்துச் செல்லப்பட்டனர்.",tl:"Kaayamadaindhavargal arugilulla maruththuvamanaikku azhaiththuch sellappattanar.",note:"'The wounded' = wounded people → WERE."},
+ {en:"The English are known for their politeness.",ta:"ஆங்கிலேயர்கள் தங்கள் பணிவுக்காக அறியப்படுகிறார்கள்.",tl:"Aangileyargal thangal panivukkaaga ariyappadugiraargal.",note:"A nationality adjective → ARE."}],
+
+ s6:["the poor|ஏழை மக்கள்|Ezhai makkal",
+  "the rich|பணக்கார மக்கள்|Panakkaara makkal",
+  "the blind|பார்வையற்றவர்கள்|Paarvaiyatravargal",
+  "the deaf|காது கேளாதவர்கள்|Kaadhu kelaadhavargal",
+  "the sick|நோயாளிகள்|Noyaaligal",
+  "the wounded|காயமடைந்தவர்கள்|Kaayamadaindhavargal",
+  "the elderly|முதியவர்கள்|Mudhiyavargal",
+  "the unemployed|வேலையில்லாதவர்கள்|Velaiyillaadhavargal",
+  "the homeless|வீடற்றவர்கள்|Veedatravargal",
+  "the accused|குற்றம் சாட்டப்பட்டவர்கள்|Kutram saattappattavargal",
+  "the English|ஆங்கிலேயர்கள்|Aangileyargal",
+  "ignored|புறக்கணிக்கப்படுகிறார்கள்|Purakkanikkappadugiraargal",
+  "support|ஆதரவு|Aadharavu"],
+
+ s7:[
+ "The poor ____ often ignored.|are|Easy|'The poor' = poor people.",
+ "The rich ____ many problems.|have|Easy|'The rich' = rich people.",
+ "The blind ____ our help.|need|Easy|Plural verb.",
+ "The young ____ full of energy.|are|Easy|Plural verb.",
+ "The elderly ____ special care in winter.|need|Medium|Plural verb.",
+ "The unemployed ____ demanding jobs.|are|Medium|Plural verb.",
+ "The wounded ____ taken to hospital.|were|Medium|Plural verb.",
+ "The homeless ____ been given shelter.|have|Medium|Plural verb.",
+ "The sick ____ being treated free of cost.|are|Hard|Plural verb.",
+ "The English ____ known for their reserve.|are|Hard|A nationality adjective is plural.",
+ "The educated ____ a duty towards society.|have|Hard|Plural verb.",
+ "The accused ____ produced before the court.|were|Hard|Plural verb.",
+ "The dead ____ buried with full honours.|were|Expert|Plural verb.",
+ "The illiterate ____ often cheated by moneylenders.|are|Expert|Plural verb.",
+ "The brave ____ never afraid of danger.|are|Expert|Plural verb."],
+
+ s8:[
+ "The poor is often ignored.|The poor are often ignored.|'The poor' means many people.",
+ "The rich has many problems.|The rich have many problems.|Plural verb required.",
+ "The blind needs our help.|The blind need our help.|Plural verb required.",
+ "The poors are ignored by all.|The poor are ignored by all.|Never add -s to the adjective.",
+ "The elderly needs special care.|The elderly need special care.|Plural verb required.",
+ "The unemployed is demanding jobs.|The unemployed are demanding jobs.|Plural verb required.",
+ "The wounded was taken to hospital.|The wounded were taken to hospital.|Plural verb required.",
+ "The riches have many worries.|The rich have many worries.|Never add -s.",
+ "The English is very reserved.|The English are very reserved.|A nationality adjective is plural.",
+ "The accused was all produced in court.|The accused were all produced in court.|'All' shows more than one, so plural."],
+
+ s9:[
+ "Fill in the Blank|The elderly ____ special attention during the winter months.|needs;need|1|'The elderly' means elderly people → plural verb.",
+ "Find the Error|The poor (A) is often (B) denied access (C) to basic health care (D).|A;B;C;D|1|Part B. 'The poor' takes a plural verb → 'are often denied'.",
+ "Sentence Improvement|The poors of this village have no access to clean water.|The poors;The poor;A poor|1|Never add -s to the adjective.",
+ "Fill in the Blank|The wounded ____ rushed to the district hospital within minutes.|was;were|1|'The wounded' is plural.",
+ "Find the Error|The unemployed (A) has been (B) protesting outside the office (C) for a week (D).|A;B;C;D|1|Part B. Plural subject → 'have been protesting'."],
+
+ s10:{
+  en:"This looks like an Articles rule but it is really a Subject-Verb Agreement question in disguise. The exam prints 'the poor', 'the rich' or 'the elderly' and then plants a SINGULAR verb, which sounds perfectly natural because the phrase is only two words long. The second trap is 'the poors' — students add -s to show plurality, which is always wrong.",
+  ta:"இது Articles விதி போலத் தெரிகிறது, ஆனால் உண்மையில் இது மாறுவேடத்தில் உள்ள ஒரு Subject-Verb Agreement கேள்வி. தேர்வு 'the poor', 'the rich' அல்லது 'the elderly' என்று அச்சிட்டு, பிறகு ஒரு ஒருமை வினைச்சொல்லை நடும் — அந்தத் தொடர் இரண்டே சொற்கள் நீளம் என்பதால் அது முற்றிலும் இயற்கையாகக் கேட்கும். இரண்டாவது பொறி 'the poors' — மாணவர்கள் பன்மையைக் காட்ட -s சேர்க்கிறார்கள், அது எப்போதுமே தவறு.",
+  tl:"Idhu Articles vidhi polath therigiradhu, aanaal unmaiyil idhu maaruvedaththil ulla oru Subject-Verb Agreement kelvi. Thervu 'the poor' endru achittu, piragu oru orumai vinaicholai nadum. Irandaavadhu pori 'the poors' — maanavargal panmaiyaik kaatta -s serkkiraargal, adhu eppodhume thavaru."},
+
+ s11:{
+  en:"MENTALLY ADD THE WORD 'PEOPLE'. The poor [people] ARE ignored.",
+  ta:"மனதுக்குள் 'PEOPLE' என்ற சொல்லைச் சேருங்கள். The poor [people] ARE ignored.",
+  tl:"Manadhukkul 'PEOPLE' endra sollaich serungal. The poor [people] ARE ignored.",
+  vis:"      THE INVISIBLE WORD 'PEOPLE'\n\n   the poor  [people]  ARE  ignored.\n   the rich  [people]  HAVE problems.\n   the blind [people]  NEED help.\n   the sick  [people]  ARE treated.\n              ↑\n     always mentally insert PEOPLE\n\n   TWO RULES IN ONE:\n   1. Never add -s   →  'the poors' ✘\n   2. Always plural verb →  'the poor is' ✘"},
+
+ s12:[
+ "The poor ____ often ignored.|is;are|1",
+ "The rich ____ their own worries.|has;have|1",
+ "The blind ____ our support.|needs;need|1",
+ "The young ____ energetic.|is;are|1",
+ "The elderly ____ extra care.|needs;need|1",
+ "The unemployed ____ protesting.|is;are|1",
+ "The wounded ____ taken to hospital.|was;were|1",
+ "The homeless ____ been given shelter.|has;have|1",
+ "The sick ____ treated free here.|is;are|1",
+ "The English ____ very reserved.|is;are|1",
+ "The educated ____ a responsibility.|has;have|1",
+ "The accused ____ produced in court.|was;were|1",
+ "The dead ____ honoured yesterday.|was;were|1",
+ "The illiterate ____ often cheated.|is;are|1",
+ "The brave ____ never afraid.|is;are|1",
+ "____ poor are ignored by all.|The;A|0",
+ "The ____ are demanding jobs.|unemployeds;unemployed|1",
+ "The French ____ great artists.|is;are|1",
+ "The weak ____ protection from the state.|needs;need|1",
+ "The injured ____ shifted to a private ward.|was;were|1"],
+
+ s13:[
+ "The poor ____ often ignored, while ____ rich of this city ____ every facility.|are-the-have;is-the-has;are-a-have|0|'The poor' → ARE. 'The rich of this city' is specific → THE. Plural → HAVE.",
+ "The wounded ____ taken to ____ hospital, and ____ dead ____ buried the same evening.|were-a-the-were;was-a-the-was;were-the-a-were|0|Plural → WERE. 'Hospital' spoken H → A. 'The dead' → THE + WERE.",
+ "The elderly ____ care, but ____ elderly of this village ____ no medical centre nearby.|need-the-have;needs-the-has;need-a-have|0|Plural → NEED. Specific → THE. Plural → HAVE.",
+ "The English ____ reserved, the French ____ artistic, and the Japanese ____ disciplined.|is-is-is;are-are-are;are-is-are|1|All three nationality adjectives take plural verbs.",
+ "The unemployed ____ been protesting for ____ hour outside ____ MLA's office.|have-an-an;has-a-a;have-a-an|0|Plural → HAVE. 'Hour' silent H → AN. 'MLA' = 'em' → AN."],
+
+ s14:{
+  rule:"THE + adjective means the whole class of people and takes a plural verb.",
+  formula:"THE + adjective = plural noun → ARE / WERE / HAVE / NEED",
+  memory:"Mentally add PEOPLE: the poor [people] are ignored.",
+  ta:"மனசுல 'PEOPLE' சேர்த்துப் பாருங்க: the poor [people] are ignored.",
+  tl:"Manasula 'PEOPLE' serthup paarunga: the poor [people] are ignored.",
+  mistake:"Using a singular verb, and adding -s to write 'the poors'.",
+  exam:"SSC CGL / CHSL and Bank — tested as an Error Spotting question about the VERB."},
+
+ s15:[
+ {ta:"இந்த rule ஒரு rule-ஓட முகமூடி போட்ட இன்னொரு rule. வெளிய பார்த்தா Article rule மாதிரி இருக்கு, ஆனா உள்ள Subject-Verb Agreement கேள்வி.",
+  tl:"Indha rule oru rule-oda mugamoodi potta innoru rule. Veliya paarththaa Article rule maadhiri irukku, aanaa ulla Subject-Verb Agreement kelvi."},
+ {ta:"முதல்ல rule-ஐ புரிஞ்சுக்கலாம். 'Poor' அப்படிங்கிறது ஒரு பெயரடை (adjective) — 'ஏழையான'. ஆனா அதுக்கு முன்னாடி 'the' போட்டா, அது பெயர்ச்சொல்லா மாறிடும் — 'the poor' = 'ஏழை மக்கள்'. அதேபோல 'the rich' = 'பணக்கார மக்கள்', 'the blind' = 'பார்வையற்றவர்கள்'.",
+  tl:"Mudhalla rule-ai purinjukkalaam. 'Poor' appadingiradhu oru peyaradai (adjective) — 'ezhaiyaana'. Aanaa adhukku munnaadi 'the' pottaa, adhu peyarcholaa maaridum — 'the poor' = 'ezhai makkal'."},
+ {ta:"இப்போ முக்கியமான கேள்வி: 'the poor' அப்படின்னா எத்தனை பேரு? ஒருத்தரா? இல்ல, பலர். எல்லா ஏழை மக்களும். பலர்னா என்ன? பன்மை. அதனால verb பன்மை. 'The poor ARE ignored.' 'IS' இல்ல.",
+  tl:"Ippo mukkiyamaana kelvi: 'the poor' appadinnaa eththanai peru? Oruththaraa? Illa, palar. Ellaa ezhai makkalum. Palarnaa enna? Panmai. Adhanaala verb panmai. 'The poor ARE ignored.'"},
+ {ta:"இதை எப்படி எளிமையா நினைவு வெச்சுக்கிறது? மனசுக்குள்ள 'people' அப்படிங்கிற வார்த்தையை சேர்த்துப் பாருங்க. 'The poor [people] are ignored.' இப்போ verb தெளிவா தெரியுது இல்லையா? 'The rich [people] have problems.' 'The blind [people] need help.' இந்த ஒரு trick போதும்.",
+  tl:"Idhai eppadi elimaiyaa ninaivu vechukkiradhu? Manasukkulla 'people' appadingira vaarththaiyai serthup paarunga. 'The poor [people] are ignored.' Ippo verb thelivaa theriyudhu illaiyaa?"},
+ {ta:"இன்னொரு பெரிய தப்பு சொல்லுறேன். நிறைய பேரு 'பன்மைன்னா -s போடணும்' அப்படின்னு நினைச்சு 'the poors' அப்படின்னு எழுதுவாங்க. இது கண்டிப்பா தப்பு. 'The poors', 'the riches', 'the blinds' — எல்லாமே தப்பு. பன்மை பொருள்ல இருக்கு, எழுத்துல இல்ல. இது SVA module-ல படிச்ச Rule 47 மாதிரியே — police, cattle, people-க்கு -s போடமாட்டோம், ஆனா பன்மை verb போடுவோம்.",
+  tl:"Innoru periya thappu solluren. Neraiya peru 'panmainnaa -s podanum' appadinnu ninaichu 'the poors' appadinnu ezhudhuvaanga. Idhu kandippaa thappu. Panmai porulla irukku, ezhuththula illa. Idhu SVA module-la padicha Rule 47 maadhiriye."},
+ {ta:"கடைசியா ஒரு கூடுதல் தகவல். தேசியப் பெயரடையும் இதே மாதிரி வேலை செய்யும். 'The English are hardworking', 'The French are artistic', 'The Chinese are industrious', 'The Japanese are disciplined'. இதெல்லாம் அந்த நாட்டு மக்களைக் குறிக்குது, பலர். அதனால பன்மை verb. இதை SSC அடிக்கடி கேட்கும்.",
+  tl:"Kadaisiyaa oru koodudhal thagaval. Desiyap peyaradaiyum idhe maadhiri velai seyyum. 'The English are hardworking', 'The French are artistic', 'The Chinese are industrious'. Idhellaam andha naattu makkalaik kurikkudhu, palar. Adhanaala panmai verb."}]},
+
+/* ========== RULE 9 ========== */
+{n:9,rc:"ART-09",d:"Hard",t:"Omit the Article when the Place serves its PRIMARY PURPOSE",
+ tam:"School, Hospital, Prison — முதன்மை நோக்கத்திற்குப் பயன்படும்போது article இல்லை",
+ s1:{en:"Words like school, college, church, temple, hospital, court, prison, jail, bed, market and sea take NO article when the person is there for the place's PRIMARY PURPOSE. When you visit the BUILDING itself, THE returns.",
+  ta:"School, college, church, temple, hospital, court, prison, jail, bed, market, sea போன்ற சொற்கள், அந்த இடத்தின் முதன்மை நோக்கத்திற்காக ஒருவர் அங்கு இருக்கும்போது article எடுக்காது. நீங்கள் கட்டிடத்தையே பார்க்கச் செல்லும்போது, THE திரும்பி வரும்.",
+  tl:"School, college, church, temple, hospital, court, prison, jail, bed, market, sea pondra sorkal, andha idaththin mudhanmai nokkaththirkaaga oruvar angu irukkumbodhu article edukkaadhu. Neengal kattidaththaiye paarkkach sellumbodhu, THE thirumbi varum.",
+  formula:"PRIMARY PURPOSE  →  NO ARTICLE\n  He goes to school.        (to study)\n  He is in hospital.        (as a patient)\n  He was sent to prison.    (as a convict)\n  She went to bed.          (to sleep)\n\nTHE BUILDING  →  THE\n  He went to THE school to meet the principal.\n  He went to THE hospital to see a patient.\n  He went to THE prison to interview a convict."},
+
+ s2:[
+ {h:"Purpose versus place",
+  en:"The question English asks is: are you there for the ACTIVITY or for the BUILDING? A student goes to school (activity: studying). A father goes to THE school (building: to meet a teacher). Same word, two different meanings.",
+  ta:"நோக்கமா, இடமா? ஆங்கிலம் கேட்கும் கேள்வி இதுதான்: நீங்கள் அங்கே செயலுக்காக இருக்கிறீர்களா, கட்டிடத்திற்காகவா? ஒரு மாணவர் school-க்குச் செல்கிறார் (செயல்: படிப்பது). ஒரு தந்தை THE school-க்குச் செல்கிறார் (கட்டிடம்: ஆசிரியரைச் சந்திக்க). ஒரே சொல், இரண்டு வெவ்வேறு பொருள்.",
+  tl:"Nokkamaa, idamaa? Aangilam ketkum kelvi idhudhaan: neengal ange seyalukkaaga irukkireergalaa, kattidaththirkaagavaa? Oru maanavar school-kkuch selgiraar (seyal: padippadhu). Oru thandhai THE school-kkuch selgiraar (kattidam)."},
+ {h:"The full family of words",
+  en:"school, college, university (in some uses), church, temple, mosque, hospital, court, prison, jail, bed, table (at table = eating), sea (go to sea = become a sailor), town, market, class, office, work, home.",
+  ta:"முழு சொல் குடும்பம்: school, college, church, temple, mosque, hospital, court, prison, jail, bed, table (at table = சாப்பிடுவது), sea (go to sea = மாலுமியாவது), town, market, class, office, work, home.",
+  tl:"Muzhu sol kudumbam: school, college, church, temple, mosque, hospital, court, prison, jail, bed, table (at table = saappiduvadhu), sea (go to sea = maalumiyaavadhu), town, market, class, office, work, home."},
+ {h:"The most useful pairs to memorise",
+  en:"go to bed (to sleep) vs go to THE bed (the furniture). go to sea (become a sailor) vs go to THE sea (the beach). at table (eating) vs at THE table (the furniture). in class (studying) vs in THE class (the room).",
+  ta:"மனப்பாடம் செய்ய வேண்டிய மிகவும் பயனுள்ள ஜோடிகள்: go to bed (தூங்க) vs go to THE bed (மரச்சாமான்). go to sea (மாலுமியாக) vs go to THE sea (கடற்கரை). at table (சாப்பிடுவது) vs at THE table (மேசை). in class (படிப்பது) vs in THE class (அறை).",
+  tl:"Manappaadam seyya vendiya migavum payanulla jodigal: go to bed vs go to THE bed. go to sea vs go to THE sea. at table vs at THE table. in class vs in THE class."},
+ {h:"American English differs — follow British usage",
+  en:"Americans say 'in THE hospital' even for a patient. Indian competitive exams follow BRITISH usage, so 'He is in hospital' with no article is the expected answer. Do not be misled by American films or websites.",
+  ta:"அமெரிக்க ஆங்கிலம் வேறுபடுகிறது — பிரிட்டிஷ் வழக்கைப் பின்பற்றுங்கள். அமெரிக்கர்கள் நோயாளிக்கும் 'in THE hospital' என்று சொல்கிறார்கள். இந்தியப் போட்டித் தேர்வுகள் பிரிட்டிஷ் வழக்கைப் பின்பற்றுகின்றன, எனவே article இல்லாத 'He is in hospital'தான் எதிர்பார்க்கப்படும் விடை. அமெரிக்கத் திரைப்படங்களாலோ இணையதளங்களாலோ தவறாக வழிநடத்தப்படாதீர்கள்.",
+  tl:"America Aangilam verupadugiradhu — British vazhakkaip pinpatrungal. Americargal noyaalikkum 'in THE hospital' endru solgiraargal. Indhiyap pottith thervugal British vazhakkaip pinpatrugindrana, enave article illaadha 'He is in hospital'-dhaan edhirpaarkkappadum vidai."}],
+
+ s3:[
+ {h:"Why are you there?",
+  d:"   🎒 to STUDY        →  He goes to school.        (no article)\n   👔 to MEET someone  →  He goes to THE school.    (THE)\n\n   🤒 as a PATIENT     →  He is in hospital.        (no article)\n   💐 as a VISITOR     →  He is at THE hospital.    (THE)\n\n   ⛓️ as a CONVICT     →  He was sent to prison.    (no article)\n   📋 as an OFFICER    →  He went to THE prison.    (THE)"},
+ {h:"The famous pairs",
+  d:"  go to BED       = to sleep      |  go to THE BED  = the furniture\n  go to SEA       = become sailor  |  go to THE SEA  = the beach\n  at TABLE        = eating         |  at THE TABLE   = the furniture\n  in CLASS        = studying       |  in THE CLASS   = the room\n  go to CHURCH    = to pray        |  go to THE CHURCH = to see it\n  in COURT        = on trial       |  in THE COURT   = the building"}],
+
+ s4:{
+ wrong:["\"Hospital is a place, and places need THE.\" — Not when you are there as a patient.",
+  "\"'He is in the hospital' is what I hear in films.\" — That is American usage. Indian exams follow British usage.",
+  "\"'Go to the bed' is more grammatical than 'go to bed'.\" — 'Go to bed' means to sleep and is the standard idiom.",
+  "\"This rule applies to all buildings.\" — Only to this specific family of institution words."],
+ right:["Ask: is this person here for the ACTIVITY or to see the BUILDING?",
+  "Activity → no article. Building → THE.",
+  "Memorise the pairs: to bed / to the bed, to sea / to the sea, at table / at the table.",
+  "Follow British usage: 'in hospital' for a patient."]},
+
+ s5:[
+ {en:"He goes to school every day.",ta:"அவன் தினமும் பள்ளிக்குச் செல்கிறான்.",tl:"Avan dhinamum pallikkuch selgiraan.",note:"He goes to STUDY — the primary purpose → no article."},
+ {en:"His father went to the school to meet the principal.",ta:"அவனுடைய தந்தை தலைமையாசிரியரைச் சந்திக்கப் பள்ளிக்குச் சென்றார்.",tl:"Avanudaiya thandhai thalaimaiyaasiriyaraich sandhikkap pallikkuch sendraar.",note:"He went to the BUILDING, not to study → THE."},
+ {en:"The thief was sent to prison for three years.",ta:"அந்தத் திருடன் மூன்று ஆண்டுகளுக்குச் சிறையில் அடைக்கப்பட்டான்.",tl:"Andhath thirudan moondru aandugalukkuch siraiyil adaikkappattaan.",note:"He is there as a CONVICT → no article."},
+ {en:"My brother is in hospital with a fracture.",ta:"என்னுடைய சகோதரர் எலும்பு முறிவால் மருத்துவமனையில் இருக்கிறார்.",tl:"Ennudaiya sagodharar elumbu murivaal maruththuvamanaiyil irukkiraar.",note:"He is there as a PATIENT → no article."},
+ {en:"She went to bed early last night.",ta:"நேற்று இரவு அவர் சீக்கிரமாகத் தூங்கச் சென்றார்.",tl:"Netru iravu avar seekkiramaagath thoongach sendraar.",note:"'Go to bed' means to sleep → no article."}],
+
+ s6:["school|பள்ளி|Palli",
+  "college|கல்லூரி|Kalloori",
+  "hospital|மருத்துவமனை|Maruththuvamanai",
+  "prison / jail|சிறை|Sirai",
+  "court|நீதிமன்றம்|Needhimandram",
+  "church|தேவாலயம்|Devaalayam",
+  "temple|கோயில்|Koyil",
+  "bed|படுக்கை|Padukkai",
+  "go to bed|தூங்கச் செல்|Thoongach sel",
+  "go to sea|மாலுமியாகு|Maalumiyaagu",
+  "at table|சாப்பிட அமர்ந்திருத்தல்|Saappida amarndhiruththal",
+  "in class|வகுப்பில் படித்தல்|Vagupil padiththal",
+  "principal|தலைமையாசிரியர்|Thalaimaiyaasiriyar",
+  "patient|நோயாளி|Noyaali"],
+
+ s7:[
+ "He goes to ____ school every day to study.|—|Easy|Primary purpose.",
+ "His father went to ____ school to meet the teacher.|the|Easy|The building.",
+ "The thief was sent to ____ prison.|—|Easy|As a convict.",
+ "She went to ____ bed at ten.|—|Easy|To sleep.",
+ "My uncle is in ____ hospital with a fever.|—|Medium|As a patient.",
+ "I went to ____ hospital to see my uncle.|the|Medium|As a visitor.",
+ "He goes to ____ church every Sunday to pray.|—|Medium|Primary purpose.",
+ "They visited ____ church built in 1750.|the|Medium|The building as a monument.",
+ "The accused appeared in ____ court yesterday.|—|Hard|As a party to the case.",
+ "He works as a clerk in ____ court.|the|Hard|The building as a workplace.",
+ "The boy ran to ____ sea and became a sailor.|—|Hard|'Go to sea' means to become a sailor.",
+ "We went to ____ sea for a picnic.|the|Hard|The beach as a place.",
+ "The family was at ____ table when the phone rang.|—|Expert|'At table' means eating.",
+ "He placed the book on ____ table near the window.|the|Expert|The furniture.",
+ "The students are in ____ class right now.|—|Expert|Studying, the primary purpose."],
+
+ s8:[
+ "He goes to the school every day to study.|He goes to school every day to study.|He is there for the primary purpose.",
+ "His father went to school to meet the principal.|His father went to the school to meet the principal.|He went to the building.",
+ "The thief was sent to the prison as a convict.|The thief was sent to prison as a convict.|He is there for the primary purpose.",
+ "She went to the bed at ten to sleep.|She went to bed at ten to sleep.|'Go to bed' means to sleep.",
+ "My uncle is in the hospital with a fever.|My uncle is in hospital with a fever.|British usage drops the article for a patient.",
+ "I went to hospital to see my uncle.|I went to the hospital to see my uncle.|A visitor goes to the building.",
+ "He goes to the church every Sunday to pray.|He goes to church every Sunday to pray.|Primary purpose.",
+ "The accused appeared in the court as a party.|The accused appeared in court as a party.|Primary purpose.",
+ "The family was at the table eating dinner.|The family was at table eating dinner.|'At table' means eating.",
+ "The students are in the class studying now.|The students are in class studying now.|Primary purpose."],
+
+ s9:[
+ "Fill in the Blank|My brother has been in ____ hospital since Monday with a broken leg.|the;no article|1|He is there as a patient → no article.",
+ "Find the Error|His father went (A) to school (B) to meet the class teacher (C) about his marks (D).|A;B;C;D|1|Part B. He went to the building, not to study → 'to the school'.",
+ "Sentence Improvement|The convict was sent to the prison for a period of five years.|to the prison;to prison;to a prison|1|He is there as a convict → no article.",
+ "Fill in the Blank|The whole family was at ____ table when the news was announced on TV.|the;no article|1|'At table' means eating → no article.",
+ "Find the Error|She goes (A) to the church (B) every Sunday morning (C) to pray quietly (D).|A;B;C;D|1|Part B. She goes to pray, the primary purpose → 'to church'."],
+
+ s10:{
+  en:"This is the hardest article rule because the SAME sentence can be right or wrong depending on WHY the person is there. The exam supplies the reason in the second half of the sentence: 'to study' versus 'to meet the principal', 'with a fracture' versus 'to see a patient'. Read the whole sentence before choosing. Also beware of American usage from films — Indian exams follow British rules.",
+  ta:"இது மிகக் கடினமான article விதி, ஏனெனில் அந்த நபர் அங்கே ஏன் இருக்கிறார் என்பதைப் பொறுத்து ஒரே வாக்கியம் சரியாகவோ தவறாகவோ இருக்கலாம். தேர்வு காரணத்தை வாக்கியத்தின் இரண்டாவது பாதியில் தருகிறது: 'to study' மற்றும் 'to meet the principal', 'with a fracture' மற்றும் 'to see a patient'. தேர்ந்தெடுப்பதற்கு முன் முழு வாக்கியத்தையும் படியுங்கள். மேலும் திரைப்படங்களில் இருந்து வரும் அமெரிக்க வழக்கு குறித்து எச்சரிக்கையாக இருங்கள்.",
+  tl:"Idhu migak kadinamaana article vidhi, yenenil andha nabar ange yen irukkiraar enbadhaip poruththu ore vaakkiyam sariyaagavo thavaraagavo irukkalaam. Therndhedupparku mun muzhu vaakkiyaththaiyum padiyungal."},
+
+ s11:{
+  en:"WHY IS THE PERSON THERE? For the ACTIVITY → no article. For the BUILDING → THE.",
+  ta:"அந்த நபர் ஏன் அங்கே இருக்கிறார்? செயலுக்காக → article இல்லை. கட்டிடத்திற்காக → THE.",
+  tl:"Andha nabar yen ange irukkiraar? Seyalukkaaga → article illai. Kattidaththirkaaga → THE.",
+  vis:"       ASK: WHY IS HE THERE?\n\n   STUDENT  → school   → to STUDY   → no article\n   PARENT   → THE school → to MEET  → THE\n\n   PATIENT  → hospital → to be TREATED → no article\n   VISITOR  → THE hospital → to SEE   → THE\n\n   CONVICT  → prison   → to be JAILED → no article\n   OFFICER  → THE prison → to INSPECT → THE\n\n   ⚠ British usage: 'in hospital' for a patient.\n     American films say 'in the hospital' — ignore them."},
+
+ s12:[
+ "He goes to ____ school to study.|the;—|1",
+ "His father went to ____ school to meet the head.|the;—|0",
+ "The thief was sent to ____ prison.|the;—|1",
+ "She went to ____ bed early.|the;—|1",
+ "My uncle is in ____ hospital with fever.|the;—|1",
+ "I went to ____ hospital to see him.|the;—|0",
+ "He goes to ____ church to pray.|the;—|1",
+ "They visited ____ church built in 1750.|the;—|0",
+ "The accused appeared in ____ court.|the;—|1",
+ "He works as a clerk in ____ court.|the;—|0",
+ "He went to ____ sea and became a sailor.|the;—|1",
+ "We went to ____ sea for a picnic.|the;—|0",
+ "The family was at ____ table eating.|the;—|1",
+ "He kept the file on ____ table.|the;—|0",
+ "The students are in ____ class now.|the;—|1",
+ "Repairs are going on in ____ class room.|the;—|0",
+ "She goes to ____ college to study law.|the;—|1",
+ "He went to ____ college to collect a form.|the;—|0",
+ "He is in ____ jail for theft.|the;—|1",
+ "The officer inspected ____ jail yesterday.|the;—|0"],
+
+ s13:[
+ "His son goes to ____ school, but yesterday he himself went to ____ school to meet ____ principal.|—-the-the;the-—-a;—-a-the|0|Student → no article. Parent visiting the building → THE. A specific principal → THE.",
+ "My brother is in ____ hospital, so I went to ____ hospital carrying ____ basket of fruit.|—-the-a;the-—-a;—-a-the|0|Patient → no article. Visitor → THE. 'Basket' → A.",
+ "____ accused were produced in ____ court by ____ police at ____ 10 o'clock.|The-—-the-—;A-the-the-the;The-the-the-—|0|'The accused' → THE. 'In court' as a party → no article. 'The police' → THE. Clock time takes no article.",
+ "She went to ____ bed after placing ____ lamp on ____ table near ____ window.|—-a-the-the;the-a-a-the;—-the-a-a|0|'Go to bed' → no article. 'Lamp' → A. Specific table and window → THE.",
+ "He went to ____ sea as ____ sailor and returned after ____ year to ____ village.|—-a-a-the;the-a-a-a;—-the-a-the|0|'Go to sea' → no article. 'Sailor' → A. 'Year' → A. A specific village → THE."],
+
+ s14:{
+  rule:"Institution words take no article when used for their primary purpose, and THE when the building is meant.",
+  formula:"PRIMARY PURPOSE → no article\nTHE BUILDING → THE",
+  memory:"Ask why the person is there. Activity = no article. Building = THE.",
+  ta:"அந்த நபர் ஏன் அங்க இருக்காருன்னு கேளுங்க. செயல்னா article இல்ல. கட்டிடம்னா THE.",
+  tl:"Andha nabar yen anga irukkaarunnu kelunga. Seyalnaa article illa. Kattidamnaa THE.",
+  mistake:"Writing 'in the hospital' for a patient because of American usage, and 'go to the bed' for sleeping.",
+  exam:"SSC CGL Tier-1, CDS and Bank — appears in Fill in the Blank and Cloze Test."},
+
+ s15:[
+ {ta:"இது Articles-ல மிகக் கடினமான rule. ஏன்? ஏன்னா ஒரே வாக்கியம் ஒரு சூழல்ல சரியா இருக்கும், இன்னொரு சூழல்ல தப்பா இருக்கும். வார்த்தை மாறல, ஆனா அர்த்தம் மாறுது.",
+  tl:"Idhu Articles-la migak kadinamaana rule. Yennaa ore vaakkiyam oru soozhalla sariyaa irukkum, innoru soozhalla thappaa irukkum. Vaarththai maarala, aanaa arththam maarudhu."},
+ {ta:"ஒரு உதாரணம் பார்ப்போம். 'He goes to school.' — இதுல article இல்ல. ஏன்? ஏன்னா அவன் ஒரு மாணவன், படிக்கப் போறான். school-ஓட முதன்மை நோக்கம் என்ன? படிப்பு. அவன் அதுக்குத்தான் போறான். அதனால article இல்ல.",
+  tl:"Oru udhaaranam paarpom. 'He goes to school.' — idhula article illa. Yennaa avan oru maanavan, padikkap poraan. School-oda mudhanmai nokkam enna? Padippu. Avan adhukkuth-thaan poraan. Adhanaala article illa."},
+ {ta:"ஆனா 'His father went to THE school to meet the principal.' — இங்க THE இருக்கு. ஏன்? ஏன்னா அப்பா படிக்கப் போகல. அவரு கட்டிடத்துக்குப் போறாரு, தலைமையாசிரியரைப் பார்க்க. அவருக்கு school ஒரு கட்டிடம் மட்டும்தான். அதனால THE.",
+  tl:"Aanaa 'His father went to THE school to meet the principal.' — inga THE irukku. Yennaa appaa padikkap pogala. Avaru kattidaththukkup poraaru. Avarukku school oru kattidam mattum-dhaan. Adhanaala THE."},
+ {ta:"மருத்துவமனையும் அப்படித்தான். 'My brother is in hospital' — அவரு நோயாளி. மருத்துவமனையோட முதன்மை நோக்கம் சிகிச்சை. அவரு அதுக்குத்தான் இருக்காரு. article இல்ல. ஆனா 'I went to THE hospital to see my brother' — நான் நோயாளி இல்ல, நான் பார்க்கப் போறேன். கட்டிடம். THE.",
+  tl:"Maruththuvamanaiyum appadidhaan. 'My brother is in hospital' — avaru noyaali. Article illa. Aanaa 'I went to THE hospital to see my brother' — naan noyaali illa, naan paarkkap poren. Kattidam. THE."},
+ {ta:"இப்போ சில முக்கியமான ஜோடி சொல்லுறேன், இதை மனப்பாடம் பண்ணுங்க. 'Go to bed' = தூங்கப் போ. 'Go to the bed' = படுக்கை அப்படிங்கிற மரச்சாமான் கிட்ட போ. 'Go to sea' = மாலுமியாகு. 'Go to the sea' = கடற்கரைக்குப் போ. 'At table' = சாப்பிட்டுட்டு இரு. 'At the table' = மேசை பக்கத்துல இரு. இந்த ஜோடிகள் தேர்வுல அடிக்கடி வரும்.",
+  tl:"Ippo sila mukkiyamaana jodi solluren, idhai manappaadam pannunga. 'Go to bed' = thoongap po. 'Go to the bed' = padukkai kitta po. 'Go to sea' = maalumiyaagu. 'Go to the sea' = kadarkaraikkup po. 'At table' = saappittuttu iru. 'At the table' = mesai pakkaththula iru."},
+ {ta:"கடைசியா ஒரு முக்கியமான எச்சரிக்கை. நீங்க ஆங்கில படம் பார்க்கும்போது 'He is in THE hospital' அப்படின்னு கேட்பீங்க — நோயாளியா இருந்தாலும். அது அமெரிக்க ஆங்கிலம். இந்திய தேர்வுகள் எல்லாம் பிரிட்டிஷ் ஆங்கிலத்தைத்தான் பின்பற்றுது. அதனால தேர்வுல 'in hospital' — article இல்லாம — அதுதான் சரி. படம் பார்த்து குழம்பாதீங்க.",
+  tl:"Kadaisiyaa oru mukkiyamaana echcharikkai. Neenga Aangila padam paarkkumbodhu 'He is in THE hospital' appadinnu ketpeenga. Adhu America Aangilam. Indhiya thervugal ellaam British Aangilaththaith-thaan pinpatrudhu. Adhanaala thervula 'in hospital' — article illaama — adhudhaan sari."}]},
+
+/* ========== RULE 10 ========== */
+{n:10,rc:"ART-10",d:"Hard",t:"Repeat the Article for Two Different Persons or Things",
+ tam:"ஒரே நபர் = ஒரு article. வெவ்வேறு நபர் = தனித்தனி article",
+ s1:{en:"ONE article before two nouns means ONE person or thing, and the verb is SINGULAR. REPEATING the article means TWO separate persons or things, and the verb is PLURAL. The article count tells you how many entities there are.",
+  ta:"இரண்டு பெயர்ச்சொற்களுக்கு முன் ஒரு article என்றால் ஒரே ஒரு நபர் அல்லது பொருள், வினைச்சொல் ஒருமை. Article-ஐ மீண்டும் சேர்த்தால் இரண்டு தனித்தனி நபர்கள் அல்லது பொருட்கள், வினைச்சொல் பன்மை. Article எண்ணிக்கை எத்தனை பொருட்கள் இருக்கின்றன என்பதைச் சொல்கிறது.",
+  tl:"Irandu peyarchorkalukku mun oru article endraal ore oru nabar alladhu porul, vinaichol orumai. Article-ai meendum serthaal irandu thanithani nabargal alladhu porutkal, vinaichol panmai. Article ennikkai eththanai porutkal irukkindrana enbadhaich solgiradhu.",
+  formula:"ONE article  =  ONE person  →  SINGULAR verb\n  THE secretary and treasurer IS present.\n  (one man holding both posts)\n\nTWO articles =  TWO persons →  PLURAL verb\n  THE secretary and THE treasurer ARE present.\n  (two different men)"},
+
+ s2:[
+ {h:"The article is a counting device",
+  en:"Think of each article as a name tag. One tag means one person wearing two labels. Two tags mean two people standing side by side. Count the tags and you know how many people are in the room.",
+  ta:"Article ஒரு எண்ணும் கருவி. ஒவ்வொரு article-ஐயும் ஒரு பெயர்ச் சீட்டாக நினைத்துக் கொள்ளுங்கள். ஒரு சீட்டு என்றால் இரண்டு பட்டங்களை அணிந்த ஒரே நபர். இரண்டு சீட்டு என்றால் அருகருகே நிற்கும் இரண்டு நபர்கள். சீட்டுகளை எண்ணினால் அறையில் எத்தனை பேர் இருக்கிறார்கள் என்று தெரியும்.",
+  tl:"Article oru ennum karuvi. Ovvoru article-aiyum oru peyarch seettaaga ninaiththuk kollungal. Oru seettu endraal irandu pattangalai anindha ore nabar. Irandu seettu endraal arugaruge nirkum irandu nabargal."},
+ {h:"This is exactly SVA Rule 33 seen from the other side",
+  en:"In the Subject-Verb Agreement module you learnt that 'The Collector and District Magistrate IS' takes a singular verb. That was the VERB side of this rule. Here you are learning the ARTICLE side. Same rule, two doors.",
+  ta:"இது Subject-Verb Agreement module-ன் Rule 33-ஐ மறுபக்கத்திலிருந்து பார்ப்பதுதான். அங்கே 'The Collector and District Magistrate IS' ஒருமை வினைச்சொல் எடுக்கும் என்று கற்றுக்கொண்டீர்கள். அது இந்த விதியின் வினைச்சொல் பக்கம். இங்கே article பக்கத்தைக் கற்றுக்கொள்கிறீர்கள். ஒரே விதி, இரண்டு கதவுகள்.",
+  tl:"Idhu Subject-Verb Agreement module-in Rule 33-ai marupakkaththilirundhu paarppadhudhaan. Ange 'The Collector and District Magistrate IS' orumai vinaichol edukkum endru katrukkondeergal. Ore vidhi, irandu kadhavugal."},
+ {h:"Possessives count as articles too",
+  en:"'My friend and guide HAS advised me' — one 'my' means one person who is both. 'My friend and my guide HAVE advised me' — two 'my' means two people. Words like my, his, her and your work exactly like the.",
+  ta:"உடைமைச் சொற்களும் article-ஆகவே கணக்கிடப்படும். 'My friend and guide HAS advised me' — ஒரு 'my' என்றால் இரண்டுமாக இருக்கும் ஒரே நபர். 'My friend and my guide HAVE advised me' — இரண்டு 'my' என்றால் இரண்டு நபர்கள். my, his, her, your போன்ற சொற்கள் the போலவே செயல்படும்.",
+  tl:"Udaimaich sorkalum article-aagave kanakkidappadum. 'My friend and guide HAS advised me' — oru 'my' endraal irandumaaga irukkum ore nabar. 'My friend and my guide HAVE advised me' — irandu 'my' endraal irandu nabargal."},
+ {h:"Also repeat the article for contrasting things",
+  en:"When two nouns are being contrasted or compared, repeat the article even if the verb does not change: 'the rise and THE fall of prices', 'a black and A white shirt' (two shirts) versus 'a black and white shirt' (one two-coloured shirt).",
+  ta:"முரண்படும் பொருட்களுக்கும் article-ஐ மீண்டும் சேர்க்கவும். இரண்டு பெயர்ச்சொற்கள் ஒப்பிடப்படும்போது, வினைச்சொல் மாறாவிட்டாலும் article-ஐ மீண்டும் சேருங்கள்: 'a black and A white shirt' (இரண்டு சட்டைகள்) மற்றும் 'a black and white shirt' (ஒரே இரு நிற சட்டை).",
+  tl:"Muranpadum porutkalukkum article-ai meendum serkkavum. 'a black and A white shirt' (irandu sattaigal) matrum 'a black and white shirt' (ore iru nira sattai)."}],
+
+ s3:[
+ {h:"Count the name tags",
+  d:"   THE secretary and treasurer  IS  present.\n    ↑\n  ONE tag  →  👤  one man, two posts  →  singular verb\n\n   THE secretary and THE treasurer  ARE  present.\n    ↑                 ↑\n  TWO tags →  👤👤  two men          →  plural verb"},
+ {h:"The shirt example",
+  d:"  a black and white shirt      →  👕      ONE shirt\n     ↑                              (two colours on it)\n  one article\n\n  a black and A white shirt    →  👕👕   TWO shirts\n     ↑          ↑                  (one black, one white)\n  two articles"}],
+
+ s4:{
+ wrong:["\"There are two nouns, so there must be two people.\" — Not if only one article appears.",
+  "\"The article is just decoration and does not change meaning.\" — Here the article count IS the meaning.",
+  "\"'The Collector and District Magistrate are visiting' — that is clearly two officers.\" — In India it is one officer holding both designations.",
+  "\"Possessives like 'my' are different from articles.\" — They count exactly the same way."],
+ right:["Count the articles (the, a, my, his) before the nouns.",
+  "One article → one entity → singular verb.",
+  "Two articles → two entities → plural verb.",
+  "Read the rest of the sentence for clues like 'both' or 'separately'."]},
+
+ s5:[
+ {en:"The secretary and treasurer is present at the meeting.",ta:"செயலாளராகவும் பொருளாளராகவும் இருக்கும் அதே நபர் கூட்டத்தில் இருக்கிறார்.",tl:"Seyalaalaraagavum porulaalaraagavum irukkum adhe nabar koottaththil irukkiraar.",note:"One article → one person holding both posts → IS."},
+ {en:"The secretary and the treasurer are present at the meeting.",ta:"செயலாளரும் பொருளாளரும் இருவரும் கூட்டத்தில் இருக்கிறார்கள்.",tl:"Seyalaalarum porulaalarum iruvarum koottaththil irukkiraargal.",note:"Two articles → two different people → ARE."},
+ {en:"The poet and philosopher is dead.",ta:"கவிஞரும் தத்துவவாதியுமான அந்த ஒரே நபர் இறந்துவிட்டார்.",tl:"Kavignarum thaththuvavaadhiyumaana andha ore nabar irandhuvittaar.",note:"One article → one man who was both → IS."},
+ {en:"My friend and guide has always supported me.",ta:"என்னுடைய நண்பரும் வழிகாட்டியுமான அவர் எப்போதும் என்னை ஆதரித்திருக்கிறார்.",tl:"Ennudaiya nanbarum vazhikaattiyumaana avar eppodhum ennai aadhariththirukkiraar.",note:"One 'my' → one person → HAS."},
+ {en:"He wore a black and a white shirt on the two days.",ta:"அவர் அந்த இரண்டு நாட்களிலும் ஒரு கருப்புச் சட்டையையும் ஒரு வெள்ளைச் சட்டையையும் அணிந்திருந்தார்.",tl:"Avar andha irandu naatkalilum oru karuppuch sattaiyaiyum oru vellaich sattaiyaiyum anindhirundhaar.",note:"Two articles → two separate shirts."}],
+
+ s6:["the secretary|செயலாளர்|Seyalaalar",
+  "the treasurer|பொருளாளர்|Porulaalar",
+  "the poet|கவிஞர்|Kavignar",
+  "the philosopher|தத்துவவாதி|Thaththuvavaadhi",
+  "the principal|தலைமையாசிரியர்|Thalaimaiyaasiriyar",
+  "the Collector|ஆட்சியர்|Aatchiyar",
+  "District Magistrate|மாவட்ட நீதிபதி|Maavatta needhibadhi",
+  "my friend and guide|என் நண்பரும் வழிகாட்டியும் (ஒருவரே)|En nanbarum vazhikaattiyum (oruvare)",
+  "is|இருக்கிறார் (ஒருமை)|Irukkiraar (orumai)",
+  "are|இருக்கிறார்கள் (பன்மை)|Irukkiraargal (panmai)",
+  "both posts|இரு பதவிகளும்|Iru padhavigalum",
+  "separately|தனித்தனியாக|Thanithaniyaaga"],
+
+ s7:[
+ "The secretary and treasurer ____ present.|is|Easy|One article → one person.",
+ "The secretary and the treasurer ____ present.|are|Easy|Two articles → two people.",
+ "The poet and philosopher ____ dead.|is|Medium|One article → one man.",
+ "The poet and the philosopher ____ dead.|are|Medium|Two articles → two men.",
+ "The principal and the vice-principal ____ attending.|are|Medium|Two articles.",
+ "The Collector and District Magistrate ____ visiting us.|is|Medium|One article → one officer.",
+ "My friend and guide ____ helped me a lot.|has|Hard|One 'my' → one person.",
+ "My friend and my guide ____ helped me a lot.|have|Hard|Two 'my' → two people.",
+ "The Chairman and Managing Director ____ signed it.|has|Hard|One article → one person.",
+ "The Chairman and the Managing Director ____ signed separately.|have|Hard|Two articles → two people.",
+ "He wore a black and white shirt, which ____ new.|was|Expert|One article → one two-coloured shirt.",
+ "He wore a black and a white shirt, which ____ new.|were|Expert|Two articles → two shirts.",
+ "The teacher and the writer ____ addressed us one after the other.|have|Expert|Two articles.",
+ "The teacher and writer ____ addressed us for an hour.|has|Expert|One article → one person.",
+ "The bread and butter ____ kept on the table.|was|Expert|One dish → singular."],
+
+ s8:[
+ "The secretary and treasurer are present, one being Ram and the other Shyam.|The secretary and the treasurer are present, one being Ram and the other Shyam.|Two people need two articles.",
+ "The poet and novelist are dead.|The poet and novelist is dead.|One article means one person.",
+ "The principal and vice-principal are attending separately.|The principal and the vice-principal are attending separately.|Two people need two articles.",
+ "The Collector and District Magistrate are visiting our town.|The Collector and District Magistrate is visiting our town.|One article means one officer.",
+ "My friend and guide have helped me.|My friend and guide has helped me.|One 'my' means one person.",
+ "My friend and my guide has helped me.|My friend and my guide have helped me.|Two 'my' means two people.",
+ "The Chairman and Managing Director have signed the deal.|The Chairman and Managing Director has signed the deal.|One article means one person.",
+ "The teacher and the writer has addressed us.|The teacher and the writer have addressed us.|Two articles mean two people.",
+ "He wore a black and white shirts.|He wore a black and white shirt.|One article and one shirt, so a singular noun.",
+ "The bread and butter were kept on the table.|The bread and butter was kept on the table.|One dish, so a singular verb."],
+
+ s9:[
+ "Fill in the Blank|The Chairman and Managing Director of the company ____ inaugurated the new plant.|has;have|0|One article → one person holding both posts.",
+ "Find the Error|The principal (A) and vice-principal (B) are attending (C) two different meetings (D).|A;B;C;D|1|Part B. Two different people need a second article → 'and the vice-principal'.",
+ "Sentence Improvement|The poet and the novelist is one of the finest writers of our time.|and the novelist is;and novelist is;and the novelist are|1|One person means one article and a singular verb.",
+ "Fill in the Blank|My friend and ____ guide have both advised me to take up this course.|—;my|1|'Both' shows two people, so the possessive must be repeated.",
+ "Find the Error|The Collector (A) and District Magistrate (B) are visiting (C) our district tomorrow (D).|A;B;C;D|2|Part C. One article means one officer → 'is visiting'."],
+
+ s10:{
+  en:"The exam decides the answer with ONE tiny word — a second 'the' that is either present or absent. Two sentences look identical at a glance. Worse, the verb and the article must AGREE with each other, so a single mistake breaks both. The other trap is Indian designations: 'The Collector and District Magistrate' is genuinely one officer, and 'The Chairman and Managing Director' is genuinely one person.",
+  ta:"தேர்வு ஒரே ஒரு சின்ன சொல்லால் விடையைத் தீர்மானிக்கிறது — இரண்டாவது 'the' இருக்கிறதா இல்லையா என்பதால். இரண்டு வாக்கியங்களும் ஒரு பார்வையில் ஒரே மாதிரி தெரியும். மோசமாக, வினைச்சொல்லும் article-ம் ஒன்றுடன் ஒன்று ஒத்துப்போக வேண்டும், எனவே ஒரே ஒரு தவறு இரண்டையும் உடைக்கும். மற்றொரு பொறி இந்தியப் பதவிப் பெயர்கள்: 'The Collector and District Magistrate' உண்மையிலேயே ஒரே அதிகாரிதான்.",
+  tl:"Thervu ore oru chinna sollaal vidaiyaith theermaanikkiradhu — irandaavadhu 'the' irukkiradhaa illaiyaa enbadhaal. Irandu vaakkiyangalum oru paarvaiyil ore maadhiri theriyum. Matroru pori Indhiyap padhavip peyargal."},
+
+ s11:{
+  en:"COUNT THE ARTICLES. One article = one person = singular verb. Two articles = two persons = plural verb.",
+  ta:"Article-களை எண்ணுங்கள். ஒரு article = ஒரு நபர் = ஒருமை வினைச்சொல். இரண்டு article = இரண்டு நபர் = பன்மை வினைச்சொல்.",
+  tl:"Article-galai ennungal. Oru article = oru nabar = orumai vinaichol. Irandu article = irandu nabar = panmai vinaichol.",
+  vis:"        COUNT THE NAME TAGS\n\n   THE secretary and treasurer  →  👤    →  IS\n    ↑\n   1 tag = 1 person wearing 2 labels\n\n   THE secretary and THE treasurer →  👤👤  →  ARE\n    ↑                 ↑\n   2 tags = 2 separate people\n\n   POSSESSIVES COUNT TOO:\n   MY friend and guide      →  1 person  →  HAS\n   MY friend and MY guide   →  2 people  →  HAVE\n\n   ⚠ Indian designations that are ONE person:\n     The Collector and District Magistrate\n     The Chairman and Managing Director\n     The Principal and Correspondent"},
+
+ s12:[
+ "The secretary and treasurer ____ present.|is;are|0",
+ "The secretary and the treasurer ____ present.|is;are|1",
+ "The poet and philosopher ____ dead.|is;are|0",
+ "The poet and the philosopher ____ dead.|is;are|1",
+ "The principal and the vice-principal ____ here.|is;are|1",
+ "The Collector and District Magistrate ____ coming.|is;are|0",
+ "My friend and guide ____ helped me.|has;have|0",
+ "My friend and my guide ____ helped me.|has;have|1",
+ "The Chairman and Managing Director ____ signed.|has;have|0",
+ "The Chairman and the Managing Director ____ signed.|has;have|1",
+ "The teacher and writer ____ addressed us.|has;have|0",
+ "The teacher and the writer ____ addressed us.|has;have|1",
+ "The bread and butter ____ on the table.|was;were|0",
+ "The pen and the pencil ____ missing.|is;are|1",
+ "The Principal and Correspondent ____ resigned.|has;have|0",
+ "The manager and the clerk ____ suspended.|was;were|1",
+ "The horse and carriage ____ waiting outside.|is;are|0",
+ "The doctor and the nurse ____ arrived together.|has;have|1",
+ "The author and editor ____ the same person.|is;are|0",
+ "The author and the editor ____ two different people.|is;are|1"],
+
+ s13:[
+ "____ Collector and District Magistrate, along with his staff, ____ visiting ____ school tomorrow.|The-is-the;The-are-a;A-is-the|0|One article → one officer → IS. 'Along with' is ignored (SVA Rule 31). Visiting the building → THE school.",
+ "____ poet and ____ novelist ____ both been awarded ____ honorary doctorate.|The-the-have-an;The-—-has-an;The-the-have-a|0|Two articles → two people → HAVE. 'Honorary' silent H → AN.",
+ "My friend and ____ guide ____ advised me to join ____ university near ____ Ganga.|my-have-a-the;—-has-a-the;my-has-the-the|0|Second 'my' → two people → HAVE. 'University' /yu/ → A. River → THE.",
+ "____ Chairman and Managing Director ____ present, but ____ secretary and ____ treasurer ____ absent.|The-was-the-the-were;The-were-the-—-was;A-was-a-a-were|0|One article → one person → WAS. Two articles → two people → WERE.",
+ "____ principal and correspondent of ____ school ____ gone to ____ court on official work.|The-the-has-—;The-a-have-the;A-the-has-the|0|One article → one person → HAS. Specific school → THE. In court on official work → no article."],
+
+ s14:{
+  rule:"One article before two nouns means one person and a singular verb. Repeating the article means two persons and a plural verb.",
+  formula:"ONE article → ONE person → SINGULAR verb\nTWO articles → TWO persons → PLURAL verb",
+  memory:"Count the name tags. Possessives (my, his) count as articles too.",
+  ta:"பெயர்ச் சீட்டுகளை எண்ணுங்க. My, His போன்ற உடைமைச் சொற்களும் article-ஆவே கணக்கு.",
+  tl:"Peyarch seettugalai ennunga. My, His pondra udaimaich sorkalum article-aave kanakku.",
+  mistake:"Ignoring the second article and choosing the verb by counting nouns instead.",
+  exam:"SSC CGL Tier-1 favourite. Mirrors SVA Rule 33 — the two are always tested together."},
+
+ s15:[
+ {ta:"நாம Articles module-ஓட கடைசி rule-க்கு வந்துட்டோம். இது ரொம்ப சுவாரஸ்யமான rule, ஏன்னா இங்க ஒரு சின்ன வார்த்தை — 'the' — வாக்கியத்தோட முழு அர்த்தத்தையும் மாத்திடும்.",
+  tl:"Naama Articles module-oda kadaisi rule-kku vandhuttom. Idhu romba suvaarasyamaana rule, yennaa inga oru chinna vaarththai — 'the' — vaakkiyaththoda muzhu arththaththaiyum maaththidum."},
+ {ta:"ரெண்டு வாக்கியம் பாருங்க. 'The secretary and treasurer IS present.' மற்றும் 'The secretary and THE treasurer ARE present.' வித்தியாசம் என்ன? ஒரே ஒரு 'the'. ஆனா அர்த்தம் முழுசா வேற.",
+  tl:"Rendu vaakkiyam paarunga. 'The secretary and treasurer IS present.' matrum 'The secretary and THE treasurer ARE present.' Viththiyaasam enna? Ore oru 'the'. Aanaa arththam muzhusaa veru."},
+ {ta:"முதல் வாக்கியத்துல ஒரே ஒரு 'the'. அதனால ஒரே ஒரு நபர். அந்த ஒரு மனுஷன் செயலாளரும் ஆவாரு, பொருளாளரும் ஆவாரு. ரெண்டு பதவி, ஒரு நபர். அதனால IS. ரெண்டாவது வாக்கியத்துல ரெண்டு 'the'. ரெண்டு நபர். ஒருத்தர் செயலாளர், இன்னொருத்தர் பொருளாளர். அதனால ARE.",
+  tl:"Mudhal vaakkiyaththula ore oru 'the'. Adhanaala ore oru nabar. Andha oru manushan seyalaalarum aavaaru, porulaalarum aavaaru. Rendu padhavi, oru nabar. Adhanaala IS. Randaavadhu vaakkiyaththula rendu 'the'. Rendu nabar. Adhanaala ARE."},
+ {ta:"இதை ஒரு படமா நினைச்சுக்கோங்க — பெயர்ச் சீட்டு. ஒவ்வொரு 'the'-ம் ஒரு பெயர்ச் சீட்டு. அறையில எத்தனை சீட்டு இருக்கோ அத்தனை மனுஷன். ஒரு சீட்டு = ஒரு மனுஷன். ரெண்டு சீட்டு = ரெண்டு மனுஷன். சீட்டை எண்ணுங்க, மனுஷனை எண்ணுங்க, verb போடுங்க.",
+  tl:"Idhai oru padamaa ninaichukkonga — peyarch seettu. Ovvoru 'the'-um oru peyarch seettu. Araiyila eththanai seettu irukko aththanai manushan. Oru seettu = oru manushan. Rendu seettu = rendu manushan."},
+ {ta:"இப்போ ஒரு முக்கியமான இந்திய உதாரணம். 'The Collector and District Magistrate is visiting our town.' இதைப் பார்த்தவுடனே நிறைய பேரு நினைப்பாங்க — 'ரெண்டு அதிகாரி வராங்க'. இல்ல! இந்தியால ஒரே அதிகாரிதான் ரெண்டு பதவியையும் வகிக்கிறாரு. அவரோட முழு பதவிப் பெயரே 'Collector and District Magistrate'. ஒரு 'the'. ஒரு மனுஷன். IS.",
+  tl:"Ippo oru mukkiyamaana Indhiya udhaaranam. 'The Collector and District Magistrate is visiting our town.' Idhaip paarththavudane neraiya peru ninaippaanga — 'rendu adhigaari varaanga'. Illa! India-la ore adhigaari-dhaan rendu padhaviyaiyum vagikkiraaru."},
+ {ta:"கடைசியா ஒரு கூடுதல் தகவல் — 'my', 'his', 'her' போன்ற உடைமைச் சொல்லும் article மாதிரியே வேலை செய்யும். 'My friend and guide HAS helped me' — ஒரு 'my', ஒரு நபர். 'My friend and MY guide HAVE helped me' — ரெண்டு 'my', ரெண்டு நபர். இதே rule. மேலும் — நீங்க SVA module-ல படிச்ச Rule 33 நினைவிருக்கா? அது இதே rule-ஓட மறுபக்கம். அங்க verb பக்கம் பார்த்தோம், இங்க article பக்கம் பார்க்குறோம். ரெண்டையும் சேர்த்து படிச்சா, SSC-ல இந்த கேள்வி வந்தா நீங்க நிச்சயம் சரியா பண்ணுவீங்க.",
+  tl:"Kadaisiyaa oru koodudhal thagaval — 'my', 'his', 'her' pondra udaimaich sollum article maadhiriye velai seyyum. 'My friend and guide HAS helped me' — oru 'my', oru nabar. Melum — neenga SVA module-la padicha Rule 33 ninaivirukkaa? Adhu idhe rule-oda marupakkam."}]}
+];
+
+/* ================== ENGINE ================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const P=(s,n)=>String(s).split("|").concat(Array(n).fill("")).slice(0,n);
+let cur=0, done={}, ansd={}, sc={};
+
+const STEPS=[
+ ["What is the Rule?","விதி என்ன? · Vidhi enna?"],
+ ["Why does this rule exist?","ஏன் இந்த விதி? · Yen indha vidhi?"],
+ ["Visual Diagram","படம் மூலம் புரிதல் · Padam moolam purithal"],
+ ["Wrong Thinking vs Right Thinking","தவறான சிந்தனை · Thavaraana sinthanai"],
+ ["Tamil Translation of Examples","உதாரணங்களின் தமிழ் · Udhaaranangalin Tamil"],
+ ["Word-by-Word Meaning","சொல்லுக்குச் சொல் · Sollukku sol"],
+ ["Solved Examples — Easy to Hard","தீர்க்கப்பட்ட உதாரணங்கள்"],
+ ["Wrong vs Correct","தவறு vs சரி · Thavaru vs Sari"],
+ ["SSC / Bank PYQ Style","முந்தைய வினாத்தாள் பாணி"],
+ ["Exam Trap","தேர்வு பொறி · Thervu pori"],
+ ["Memory Trick","நினைவு உத்தி · Ninaivu utthi"],
+ ["Practice Set — 20 Questions","பயிற்சி தொகுப்பு"],
+ ["Challenge Round","சவால் சுற்று · Savaal sutru"],
+ ["One-Page Revision Sheet","ஒரு பக்க மறுபார்வை"],
+ ["Centu AI Explains","சென்டு AI விளக்கம்"]
+];
+
+function tri(en,ta,tl){
+ let h="";
+ if(en) h+=`<div class="en">${esc(en)}</div>`;
+ if(ta) h+=`<div class="ta">${esc(ta)}</div>`;
+ if(tl) h+=`<div class="tl">${esc(tl)}</div>`;
+ return h;
+}
+
+function buildStep(i,r){
+ let c="";
+ if(i===0){
+   c=`<div class="box gold">${tri(r.s1.en,r.s1.ta,r.s1.tl)}</div>`;
+   if(r.s1.formula) c+=`<div class="hd">Formula</div><pre class="dia">${esc(r.s1.formula)}</pre>`;
+ }
+ if(i===1) c=r.s2.map(b=>`<div class="hd">${esc(b.h)}</div><div class="box blue">${tri(b.en,b.ta,b.tl)}</div>`).join("");
+ if(i===2) c=r.s3.map(d=>`<div class="hd">${esc(d.h)}</div><pre class="dia">${esc(d.d)}</pre>`).join("");
+ if(i===3){
+   c=`<div class="hd">How students think — and why it fails</div><div class="think">`+
+     r.s4.wrong.map(x=>`<div class="bad">✘ ${esc(x)}</div>`).join("")+`</div>`+
+     `<div class="hd">How you must think</div><div class="think">`+
+     r.s4.right.map(x=>`<div class="good">✔ ${esc(x)}</div>`).join("")+`</div>`;
+ }
+ if(i===4) c=r.s5.map(x=>`<div class="box pur"><div class="en"><b>${esc(x.en)}</b></div>
+   <div class="ta">${esc(x.ta)}</div><div class="tl">${esc(x.tl)}</div>
+   ${x.note?`<div style="font-size:12.5px;color:var(--acc);margin-top:6px">▸ ${esc(x.note)}</div>`:""}</div>`).join("");
+ if(i===5){
+   c=`<div class="wordgrid">`+r.s6.map(w=>{const[a,b,d]=P(w,3);
+     return `<div class="wc"><b>${esc(a)}</b><span>${esc(b)}</span><em>${esc(d)}</em></div>`;}).join("")+`</div>`;
+ }
+ if(i===6){
+   c=`<table><tr><th style="width:46px">#</th><th>Sentence</th><th style="width:80px">Answer</th><th style="width:78px">Level</th><th>Why</th></tr>`+
+     r.s7.map((x,k)=>{const[s,a,l,w]=P(x,4);
+       return `<tr><td>${k+1}</td><td>${esc(s)}</td><td class="c"><b>${esc(a)}</b></td>
+       <td><span class="lvl l-${esc(l)}">${esc(l)}</span></td><td style="color:var(--dim)">${esc(w)}</td></tr>`;}).join("")+`</table>`;
+ }
+ if(i===7){
+   c=`<table><tr><th style="width:40px">#</th><th>✘ Wrong</th><th>✔ Correct</th><th>Reason</th></tr>`+
+     r.s8.map((x,k)=>{const[w,g,y]=P(x,3);
+       return `<tr><td>${k+1}</td><td class="w">${esc(w)}</td><td class="c">${esc(g)}</td>
+       <td style="color:var(--dim)">${esc(y)}</td></tr>`;}).join("")+`</table>`;
+ }
+ if(i===8) c=r.s9.map((x,k)=>{const[t,q,o,a,s]=P(x,5);
+   return qzHtml(r.n,"p"+k,q,o.split(";"),+a,s,t);}).join("");
+ if(i===9) c=`<div class="box red">${tri(r.s10.en,r.s10.ta,r.s10.tl)}</div>`;
+ if(i===10){
+   c=`<div class="box gold">${tri(r.s11.en,r.s11.ta,r.s11.tl)}</div>`;
+   if(r.s11.vis) c+=`<pre class="dia">${esc(r.s11.vis)}</pre>`;
+ }
+ if(i===11){
+   c=scoreBar(r.n,"q",r.s12.length)+r.s12.map((x,k)=>{const[q,o,a]=P(x,3);
+     return qzHtml(r.n,"q"+k,q,o.split(";"),+a,"",""+(k+1));}).join("");
+ }
+ if(i===12) c=`<div class="box gold" style="margin-bottom:12px"><b>Mixed with Tense, Pronoun, Article and Preposition — real SSC difficulty.</b></div>`+
+   r.s13.map((x,k)=>{const[q,o,a,s]=P(x,4);
+     return qzHtml(r.n,"c"+k,q,o.split(";"),+a,s,"C"+(k+1));}).join("");
+ if(i===13){
+   const v=r.s14;
+   c=`<div class="rev">
+     <div>Rule</div><div>${esc(v.rule)}</div>
+     <div>Formula</div><div><code>${esc(v.formula)}</code></div>
+     <div>Memory</div><div>${esc(v.memory)}</div>
+     <div>Tamil</div><div class="tam">${esc(v.ta)}<br><em style="color:var(--dim);font-size:12px">${esc(v.tl)}</em></div>
+     <div>Common Mistake</div><div style="color:var(--no)">${esc(v.mistake)}</div>
+     <div>Exam Value</div><div>${esc(v.exam)}</div></div>`;
+ }
+ if(i===14){
+   c=`<div class="ai"><div class="who">🎙️ CENTU AI EXPLAINS — வகுப்பு நேரம்</div>`+
+     r.s15.map(p=>`<p class="ta">${esc(p.ta)}</p><p class="tl">${esc(p.tl)}</p>`).join("")+`</div>`;
+ }
+ return `<div class="step" data-s="${i}">
+   <div class="sh"><div class="sn">${i+1}</div>
+   <div class="st">${esc(STEPS[i][0])}<small>${esc(STEPS[i][1])}</small></div>
+   <span class="cv">▼</span></div>
+   <div class="sb">${c}</div></div>`;
+}
+
+function qzHtml(rn,id,q,opts,ans,sol,tag){
+ const key=rn+"-"+id;
+ return `<div class="qz" id="z-${key}" data-a="${ans}" data-k="${key}">
+   <div class="qn">${tag?`<i>${esc(tag)}.</i>`:""}${esc(q)}</div>
+   <div class="ops">${opts.map((o,j)=>`<button class="op" data-k="${key}" data-j="${j}">${esc(o.trim())}</button>`).join("")}</div>
+   ${sol?`<div class="sol">💡 ${esc(sol)}</div>`:`<div class="sol">💡 Correct answer: <b>${esc(opts[ans]||"")}</b></div>`}</div>`;
+}
+function scoreBar(rn,pre,total){
+ return `<div class="scorebar" id="sb-${rn}-${pre}">Your score: <b id="sv-${rn}-${pre}">0</b> / ${total}
+   <span class="bar"><i id="sp-${rn}-${pre}"></i></span>
+   <span style="color:var(--dim);font-size:12px">Tap an option to check instantly</span></div>`;
+}
+
+function renderRule(){
+ const r=RULES[cur];
+ $("#tt").innerHTML=`Rule ${r.n} · <em>${esc(r.t)}</em>`;
+ $("#tta").textContent=r.tam;
+ $("#tdiff").textContent=r.d; $("#tdiff").className="badge b-"+r.d;
+ $("#trc").textContent=r.rc;
+ $("#body").innerHTML=STEPS.map((_,i)=>buildStep(i,r)).join("");
+ document.querySelector('.step[data-s="0"]').classList.add("open");
+ $("#prev").disabled=cur===0; $("#next").disabled=cur===RULES.length-1;
+ document.querySelectorAll(".rbtn").forEach((b,i)=>b.classList.toggle("on",i===cur));
+ window.scrollTo({top:0,behavior:"smooth"});
+ // restore answers
+ Object.keys(ansd).forEach(k=>{ if(k.startsWith(r.n+"-")) paint(k,ansd[k]); });
+ ["q","c","p"].forEach(pre=>updBar(r.n,pre));
+}
+function paint(key,chosen){
+ const box=document.getElementById("z-"+key); if(!box) return;
+ const ans=+box.dataset.a;
+ box.querySelectorAll(".op").forEach((b,j)=>{
+   if(j===ans) b.classList.add("right"); else if(j===chosen) b.classList.add("wrong");});
+ box.classList.add("done");
+}
+function updBar(rn,pre){
+ const el=document.getElementById("sv-"+rn+"-"+pre); if(!el) return;
+ const tot=document.querySelectorAll(`[id^="z-${rn}-${pre}"]`).length;
+ let got=0; Object.keys(ansd).forEach(k=>{
+   if(k.startsWith(rn+"-"+pre)){const b=document.getElementById("z-"+k); if(b&&ansd[k]===+b.dataset.a) got++;}});
+ el.textContent=got;
+ const bar=document.getElementById("sp-"+rn+"-"+pre); if(bar) bar.style.width=(tot?got/tot*100:0)+"%";
+}
+
+document.addEventListener("click",e=>{
+ const sh=e.target.closest(".sh"); if(sh){sh.parentElement.classList.toggle("open");return;}
+ const op=e.target.closest(".op");
+ if(op){
+   const k=op.dataset.k; if(ansd[k]!==undefined) return;
+   ansd[k]=+op.dataset.j; paint(k,+op.dataset.j);
+   const rn=k.split("-")[0], pre=k.split("-")[1][0];
+   updBar(rn,pre);
+   if(pre==="q"){done[rn]=true; drawList();}
+   return;
+ }
+ const rb=e.target.closest(".rbtn"); if(rb){cur=+rb.dataset.i;renderRule();}
+});
+$("#prev").onclick=()=>{if(cur>0){cur--;renderRule();}};
+$("#next").onclick=()=>{if(cur<RULES.length-1){cur++;renderRule();}};
+$("#allopen").onclick=()=>{
+ const all=document.querySelectorAll(".step"), anyClosed=[...all].some(s=>!s.classList.contains("open"));
+ all.forEach(s=>s.classList.toggle("open",anyClosed));
+ $("#allopen").textContent=anyClosed?"Close all steps":"Open all steps";
+};
+window.addEventListener("beforeprint",()=>document.querySelectorAll(".step").forEach(s=>s.classList.add("open")));
+
+function drawList(){
+ $("#rlist").innerHTML=RULES.map((r,i)=>
+  `<button class="rbtn ${i===cur?"on":""}" data-i="${i}">
+    <b>${r.n}</b><span>${esc(r.t)}<span class="dn">${esc(r.rc)} · ${r.d}</span></span>
+    ${done[r.n]?'<span class="tick">✔</span>':''}</button>`).join("");
+}
+drawList();
+renderRule();
+</script>
+<script>
+/* ===== CentuMania metrics — universal v2 (generator-agnostic; additive) =====
+ * Handles three different option-rendering engines seen across this batch:
+ *  A) .opts[data-a] container + .opt[data-j] options (class8-12 MASTER packs)
+ *  B) .qz/.opts[data-a] container + .op/.opt[data-j] options, .right/.wrong
+ *     classes applied on click (MicroClasses, Grammar Bible)
+ *  C) .opt-btn[data-oi] with no DOM-exposed answer key; correctness read
+ *     back from the inline background-color the module sets on click
+ *     (Geography / Polity / GK / Art & Culture)
+ * Detection cascades: explicit data-a/data-ans first (most reliable), then
+ * known correct/wrong class names, then the inline-style colour signature.
+ */
+(function(){
+  if(window.__cmTrackU||window.__cmTrackInit)return; window.__cmTrackU=1;
+  var CM_DEFAULT='eng-micro-articles', CM_T0=Date.now(), CM_ACTIVE=0, _vt=Date.now(), _lastQ=0;
+  function tok(){try{var t=localStorage.getItem('cm:access_token');if(t)return t;}catch(e){}try{var st=[localStorage,sessionStorage],s,i,k,d;for(s=0;s<st.length;s++){for(i=0;i<st[s].length;i++){k=st[s].key(i);if(k&&k.indexOf('sb-')===0&&k.slice(-11)==='-auth-token'){d=JSON.parse(st[s].getItem(k)||'{}');if(d&&d.access_token)return d.access_token;}}}}catch(e){}return null;}
+  function mat(){try{return localStorage.getItem('cm:material_id')||CM_DEFAULT;}catch(e){return CM_DEFAULT;}}
+  function sid(){try{var id=sessionStorage.getItem('cm:analytics_session');if(!id){id=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():(Math.random().toString(36).slice(2)+Date.now().toString(36));sessionStorage.setItem('cm:analytics_session',id);}return id;}catch(e){return 'a'+Date.now();}}
+  function inter(t,n,m){try{var k=tok();if(!k||!n)return;fetch('/api/study/interaction',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({interaction_type:t,node_id:String(n),material_id:mat(),session_id:sid(),timestamp:new Date().toISOString(),metadata:m||{}})}).catch(function(){});}catch(e){}}
+  function ev(name,m){try{var k=tok();if(!k)return;fetch('/api/events',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},body:JSON.stringify({event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})})}).catch(function(){});}catch(e){}}
+  function beacon(name,m){try{var k=tok();if(!k)return;var p=JSON.stringify({_token:k,event_name:name,session_id:sid(),event_timestamp:new Date().toISOString(),metadata:Object.assign({material_id:mat()},m||{})});if(navigator.sendBeacon)navigator.sendBeacon('/api/events/beacon',new Blob([p],{type:'application/json'}));}catch(e){}}
+  document.addEventListener('visibilitychange',function(){if(document.hidden){CM_ACTIVE+=Date.now()-_vt;beacon('tab_switch',{seconds_active:Math.round(CM_ACTIVE/1000)});}else{_vt=Date.now();}});
+  window.addEventListener('pagehide',function(){if(!document.hidden)CM_ACTIVE+=Date.now()-_vt;beacon('session_end',{seconds_total:Math.round((Date.now()-CM_T0)/1000),seconds_active:Math.round(CM_ACTIVE/1000)});});
+  ev('material_opened',{});ev('session_start',{});
+  /* chapter/section navigation (Engine A's .cn-pill) counts as node_opened */
+  document.addEventListener('click',function(e){
+    var p=e.target&&e.target.closest&&e.target.closest('.cn-pill[data-ci]');
+    if(!p||p._cmOpened)return; p._cmOpened=1;
+    var ci=p.getAttribute('data-ci');
+    inter('node_opened','ch'+ci,{}); ev('node_open',{node_id:'ch'+ci});
+  });
+  /* answer clicks across all three engines */
+  var _cmCardIdx=0, _cmCardMap=(typeof WeakMap!=='undefined')?new WeakMap():null;
+  function cmCardIndex(card){
+    if(!card)return -1;
+    if(_cmCardMap){ if(_cmCardMap.has(card))return _cmCardMap.get(card); var i=_cmCardIdx++; _cmCardMap.set(card,i); return i; }
+    return -1;
+  }
+  document.addEventListener('click',function(e){
+    var o=e.target&&e.target.closest&&e.target.closest('.opt,.op,.mopt,.opt-btn,.option,[data-oi]');
+    if(!o||o._cmSeen)return; o._cmSeen=1;
+    var container=o.closest('.opts,.qz,.mcq-card,.mcq,[data-nid],[data-qi]')||o.parentElement;
+    var card=o.closest('.mcq-card,.mcq,.qz,.opts')||container;
+    var nid=(container&&(container.getAttribute('data-nid')||container.getAttribute('data-node')||container.getAttribute('data-k')||container.id))||o.getAttribute('data-r');
+    var qiRaw=(container&&container.getAttribute('data-qi'))||o.getAttribute('data-q')||o.getAttribute('data-j');
+    var qi=qiRaw!=null?parseInt(qiRaw,10):NaN;
+    var correctAttr=container&&(container.getAttribute('data-a')||container.getAttribute('data-ans'));
+    var myIdx=o.getAttribute('data-j')!=null?o.getAttribute('data-j'):(o.getAttribute('data-o')!=null?o.getAttribute('data-o'):o.getAttribute('data-oi'));
+    // No usable identifier anywhere in the DOM (Engine C): fall back to a
+    // per-card sequential index so distinct questions in the same file never
+    // collide on the same synthetic node_id (which would silently drop every
+    // answer after the first under the server's first-attempt lock).
+    if(!nid||isNaN(qi)){ var ci=cmCardIndex(card); if(!nid)nid='q'+ci; if(isNaN(qi))qi=ci; }
+    var now=Date.now(),dt=_lastQ?now-_lastQ:0;_lastQ=now;
+    setTimeout(function(){
+      var isCorrect;
+      if(correctAttr!=null&&myIdx!=null){
+        isCorrect=(parseInt(correctAttr,10)===parseInt(myIdx,10));
+      } else {
+        var cl=o.classList;
+        if(cl.contains('right')||cl.contains('ok')||cl.contains('correct'))isCorrect=true;
+        else if(cl.contains('wrong')||cl.contains('bad')||cl.contains('incorrect'))isCorrect=false;
+        else {
+          var bg=(o.style&&o.style.backgroundColor)||'';
+          if(!bg&&window.getComputedStyle)bg=getComputedStyle(o).backgroundColor;
+          if(bg.indexOf('220, 252, 231')!==-1)isCorrect=true;
+          else if(bg.indexOf('254, 226, 226')!==-1)isCorrect=false;
+          else isCorrect=false;
+        }
+      }
+      inter('mcq_attempt',String(nid),{question_index:qi,is_correct:!!isCorrect});
+      ev('answer',{node_id:String(nid),question_index:qi,is_correct:!!isCorrect,time_spent_ms:dt});
+    },90);
+  });
+})();
+</script>
+</body>
+</html>
