@@ -8,6 +8,7 @@ export type ProgramId = 'LDC' | 'SSC' | 'Banking'
 export type Subject =
   | 'Ancient History' | 'Medieval History' | 'Modern History' | 'World History'
   | 'Physics' | 'Chemistry' | 'Biology' | 'English' | 'Daily Test'
+  | 'Accountancy' | 'Economics' | 'Political Science' | 'Geography' | 'Polity' | 'General Knowledge'
 
 export interface Module {
   id: string            // slug; file served from /study/<id>.html; also the tracking material_id
@@ -82,6 +83,53 @@ export const MODULES: Module[] = [
   { id: 'eng-14-parajumbles', title: 'Para Jumbles', subject: 'English' },
   { id: 'eng-15-error-spotting', title: 'Error Spotting', subject: 'English' },
   { id: 'eng-16-sentence-improvement', title: 'Sentence Improvement', subject: 'English' },
+  // English — Grammar Bible + Micro-Classes (v2 batch)
+  { id: 'eng-grammar-bible', title: 'English Grammar Bible — 120 Rules', subject: 'English' },
+  { id: 'eng-micro-articles', title: 'Articles — Micro-Classes', subject: 'English' },
+  { id: 'eng-micro-nouns', title: 'Nouns — Micro-Classes', subject: 'English' },
+  { id: 'eng-micro-pronouns', title: 'Pronouns — Micro-Classes', subject: 'English' },
+  { id: 'eng-micro-adjectives-adverbs', title: 'Adjectives & Adverbs — Micro-Classes', subject: 'English' },
+  { id: 'eng-micro-prepositions', title: 'Prepositions — Micro-Classes', subject: 'English' },
+  { id: 'eng-micro-conjunctions', title: 'Conjunctions — Micro-Classes', subject: 'English' },
+  { id: 'eng-micro-modals', title: 'Modal Verbs — Micro-Classes', subject: 'English' },
+  { id: 'eng-micro-sva', title: 'Subject-Verb Agreement — Micro-Classes', subject: 'English' },
+  { id: 'eng-micro-tenses', title: 'Tenses — Micro-Classes', subject: 'English' },
+  { id: 'eng-micro-voice-narration', title: 'Voice, Narration & Miscellaneous — Micro-Classes', subject: 'English' },
+  // Science — NCERT class-wise master references (v2 batch)
+  { id: 'class8-physics',    title: 'Class 8 Physics — Master Material',    subject: 'Physics' },
+  { id: 'class8-chemistry',  title: 'Class 8 Chemistry — Master Material',  subject: 'Chemistry' },
+  { id: 'class8-biology',    title: 'Class 8 Biology — Master Material',    subject: 'Biology' },
+  { id: 'class9-physics',    title: 'Class 9 Physics — Master Material',    subject: 'Physics' },
+  { id: 'class9-chemistry',  title: 'Class 9 Chemistry — Master Material',  subject: 'Chemistry' },
+  { id: 'class9-biology',    title: 'Class 9 Biology — Master Material',    subject: 'Biology' },
+  { id: 'class10-physics',   title: 'Class 10 Physics — Master Material',   subject: 'Physics' },
+  { id: 'class10-chemistry', title: 'Class 10 Chemistry — Master Material', subject: 'Chemistry' },
+  { id: 'class10-biology',   title: 'Class 10 Biology — Master Material',   subject: 'Biology' },
+  { id: 'class11-physics',   title: 'Class 11 Physics — Master Material',   subject: 'Physics' },
+  { id: 'class11-chemistry', title: 'Class 11 Chemistry — Master Material', subject: 'Chemistry' },
+  { id: 'class11-biology',   title: 'Class 11 Biology — Master Material',   subject: 'Biology' },
+  { id: 'class12-physics',   title: 'Class 12 Physics — Master Material',   subject: 'Physics' },
+  { id: 'class12-chemistry', title: 'Class 12 Chemistry — Master Material', subject: 'Chemistry' },
+  { id: 'class12-biology',   title: 'Class 12 Biology — Master Material',   subject: 'Biology' },
+  // Accountancy, Economics, Political Science — new subjects (v2 batch)
+  { id: 'class11-accountancy', title: 'Class 11 Accountancy — Master Material', subject: 'Accountancy' },
+  { id: 'class12-accountancy', title: 'Class 12 Accountancy — Master Material', subject: 'Accountancy' },
+  { id: 'class11-economics',   title: 'Class 11 Economics — Master Material',   subject: 'Economics' },
+  { id: 'class12-economics',   title: 'Class 12 Economics — Master Material',   subject: 'Economics' },
+  { id: 'class11-polscience',  title: 'Class 11 Political Science — Master Material', subject: 'Political Science' },
+  // Geography (v2 batch)
+  { id: 'geo-earth-climatology',          title: 'The Earth & Climatology',          subject: 'Geography' },
+  { id: 'geo-india-relief-climate-soils', title: 'India: Relief, Climate & Soils',   subject: 'Geography' },
+  { id: 'geo-agriculture-human',          title: 'Agriculture & Human Geography',    subject: 'Geography' },
+  { id: 'geo-oceanography-world',         title: 'Oceanography & World Geography',   subject: 'Geography' },
+  { id: 'geo-states-parks-facts',         title: 'States, Parks & Quick Facts',      subject: 'Geography' },
+  // Polity (v2 batch)
+  { id: 'polity-constitution-rights',  title: 'Constitution & Fundamental Rights',        subject: 'Polity' },
+  { id: 'polity-executive-judiciary',  title: 'Executive, Judiciary & Constitutional Bodies', subject: 'Polity' },
+  { id: 'polity-parliament-president', title: 'Parliament, President & Amendments',       subject: 'Polity' },
+  // General Knowledge (v2 batch)
+  { id: 'gk-static',      title: 'Static GK Master', subject: 'General Knowledge' },
+  { id: 'gk-art-culture', title: 'Art & Culture',     subject: 'General Knowledge' },
 ]
 
 const BY_ID = new Map(MODULES.map(m => [m.id, m]))
@@ -96,9 +144,9 @@ export interface Program {
   weightage: { subject: string; pct: number }[] // exam-paper weight, drives sequencing
 }
 export const PROGRAMS: Program[] = [
-  { id: 'LDC', name: 'Puducherry / TN LDC-UDC', full: 'Lower/Upper Division Clerk', days: 30,
+  { id: 'LDC', name: 'Puducherry / TN LDC-UDC', full: 'Lower/Upper Division Clerk', days: 45,
     weightage: [ { subject: 'General Studies', pct: 40 }, { subject: 'Aptitude', pct: 30 }, { subject: 'English / Tamil', pct: 20 }, { subject: 'Current Affairs', pct: 10 } ] },
-  { id: 'SSC', name: 'SSC (CGL / CHSL / MTS)', full: 'Staff Selection Commission', days: 30,
+  { id: 'SSC', name: 'SSC (CGL / CHSL / MTS)', full: 'Staff Selection Commission', days: 31,
     weightage: [ { subject: 'General Awareness', pct: 25 }, { subject: 'Quantitative Aptitude', pct: 25 }, { subject: 'Reasoning', pct: 25 }, { subject: 'English', pct: 25 } ] },
   { id: 'Banking', name: 'Banking (IBPS / SBI)', full: 'IBPS / SBI PO & Clerk', days: 24,
     weightage: [ { subject: 'Quantitative Aptitude', pct: 35 }, { subject: 'Reasoning', pct: 35 }, { subject: 'English', pct: 30 } ] },
@@ -146,6 +194,25 @@ const LDC_PLAN: DayPlan[] = [
   { day: 28, modules: ['biology-how-organisms-reproduce', 'biology-human-body-systems'], reasoningOrArithmetic: 'ARITHMETIC: Data Interpretation', rotating: 'ETHICS: Case studies' },
   { day: 29, modules: [], reasoningOrArithmetic: 'FULL REASONING MOCK', rotating: 'REVISION: Current Affairs + English' },
   { day: 30, modules: ['daily-test-engine'], reasoningOrArithmetic: 'FULL ARITHMETIC MOCK', rotating: 'FULL GS MOCK + Centum-Score check' },
+  // Days 31-45: the "version 2" content library (English deep-dives, NCERT
+  // class-wise references, extra Geography/Polity, Accountancy, GK) — appended
+  // after the capstone mock so day 30's meaning for already-enrolled students
+  // never shifts.
+  { day: 31, modules: ['eng-grammar-bible', 'eng-micro-articles', 'eng-micro-nouns'], rotating: 'ENGLISH: Grammar Bible & Micro-Classes I' },
+  { day: 32, modules: ['eng-micro-pronouns', 'eng-micro-adjectives-adverbs', 'eng-micro-prepositions'], rotating: 'ENGLISH: Micro-Classes II' },
+  { day: 33, modules: ['eng-micro-conjunctions', 'eng-micro-modals', 'eng-micro-sva'], rotating: 'ENGLISH: Micro-Classes III' },
+  { day: 34, modules: ['eng-micro-tenses', 'eng-micro-voice-narration'], rotating: 'ENGLISH: Micro-Classes IV' },
+  { day: 35, modules: ['class8-physics', 'class8-chemistry', 'class8-biology'], rotating: 'SCIENCE: Class 8 Master References' },
+  { day: 36, modules: ['class9-physics', 'class9-chemistry', 'class9-biology'], rotating: 'SCIENCE: Class 9 Master References' },
+  { day: 37, modules: ['class10-physics', 'class10-chemistry', 'class10-biology'], rotating: 'SCIENCE: Class 10 Master References' },
+  { day: 38, modules: ['class11-physics', 'class11-chemistry', 'class11-biology'], rotating: 'SCIENCE: Class 11 Master References' },
+  { day: 39, modules: ['class11-accountancy', 'class11-economics', 'class11-polscience'], rotating: 'COMMERCE & POLITY: Class 11 References' },
+  { day: 40, modules: ['class12-physics', 'class12-chemistry', 'class12-biology'], rotating: 'SCIENCE: Class 12 Master References' },
+  { day: 41, modules: ['class12-accountancy', 'class12-economics'], rotating: 'COMMERCE: Class 12 References' },
+  { day: 42, modules: ['geo-earth-climatology', 'geo-india-relief-climate-soils', 'geo-agriculture-human'], rotating: 'GEOGRAPHY: Earth, India & Agriculture' },
+  { day: 43, modules: ['geo-oceanography-world', 'geo-states-parks-facts'], rotating: 'GEOGRAPHY: Oceans, World & Quick Facts' },
+  { day: 44, modules: ['polity-constitution-rights', 'polity-executive-judiciary', 'polity-parliament-president'], rotating: 'POLITY: Constitution, Executive & Parliament' },
+  { day: 45, modules: ['gk-static', 'gk-art-culture'], rotating: 'GK: Static GK & Art and Culture' },
 ]
 
 // SSC — equal GA/Quant/Reasoning/English. Shares GS (history/science) + English modules;
@@ -169,6 +236,19 @@ const SSC_PLAN: DayPlan[] = [
   { day: 16, modules: ['chem-map-a', 'chem-map-b', 'chemistry-matter-surroundings', 'chemistry-matter-pure'], rotating: 'GA: Chemistry — Matter' },
   { day: 17, modules: ['chemistry-atoms-molecules', 'chemistry-structure-of-atom', 'chemistry-periodic-classification', 'chemistry-chemical-reactions'], rotating: 'GA: Chemistry — Atomic structure & reactions' },
   { day: 18, modules: ['chemistry-acids-bases-salts', 'chemistry-metals-nonmetals', 'chemistry-carbon-compounds', 'chemistry-everyday-life'], rotating: 'GA: Chemistry — Acids, metals & carbon' },
+  { day: 19, modules: ['eng-grammar-bible', 'eng-micro-articles', 'eng-micro-nouns', 'eng-micro-pronouns'], rotating: 'ENGLISH: Grammar Bible & Micro-Classes I' },
+  { day: 20, modules: ['eng-micro-adjectives-adverbs', 'eng-micro-prepositions', 'eng-micro-conjunctions', 'eng-micro-modals'], rotating: 'ENGLISH: Micro-Classes II' },
+  { day: 21, modules: ['eng-micro-sva', 'eng-micro-tenses', 'eng-micro-voice-narration'], rotating: 'ENGLISH: Micro-Classes III' },
+  { day: 22, modules: ['class8-physics', 'class8-chemistry', 'class8-biology'], rotating: 'GA: Class 8 Science References' },
+  { day: 23, modules: ['class9-physics', 'class9-chemistry', 'class9-biology'], rotating: 'GA: Class 9 Science References' },
+  { day: 24, modules: ['class10-physics', 'class10-chemistry', 'class10-biology'], rotating: 'GA: Class 10 Science References' },
+  { day: 25, modules: ['class11-physics', 'class11-chemistry', 'class11-biology', 'class11-polscience'], rotating: 'GA: Class 11 Science & Polity References' },
+  { day: 26, modules: ['class12-physics', 'class12-chemistry', 'class12-biology'], rotating: 'GA: Class 12 Science References' },
+  { day: 27, modules: ['class11-accountancy', 'class12-accountancy', 'class11-economics', 'class12-economics'], rotating: 'GA: Commerce References' },
+  { day: 28, modules: ['geo-earth-climatology', 'geo-india-relief-climate-soils', 'geo-agriculture-human'], rotating: 'GA: Geography — Earth, India & Agriculture' },
+  { day: 29, modules: ['geo-oceanography-world', 'geo-states-parks-facts'], rotating: 'GA: Geography — Oceans, World & Quick Facts' },
+  { day: 30, modules: ['polity-constitution-rights', 'polity-executive-judiciary', 'polity-parliament-president'], rotating: 'GA: Polity — Constitution, Executive & Parliament' },
+  { day: 31, modules: ['gk-static', 'gk-art-culture'], rotating: 'GA: Static GK & Art and Culture' },
 ]
 
 // Banking — Quant/Reasoning heavy + English; GS only for Mains. English-forward.
@@ -187,6 +267,15 @@ const BANKING_PLAN: DayPlan[] = [
   { day: 12, modules: ['daily-test-engine'], rotating: 'FULL MOCK: Prelims pattern' },
   { day: 13, modules: ['chem-map-a', 'chem-map-b', 'chemistry-matter-surroundings', 'chemistry-matter-pure', 'chemistry-atoms-molecules', 'chemistry-structure-of-atom'], rotating: 'MAINS GA: Chemistry — Matter & atomic structure' },
   { day: 14, modules: ['chemistry-periodic-classification', 'chemistry-chemical-reactions', 'chemistry-acids-bases-salts', 'chemistry-metals-nonmetals', 'chemistry-carbon-compounds', 'chemistry-everyday-life'], rotating: 'MAINS GA: Chemistry — Reactions, acids & carbon' },
+  { day: 15, modules: ['eng-grammar-bible', 'eng-micro-articles', 'eng-micro-nouns', 'eng-micro-pronouns', 'eng-micro-adjectives-adverbs', 'eng-micro-prepositions'], rotating: 'ENGLISH: Grammar Bible & Micro-Classes I' },
+  { day: 16, modules: ['eng-micro-conjunctions', 'eng-micro-modals', 'eng-micro-sva', 'eng-micro-tenses', 'eng-micro-voice-narration'], rotating: 'ENGLISH: Micro-Classes II' },
+  { day: 17, modules: ['class8-physics', 'class8-chemistry', 'class8-biology', 'class9-physics', 'class9-chemistry', 'class9-biology'], rotating: 'MAINS GA: Class 8-9 Science References' },
+  { day: 18, modules: ['class10-physics', 'class10-chemistry', 'class10-biology', 'class11-physics', 'class11-chemistry', 'class11-biology'], rotating: 'MAINS GA: Class 10-11 Science References' },
+  { day: 19, modules: ['class12-physics', 'class12-chemistry', 'class12-biology', 'class11-polscience'], rotating: 'MAINS GA: Class 12 Science & Polity References' },
+  { day: 20, modules: ['class11-accountancy', 'class12-accountancy', 'class11-economics', 'class12-economics'], rotating: 'MAINS GA: Commerce References' },
+  { day: 21, modules: ['geo-earth-climatology', 'geo-india-relief-climate-soils', 'geo-agriculture-human', 'geo-oceanography-world', 'geo-states-parks-facts'], rotating: 'MAINS GA: Geography References' },
+  { day: 22, modules: ['polity-constitution-rights', 'polity-executive-judiciary', 'polity-parliament-president'], rotating: 'MAINS GA: Polity References' },
+  { day: 23, modules: ['gk-static', 'gk-art-culture'], rotating: 'MAINS GA: Static GK & Art and Culture' },
 ]
 
 export const PLANS: Record<ProgramId, DayPlan[]> = {
