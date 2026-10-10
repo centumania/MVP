@@ -12,7 +12,7 @@
  *   const { t } = useLang()
  *   <h2>{t('Hard work isn't the problem.', 'உழைப்பு பிரச்சனை இல்லை.')}</h2>
  */
-import { createContext, useCallback, useContext, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 export type Lang = 'en' | 'ta'
 
@@ -28,11 +28,18 @@ type LangCtx = {
 
 const Ctx = createContext<LangCtx>({ lang: 'en', setLang: () => {}, t: en => en })
 
-export function LangProvider({ children }: { children: React.ReactNode }) {
+export function LangProvider({ children, ssr = false }: { children: React.ReactNode; ssr?: boolean }) {
   // Safe to read localStorage in the initializer: LandingGate only mounts its
   // subtree client-side after the routing decision, so this never runs on the
   // server and never causes a hydration mismatch.
-  const [lang, setLangState] = useState<Lang>(readStoredLang)
+  // Server-rendered pages (e.g. /pilot) pass `ssr` instead: they hydrate in
+  // English and switch to the stored language once mounted.
+  const [lang, setLangState] = useState<Lang>(() => (ssr ? 'en' : readStoredLang()))
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is client-only
+    if (ssr) setLangState(readStoredLang())
+  }, [ssr])
 
   const setLang = useCallback((l: Lang) => {
     setLangState(l)
